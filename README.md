@@ -1,6 +1,6 @@
-# Chilperic ODE v2.0-stable
+# Chilperic Dynamics v2.4.1
 
-Browser-only scientific workbench for ODE solving, parametric sweeps, phase portraits, heatmaps, nonlinear optimization, import templates, and Python export.
+Browser-only scientific workbench for deterministic ODE modeling, stochastic simulation, parameter sweeps, phase portraits, heatmaps, nonlinear optimization, model-atlas exploration, import templates, and reproducibility export.
 
 ## Local run
 
@@ -16,35 +16,37 @@ Serve from the repository root on the `main` branch.
 
 ## Modules
 
-- ODE solver: trajectories, 2D/3D phase portraits, vector fields, Poincaré sections, trajectory matrix.
-- Parametric ODE: default run plus parameter sweep plots.
-- Optimization: constrained nonlinear optimization exploration with SciPy/CasADi/Pyomo export.
+- **ODE Lab**: trajectories, 2D/3D phase portraits, vector fields, Poincaré sections, trajectory matrix, parametric sweeps, and optimization.
+- **Stochastic Lab**: CTMC/Gillespie-style event models, branching processes, random walks, SDE examples, finite-population simulations, ensemble diagnostics, and exports.
+- **Model Atlas**: curated deterministic and stochastic model cards with schematics, concepts, variables, and links into the appropriate lab.
+- **Docs**: usage notes, import formats, export workflow, and modeling boundaries.
+
+## Stochastic Lab models
+
+- Birth-death process
+- Stochastic SIR
+- Stochastic gene expression
+- Stochastic Michaelis-Menten
+- Reduced T-cell proliferation event model
+- Galton-Watson branching process
+- Gambler’s ruin
+- Ehrenfest urn
+- Wright-Fisher drift
+- Geometric Brownian motion
+- Parrondo’s paradox
+- Stochastic resonance
+- Flashing ratchet / Brownian motor
+- Multi-armed bandit
+- Secretary / optimal stopping
+
+## Import and export
+
+Use JSON for reliable model interchange. CSV, TXT/ODE, YAML-like files, Python files with embedded `ODE_LAB_CONFIG`, and basic SBML/XML reaction models are supported. Export options include figures, CSV/JSON data, model schemas, and starter Python workflows.
 
 ## Boundary
 
-Browser solvers are for exploration. For stiff ODEs or serious constrained nonlinear optimization, export Python and run locally.
+Browser solvers are for exploration, teaching, and rapid model inspection. For stiff ODEs, large stochastic ensembles, calibrated inference, or serious constrained nonlinear optimization, export and run locally with SciPy, CasADi, Pyomo, or a specialist stochastic-simulation workflow.
 
+## License
 
-## Example guide
-
-The app includes a dedicated `examples.html` page with model descriptions, author attributions, and notes on how each example should be explored.
-
-
-## v2.1.8 notes
-
-- Added experimental lightweight SBML/XML import for reaction-network models with MathML kinetic laws.
-- Replaced the FADNS PhD example with the refined CoA-sequestration model.
-- Added Lasso, Runge, and Secretary problem teaching examples in the optimization/example guide.
-- Added plot safeguards for high-dimensional models so heavy plots show key variables rather than overwhelming the browser.
-
-## v2.1.9 stability and identity patch
-
-- Run / Sweep / Cancel controls are now sticky in the left work panel so users do not need to scroll to execute the model.
-- Plot rendering now recreates the Plotly node before each draw, which prevents Chrome from keeping invisible zero-size SVG containers after model switches.
-- Plot containers receive repeated resize passes after rendering and after window/theme changes.
-- The logo was redesigned to represent dynamical systems, molecular/metabolic modeling, and optimization as a single scientific identity.
-
-
-## Model Atlas
-
-The app includes a dedicated `examples.html` Model Atlas with visual schematics, author/inspiration notes, variables, and guided exploration suggestions for each built-in model.
+MIT License.
