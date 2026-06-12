@@ -1,0 +1,33 @@
+<!doctype html><html lang="en" data-theme="aurora"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chilperic ODE docs</title><link rel="stylesheet" href="styles/style.css?v=2.2.2"></head><body><div class="app-shell"><header class="topbar"><a class="brand" href="index.html"><img src="assets/chilperic-ode-logo.svg" class="logo" alt="Chilperic ODE"></a><nav class="topnav"><a href="index.html">Workbench</a><a href="index.html#modelArea">Library</a><a href="examples.html">Model Atlas</a><a class="active" href="docs.html">Docs</a></nav></header><main class="doc-page" style="max-width:980px;margin:0 auto;padding:42px 22px"><section class="card"><h1>Chilperic ODE documentation</h1><p>Chilperic ODE is a browser workbench for exploring ordinary differential equations, parameter sweeps, phase portraits, heatmaps, and nonlinear optimization. The browser solver is for exploration and teaching. For stiff systems or serious constrained optimization, export Python and use SciPy, CasADi, or Pyomo locally.</p></section><section class="card"><h2>Quick start</h2><ol><li>Select a module: ODE, Parametric, or Optimization.</li><li>Load an example or import a model file.</li><li>Edit equations, parameters, initial values, or constraints.</li><li>Click <b>Run</b>. In Parametric mode, click <b>Sweep</b> to evaluate parameter ranges.</li><li>Choose left and right plots independently.</li><li>Export PNG/SVG, CSV/JSON, or a runnable Python script.</li></ol></section><section class="card"><h2>Plot types</h2><p><b>ODE:</b> trajectory, 2D/3D phase portrait, vector field, Poincaré section, trajectory matrix.</p><p><b>Parametric sweep:</b> heatmap, contour, bifurcation-style diagram, envelope/fan plot, parallel coordinates.</p><p><b>Optimization:</b> samples, optimization path, convergence, objective–constraint trade-off.</p></section><section class="card"><h2>Solvers</h2><p>The browser supports Euler, Heun, RK4, RK5, and RK45-style adaptive integration. Python export supports SciPy <code>solve_ivp</code> targets such as RK45, DOP853, Radau, BDF, and LSODA.</p></section><section class="card"><h2>Local Python setup</h2><pre><code># Linux / macOS
+python3 -m venv .venv
+source .venv/bin/activate
+pip install numpy scipy matplotlib casadi pyomo
+
+# Windows PowerShell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install numpy scipy matplotlib casadi pyomo</code></pre></section><section class="card"><h2>Import formats</h2><p>Use JSON for the most reliable model interchange. CSV, TXT/ODE, YAML-like files, Python files with an embedded <code>ODE_LAB_CONFIG</code> block, and basic SBML/XML reaction models are also supported. SBML import handles species, reactions, stoichiometry, global/local parameters, and MathML kinetic laws. Events, algebraic rules, assignment rules, units, and advanced SBML packages are intentionally ignored in the browser.</p></section><section class="card"><h2>License</h2><p>MIT License. You may use, modify, and redistribute this application with attribution and without warranty.</p></section>
+<section class="doc-card">
+  <h2>Export publication figures</h2>
+  <ol>
+    <li>Run a model or parameter sweep.</li>
+    <li>Choose the primary or secondary view.</li>
+    <li>Open <strong>Figure settings</strong>.</li>
+    <li>Edit the title, axis labels, colorbar label, size, font, line width, marker size, legend, and grid.</li>
+    <li>Export SVG for manuscripts or PNG for slides.</li>
+  </ol>
+</section>
+
+<section class="doc-section">
+  <h2>Additional examples</h2>
+  <p>The workbench separates core examples from additional research and teaching examples. Core models stay visible for fast learning; additional models live in their own panel so the main workflow stays clean. See the dedicated <a href="examples.html">Model Atlas</a> for authors, model purpose, and exploration notes.</p>
+  <ul>
+    <li><b>FA metabolism bistability:</b> PhD-inspired four-state model with acetyl-CoA, malonyl-CoA, fatty acids, and triglycerides.</li>
+    <li><b>FADNS with CoA sequestration:</b> refined PhD-inspired semi-mechanistic model with FAS intermediates, CoA release, and inhibitory ECoA formation.</li>
+    <li><b>Love–hate oscillator:</b> a two-variable Romeo–Juliet / Strogatz-style oscillator.</li>
+    <li><b>Braess routing dynamics:</b> a route-choice model for congestion and shortcut effects.</li>
+    <li><b>Ziegler destabilization:</b> a structural-dynamics example where added stiffness or follower load can destabilize motion.</li>
+    <li><b>Calvin cycle mini-model:</b> a minimal photosynthesis-inspired model for PGA and RuBP pools.</li>
+  </ul>
+</section>
+<section class="doc-section"><h2>SBML import boundary</h2><p>SBML support is deliberately lightweight. The browser converts ordinary reaction-network SBML into ODEs using stoichiometry and kinetic-law MathML. For full SBML validation, model exchange, events, rules, units, or packages, use a specialist SBML toolchain and then import a reduced reaction model here.</p></section><section class="doc-section"><h2>Interface themes</h2><p>The workbench includes eight themes: Aurora, Clarity, Ocean, Lavender, Midnight, Slate, Paper, and Forest. Use lighter themes for teaching/projection and dark themes for long work sessions.</p></section></main></div></body></html>

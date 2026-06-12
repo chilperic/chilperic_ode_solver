@@ -1,0 +1,13 @@
+{
+  "module": "opt",
+  "model": {
+    "sense": "minimize",
+    "variables": [
+      {"name": "x", "initial": 1, "lower": 0, "upper": 10},
+      {"name": "y", "initial": 1, "lower": 0, "upper": 10}
+    ],
+    "objective": "(x-3)^2 + (y-2)^2",
+    "ineq": ["x + y - 4", "-x", "-y"],
+    "eq": []
+  }
+}

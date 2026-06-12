@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Model Atlas for Chilperic ODE: schematics, authors, variables, and guided exploration paths." name="description"/>
+<title>Chilperic ODE Model Atlas</title>
+<link href="styles/style.css?v=2.2.2" rel="stylesheet"/>
+</head>
+<body>
+<div class="app-shell">
+<header class="topbar">
+<a class="brand" href="index.html"><img alt="Chilperic ODE" class="logo" src="assets/chilperic-ode-logo.svg"/></a>
+<nav aria-label="Primary navigation" class="topnav">
+<a href="index.html">Workbench</a>
+<a href="index.html#modelArea">Library</a>
+<a class="active" href="examples.html">Model Atlas</a>
+<a href="docs.html">Docs</a>
+</nav>
+</header>
+<main class="doc-page model-atlas">
+<section class="card hero-doc atlas-hero">
+<p class="eyebrow">Visual guide</p>
+<h1>Model Atlas</h1>
+<p>Explore each model through clean schematics, author attribution, variables, and guided experiments. The two PhD research models use extracted schemes from the defense slides; the other models use designed atlas images.</p>
+</section>
+<section aria-label="Model filters" class="atlas-filters card">
+<button class="filter active" data-filter="all">All</button>
+<button class="filter" data-filter="biology">Biology</button>
+<button class="filter" data-filter="physics">Physics</button>
+<button class="filter" data-filter="chemistry">Chemistry</button>
+<button class="filter" data-filter="optimization">Optimization</button>
+<button class="filter" data-filter="paradox">Paradoxes</button>
+<button class="filter" data-filter="research">Your research</button>
+<button class="filter" data-filter="teaching">Teaching</button>
+</section>
+<section class="atlas-grid" id="atlasGrid">
+<article class="atlas-card" data-category="biology core">
+<div class="scheme atlas-figure"><img alt="Lotka–Volterra predator-prey schematic" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Core ODE</p>
+<h3>Lotka–Volterra</h3>
+<p class="authors"><b>Authors / inspiration:</b> Alfred J. Lotka; Vito Volterra</p>
+<p>Predator–prey oscillator. The key lesson is how interaction terms create cycles in a phase portrait.</p>
+<p class="vars"><b>Variables:</b> prey x; predator y</p>
+<p class="try"><b>Try:</b> increase predation β or predator death γ</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Lotka%E2%80%93Volterra">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="physics core">
+<div class="scheme atlas-figure"><img alt="Lorenz attractor variable coupling schematic" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Core ODE</p>
+<h3>Lorenz attractor</h3>
+<p class="authors"><b>Authors / inspiration:</b> Edward N. Lorenz</p>
+<p>A canonical three-state chaotic system. Small changes in parameters or initial conditions can reshape long-term trajectories.</p>
+<p class="vars"><b>Variables:</b> x, y, z convection/temperature modes</p>
+<p class="try"><b>Try:</b> change ρ near 24–30 and inspect 3D view</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Lorenz">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="biology core">
+<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Core ODE</p>
+<h3>SIR epidemic</h3>
+<p class="authors"><b>Authors / inspiration:</b> W. O. Kermack; A. G. McKendrick tradition</p>
+<p>Compartmental epidemic model with susceptible, infected, and recovered states.</p>
+<p class="vars"><b>Variables:</b> S, I, R</p>
+<p class="try"><b>Try:</b> increase β or γ and watch the infection peak</p>
+<a class="open-link" href="index.html?module=ode&amp;example=SIR">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="biology core">
+<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Core ODE</p>
+<h3>SEIR epidemic</h3>
+<p class="authors"><b>Authors / inspiration:</b> Kermack–McKendrick tradition</p>
+<p>Adds an exposed compartment before infectiousness, making incubation explicit.</p>
+<p class="vars"><b>Variables:</b> S, E, I, R</p>
+<p class="try"><b>Try:</b> change σ to shorten or lengthen incubation</p>
+<a class="open-link" href="index.html?module=ode&amp;example=SEIR">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="chemistry core">
+<div class="scheme chem"><svg viewbox="0 0 320 150"><circle cx="64" cy="72" r="24"></circle><text x="64" y="77">A</text><circle cx="160" cy="72" r="24"></circle><text x="160" y="77">B</text><circle cx="256" cy="72" r="24"></circle><text x="256" y="77">C</text><path d="M88 72 H136"></path><path d="M126 64 L138 72 L126 80"></path><path d="M184 72 H232"></path><path d="M222 64 L234 72 L222 80"></path><path class="ghost" d="M251 96 C215 136 107 132 72 96"></path><text x="112" y="132">stiff feedback</text></svg></div>
+<div class="atlas-body">
+<p class="atlas-type">Stiff ODE benchmark</p>
+<h3>Robertson chemistry</h3>
+<p class="authors"><b>Authors / inspiration:</b> H. H. Robertson</p>
+<p>Classic stiff reaction system. It is included to show why explicit browser solvers have limits.</p>
+<p class="vars"><b>Variables:</b> A, B, C</p>
+<p class="try"><b>Try:</b> export Python and compare Radau/BDF for reliability</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Robertson">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="biology core">
+<div class="scheme atlas-figure"><img alt="Michaelis-Menten enzyme kinetics schematic" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Core ODE</p>
+<h3>Michaelis–Menten enzyme kinetics</h3>
+<p class="authors"><b>Authors / inspiration:</b> Leonor Michaelis; Maud Menten</p>
+<p>Minimal saturating conversion from substrate to product.</p>
+<p class="vars"><b>Variables:</b> S, P</p>
+<p class="try"><b>Try:</b> change Km and vmax to see saturation</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Enzyme%20kinetics">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="physics core">
+<div class="scheme atlas-figure"><img alt="Van der Pol oscillator schematic" decoding="async" loading="lazy" src="assets/model-atlas/vanderpol.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Core ODE</p>
+<h3>Van der Pol oscillator</h3>
+<p class="authors"><b>Authors / inspiration:</b> Balthasar van der Pol</p>
+<p>Self-sustained nonlinear oscillator with a limit cycle. Large μ creates stiffness.</p>
+<p class="vars"><b>Variables:</b> x position; v velocity</p>
+<p class="try"><b>Try:</b> increase μ and compare phase portrait shapes</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Van%20der%20Pol">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="research biology">
+<div class="scheme atlas-figure"><img alt="Extracted PhD scheme of the minimal fatty-acid metabolism model" decoding="async" loading="lazy" src="assets/model-atlas/phd-fa-metabolism-extracted.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Research ODE</p>
+<h3>Fatty-acid metabolism bistability</h3>
+<p class="authors"><b>Authors / inspiration:</b> Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh</p>
+<p>Coarse-grained PhD-inspired fatty-acid metabolism model connecting acetyl-CoA, malonyl-CoA, fatty acids, and triglycerides with feedback.</p>
+<p class="vars"><b>Variables:</b> S1 acetyl-CoA; S2 malonyl-CoA; S3 fatty acids; S4 triglycerides</p>
+<p class="try"><b>Try:</b> inspect fatty-acid pool feedback and possible switching behavior</p>
+<a class="open-link" href="index.html?module=ode&amp;example=FA%20metabolism%20bistability">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="research biology">
+<div class="scheme atlas-figure"><img alt="Extracted PhD scheme of the refined fatty-acid synthesis model with CoA sequestration" decoding="async" loading="lazy" src="assets/model-atlas/phd-fadns-coa-extracted.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Research ODE</p>
+<h3>FADNS with CoA sequestration</h3>
+<p class="authors"><b>Authors / inspiration:</b> Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh</p>
+<p>Refined PhD model: FAS elongation with CoA-driven enzyme sequestration.</p>
+<p class="vars"><b>Variables:</b> AcetCoA, MalCoA, NADPH, CoA, E/ECoA, EC2–EC18, C14/C16/C18</p>
+<p class="try"><b>Try:</b> watch C16 production and ECoA sequestration</p>
+<a class="open-link" href="index.html?module=ode&amp;example=FADNS%20semi-mechanistic">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="teaching">
+<div class="scheme atlas-figure"><img alt="Romeo-Juliet love-hate oscillator schematic" decoding="async" loading="lazy" src="assets/model-atlas/romeo-juliet.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Teaching ODE</p>
+<h3>Love–hate oscillator</h3>
+<p class="authors"><b>Authors / inspiration:</b> Steven Strogatz / Romeo–Juliet teaching model</p>
+<p>Two-person social oscillator. It is mathematically simple but intuitively memorable.</p>
+<p class="vars"><b>Variables:</b> R Romeo; J Juliet</p>
+<p class="try"><b>Try:</b> change a and b to alter oscillation speed</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Love%E2%80%93hate%20oscillator">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="paradox">
+<div class="scheme atlas-figure"><img alt="Braess paradox network-routing schematic" decoding="async" loading="lazy" src="assets/model-atlas/braess.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Paradox / network dynamics</p>
+<h3>Braess routing dynamics</h3>
+<p class="authors"><b>Authors / inspiration:</b> Dietrich Braess</p>
+<p>Route-choice dynamics inspired by the paradox that extra capacity can worsen collective outcomes under selfish routing.</p>
+<p class="vars"><b>Variables:</b> x fraction using a route</p>
+<p class="try"><b>Try:</b> compare route equilibrium with and without shortcut incentive</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Braess%20routing%20dynamics">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="paradox physics">
+<div class="scheme ziegler"><svg viewbox="0 0 320 150"><path d="M104 126 L144 78 L182 38"></path><circle cx="144" cy="78" r="7"></circle><circle cx="182" cy="38" r="7"></circle><path d="M182 38 H244"></path><path d="M232 30 L246 38 L232 46"></path><text x="250" y="43">P</text><path class="spring" d="M96 126 c10 -10 20 10 30 0 c10 -10 20 10 30 0"></path><text x="44" y="138">stiffness</text></svg></div>
+<div class="atlas-body">
+<p class="atlas-type">Paradox / structural dynamics</p>
+<h3>Ziegler destabilization</h3>
+<p class="authors"><b>Authors / inspiration:</b> Hans Ziegler</p>
+<p>Non-conservative follower-force model where added stiffness or load can destabilize instead of stabilizing.</p>
+<p class="vars"><b>Variables:</b> q1, q2, v1, v2</p>
+<p class="try"><b>Try:</b> increase follower load P and inspect oscillation growth</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Ziegler%20destabilization">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="biology">
+<div class="scheme atlas-figure"><img alt="Calvin cycle mini-model schematic" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></div>
+<div class="atlas-body">
+<p class="atlas-type">Photosynthesis ODE</p>
+<h3>Calvin cycle mini-model</h3>
+<p class="authors"><b>Authors / inspiration:</b> Calvin–Benson–Bassham tradition</p>
+<p>Reduced two-pool photosynthesis model tracking PGA and RuBP with carboxylation, oxygenation, and regeneration.</p>
+<p class="vars"><b>Variables:</b> PGA, RuBP</p>
+<p class="try"><b>Try:</b> increase regeneration Vregen or oxygenation Vo</p>
+<a class="open-link" href="index.html?module=ode&amp;example=Calvin%20cycle%20mini-model">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="optimization teaching">
+<div class="scheme lasso"><svg viewbox="0 0 320 150"><path class="axis" d="M160 20 V130M60 75 H260"></path><path class="diamond" d="M160 35 L225 75 L160 115 L95 75 Z"></path><ellipse cx="200" cy="55" rx="72" ry="36" transform="rotate(-25 200 55)"></ellipse><ellipse cx="200" cy="55" rx="42" ry="21" transform="rotate(-25 200 55)"></ellipse><circle cx="160" cy="35" r="5"></circle><text x="176" y="34">zero coefficient</text></svg></div>
+<div class="atlas-body">
+<p class="atlas-type">Optimization example</p>
+<h3>Lasso regression geometry</h3>
+<p class="authors"><b>Authors / inspiration:</b> Robert Tibshirani</p>
+<p>L1 regularization creates diamond-shaped constraints, so the optimum often lands exactly on an axis and sets coefficients to zero.</p>
+<p class="vars"><b>Variables:</b> w1, w2 coefficients</p>
+<p class="try"><b>Try:</b> compare L1 sparsity geometry to smooth shrinkage</p>
+<a class="open-link" href="index.html?module=opt&amp;example=Lasso%20regression%20geometry">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="optimization teaching">
+<div class="scheme runge"><svg viewbox="0 0 320 150"><path class="axis" d="M30 118 H292M52 22 V128"></path><path class="ghost" d="M38 110 C84 112 112 32 160 33 C208 32 238 112 284 110"></path><path class="osc" d="M38 122 C52 8 75 130 96 62 C120 10 138 76 160 34 C184 76 202 10 224 62 C246 130 268 8 284 122"></path><text x="58" y="24">high degree oscillates</text></svg></div>
+<div class="atlas-body">
+<p class="atlas-type">Optimization / fitting example</p>
+<h3>Runge fitting caution</h3>
+<p class="authors"><b>Authors / inspiration:</b> Carl Runge</p>
+<p>More polynomial flexibility can make edge oscillations worse, not better.</p>
+<p class="vars"><b>Variables:</b> polynomial coefficients</p>
+<p class="try"><b>Try:</b> inspect how high-degree fitting overreacts near boundaries</p>
+<a class="open-link" href="index.html?module=opt&amp;example=Runge%20fitting%20caution">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="optimization teaching">
+<div class="scheme secretary"><svg viewbox="0 0 340 150"><path class="axis" d="M34 92 H306"></path><line class="threshold" x1="140" x2="140" y1="38" y2="112"></line><text x="113" y="30">≈37%</text><g><circle cx="56" cy="92" r="13"></circle><circle cx="96" cy="92" r="13"></circle><circle cx="136" cy="92" r="13"></circle><circle cx="176" cy="92" r="13"></circle><circle cx="216" cy="92" r="13"></circle><circle cx="256" cy="92" r="13"></circle></g><text x="42" y="126">reject benchmark</text><text x="174" y="126">then select first best-so-far</text></svg></div>
+<div class="atlas-body">
+<p class="atlas-type">Decision example</p>
+<h3>Secretary stopping rule</h3>
+<p class="authors"><b>Authors / inspiration:</b> Classical optimal stopping tradition</p>
+<p>Reject the first 1/e of candidates as a benchmark, then choose the first candidate better than all previous.</p>
+<p class="vars"><b>Variables:</b> candidate rank sequence</p>
+<p class="try"><b>Try:</b> compare the 37% rule with naive early selection</p>
+<a class="open-link" href="index.html?module=opt&amp;example=Secretary%20stopping%20rule">Open in workbench</a>
+</div>
+</article>
+<article class="atlas-card" data-category="optimization teaching">
+<div class="scheme pareto"><svg viewbox="0 0 340 150"><path class="axis" d="M42 118 H304M58 26 V128"></path><circle cx="92" cy="102" r="5"></circle><circle cx="122" cy="86" r="5"></circle><circle cx="156" cy="68" r="5"></circle><circle cx="202" cy="54" r="5"></circle><circle cx="250" cy="42" r="5"></circle><path class="front" d="M92 102 C122 84 156 68 202 54 C226 48 240 44 250 42"></path><circle class="ghost-point" cx="128" cy="110" r="4"></circle><circle class="ghost-point" cx="190" cy="92" r="4"></circle><circle class="ghost-point" cx="238" cy="76" r="4"></circle><text x="230" y="132">f1</text><text x="25" y="36">f2</text><text x="100" y="28">non-dominated frontier</text></svg></div>
+<div class="atlas-body">
+<p class="atlas-type">Optimization example</p>
+<h3>Pareto design trade-off</h3>
+<p class="authors"><b>Authors / inspiration:</b> Multi-objective optimization teaching example</p>
+<p>Two competing objectives. The useful output is the non-dominated frontier, not a single best point.</p>
+<p class="vars"><b>Variables:</b> x, y design coordinates</p>
+<p class="try"><b>Try:</b> run optimization, then select Pareto frontier or feasibility map</p>
+<a class="open-link" href="index.html?module=opt&amp;example=Pareto%20design%20trade-off">Open in workbench</a>
+</div>
+</article>
+</section>
+<section class="card atlas-note">
+<h2>How to use this atlas</h2>
+<p>Use the atlas to choose a model, then open it in the workbench. The workbench is where you edit equations, run simulations, sweep parameters, configure figures, and export Python.</p>
+<p><b>Boundary:</b> research and paradox examples are reduced browser models for exploration. For calibrated fitting, stiff systems, or publication analysis, export Python.</p>
+</section>
+</main>
+</div>
+<script>
+  document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    document.querySelectorAll('.atlas-card').forEach(card=>{
+      card.hidden = f !== 'all' && !card.dataset.category.includes(f);
+    });
+  }));
+</script>
+</body>
+</html>

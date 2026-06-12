@@ -1,0 +1,12 @@
+kind,name,value,min,max,equation,initial
+module,,ode,,,,
+equation,x,,,,sigma*(y-x),1
+equation,y,,,,x*(rho-z)-y,1
+equation,z,,,,x*y-beta*z,1
+parameter,sigma,10,6,16,,
+parameter,rho,28,12,40,,
+parameter,beta,2.6666666667,2,3,,
+time,t0,0,,,,
+time,t1,35,,,,
+time,points,2500,,,,
+solver,method,rk45,,,,
