@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Chilperic Dynamics docs</title>
-  <link rel="stylesheet" href="styles/style.css?v=2.4.1">
+  <link rel="stylesheet" href="styles/style.css?v=2.4.6">
 </head>
 <body>
 <div class="app-shell">
@@ -15,7 +15,7 @@
 <main class="doc-page" style="max-width:980px;margin:0 auto;padding:42px 22px">
 <section class="card">
   <h1>Chilperic Dynamics documentation</h1>
-  <p>A browser workbench for deterministic ODE modeling, stochastic simulation, model exploration, and reproducible teaching-scale exports.</p>
+  <p>A browser lab for deterministic ODE modeling, stochastic simulation, model exploration, and reproducible teaching-scale exports.</p>
 </section>
 
 <section class="card">
@@ -36,13 +36,14 @@
 
 <section class="card" id="stochastic-lab-docs">
   <h2>Stochastic Lab</h2>
-  <p>Stochastic Lab supports editable random-event models, ensemble simulation, deterministic mean-field comparison for CTMC models, and reproducibility exports.</p>
+  <p>Stochastic Lab supports editable random-event models, blank CTMC/Gillespie model creation, ensemble simulation, deterministic mean-field comparison for CTMC models, and reproducibility exports.</p>
   <ol>
-    <li><b>CTMC / Gillespie:</b> states, propensities, and integer updates for birth-death, SIR, gene expression, Michaelis-Menten, and reduced T-cell proliferation models.</li>
+    <li><b>CTMC / Gillespie:</b> create your own model from states, numeric parameters, propensities, and integer updates; or start from birth-death, SIR, gene expression, Michaelis-Menten, and reduced T-cell proliferation examples.</li>
     <li><b>Branching and finite Markov chains:</b> Galton-Watson, Gambler’s ruin, Ehrenfest urn, and Wright-Fisher drift.</li>
     <li><b>SDE and fluctuation models:</b> geometric Brownian motion, stochastic resonance, Parrondo’s paradox, and Brownian ratchet examples.</li>
     <li><b>Decision examples:</b> multi-armed bandit and secretary/optimal-stopping simulations.</li>
   </ol>
+  <p>Blank CTMC events use Math.js-style mathematical expressions. Example: <code>beta*S*I/N</code> with visual per-state update entries such as <code>S:-1</code> and <code>I:+1</code>. State and parameter names must be valid identifiers such as <code>S</code>, <code>I</code>, <code>beta</code>, or <code>k_on</code>.</p>
 </section>
 
 <section class="card">
