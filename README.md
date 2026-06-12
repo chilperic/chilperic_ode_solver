@@ -1,6 +1,6 @@
-# Chilperic Dynamics v2.4.6
+# Chilperic Dynamics v2.4.8 v2.4.5
 
-Browser-only scientific lab for deterministic ODE modeling, stochastic simulation, parameter sweeps, phase portraits, heatmaps, nonlinear optimization, model-atlas exploration, import templates, and reproducibility export.
+Browser-only scientific workbench for deterministic ODE modeling, stochastic simulation, parameter sweeps, phase portraits, heatmaps, nonlinear optimization, model-atlas exploration, import templates, and reproducibility export.
 
 ## Local run
 
@@ -17,13 +17,13 @@ Serve from the repository root on the `main` branch.
 ## Modules
 
 - **ODE Lab**: trajectories, 2D/3D phase portraits, vector fields, Poincaré sections, trajectory matrix, parametric sweeps, and optimization.
-- **Stochastic Lab**: blank CTMC/Gillespie model building from states, parameters, propensities, and integer updates, plus branching processes, random walks, SDE examples, finite-population simulations, ensemble diagnostics, and exports.
+- **Stochastic Lab**: custom CTMC/Gillespie model building from states, parameters, propensities, and integer updates, plus branching processes, random walks, SDE examples, finite-population simulations, ensemble diagnostics, and exports.
 - **Model Atlas**: curated deterministic and stochastic model cards with schematics, concepts, variables, and links into the appropriate lab.
 - **Docs**: usage notes, import formats, export workflow, and modeling boundaries.
 
 ## Stochastic Lab
 
-The Stochastic Lab can run curated examples or user-defined CTMC/Gillespie models. For a custom model, use **Blank CTMC**, then add states, parameters, random events, propensities, and per-state integer updates. The lab automatically builds stochastic ensembles and, for CTMC models, a mean-field comparison from the event stoichiometry.
+The Stochastic Lab can run curated examples or user-defined CTMC/Gillespie models. For a custom model, use **New custom CTMC model**, then add states, parameters, random events, propensities, and per-state integer updates. The lab automatically builds stochastic ensembles and, for CTMC models, a mean-field comparison from the event stoichiometry.
 
 Example CTMC event schema behind the visual editor:
 

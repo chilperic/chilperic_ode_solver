@@ -129,14 +129,22 @@ function ensurePlot(side){
   state.plots[side]={...defaultPlot(side),...state.plots[side]};
   return state.plots[side];
 }
-function resetPlotAxes(){
+function resetPlotAxes(force=false){
   const vars=currentVars();
-  const first=vars[0]||'x', second=vars[1]||first, third=state.model?.sectionVar || vars[2] || first;
+  const first=vars[0]||'x', second=vars[1]||first, third=vars[2] || first;
   for(const side of ['left','right']){
     const p=ensurePlot(side);
-    p.x=vars.includes(p.x)?p.x:first;
-    p.y=vars.includes(p.y)?p.y:second;
-    p.z=vars.includes(p.z)?p.z:third;
+    const duplicateAxes = p.x===p.y || p.x===p.z || p.y===p.z;
+    const invalidAxes = !vars.includes(p.x) || !vars.includes(p.y) || !vars.includes(p.z);
+    if(force || invalidAxes || duplicateAxes){
+      p.x=first;
+      p.y=second;
+      p.z=third;
+    }else{
+      p.x=vars.includes(p.x)?p.x:first;
+      p.y=vars.includes(p.y)?p.y:second;
+      p.z=vars.includes(p.z)?p.z:third;
+    }
     if(state.model?.sectionValue!==undefined) p.plane=state.model.sectionValue;
   }
 }
@@ -183,7 +191,7 @@ function wire(){
   $('themeBtn').addEventListener('change',e=>setTheme(e.target.value));
   $('resetBtn').addEventListener('click',()=>loadExample($('exampleSelect').value));
   $('loadExample').addEventListener('click',()=>loadExample($('exampleSelect').value));
-  $('exampleSelect').addEventListener('change',e=>loadExample(e.target.value));
+  $('exampleSelect').addEventListener('change',e=>previewExampleSelection(e.target.value));
   $('addEq').addEventListener('click',addEquation);
   $('addVar').addEventListener('click',addVariable);
   $('runBtn').addEventListener('click',runDefault);
@@ -283,6 +291,13 @@ function displayName(name){
   };
   return map[name] || name.replace(/\s+sweep$/,'').replace(/\s+model$/,'');
 }
+function previewExampleSelection(name){
+  const ex=EXAMPLES[state.module]?.[name];
+  if(!ex) return;
+  safeText($('exampleNarrative'),`${ex.narrative||''} Authors: ${authorLine(name)}. Press Load model to open this example.`);
+  setStatus(`Selected ${name}. Press Load model to open it.`);
+}
+
 function loadExample(name){
   if(state.worker){ state.worker.terminate(); state.worker=null; }
   const ex=deepClone(EXAMPLES[state.module][name]); if(!ex) return;
@@ -290,7 +305,9 @@ function loadExample(name){
   document.querySelectorAll('.model-card,.additional-example-card').forEach(b=>b.classList.toggle('active',b.dataset.example===name));
   state.result=null; state.sweep=null; state.opt=null; state.resultKind=state.module==='opt'?'optimization':'default';
   if(state.module==='opt') loadOpt(ex); else loadOde(ex);
+  resetPlotAxes(true);
   updateMathPreview(); refreshAllSelects(); updatePlotOptions(); clearPlots(); resetStatus();
+  setStatus(`Loaded ${name}. Run the model to update plots.`);
 }
 function loadOde(ex){
   state.model={vars:ex.vars, eqs:ex.eqs, y0:ex.y0, params:ex.params||{}, t0:ex.t0, t1:ex.t1, points:ex.points, method:ex.method||'rk45', sweep:ex.sweep||null, sectionVar:ex.sectionVar||null, sectionValue:ex.sectionValue??0};
@@ -352,10 +369,11 @@ function updatePlotOptions(){
   if(!allowed.includes(state.plots.left.type)) state.plots.left.type=opts[0]?.[0]||'none';
   if(!allowed.includes(state.plots.right.type)) state.plots.right.type=opts.find(o=>o[0]!=='trajectory')?.[0] || 'none';
   // Curated defaults when the result kind changes.
-  if(state.module==='ode' && state.resultKind==='default'){ state.plots.left.type='trajectory'; state.plots.right.type=state.model?.vars?.length>=3?'phase3d':'phase2d'; }
-  if(state.module==='param' && state.resultKind==='default'){ state.plots.left.type='trajectory'; state.plots.right.type=state.model?.vars?.length>=3?'phase3d':'phase2d'; }
+  if(state.module==='ode' && state.resultKind==='default'){ const nv=state.model?.vars?.length||0; state.plots.left.type='trajectory'; state.plots.right.type=nv>=3?'phase3d':nv>=2?'phase2d':'none'; }
+  if(state.module==='param' && state.resultKind==='default'){ const nv=state.model?.vars?.length||0; state.plots.left.type='trajectory'; state.plots.right.type=nv>=3?'phase3d':nv>=2?'phase2d':'none'; }
   if(state.module==='param' && state.resultKind==='sweep'){ state.plots.left.type='heatmap'; state.plots.right.type='parallel'; }
   if(state.module==='opt'){ state.plots.left.type='opt_samples'; state.plots.right.type='convergence'; }
+  resetPlotAxes();
   $('leftPlotType').value=state.plots.left.type; $('rightPlotType').value=state.plots.right.type;
   setDefaultLabels('left'); setDefaultLabels('right'); renderTabs(); updatePlotHint();
 }
@@ -482,7 +500,7 @@ function baseLayout(cfg){ const text=cssVar('--text')||'#111827', muted=cssVar('
 function plotConfig(side){ return ensurePlot(side); }
 function setDefaultLabels(side){
   const p=state.plots[side]; const vars=currentVars();
-  if(!p.x) p.x=vars[0]||'x'; if(!p.y) p.y=vars[1]||vars[0]||'y'; if(!p.z) p.z=state.model?.sectionVar || vars[2]||vars[0]||'z';
+  if(!p.x) p.x=vars[0]||'x'; if(!p.y) p.y=vars[1]||vars[0]||'y'; if(!p.z) p.z=vars[2]||vars[0]||'z';
   const map={
     trajectory:['Trajectory','t','state','', ''],
     phase2d:['2D phase portrait',p.x,p.y,'',''],
@@ -540,7 +558,7 @@ function plotAllowed(type){ const opts=((PLOTS[state.module]||{})[state.resultKi
 function updatePlotHint(){ const hint = state.module==='param' && state.resultKind==='sweep' ? 'Sweep views use parameter ranges. Use Run default to return to trajectory/phase plots.' : state.module==='opt' ? 'Optimization plots show samples, convergence, feasibility, and objective/constraint trade-offs.' : 'For stiff systems, export Python to use BDF, Radau, or LSODA locally.'; safeText($('plotHint'), 'ⓘ '+hint); }
 function renderOdePlot(target,p){ if(!state.result) throw new Error('Run the model first.'); if(p.type==='trajectory') return plotTrajectory(target,p); if(p.type==='phase2d') return plotPhase2D(target,p); if(p.type==='phase3d') return plotPhase3D(target,p); if(p.type==='vector') return plotVectorField(target,p); if(p.type==='poincare') return plotPoincare(target,p); if(p.type==='matrix') return plotMatrix(target,p); }
 function plotTrajectory(target,p){ const cs=colors(); const idxs=visibleSeriesIndices(); const traces=idxs.map((i,k)=>{ const v=state.result.vars[i]; return {x:state.result.T,y:state.result.Y[i],mode:'lines',name:`${v}(t)`,line:{color:cs[k%cs.length],width:p.lineWidth}}; }); const layout=baseLayout({...p,xLabel:p.xLabel||'t',yLabel:p.yLabel||'state'}); if((state.result.vars||[]).length>idxs.length){ layout.annotations=[{text:`Showing ${idxs.length} key variables of ${state.result.vars.length}. Export CSV/Python for all states.`,xref:'paper',yref:'paper',x:1,y:1.12,showarrow:false,font:{size:11,color:cssVar('--muted')||'#667085'},xanchor:'right'}]; } drawPlot(target,traces,layout,{responsive:true,displaylogo:false}); }
-function plotPhase2D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1); const trace={x:state.result.Y[ix],y:state.result.Y[iy],mode:'lines',type:'scatter',name:`${vars[ix]} vs ${vars[iy]}`,line:{color:cs[1]||cs[0],width:p.lineWidth}}; drawPlot(target,[trace],baseLayout({...p,xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
+function plotPhase2D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1); if(ix===iy){ drawPlot(target,[],{...baseLayout({...p,title:'Phase portrait requires 2 different variables',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),annotations:[{text:'Select different X and Y variables in Figure settings.',xref:'paper',yref:'paper',x:.5,y:.5,showarrow:false,font:{size:14}}]},{responsive:true,displaylogo:false}); return; } const trace={x:state.result.Y[ix],y:state.result.Y[iy],mode:'lines',type:'scatter',name:`${vars[ix]} vs ${vars[iy]}`,line:{color:cs[1]||cs[0],width:p.lineWidth}}; drawPlot(target,[trace],baseLayout({...p,xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
 function plotPhase3D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1), iz=indexOfVar(p.z,2); if(vars.length<3) throw new Error('3D phase portrait requires at least three variables.'); const trace={x:state.result.Y[ix],y:state.result.Y[iy],z:state.result.Y[iz],mode:'lines',type:'scatter3d',name:`${vars[ix]}-${vars[iy]}-${vars[iz]}`,line:{color:cs[0],width:p.lineWidth*1.6}}; drawPlot(target,[trace],{...baseLayout(p),scene:{xaxis:{title:p.xLabel||vars[ix]},yaxis:{title:p.yLabel||vars[iy]},zaxis:{title:p.zLabel||vars[iz]}},margin:{l:0,r:0,t:45,b:0},showlegend:false},{responsive:true,displaylogo:false}); }
 function compileMainEquations(){ const allowed=new Set(['t',...state.model.vars,...Object.keys(state.model.params||{}),'sin','cos','tan','exp','log','sqrt','abs','min','max','pow','pi','e']); return state.model.eqs.map(e=>{ const n=math.parse(e); const symbols=[]; n.traverse(node=>{if(node.isSymbolNode)symbols.push(node.name);}); symbols.forEach(s=>{if(!allowed.has(s)) throw new Error(`Unknown symbol ${s}`);}); return n.compile(); }); }
 function evalRhsAt(x,y,p){ const comps=compileMainEquations(), vars=state.model.vars, params=paramValues(); const scope={t:0,...params}; vars.forEach((v,i)=>scope[v]=state.model.y0[i]||0); scope[p.x]=x; scope[p.y]=y; if(p.z && vars.includes(p.z)) scope[p.z]=num(p.plane); return comps.map(c=>c.evaluate(scope)); }
@@ -570,7 +588,7 @@ function plotVectorField(target,p){
   const traj={x:xs,y:ys,mode:'lines',type:'scatter',name:'trajectory',line:{color:cs[2]||cs[1]||cs[0],width:Math.max(1.4,p.lineWidth*.75)}};
   drawPlot(target,[field,traj],baseLayout({...p,title:p.title||'2D vector field',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false});
 }
-function plotPoincare(target,p){ const vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1), iz=indexOfVar(p.z,2), plane=num(p.plane); const X=[],Y=[]; const Z=state.result.Y[iz]; for(let i=1;i<Z.length;i++){ const a=Z[i-1]-plane,b=Z[i]-plane; if(a===0 || a*b<0){ const r=Math.abs(a)/(Math.abs(a)+Math.abs(b)); X.push(state.result.Y[ix][i-1]*(1-r)+state.result.Y[ix][i]*r); Y.push(state.result.Y[iy][i-1]*(1-r)+state.result.Y[iy][i]*r); } } if(!X.length){ drawPlot(target,[],{...baseLayout({...p,title:'Poincaré section: no crossings found',xLabel:vars[ix],yLabel:vars[iy]}),annotations:[{text:`No crossings found. Try ${vars[0]} = 0 or change the plane value.`,xref:'paper',yref:'paper',x:.5,y:.5,showarrow:false,font:{size:14}}]},{responsive:true,displaylogo:false}); return; } drawPlot(target,[{x:X,y:Y,mode:'markers',type:'scatter',name:`${vars[iz]}=${plane}`,marker:{size:p.markerSize,color:colors()[0]}}],baseLayout({...p,title:p.title||'Poincaré section',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
+function plotPoincare(target,p){ const vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1), sectionVarName=state.model?.sectionVar || p.z, iz=indexOfVar(sectionVarName,2), plane=state.model?.sectionValue ?? num(p.plane); const X=[],Y=[]; const Z=state.result.Y[iz]; for(let i=1;i<Z.length;i++){ const a=Z[i-1]-plane,b=Z[i]-plane; if(a===0 || a*b<0){ const r=Math.abs(a)/(Math.abs(a)+Math.abs(b)); X.push(state.result.Y[ix][i-1]*(1-r)+state.result.Y[ix][i]*r); Y.push(state.result.Y[iy][i-1]*(1-r)+state.result.Y[iy][i]*r); } } if(!X.length){ drawPlot(target,[],{...baseLayout({...p,title:'Poincaré section: no crossings found',xLabel:vars[ix],yLabel:vars[iy]}),annotations:[{text:`No crossings found. Try ${sectionVarName || vars[0]} = ${plane} or change the plane value.`,xref:'paper',yref:'paper',x:.5,y:.5,showarrow:false,font:{size:14}}]},{responsive:true,displaylogo:false}); return; } drawPlot(target,[{x:X,y:Y,mode:'markers',type:'scatter',name:`${vars[iz]}=${plane}`,marker:{size:p.markerSize,color:colors()[0]}}],baseLayout({...p,title:p.title||'Poincaré section',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
 function plotMatrix(target,p){
   const vars=state.result.vars;
   const n=vars.length;
@@ -667,9 +685,12 @@ function openPlotConfig(side='left'){
   $('cfgWidth').value=p.width||760; $('cfgHeight').value=p.height||430; $('cfgFontSize').value=p.fontSize||13; $('cfgLineWidth').value=p.lineWidth||2.4; $('cfgMarkerSize').value=p.markerSize||5; $('cfgLegend').checked=p.legend!==false; $('cfgGrid').checked=p.grid!==false;
 }
 function applyPlotConfig(){
-  const p=ensurePlot(state.plotSide);
+  const targetSide=$('cfgTarget')?.value==='right'?'right':'left';
+  state.plotSide=targetSide;
+  const p=ensurePlot(targetSide);
   Object.assign(p,{title:$('cfgTitle').value,x:$('cfgX').value,y:$('cfgY').value,z:$('cfgZ').value,plane:$('cfgPlane').value,xLabel:$('cfgXLabel').value,yLabel:$('cfgYLabel').value,zLabel:$('cfgZLabel').value,colorLabel:$('cfgColorLabel').value,width:+$('cfgWidth').value,height:+$('cfgHeight').value,fontSize:+$('cfgFontSize').value,lineWidth:+$('cfgLineWidth').value,markerSize:+$('cfgMarkerSize').value,legend:$('cfgLegend').checked,grid:$('cfgGrid').checked});
-  renderPlot(state.plotSide); setStatus(`Updated ${state.plotSide==='left'?'primary':'secondary'} figure settings.`);
+  renderPlot(targetSide);
+  setStatus(`Updated ${targetSide==='left'?'primary':'secondary'} figure settings.`);
 }
 function plotFileName(side,format){
   const p=ensurePlot(side); const raw=(p.title||PLOT_LABEL(p.type)||'chilperic_ode_plot').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'') || 'chilperic_ode_plot';
