@@ -1,4 +1,4 @@
-# Chilperic ODE model import templates
+# Foko Lab model import templates
 
 You can upload model files directly in the app. Supported formats:
 
@@ -6,7 +6,7 @@ You can upload model files directly in the app. Supported formats:
 - `.csv` — useful for spreadsheets
 - `.txt` / `.ode` — compact hand-written model format
 - `.yaml` / `.yml` — limited simple key-value support
-- `.py` — importable only when the file contains an `ODE_LAB_CONFIG = {...}` JSON block
+- `.py` — importable only when the file contains an `DYNAMICS_LAB_CONFIG = {...}` JSON block
 
 ## JSON schema
 
@@ -100,7 +100,7 @@ Use the downloadable CSV template. The important rows are:
 A general Python script cannot be safely parsed. Use an embedded JSON block:
 
 ```python
-ODE_LAB_CONFIG = {
+DYNAMICS_LAB_CONFIG = {
   "module": "ode",
   "model": {
     "vars": ["x"],
@@ -113,5 +113,5 @@ ODE_LAB_CONFIG = {
     "method": "rk45"
   }
 }
-# END_ODE_LAB_CONFIG
+# END_DYNAMICS_LAB_CONFIG
 ```

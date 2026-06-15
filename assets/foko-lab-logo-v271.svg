@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
+<title id="title">Foko Lab</title><desc id="desc">Dynamics, optimization, equilibria and stochastic modeling.</desc>
+<defs>
+  <linearGradient id="orbit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#061a3c"/><stop offset=".42" stop-color="#0f52d9"/><stop offset=".72" stop-color="#22d3ee"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
+  <linearGradient id="word" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#061a3c"/><stop offset=".55" stop-color="#0f52d9"/><stop offset="1" stop-color="#0891b2"/></linearGradient>
+  <radialGradient id="core" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#dffcff"/><stop offset=".35" stop-color="#22d3ee"/><stop offset="1" stop-color="#0f52d9"/></radialGradient>
+  <filter id="shadow" x="-20%" y="-25%" width="145%" height="155%"><feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0f52d9" flood-opacity=".22"/></filter>
+</defs>
+<g transform="translate(26 22)" filter="url(#shadow)">
+  <circle cx="88" cy="88" r="62" fill="#ffffff" stroke="#dbeafe" stroke-width="3"/>
+  <path d="M20 102 C54 20 142 17 166 74 C193 138 76 166 28 76" fill="none" stroke="url(#orbit)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M13 80 C70 123 138 119 171 42" fill="none" stroke="#061a3c" stroke-width="4.5" stroke-linecap="round" opacity=".86"/>
+  <path d="M32 151 C80 82 129 55 180 132" fill="none" stroke="#14b8a6" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M88 7 V171 M9 88 H169" stroke="#082f6b" stroke-width="2.8" stroke-linecap="round" opacity=".55"/>
+  <ellipse cx="89" cy="104" rx="52" ry="21" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="3 9" transform="rotate(-20 89 104)" opacity=".9"/>
+  <ellipse cx="91" cy="73" rx="36" ry="14" fill="none" stroke="#14b8a6" stroke-width="2.4" transform="rotate(23 91 73)" opacity=".85"/>
+  <g stroke="#0f52d9" stroke-width="1.7" opacity=".55" fill="none"><path d="M37 121 L62 52 L88 88 L129 62 L153 121"/><path d="M33 132 L56 151 L88 171"/></g>
+  <circle cx="88" cy="88" r="17" fill="url(#core)" stroke="#061a3c" stroke-width="2.5"/>
+  <circle cx="43" cy="125" r="7" fill="#14b8a6"/><circle cx="129" cy="61" r="8" fill="#0f52d9"/><circle cx="153" cy="121" r="6" fill="#061a3c"/><circle cx="62" cy="52" r="5" fill="#22d3ee"/>
+  <g fill="#0ea5e9" opacity=".85"><circle cx="181" cy="91" r="2.3"/><circle cx="189" cy="101" r="2"/><circle cx="195" cy="114" r="1.8"/><circle cx="177" cy="112" r="1.6"/><circle cx="169" cy="102" r="1.5"/><circle cx="202" cy="128" r="1.4"/></g>
+</g>
+<g transform="translate(245 48)">
+  <text x="0" y="72" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="950" font-size="82" letter-spacing="1.5" fill="url(#word)">FOKO LAB</text>
+  <line x1="4" y1="101" x2="555" y2="101" stroke="#bfdbfe" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="282" cy="101" r="6" fill="#14b8a6"/>
+  <text x="7" y="137" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="17" font-weight="900" letter-spacing="3.3" fill="#0f2b62">DYNAMICS · OPTIMIZATION · EQUILIBRIA · STOCHASTICS</text>
+</g>
+</svg>

@@ -15,7 +15,7 @@ const PALETTES = {
 const CORE_EXAMPLES = {
   ode: ['Lotka–Volterra','Lorenz','SIR','SEIR','Robertson','Enzyme kinetics'],
   param: ['Lotka–Volterra sweep','SIR beta–gamma','SEIR incubation','Lorenz rho–sigma','Enzyme kinetics sweep'],
-  opt: ['Constrained quadratic','Rosenbrock on disk','Cylinder design','Portfolio toy model','Lasso regression geometry','Runge fitting caution','Secretary stopping rule','Pareto design trade-off']
+  opt: ['Constrained quadratic','Rosenbrock on disk','Portfolio toy model','Lasso regression geometry','Secretary stopping rule','Pareto design trade-off']
 };
 
 const EXAMPLES = {
@@ -79,10 +79,10 @@ const EXAMPLE_AUTHORS = {
   'FADNS semi-mechanistic sweep': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh',
   'Braess shortcut sweep': 'Dietrich Braess',
   'Calvin regeneration sweep': 'Melvin Calvin; Andrew Benson; James Bassham',
-  'Constrained quadratic': 'Chilperic ODE teaching example',
+  'Constrained quadratic': 'Foko Lab teaching example',
   'Rosenbrock on disk': 'Howard H. Rosenbrock',
-  'Cylinder design': 'Chilperic ODE teaching example',
-  'Portfolio toy model': 'Chilperic ODE teaching example',
+  'Cylinder design': 'Foko Lab teaching example',
+  'Portfolio toy model': 'Foko Lab teaching example',
   'Lasso regression geometry': 'Robert Tibshirani',
   'Runge fitting caution': 'Carl Runge',
   'Secretary stopping rule': 'Classical optimal stopping problem'
@@ -179,7 +179,8 @@ function init(){
   wire();
   setTheme(localStorage.getItem('chilperic-theme') || 'aurora');
   const params = new URLSearchParams(window.location.search);
-  const m = params.get('module') || 'ode';
+  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const m = params.get('module') || (path === 'optimization.html' ? 'opt' : 'ode');
   const ex = params.get('example');
   setModule(EXAMPLES[m] ? m : 'ode');
   if(ex && EXAMPLES[state.module]?.[ex]) loadExample(ex);
@@ -193,7 +194,7 @@ function wire(){
   $('loadExample').addEventListener('click',()=>loadExample($('exampleSelect').value));
   $('exampleSelect').addEventListener('change',e=>previewExampleSelection(e.target.value));
   $('addEq').addEventListener('click',addEquation);
-  $('addVar').addEventListener('click',addVariable);
+  $('addVar')?.addEventListener('click',addVariable);
   $('runBtn').addEventListener('click',runDefault);
   $('runSweep').addEventListener('click',runSweep);
   $('cancelBtn').addEventListener('click',cancelWorker);
@@ -214,9 +215,12 @@ function wire(){
   $('exportSvg').addEventListener('click',()=>exportPlot('leftPlot',plotFileName('left','svg'),'svg'));
   $('leftMenu').addEventListener('click',()=>{ state.plotSide='left'; openPlotConfig('left'); });
   $('rightMenu').addEventListener('click',()=>{ state.plotSide='right'; openPlotConfig('right'); });
-  $('exportPython').addEventListener('click',()=>download('chilperic_ode_export.py', pythonExport(), 'text/x-python'));
-  $('exportCsv').addEventListener('click',()=>download('chilperic_ode_data.csv', csvExport(), 'text/csv'));
-  $('exportJson').addEventListener('click',()=>download('chilperic_ode_config.json', JSON.stringify(currentConfig(),null,2), 'application/json'));
+  $('exportPython').addEventListener('click',()=>download('foko_lab_export.py', pythonExport(), 'text/x-python'));
+  $('exportCsv').addEventListener('click',()=>download('foko_lab_data_wide.csv', csvExport(), 'text/csv'));
+  $('exportLongCsv')?.addEventListener('click',()=>download('foko_lab_data_long.csv', longCsvExport(), 'text/csv'));
+  $('exportResultJson')?.addEventListener('click',()=>download('foko_lab_result_data.json', JSON.stringify(resultDataExport(),null,2), 'application/json'));
+  $('exportJson').addEventListener('click',()=>download('foko_lab_model_config.json', JSON.stringify(currentConfig(),null,2), 'application/json'));
+  $('exportPlotlyJson')?.addEventListener('click',()=>download('foko_lab_plotly_data.json', JSON.stringify(plotlyDataExport(),null,2), 'application/json'));
   $('copyInstall').addEventListener('click',copyInstall);
   $('downloadTemplate').addEventListener('click',downloadSelectedTemplate);
   $('modelFile').addEventListener('change',e=>handleFiles(e.target.files));
@@ -233,7 +237,7 @@ function setModule(m){
   $('moduleSelect').value=m;
   document.querySelectorAll('.mode-tab').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));
   document.querySelectorAll('[data-mode-jump]').forEach(b=>b.classList.toggle('active',b.dataset.modeJump===m));
-  toggle('odeEditor',m!=='opt'); toggle('optEditor',m==='opt'); toggle('sweepPanel',m==='param'); toggle('odeNumerics',m!=='opt'); toggle('optNumerics',m==='opt'); toggle('runSweep',m==='param'); $('runBtn').textContent = m==='opt' ? 'Optimize' : (m==='param' ? 'Run default' : 'Run'); $('runSweep').textContent='Sweep parameters';
+  toggle('odeEditor',m!=='opt'); toggle('optEditor',m==='opt'); toggle('sweepPanel',m==='param'); toggle('odeNumerics',m!=='opt'); toggle('optNumerics',m==='opt'); toggle('runSweep',m==='param'); $('runBtn').textContent = m==='opt' ? 'Optimize' : (m==='param' ? 'Run default' : 'Run'); $('runSweep').textContent='Sweep parameters'; document.title = m==='opt' ? 'Optimization Lab · Foko Lab' : 'Foko Lab'; document.querySelectorAll('.topnav a').forEach(a=>{ const h=a.getAttribute('href')||''; const active = m==='opt' ? h.includes('optimization.html') : h.includes('ode.html#workbench'); a.classList.toggle('active', active); });
   fillExamples(); loadExample(Object.keys(EXAMPLES[m])[0]); updatePythonTargets(); resetStatus();
 }
 function fillExamples(){
@@ -287,7 +291,8 @@ function displayName(name){
     'Braess shortcut sweep':'Braess',
     'Ziegler destabilization':'Ziegler',
     'Calvin cycle mini-model':'Calvin cycle',
-    'Calvin regeneration sweep':'Calvin cycle'
+    'Calvin regeneration sweep':'Calvin cycle',
+    'Differential evolution':'Differential evolution'
   };
   return map[name] || name.replace(/\s+sweep$/,'').replace(/\s+model$/,'');
 }
@@ -315,9 +320,24 @@ function loadOde(ex){
   if(ex.sweep){ $('sweepMetric').value=ex.sweep[3]||'max'; }
   renderOdeControls(); syncSummary(); refreshAllSelects();
 }
+function inferOptClass(ex){
+  if(ex.optClass) return ex.optClass;
+  if(ex.objective2) return 'multiobjective';
+  const txt = `${ex.narrative||''} ${ex.objective||''}`.toLowerCase();
+  if(txt.includes('rosenbrock') || txt.includes('non-convex') || txt.includes('nonconvex')) return 'nonconvex';
+  if(txt.includes('secretary') || txt.includes('stopping')) return 'optimal_stopping';
+  if(txt.includes('portfolio') || txt.includes('lasso') || txt.includes('quadratic')) return 'convex';
+  return 'nonconvex';
+}
+function defaultOptAlgorithm(cls){
+  return cls==='convex' ? 'projected_gradient' : cls==='metaheuristic' ? 'differential_evolution' : cls==='multiobjective' ? 'differential_evolution' : cls==='optimal_stopping' ? 'random_coord' : 'multi_start';
+}
 function loadOpt(ex){
-  state.model={sense:ex.sense, variables:ex.variables.map(v=>Array.isArray(v)?{name:v[0],initial:v[1],lower:v[2],upper:v[3]}:v), objective:ex.objective, objective2:ex.objective2||'', ineq:ex.ineq||[], eq:ex.eq||[]};
-  $('optSense').value=state.model.sense; $('objective').value=state.model.objective; if($('objective2')) $('objective2').value=state.model.objective2||''; $('ineq').value=state.model.ineq.join('\n'); $('eqcon').value=state.model.eq.join('\n'); renderOptControls();
+  const optClass=inferOptClass(ex);
+  state.model={sense:ex.sense, optClass, algorithm:ex.algorithm||defaultOptAlgorithm(optClass), variables:ex.variables.map(v=>Array.isArray(v)?{name:v[0],initial:v[1],lower:v[2],upper:v[3]}:v), objective:ex.objective, objective2:ex.objective2||'', ineq:ex.ineq||[], eq:ex.eq||[]};
+  if($('optClass')) $('optClass').value=state.model.optClass;
+  if($('optAlgorithm')) $('optAlgorithm').value=state.model.algorithm;
+  $('optSense').value=state.model.sense; $('objective').value=state.model.objective; if($('objective2')) $('objective2').value=state.model.objective2||''; $('ineq').value=state.model.ineq.join('\\n'); $('eqcon').value=state.model.eq.join('\\n'); renderOptControls();
 }
 function renderOdeControls(){
   const root=$('equationRows'); root.innerHTML='';
@@ -329,7 +349,8 @@ function renderOdeControls(){
 }
 function renderOptControls(){
   renderTable('variableRows',['name','initial','lower','upper'],state.model.variables.map(v=>[v.name,v.initial,v.lower,v.upper]),(r,c,val)=>{ const keys=['name','initial','lower','upper']; state.model.variables[r][keys[c]]=c===0?val:num(val); updateMathPreview(); },true);
-  ['optSense','objective','objective2','ineq','eqcon'].forEach(id=>{ const el=$(id); if(el) el.oninput=()=>{ readOpt(); updateMathPreview(); }; });
+  ['optClass','optAlgorithm','optSense','objective','objective2','ineq','eqcon'].forEach(id=>{ const el=$(id); if(el) el.oninput=()=>{ readOpt(); updateMathPreview(); }; });
+  if($('optClass')) $('optClass').onchange=()=>{ readOpt(); if($('optAlgorithm') && state.model.algorithm===defaultOptAlgorithm(state.model.optClass)) $('optAlgorithm').value=defaultOptAlgorithm($('optClass').value); readOpt(); updateMathPreview(); };
   updateMathPreview();
 }
 function renderTable(id,heads,rows,callback,deletable=false){
@@ -340,7 +361,7 @@ function deleteTableRow(id,i){ if(id==='paramRows'){ const k=Object.keys(state.m
 function addEquation(){ const n='u'+(state.model.vars.filter(v=>v.startsWith('u')).length+1); state.model.vars.push(n); state.model.eqs.push('0'); state.model.y0.push(0); renderOdeControls(); refreshAllSelects(); updateMathPreview(); }
 function addVariable(){ state.model.variables.push({name:'x'+(state.model.variables.length+1),initial:0,lower:-10,upper:10}); renderOptControls(); }
 function readOde(){ state.model.t0=num($('t0').value); state.model.t1=num($('t1').value); state.model.points=Math.max(2,+$('points').value||800); state.model.method=$('method').value; syncSummary(); }
-function readOpt(){ state.model.sense=$('optSense').value; state.model.objective=$('objective').value; state.model.objective2=$('objective2')?.value?.trim()||''; state.model.ineq=$('ineq').value.split('\n').map(s=>s.trim()).filter(Boolean); state.model.eq=$('eqcon').value.split('\n').map(s=>s.trim()).filter(Boolean); }
+function readOpt(){ state.model.optClass=$('optClass')?.value || state.model.optClass || 'nonconvex'; state.model.algorithm=$('optAlgorithm')?.value || state.model.algorithm || defaultOptAlgorithm(state.model.optClass); state.model.sense=$('optSense').value; state.model.objective=$('objective').value; state.model.objective2=$('objective2')?.value?.trim()||''; state.model.ineq=$('ineq').value.split('\n').map(s=>s.trim()).filter(Boolean); state.model.eq=$('eqcon').value.split('\n').map(s=>s.trim()).filter(Boolean); }
 function paramValues(){ const out={}; Object.entries(state.model.params||{}).forEach(([k,a])=>out[k]=Number(a[0])); return out; }
 function paramDefs(){ const out={}; Object.entries(state.model.params||{}).forEach(([k,a])=>out[k]={value:Number(a[0]),min:Number(a[1]),max:Number(a[2])}); return out; }
 function syncSummary(){
@@ -410,7 +431,7 @@ function runOde(){
 function runSweep(){
   try{ readOde(); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, sweepA:$('sweepA').value, sweepB:$('sweepB').value, sweepVar:$('sweepVar').value, sweepMetric:$('sweepMetric').value, sweepN:+$('sweepN').value}; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
-function runOpt(){ try{ readOpt(); const payload={...state.model, samples:+$('optSamples').value, penalty:$('penalty').value, refineSteps:+$('refineSteps').value}; startBusy('Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
+function runOpt(){ try{ readOpt(); const payload={...state.model, samples:+$('optSamples').value, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population:+($('optPopulation')?.value||36), temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy('Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
 function worker(){ if(state.worker) state.worker.terminate(); state.worker=new Worker('src/worker.js'); state.worker.onmessage=e=>{ const d=e.data; if(d.progress!==undefined){ $('progressWrap').classList.remove('hidden'); $('progressBar').style.width=Math.round(d.progress*100)+'%'; setStatus(`${d.text||'Running'} ${Math.round(d.progress*100)}%`); return; } finishRun(d); }; return state.worker; }
 function cancelWorker(){ if(state.worker){ state.worker.postMessage({type:'cancel'}); state.worker.terminate(); state.worker=null; } document.querySelector('.results-card').classList.remove('stale-results'); endBusy('Cancelled.'); }
 function startBusy(msg){ document.querySelector('.results-card').classList.add('stale-results'); $('runBtn').disabled=true; $('runSweep').disabled=true; $('runBtn').dataset.label=$('runBtn').textContent; $('runBtn').textContent=state.module==='opt'?'Optimizing...':'Solving...'; $('cancelBtn').classList.remove('hidden'); $('progressWrap').classList.remove('hidden'); $('progressBar').style.width='5%'; setStatus(msg); }
@@ -424,7 +445,7 @@ function actionable(m){ m=String(m||'Unknown error'); if(/diverged|stiff|Step li
 function resetStatus(){ ['runtimeValue','acceptedValue','rejectedValue','stepsMetric','evalMetric','cpuMetric','errorMetric'].forEach(id=>safeText($(id),'—')); safeText($('topStatus'),'Ready'); setStatus('Ready.'); }
 function setStatus(msg,bad=false){ $('status').textContent=msg; $('status').className='status '+(bad?'bad':''); }
 function updateMetrics(d){ safeText($('topStatus'),'Integration successful'); safeText($('runtimeValue'),fmtRuntime(d.runtime)); safeText($('acceptedValue'),fmt(d.accepted)); safeText($('rejectedValue'),fmt(d.rejected)); safeText($('stepsMetric'),fmt(d.accepted)); safeText($('evalMetric'),fmt(d.functionEvaluations)); safeText($('cpuMetric'),fmtRuntime(d.runtime)); safeText($('errorMetric'),$('rtol').value || '—'); }
-function updateOptMetrics(d){ safeText($('topStatus'),d.feasible?'Feasible candidate':'Approximate candidate'); safeText($('runtimeValue'),fmtRuntime(d.diagnostics.runtime)); safeText($('acceptedValue'),fmt(d.diagnostics.samples)); safeText($('rejectedValue'),d.feasible?'0':'violation'); safeText($('stepsMetric'),fmt(d.diagnostics.samples)); safeText($('evalMetric'),fmt(d.samples?.length||0)); safeText($('cpuMetric'),fmtRuntime(d.diagnostics.runtime)); safeText($('errorMetric'),Number(d.violation).toExponential(2)); }
+function updateOptMetrics(d){ safeText($('topStatus'),`${d.feasible?'Feasible':'Approximate'} · ${d.diagnostics?.method||'optimizer'}`); safeText($('runtimeValue'),fmtRuntime(d.diagnostics.runtime)); safeText($('acceptedValue'),fmt(d.diagnostics.samples)); safeText($('rejectedValue'),d.feasible?'0':'violation'); safeText($('stepsMetric'),fmt(d.diagnostics.samples)); safeText($('evalMetric'),fmt(d.samples?.length||0)); safeText($('cpuMetric'),fmtRuntime(d.diagnostics.runtime)); safeText($('errorMetric'),Number(d.violation).toExponential(2)); }
 function showDiagnostics(d){ $('diagnostics').textContent=JSON.stringify(d,null,2); }
 function showOptDiagnostics(d){ $('diagnostics').textContent=JSON.stringify({best:d.best, objective:d.objective, violation:d.violation, feasible:d.feasible, diagnostics:d.diagnostics},null,2); }
 
@@ -555,7 +576,7 @@ function renderPlot(side){
 }
 function PLOT_LABEL(t){ const all=[...PLOTS.ode.default,...PLOTS.param.default,...PLOTS.param.sweep,...PLOTS.opt.optimization]; return (all.find(x=>x[0]===t)||['',t])[1]; }
 function plotAllowed(type){ const opts=((PLOTS[state.module]||{})[state.resultKind]||[]).map(o=>o[0]); return opts.includes(type); }
-function updatePlotHint(){ const hint = state.module==='param' && state.resultKind==='sweep' ? 'Sweep views use parameter ranges. Use Run default to return to trajectory/phase plots.' : state.module==='opt' ? 'Optimization plots show samples, convergence, feasibility, and objective/constraint trade-offs.' : 'For stiff systems, export Python to use BDF, Radau, or LSODA locally.'; safeText($('plotHint'), 'ⓘ '+hint); }
+function updatePlotHint(){ const hint = state.module==='param' && state.resultKind==='sweep' ? 'Sweep views use parameter ranges. Use Run default to return to trajectory/phase plots.' : state.module==='opt' ? 'Optimization Lab plots show search samples, convergence, feasibility, Pareto/frontier views, and objective/constraint trade-offs.' : 'For stiff systems, export Python to use BDF, Radau, or LSODA locally.'; safeText($('plotHint'), 'ⓘ '+hint); }
 function renderOdePlot(target,p){ if(!state.result) throw new Error('Run the model first.'); if(p.type==='trajectory') return plotTrajectory(target,p); if(p.type==='phase2d') return plotPhase2D(target,p); if(p.type==='phase3d') return plotPhase3D(target,p); if(p.type==='vector') return plotVectorField(target,p); if(p.type==='poincare') return plotPoincare(target,p); if(p.type==='matrix') return plotMatrix(target,p); }
 function plotTrajectory(target,p){ const cs=colors(); const idxs=visibleSeriesIndices(); const traces=idxs.map((i,k)=>{ const v=state.result.vars[i]; return {x:state.result.T,y:state.result.Y[i],mode:'lines',name:`${v}(t)`,line:{color:cs[k%cs.length],width:p.lineWidth}}; }); const layout=baseLayout({...p,xLabel:p.xLabel||'t',yLabel:p.yLabel||'state'}); if((state.result.vars||[]).length>idxs.length){ layout.annotations=[{text:`Showing ${idxs.length} key variables of ${state.result.vars.length}. Export CSV/Python for all states.`,xref:'paper',yref:'paper',x:1,y:1.12,showarrow:false,font:{size:11,color:cssVar('--muted')||'#667085'},xanchor:'right'}]; } drawPlot(target,traces,layout,{responsive:true,displaylogo:false}); }
 function plotPhase2D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1); if(ix===iy){ drawPlot(target,[],{...baseLayout({...p,title:'Phase portrait requires 2 different variables',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),annotations:[{text:'Select different X and Y variables in Figure settings.',xref:'paper',yref:'paper',x:.5,y:.5,showarrow:false,font:{size:14}}]},{responsive:true,displaylogo:false}); return; } const trace={x:state.result.Y[ix],y:state.result.Y[iy],mode:'lines',type:'scatter',name:`${vars[ix]} vs ${vars[iy]}`,line:{color:cs[1]||cs[0],width:p.lineWidth}}; drawPlot(target,[trace],baseLayout({...p,xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
@@ -693,19 +714,67 @@ function applyPlotConfig(){
   setStatus(`Updated ${targetSide==='left'?'primary':'secondary'} figure settings.`);
 }
 function plotFileName(side,format){
-  const p=ensurePlot(side); const raw=(p.title||PLOT_LABEL(p.type)||'chilperic_ode_plot').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'') || 'chilperic_ode_plot';
+  const p=ensurePlot(side); const raw=(p.title||PLOT_LABEL(p.type)||'foko_lab_plot').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'') || 'foko_lab_plot';
   return `${raw}.${format}`;
 }
 function exportConfiguredPlot(format){ applyPlotConfig(); exportPlot(state.plotSide==='left'?'leftPlot':'rightPlot', plotFileName(state.plotSide,format), format); }
 function exportPlot(id,name,format){ const side=id==='leftPlot'?'left':'right'; const p=ensurePlot(side); Plotly.downloadImage(id,{format:format==='svg'?'svg':'png',filename:name.replace(/\.(png|svg)$/,''),width:Number(p.width)||1100,height:Number(p.height)||760,scale:format==='svg'?1:2}); }
 
-function updatePythonTargets(){ const py=$('pythonTarget'); py.innerHTML=''; if(state.module==='opt'){ [['scipy_opt','SciPy minimize'],['casadi','CasADi Opti'],['pyomo','Pyomo']].forEach(([v,l])=>py.append(new Option(l,v))); } else py.append(new Option('SciPy solve_ivp','scipy_ode')); }
+function updatePythonTargets(){ const py=$('pythonTarget'); py.innerHTML=''; if(state.module==='opt'){ [['scipy_opt','SciPy minimize'],['scipy_de','SciPy differential_evolution'],['casadi','CasADi Opti'],['pyomo','Pyomo'],['julia_opt','Julia Optim/BlackBoxOptim starter']].forEach(([v,l])=>py.append(new Option(l,v))); } else { [['scipy_ode','SciPy solve_ivp'],['julia_ode','Julia SciML starter'],['sundials_note','SUNDIALS/CVODE export notes']].forEach(([v,l])=>py.append(new Option(l,v))); } }
 function pythonExport(){ return state.module==='opt'?pythonOptExport():pythonOdeExport(); }
-function pythonHeader(){ return `# Chilperic ODE export\n# Setup examples:\n#   Linux/macOS:\n#     python3 -m venv .venv\n#     source .venv/bin/activate\n#     pip install numpy scipy matplotlib casadi pyomo\n#   Windows PowerShell:\n#     py -m venv .venv\n#     .\\.venv\\Scripts\\Activate.ps1\n#     pip install numpy scipy matplotlib casadi pyomo\n\n`; }
-function pythonOdeExport(){ const vars=state.model.vars, params=paramValues(); return pythonHeader()+`import numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.integrate import solve_ivp\n\nparams = ${JSON.stringify(params,null,2)}\n\ndef rhs(t, y):\n    ${vars.map((v,i)=>`${v}=y[${i}]`).join('; ')}\n    ${Object.keys(params).map(k=>`${k}=params["${k}"]`).join('; ')}\n    return [\n${state.model.eqs.map(e=>'        '+pyExpr(e,'np')+',').join('\n')}\n    ]\n\nsol = solve_ivp(rhs, (${state.model.t0}, ${state.model.t1}), ${JSON.stringify(state.model.y0)}, method="RK45", rtol=${$('rtol').value}, atol=${$('atol').value}, dense_output=True)\nt = np.linspace(${state.model.t0}, ${state.model.t1}, ${state.model.points})\nY = sol.sol(t)\nfor i, name in enumerate(${JSON.stringify(vars)}):\n    plt.plot(t, Y[i], label=name)\nplt.xlabel('t'); plt.ylabel('state'); plt.legend(); plt.grid(True); plt.show()\n`; }
-function pythonOptExport(){ const target=$('pythonTarget').value; if(target==='casadi') return pythonHeader()+`import casadi as ca\n\nopti = ca.Opti()\n${state.model.variables.map(v=>`${v.name}=opti.variable(); opti.set_initial(${v.name}, ${v.initial}); opti.subject_to(${v.lower} <= ${v.name}); opti.subject_to(${v.name} <= ${v.upper})`).join('\n')}\n${state.model.sense==='maximize'?'opti.maximize':'opti.minimize'}(${pyExpr(state.model.objective,'ca')})\n${state.model.ineq.map(g=>`opti.subject_to(${pyExpr(g,'ca')} <= 0)`).join('\n')}\n${state.model.eq.map(h=>`opti.subject_to(${pyExpr(h,'ca')} == 0)`).join('\n')}\nopti.solver('ipopt')\nsol=opti.solve()\nprint(${JSON.stringify(state.model.variables.map(v=>v.name))})\n`; if(target==='pyomo') return pythonHeader()+`import pyomo.environ as pyo\nfrom math import sin, cos, tan, exp, log, sqrt, pi\n\nm=pyo.ConcreteModel()\n${state.model.variables.map(v=>`m.${v.name}=pyo.Var(bounds=(${v.lower},${v.upper}), initialize=${v.initial})`).join('\n')}\ndef obj_rule(m):\n    ${state.model.variables.map(v=>`${v.name}=m.${v.name}`).join('; ')}\n    return ${pyExpr(state.model.objective,'math')}\nm.obj=pyo.Objective(rule=obj_rule, sense=${state.model.sense==='maximize'?'pyo.maximize':'pyo.minimize'})\n# Add constraints manually or extend generated rules below.\n`; return pythonHeader()+`import numpy as np\nfrom scipy.optimize import minimize\n\ndef objective(v):\n    ${state.model.variables.map((v,i)=>`${v.name}=v[${i}]`).join('; ')}\n    return ${state.model.sense==='maximize'?'-(':''}${pyExpr(state.model.objective,'np')}${state.model.sense==='maximize'?')':''}\n\nconstraints = [\n${state.model.ineq.map(g=>`    {'type':'ineq', 'fun': lambda v: -(${pyExpr(g,'np')})},`).join('\n')}\n${state.model.eq.map(h=>`    {'type':'eq', 'fun': lambda v: ${pyExpr(h,'np')}},`).join('\n')}\n]\nbounds = ${JSON.stringify(state.model.variables.map(v=>[v.lower,v.upper]))}\nx0 = ${JSON.stringify(state.model.variables.map(v=>v.initial))}\nres = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints, options={'maxiter':1000,'ftol':1e-9})\nprint(res)\n`; }
+function pythonHeader(){ return `# Foko Lab export\n# Setup examples for Python exports:\n#   Linux/macOS:\n#     python3 -m venv .venv\n#     source .venv/bin/activate\n#     pip install numpy scipy matplotlib casadi pyomo\n#   Windows PowerShell:\n#     py -m venv .venv\n#     .\\.venv\\Scripts\\Activate.ps1\n#     pip install numpy scipy matplotlib casadi pyomo\n\n`; }
+function pythonOdeExport(){ const target=$('pythonTarget')?.value || 'scipy_ode'; const vars=state.model.vars, params=paramValues(); if(target==='julia_ode') return `# Foko Lab Julia/SciML starter
+using DifferentialEquations
+
+const p = ${JSON.stringify(params,null,2)}
+function f!(du,u,p,t)
+    ${vars.map((v,i)=>`${v}=u[${i+1}]`).join('; ')}
+    ${Object.keys(params).map(k=>`${k}=p["${k}"]`).join('; ')}
+${state.model.eqs.map((e,i)=>`    du[${i+1}] = ${pyExpr(e,'julia')}`).join('\n')}
+end
+
+u0 = ${JSON.stringify(state.model.y0)}
+tspan = (${state.model.t0}, ${state.model.t1})
+prob = ODEProblem(f!, u0, tspan, p)
+sol = solve(prob, Tsit5(); reltol=1e-6, abstol=1e-9)
+# For stiff systems: solve(prob, Rodas5()) or use Sundials.CVODE_BDF() when available.
+`; if(target==='sundials_note') return `# Foko Lab SUNDIALS/CVODE notes
+# Browser native CVODE is not bundled in this build.
+# Professional target mapping:
+# - nonstiff IVP: CVODE Adams / Tsit5 / DOP853
+# - stiff IVP: CVODE BDF, Radau, BDF, LSODA
+# - sensitivities: CVODES / adjoint sensitivity
+# - DAE: IDA/IDAS
+# - steady state: KINSOL or scipy.optimize.root
+
+MODEL = ${JSON.stringify({vars:state.model.vars,eqs:state.model.eqs,y0:state.model.y0,params},null,2)}
+`; return pythonHeader()+`import numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.integrate import solve_ivp\n\nparams = ${JSON.stringify(params,null,2)}\n\ndef rhs(t, y):\n    ${vars.map((v,i)=>`${v}=y[${i}]`).join('; ')}\n    ${Object.keys(params).map(k=>`${k}=params["${k}"]`).join('; ')}\n    return [\n${state.model.eqs.map(e=>'        '+pyExpr(e,'np')+',').join('\n')}\n    ]\n\nsol = solve_ivp(rhs, (${state.model.t0}, ${state.model.t1}), ${JSON.stringify(state.model.y0)}, method="RK45", rtol=${$('rtol').value}, atol=${$('atol').value}, dense_output=True)\nt = np.linspace(${state.model.t0}, ${state.model.t1}, ${state.model.points})\nY = sol.sol(t)\nfor i, name in enumerate(${JSON.stringify(vars)}):\n    plt.plot(t, Y[i], label=name)\nplt.xlabel('t'); plt.ylabel('state'); plt.legend(); plt.grid(True); plt.show()\n`; }
+function pythonOptExport(){ const target=$('pythonTarget').value; if(target==='julia_opt') return `# Foko Lab Julia optimization starter
+# Suggested packages: Optim.jl for local smooth problems, BlackBoxOptim.jl or Evolutionary.jl for metaheuristics, JuMP.jl for structured convex/nonlinear programs.
+
+# Variables: ${state.model.variables.map(v=>v.name).join(', ')}
+# Objective: ${state.model.objective}
+# Inequality constraints g(x) <= 0:
+${state.model.ineq.map(g=>'#   '+g).join('\n')}
+`; if(target==='scipy_de') return pythonHeader()+`import numpy as np
+from scipy.optimize import differential_evolution
+
+def objective(v):
+    ${state.model.variables.map((v,i)=>`${v.name}=v[${i}]`).join('; ')}
+    obj = ${state.model.sense==='maximize'?'-(':''}${pyExpr(state.model.objective,'np')}${state.model.sense==='maximize'?')':''}
+    penalty = ${$('penalty').value || '1e6'}
+    viol = 0.0
+${state.model.ineq.map(g=>`    viol += max(0.0, ${pyExpr(g,'np')})**2`).join('\n') || '    pass'}
+${state.model.eq.map(h=>`    viol += (${pyExpr(h,'np')})**2`).join('\n') || ''}
+    return obj + penalty*viol
+
+bounds = ${JSON.stringify(state.model.variables.map(v=>[v.lower,v.upper]))}
+res = differential_evolution(objective, bounds, polish=True, tol=1e-8)
+print(res)
+`; if(target==='casadi') return pythonHeader()+`import casadi as ca\n\nopti = ca.Opti()\n${state.model.variables.map(v=>`${v.name}=opti.variable(); opti.set_initial(${v.name}, ${v.initial}); opti.subject_to(${v.lower} <= ${v.name}); opti.subject_to(${v.name} <= ${v.upper})`).join('\n')}\n${state.model.sense==='maximize'?'opti.maximize':'opti.minimize'}(${pyExpr(state.model.objective,'ca')})\n${state.model.ineq.map(g=>`opti.subject_to(${pyExpr(g,'ca')} <= 0)`).join('\n')}\n${state.model.eq.map(h=>`opti.subject_to(${pyExpr(h,'ca')} == 0)`).join('\n')}\nopti.solver('ipopt')\nsol=opti.solve()\nprint(${JSON.stringify(state.model.variables.map(v=>v.name))})\n`; if(target==='pyomo') return pythonHeader()+`import pyomo.environ as pyo\nfrom math import sin, cos, tan, exp, log, sqrt, pi\n\nm=pyo.ConcreteModel()\n${state.model.variables.map(v=>`m.${v.name}=pyo.Var(bounds=(${v.lower},${v.upper}), initialize=${v.initial})`).join('\n')}\ndef obj_rule(m):\n    ${state.model.variables.map(v=>`${v.name}=m.${v.name}`).join('; ')}\n    return ${pyExpr(state.model.objective,'math')}\nm.obj=pyo.Objective(rule=obj_rule, sense=${state.model.sense==='maximize'?'pyo.maximize':'pyo.minimize'})\n# Add constraints manually or extend generated rules below.\n`; return pythonHeader()+`import numpy as np\nfrom scipy.optimize import minimize\n\ndef objective(v):\n    ${state.model.variables.map((v,i)=>`${v.name}=v[${i}]`).join('; ')}\n    return ${state.model.sense==='maximize'?'-(':''}${pyExpr(state.model.objective,'np')}${state.model.sense==='maximize'?')':''}\n\nconstraints = [\n${state.model.ineq.map(g=>`    {'type':'ineq', 'fun': lambda v: -(${pyExpr(g,'np')})},`).join('\n')}\n${state.model.eq.map(h=>`    {'type':'eq', 'fun': lambda v: ${pyExpr(h,'np')}},`).join('\n')}\n]\nbounds = ${JSON.stringify(state.model.variables.map(v=>[v.lower,v.upper]))}\nx0 = ${JSON.stringify(state.model.variables.map(v=>v.initial))}\nres = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints, options={'maxiter':1000,'ftol':1e-9})\nprint(res)\n`; }
 function pyExpr(s,lib='np'){
-  let out=String(s).replace(/\^/g,'**');
+  let out=String(s);
+  if(lib!=='julia') out = out.replace(/\^/g,'**');
   const funcs=['sin','cos','tan','exp','log','sqrt','abs','min','max','pow'];
   if(lib==='np'){
     out=out.replace(/\bpi\b/g,'np.pi');
@@ -713,18 +782,54 @@ function pyExpr(s,lib='np'){
   } else if(lib==='ca'){
     out=out.replace(/\bpi\b/g,'3.141592653589793');
     for(const f of funcs) out=out.replace(new RegExp('\\b'+f+'\\s*\\(','g'),`ca.${f}(`);
+  } else if(lib==='julia'){
+    out=out.replace(/\bpi\b/g,'pi');
   } else {
     out=out.replace(/\bpi\b/g,'pi');
   }
   return out;
 }
-function csvExport(){ if(state.module==='param' && state.resultKind==='sweep' && state.sweep) return ['x,y,z',...state.sweep.z.flatMap((row,j)=>row.map((v,i)=>[state.sweep.x[i],state.sweep.y[j],v].join(',')))].join('\n'); if(state.opt) return ['objective,violation,feasible,x',...state.opt.samples.map(p=>[p.obj,p.violation,p.feasible,...p.x].join(','))].join('\n'); if(!state.result) return ''; const rows=['t,'+state.result.vars.join(',')]; state.result.T.forEach((t,i)=>rows.push([t,...state.result.Y.map(y=>y[i])].join(','))); return rows.join('\n'); }
+function csvEscapeCell(v){ const s=String(v ?? ''); return /[,\n"]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; }
+function csvExport(){
+  if(state.module==='param' && state.resultKind==='sweep' && state.sweep) return ['x,y,z',...state.sweep.z.flatMap((row,j)=>row.map((v,i)=>[state.sweep.x[i],state.sweep.y[j],v].map(csvEscapeCell).join(',')))].join('\n');
+  if(state.opt) return [['sample','objective','violation','feasible',...state.model.variables.map(v=>v.name)].join(','),...state.opt.samples.map((p,i)=>[i,p.obj,p.violation,p.feasible,...p.x].map(csvEscapeCell).join(','))].join('\n');
+  if(!state.result) return '';
+  const rows=['t,'+state.result.vars.map(csvEscapeCell).join(',')];
+  state.result.T.forEach((t,i)=>rows.push([t,...state.result.Y.map(y=>y[i])].map(csvEscapeCell).join(',')));
+  return rows.join('\n');
+}
+function longCsvExport(){
+  const rows=[['dataset','sample','x','y','variable','value','extra'].join(',')];
+  if(state.module==='param' && state.resultKind==='sweep' && state.sweep){
+    state.sweep.z.forEach((row,j)=>row.forEach((v,i)=>rows.push(['sweep','',state.sweep.x[i],state.sweep.y[j],'z',v,''].map(csvEscapeCell).join(','))));
+    return rows.join('\n');
+  }
+  if(state.opt){
+    state.opt.samples.forEach((pt,i)=>{
+      rows.push(['optimization',i,'','', 'objective', pt.obj, `violation=${pt.violation}; feasible=${pt.feasible}`].map(csvEscapeCell).join(','));
+      (pt.x||[]).forEach((val,j)=>rows.push(['optimization',i,'','', state.model.variables[j]?.name || `x${j+1}`, val, 'decision variable'].map(csvEscapeCell).join(',')));
+    });
+    return rows.join('\n');
+  }
+  if(state.result){
+    state.result.T.forEach((t,i)=>state.result.vars.forEach((name,j)=>rows.push(['ode','',t,'',name,state.result.Y[j][i],'trajectory'].map(csvEscapeCell).join(','))));
+  }
+  return rows.join('\n');
+}
+function resultDataExport(){
+  return {module:state.module, model:state.model, plots:state.plots, result:state.result||null, sweep:state.sweep||null, optimization:state.opt||null, diagnostics:$('diagnostics')?.textContent||null, exportedAt:new Date().toISOString()};
+}
+function plotlyDataExport(){
+  const pack={exportedAt:new Date().toISOString(), plots:{}};
+  ['leftPlot','rightPlot'].forEach(id=>{ const el=$(id); if(el && el.data) pack.plots[id]={data:el.data, layout:el.layout}; });
+  return pack;
+}
 function currentConfig(){ ensurePlot('left'); ensurePlot('right'); return {module:state.module,model:state.model,plots:state.plots}; }
 function copyInstall(){ const text=`# Linux/macOS\npython3 -m venv .venv\nsource .venv/bin/activate\npip install numpy scipy matplotlib casadi pyomo\n\n# Windows PowerShell\npy -m venv .venv\n.\\.venv\\Scripts\\Activate.ps1\npip install numpy scipy matplotlib casadi pyomo`; navigator.clipboard?.writeText(text); setStatus('Install block copied.'); }
 
 function setupDragDrop(){ const zone=$('uploadDrop'); ['dragenter','dragover'].forEach(ev=>zone.addEventListener(ev,e=>{ e.preventDefault(); zone.classList.add('drag'); })); ['dragleave','drop'].forEach(ev=>zone.addEventListener(ev,e=>{ e.preventDefault(); zone.classList.remove('drag'); })); zone.addEventListener('drop',e=>handleFiles(e.dataTransfer.files)); }
 function handleFiles(files){ const file=files&&files[0]; if(!file) return; const reader=new FileReader(); reader.onload=()=>{ try{ const parsed=parseImport(String(reader.result),file.name); applyImported(parsed,file.name); } catch(e){ setStatus(actionable(e.message),true); } }; reader.readAsText(file); }
-function parseImport(text,name){ const ext=(name.split('.').pop()||'').toLowerCase(); if(ext==='json') return normalizeImported(JSON.parse(text)); if(ext==='csv') return parseCsvModel(text); if(['xml','sbml'].includes(ext)) return parseSbmlModel(text,name); if(['txt','ode','eqn'].includes(ext)) return parseTextModel(text); if(['yml','yaml'].includes(ext)) return parseYamlLikeModel(text); if(ext==='py'){ const m=text.match(/ODE_LAB_CONFIG\s*=\s*({[\s\S]*?})\s*(?:#\s*END_ODE_LAB_CONFIG|$)/); if(!m) throw new Error('Python import requires ODE_LAB_CONFIG = {...}.'); return normalizeImported(JSON.parse(m[1])); } throw new Error('Unsupported file type.'); }
+function parseImport(text,name){ const ext=(name.split('.').pop()||'').toLowerCase(); if(ext==='json') return normalizeImported(JSON.parse(text)); if(ext==='csv') return parseCsvModel(text); if(['xml','sbml'].includes(ext)) return parseSbmlModel(text,name); if(['txt','ode','eqn'].includes(ext)) return parseTextModel(text); if(['yml','yaml'].includes(ext)) return parseYamlLikeModel(text); if(ext==='py'){ const m=text.match(/DYNAMICS_LAB_CONFIG\s*=\s*({[\s\S]*?})\s*(?:#\s*END_DYNAMICS_LAB_CONFIG|$)/); if(!m) throw new Error('Python import requires DYNAMICS_LAB_CONFIG = {...}.'); return normalizeImported(JSON.parse(m[1])); } throw new Error('Unsupported file type.'); }
 
 function parseSbmlModel(text,name='model.sbml'){
   const doc=new DOMParser().parseFromString(text,'application/xml');
@@ -783,7 +888,7 @@ function mathmlToInfix(node){
   if(tag==='true') return '1'; if(tag==='false') return '0';
   return node.textContent?.trim() || '0';
 }
-function normalizeImported(raw){ const module=(raw.module||raw.type||'ode').toLowerCase().replace('optimization','opt'); const model=raw.model||raw; if(module==='opt'){ return {module:'opt',model:{sense:model.sense||'minimize',variables:normalizeVariables(model.variables||[]),objective:model.objective||'0',objective2:model.objective2||model.secondaryObjective||'',ineq:arr(model.ineq||model.constraints||model.g||[]),eq:arr(model.eq||model.h||[])}}; } const vars=arr(model.vars||model.variables||[]), eqs=arr(model.eqs||model.equations||[]); if(vars.length!==eqs.length) throw new Error('ODE import needs matching vars and equations arrays.'); return {module:module==='param'?'param':'ode',model:{vars,eqs,y0:arr(model.y0||model.initial||[]).map(Number),params:normalizeParams(model.params||model.parameters||{}),t0:Number(model.t0??0),t1:Number(model.t1??20),points:Number(model.points??800),method:model.method||'rk45',sweep:model.sweep||null,narrative:model.narrative||'Imported model.'}}; }
+function normalizeImported(raw){ const module=(raw.module||raw.type||'ode').toLowerCase().replace('optimization','opt'); const model=raw.model||raw; if(module==='opt'){ return {module:'opt',model:{sense:model.sense||'minimize',variables:normalizeVariables(model.variables||[]),optClass:model.optClass||model.class||'nonconvex',algorithm:model.algorithm||'',objective:model.objective||'0',objective2:model.objective2||model.secondaryObjective||'',ineq:arr(model.ineq||model.constraints||model.g||[]),eq:arr(model.eq||model.h||[])}}; } const vars=arr(model.vars||model.variables||[]), eqs=arr(model.eqs||model.equations||[]); if(vars.length!==eqs.length) throw new Error('ODE import needs matching vars and equations arrays.'); return {module:module==='param'?'param':'ode',model:{vars,eqs,y0:arr(model.y0||model.initial||[]).map(Number),params:normalizeParams(model.params||model.parameters||{}),t0:Number(model.t0??0),t1:Number(model.t1??20),points:Number(model.points??800),method:model.method||'rk45',sweep:model.sweep||null,narrative:model.narrative||'Imported model.'}}; }
 function normalizeParams(params){ const out={}; if(Array.isArray(params)){ params.forEach(p=>Array.isArray(p)?out[p[0]]=[Number(p[1]),Number(p[2]??p[1]),Number(p[3]??p[1])]:out[p.name]=[Number(p.value),Number(p.min??p.value),Number(p.max??p.value)]); } else Object.entries(params).forEach(([k,v])=>{ if(Array.isArray(v)) out[k]=[Number(v[0]),Number(v[1]??v[0]),Number(v[2]??v[0])]; else if(typeof v==='object') out[k]=[Number(v.value),Number(v.min??v.value),Number(v.max??v.value)]; else out[k]=[Number(v),Number(v),Number(v)]; }); return out; }
 function normalizeVariables(vs){ if(!vs.length) throw new Error('Optimization import needs at least one decision variable.'); return vs.map(v=>Array.isArray(v)?{name:String(v[0]),initial:Number(v[1]??0),lower:Number(v[2]??-10),upper:Number(v[3]??10)}:{name:String(v.name),initial:Number(v.initial??v.value??0),lower:Number(v.lower??v.min??-10),upper:Number(v.upper??v.max??10)}); }
 function arr(x){ return Array.isArray(x)?x:String(x||'').split(/\n|;/).map(s=>s.trim()).filter(Boolean); }
@@ -791,8 +896,8 @@ function parseCsvRows(text){ const lines=text.split(/\r?\n/).filter(l=>l.trim()&
 function parseCsvModel(text){ const rows=parseCsvRows(text); const vars=[],eqs=[],y0=[],params={}; rows.filter(r=>r.kind==='equation').forEach(r=>{vars.push(r.name); eqs.push(r.equation||r.expression||r.value); y0.push(Number(r.initial||0));}); rows.filter(r=>r.kind==='parameter').forEach(r=>params[r.name]=[Number(r.value),Number(r.min||r.value),Number(r.max||r.value)]); const get=(k,d)=>rows.find(r=>r.kind==='time'&&r.name===k)?.value??d; return normalizeImported({module:'ode',model:{vars,eqs,y0,params,t0:get('t0',0),t1:get('t1',20),points:get('points',800),method:rows.find(r=>r.kind==='solver')?.value||'rk45'}}); }
 function parseTextModel(text){ const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean); let module='ode',vars=[],eqs=[],y0=[],params={},variables=[],objective='',objective2='',ineq=[],eq=[],t0=0,t1=20,points=800,method='rk45'; for(const line of lines){ let m;if(m=line.match(/^module\s*:\s*(.+)$/i)){module=m[1].toLowerCase().replace('optimization','opt');continue;} if(m=line.match(/^d([A-Za-z_]\w*)\/dt\s*=\s*(.+)$/i)){vars.push(m[1]);eqs.push(m[2]);y0.push(0);continue;} if(m=line.match(/^param\s+([A-Za-z_]\w*)\s*=\s*([^\[,]+)(?:\s*\[\s*([^,]+),\s*([^\]]+)\])?/i)){params[m[1]]=[Number(m[2]),Number(m[3]??m[2]),Number(m[4]??m[2])];continue;} if(m=line.match(/^initial\s+([A-Za-z_]\w*)\s*=\s*(.+)$/i)){const i=vars.indexOf(m[1]); if(i>=0)y0[i]=Number(m[2]);continue;} if(m=line.match(/^time\s+([^\s]+)\s+([^\s]+)(?:\s+([^\s]+))?/i)){t0=Number(m[1]);t1=Number(m[2]);points=Number(m[3]||points);continue;} if(m=line.match(/^var\s+([A-Za-z_]\w*)\s*=\s*([^\[,]+)(?:\s*\[\s*([^,]+),\s*([^\]]+)\])?/i)){variables.push({name:m[1],initial:Number(m[2]),lower:Number(m[3]??-10),upper:Number(m[4]??10)});continue;} if(m=line.match(/^objective2\s*:\s*(.+)$/i)){objective2=m[1];continue;} if(m=line.match(/^secondary objective\s*:\s*(.+)$/i)){objective2=m[1];continue;} if(m=line.match(/^objective\s*:\s*(.+)$/i)){objective=m[1];continue;} if(m=line.match(/^ineq\s*:\s*(.+)$/i)){ineq.push(m[1]);continue;} if(m=line.match(/^eq\s*:\s*(.+)$/i)){eq.push(m[1]);continue;} } return normalizeImported(module==='opt'?{module:'opt',model:{variables,objective,objective2,ineq,eq}}:{module,model:{vars,eqs,y0,params,t0,t1,points,method}}); }
 function parseYamlLikeModel(text){ const obj={module:'ode',model:{}}; text.split(/\r?\n/).forEach(line=>{ const m=line.match(/^\s*([A-Za-z_]\w*)\s*:\s*(.+)$/); if(!m)return; let v=m[2].trim(); try{ if(v.startsWith('[')||v.startsWith('{')) v=JSON.parse(v.replaceAll("'",'"')); }catch{} if(m[1]==='module') obj.module=String(v); else obj.model[m[1]]=v; }); return normalizeImported(obj); }
-function applyImported(parsed,filename){ setModule(parsed.module); state.model=parsed.model; if(parsed.module==='opt'){ $('optSense').value=state.model.sense; $('objective').value=state.model.objective; if($('objective2')) $('objective2').value=state.model.objective2||''; $('ineq').value=state.model.ineq.join('\n'); $('eqcon').value=state.model.eq.join('\n'); renderOptControls(); } else { $('t0').value=state.model.t0; $('t1').value=state.model.t1; $('points').value=state.model.points; $('method').value=state.model.method||'rk45'; renderOdeControls(); } safeText($('exampleNarrative'),`Imported: ${filename}`); refreshAllSelects(); updatePlotOptions(); clearPlots(); updateMathPreview(); setStatus('Model imported. Review it, then run.'); }
-const TEMPLATE_CONTENT={ode_json:{name:'chilperic_ode_lorenz_template.json',type:'application/json',body:()=>JSON.stringify({module:'ode',model:EXAMPLES.ode.Lorenz},null,2)},param_json:{name:'chilperic_parametric_sir_template.json',type:'application/json',body:()=>JSON.stringify({module:'param',model:EXAMPLES.param['SIR beta–gamma']},null,2)},opt_json:{name:'chilperic_optimization_template.json',type:'application/json',body:()=>JSON.stringify({module:'opt',model:EXAMPLES.opt['Pareto design trade-off']},null,2)},ode_csv:{name:'chilperic_ode_template.csv',type:'text/csv',body:()=>`kind,name,value,min,max,equation,initial\nmodule,,ode,,,,\nequation,x,,,,sigma*(y-x),1\nequation,y,,,,x*(rho-z)-y,1\nequation,z,,,,x*y-beta*z,1\nparameter,sigma,10,6,16,,\nparameter,rho,28,12,40,,\nparameter,beta,2.6666666666666665,2,3,,\ntime,t0,0,,,,\ntime,t1,35,,,,\ntime,points,2500,,,,\nsolver,method,rk45,,,,\n`},opt_txt:{name:'chilperic_optimization_template.txt',type:'text/plain',body:()=>`module: opt\nvar x = 1 [0, 10]\nvar y = 1 [0, 10]\nobjective: (x-3)^2 + (y-2)^2\nobjective2: (x+1)^2 + (y-4)^2\nineq: x + y - 4\n`},py_embed:{name:'chilperic_python_embedded_config.py',type:'text/x-python',body:()=>`ODE_LAB_CONFIG = ${JSON.stringify({module:'ode',model:EXAMPLES.ode.Lorenz},null,2)}\n# END_ODE_LAB_CONFIG\n`}};
+function applyImported(parsed,filename){ setModule(parsed.module); state.model=parsed.model; if(parsed.module==='opt'){ if($('optClass')) $('optClass').value=state.model.optClass||'nonconvex'; if($('optAlgorithm')) $('optAlgorithm').value=state.model.algorithm||defaultOptAlgorithm(state.model.optClass||'nonconvex'); $('optSense').value=state.model.sense; $('objective').value=state.model.objective; if($('objective2')) $('objective2').value=state.model.objective2||''; $('ineq').value=state.model.ineq.join('\\n'); $('eqcon').value=state.model.eq.join('\\n'); renderOptControls(); } else { $('t0').value=state.model.t0; $('t1').value=state.model.t1; $('points').value=state.model.points; $('method').value=state.model.method||'rk45'; renderOdeControls(); } safeText($('exampleNarrative'),`Imported: ${filename}`); refreshAllSelects(); updatePlotOptions(); clearPlots(); updateMathPreview(); setStatus('Model imported. Review it, then run.'); }
+const TEMPLATE_CONTENT={ode_json:{name:'foko_lab_ode_lorenz_template.json',type:'application/json',body:()=>JSON.stringify({module:'ode',model:EXAMPLES.ode.Lorenz},null,2)},param_json:{name:'foko_lab_parametric_sir_template.json',type:'application/json',body:()=>JSON.stringify({module:'param',model:EXAMPLES.param['SIR beta–gamma']},null,2)},opt_json:{name:'foko_lab_optimization_template.json',type:'application/json',body:()=>JSON.stringify({module:'opt',model:EXAMPLES.opt['Pareto design trade-off']},null,2)},ode_csv:{name:'foko_lab_ode_template.csv',type:'text/csv',body:()=>`kind,name,value,min,max,equation,initial\nmodule,,ode,,,,\nequation,x,,,,sigma*(y-x),1\nequation,y,,,,x*(rho-z)-y,1\nequation,z,,,,x*y-beta*z,1\nparameter,sigma,10,6,16,,\nparameter,rho,28,12,40,,\nparameter,beta,2.6666666666666665,2,3,,\ntime,t0,0,,,,\ntime,t1,35,,,,\ntime,points,2500,,,,\nsolver,method,rk45,,,,\n`},opt_txt:{name:'foko_lab_optimization_template.txt',type:'text/plain',body:()=>`module: opt\nvar x = 1 [0, 10]\nvar y = 1 [0, 10]\nobjective: (x-3)^2 + (y-2)^2\nobjective2: (x+1)^2 + (y-4)^2\nineq: x + y - 4\n`},py_embed:{name:'foko_lab_python_embedded_config.py',type:'text/x-python',body:()=>`DYNAMICS_LAB_CONFIG = ${JSON.stringify({module:'ode',model:EXAMPLES.ode.Lorenz},null,2)}\n# END_DYNAMICS_LAB_CONFIG\n`}};
 function downloadSelectedTemplate(){ const t=TEMPLATE_CONTENT[$('templateSelect').value]||TEMPLATE_CONTENT.ode_json; download(t.name,t.body(),t.type); }
 
 function download(name,text,type='text/plain'){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }

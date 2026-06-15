@@ -1,95 +1,26 @@
-<!doctype html>
-<html lang="en" data-theme="aurora">
+<!DOCTYPE html>
+<html data-theme="aurora" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Chilperic Dynamics docs</title>
-  <link rel="stylesheet" href="styles/style.css?v=2.4.8">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Docs · Foko Lab</title>
+<link href="styles/style.css?v=2.7.1" rel="stylesheet"/>
 </head>
 <body>
 <div class="app-shell">
 <header class="topbar">
-  <a class="brand" href="index.html"><img src="assets/chilperic-ode-logo.svg" class="logo" alt="Chilperic Dynamics"></a>
-  <nav class="topnav"><a href="index.html">ODE Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a class="active" href="docs.html">Docs</a></nav>
+<a class="brand" href="index.html"><img class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.1" alt="Foko Lab"/></a>
+<nav class="topnav" aria-label="Primary navigation"><a href="index.html">Home</a><a href="ode.html#workbench">ODE Lab</a><a href="optimization.html">Optimization Lab</a><a href="steady.html">Steady-State Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a class="active" href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a></nav>
+<div class="top-actions"><label class="theme-picker"><span class="theme-icon">☼</span><select id="themeBtn" class="theme-select"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label></div>
 </header>
-<main class="doc-page" style="max-width:980px;margin:0 auto;padding:42px 22px">
-<section class="card">
-  <h1>Chilperic Dynamics documentation</h1>
-  <p>A browser workbench for deterministic ODE modeling, stochastic simulation, model exploration, and reproducible teaching-scale exports.</p>
-</section>
-
-<section class="card">
-  <h2>Quick start</h2>
-  <ol>
-    <li>Use <b>ODE Lab</b> for differential equations, parameter sweeps, phase portraits, optimization, and Python export.</li>
-    <li>Use <b>Stochastic Lab</b> for random-event models, ensembles, distributions, extinction/fixation probabilities, and stochastic diagnostics.</li>
-    <li>Use <b>Model Atlas</b> to choose a curated deterministic or stochastic example and open it in the appropriate lab.</li>
-    <li>Run the model, inspect the plots and diagnostics, then export JSON, CSV, figures, or starter Python where available.</li>
-  </ol>
-</section>
-
-<section class="card">
-  <h2>ODE Lab</h2>
-  <p>ODE Lab supports trajectories, 2D/3D phase portraits, vector fields, Poincaré sections, trajectory matrices, heatmaps, parametric sweeps, and constrained optimization experiments.</p>
-  <p>The browser supports Euler, Heun, RK4, RK5, and RK45-style adaptive integration. Python export supports SciPy <code>solve_ivp</code> targets such as RK45, DOP853, Radau, BDF, and LSODA.</p>
-</section>
-
-<section class="card" id="stochastic-lab-docs">
-  <h2>Stochastic Lab</h2>
-  <p>Stochastic Lab supports editable random-event models, custom CTMC/Gillespie model creation, ensemble simulation, deterministic mean-field comparison for CTMC models, and reproducibility exports.</p>
-  <ol>
-    <li><b>CTMC / Gillespie:</b> create your own model from states, numeric parameters, propensities, and integer updates; or start from birth-death, SIR, gene expression, Michaelis-Menten, and reduced T-cell proliferation examples.</li>
-    <li><b>Branching and finite Markov chains:</b> Galton-Watson, Gambler’s ruin, Ehrenfest urn, and Wright-Fisher drift.</li>
-    <li><b>SDE and fluctuation models:</b> geometric Brownian motion, stochastic resonance, Parrondo’s paradox, and Brownian ratchet examples.</li>
-    <li><b>Decision examples:</b> multi-armed bandit and secretary/optimal-stopping simulations.</li>
-  </ol>
-  <p>Custom CTMC events use Math.js-style mathematical expressions. Example: <code>beta*S*I/N</code> with visual per-state update entries such as <code>S:-1</code> and <code>I:+1</code>. State and parameter names must be valid identifiers such as <code>S</code>, <code>I</code>, <code>beta</code>, or <code>k_on</code>.</p>
-</section>
-
-<section class="card">
-  <h2>Import formats</h2>
-  <p>Use JSON for the most reliable model interchange. CSV, TXT/ODE, YAML-like files, Python files with an embedded <code>ODE_LAB_CONFIG</code> block, and basic SBML/XML reaction models are also supported.</p>
-  <p>SBML import handles species, reactions, stoichiometry, global/local parameters, and MathML kinetic laws. Events, algebraic rules, assignment rules, units, and advanced SBML packages are outside the browser import boundary.</p>
-</section>
-
-<section class="card">
-  <h2>Export publication figures</h2>
-  <ol>
-    <li>Run a model or parameter sweep.</li>
-    <li>Choose the primary or secondary view.</li>
-    <li>Open <strong>Figure settings</strong>.</li>
-    <li>Edit the title, axis labels, colorbar label, size, font, line width, marker size, legend, and grid.</li>
-    <li>Export SVG for manuscripts or PNG for slides.</li>
-  </ol>
-</section>
-
-<section class="card">
-  <h2>Local Python setup</h2>
-  <pre><code># Linux / macOS
-python3 -m venv .venv
-source .venv/bin/activate
-pip install numpy scipy matplotlib casadi pyomo
-
-# Windows PowerShell
-py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install numpy scipy matplotlib casadi pyomo</code></pre>
-</section>
-
-<section class="card">
-  <h2>Modeling boundary</h2>
-  <ul>
-    <li>Use deterministic models when average population or concentration dynamics are the main object.</li>
-    <li>Use stochastic models when discreteness, extinction, hitting times, rare events, finite-population fluctuations, or information-gathering policies are central.</li>
-    <li>For calibrated inference, stiff systems, large ensembles, or serious constrained optimization, export and run a specialist Python workflow.</li>
-  </ul>
-</section>
-
-<section class="card">
-  <h2>License</h2>
-  <p>MIT License. You may use, modify, and redistribute this application with attribution and without warranty.</p>
-</section>
+<main class="doc-page">
+<section class="card hero-doc hero-with-mark"><div><p class="eyebrow">Documentation</p><h1>Foko Lab reference</h1><p>Concise reference for the four labs, model formats, solver limits, exports and recommended workflows. The detailed walkthrough is now separated into the tutorial.</p><p><a class="primary link-button" href="tutorial.html">Open full tutorial</a></p></div><img class="lab-mark" alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.1"/></section>
+<section class="card"><h2>Shared workflow</h2><ol class="clean-list"><li>Select a model from the library or Model Atlas.</li><li>Edit equations, parameters, events or optimization objectives in the middle panel.</li><li>Run, solve or optimize from the sticky action bar.</li><li>Read the status strip and metrics.</li><li>Use the two-plot workspace and diagnostics tab.</li><li>Export CSV, JSON, Plotly JSON or Python starter code.</li></ol></section>
+<section class="card"><h2>Labs</h2><div class="example-catalog"><article><h3>ODE Lab</h3><p>Deterministic ODE simulation, phase portraits, parameter sweeps, vector fields, Poincaré sections and Python solve_ivp export.</p></article><article><h3>Optimization Lab</h3><p>Constrained nonlinear optimization, metaheuristics, convergence plots, feasibility diagnostics and SciPy export.</p></article><article><h3>Steady-State / Algebraic Lab</h3><p>Algebraic systems f(x,p)=0, Newton solves, residuals, stability classification, alternative equilibria and continuation.</p></article><article><h3>Stochastic Lab</h3><p>CTMC/Gillespie models, branching processes, random walks, stochastic decision models, ensemble plots and stochastic exports.</p></article></div></section>
+<section class="card"><h2>Exports</h2><p>Every lab is designed for reproducibility. Use model JSON to save the model, wide CSV for spreadsheet inspection, long CSV for tidy analysis, Plotly JSON for recreating figures, and Python export for external computation. Browser results are intended for exploration and teaching, not regulatory-grade validation.</p></section>
+<section class="card"><h2>Known scope</h2><ul class="clean-list"><li>Browser solvers are best for small to medium exploratory models.</li><li>Stiff ODE methods such as BDF, Radau and LSODA are exported to Python rather than solved directly in the browser.</li><li>Large stochastic ensembles should be moved to Python after prototyping.</li><li>SBML import supports useful basic cases but not the full SBML standard.</li></ul></section>
 </main>
 </div>
+<script>const t=localStorage.getItem('chilperic-theme')||'aurora';document.documentElement.dataset.theme=t;const s=document.getElementById('themeBtn');if(s){s.value=t;s.onchange=e=>{document.documentElement.dataset.theme=e.target.value;localStorage.setItem('chilperic-theme',e.target.value)}};</script>
 </body>
 </html>

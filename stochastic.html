@@ -3,143 +3,110 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="Stochastic Lab for editable jump processes, branching processes, random walks, SDEs, and stochastic decision models."/>
-<title>Stochastic Lab · Chilperic Dynamics</title>
+<meta name="description" content="Foko Lab Stochastic Lab: browser-side stochastic processes, Gillespie CTMC models, branching processes, random walks, SDE examples, diagnostics, plots, and reproducible exports."/>
+<title>Stochastic Lab · Foko Lab</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="styles/style.css?v=2.4.8" rel="stylesheet"/>
+<link href="styles/style.css?v=2.7.1" rel="stylesheet"/>
 </head>
-<body>
+<body data-lab="stochastic">
 <div class="app-shell stochastic-page lab-page">
 <header class="topbar">
-<a aria-label="Chilperic Dynamics home" class="brand" href="index.html#workbench"><img alt="Chilperic Dynamics" class="logo" src="assets/chilperic-ode-logo.svg?v=2.1.9"/></a>
-<nav aria-label="Primary navigation" class="topnav">
-<a href="index.html#workbench">ODE Lab</a>
+<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.1"/></a>
+<nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
+<a href="ode.html#workbench">ODE Lab</a>
+<a href="optimization.html">Optimization Lab</a>
+<a href="steady.html">Steady-State Lab</a>
 <a class="active" href="stochastic.html">Stochastic Lab</a>
 <a href="examples.html">Model Atlas</a>
 <a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a>
 </nav>
 <div class="top-actions">
 <label class="theme-picker" aria-label="Theme"><span class="theme-icon">☼</span><select id="themeBtn" class="theme-select" aria-label="Theme"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label>
+<button id="resetModelTop" class="avatar" title="Reset current stochastic template" type="button">↻</button>
 </div>
 </header>
-<main class="stoch2-layout">
-<section class="stoch2-hero card">
-<div>
-<p class="eyebrow">Stochastic Lab</p>
-<h1>Stochastic Lab</h1>
-<p>Choose a stochastic template, edit its states, parameters and events, run the simulation, then inspect the two configurable plots.</p>
-</div>
-<div class="stoch2-hero-actions">
-<a class="primary link-button" href="index.html#workbench">Open ODE Lab</a>
-<a class="ghost link-button" href="examples.html">Browse Model Atlas</a>
-</div>
-</section>
-<section class="stoch2-shell">
-<aside class="card stoch2-library">
-<div class="library-head">
-<div><p class="eyebrow mini">Model library</p><h2>Examples</h2></div>
-<select id="familyFilter" aria-label="Filter model family"><option value="all">All families</option></select>
-</div>
-<div id="modelLibrary" class="stoch2-model-list"></div>
+<main class="layout lab-mirror-layout" id="workbench">
+<aside class="side-nav" aria-label="Stochastic workflow">
+<button class="nav-item active" type="button" data-jump="library"><span>▦</span><b>Models</b></button>
+<button class="nav-item" type="button" data-jump="editor"><span>λ</span><b>Events</b></button>
+<button class="nav-item" type="button" data-jump="simulation"><span>▶</span><b>Run</b></button>
+<button class="nav-item" type="button" data-jump="results"><span>▣</span><b>Results</b></button>
+<button class="nav-item" type="button" data-jump="exportsBlock"><span>⇩</span><b>Export</b></button>
+<button class="collapse" type="button" id="collapseSidebar">‹</button>
 </aside>
-<section class="stoch2-workbench">
-<article class="card stoch2-title-card">
-<div>
+<aside class="work-panel controls" aria-label="Stochastic controls">
+<section class="intro-card hero-with-mark">
+<div><p class="eyebrow mini">Stochastic processes · ensembles · uncertainty</p><b>Stochastic Lab</b><p class="note compact-note">Choose a template, edit states, propensities and settings, then run the ensemble while plots remain visible on the right.</p></div>
+<img class="lab-mark" src="assets/lab-logos/stochastic-lab.webp" alt="Stochastic Lab mark"/>
+</section>
+<section class="actionbar" aria-label="Run stochastic model">
+<button id="runModel" class="primary run-button" type="button">▶ Run ensemble</button>
+<button id="resetModel" class="ghost" type="button">Reset</button>
+<button id="applyJson" class="secondary" type="button">Apply JSON</button>
+<button id="newBlankModel" class="ghost" type="button">Blank CTMC</button>
+<div class="progress"><div id="runProgress"></div></div>
+<div class="status" id="runStatus">Idle.</div>
+</section>
+<section class="examples-section" id="library">
+<div class="section-title flat"><h2>Examples</h2><select id="familyFilter" aria-label="Filter stochastic family"><option value="all">All families</option></select></div>
+<div id="modelLibrary" class="stoch2-model-list"></div>
+<p class="narrative" id="stochasticNarrative">Select a stochastic model.</p>
+</section>
+<section class="editor-stack module-block" id="editor">
+<article class="card">
+<div class="card-head"><h2>Model</h2><div class="model-badges hidden" id="modelBadges"></div></div>
 <p class="atlas-type" id="modelFamily">—</p>
-<h2 id="modelTitle">—</h2>
-<p id="modelConcept">—</p>
-</div>
-<div class="model-badges hidden" id="modelBadges"></div>
+<h2 id="modelTitle" class="compact-heading">—</h2>
+<p id="modelConcept" class="note">—</p>
+<div id="diagnosticGuide" class="diagnostic-guide"></div>
 </article>
-<nav class="stoch2-tabs" aria-label="Stochastic workflow">
-<button class="stoch2-tab active" data-tab="model" type="button">Model</button>
-<button class="stoch2-tab" data-tab="simulation" type="button">Simulation</button>
-<button class="stoch2-tab" data-tab="results" type="button">Results</button>
-<button class="stoch2-tab" data-tab="compare" type="button">Compare</button>
-<button class="stoch2-tab" data-tab="export" type="button">Export</button>
-</nav>
-<section class="stoch2-panel active" id="tab-model">
-<div class="stoch2-grid-main">
-<article class="card stoch2-editor-card">
-<div class="card-head"><h2>Parameters</h2><button id="resetModel" class="ghost" type="button">Reset example</button></div>
+<article class="card">
+<div class="card-head"><h2>Parameters</h2></div>
 <div id="parameterEditor" class="stoch2-param-grid"></div>
 </article>
-<article class="card stoch2-editor-card">
-<div class="card-head"><h2>Model editor</h2><div class="inline-actions"><button id="newBlankModel" class="ghost" type="button">New blank CTMC</button><button id="applyJson" class="secondary" type="button">Apply JSON</button></div></div>
-<div class="editor-help">For CTMC/Gillespie models, edit states, parameters, propensities, and integer state updates. This is the stochastic analogue of entering equations in the ODE Lab.</div>
+<article class="card" id="simulation">
+<div class="card-head"><h2>Simulation settings</h2></div>
+<div class="stoch2-param-grid">
+<label><span>runs</span><input id="runsInput" type="number" min="1" max="10000" value="200"/></label>
+<label><span>seed</span><input id="seedInput" type="number" min="1" value="12345"/></label>
+<label><span>time horizon</span><input id="tEndInput" type="number" min="1" step="1" value="100"/></label>
+<label><span>grid points</span><input id="gridInput" type="number" min="20" max="1000" step="10" value="241"/></label>
+<label><span>max events / path</span><input id="maxEventsInput" type="number" min="100" max="200000" step="100" value="50000"/></label>
+<label><span>plot variable</span><select id="plotVariable"></select></label>
+</div>
+<div class="switch-row compact-controls"><label class="checkline"><input id="meanFieldToggle" type="checkbox" checked/> <span>Mean-field overlay</span></label><label class="checkline"><input id="autoRunToggle" type="checkbox"/> <span>Auto-run after edits</span></label></div>
+</article>
+<article class="card">
+<div class="card-head"><h2>Structured CTMC editor</h2></div>
+<div class="editor-help">For Gillespie models, edit states, parameters, propensities and integer updates. Specialist stochastic examples use their template parameters above.</div>
 <div id="structuredEditor"></div>
+</article>
+<article class="card">
 <label class="full-label"><span>Full editable model schema</span><textarea id="jsonEditor" spellcheck="false" rows="16"></textarea></label>
 <p class="note compact-note" id="validationStatus">Schema ready.</p>
 </article>
-</div>
 </section>
-<section class="stoch2-panel" id="tab-simulation">
-<div class="stoch2-grid-main">
-<article class="card stoch2-editor-card">
-<div class="card-head"><h2>Run settings</h2><button id="runModel" class="primary" type="button">▶ Run ensemble</button></div>
-<div class="stoch2-param-grid">
-<label><span>runs</span><input id="runsInput" type="number" min="1" max="10000" value="200"></label>
-<label><span>seed</span><input id="seedInput" type="number" min="1" value="12345"></label>
-<label><span>time horizon</span><input id="tEndInput" type="number" min="1" step="1" value="100"></label>
-<label><span>grid points</span><input id="gridInput" type="number" min="20" max="1000" step="10" value="241"></label>
-<label><span>max events / path</span><input id="maxEventsInput" type="number" min="100" max="200000" step="100" value="50000"></label>
-<label><span>plot variable</span><select id="plotVariable"></select></label>
-</div>
-<div class="switch-row compact-controls"><label class="checkline"><input id="meanFieldToggle" type="checkbox" checked> <span>Mean-field overlay</span></label><label class="checkline"><input id="autoRunToggle" type="checkbox"> <span>Auto-run</span></label></div>
-<div class="progress stoch2-progress"><div id="runProgress"></div></div><p id="runStatus" class="status">Idle.</p>
-</article>
-<article class="card stoch2-editor-card">
-<h2>What this run measures</h2>
-<div id="diagnosticGuide" class="diagnostic-guide"></div>
-</article>
-</div>
-</section>
-<section class="stoch2-panel" id="tab-results">
+</aside>
+<section class="workspace" aria-label="Stochastic results" id="results">
+<section class="results-card">
+<div class="status-strip"><div class="status-ok"><span>●</span><b id="topStatus">Ready</b></div><div><span>Runtime</span><b id="runtimeValue">—</b></div><div><span>Runs</span><b id="runsValue">—</b></div><div><span>Mean final</span><b id="meanFinalValue">—</b></div></div>
+<div class="result-head"><div class="tabs" id="resultTabs"><button class="tab active" data-panel="plotsPanel" type="button">Plots</button><button class="tab" data-panel="diagnosticsPanel" type="button">Diagnostics</button></div></div>
 <div class="plot-toolbar-v2 stochastic-plot-toolbar">
-<label><span>Primary view</span><select id="stochLeftPlotType"></select></label>
-<label><span>Secondary view</span><select id="stochRightPlotType"></select></label>
-<button class="ghost" id="stochExportPng" type="button">PNG</button>
+<label><span>Left plot</span><select id="stochLeftPlotType"><option value="ensemble">Ensemble paths</option><option value="mean">Mean trajectory</option><option value="single">Single path</option><option value="mean-field">Mean + mean-field</option><option value="diagnostic">Distribution / diagnostic</option><option value="metrics">Metrics chart</option></select></label>
+<label><span>Right plot</span><select id="stochRightPlotType"><option value="diagnostic">Distribution / diagnostic</option><option value="ensemble">Ensemble paths</option><option value="mean">Mean trajectory</option><option value="single">Single path</option><option value="mean-field">Mean + mean-field</option><option value="metrics">Metrics chart</option></select></label>
+<button class="ghost" id="stochExportPng" type="button">PNG</button><button class="ghost" id="stochExportSvg" type="button">SVG</button>
 </div>
-<article class="card stoch2-summary-card">
-<div class="card-head"><h2>Diagnostics</h2><button id="copySummary" class="ghost" type="button">Copy summary</button></div>
-<div id="summaryGrid" class="summary-grid"></div>
-<div id="insightBox" class="insight-box">Run a model to inspect stochastic diagnostics.</div>
-</article>
-<section class="plot-wall stoch2-plot-wall">
-<article class="plot-card card"><div class="plot-head"><h2>Trajectories / ensemble</h2><span id="plotALabel">—</span></div><div id="plotA" class="plot"></div></article>
-<article class="plot-card card"><div class="plot-head"><h2>Distribution / diagnostic</h2><span id="plotBLabel">—</span></div><div id="plotB" class="plot"></div></article>
+<div class="tab-panel active" id="plotsPanel"><div class="chart-grid"><article class="chart-card"><div class="chart-title"><h3>Primary plot</h3><span id="plotALabel">—</span></div><div id="leftPlot" class="plot"></div></article><article class="chart-card"><div class="chart-title"><h3>Secondary plot</h3><span id="plotBLabel">—</span></div><div id="rightPlot" class="plot"></div></article></div><div class="metrics-grid"><div class="metric-card"><small>Runs</small><b id="metricRuns">—</b><em>ensemble size</em></div><div class="metric-card"><small>Runtime</small><b id="metricRuntime">—</b><em>browser time</em></div><div class="metric-card"><small>Plot variable</small><b id="metricVariable">—</b><em>observed state</em></div><div class="metric-card"><small>Engine</small><b id="metricEngine">—</b><em>model class</em></div></div></div>
+<div class="tab-panel" id="diagnosticsPanel"><article class="card stoch2-summary-card"><div class="card-head"><h2>Diagnostics</h2><button id="copySummary" class="ghost" type="button">Copy summary</button></div><div id="summaryGrid" class="summary-grid"></div><div id="insightBox" class="insight-box">Run a model to inspect stochastic diagnostics.</div><div id="compareBox" class="det-stoch-compare"></div><div id="meanFieldBox" class="meanfield-box"></div></article></div>
 </section>
-</section>
-<section class="stoch2-panel" id="tab-compare">
-<article class="card">
-<h2>Deterministic vs stochastic reading</h2>
-<div id="compareBox" class="det-stoch-compare"></div>
-<div id="meanFieldBox" class="meanfield-box"></div>
-</article>
-</section>
-<section class="stoch2-panel" id="tab-export">
-<div class="stoch2-grid-main">
-<article class="card stoch2-editor-card">
-<h2>Reproducibility exports</h2>
-<div class="export-grid">
-<button id="downloadModel" class="secondary" type="button">Download model JSON</button>
-<button id="downloadCsv" class="secondary" type="button">Download trajectories CSV</button>
-<button id="downloadSummary" class="secondary" type="button">Download summary JSON</button>
-<button id="copyPython" class="ghost" type="button">Copy Python starter</button>
-</div>
-<p class="note">Exports include the model schema, seed, run settings, and browser-scale output. Use them as a reproducibility bridge, not as a substitute for calibrated inference.</p>
-</article>
-<article class="card stoch2-editor-card">
-<label class="full-label"><span>Export preview</span><textarea id="exportPreview" spellcheck="false" rows="18"></textarea></label>
-</article>
-</div>
-</section>
-</section>
+<section class="exports-card" id="exportsBlock"><div class="section-title flat"><h2>Exports</h2></div><div class="export-row"><button id="downloadModel" class="secondary" type="button">Model JSON</button><button id="downloadCsv" class="secondary" type="button">Wide CSV</button><button id="downloadLongCsv" class="secondary" type="button">Long CSV</button><button id="downloadSummary" class="secondary" type="button">Summary JSON</button><button id="downloadPlotJson" class="secondary" type="button">Plot data JSON</button><button id="copyPython" class="ghost" type="button">Copy Python starter</button></div><label class="full-label"><span>Export preview</span><textarea id="exportPreview" spellcheck="false" rows="12"></textarea></label><p class="note">Exports include the model schema, seed, run settings and browser-scale output. Use Python export for external validation and larger runs.</p></section>
 </section>
 </main>
 </div>
-<script src="src/stochastic/stochastic-lab.js?v=2.4.8"></script>
+<script src="src/stochastic/stochastic-lab.js?v=2.7.1"></script>
+<script>document.getElementById('resetModelTop')?.addEventListener('click',()=>document.getElementById('resetModel')?.click());document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'})));document.getElementById('collapseSidebar')?.addEventListener('click',()=>document.getElementById('workbench')?.classList.toggle('sidebar-collapsed'));</script>
 </body>
 </html>

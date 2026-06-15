@@ -1,5 +1,5 @@
-# Chilperic ODE can import this file because it contains ODE_LAB_CONFIG.
-ODE_LAB_CONFIG = {
+# Foko Lab can import this file because it contains DYNAMICS_LAB_CONFIG.
+DYNAMICS_LAB_CONFIG = {
   "module": "ode",
   "model": {
     "vars": ["x", "y", "z"],
@@ -9,4 +9,4 @@ ODE_LAB_CONFIG = {
     "t0": 0, "t1": 35, "points": 2500, "method": "rk45"
   }
 }
-# END_ODE_LAB_CONFIG
+# END_DYNAMICS_LAB_CONFIG

@@ -156,7 +156,7 @@ function showValidation(prefix = 'Model ready.') {
   return v;
 }
 function plotLayout(title, xaxis, yaxis) { return { title: { text: title, font: { size: 14 } }, margin: { l: 52, r: 22, t: 44, b: 46 }, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', font: { family: 'Inter, system-ui, sans-serif' }, xaxis: { title: xaxis, zeroline: false }, yaxis: { title: yaxis, zeroline: false }, legend: { orientation: 'h', y: -0.24 } }; }
-function renderPlot(id, traces, title, xaxis, yaxis) { if (!window.Plotly) return; Plotly.react(id, traces, plotLayout(title, xaxis, yaxis), { responsive: true, displaylogo: false }); $(id).classList.add('plot-ready'); }
+function renderPlot(id, traces, title, xaxis, yaxis) { const el=$(id); if (!el) return; if (!window.Plotly){ el.innerHTML='<div class="diagnostics empty">Plotly is not loaded.</div>'; return; } if(!traces || !traces.length){ el.innerHTML='<div class="diagnostics empty">No data available for this plot.</div>'; return; } try{ if(el.querySelector('.diagnostics')) el.innerHTML=''; Plotly.purge(el); Plotly.react(el, traces, plotLayout(title, xaxis, yaxis), { responsive: true, displaylogo: false }).then(()=>{ el.classList.add('plot-ready'); try{ Plotly.Plots.resize(el); }catch{} }).catch(err=>{ el.innerHTML='<div class="diagnostics empty">Plot error: '+escapeHtml(err.message||err)+'</div>'; }); }catch(err){ el.innerHTML='<div class="diagnostics empty">Plot error: '+escapeHtml(err.message||err)+'</div>'; } }
 function downloadText(filename, text, mime = 'text/plain') { const blob = new Blob([text], { type: mime }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); }
 function csvEscape(v) { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replaceAll('"', '""') + '"' : s; }
 
@@ -309,13 +309,18 @@ let jsonDirty = false;
 const CORE_STOCH = ['birth-death', 'sir', 'gene-expression', 'michaelis-menten-ssa'];
 
 function initTheme() {
-  const saved = localStorage.getItem('chilperic-ode-theme') || 'aurora';
+  const saved = localStorage.getItem('chilperic-theme') || 'aurora';
   document.documentElement.dataset.theme = saved;
   if ($('themeBtn')) $('themeBtn').value = saved;
-  $('themeBtn')?.addEventListener('change', e => { document.documentElement.dataset.theme = e.target.value; localStorage.setItem('chilperic-ode-theme', e.target.value); });
+  $('themeBtn')?.addEventListener('change', e => { document.documentElement.dataset.theme = e.target.value; localStorage.setItem('chilperic-theme', e.target.value); });
 }
 function initTabs() {
   document.querySelectorAll('.stoch2-tab').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
+  document.querySelectorAll('#resultTabs .tab').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('#resultTabs .tab').forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === btn.dataset.panel));
+    setTimeout(() => ['leftPlot','rightPlot'].forEach(id => { try { Plotly.Plots.resize(id); } catch {} }), 50);
+  }));
 }
 function setTab(tab) {
   activeTab = tab;
@@ -353,7 +358,7 @@ function loadPreset(id, updateHash = false) {
   currentModel = clone(currentPreset.model);
   jsonDirty = false;
   currentSettings = { runs: currentPreset.settings?.runs || 200, seed: 12345, tEnd: currentPreset.settings?.tEnd || currentModel.params?.tEnd || 100, grid: 241, maxEvents: 50000, plotVariable: currentPreset.settings?.plotVariable || firstVariable(currentModel), showMeanField: true };
-  if (updateHash) history.replaceState(null, '', '#' + currentPreset.id);
+  if (updateHash) history.replaceState(null, '', `?example=${encodeURIComponent(currentPreset.id)}`);
   renderLibrary();
   renderAll();
   runCurrent();
@@ -375,7 +380,7 @@ function loadCustomCTMC(model = null, title = 'Blank CTMC model', updateHash = t
   currentModel = clone(model || blankCTMCModel());
   jsonDirty = false;
   currentSettings = { runs: 200, seed: 12345, tEnd: 100, grid: 241, maxEvents: 50000, plotVariable: firstVariable(currentModel), showMeanField: true };
-  if (updateHash) history.replaceState(null, '', '#custom-ctmc');
+  if (updateHash) history.replaceState(null, '', '?example=custom-ctmc');
   renderLibrary();
   renderAll();
   showValidation(model ? 'Editable CTMC copy ready.' : 'Blank CTMC model ready.');
@@ -674,6 +679,13 @@ function valueOfVar(state, model, variable) {
   if (model.derived?.[variable]) { try { return evalAnyExpr(model.derived[variable], { ...state, ...(model.params || {}) }); } catch { return 0; } }
   return 0;
 }
+
+function eventIsEnabled(ev, st) {
+  for (const [k, delta] of Object.entries(ev.updates || {})) {
+    if ((Number(st[k]) || 0) + Number(delta) < -1e-12) return false;
+  }
+  return true;
+}
 function runCTMC(model, settings, rng) {
   const events = model.events.map(e => ({ ...e, fn: compileExpr(e.propensity) }));
   const tGrid = grid(settings.tEnd, settings.grid);
@@ -683,7 +695,7 @@ function runCTMC(model, settings, rng) {
   fillUntil(0);
   while (t < settings.tEnd && steps < settings.maxEvents) {
     const ctx = { ...st, ...(model.params || {}) };
-    const props = events.map(e => e.fn(ctx));
+    const props = events.map(e => eventIsEnabled(e, st) ? e.fn(ctx) : 0);
     const a0 = sum(props);
     if (!(a0 > 0)) break;
     t += -Math.log(Math.max(rng(), 1e-12)) / a0;
@@ -691,11 +703,15 @@ function runCTMC(model, settings, rng) {
     let u = rng() * a0, chosen = 0;
     for (let i = 0; i < props.length; i++) { u -= props[i]; if (u <= 0) { chosen = i; break; } }
     const ev = events[chosen];
-    for (const [k, delta] of Object.entries(ev.updates || {})) st[k] = Math.max(0, (st[k] || 0) + Number(delta));
+    if (!eventIsEnabled(ev, st)) continue;
+    for (const [k, delta] of Object.entries(ev.updates || {})) {
+      const next = (Number(st[k]) || 0) + Number(delta);
+      st[k] = Math.abs(next) < 1e-12 ? 0 : next;
+    }
     eventCounts[ev.name] += 1; steps += 1; fillUntil(t);
   }
   fillUntil(settings.tEnd + 1e-9);
-  return { x: tGrid, y, finalState: st, final: y[y.length - 1], events: eventCounts, steps };
+  return { x: tGrid, y, finalState: st, final: y[y.length - 1], events: eventCounts, steps, truncated: steps >= settings.maxEvents };
 }
 function meanFieldCTMC(model, settings) {
   const names = (model.states || []).map(s => s.name); const p = model.params || {}; const events = model.events.map(e => ({ ...e, fn: compileExpr(e.propensity) }));
@@ -725,7 +741,7 @@ function resultFromCTMC(model, settings) {
   let mf = null; if (settings.showMeanField) { mf = meanFieldCTMC(model, settings); traces.push(traceLine('mean-field', mf.x, mf.y, { line: { dash: 'dash', width: 3 } })); }
   const h = hist(ens.finals);
   const eventMean = {}; Object.keys(ens.extra[0]?.events || {}).forEach(k => eventMean[k] = mean(ens.extra.map(e => e.events[k] || 0)));
-  return { engine: 'ctmc', x: ens.x, paths: ens.paths, finals: ens.finals, meanField: mf, eventMean, metrics: { runs: ens.paths.length, 'mean final': mean(ens.finals), 'variance final': variance(ens.finals), 'P(final=0)': extinction, 'mean events': mean(ens.extra.map(e => e.steps)) }, tracesA: traces, tracesB: [{ type: 'bar', x: h.x, y: h.y, name: 'final distribution' }], titleA: `${settings.plotVariable}: stochastic paths and mean`, titleB: `Final ${settings.plotVariable} distribution`, xA: 'time', yA: settings.plotVariable, xB: `final ${settings.plotVariable}`, yB: 'runs' };
+  return { engine: 'ctmc', x: ens.x, paths: ens.paths, finals: ens.finals, meanField: mf, eventMean, metrics: { runs: ens.paths.length, 'mean final': mean(ens.finals), 'variance final': variance(ens.finals), 'P(final=0)': extinction, 'mean events': mean(ens.extra.map(e => e.steps)), 'paths at maxEvents': ens.extra.filter(e => e.truncated).length }, tracesA: traces, tracesB: [{ type: 'bar', x: h.x, y: h.y, name: 'final distribution' }], titleA: `${settings.plotVariable}: stochastic paths and mean`, titleB: `Final ${settings.plotVariable} distribution`, xA: 'time', yA: settings.plotVariable, xB: `final ${settings.plotVariable}`, yB: 'runs' };
 }
 
 function runBranching(model, settings) {
@@ -791,16 +807,19 @@ function computeResult() {
   throw new Error('Unknown engine: ' + e);
 }
 function runCurrent() {
+  const btn = $('runModel');
+  if (btn?.disabled) return;
   readSettings();
   const validation = validateCurrentModel();
   if (!validation.ok) { showValidation('Fix the model before running.'); $('runStatus').textContent = 'Model validation failed.'; $('runProgress').style.width = '0%'; return; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Running…'; }
   $('runStatus').textContent = 'Running…'; $('runProgress').style.width = '35%';
   window.setTimeout(() => {
     try {
       const started = performance.now(); lastResult = computeResult(); lastResult.runtimeMs = performance.now() - started;
       $('runProgress').style.width = '100%'; $('runStatus').textContent = `Done in ${fmt(lastResult.runtimeMs)} ms.`; renderResult(); updateExportPreview();
-      // Keep the editor tab in place; plots are always visible in the workspace.
     } catch (err) { $('runStatus').textContent = 'Error: ' + err.message; $('runProgress').style.width = '0%'; console.error(err); }
+    finally { if (btn) { btn.disabled = false; btn.textContent = '▶ Run ensemble'; } }
   }, 20);
 }
 function renderResult() {
@@ -811,10 +830,26 @@ function renderResult() {
   if ($('runtimeValue')) $('runtimeValue').textContent = fmt(lastResult.runtimeMs) + ' ms';
   if ($('runsValue')) $('runsValue').textContent = fmt(lastResult.metrics?.runs ?? currentSettings?.runs ?? '—');
   if ($('meanFinalValue')) $('meanFinalValue').textContent = fmt(lastResult.metrics?.['mean final'] ?? lastResult.metrics?.['mean final population'] ?? lastResult.metrics?.['mean final frequency'] ?? '—');
+  if ($('metricRuns')) $('metricRuns').textContent = fmt(lastResult.metrics?.runs ?? currentSettings?.runs ?? '—');
+  if ($('metricRuntime')) $('metricRuntime').textContent = fmt(lastResult.runtimeMs) + ' ms';
+  if ($('metricVariable')) $('metricVariable').textContent = currentSettings?.plotVariable || '—';
+  if ($('metricEngine')) $('metricEngine').textContent = currentPreset?.engine || '—';
   populateStochasticPlotTypes();
   renderSelectedPlots();
   renderMeanFieldBox();
+  renderStochasticWarnings();
 }
+function renderStochasticWarnings() {
+  const box = $('stochWarningBox');
+  if (!box || !lastResult) return;
+  const truncated = Number(lastResult.metrics?.['paths at maxEvents'] || 0);
+  const parts = [];
+  if (currentPreset?.engine === 'ctmc') parts.push('CTMC events that would create negative state counts are blocked before firing, not clamped after firing.');
+  if (truncated > 0) parts.push(`${truncated} path(s) reached maxEvents; increase max events or shorten the horizon before trusting tail statistics.`);
+  if (lastResult.meanField) parts.push('Mean-field overlay is a deterministic large-count approximation. It can fail near extinction, low copy numbers, or strong nonlinear propensities.');
+  box.textContent = parts.join(' ') || 'No stochastic warnings for this run.';
+}
+
 function populateStochasticPlotTypes() {
   const left = $('stochLeftPlotType'), right = $('stochRightPlotType');
   if (!left || !right || !lastResult) return;
@@ -844,8 +879,8 @@ function renderSelectedPlots() {
   const right = buildRightPlot(rightType);
   $('plotALabel').textContent = left.title;
   $('plotBLabel').textContent = right.title;
-  renderPlot('plotA', left.traces, left.title, left.xLabel, left.yLabel);
-  renderPlot('plotB', right.traces, right.title, right.xLabel, right.yLabel);
+  renderPlot('leftPlot', left.traces, left.title, left.xLabel, left.yLabel);
+  renderPlot('rightPlot', right.traces, right.title, right.xLabel, right.yLabel);
 }
 function buildLeftPlot(type) {
   const x = lastResult.x || [];
@@ -871,6 +906,7 @@ function buildLeftPlot(type) {
   return { traces: lastResult.tracesA || [], title: lastResult.titleA || 'Main plot', xLabel: lastResult.xA || '', yLabel: lastResult.yA || '' };
 }
 function buildRightPlot(type) {
+  if (['ensemble','mean','single','mean-field'].includes(type)) return buildLeftPlot(type);
   if (type === 'metrics') {
     const entries = Object.entries(lastResult.metrics || {}).filter(([,v]) => Number.isFinite(Number(v))).slice(0, 12);
     return { traces: [{ type:'bar', x: entries.map(e=>e[0]), y: entries.map(e=>Number(e[1])), name:'metrics' }], title: 'Run metrics', xLabel: 'metric', yLabel: 'value' };
@@ -879,7 +915,7 @@ function buildRightPlot(type) {
 }
 function renderMeanFieldBox() {
   const mf = lastResult?.meanField;
-  $('meanFieldBox').innerHTML = mf ? `<h3>Mean-field overlay</h3><p>The dashed curve is generated automatically from the CTMC stoichiometry: drift = sum of event updates multiplied by propensities. This is the stochastic analogue of an ODE limit, not a replacement for the finite-event simulation.</p>` : `<h3>Mean-field overlay</h3><p>This model family uses a specialized stochastic engine. A closed deterministic approximation is either model-specific or not shown in this browser lab.</p>`;
+  $('meanFieldBox').innerHTML = mf ? `<h3>Mean-field overlay</h3><p>The dashed curve is generated automatically from the CTMC stoichiometry: drift = sum of event updates multiplied by propensities. This is a deterministic large-copy-number approximation, not a replacement for finite-event simulation. It may fail for extinction, low copy numbers, or strongly nonlinear propensities.</p>` : `<h3>Mean-field overlay</h3><p>This model family uses a specialized stochastic engine. A closed deterministic approximation is either model-specific or not shown in this browser lab.</p>`;
 }
 function updateExportPreview() {
   const payload = { preset: currentPreset?.id, engine: currentPreset?.engine, model: currentModel, settings: currentSettings, summary: lastResult?.metrics || null };
@@ -893,6 +929,21 @@ function resultToCsv() {
     return [header, ...rows].map(r => r.map(csvEscape).join(',')).join('\n');
   }
   return 'metric,value\n' + Object.entries(lastResult.metrics || {}).map(([k, v]) => `${csvEscape(k)},${csvEscape(v)}`).join('\n');
+}
+function resultToLongCsv() {
+  if (!lastResult) return '';
+  const rows = [['dataset','run','x','variable','value','extra'].join(',')];
+  if (lastResult.paths && lastResult.x) {
+    const variable = currentSettings?.plotVariable || 'value';
+    lastResult.paths.forEach((path, r) => lastResult.x.forEach((x, i) => rows.push(['stochastic', r + 1, x, variable, path[i], currentPreset?.id || ''].map(csvEscape).join(','))));
+  }
+  Object.entries(lastResult.metrics || {}).forEach(([k, v]) => rows.push(['metrics','', '', k, v, currentPreset?.id || ''].map(csvEscape).join(',')));
+  return rows.join('\n');
+}
+function stochasticPlotDataExport() {
+  const pack = {preset: currentPreset?.id, engine: currentPreset?.engine, model: currentModel, settings: currentSettings, summary: lastResult?.metrics || null, result: lastResult || null, plots: {}, exportedAt: new Date().toISOString()};
+  ['leftPlot','rightPlot'].forEach(id => { const el = $(id); if (el && el.data) pack.plots[id] = {data: el.data, layout: el.layout}; });
+  return pack;
 }
 function pythonStarter() {
   const modelJson = JSON.stringify(currentModel, null, 2);
@@ -909,7 +960,7 @@ settings = ${settingsJson}
 # Exported JSON preserves the parameters and settings for reimplementation.
 `;
   }
-  return `# Runnable CTMC / Gillespie export from Chilperic Dynamics Lab
+  return `# Runnable CTMC / Gillespie export from Foko Lab
 # Model: ${currentPreset.title}
 
 import math
@@ -960,8 +1011,13 @@ def gillespie(model, settings, seed=0):
 
     fill_until(0.0)
     while t < t_end and events_taken < max_events:
+        def event_enabled(ev):
+            for name, delta in ev.get('updates', {}).items():
+                if state.get(name, 0.0) + float(delta) < -1e-12:
+                    return False
+            return True
         propensities = np.array([
-            _safe_eval(ev['propensity'], state, params)
+            _safe_eval(ev['propensity'], state, params) if event_enabled(ev) else 0.0
             for ev in model.get('events', [])
         ], dtype=float)
         a0 = propensities.sum()
@@ -971,8 +1027,12 @@ def gillespie(model, settings, seed=0):
         if t > t_end:
             break
         chosen = int(rng.choice(len(propensities), p=propensities / a0))
-        for name, delta in model['events'][chosen].get('updates', {}).items():
-            state[name] = max(0.0, state.get(name, 0.0) + float(delta))
+        ev = model['events'][chosen]
+        if not event_enabled(ev):
+            continue
+        for name, delta in ev.get('updates', {}).items():
+            val = state.get(name, 0.0) + float(delta)
+            state[name] = 0.0 if abs(val) < 1e-12 else val
         events_taken += 1
         fill_until(t)
     fill_until(t_end + 1e-12)
@@ -997,6 +1057,35 @@ if __name__ == '__main__':
     print('variance final:', finals.var())
 `;
 }
+
+function populatePlotTypeSelects() {
+  const leftOpts = [
+    ['ensemble', 'Ensemble paths'],
+    ['mean', 'Mean trajectory'],
+    ['single', 'Single path'],
+    ['mean-field', 'Mean + mean-field'],
+    ['diagnostic', 'Distribution / diagnostic'],
+    ['metrics', 'Metrics chart']
+  ];
+  const rightOpts = [
+    ['diagnostic', 'Distribution / diagnostic'],
+    ['ensemble', 'Ensemble paths'],
+    ['mean', 'Mean trajectory'],
+    ['single', 'Single path'],
+    ['mean-field', 'Mean + mean-field'],
+    ['metrics', 'Metrics chart']
+  ];
+  const fill = (id, opts, fallback) => {
+    const el = $(id);
+    if (!el) return;
+    const previous = el.value || fallback;
+    el.innerHTML = opts.map(([v, label]) => `<option value="${v}">${label}</option>`).join('');
+    el.value = opts.some(([v]) => v === previous) ? previous : fallback;
+  };
+  fill('stochLeftPlotType', leftOpts, 'ensemble');
+  fill('stochRightPlotType', rightOpts, 'diagnostic');
+}
+
 function bindEvents() {
   $('applyJson').addEventListener('click', applyJson);
   $('jsonEditor').addEventListener('input', () => { jsonDirty = true; $('validationStatus').textContent = 'JSON has unsaved changes — click Apply JSON to use them.'; $('validationStatus').classList.remove('bad'); });
@@ -1006,19 +1095,32 @@ function bindEvents() {
   $('runModel').addEventListener('click', runCurrent);
   $('stochLeftPlotType')?.addEventListener('change', renderSelectedPlots);
   $('stochRightPlotType')?.addEventListener('change', renderSelectedPlots);
-  $('stochExportPng')?.addEventListener('click', () => Plotly.downloadImage('plotA', {format:'png', filename:`${currentPreset?.id || 'stochastic'}-primary`}));
+  $('stochExportPng')?.addEventListener('click', () => safeDownloadPlot('leftPlot', 'png', 'primary'));
+  $('stochExportSvg')?.addEventListener('click', () => safeDownloadPlot('leftPlot', 'svg', 'primary'));
+  $('stochExportPngRight')?.addEventListener('click', () => safeDownloadPlot('rightPlot', 'png', 'secondary'));
+  $('stochExportSvgRight')?.addEventListener('click', () => safeDownloadPlot('rightPlot', 'svg', 'secondary'));
   ['runsInput','seedInput','tEndInput','gridInput','maxEventsInput','plotVariable','meanFieldToggle'].forEach(id => $(id).addEventListener('change', () => { readSettings(); updateExportPreview(); maybeAutoRun(); }));
   $('copySummary').addEventListener('click', () => navigator.clipboard?.writeText(JSON.stringify(lastResult?.metrics || {}, null, 2)));
   $('downloadModel').addEventListener('click', () => downloadText(`${currentPreset.id}-model.json`, JSON.stringify({ engine: currentPreset.engine, model: currentModel, settings: currentSettings }, null, 2), 'application/json'));
-  $('downloadCsv').addEventListener('click', () => downloadText(`${currentPreset.id}-trajectories.csv`, resultToCsv(), 'text/csv'));
+  $('downloadCsv').addEventListener('click', () => downloadText(`${currentPreset.id}-trajectories-wide.csv`, resultToCsv(), 'text/csv'));
+  $('downloadLongCsv')?.addEventListener('click', () => downloadText(`${currentPreset.id}-trajectories-long.csv`, resultToLongCsv(), 'text/csv'));
+  $('downloadPlotJson')?.addEventListener('click', () => downloadText(`${currentPreset.id}-plot-data.json`, JSON.stringify(stochasticPlotDataExport(), null, 2), 'application/json'));
   $('downloadSummary').addEventListener('click', () => downloadText(`${currentPreset.id}-summary.json`, JSON.stringify(lastResult?.metrics || {}, null, 2), 'application/json'));
   $('copyPython').addEventListener('click', () => { $('exportPreview').value = pythonStarter(); navigator.clipboard?.writeText(pythonStarter()); });
 }
-function boot() {
-  initTheme(); initTabs(); initLibrary(); bindEvents();
-  const alias = {gillespie:'birth-death', galton:'galton', wright:'wright-fisher', ratchet:'ratchet'};
-  const rawHash = location.hash.replace('#', ''); const hash = alias[rawHash] || rawHash;
-  if (hash === 'custom-ctmc') loadCustomCTMC(null, 'Blank CTMC model', false, { skipConfirm: true });
-  else loadPreset(PRESETS.some(p => p.id === hash) ? hash : 'birth-death', false);
+function safeDownloadPlot(id, format, label) {
+  const el = $(id);
+  if (el && el.data) Plotly.downloadImage(id, {format, filename:`${currentPreset?.id || 'stochastic'}-${label}`});
+  else if ($('runStatus')) $('runStatus').textContent = 'Run a model before exporting a plot.';
 }
+function boot() {
+  initTheme(); initTabs(); initLibrary(); populatePlotTypeSelects(); bindEvents();
+  const alias = {gillespie:'birth-death', galton:'galton', wright:'wright-fisher', ratchet:'ratchet'};
+  const params = new URLSearchParams(location.search);
+  const raw = params.get('example') || location.hash.replace('#', '');
+  const picked = alias[raw] || raw;
+  if (picked === 'custom-ctmc') loadCustomCTMC(null, 'Blank CTMC model', false, { skipConfirm: true });
+  else loadPreset(PRESETS.some(p => p.id === picked) ? picked : 'birth-death', false);
+}
+document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runCurrent(); } });
 document.addEventListener('DOMContentLoaded', boot);

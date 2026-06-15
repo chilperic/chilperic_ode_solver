@@ -4,6 +4,7 @@ importScripts('https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js');
 const ALLOWED_FUNCS = new Set(['sin','cos','tan','asin','acos','atan','sinh','cosh','tanh','exp','log','log10','sqrt','abs','min','max','pow','floor','ceil','round']);
 const ALLOWED_CONSTS = new Set(['pi','e','PI','E']);
 let cancelled = false;
+function mulberry32(seed){ let a=(Number(seed)||12345)>>>0; return function(){ a|=0; a=(a+0x6D2B79F5)|0; let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
 self.onmessage = (ev) => {
   const msg = ev.data || {};
   if (msg.type === 'cancel') { cancelled = true; return; }
@@ -187,11 +188,17 @@ function optJob(cfg){
   const allowed = new Set(names);
   const obj = compileSafe(cfg.objective, allowed);
   const obj2 = cfg.objective2 ? compileSafe(cfg.objective2, allowed) : null;
-  const gs = (cfg.ineq||[]).filter(Boolean).map(s=>compileSafe(s, allowed));
-  const hs = (cfg.eq||[]).filter(Boolean).map(s=>compileSafe(s, allowed));
+  const gs = (cfg.ineq||[]).filter(Boolean).map(str=>compileSafe(str, allowed));
+  const hs = (cfg.eq||[]).filter(Boolean).map(str=>compileSafe(str, allowed));
   const lo=cfg.variables.map(v=>Number(v.lower)), hi=cfg.variables.map(v=>Number(v.upper));
   const x0=cfg.variables.map(v=>Number(v.initial));
-  const penalty=Number(cfg.penalty)||1e6, samples=Math.max(100, Math.min(100000, Number(cfg.samples)||3500));
+  const penalty=Number(cfg.penalty)||1e6;
+  const budget=Math.max(100, Math.min(100000, Number(cfg.samples)||3500));
+  const popSize=Math.max(8, Math.min(400, Number(cfg.population)||36));
+  const temperature=Math.max(1e-9, Number(cfg.temperature)||1);
+  const tol=Math.max(1e-14, Number(cfg.tolerance)||1e-8);
+  const algorithm=cfg.algorithm || 'random_coord';
+  const rand = mulberry32(cfg.seed || 12345);
   const sign = cfg.sense === 'maximize' ? -1 : 1;
   function scope(x){ const s={}; names.forEach((n,i)=>s[n]=x[i]); return s; }
   function rawObj(x){ return evalCompiled(obj, scope(x)); }
@@ -203,20 +210,154 @@ function optJob(cfg){
     return v;
   }
   function penalized(x){ return sign*rawObj(x) + penalty*violation(x); }
+  function clamp(x){ return x.map((v,i)=>Math.max(lo[i],Math.min(hi[i],v))); }
+  function randomPoint(){ return lo.map((a,i)=>a + rand()*(hi[i]-a)); }
+  function jitter(x,scale=.08){ return clamp(x.map((v,i)=>v+(rand()*2-1)*(hi[i]-lo[i])*scale)); }
+  function record(x, arr){
+    const objv=rawObj(x), obj2v=rawObj2(x), viol=violation(x);
+    if(arr.length<6000) arr.push({x:x.slice(),obj:objv,obj2:obj2v,violation:viol,feasible:viol<1e-8});
+    return {score:sign*objv + penalty*viol, objv, obj2v, viol};
+  }
   let best=x0.slice(), bestScore=penalized(best), pts=[];
   const start=performance.now();
-  for(let k=0;k<samples;k++){
-    if(cancelled) return {ok:false,cancelled:true,error:'Cancelled'};
-    const x=lo.map((a,i)=>a + Math.random()*(hi[i]-a));
-    const score=penalized(x), objv=rawObj(x), obj2v=rawObj2(x), viol=violation(x);
-    if(k<3000) pts.push({x,obj:objv,obj2:obj2v,violation:viol,feasible:viol<1e-8});
-    if(score<bestScore){ best=x; bestScore=score; }
-    if(k%200===0) progress(k/samples,'Searching');
+  record(best, pts);
+  function consider(x){
+    const r=record(x, pts);
+    if(r.score < bestScore){ best=x.slice(); bestScore=r.score; }
+    return r.score;
   }
-  const refined = coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||250);
-  best=refined.x; bestScore=refined.fx;
+  function randomSearch(n){
+    for(let k=0;k<n;k++){
+      if(cancelled) return false;
+      consider(randomPoint());
+      if(k%200===0) progress(k/Math.max(1,n), 'Searching');
+    }
+    return true;
+  }
+  function projectedGradient(x, n){
+    let step = 0.08, fx=penalized(x);
+    const epsBase=1e-5;
+    for(let k=0;k<n;k++){
+      if(cancelled) return x;
+      const grad=x.map((_,i)=>{
+        const h=Math.max(epsBase, Math.abs(hi[i]-lo[i])*epsBase);
+        const xp=x.slice(), xm=x.slice(); xp[i]=Math.min(hi[i],xp[i]+h); xm[i]=Math.max(lo[i],xm[i]-h);
+        return (penalized(xp)-penalized(xm))/Math.max(1e-12,xp[i]-xm[i]);
+      });
+      let xn=clamp(x.map((v,i)=>v-step*grad[i]));
+      let fn=penalized(xn);
+      if(fn<fx){ x=xn; fx=fn; consider(x); step=Math.min(step*1.08,1); }
+      else step*=0.5;
+      if(step<tol) break;
+      if(k%50===0) progress(k/Math.max(1,n), 'Projected gradient');
+    }
+    return x;
+  }
+  function simulatedAnnealing(x, n){
+    let fx=penalized(x), temp=temperature;
+    for(let k=0;k<n;k++){
+      if(cancelled) return x;
+      const xn=jitter(x, Math.max(.002, .15*(1-k/Math.max(1,n))));
+      const fn=penalized(xn);
+      if(fn<fx || rand()<Math.exp(-(fn-fx)/Math.max(temp,1e-12))){ x=xn; fx=fn; consider(x); }
+      temp*=0.995;
+      if(k%100===0) progress(k/Math.max(1,n), 'Annealing');
+    }
+    return x;
+  }
+  function differentialEvolution(n){
+    let pop=Array.from({length:popSize},()=>randomPoint());
+    let score=pop.map(p=>consider(p));
+    const F=.75, CR=.85;
+    for(let k=0;k<n;k++){
+      if(cancelled) break;
+      for(let i=0;i<pop.length;i++){
+        let a,b,c;
+        do{a=Math.floor(rand()*pop.length)}while(a===i);
+        do{b=Math.floor(rand()*pop.length)}while(b===i||b===a);
+        do{c=Math.floor(rand()*pop.length)}while(c===i||c===a||c===b);
+        const jrand=Math.floor(rand()*names.length);
+        const trial=clamp(pop[i].map((v,j)=> (rand()<CR||j===jrand) ? pop[a][j] + F*(pop[b][j]-pop[c][j]) : v));
+        const fs=penalized(trial);
+        if(fs<score[i]){ pop[i]=trial; score[i]=fs; consider(trial); }
+      }
+      if(k%5===0) progress(k/Math.max(1,n), 'Differential evolution');
+    }
+  }
+  function particleSwarm(n){
+    const w=.68,c1=1.35,c2=1.35;
+    let pos=Array.from({length:popSize},()=>randomPoint());
+    let vel=pos.map(x=>x.map((_,i)=>(rand()*2-1)*(hi[i]-lo[i])*.05));
+    let pbest=pos.map(x=>x.slice()), pscore=pos.map(x=>consider(x));
+    let gi=pscore.indexOf(Math.min(...pscore));
+    let gbest=pbest[gi].slice(), gscore=pscore[gi];
+    for(let k=0;k<n;k++){
+      if(cancelled) break;
+      for(let i=0;i<pos.length;i++){
+        vel[i]=vel[i].map((v,j)=>w*v+c1*rand()*(pbest[i][j]-pos[i][j])+c2*rand()*(gbest[j]-pos[i][j]));
+        pos[i]=clamp(pos[i].map((v,j)=>v+vel[i][j]));
+        const fs=penalized(pos[i]); consider(pos[i]);
+        if(fs<pscore[i]){ pbest[i]=pos[i].slice(); pscore[i]=fs; if(fs<gscore){ gbest=pos[i].slice(); gscore=fs; } }
+      }
+      if(k%5===0) progress(k/Math.max(1,n), 'Particle swarm');
+    }
+  }
+  function genetic(n){
+    let pop=Array.from({length:popSize},()=>randomPoint());
+    for(let k=0;k<n;k++){
+      if(cancelled) break;
+      pop.sort((a,b)=>penalized(a)-penalized(b));
+      pop.slice(0,Math.min(pop.length,12)).forEach(consider);
+      const elites=pop.slice(0,Math.max(2,Math.floor(pop.length*.25)));
+      const next=elites.map(x=>x.slice());
+      while(next.length<popSize){
+        const a=elites[Math.floor(rand()*elites.length)], b=elites[Math.floor(rand()*elites.length)];
+        const child=clamp(a.map((v,i)=> (rand()<.5?v:b[i]) + (rand()*2-1)*(hi[i]-lo[i])*.04));
+        next.push(child);
+      }
+      pop=next;
+      if(k%5===0) progress(k/Math.max(1,n), 'Genetic search');
+    }
+  }
+  if(algorithm==='coordinate'){
+    best=coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||budget).x;
+    consider(best);
+  } else if(algorithm==='projected_gradient'){
+    best=projectedGradient(best,budget);
+    best=coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||150).x;
+    consider(best);
+  } else if(algorithm==='simulated_annealing'){
+    best=simulatedAnnealing(best,budget);
+    best=coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||150).x;
+    consider(best);
+  } else if(algorithm==='differential_evolution'){
+    differentialEvolution(Math.max(5, Math.floor(budget/popSize)));
+    best=coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||150).x;
+    consider(best);
+  } else if(algorithm==='particle_swarm'){
+    particleSwarm(Math.max(5, Math.floor(budget/popSize)));
+    best=coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||150).x;
+    consider(best);
+  } else if(algorithm==='genetic'){
+    genetic(Math.max(5, Math.floor(budget/popSize)));
+    best=coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||150).x;
+    consider(best);
+  } else if(algorithm==='multi_start'){
+    const starts=Math.max(5, Math.floor(Math.sqrt(budget)));
+    for(let k=0;k<starts;k++){
+      if(cancelled) return {ok:false,cancelled:true,error:'Cancelled'};
+      const candidate=coordinateDescent(penalized,randomPoint(),lo,hi,Math.max(20,Math.floor(budget/starts))).x;
+      consider(candidate);
+      progress(k/starts, 'Multi-start local search');
+    }
+  } else {
+    if(!randomSearch(budget)) return {ok:false,cancelled:true,error:'Cancelled'};
+    best=coordinateDescent(penalized,best,lo,hi,Number(cfg.refineSteps)||250).x;
+    consider(best);
+  }
   const runtime=performance.now()-start;
-  return {ok:true, kind:'opt', variables:names, best, objective:rawObj(best), objective2:rawObj2(best), violation:violation(best), feasible:violation(best)<1e-7, samples:pts, diagnostics:{method:'Random + coordinate descent', samples, runtime, penalty}};
+  const methodLabel={random_coord:'Random + coordinate descent',coordinate:'Coordinate descent',projected_gradient:'Projected gradient penalty',simulated_annealing:'Simulated annealing',differential_evolution:'Differential evolution',particle_swarm:'Particle swarm',genetic:'Genetic algorithm',multi_start:'Multi-start local search'}[algorithm] || algorithm;
+  return {ok:true, kind:'opt', variables:names, best, objective:rawObj(best), objective2:rawObj2(best), violation:violation(best), feasible:violation(best)<1e-7, samples:pts, diagnostics:{method:methodLabel, optClass:cfg.optClass||'unspecified', samples:budget, runtime, penalty, population:popSize, seed:cfg.seed||12345}};
 }
 function coordinateDescent(f,x0,lo,hi,maxIter){
   let x=x0.slice(), fx=f(x);

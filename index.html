@@ -1,265 +1,57 @@
 <!DOCTYPE html>
-
 <html data-theme="aurora" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Chilperic ODE is a browser workbench for ODEs, parameter sweeps, phase portraits, optimization, and reproducible Python export." name="description"/>
-<meta content="Chilperic ODE" property="og:title"/>
-<meta content="Browser-only scientific workbench for ODE models, sweeps, plots, and Python export." property="og:description"/>
-<meta content="website" property="og:type"/>
-<title>Chilperic ODE</title>
-<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
-<script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="styles/style.css?v=2.4.8" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Foko Lab is a browser-native scientific modeling environment for ODEs, optimization, steady-state systems, stochastic simulation, plotting and reproducible exports."/>
+<meta property="og:title" content="Foko Lab"/>
+<meta property="og:description" content="Interactive scientific modeling in the browser."/>
+<meta property="og:type" content="website"/>
+<title>Foko Lab · Browser-native scientific modeling</title>
+<link href="styles/style.css?v=2.7.1" rel="stylesheet"/>
 </head>
-<body>
-<div class="app-shell">
-<header class="topbar">
-<a aria-label="Chilperic ODE home" class="brand" href="#workbench">
-<img alt="Chilperic ODE" class="logo" src="assets/chilperic-ode-logo.svg?v=2.1.9"/>
-</a>
-<nav aria-label="Primary navigation" class="topnav">
-<a class="active" href="#workbench">ODE Lab</a>
-<a href="stochastic.html">Stochastic Lab</a>
-<a href="examples.html">Model Atlas</a>
-<a href="docs.html">Docs</a>
-</nav>
-<div class="top-actions">
-<label aria-label="Theme" class="theme-picker">
-<span class="theme-icon">☼</span>
-<select aria-label="Theme" class="theme-select" id="themeBtn">
-<option value="aurora">Aurora</option>
-<option value="clarity">Clarity</option>
-<option value="ocean">Ocean</option>
-<option value="lavender">Lavender</option>
-<option value="midnight">Midnight</option>
-<option value="slate">Slate</option>
-<option value="paper">Paper</option>
-<option value="forest">Forest</option>
-</select>
-</label>
-<button class="avatar" id="resetBtn" title="Reset current model" type="button">↻</button>
-</div>
+<body data-lab="home">
+<script>
+(function(){
+  const q = new URLSearchParams(location.search);
+  if(q.has('example') || q.has('module')) location.replace('ode.html' + location.search + location.hash);
+})();
+</script>
+<div class="app-shell home-shell">
+<header class="topbar home-topbar">
+<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.1"/></a>
+<nav aria-label="Primary navigation" class="topnav"><a class="active" href="index.html">Home</a><a href="ode.html#workbench">ODE Lab</a><a href="optimization.html">Optimization Lab</a><a href="steady.html">Steady-State Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a></nav>
+<div class="top-actions"><a class="primary launch-button" href="ode.html#workbench">⚗ Launch Labs</a></div>
 </header>
-<main class="layout" id="workbench">
-<aside aria-label="Module navigation" class="side-nav">
-<button class="nav-item active" data-mode-jump="ode" type="button"><span>⌁</span><b>ODE Solver</b></button>
-<button class="nav-item" data-mode-jump="param" type="button"><span>⌬</span><b>Parametric ODE</b></button>
-<button class="nav-item" data-mode-jump="opt" type="button"><span>◎</span><b>Optimization</b></button>
-<button aria-label="Collapse sidebar" class="collapse" id="collapseSidebar" type="button">‹</button>
-</aside>
-<aside aria-label="Problem controls" class="work-panel controls">
-<section aria-label="Mode selector" class="mode-strip">
-<select aria-label="Mode" class="sr-only" id="moduleSelect" style="display:none">
-<option value="ode">ODE solver</option>
-<option value="param">Parametric ODE</option>
-<option value="opt">Optimization problem</option>
-</select>
-<button class="mode-tab active" data-mode="ode" type="button">ODE</button>
-<button class="mode-tab" data-mode="param" type="button">Parametric</button>
-<button class="mode-tab" data-mode="opt" type="button">Optimization</button>
+<main class="home-page">
+<section class="home-hero">
+<div class="home-copy">
+<p class="home-pill">BROWSER-NATIVE <span>•</span> FAST <span>•</span> REPRODUCIBLE <span>•</span> OPEN</p>
+<h1>Interactive scientific modeling <span>in the browser.</span></h1>
+<p class="home-lead">Explore and build models across ODEs, optimization, steady-state systems and stochastic simulation, with powerful visualization and reproducible exports.</p>
+<div class="home-actions"><a class="primary big-cta" href="ode.html#workbench">⚗ Launch Labs</a><a class="secondary big-cta" href="examples.html">▣ Explore Model Atlas</a></div>
+</div>
+<div class="home-visual"><img alt="Foko Lab scientific orbit logo" src="assets/foko-lab-hero-orbit.webp?v=2.7.1"/></div>
 </section>
-<section class="intro-card">
-<b>Chilperic ODE</b> explores ODE systems, parameter sweeps, phase portraits, and nonlinear optimization in the browser. <a href="docs.html">Read the documentation</a>, <a href="examples.html">browse the Model Atlas</a>, or <a href="stochastic.html">run stochastic simulations</a>.
-        </section><section class="actionbar">
-<button class="primary run-button" id="runBtn" type="button">▶ Run</button>
-<button class="primary sweep-button hidden" id="runSweep" type="button">↻ Sweep</button>
-<button class="ghost cancel-button hidden" id="cancelBtn" type="button">× Cancel</button>
-<button class="ghost" id="exportPython" type="button">🐍 Export Python</button>
-<button class="ghost" id="exportCsv" type="button">▣ Export CSV</button>
-<div class="progress hidden" id="progressWrap"><div id="progressBar"></div></div>
-<div aria-live="assertive" class="status" id="status" role="status">Ready.</div>
+<section class="home-labs" aria-label="Foko Lab modules">
+<a class="home-lab-card logo-card" href="ode.html#workbench"><img class="home-lab-logo" src="assets/lab-logos/ode-lab.webp" alt="ODE Lab logo"/><b>ODE Lab</b><p>Deterministic dynamics, trajectories, phase portraits and parameter sweeps.</p><em>Explore ODE Lab →</em></a>
+<a class="home-lab-card logo-card" href="optimization.html"><img class="home-lab-logo" src="assets/lab-logos/optimization-lab.webp" alt="Optimization Lab logo"/><b>Optimization Lab</b><p>Convex and non-convex search, constraints and Pareto frontier views.</p><em>Explore Optimization Lab →</em></a>
+<a class="home-lab-card logo-card" href="steady.html"><img class="home-lab-logo" src="assets/lab-logos/steady-state-lab.webp" alt="Steady-State Lab logo"/><b>Steady-State Lab</b><p>Algebraic systems, equilibria, Jacobian diagnostics and continuation.</p><em>Explore Steady-State Lab →</em></a>
+<a class="home-lab-card logo-card" href="stochastic.html"><img class="home-lab-logo" src="assets/lab-logos/stochastic-lab.webp" alt="Stochastic Lab logo"/><b>Stochastic Lab</b><p>CTMC/Gillespie simulation, ensembles, mean-field overlays and randomness.</p><em>Explore Stochastic Lab →</em></a>
 </section>
-<section class="examples-section" id="modelArea">
-<div class="section-title flat"><h2>Examples</h2><button class="secondary subtle" id="loadExample" type="button">Load</button></div>
-<select aria-label="Example model" id="exampleSelect"></select>
-<div aria-label="Core example model chips" class="model-deck" id="modelDeck"></div>
-<p class="narrative" id="exampleNarrative"></p>
-</section>
-<section class="additional-examples card" id="additionalExamplesPanel">
-<details>
-<summary>Additional examples</summary>
-<p class="note compact-note">Research, teaching, and paradox examples kept separate from the core workflow. <a href="examples.html">Open the Model Atlas.</a></p>
-<div aria-label="Additional example models" class="additional-example-grid" id="additionalExamples"></div>
-</details>
-</section>
-<section class="editor-stack module-block" id="odeEditor">
-<article class="card equations-card">
-<div class="card-head"><h2>Equations</h2><button class="icon-btn" id="addEq" title="Add equation" type="button">＋</button></div>
-<div class="equation-layout">
-<div class="rows equation-rows" id="equationRows"></div>
-<div aria-label="Mathematical preview" class="math-preview inline-math" id="mathPreview"></div>
-</div>
-</article>
-<article class="card subdetails" id="paramDetails" open="">
-<div class="card-head"><h2>Parameters</h2></div>
-<div class="clean-table param-table" id="paramRows"></div>
-</article>
-<div class="two-col">
-<article class="card subdetails" open="">
-<div class="card-head"><h2>Initial conditions</h2></div>
-<div class="clean-table compact-table" id="initialRows"></div>
-</article>
-<article class="card time-card">
-<div class="card-head"><h2>Time range</h2></div>
-<label><span>t start</span><input id="t0" step="any" type="number" value="0"/></label>
-<label><span>t end</span><input id="t1" step="any" type="number" value="20"/></label>
-</article>
-</div>
-</section>
-<section class="editor-stack module-block hidden" id="optEditor">
-<article class="card">
-<div class="card-head"><h2>Optimization problem</h2><button class="icon-btn" id="addVar" type="button">＋ variable</button></div>
-<div class="two-col small-gap">
-<label><span>Sense</span><select id="optSense"><option value="minimize">Minimize</option><option value="maximize">Maximize</option></select></label>
-<label><span>Objective f1</span><textarea id="objective" placeholder="(x - 3)^2 + (y - 2)^2" rows="2"></textarea></label>
-<label><span>Secondary objective f2 <em>optional, for Pareto plots</em></span><textarea id="objective2" placeholder="(x + 1)^2 + (y - 4)^2" rows="2"></textarea></label>
-</div>
-<div aria-label="Optimization math preview" class="math-preview opt-preview" id="optPreview"></div>
-<div class="small-title">Decision variables</div>
-<div class="clean-table" id="variableRows"></div>
-<label><span>Inequality constraints <em>g(x) ≤ 0</em></span><textarea id="ineq" placeholder="x + y - 4
--x
--y" rows="3"></textarea></label>
-<label><span>Equality constraints <em>h(x) = 0</em></span><textarea id="eqcon" placeholder="x - 2*y" rows="2"></textarea></label>
-</article>
-</section>
-<section class="card hidden" id="sweepPanel">
-<div class="card-head"><h2>Sweep settings</h2></div>
-<div class="sweep-grid">
-<label><span>Param A</span><select id="sweepA"></select></label>
-<label><span>Param B</span><select id="sweepB"></select></label>
-<label><span>Output</span><select id="sweepVar"></select></label>
-<label><span>Metric</span><select id="sweepMetric"><option value="max">max</option><option value="final">final</option><option value="min">min</option><option value="mean">mean</option></select></label>
-<label><span>Grid size</span><input id="sweepN" max="35" min="4" type="number" value="18"/></label>
-</div>
-</section>
-<section class="card advanced-card">
-<details id="advanced">
-<summary>Advanced numerical settings</summary>
-<div class="advanced-grid" id="odeNumerics">
-<label><span>Solver</span><select id="method"><optgroup label="Browser solvers"><option value="rk45">RK45 adaptive</option><option value="rk5">RK5 fixed</option><option value="rk4">RK4 fixed</option><option value="heun_adaptive">Heun adaptive</option><option value="heun">Heun fixed</option><option value="euler">Euler fixed</option></optgroup><optgroup label="Python export only"><option value="dop853">DOP853</option><option value="radau">Radau stiff</option><option value="bdf">BDF stiff</option><option value="lsoda">LSODA auto stiff</option></optgroup></select></label>
-<label><span>plot points</span><input id="points" max="20000" min="20" type="number" value="800"/></label>
-<label><span title="Fixed step size for fixed-step methods. Use auto unless you know the scale.">fixed step h</span><input id="stepSize" placeholder="auto or 0.01" type="text" value="auto"/></label>
-<label><span>initial step</span><input id="initialStep" placeholder="auto or 0.01" type="text" value="auto"/></label>
-<label><span>max step</span><input id="maxStep" type="text" value="auto"/></label>
-<label><span title="Relative tolerance: adaptive solvers adjust the step so local error stays small relative to the state size.">rtol</span><input id="rtol" type="text" value="1e-6"/></label>
-<label><span title="Absolute tolerance: lower bound on the local error scale, important near zero-valued states.">atol</span><input id="atol" type="text" value="1e-9"/></label>
-<label><span>safety</span><input id="safety" type="text" value="0.9"/></label>
-</div>
-<div class="advanced-grid hidden" id="optNumerics">
-<label><span>random samples</span><input id="optSamples" max="100000" min="100" type="number" value="3500"/></label>
-<label><span>penalty</span><input id="penalty" type="text" value="1e6"/></label>
-<label><span>refine steps</span><input id="refineSteps" max="1000" min="0" type="number" value="250"/></label>
-</div>
-</details>
-<div class="solver-summary">
-<label><span>Solver</span><select id="methodMirror"><option value="rk45">RK45 adaptive</option></select></label>
-<label><span>t start</span><input id="t0Mirror" readonly="" value="0"/></label>
-<label><span>t end</span><input id="t1Mirror" readonly="" value="50"/></label>
-<label><span>points</span><input id="pointsMirror" readonly="" value="2000"/></label>
-<button class="secondary subtle" id="toleranceShortcut" type="button">Tolerances &amp; step ⚙</button>
-</div>
-</section>
-
-<section class="import-drawer" id="importBlock">
-<details>
-<summary>Import model / templates</summary>
-<p class="note compact-note">Import a Chilperic ODE model: JSON, CSV, TXT/ODE, YAML, Python config, or basic SBML/XML. For SBML, search/download models from <a href="https://www.ebi.ac.uk/biomodels/" rel="noopener" target="_blank">BioModels</a> or <a href="http://bigg.ucsd.edu/" rel="noopener" target="_blank">BiGG Models</a>, then click here or drag and drop the file.</p>
-<label class="upload-drop" for="modelFile" id="uploadDrop">
-<span>Click here or drag and drop JSON, CSV, TXT/ODE, YAML, Python config, or SBML/XML</span>
-<small>.json · .csv · .txt · .ode · .yml · .py</small>
-<input accept=".json,.csv,.txt,.ode,.eqn,.yaml,.yml,.py,.xml,.sbml,.md" id="modelFile" type="file">
-</input></label>
-<div class="template-row">
-<select aria-label="Template" id="templateSelect">
-<option value="ode_json">ODE JSON</option>
-<option value="param_json">Parametric ODE JSON</option>
-<option value="opt_json">Optimization JSON</option>
-<option value="ode_csv">ODE CSV</option>
-<option value="opt_txt">Optimization TXT</option>
-<option value="py_embed">Python embedded config</option>
-</select>
-<button class="secondary" id="downloadTemplate" type="button">Download template</button>
-<a class="secondary template-link" download="" href="templates/README.md">Guide</a>
-</div>
-</details>
-</section>
-</aside>
-<section aria-label="Results workspace" class="workspace">
-<section aria-label="Numerical results" class="results-card" role="region">
-<div class="status-strip">
-<div class="status-ok"><span>✓</span><b id="topStatus">Ready</b></div>
-<div><span>Runtime</span><b id="runtimeValue">—</b></div>
-<div><span>Accepted steps</span><b id="acceptedValue">—</b></div>
-<div><span>Rejected</span><b id="rejectedValue">—</b></div>
-</div>
-<div class="result-head">
-<div aria-label="Result views" class="tabs" id="resultTabs" role="tablist"></div>
-</div>
-<div class="plot-toolbar-v2">
-<label><span>Primary view</span><select id="leftPlotType"></select></label>
-<label><span>Secondary view</span><select id="rightPlotType"></select></label>
-<button class="secondary subtle" id="figureSettings" type="button">Figure settings</button>
-<select id="palette" title="Plot palette"><option value="seaborn">Seaborn</option><option value="bokeh">Bokeh</option><option value="viridis">Viridis</option><option value="scientific">Scientific</option><option value="mono">Mono</option></select>
-<button class="ghost" id="exportPng" type="button">PNG</button>
-<button class="ghost" id="exportSvg" type="button">SVG</button>
-</div>
-<div class="plot-config hidden" id="plotConfig">
-<div class="config-title"><b id="configTitle">Figure settings</b><button class="icon-btn" id="closeConfig" type="button">×</button></div>
-<div class="config-grid">
-<label><span>Target</span><select id="cfgTarget"><option value="left">Primary view</option><option value="right">Secondary view</option></select></label>
-<label><span>Title</span><input id="cfgTitle"/></label>
-<label><span>X variable</span><select id="cfgX"></select></label>
-<label><span>Y variable</span><select id="cfgY"></select></label>
-<label><span>Z / plane variable</span><select id="cfgZ"></select></label>
-<label><span>Plane value</span><input id="cfgPlane" value="0"/></label>
-<label><span>X label</span><input id="cfgXLabel"/></label>
-<label><span>Y label</span><input id="cfgYLabel"/></label>
-<label><span>Z label</span><input id="cfgZLabel"/></label>
-<label><span>Colorbar label</span><input id="cfgColorLabel"/></label>
-<label><span>Width</span><input id="cfgWidth" max="2400" min="300" type="number"/></label>
-<label><span>Height</span><input id="cfgHeight" max="1600" min="260" type="number"/></label>
-<label><span>Font size</span><input id="cfgFontSize" max="28" min="8" type="number"/></label>
-<label><span>Line width</span><input id="cfgLineWidth" max="8" min="0.5" step="0.5" type="number"/></label>
-<label><span>Marker size</span><input id="cfgMarkerSize" max="16" min="2" type="number"/></label>
-<label class="check-label"><input checked="" id="cfgLegend" type="checkbox"/> Legend</label>
-<label class="check-label"><input checked="" id="cfgGrid" type="checkbox"/> Grid</label>
-<button class="primary small" id="applyPlotConfig" type="button">Apply</button>
-<button class="secondary small" id="exportSelectedPng" type="button">Export selected PNG</button>
-<button class="secondary small" id="exportSelectedSvg" type="button">Export selected SVG</button>
-</div>
-</div>
-<div class="tab-panel active" id="plotsPanel">
-<div class="chart-grid">
-<article class="chart-card"><div class="chart-title"><h3 id="leftPlotTitle">Left plot</h3><button class="kebab" id="leftMenu" title="Download left plot" type="button">⋮</button></div><div class="plot" id="leftPlot"></div></article>
-<article class="chart-card"><div class="chart-title"><h3 id="rightPlotTitle">Right plot</h3><button class="kebab" id="rightMenu" title="Download right plot" type="button">⋮</button></div><div class="plot" id="rightPlot"></div></article>
-</div>
-<div class="metrics-grid">
-<article class="metric-card"><span class="metric-icon">⌞</span><small>Steps</small><b id="stepsMetric">—</b><em>Accepted</em></article>
-<article class="metric-card"><span class="metric-icon">ƒx</span><small>Function Evaluations</small><b id="evalMetric">—</b><em>Total calls</em></article>
-<article class="metric-card"><span class="metric-icon">◷</span><small>CPU Time</small><b id="cpuMetric">—</b><em>Wall time</em></article>
-<article class="metric-card"><span class="metric-icon">◎</span><small>rtol</small><b id="errorMetric">—</b><em>requested tolerance</em></article>
-</div>
-<p class="info-strip" id="plotHint">ⓘ For stiff systems, export Python to use BDF, Radau, or LSODA locally.</p>
-</div>
-<div class="tab-panel" id="diagnosticsPanel"><div class="diagnostics empty" id="diagnostics">Run a model to see diagnostics.</div></div>
-</section>
-<section aria-label="Exports" class="exports-card" id="exportsBlock" role="region">
-<div class="export-row">
-<select id="pythonTarget"></select>
-<button class="secondary" id="copyInstall" type="button">Copy install</button>
-<button class="secondary" id="exportJson" type="button">JSON</button>
-</div>
-<p class="note" id="exportNote">Export includes a runnable script plus Linux/macOS/Windows virtual-environment setup. Use Python for BDF, Radau, LSODA, CasADi, or Pyomo.</p>
-</section>
+<section class="home-lower">
+<div class="home-panel atlas-panel home-panel-with-logo"><div class="home-panel-title"><div><h2>Model Atlas</h2><p>Curated, executable examples across systems biology, epidemiology, ecology, optimization, steady-state analysis and stochastic processes.</p></div><img class="home-section-logo" alt="Model Atlas mark" src="assets/lab-logos/model-atlas.webp"/></div><div class="atlas-mini-grid"><span>Systems biology</span><span>Epidemiology</span><span>Ecology</span><span>Chemical kinetics</span><span>Foko Models</span><span>Paradoxes</span></div><a href="examples.html">Browse all models →</a></div>
+<div class="home-panel export-panel"><h2>Reproducible exports</h2><p>Export models, results and figures for transparent research and teaching workflows.</p><div class="export-badges"><span>CSV</span><span>JSON</span><span>Plotly</span><span>Python</span><span>Julia</span></div></div>
+<div class="home-panel creator-panel"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=2.7.1"/><div><p class="eyebrow">About the creator</p><h2>Dr. Chilperic Armel Foko Kuate</h2><p>Computational biologist and applied mathematician building mechanistic models and interactive tools that support education, research and discovery.</p><a href="docs.html#about">Learn more about me →</a></div></div>
 </section>
 </main>
+<footer class="home-footer"><a class="footer-brand" href="index.html"><img alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.1"/></a><p>Model deeply. Simulate confidently. Share reproducibly.</p><nav><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a><a href="examples.html">Model Atlas</a><a href="https://github.com/chilperic/chilperic_ode_solver">GitHub</a></nav></footer>
 </div>
-<script src="src/app.js?v=2.4.8"></script>
+<script>
+(function(){
+  const saved = localStorage.getItem('chilperic-theme') || 'aurora';
+  document.documentElement.dataset.theme = saved;
+})();
+</script>
 </body>
 </html>
