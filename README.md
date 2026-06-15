@@ -1,4 +1,4 @@
-# Foko Lab v2.7.1
+# Foko Lab v2.7.2
 
 Foko Lab is a browser-native modeling environment for interactive scientific exploration across four labs:
 

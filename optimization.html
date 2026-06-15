@@ -12,12 +12,12 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="styles/style.css?v=2.7.1" rel="stylesheet"/>
+<link href="styles/style.css?v=2.7.2" rel="stylesheet"/>
 </head>
 <body data-lab="optimization">
 <div class="app-shell">
 <header class="topbar">
-<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.1"/></a>
+<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.2"/></a>
 <nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
 <a href="ode.html#workbench">ODE Lab</a><a class="active" href="optimization.html">Optimization Lab</a><a href="steady.html">Steady-State Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a>
 </nav>
@@ -67,7 +67,7 @@
 <section class="results-card">
 <div class="status-strip"><div class="status-ok"><span>●</span><b id="optTopStatus">Ready</b></div><div><span>Algorithm</span><b id="optAlgoStatus">—</b></div><div><span>Samples</span><b id="optSamplesStatus">—</b></div><div><span>Best f</span><b id="optBestStatus">—</b></div></div>
 <div class="result-head"><div class="tabs" id="resultTabs"><button class="tab active" data-panel="plotsPanel" type="button">Plots</button><button class="tab" data-panel="diagnosticsPanel" type="button">Diagnostics</button></div></div>
-<div class="plot-toolbar-v2"><label><span>Left plot</span><select id="optPlotA"><option value="landscape">Landscape / contours</option><option value="samples">Samples + best</option><option value="convergence">Convergence</option><option value="pareto">Pareto / objectives</option><option value="feasibility">Feasibility</option><option value="variables">Variable traces</option></select></label><label><span>Right plot</span><select id="optPlotB"><option value="convergence">Convergence</option><option value="landscape">Landscape / contours</option><option value="samples">Samples + best</option><option value="feasibility">Feasibility</option><option value="pareto">Pareto / objectives</option><option value="variables">Variable traces</option></select></label><button id="optExportPng" class="secondary" type="button">PNG</button><button id="optExportSvg" class="secondary" type="button">SVG</button></div>
+<div class="plot-toolbar-v2"><label><span>Left plot</span><select id="optPlotA"><option value="samples">Samples + best</option><option value="convergence">Convergence</option><option value="pareto">Pareto / objectives</option><option value="feasibility">Feasibility</option><option value="variables">Variable traces</option></select></label><label><span>Right plot</span><select id="optPlotB"><option value="convergence">Convergence</option><option value="samples">Samples + best</option><option value="feasibility">Feasibility</option><option value="pareto">Pareto / objectives</option><option value="variables">Variable traces</option></select></label><button id="optExportPng" class="secondary" type="button">PNG</button><button id="optExportSvg" class="secondary" type="button">SVG</button></div>
 <div class="tab-panel active" id="plotsPanel"><div class="chart-grid"><article class="chart-card"><div class="chart-title"><h3>Primary plot</h3></div><div class="plot" id="optPlotLeft"></div></article><article class="chart-card"><div class="chart-title"><h3>Secondary plot</h3></div><div class="plot" id="optPlotRight"></div></article></div><div class="metrics-grid"><div class="metric-card"><small>Algorithm</small><b id="metricAlgo">—</b><em>worker method</em></div><div class="metric-card"><small>Samples</small><b id="metricSamples">—</b><em>evaluated candidates</em></div><div class="metric-card"><small>Best f</small><b id="metricBest">—</b><em>objective</em></div><div class="metric-card"><small>Feasible</small><b id="metricFeasible">—</b><em>constraints</em></div></div></div>
 <div class="tab-panel" id="diagnosticsPanel"><div class="diagnostics" id="optDiagPanel">Run the optimizer to see candidates, convergence, feasibility, and the best solution.</div></div>
 </section>
@@ -75,6 +75,6 @@
 </section>
 </main>
 </div>
-<script src="src/optimization-lab.js?v=2.7.1"></script>
+<script src="src/optimization-lab.js?v=2.7.2"></script>
 </body>
 </html>
