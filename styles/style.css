@@ -458,3 +458,42 @@ body[data-lab="home"]{background:radial-gradient(circle at 72% 18%,rgba(45,212,1
   .tutorial-intensive th,.tutorial-intensive td{padding:3pt!important;}
   .tutorial-intensive pre{font-size:7.8pt!important;line-height:1.18!important;margin:3pt 0!important;}
 }
+
+cat >> styles/style.css <<'EOF'
+
+/* v2.7.3 smaller header logo */
+.topbar .brand{
+  min-width: 220px;
+  max-width: 260px;
+  overflow: visible;
+  flex: 0 0 auto;
+}
+
+.topbar .logo{
+  width: 220px !important;
+  max-width: 240px !important;
+  height: auto !important;
+  max-height: 72px !important;
+  object-fit: contain;
+}
+
+.home-topbar .logo{
+  width: 220px !important;
+  max-width: 240px !important;
+  height: auto !important;
+  max-height: 72px !important;
+}
+
+@media (max-width: 900px){
+  .topbar .brand{
+    min-width: auto;
+    max-width: 210px;
+  }
+  .topbar .logo,
+  .home-topbar .logo{
+    width: 180px !important;
+    max-width: 190px !important;
+    max-height: 60px !important;
+  }
+}
+EOF
