@@ -33,3 +33,6 @@ http://localhost:8000/tutorial.html?v=271
 Foko Lab is intended for education, exploration and rapid prototyping. For stiff ODEs, large Monte Carlo studies, rigorous optimization or publication-grade validation, export the model and validate externally in Python, Julia, CasADi, Pyomo, SciPy or another production workflow.
 
 MIT License.
+
+
+Update in this package: replaced the main top-left Foko Lab logo with the corrected user-approved logo asset.
