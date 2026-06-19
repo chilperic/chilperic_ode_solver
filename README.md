@@ -1,4 +1,4 @@
-# Foko Lab v2.7.2
+# Foko Lab v2.7.4
 
 Foko Lab is a browser-native modeling environment for interactive scientific exploration across four labs:
 
@@ -36,3 +36,6 @@ MIT License.
 
 
 Update in this package: replaced the main top-left Foko Lab logo with the corrected user-approved logo asset.
+
+
+v2.7.4: replaced the main header logo with the compact 560x150 SVG and fixed the header render size.
