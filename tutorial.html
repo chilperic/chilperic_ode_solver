@@ -1,38 +1,213 @@
 <!DOCTYPE html>
 <html data-theme="aurora" lang="en">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="Foko Lab tutorial: compact step-by-step examples for ODE, optimization, steady-state, stochastic simulation, diagnostics and exports."/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Foko Lab tutorial with action-based paths for Model Atlas, model workbench, legacy labs, GSA, exports and troubleshooting."/>
 <title>Tutorial · Foko Lab</title>
-<script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
 <link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+
+<style>
+:root{--doc-max:1180px;--doc-gap:1.15rem;--doc-radius:24px;--doc-small:0.92rem;}
+.doc-standard{width:min(var(--doc-max),calc(100vw - 2rem));margin:0 auto;padding:1.25rem 0 3rem;}
+.doc-hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.75fr);gap:1rem;align-items:stretch;margin-bottom:1rem;}
+.doc-panel,.doc-card,.doc-nav{background:var(--surface,rgba(255,255,255,.9));border:1px solid var(--border,rgba(120,130,160,.22));border-radius:var(--doc-radius);box-shadow:0 18px 45px rgba(20,24,45,.08);}
+.doc-panel{padding:1.35rem;}
+.doc-eyebrow{margin:0 0 .35rem;color:var(--accent,#3b82f6);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.76rem;}
+.doc-panel h1{font-size:clamp(2rem,4.2vw,4rem);line-height:.94;margin:.1rem 0 .75rem;letter-spacing:-.055em;}
+.doc-lede{font-size:1.02rem;line-height:1.65;color:var(--muted,#667085);max-width:72ch;margin:.3rem 0 1rem;}
+.doc-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem;}
+.doc-actions a,.doc-button{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;border-radius:999px;border:1px solid var(--border,rgba(120,130,160,.25));padding:.65rem .9rem;font-weight:750;color:inherit;background:rgba(255,255,255,.06);}
+.doc-actions a.primary,.doc-button.primary{background:var(--accent,#2563eb);color:white;border-color:transparent;}
+.doc-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;}
+.doc-metric{padding:1rem;border-radius:20px;background:rgba(125,145,180,.10);border:1px solid rgba(125,145,180,.16);}
+.doc-metric strong{display:block;font-size:1.55rem;line-height:1;color:var(--accent,#2563eb);}
+.doc-metric span{display:block;margin-top:.35rem;color:var(--muted,#667085);font-size:var(--doc-small);}
+.doc-layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:1rem;align-items:start;}
+.doc-nav{position:sticky;top:92px;padding:.85rem;}
+.doc-nav strong{display:block;margin:.25rem .45rem .55rem;font-size:.85rem;color:var(--muted,#667085);text-transform:uppercase;letter-spacing:.08em;}
+.doc-nav a{display:block;padding:.55rem .65rem;border-radius:14px;color:inherit;text-decoration:none;font-weight:650;font-size:.93rem;}
+.doc-nav a:hover{background:rgba(125,145,180,.12);}
+.doc-stack{display:grid;gap:1rem;}
+.doc-card{padding:1.15rem;scroll-margin-top:100px;}
+.doc-card h2{margin:.05rem 0 .7rem;font-size:1.45rem;letter-spacing:-.025em;}
+.doc-card h3{margin:.3rem 0 .35rem;font-size:1rem;}
+.doc-card p{line-height:1.62;color:var(--muted,#667085);}
+.doc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;}
+.doc-grid.three{grid-template-columns:repeat(3,minmax(0,1fr));}
+.doc-mini{padding:.95rem;border-radius:20px;border:1px solid rgba(125,145,180,.18);background:rgba(125,145,180,.07);}
+.doc-mini p{margin:.25rem 0 0;font-size:.94rem;}
+.doc-table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid rgba(125,145,180,.22);border-radius:18px;overflow:hidden;font-size:.94rem;}
+.doc-table th,.doc-table td{padding:.75rem;border-bottom:1px solid rgba(125,145,180,.16);text-align:left;vertical-align:top;}
+.doc-table th{background:rgba(125,145,180,.11);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted,#667085);}
+.doc-table tr:last-child td{border-bottom:0;}
+.doc-callout{padding:1rem;border-radius:20px;border:1px solid rgba(37,99,235,.22);background:rgba(37,99,235,.08);}
+.doc-warning{padding:1rem;border-radius:20px;border:1px solid rgba(245,158,11,.28);background:rgba(245,158,11,.10);}
+.doc-code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;background:rgba(15,23,42,.07);border:1px solid rgba(125,145,180,.18);border-radius:16px;padding:.85rem;overflow:auto;line-height:1.55;}
+.doc-steps{counter-reset:step;display:grid;gap:.9rem;}
+.doc-step{position:relative;padding:1rem 1rem 1rem 3.5rem;border-radius:22px;border:1px solid rgba(125,145,180,.18);background:rgba(125,145,180,.07);}
+.doc-step:before{counter-increment:step;content:counter(step);position:absolute;left:1rem;top:1rem;width:1.8rem;height:1.8rem;border-radius:999px;display:grid;place-items:center;background:var(--accent,#2563eb);color:#fff;font-weight:800;}
+.doc-step p{margin:.25rem 0 0;}
+.doc-pill-row{display:flex;flex-wrap:wrap;gap:.45rem;margin:.75rem 0;}
+.doc-pill{font-size:.82rem;font-weight:750;padding:.35rem .55rem;border-radius:999px;background:rgba(125,145,180,.11);border:1px solid rgba(125,145,180,.18);}
+.doc-split{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
+@media(max-width:980px){.doc-hero,.doc-layout,.doc-split{grid-template-columns:1fr}.doc-nav{position:relative;top:auto}.doc-grid,.doc-grid.three{grid-template-columns:1fr}.doc-metrics{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){.doc-standard{width:min(100vw - 1rem, var(--doc-max));}.doc-metrics{grid-template-columns:1fr}.doc-panel h1{font-size:2.1rem}.doc-actions a,.doc-button{width:100%;justify-content:center}.doc-step{padding-left:1rem;padding-top:3.2rem}.doc-step:before{top:.8rem}}
+@media print{.topbar,.doc-nav,.doc-actions{display:none!important}.doc-standard{width:100%;padding:0}.doc-card,.doc-panel{box-shadow:none;break-inside:avoid}.doc-layout,.doc-hero{display:block}.doc-card{margin:0 0 1rem}}
+</style>
+
 </head>
 <body>
 <div class="app-shell">
-<header class="topbar"><a class="brand" href="index.html"><img class="logo" alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a><nav class="topnav" aria-label="Primary navigation"><a href="index.html">Home</a><a href="ode.html#workbench">ODE Lab</a><a href="optimization.html">Optimization Lab</a><a href="steady.html">Steady-State Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a href="docs.html">Docs</a><a class="active" href="tutorial.html">Tutorial</a></nav><div class="top-actions"><button class="primary print-keep" onclick="window.print()">Export tutorial as PDF</button><label class="theme-picker"><span class="theme-icon">☼</span><select id="themeBtn" class="theme-select"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label></div></header>
-<main class="tutorial-doc">
-<section class="card tutorial-page"><p class="eyebrow">Foko Lab tutorial</p><h1>Using Foko Lab without guessing</h1><p>This guide is intentionally compact. Each example gives the action, the expected result, and the failure mode to check. For the PDF version, use <b>Export tutorial as PDF</b> and choose <b>Save to PDF</b>.</p><div class="info-box"><b>Common layout:</b> choose a model on the left, edit/run in the middle, inspect plots and exports on the right.</div></section>
-<section class="card tutorial-page"><h2>1. Start from the Model Atlas</h2><p>Open <b>Model Atlas</b>. Pick a card such as Lorenz, Toggle switch, SIR endemic equilibrium, or Birth-death CTMC.</p><pre>Expected: the card opens the correct lab with ?example=... in the URL.</pre><div class="warning-box"><b>Check:</b> if the wrong lab opens, the atlas card route is wrong.</div></section>
-<section class="card tutorial-page"><h2>2. ODE Lab: run Lorenz</h2><p>Open ODE Lab, load <b>Lorenz</b>, and press <b>Run</b>.</p><pre>Expected: two plots appear. The metrics row shows steps, evaluations, CPU time and tolerance.</pre><p>Use plot selectors to switch between trajectory, phase plot, vector field, Poincaré section, and other views.</p></section>
-<section class="card tutorial-page"><h2>3. ODE Lab: parameter sweep</h2><p>Switch to Parametric ODE and run a sweep example.</p><pre>Expected: the right workspace shows a heatmap/contour-like response surface.</pre><div class="warning-box"><b>Numerical warning:</b> browser RK methods are exploratory for stiff systems. Export to Python for Radau, BDF or LSODA validation.</div></section>
-<section class="card tutorial-page"><h2>4. Steady-State Lab: equation syntax</h2><p>Use one equation per variable. The app solves each expression as equal to zero.</p><pre>C: quad konES − koffC − kcatC = 0
-x: quad ax − bxy = 0
-y: quad dxy − cy = 0</pre><p>The parser normalizes labels, unicode minus, <code>quad</code>, implicit products and <code>=0</code>.</p><pre>Parsed as:
-C: kon*E*S - koff*C - kcat*C = 0
-x: a*x - b*x*y = 0
-y: d*x*y - c*y = 0</pre><div class="warning-box"><b>Check:</b> the preview must never display raw <code>\[4pt]</code>.</div></section>
-<section class="card tutorial-page"><h2>5. Steady-State Lab: solve and classify</h2><p>Choose <b>Toggle switch bistability</b> and press <b>Solve</b>.</p><pre>Expected: equilibrium bar plot, Newton residual plot, residual norm and iteration count.</pre><p><b>Local Jacobian classification</b> is only a dynamical-stability statement if the equations are interpreted as <code>dx/dt = f(x,p)</code>.</p></section>
-<section class="card tutorial-page"><h2>6. Steady-State Lab: continuation</h2><p>Choose a continuation parameter, set min/max/points, then press <b>λ Continuation</b>.</p><pre>Expected: branch plot on one side and continuation residual on the other.</pre><div class="warning-box"><b>Limitation:</b> simple continuation can miss folds or switch branches. Use it as exploratory analysis.</div></section>
-<section class="card tutorial-page"><h2>7. Stochastic Lab: CTMC ensemble</h2><p>Open Stochastic Lab, choose <b>Birth-death</b>, set runs to 200, and press <b>Run ensemble</b>.</p><pre>Expected: the primary plot shows paths or mean trajectory. The secondary plot shows distribution or diagnostics.</pre><p>Events that would make counts negative are blocked before firing, not clamped afterward.</p></section>
-<section class="card tutorial-page"><h2>8. Stochastic Lab: mean-field overlay</h2><p>Enable <b>Mean-field overlay</b> and select <b>Mean + mean-field</b>.</p><div class="warning-box"><b>Interpretation warning:</b> mean-field is a deterministic large-count approximation. It can fail near extinction, low copy numbers, or strong nonlinear propensities.</div></section>
-<section class="card tutorial-page"><h2>9. Optimization Lab: convex bowl</h2><p>Choose <b>Convex bowl</b>, set a seed, and press <b>Optimize</b>.</p><pre>Expected: samples move toward x≈2, y≈-1. Repeating with the same seed should reproduce the same trajectory.</pre><p>For constrained templates, inspect both objective and feasibility metrics.</p></section>
-<section class="card tutorial-page"><h2>10. Optimization Lab: incompatible plots</h2><p>Some plots require specific model content.</p><ul class="clean-list"><li><b>Pareto:</b> requires a secondary objective.</li><li><b>Feasibility:</b> is meaningful for constraints.</li><li><b>Variables:</b> uses candidate traces and can be noisy for stochastic search.</li></ul><div class="warning-box"><b>Trust rule:</b> browser optimization is approximate. Validate scientific conclusions externally.</div></section>
-<section class="card tutorial-page"><h2>11. Exports</h2><ul class="clean-list"><li><b>Model JSON:</b> exact editable model state.</li><li><b>Wide CSV:</b> spreadsheet-friendly output.</li><li><b>Long CSV:</b> tidy data for Python/R.</li><li><b>Plotly JSON:</b> figure recreation.</li><li><b>Python starter:</b> external validation scaffold.</li></ul></section>
-<section class="card tutorial-page"><h2>12. Failure checklist</h2><ul class="clean-list"><li>Plot area still says “Run to plot” after a run: check console, selected plot type, or Plotly loading.</li><li>Steady solve fails: inspect parsed equations and unknown symbols.</li><li>Continuation gives blank plot: run a solve first, then continuation.</li><li>Stochastic paths stop early: inspect maxEvents warnings.</li><li>Optimization result is infeasible: increase budget or inspect constraints and penalty scale.</li></ul></section>
+<header class="topbar">
+  <a class="brand" href="index.html"><img class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4" alt="Foko Lab"/></a>
+  <nav class="topnav" aria-label="Primary navigation">
+    <a href="index.html">Home</a><a href="ode.html#workbench">ODE Lab</a><a href="optimization.html">Optimization Lab</a><a href="steady.html">Steady-State Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a class="" href="docs.html">Docs</a><a class="active" href="tutorial.html">Tutorial</a>
+  </nav>
+  <div class="top-actions"><label class="theme-picker"><span class="theme-icon">☼</span><select id="themeBtn" class="theme-select"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label></div>
+</header>
+<main class="doc-standard">
+  <section class="doc-hero" aria-labelledby="tutorial-title">
+    <div class="doc-panel">
+      <p class="doc-eyebrow">Tutorial</p>
+      <h1 id="tutorial-title">Run analyses without guessing</h1>
+      <p class="doc-lede">This tutorial is action-based. Each path gives an entry route, what to click, the expected result, and the failure mode to check. Start from the Model Atlas unless you already know the lab you need.</p>
+      <div class="doc-actions">
+        <a class="primary" href="examples.html">Start from Model Atlas</a>
+        <a href="workbench.html?model=sir">Open SIR in Workbench</a>
+        <a href="docs.html">Read standard</a>
+        <button class="doc-button" type="button" data-print>Print / save PDF</button>
+      </div>
+    </div>
+    <aside class="doc-panel">
+      <p class="doc-eyebrow">Fast route</p>
+      <div class="doc-code">Model Atlas
+→ Open in Workbench
+→ adjust parameters
+→ run analysis card
+→ export result</div>
+      <p class="doc-lede">Use the legacy lab button when you need the full specialist interface.</p>
+    </aside>
+  </section>
+  <section class="doc-layout">
+    <nav class="doc-nav" aria-label="Tutorial sections">
+      <strong>Lessons</strong>
+      <a href="#lesson-zero">0. Choose the surface</a>
+      <a href="#workbench-sir">1. Workbench ODE</a>
+      <a href="#atlas-routes">2. Atlas routes</a>
+      <a href="#stochastic-path">3. Stochastic path</a>
+      <a href="#steady-path">4. Steady-state path</a>
+      <a href="#optimization-path">5. Optimization path</a>
+      <a href="#legacy-path">6. Legacy path</a>
+      <a href="#export-path">7. Export path</a>
+      <a href="#checks">8. Failure checks</a>
+    </nav>
+    <div class="doc-stack">
+      <section id="lesson-zero" class="doc-card">
+        <h2>0. Choose the correct surface</h2>
+        <div class="doc-grid">
+          <article class="doc-mini"><h3>Use Workbench when…</h3><p>You want to run common analyses from one model-centered page: parameter changes, time courses, sweeps, contour/heatmap, GSA/sensitivity, diagnostics and exports.</p></article>
+          <article class="doc-mini"><h3>Use Legacy Lab when…</h3><p>You need the complete original specialist interface, advanced controls, or behavior that is not yet migrated to the workbench.</p></article>
+        </div>
+        <div class="doc-callout"><b>Rule:</b> Do not search through long controls first. Start from a model card and choose the appropriate route.</div>
+      </section>
+
+      <section id="workbench-sir" class="doc-card">
+        <h2>1. Workbench ODE: SIR without scrolling</h2>
+        <div class="doc-steps">
+          <article class="doc-step"><h3>Open the model</h3><p>Open <a href="workbench.html?model=sir">SIR epidemic in Workbench</a>.</p><p><b>Expected:</b> compact model header, parameter strip, and analysis cards appear before detailed equations.</p></article>
+          <article class="doc-step"><h3>Change a parameter</h3><p>Adjust <b>beta</b> or <b>gamma</b> in the parameter strip.</p><p><b>Expected:</b> analysis cards can be refreshed without searching through a left control column.</p></article>
+          <article class="doc-step"><h3>Run analysis cards</h3><p>Use Time course first, then run Parameter sweep or GSA/sensitivity.</p><p><b>Expected:</b> plots and ranked tables appear inside their own cards.</p></article>
+        </div>
+      </section>
+
+      <section id="atlas-routes" class="doc-card">
+        <h2>2. Start from the Model Atlas</h2>
+        <p>Open <a href="examples.html">Model Atlas</a>. Each supported card should offer two clear paths.</p>
+        <table class="doc-table">
+          <thead><tr><th>Button</th><th>Expected result</th><th>Failure check</th></tr></thead>
+          <tbody>
+            <tr><td>Open in Workbench</td><td>Opens <code>workbench.html?model=...</code> and shows analysis cards.</td><td>If the page opens but says unknown model, the Atlas route is missing from the workbench registry.</td></tr>
+            <tr><td>Open in lab</td><td>Opens the original ODE, stochastic, steady-state or optimization lab.</td><td>If the wrong lab opens, the Atlas route is mapped to the wrong model family.</td></tr>
+          </tbody>
+        </table>
+        <div class="doc-pill-row"><span class="doc-pill">Lotka–Volterra</span><span class="doc-pill">Lorenz</span><span class="doc-pill">Robertson</span><span class="doc-pill">FA metabolism</span><span class="doc-pill">Gambler's ruin</span><span class="doc-pill">Rosenbrock</span></div>
+      </section>
+
+      <section id="stochastic-path" class="doc-card">
+        <h2>3. Stochastic path</h2>
+        <div class="doc-steps">
+          <article class="doc-step"><h3>Open stochastic SIR</h3><p>Open <a href="workbench.html?model=stoch-sir">stochastic SIR in Workbench</a>.</p><p><b>Expected:</b> ensemble, final distribution, stochastic sweep, sensitivity and reaction math cards.</p></article>
+          <article class="doc-step"><h3>Interpret ensemble output</h3><p>Use mean trajectory and distribution cards together. Do not interpret one trajectory as the expected behavior.</p></article>
+          <article class="doc-step"><h3>Use legacy for specialized models</h3><p>Open <a href="stochastic.html">Stochastic Lab</a> when you need the full CTMC/Gillespie specialist interface.</p></article>
+        </div>
+      </section>
+
+      <section id="steady-path" class="doc-card">
+        <h2>4. Steady-state path</h2>
+        <div class="doc-steps">
+          <article class="doc-step"><h3>Open an equilibrium model</h3><p>Open <a href="workbench.html?model=enzyme-steady">enzyme steady-state</a>, <a href="workbench.html?model=toggle-steady">toggle steady-state</a>, or <a href="workbench.html?model=cubic-bistable">cubic bistability</a>.</p></article>
+          <article class="doc-step"><h3>Run response analysis</h3><p>Use the MCA/GSA-style card to inspect parameter response. Treat it as a local response screen unless exported and validated externally.</p></article>
+          <article class="doc-step"><h3>Check stability language</h3><p>Local stability classification is meaningful when the algebraic system is interpreted as <code>dx/dt = f(x,p)</code>.</p></article>
+        </div>
+      </section>
+
+      <section id="optimization-path" class="doc-card">
+        <h2>5. Optimization path</h2>
+        <div class="doc-steps">
+          <article class="doc-step"><h3>Open a benchmark</h3><p>Open <a href="workbench.html?model=rosenbrock">Rosenbrock</a>, <a href="workbench.html?model=rastrigin">Rastrigin</a>, or <a href="workbench.html?model=constrained">constrained optimization</a>.</p></article>
+          <article class="doc-step"><h3>Read the right metric</h3><p>For optimization, the correct language is robustness, objective sensitivity and constraint residuals, not generic GSA.</p></article>
+          <article class="doc-step"><h3>Validate conclusions</h3><p>Browser optimization is pedagogical and exploratory. Use exported Python for serious validation.</p></article>
+        </div>
+      </section>
+
+      <section id="legacy-path" class="doc-card">
+        <h2>6. Legacy lab path</h2>
+        <div class="doc-grid">
+          <article class="doc-mini"><h3><a href="ode.html#workbench">ODE Lab</a></h3><p>Use for the complete current ODE interface.</p></article>
+          <article class="doc-mini"><h3><a href="optimization.html">Optimization Lab</a></h3><p>Use for original optimization workflows and diagnostics.</p></article>
+          <article class="doc-mini"><h3><a href="steady.html">Steady-State Lab</a></h3><p>Use for full algebraic solve and continuation controls.</p></article>
+          <article class="doc-mini"><h3><a href="stochastic.html">Stochastic Lab</a></h3><p>Use for specialized CTMC/Gillespie workflows.</p></article>
+        </div>
+      </section>
+
+      <section id="export-path" class="doc-card">
+        <h2>7. Export path</h2>
+        <table class="doc-table">
+          <thead><tr><th>Export</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td>Model JSON</td><td>Save the exact model state.</td></tr>
+            <tr><td>CSV</td><td>Inspect or post-process simulation results.</td></tr>
+            <tr><td>Plotly JSON / SVG</td><td>Recreate or archive figures.</td></tr>
+            <tr><td>Python / SALib</td><td>Run external validation, stiff solvers, large ensembles or Morris/Sobol sensitivity.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="checks" class="doc-card">
+        <h2>8. Failure checks</h2>
+        <ul class="clean-list">
+          <li><b>404 on model route:</b> use <code>workbench.html?model=...</code> or <code>model.html?model=...</code>; both aliases should exist.</li>
+          <li><b>Unknown model:</b> the model exists in Atlas but not in the workbench registry.</li>
+          <li><b>Slow stochastic page:</b> reduce ensemble runs or use the legacy stochastic lab for specialized models.</li>
+          <li><b>Blank plot:</b> check browser console, Plotly loading, and whether the card needs manual Run.</li>
+          <li><b>Misleading GSA label:</b> browser result is only a quick screen unless the exported SALib workflow is run.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
 </main>
 </div>
-<script>const $=id=>document.getElementById(id);function setTheme(t){document.documentElement.dataset.theme=t;localStorage.setItem('chilperic-theme',t);if($('themeBtn'))$('themeBtn').value=t}setTheme(localStorage.getItem('chilperic-theme')||'aurora');$('themeBtn')?.addEventListener('change',e=>setTheme(e.target.value));</script>
+
+<script>
+(function(){
+  const select=document.getElementById('themeBtn');
+  const saved=localStorage.getItem('chilperic-theme')||'aurora';
+  document.documentElement.dataset.theme=saved;
+  if(select){select.value=saved;select.addEventListener('change',e=>{document.documentElement.dataset.theme=e.target.value;localStorage.setItem('chilperic-theme',e.target.value);});}
+  document.querySelectorAll('[data-print]').forEach(btn=>btn.addEventListener('click',()=>window.print()));
+})();
+</script>
+
 </body>
 </html>
