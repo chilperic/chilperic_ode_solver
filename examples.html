@@ -6,7 +6,7 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Model Atlas for Foko Lab: schematics, authors, variables, and guided exploration paths." name="description"/>
 <title>Foko Lab Model Atlas</title>
-<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+<link href="styles/style.css?v=platform-v23-upload" rel="stylesheet"/>
 <style>.workbench-link{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;border-color:transparent}.workbench-link:hover{filter:brightness(1.04)}</style>
 </head>
 <body>
@@ -14,20 +14,26 @@
 <header class="topbar">
 <a class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
 <nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
+<a href="workbench.html">Workbench Beta</a>
 <a href="ode.html#workbench">ODE Lab</a>
 <a href="optimization.html">Optimization Lab</a>
 <a href="steady.html">Steady-State Lab</a>
 <a href="stochastic.html">Stochastic Lab</a>
+<a href="symbolic.html">Symbolic Lab</a>
+<a href="agent.html">Agent Lab</a>
+<a href="beauty.html">Math Beauty</a>
 <a class="active" href="examples.html">Model Atlas</a>
-<a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a>
-</nav>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
+<a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a></nav>
 </header>
 <main class="doc-page model-atlas">
 <section class="card hero-doc atlas-hero hero-with-mark">
 <div><p class="eyebrow">Visual guide</p>
 <h1>Model Atlas</h1>
-<p>Choose a model by lab class first, then by scientific domain. ODE, Optimization, Steady-State, and Stochastic models open in their dedicated labs.</p></div>
-<img class="lab-mark" alt="Model Atlas mark" src="assets/lab-logos/model-atlas.webp"/>
+<p>Teaching and benchmark models only. This page uses polished teaching visuals. Research figures are kept separate in the Research Hub. Personal research projects stay in the Research Hub with provenance, limitations and protected boundaries.</p></div>
+<img alt="Model Atlas mark" class="lab-mark" src="assets/lab-logos/model-atlas.webp"/>
 </section>
 <section aria-label="Model filters" class="atlas-filters card">
 <button class="filter active" data-filter="all">All</button>
@@ -35,21 +41,45 @@
 <button class="filter" data-filter="optimization">Optimization</button>
 <button class="filter" data-filter="steady">Steady State</button>
 <button class="filter" data-filter="stochastic">Stochastic</button>
-<span class="filter-separator" aria-hidden="true"></span>
+<button class="filter" data-filter="agent">Agent / ABM</button>
+<span aria-hidden="true" class="filter-separator"></span>
 <button class="filter" data-filter="biology">Biology</button>
 <button class="filter" data-filter="physics">Physics</button>
 <button class="filter" data-filter="chemistry">Chemistry</button>
 <button class="filter" data-filter="paradox">Paradoxes</button>
-<button class="filter" data-filter="research">Foko Models</button>
 <button class="filter" data-filter="teaching">Teaching</button>
 <button class="filter" data-filter="simulation">Simulation</button>
 <button class="filter" data-filter="genetics">Genetics</button>
 <button class="filter" data-filter="finance">Finance</button>
 <button class="filter" data-filter="control">Control</button>
+<button class="filter" data-filter="environment">Environment</button>
+<button class="filter" data-filter="engineering">Engineering</button>
+</section>
+<section class="card"><h2>Research Hub is separate from the Model Atlas</h2><p>The Model Atlas is reserved for classical systems, teaching examples and benchmark problems. Chilperic’s research portfolio is kept separate, with project provenance, contributors, limitations, selected figures and protected simulation boundaries.</p><p><a class="open-link workbench-link" href="research.html">Open Research Hub</a></p></section>
+<section class="card agent-atlas-section" id="agent-atlas">
+<div class="atlas-section-head"><p class="eyebrow">Agent-based modeling</p><h2>Agent Model Atlas</h2><p>Detailed scenario descriptions live here, not on the Agent Lab execution page. Open a model in Agent Lab to run it, then change approach, topology, update scheme, parameters or custom rule code.</p></div>
+<div class="agent-atlas-grid">
+<article data-category="agent biology"><figure class="agent-atlas-thumb"><img alt="Generation-structured cell proliferation agents illustration" decoding="async" loading="lazy" src="assets/agent-atlas/tcell.svg"/></figure><h3>Generation-structured cell proliferation agents</h3><p>Statechart ABM: quiescent cells activate, divide into local space and die. Useful for linking cell-proliferation research concepts to individual-based dynamics.</p><a class="open-link workbench-link" href="agent.html?example=tcell">Open in Agent Lab</a></article>
+<article data-category="agent biology chemistry"><figure class="agent-atlas-thumb"><img alt="FADNS particle-agent tracker illustration" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>FADNS particle-agent tracker</h3><p>Tracks Acetyl-CoA, Malonyl-CoA, chain intermediates, C14/C16/C18 products and CoA release as a toy ABM analogy. This is not the calibrated FADNS ODE model; it is a teaching bridge between reaction events and agent-state transitions.</p><p><b>States:</b> empty, Acetyl-CoA, Malonyl-CoA, chain intermediate, C14, C16, C18, CoA.</p><a class="open-link workbench-link" href="agent.html?example=fadns_particle">Open in Agent Lab</a></article>
+<article data-category="agent biology stochastic"><figure class="agent-atlas-thumb"><img alt="Outbreak + vaccine hesitancy illustration" decoding="async" loading="lazy" src="assets/agent-atlas/vax_hesitancy.svg"/></figure><h3>Outbreak + vaccine hesitancy</h3><p>Rumors spread on contact networks and reduce effective herd immunity during an outbreak. Separates infection pressure from misinformation pressure.</p><a class="open-link workbench-link" href="agent.html?example=vax_hesitancy">Open in Agent Lab</a></article>
+<article data-category="agent environment crisis"><figure class="agent-atlas-thumb"><img alt="Wildfire evacuation + panic misinformation illustration" decoding="async" loading="lazy" src="assets/agent-atlas/evacuation_panic.svg"/></figure><h3>Wildfire evacuation + panic misinformation</h3><p>Fake route information spreads through local groups and redirects agents into congested paths. Useful for crisis communication and transport behavior prototypes.</p><a class="open-link workbench-link" href="agent.html?example=evacuation_panic">Open in Agent Lab</a></article>
+<article data-category="agent finance"><figure class="agent-atlas-thumb"><img alt="Meme-stock cascade illustration" decoding="async" loading="lazy" src="assets/agent-atlas/meme_stock.svg"/></figure><h3>Meme-stock cascade</h3><p>Viral hype and clustered investor influence create waves of buying and selling. A compact graph-contagion model for financial social dynamics.</p><a class="open-link workbench-link" href="agent.html?example=meme_stock">Open in Agent Lab</a></article>
+<article data-category="agent biology social"><figure class="agent-atlas-thumb"><img alt="Cancer-care myth adoption illustration" decoding="async" loading="lazy" src="assets/agent-atlas/cancer_myth.svg"/></figure><h3>Cancer-care myth adoption</h3><p>Health misinformation diffuses through support networks and can pull agents away from evidence-aligned care. Clinical correction is modeled as a competing process.</p><a class="open-link workbench-link" href="agent.html?example=cancer_myth">Open in Agent Lab</a></article>
+<article data-category="agent urban social"><figure class="agent-atlas-thumb"><img alt="Urban gentrification + neighborhood hype illustration" decoding="async" loading="lazy" src="assets/agent-atlas/gentrification_hype.svg"/></figure><h3>Urban gentrification + neighborhood hype</h3><p>Geo-tagged influence raises desirability and displacement pressure. A spatial/social ABM for hype-driven neighborhood transitions.</p><a class="open-link workbench-link" href="agent.html?example=gentrification_hype">Open in Agent Lab</a></article>
+<article data-category="agent social"><figure class="agent-atlas-thumb"><img alt="Political polarization + deepfakes illustration" decoding="async" loading="lazy" src="assets/agent-atlas/deepfake_polarization.svg"/></figure><h3>Political polarization + deepfakes</h3><p>Polarizing synthetic content propagates through algorithmic feeds. Debunking and echo retention compete with polarization pressure.</p><a class="open-link workbench-link" href="agent.html?example=deepfake_polarization">Open in Agent Lab</a></article>
+<article data-category="agent environment social"><figure class="agent-atlas-thumb"><img alt="Wildlife poaching + black-market networks illustration" decoding="async" loading="lazy" src="assets/agent-atlas/poaching_market.svg"/></figure><h3>Wildlife poaching + black-market networks</h3><p>Poachers, smugglers and buyers coordinate through trust networks while enforcement removes active links or agents.</p><a class="open-link workbench-link" href="agent.html?example=poaching_market">Open in Agent Lab</a></article>
+<article data-category="agent urban social"><figure class="agent-atlas-thumb"><img alt="Autonomous vehicles + anti-tech backlash illustration" decoding="async" loading="lazy" src="assets/agent-atlas/av_backlash.svg"/></figure><h3>Autonomous vehicles + anti-tech backlash</h3><p>Rumors about AV incidents trigger local backlash and trust repair dynamics. Useful for urban technology adoption prototypes.</p><a class="open-link workbench-link" href="agent.html?example=av_backlash">Open in Agent Lab</a></article>
+<article data-category="agent environment engineering"><figure class="agent-atlas-thumb"><img alt="Smart-grid boycott rumors illustration" decoding="async" loading="lazy" src="assets/agent-atlas/smart_grid_boycott.svg"/></figure><h3>Smart-grid boycott rumors</h3><p>Privacy or health rumors reduce automation compliance. Technical correction and trust persistence control system-level resilience.</p><a class="open-link workbench-link" href="agent.html?example=smart_grid_boycott">Open in Agent Lab</a></article>
+<article data-category="agent social history"><figure class="agent-atlas-thumb"><img alt="Ancient cities + cult movement rumors illustration" decoding="async" loading="lazy" src="assets/agent-atlas/ancient_cult.svg"/></figure><h3>Ancient cities + cult movement rumors</h3><p>Trade-route networks carry cultural or apocalyptic rumors that can trigger migration and settlement abandonment ahead of climate stress.</p><a class="open-link workbench-link" href="agent.html?example=ancient_cult">Open in Agent Lab</a></article>
+<article data-category="agent biology"><figure class="agent-atlas-thumb"><img alt="Predator–prey agents illustration" decoding="async" loading="lazy" src="assets/agent-atlas/predprey.svg"/></figure><h3>Predator–prey agents</h3><p>Spatial Lotka–Volterra intuition: prey reproduce locally, predators consume nearby prey and die without food.</p><a class="open-link workbench-link" href="agent.html?example=predprey">Open in Agent Lab</a></article>
+<article data-category="agent cellular teaching"><figure class="agent-atlas-thumb"><img alt="Conway's Game of Life illustration" decoding="async" loading="lazy" src="assets/agent-atlas/life.svg"/></figure><h3>Conway's Game of Life</h3><p>Classic local-rule cellular automaton. A minimal demonstration that simple rules can produce gliders, oscillators and complex-looking patterns.</p><a class="open-link workbench-link" href="agent.html?example=life">Open in Agent Lab</a></article>
+<article data-category="agent cellular environment"><figure class="agent-atlas-thumb"><img alt="Forest-fire cellular automaton illustration" decoding="async" loading="lazy" src="assets/agent-atlas/forest.svg"/></figure><h3>Forest-fire cellular automaton</h3><p>Local ignition, spread, ash and regrowth. A compact model for spatial threshold behavior and cascading events.</p><a class="open-link workbench-link" href="agent.html?example=forest">Open in Agent Lab</a></article>
+<article data-category="agent biology environment"><figure class="agent-atlas-thumb"><img alt="Plant competition toy model illustration" decoding="async" loading="lazy" src="assets/agent-atlas/plant.svg"/></figure><h3>Plant competition toy model</h3><p>Individual plants compete for local space and carry a mutable trait. Useful for connecting ecological ABM to plant modeling ideas.</p><a class="open-link workbench-link" href="agent.html?example=plant">Open in Agent Lab</a></article>
+</div>
 </section>
 <section class="atlas-grid" id="atlasGrid">
 <article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="Lotka–Volterra predator-prey schematic" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></div>
+<div class="scheme atlas-figure"><img alt="Lotka–Volterra predator-prey schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Core ODE</p>
 <h3>Lotka–Volterra</h3>
@@ -61,7 +91,7 @@
 </div>
 </article>
 <article class="atlas-card" data-category="ode physics core">
-<div class="scheme atlas-figure"><img alt="Lorenz attractor variable coupling schematic" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></div>
+<div class="scheme atlas-figure"><img alt="Lorenz attractor variable coupling schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Core ODE</p>
 <h3>Lorenz attractor</h3>
@@ -73,7 +103,7 @@
 </div>
 </article>
 <article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
+<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Core ODE</p>
 <h3>SIR epidemic</h3>
@@ -85,7 +115,7 @@
 </div>
 </article>
 <article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
+<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Core ODE</p>
 <h3>SEIR epidemic</h3>
@@ -109,7 +139,7 @@
 </div>
 </article>
 <article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="Michaelis-Menten enzyme kinetics schematic" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></div>
+<div class="scheme atlas-figure"><img alt="Michaelis-Menten enzyme kinetics schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Core ODE</p>
 <h3>Michaelis–Menten enzyme kinetics</h3>
@@ -121,7 +151,7 @@
 </div>
 </article>
 <article class="atlas-card" data-category="ode physics core">
-<div class="scheme atlas-figure"><img alt="Van der Pol oscillator schematic" decoding="async" loading="lazy" src="assets/model-atlas/vanderpol.webp"/></div>
+<div class="scheme atlas-figure"><img alt="Van der Pol oscillator schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/vanderpol.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Core ODE</p>
 <h3>Van der Pol oscillator</h3>
@@ -132,32 +162,8 @@
 <a class="open-link workbench-link" href="workbench.html?model=vanderpol">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Van%20der%20Pol">Open in lab</a>
 </div>
 </article>
-<article class="atlas-card" data-category="ode research biology">
-<div class="scheme atlas-figure"><img alt="Extracted PhD scheme of the minimal fatty-acid metabolism model" decoding="async" loading="lazy" src="assets/model-atlas/phd-fa-metabolism-extracted.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Research ODE</p>
-<h3>Fatty-acid metabolism bistability</h3>
-<p class="authors"><b>Authors / inspiration:</b> Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh</p>
-<p>Coarse-grained PhD-inspired fatty-acid metabolism model connecting acetyl-CoA, malonyl-CoA, fatty acids, and triglycerides with feedback.</p>
-<p class="vars"><b>Variables:</b> S1 acetyl-CoA; S2 malonyl-CoA; S3 fatty acids; S4 triglycerides</p>
-<p class="try"><b>Try:</b> inspect fatty-acid pool feedback and possible switching behavior</p>
-<a class="open-link workbench-link" href="workbench.html?model=fa-metabolism">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=FA%20metabolism%20bistability">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode research biology">
-<div class="scheme atlas-figure"><img alt="Extracted PhD scheme of the refined fatty-acid synthesis model with CoA sequestration" decoding="async" loading="lazy" src="assets/model-atlas/phd-fadns-coa-extracted.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Research ODE</p>
-<h3>FADNS with CoA sequestration</h3>
-<p class="authors"><b>Authors / inspiration:</b> Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh</p>
-<p>Refined PhD model: FAS elongation with CoA-driven enzyme sequestration.</p>
-<p class="vars"><b>Variables:</b> AcetCoA, MalCoA, NADPH, CoA, E/ECoA, EC2–EC18, C14/C16/C18</p>
-<p class="try"><b>Try:</b> watch C16 production and ECoA sequestration</p>
-<a class="open-link workbench-link" href="workbench.html?model=fadns-coa">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=FADNS%20semi-mechanistic">Open in lab</a>
-</div>
-</article>
 <article class="atlas-card" data-category="ode teaching">
-<div class="scheme atlas-figure"><img alt="Romeo-Juliet love-hate oscillator schematic" decoding="async" loading="lazy" src="assets/model-atlas/romeo-juliet.webp"/></div>
+<div class="scheme atlas-figure"><img alt="Romeo-Juliet love-hate oscillator schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/romeo-juliet.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Teaching ODE</p>
 <h3>Love–hate oscillator</h3>
@@ -169,7 +175,7 @@
 </div>
 </article>
 <article class="atlas-card" data-category="ode paradox">
-<div class="scheme atlas-figure"><img alt="Braess paradox network-routing schematic" decoding="async" loading="lazy" src="assets/model-atlas/braess.webp"/></div>
+<div class="scheme atlas-figure"><img alt="Braess paradox network-routing schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/braess.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Paradox / network dynamics</p>
 <h3>Braess routing dynamics</h3>
@@ -193,7 +199,7 @@
 </div>
 </article>
 <article class="atlas-card" data-category="ode biology">
-<div class="scheme atlas-figure"><img alt="Calvin cycle mini-model schematic" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></div>
+<div class="scheme atlas-figure"><img alt="Calvin cycle mini-model schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></div>
 <div class="atlas-body">
 <p class="atlas-type">Photosynthesis ODE</p>
 <h3>Calvin cycle mini-model</h3>
@@ -252,74 +258,86 @@
 <a class="open-link workbench-link" href="workbench.html?model=constrained">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Pareto%20design%20trade-off">Open in lab</a>
 </div>
 </article>
-
-
-<article class="atlas-card" data-category="steady biology teaching">
-<div class="scheme atlas-figure steady-logo"><svg viewBox="0 0 340 150" aria-hidden="true"><path class="axis" d="M42 118 H304M58 26 V128"></path><path d="M58 110 C92 58 136 42 178 42 C224 42 258 50 300 54"></path><path class="ghost" d="M58 75 H300"></path><line class="threshold" x1="150" x2="150" y1="42" y2="118"></line><circle cx="150" cy="75" r="8"></circle><text x="162" y="72">Kₘ</text><text x="258" y="47">Vmax</text><text x="66" y="34">v</text><text x="292" y="132">[S]</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Steady-State / algebraic biology</p><h3>Michaelis–Menten steady state</h3><p class="authors"><b>Authors / inspiration:</b> Leonor Michaelis; Maud Menten</p><p>Algebraic enzyme-balance form of saturating conversion. Use it to read off a steady reaction rate without integrating a time trajectory.</p><p class="vars"><b>Variables:</b> substrate concentration S; reaction rate v</p><p class="try"><b>Try:</b> change Vmax and Km, solve, then export tidy CSV and Plotly JSON.</p><a class="open-link workbench-link" href="workbench.html?model=enzyme-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Michaelis-Menten%20balance">Open in lab</a></div>
+<article class="atlas-card" data-category="optimization control engineering teaching">
+<div class="scheme traffic"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M40 75 H300M170 22 V130"></path><rect height="48" rx="8" width="48" x="146" y="51"></rect><circle cx="170" cy="64" r="6"></circle><circle cx="170" cy="86" r="6"></circle><path d="M66 74 H132M208 74 H276M170 34 V18M170 116 V136"></path><text x="58" y="42">queue</text><text x="218" y="42">delay</text><text x="196" y="126">cycle budget</text></svg></div>
+<div class="atlas-body"><p class="atlas-type">Real-world optimization / control</p><h3>Traffic signal timing</h3><p class="authors"><b>Authors / inspiration:</b> constrained traffic-control optimization</p><p>Allocate green times and offset under a finite cycle budget. The point is not traffic realism; it is to show constrained operational decision-making.</p><p class="vars"><b>Variables:</b> gNS, gEW, offset</p><p class="try"><b>Try:</b> compare convergence, feasibility, and the objective landscape.</p><a class="open-link workbench-link" href="workbench.html?model=traffic-signal">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Traffic%20signal%20timing">Open in lab</a></div>
 </article>
-<article class="atlas-card" data-category="steady biology research">
-<div class="scheme atlas-figure steady-logo"><svg viewBox="0 0 340 150" aria-hidden="true"><path class="axis" d="M44 120 H306M58 28 V130"></path><path d="M64 110 C102 104 124 42 170 42 C216 42 238 104 294 110"></path><path class="ghost" d="M64 44 C102 50 124 112 170 112 C216 112 238 50 294 44"></path><circle cx="104" cy="88" r="7"></circle><circle cx="170" cy="76" r="7"></circle><circle cx="236" cy="88" r="7"></circle><text x="86" y="128">stable</text><text x="146" y="28">unstable</text><text x="220" y="128">stable</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Steady-State / bistability</p><h3>Toggle switch equilibrium</h3><p class="authors"><b>Authors / inspiration:</b> genetic toggle-switch tradition</p><p>Two mutually repressing variables can create three fixed points: two stable expression states separated by an unstable symmetric state.</p><p class="vars"><b>Variables:</b> x and y regulatory species; α production; n Hill coefficient</p><p class="try"><b>Try:</b> start from different initial guesses and inspect the stability label and alternative equilibria.</p><a class="open-link workbench-link" href="workbench.html?model=toggle-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Toggle%20switch">Open in lab</a></div>
+<article class="atlas-card" data-category="optimization environment biology">
+<div class="scheme risk"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 118 H306M54 28 V128"></path><path d="M62 96 C104 70 134 54 168 48 C216 40 258 38 300 38"></path><path class="ghost" d="M60 44 C104 52 138 68 172 90 C208 112 254 118 300 120"></path><line class="threshold" x1="68" x2="300" y1="76" y2="76"></line><circle cx="198" cy="62" r="7"></circle><text x="76" y="32">efficacy</text><text x="226" y="132">exposure ↓ with buffer</text></svg></div>
+<div class="atlas-body"><p class="atlas-type">Real-world optimization / environmental risk</p><h3>Crop dose-buffer risk trade-off</h3><p class="authors"><b>Authors / inspiration:</b> environmental risk-assessment decision problems</p><p>Choose dose and buffer distance while trading efficacy against simplified aquatic and terrestrial exposure thresholds.</p><p class="vars"><b>Variables:</b> dose; buffer distance</p><p class="try"><b>Try:</b> view the Pareto plot, then inspect which exposure constraint binds.</p><a class="open-link workbench-link" href="workbench.html?model=crop-risk-opt">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Crop%20dose-buffer%20risk%20trade-off">Open in lab</a></div>
+</article>
+<article class="atlas-card" data-category="optimization engineering control">
+<div class="scheme reservoir"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M42 120 H302M58 26 V130"></path><path d="M74 96 C116 84 142 62 176 58 C218 54 252 66 292 94"></path><path class="ghost" d="M74 112 C120 106 148 88 178 72 C220 50 252 40 292 34"></path><circle cx="96" cy="106" r="7"></circle><circle cx="250" cy="45" r="7"></circle><text x="72" y="132">inject</text><text x="236" y="28">produce</text><text x="158" y="116">water-cut limit</text></svg></div>
+<div class="atlas-body"><p class="atlas-type">Real-world optimization / operations</p><h3>Reservoir pumping NPV surrogate</h3><p class="authors"><b>Authors / inspiration:</b> optimal production strategy examples</p><p>Select injection and production rates under capacity and water-cut constraints. Aggressive production improves revenue but increases the penalty surface.</p><p class="vars"><b>Variables:</b> qin; qprod</p><p class="try"><b>Try:</b> switch between particle swarm and differential evolution.</p><a class="open-link workbench-link" href="workbench.html?model=reservoir-npv">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Reservoir%20pumping%20NPV%20surrogate">Open in lab</a></div>
+</article>
+<article class="atlas-card" data-category="steady biology teaching">
+<div class="scheme atlas-figure steady-logo"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M42 118 H304M58 26 V128"></path><path d="M58 110 C92 58 136 42 178 42 C224 42 258 50 300 54"></path><path class="ghost" d="M58 75 H300"></path><line class="threshold" x1="150" x2="150" y1="42" y2="118"></line><circle cx="150" cy="75" r="8"></circle><text x="162" y="72">Kₘ</text><text x="258" y="47">Vmax</text><text x="66" y="34">v</text><text x="292" y="132">[S]</text></svg></div>
+<div class="atlas-body"><p class="atlas-type">Steady-State / algebraic biology</p><h3>Michaelis–Menten steady state</h3><p class="authors"><b>Authors / inspiration:</b> Leonor Michaelis; Maud Menten</p><p>Algebraic enzyme-balance form of saturating conversion. Use it to read off a steady reaction rate without integrating a time trajectory.</p><p class="vars"><b>Variables:</b> substrate concentration S; reaction rate v</p><p class="try"><b>Try:</b> change Vmax and Km, solve, then export tidy CSV and Plotly JSON.</p><a class="open-link workbench-link" href="workbench.html?model=enzyme-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Michaelis-Menten%20steady%20state">Open in lab</a></div>
+</article>
+<article class="atlas-card" data-category="steady biology">
+<div class="scheme atlas-figure steady-logo"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M44 120 H306M58 28 V130"></path><path d="M64 110 C102 104 124 42 170 42 C216 42 238 104 294 110"></path><path class="ghost" d="M64 44 C102 50 124 112 170 112 C216 112 238 50 294 44"></path><circle cx="104" cy="88" r="7"></circle><circle cx="170" cy="76" r="7"></circle><circle cx="236" cy="88" r="7"></circle><text x="86" y="128">stable</text><text x="146" y="28">unstable</text><text x="220" y="128">stable</text></svg></div>
+<div class="atlas-body"><p class="atlas-type">Steady-State / bistability</p><h3>Toggle switch equilibrium</h3><p class="authors"><b>Authors / inspiration:</b> genetic toggle-switch tradition</p><p>Two mutually repressing variables can create three fixed points: two stable expression states separated by an unstable symmetric state.</p><p class="vars"><b>Variables:</b> x and y regulatory species; α production; n Hill coefficient</p><p class="try"><b>Try:</b> start from different initial guesses and inspect the stability label and alternative equilibria.</p><a class="open-link workbench-link" href="workbench.html?model=toggle-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Toggle%20switch%20bistability">Open in lab</a></div>
 </article>
 <article class="atlas-card" data-category="steady ode teaching biology">
-<div class="scheme atlas-figure steady-logo"><svg viewBox="0 0 340 150" aria-hidden="true"><circle cx="84" cy="72" r="22"></circle><text x="84" y="77">S*</text><circle cx="170" cy="72" r="22"></circle><text x="170" y="77">I*</text><circle cx="256" cy="72" r="22"></circle><text x="256" y="77">R*</text><path d="M106 72 H146"></path><path d="M136 64 L148 72 L136 80"></path><path d="M192 72 H232"></path><path d="M222 64 L234 72 L222 80"></path><path class="ghost" d="M84 110 C126 132 214 132 256 110"></path><text x="112" y="130">f(S,I,R)=0</text></svg></div>
+<div class="scheme atlas-figure steady-logo"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="84" cy="72" r="22"></circle><text x="84" y="77">S*</text><circle cx="170" cy="72" r="22"></circle><text x="170" y="77">I*</text><circle cx="256" cy="72" r="22"></circle><text x="256" y="77">R*</text><path d="M106 72 H146"></path><path d="M136 64 L148 72 L136 80"></path><path d="M192 72 H232"></path><path d="M222 64 L234 72 L222 80"></path><path class="ghost" d="M84 110 C126 132 214 132 256 110"></path><text x="112" y="130">f(S,I,R)=0</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Steady-State / epidemic equilibrium</p><h3>SIR endemic equilibrium</h3><p class="authors"><b>Authors / inspiration:</b> Kermack–McKendrick epidemic modeling</p><p>Find the non-transient equilibrium equations associated with an epidemic system and compare the algebraic solution with long-time ODE behavior.</p><p class="vars"><b>Variables:</b> S*, I*, R* equilibrium compartments</p><p class="try"><b>Try:</b> change β and γ and check whether the endemic infected state remains feasible.</p><a class="open-link workbench-link" href="workbench.html?model=cubic-bistable">Open in Workbench</a> <a class="open-link" href="steady.html?example=SIR%20endemic%20equilibrium">Open in lab</a></div>
 </article>
-
+<article class="atlas-card" data-category="steady environment chemistry">
+<div class="scheme exposure"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="96" cy="76" r="23"></circle><text x="96" y="80">P</text><circle cx="226" cy="76" r="23"></circle><text x="226" y="80">M</text><path d="M119 76 H202"></path><path d="M192 68 L204 76 L192 84"></path><path class="ghost" d="M96 100 C90 126 62 126 58 100"></path><path class="ghost" d="M226 100 C220 126 192 126 188 100"></path><text x="78" y="38">input</text><text x="132" y="62">degradation</text><text x="58" y="132">runoff/leaching</text></svg></div>
+<div class="atlas-body"><p class="atlas-type">Real-world steady state / environmental exposure</p><h3>Soil pesticide exposure balance</h3><p class="authors"><b>Authors / inspiration:</b> parent-metabolite exposure balance</p><p>Steady parent and metabolite concentrations under repeated input, degradation, runoff, and leaching.</p><p class="vars"><b>Variables:</b> C_parent; C_met</p><p class="try"><b>Try:</b> continue over dose or interval and check exposure sensitivity.</p><a class="open-link workbench-link" href="workbench.html?model=soil-exposure-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Soil%20pesticide%20exposure%20balance">Open in lab</a></div>
+</article>
+<article class="atlas-card" data-category="steady environment engineering chemistry">
+<div class="scheme wastewater"><svg aria-hidden="true" viewbox="0 0 340 150"><rect height="72" rx="16" width="196" x="72" y="48"></rect><path d="M24 84 H72M268 84 H316"></path><path d="M306 76 L318 84 L306 92"></path><circle cx="124" cy="84" r="13"></circle><circle cx="186" cy="84" r="13"></circle><text x="124" y="88">NH₄</text><text x="186" y="88">Xn</text><text x="94" y="34">Monod growth + dilution</text></svg></div>
+<div class="atlas-body"><p class="atlas-type">Real-world steady state / environmental engineering</p><h3>Wastewater nitrification balance</h3><p class="authors"><b>Authors / inspiration:</b> activated-sludge process modeling</p><p>Ammonium and nitrifier biomass balances with dilution, Monod uptake, yield, and decay.</p><p class="vars"><b>Variables:</b> NH4; Xn</p><p class="try"><b>Try:</b> continue over dilution rate D and watch washout risk.</p><a class="open-link workbench-link" href="workbench.html?model=wastewater-nitrification">Open in Workbench</a> <a class="open-link" href="steady.html?example=Wastewater%20nitrification%20balance">Open in lab</a></div>
+</article>
 <article class="atlas-card" data-category="stochastic simulation chemistry biology teaching">
-<div class="scheme stochastic"><svg viewbox="0 0 340 150" aria-hidden="true"><circle cx="58" cy="74" r="19"></circle><text x="58" y="74">S</text><circle cx="150" cy="74" r="19"></circle><text x="150" y="74">I</text><circle cx="242" cy="74" r="19"></circle><text x="242" y="74">R</text><path d="M78 74 H130"></path><path d="M120 66 L132 74 L120 82"></path><path d="M170 74 H222"></path><path d="M212 66 L224 74 L212 82"></path><path class="ghost" d="M96 38 C122 18 182 18 210 38"></path><text x="153" y="30">random next event</text><text x="170" y="122">Gillespie SSA</text></svg></div>
+<div class="scheme stochastic"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="58" cy="74" r="19"></circle><text x="58" y="74">S</text><circle cx="150" cy="74" r="19"></circle><text x="150" y="74">I</text><circle cx="242" cy="74" r="19"></circle><text x="242" y="74">R</text><path d="M78 74 H130"></path><path d="M120 66 L132 74 L120 82"></path><path d="M170 74 H222"></path><path d="M212 66 L224 74 L212 82"></path><path class="ghost" d="M96 38 C122 18 182 18 210 38"></path><text x="153" y="30">random next event</text><text x="170" y="122">Gillespie SSA</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Event simulation engine</p><h3>Gillespie algorithm</h3><p class="authors"><b>Authors / inspiration:</b> Daniel T. Gillespie</p><p>Simulates reaction networks one event at a time: draw the waiting time, choose the next reaction, update the state.</p><p class="vars"><b>Variables:</b> integer molecule, cell, or compartment counts</p><p class="try"><b>Try:</b> compare one stochastic path against the deterministic ODE mean field</p><a class="open-link workbench-link" href="workbench.html?model=birth-death">Open in Workbench</a> <a class="open-link" href="stochastic.html#gillespie">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic biology teaching">
-<div class="scheme branching"><svg viewbox="0 0 340 150" aria-hidden="true"><circle cx="170" cy="24" r="10"></circle><path d="M170 34 L116 72M170 34 L224 72"></path><circle cx="116" cy="78" r="10"></circle><circle cx="224" cy="78" r="10"></circle><path d="M116 88 L84 122M116 88 L148 122M224 88 L206 122M224 88 L258 122"></path><circle cx="84" cy="128" r="9"></circle><circle cx="148" cy="128" r="9"></circle><circle cx="206" cy="128" r="9"></circle><circle cx="258" cy="128" r="9"></circle><text x="170" y="112">extinction can still occur</text></svg></div>
+<div class="scheme branching"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="170" cy="24" r="10"></circle><path d="M170 34 L116 72M170 34 L224 72"></path><circle cx="116" cy="78" r="10"></circle><circle cx="224" cy="78" r="10"></circle><path d="M116 88 L84 122M116 88 L148 122M224 88 L206 122M224 88 L258 122"></path><circle cx="84" cy="128" r="9"></circle><circle cx="148" cy="128" r="9"></circle><circle cx="206" cy="128" r="9"></circle><circle cx="258" cy="128" r="9"></circle><text x="170" y="112">extinction can still occur</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Branching process</p><h3>Galton–Watson process</h3><p class="authors"><b>Authors / inspiration:</b> Francis Galton; Henry W. Watson</p><p>Each individual independently produces a random number of descendants. Mean growth above one does not guarantee survival.</p><p class="vars"><b>Variables:</b> population size Zₙ by generation</p><p class="try"><b>Try:</b> vary offspring variance while keeping the same mean</p><a class="open-link workbench-link" href="workbench.html?model=galton">Open in Workbench</a> <a class="open-link" href="stochastic.html#galton">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic teaching finance">
-<div class="scheme gambler"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M36 120 H306M52 24 V130"></path><path class="osc" d="M52 92 L74 80 L96 88 L118 72 L140 84 L162 68 L184 76 L206 58 L228 70 L250 48 L272 62"></path><line class="threshold" x1="52" x2="306" y1="120" y2="120"></line><line class="ghost" x1="52" x2="306" y1="40" y2="40"></line><text x="286" y="38">target</text><text x="286" y="122">ruin</text></svg></div>
+<div class="scheme gambler"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M36 120 H306M52 24 V130"></path><path class="osc" d="M52 92 L74 80 L96 88 L118 72 L140 84 L162 68 L184 76 L206 58 L228 70 L250 48 L272 62"></path><line class="threshold" x1="52" x2="306" y1="120" y2="120"></line><line class="ghost" x1="52" x2="306" y1="40" y2="40"></line><text x="286" y="38">target</text><text x="286" y="122">ruin</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Random walk</p><h3>Gambler’s ruin</h3><p class="authors"><b>Authors / inspiration:</b> Classical probability</p><p>A finite player repeatedly wins or loses one unit. In a fair game against an infinite bankroll, eventual ruin is almost sure.</p><p class="vars"><b>Variables:</b> capital Xₜ; win probability p</p><p class="try"><b>Try:</b> increase initial capital and observe that risk is delayed, not removed</p><a class="open-link workbench-link" href="workbench.html?model=gambler-ruin">Open in Workbench</a> <a class="open-link" href="stochastic.html#ruin">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic biology simulation">
-<div class="scheme epidemic"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M36 120 H306M52 26 V130"></path><path d="M54 112 C96 98 126 40 168 50 C214 62 244 96 298 108"></path><path class="ghost" d="M54 118 C92 110 130 88 150 118 C170 132 220 130 298 128"></path><text x="130" y="34">ODE peak</text><text x="218" y="128">stochastic fade-out</text></svg></div>
+<div class="scheme epidemic"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M36 120 H306M52 26 V130"></path><path d="M54 112 C96 98 126 40 168 50 C214 62 244 96 298 108"></path><path class="ghost" d="M54 118 C92 110 130 88 150 118 C170 132 220 130 298 128"></path><text x="130" y="34">ODE peak</text><text x="218" y="128">stochastic fade-out</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Stochastic epidemic</p><h3>Stochastic SIR / SIS</h3><p class="authors"><b>Authors / inspiration:</b> Epidemic CTMC tradition</p><p>Transmission and recovery are random events. Even when R₀ is above one, early random extinction remains possible.</p><p class="vars"><b>Variables:</b> S, I, R integer counts</p><p class="try"><b>Try:</b> run many paths and inspect final-size distribution</p><a class="open-link workbench-link" href="workbench.html?model=stoch-sir">Open in Workbench</a> <a class="open-link" href="stochastic.html#sir">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic physics teaching">
-<div class="scheme urn"><svg viewbox="0 0 340 150" aria-hidden="true"><rect x="58" y="46" width="86" height="70" rx="14"></rect><rect x="196" y="46" width="86" height="70" rx="14"></rect><circle cx="82" cy="70" r="5"></circle><circle cx="104" cy="76" r="5"></circle><circle cx="126" cy="92" r="5"></circle><circle cx="220" cy="86" r="5"></circle><circle cx="244" cy="70" r="5"></circle><path d="M148 78 C166 58 178 58 194 78"></path><path d="M184 70 L196 78 L182 84"></path><path class="ghost" d="M194 96 C176 116 164 116 148 96"></path><text x="170" y="132">recurrence after equilibrium</text></svg></div>
+<div class="scheme urn"><svg aria-hidden="true" viewbox="0 0 340 150"><rect height="70" rx="14" width="86" x="58" y="46"></rect><rect height="70" rx="14" width="86" x="196" y="46"></rect><circle cx="82" cy="70" r="5"></circle><circle cx="104" cy="76" r="5"></circle><circle cx="126" cy="92" r="5"></circle><circle cx="220" cy="86" r="5"></circle><circle cx="244" cy="70" r="5"></circle><path d="M148 78 C166 58 178 58 194 78"></path><path d="M184 70 L196 78 L182 84"></path><path class="ghost" d="M194 96 C176 116 164 116 148 96"></path><text x="170" y="132">recurrence after equilibrium</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Statistical physics</p><h3>Ehrenfest urn model</h3><p class="authors"><b>Authors / inspiration:</b> Paul and Tatiana Ehrenfest</p><p>Balls randomly switch urns. The system approaches equilibrium yet can eventually return to an extreme initial state.</p><p class="vars"><b>Variables:</b> number of balls in urn A</p><p class="try"><b>Try:</b> compare short-time relaxation with long-time recurrence</p><a class="open-link workbench-link" href="workbench.html?model=ehrenfest">Open in Workbench</a> <a class="open-link" href="stochastic.html#ehrenfest">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic genetics biology">
-<div class="scheme genetics"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M38 120 H304M54 26 V130"></path><path d="M54 80 C82 74 100 96 128 90 C158 84 176 60 206 54 C238 48 260 30 296 28"></path><path class="ghost" d="M54 80 C84 92 106 110 138 116 C178 124 232 122 296 120"></path><text x="296" y="26">fixation</text><text x="294" y="122">loss</text><text x="170" y="140">neutral drift</text></svg></div>
+<div class="scheme genetics"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 120 H304M54 26 V130"></path><path d="M54 80 C82 74 100 96 128 90 C158 84 176 60 206 54 C238 48 260 30 296 28"></path><path class="ghost" d="M54 80 C84 92 106 110 138 116 C178 124 232 122 296 120"></path><text x="296" y="26">fixation</text><text x="294" y="122">loss</text><text x="170" y="140">neutral drift</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Population genetics</p><h3>Wright–Fisher model</h3><p class="authors"><b>Authors / inspiration:</b> Sewall Wright; Ronald A. Fisher</p><p>Allele frequencies change by random sampling. Neutral variants eventually fix or disappear without selection.</p><p class="vars"><b>Variables:</b> allele frequency pₙ; population size N</p><p class="try"><b>Try:</b> reduce N and watch drift dominate faster</p><a class="open-link workbench-link" href="workbench.html?model=wright-fisher">Open in Workbench</a> <a class="open-link" href="stochastic.html#wright">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic finance teaching">
-<div class="scheme finance"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M38 120 H306M54 24 V130"></path><path d="M54 104 C94 88 122 70 154 62 C190 52 234 28 296 18"></path><path class="ghost" d="M54 104 C86 112 120 118 154 116 C206 112 244 100 296 92"></path><text x="234" y="24">mean grows</text><text x="234" y="104">typical path lags</text></svg></div>
+<div class="scheme finance"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 120 H306M54 24 V130"></path><path d="M54 104 C94 88 122 70 154 62 C190 52 234 28 296 18"></path><path class="ghost" d="M54 104 C86 112 120 118 154 116 C206 112 244 100 296 92"></path><text x="234" y="24">mean grows</text><text x="234" y="104">typical path lags</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">SDE / finance</p><h3>Geometric Brownian motion</h3><p class="authors"><b>Authors / inspiration:</b> Bachelier; Black–Scholes tradition</p><p>Multiplicative noise separates ensemble average from typical trajectory. High volatility can make most paths disappointing while the mean rises.</p><p class="vars"><b>Variables:</b> asset or population size Xₜ</p><p class="try"><b>Try:</b> increase volatility and compare median vs mean</p><a class="open-link workbench-link" href="workbench.html?model=gbm">Open in Workbench</a> <a class="open-link" href="stochastic.html#gbm">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic paradox teaching finance">
-<div class="scheme parrondo"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M38 120 H306M54 24 V130"></path><path class="osc" d="M54 62 C88 70 116 74 146 82 C184 92 234 104 296 112"></path><path class="ghost" d="M54 66 C96 52 126 84 162 70 C206 54 248 44 296 30"></path><text x="102" y="50">A loses</text><text x="238" y="114">B loses</text><text x="228" y="28">mix wins</text></svg></div>
+<div class="scheme parrondo"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 120 H306M54 24 V130"></path><path class="osc" d="M54 62 C88 70 116 74 146 82 C184 92 234 104 296 112"></path><path class="ghost" d="M54 66 C96 52 126 84 162 70 C206 54 248 44 296 30"></path><text x="102" y="50">A loses</text><text x="238" y="114">B loses</text><text x="228" y="28">mix wins</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Paradox / random walks</p><h3>Parrondo’s paradox</h3><p class="authors"><b>Authors / inspiration:</b> Juan M. R. Parrondo</p><p>Two losing games can combine into a winning process when switching changes the state distribution.</p><p class="vars"><b>Variables:</b> capital; modulo state</p><p class="try"><b>Try:</b> alternate games instead of playing either one alone</p><a class="open-link workbench-link" href="workbench.html?model=parrondo">Open in Workbench</a> <a class="open-link" href="stochastic.html#parrondo">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic physics simulation teaching">
-<div class="scheme resonance"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M34 116 H306M54 24 V126"></path><path class="ghost" d="M54 92 C78 68 102 68 126 92 C150 116 174 116 198 92 C222 68 246 68 270 92"></path><line class="threshold" x1="54" x2="302" y1="62" y2="62"></line><path class="osc" d="M54 94 L70 88 L86 66 L102 74 L118 58 L134 88 L150 96 L166 62 L182 72 L198 58 L214 92 L230 96 L246 66 L262 74 L278 60"></path><text x="248" y="48">noise crosses threshold</text></svg></div>
+<div class="scheme resonance"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M34 116 H306M54 24 V126"></path><path class="ghost" d="M54 92 C78 68 102 68 126 92 C150 116 174 116 198 92 C222 68 246 68 270 92"></path><line class="threshold" x1="54" x2="302" y1="62" y2="62"></line><path class="osc" d="M54 94 L70 88 L86 66 L102 74 L118 58 L134 88 L150 96 L166 62 L182 72 L198 58 L214 92 L230 96 L246 66 L262 74 L278 60"></path><text x="248" y="48">noise crosses threshold</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Noise-assisted signal</p><h3>Stochastic resonance</h3><p class="authors"><b>Authors / inspiration:</b> Benzi–Sutera–Vulpiani tradition</p><p>Adding noise can improve detection of a weak periodic signal when a threshold system is tuned correctly.</p><p class="vars"><b>Variables:</b> signal, noise amplitude, threshold</p><p class="try"><b>Try:</b> scan noise level and find the best signal response</p><a class="open-link workbench-link" href="workbench.html?model=resonance">Open in Workbench</a> <a class="open-link" href="stochastic.html#resonance">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic physics control simulation">
-<div class="scheme motor"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M34 112 H306"></path><path d="M46 104 L94 52 L126 104 L174 52 L206 104 L254 52 L286 104"></path><circle cx="100" cy="44" r="9"></circle><path class="ghost" d="M106 42 C154 18 198 18 246 42"></path><path class="shortcut" d="M218 36 H268"></path><text x="244" y="24">net drift</text><text x="166" y="132">flashing ratchet</text></svg></div>
+<div class="scheme motor"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M34 112 H306"></path><path d="M46 104 L94 52 L126 104 L174 52 L206 104 L254 52 L286 104"></path><circle cx="100" cy="44" r="9"></circle><path class="ghost" d="M106 42 C154 18 198 18 246 42"></path><path class="shortcut" d="M218 36 H268"></path><text x="244" y="24">net drift</text><text x="166" y="132">flashing ratchet</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Brownian motor</p><h3>Flashing ratchet</h3><p class="authors"><b>Authors / inspiration:</b> Brownian ratchet literature</p><p>Thermal noise plus asymmetric switching can produce directed transport without a constant macroscopic force.</p><p class="vars"><b>Variables:</b> particle position; potential state</p><p class="try"><b>Try:</b> switch the potential on/off and measure net velocity</p><a class="open-link workbench-link" href="workbench.html?model=ratchet">Open in Workbench</a> <a class="open-link" href="stochastic.html#ratchet">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic control teaching optimization">
-<div class="scheme bandit"><svg viewbox="0 0 340 150" aria-hidden="true"><rect x="52" y="52" width="54" height="70" rx="12"></rect><rect x="143" y="36" width="54" height="86" rx="12"></rect><rect x="234" y="62" width="54" height="60" rx="12"></rect><text x="79" y="88">A</text><text x="170" y="80">B</text><text x="261" y="92">C</text><path class="ghost" d="M170 26 V14"></path><text x="170" y="14">uncertainty has value</text></svg></div>
+<div class="scheme bandit"><svg aria-hidden="true" viewbox="0 0 340 150"><rect height="70" rx="12" width="54" x="52" y="52"></rect><rect height="86" rx="12" width="54" x="143" y="36"></rect><rect height="60" rx="12" width="54" x="234" y="62"></rect><text x="79" y="88">A</text><text x="170" y="80">B</text><text x="261" y="92">C</text><path class="ghost" d="M170 26 V14"></path><text x="170" y="14">uncertainty has value</text></svg></div>
 <div class="atlas-body"><p class="atlas-type">Learning / control</p><h3>Multi-armed bandit</h3><p class="authors"><b>Authors / inspiration:</b> Robbins; Gittins-index tradition</p><p>Optimal decisions may favor an uncertain option over the current best-looking option because information has future value.</p><p class="vars"><b>Variables:</b> arm beliefs; reward history</p><p class="try"><b>Try:</b> compare greedy choice against exploration-aware policies</p><a class="open-link workbench-link" href="workbench.html?model=bandit">Open in Workbench</a> <a class="open-link" href="stochastic.html#bandit">Open stochastic lab</a></div>
 </article>
 <article class="atlas-card" data-category="stochastic control teaching optimization">
-<div class="scheme secretary"><svg viewbox="0 0 340 150" aria-hidden="true"><path class="axis" d="M34 92 H306"></path><line class="threshold" x1="140" x2="140" y1="38" y2="112"></line><text x="113" y="30">learn</text><text x="187" y="30">accept zone</text><g><circle cx="56" cy="92" r="13"></circle><circle cx="96" cy="92" r="13"></circle><circle cx="136" cy="92" r="13"></circle><circle cx="176" cy="92" r="13"></circle><circle cx="216" cy="92" r="13"></circle><circle cx="256" cy="92" r="13"></circle></g></svg></div>
+<div class="scheme secretary"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M34 92 H306"></path><line class="threshold" x1="140" x2="140" y1="38" y2="112"></line><text x="113" y="30">learn</text><text x="187" y="30">accept zone</text><g><circle cx="56" cy="92" r="13"></circle><circle cx="96" cy="92" r="13"></circle><circle cx="136" cy="92" r="13"></circle><circle cx="176" cy="92" r="13"></circle><circle cx="216" cy="92" r="13"></circle><circle cx="256" cy="92" r="13"></circle></g></svg></div>
 <div class="atlas-body"><p class="atlas-type">Optimal stopping</p><h3>Search / secretary problem</h3><p class="authors"><b>Authors / inspiration:</b> Classical optimal stopping</p><p>Rejecting good early offers can be rational when waiting preserves the option of rare high-quality future draws.</p><p class="vars"><b>Variables:</b> offer sequence; stopping threshold</p><p class="try"><b>Try:</b> change search cost and market variance</p><a class="open-link workbench-link" href="workbench.html?model=secretary">Open in Workbench</a> <a class="open-link" href="stochastic.html#secretary">Open stochastic lab</a></div>
 </article>
-<article class="atlas-card" data-category="research biology stochastic simulation">
-<div class="scheme tcell"><svg viewbox="0 0 340 150" aria-hidden="true"><rect x="42" y="60" width="48" height="32" rx="10"></rect><text x="66" y="76">Qᵢ</text><circle cx="156" cy="76" r="19"></circle><text x="156" y="76">Aᵢ</text><rect x="246" y="42" width="50" height="28" rx="10"></rect><text x="271" y="56">Qᵢ₊₁</text><circle class="ghost-point" cx="272" cy="108" r="15"></circle><text x="272" y="108">death</text><path d="M90 76 H136"></path><path d="M126 68 L138 76 L126 84"></path><path d="M176 70 C206 50 222 48 246 54"></path><path d="M236 47 L248 54 L236 62"></path><path class="inhib" d="M176 84 C210 100 236 108 256 108"></path><text x="166" y="126">activation · division · apoptosis</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Research stochastic biology</p><h3>T-cell proliferation</h3><p class="authors"><b>Authors / inspiration:</b> Chilperic Armel Foko Kuate; Wilfred Ndifon; Gisele Mophou; Ayissi Raoul</p><p>CFSE-motivated immune-cell model family: ODE/DDE, Cyton, branching, individual simulation, and master-equation views.</p><p class="vars"><b>Variables:</b> generation counts Nᵢ; quiescent Qᵢ; activated Aᵢ</p><p class="try"><b>Try:</b> compare deterministic generation means with stochastic cell-event paths</p><a class="open-link workbench-link" href="workbench.html?model=tcell">Open in Workbench</a> <a class="open-link" href="stochastic.html#tcell">Open stochastic lab</a></div>
-</article>
-
 </section>
 <section class="card atlas-note">
 <h2>How to use this atlas</h2>
@@ -333,7 +351,7 @@
     document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const f=btn.dataset.filter;
-    document.querySelectorAll('.atlas-card').forEach(card=>{
+    document.querySelectorAll('.atlas-card, .agent-atlas-grid article').forEach(card=>{
       card.hidden = f !== 'all' && !card.dataset.category.includes(f);
     });
   }));

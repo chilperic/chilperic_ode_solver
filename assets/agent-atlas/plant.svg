@@ -1,0 +1,7 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 170' role='img' aria-label='Plant competition agent model illustration'><rect width='360' height='170' rx='22' fill='#f8fafc'/><rect x='1' y='1' width='358' height='168' rx='22' fill='none' stroke='#d7e2f0'/><style>text{font-family:Inter,Arial,sans-serif;font-size:12px;fill:#334155;font-weight:700}.small{font-size:10px;fill:#64748b;font-weight:650}.line{stroke:#94a3b8;stroke-width:2;fill:none;stroke-linecap:round}.dash{stroke:#94a3b8;stroke-width:2;fill:none;stroke-dasharray:5 5}.node{stroke:#fff;stroke-width:2}</style>
+<text x='18' y='24'>plant competition toy model</text>
+<g transform='translate(56 42)'>
+<path class='line' d='M60 90 C54 58 72 38 88 18' stroke='#16a34a'/><path class='line' d='M60 90 C80 58 96 48 126 42' stroke='#16a34a'/><path class='line' d='M206 94 C196 58 216 34 246 18' stroke='#0f766e'/><path class='line' d='M206 94 C224 66 246 56 282 54' stroke='#0f766e'/>
+<path class='dash' d='M30 112 H306' stroke='#2563eb'/><circle cx='154' cy='106' r='14' fill='#2563eb'/><text class='small' x='110' y='142'>water / light competition</text>
+</g>
+</svg>

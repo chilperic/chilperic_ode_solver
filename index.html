@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html data-theme="aurora" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="Foko Lab is a browser-native scientific modeling environment for ODEs, optimization, steady-state systems, stochastic simulation, plotting and reproducible exports."/>
-<meta property="og:title" content="Foko Lab"/>
-<meta property="og:description" content="Interactive scientific modeling in the browser."/>
-<meta property="og:type" content="website"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab is a browser-native scientific modeling environment for ODEs, optimization, steady-state systems, stochastic simulation, plotting and reproducible exports." name="description"/>
+<meta content="Foko Lab" property="og:title"/>
+<meta content="Interactive scientific modeling in the browser." property="og:description"/>
+<meta content="website" property="og:type"/>
 <title>Foko Lab · Browser-native scientific modeling</title>
-<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+<link href="styles/style.css?v=platform-v23-upload" rel="stylesheet"/>
 </head>
 <body data-lab="home">
 <script>
@@ -20,32 +21,48 @@
 <div class="app-shell home-shell">
 <header class="topbar home-topbar">
 <a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav"><a class="active" href="index.html">Home</a><a href="ode.html#workbench">ODE Lab</a><a href="optimization.html">Optimization Lab</a><a href="steady.html">Steady-State Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a></nav>
-<div class="top-actions"><a class="primary launch-button" href="ode.html#workbench">⚗ Launch Labs</a></div>
+<nav aria-label="Primary navigation" class="topnav"><a class="active" href="index.html">Home</a>
+<a href="workbench.html">Workbench Beta</a>
+<a href="ode.html#workbench">ODE Lab</a>
+<a href="optimization.html">Optimization Lab</a>
+<a href="steady.html">Steady-State Lab</a>
+<a href="stochastic.html">Stochastic Lab</a>
+<a href="symbolic.html">Symbolic Lab</a>
+<a href="agent.html">Agent Lab</a>
+<a href="beauty.html">Math Beauty</a>
+<a href="examples.html">Model Atlas</a>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
+<a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a></nav>
+<div class="top-actions"><a class="primary launch-button" href="workbench.html">Workbench Beta</a></div>
 </header>
 <main class="home-page">
 <section class="home-hero">
 <div class="home-copy">
 <p class="home-pill">BROWSER-NATIVE <span>•</span> FAST <span>•</span> REPRODUCIBLE <span>•</span> OPEN</p>
 <h1>Interactive scientific modeling <span>in the browser.</span></h1>
-<p class="home-lead">Explore and build models across ODEs, optimization, steady-state systems and stochastic simulation, with powerful visualization and reproducible exports.</p>
-<div class="home-actions"><a class="primary big-cta" href="ode.html#workbench">⚗ Launch Labs</a><a class="secondary big-cta" href="examples.html">▣ Explore Model Atlas</a></div>
+<p class="home-lead">Explore and build models across ODEs, optimization, steady-state systems, stochastic simulation, symbolic analysis and agent-based emergence, with visualization and reproducible exports.</p>
+<div class="home-actions"><a class="primary big-cta" href="workbench.html">▣ Open Workbench Beta</a><a class="secondary big-cta" href="examples.html">Explore Model Atlas</a><a class="secondary big-cta" href="ode.html#workbench">Legacy Labs</a></div>
 </div>
 <div class="home-visual"><img alt="Foko Lab scientific orbit logo" src="assets/foko-lab-hero-orbit.webp?v=2.7.4"/></div>
 </section>
-<section class="home-labs" aria-label="Foko Lab modules">
-<a class="home-lab-card logo-card" href="ode.html#workbench"><img class="home-lab-logo" src="assets/lab-logos/ode-lab.webp" alt="ODE Lab logo"/><b>ODE Lab</b><p>Deterministic dynamics, trajectories, phase portraits and parameter sweeps.</p><em>Explore ODE Lab →</em></a>
-<a class="home-lab-card logo-card" href="optimization.html"><img class="home-lab-logo" src="assets/lab-logos/optimization-lab.webp" alt="Optimization Lab logo"/><b>Optimization Lab</b><p>Convex and non-convex search, constraints and Pareto frontier views.</p><em>Explore Optimization Lab →</em></a>
-<a class="home-lab-card logo-card" href="steady.html"><img class="home-lab-logo" src="assets/lab-logos/steady-state-lab.webp" alt="Steady-State Lab logo"/><b>Steady-State Lab</b><p>Algebraic systems, equilibria, Jacobian diagnostics and continuation.</p><em>Explore Steady-State Lab →</em></a>
-<a class="home-lab-card logo-card" href="stochastic.html"><img class="home-lab-logo" src="assets/lab-logos/stochastic-lab.webp" alt="Stochastic Lab logo"/><b>Stochastic Lab</b><p>CTMC/Gillespie simulation, ensembles, mean-field overlays and randomness.</p><em>Explore Stochastic Lab →</em></a>
+<section aria-label="Foko Lab modules" class="home-labs">
+<a class="home-lab-card logo-card" href="ode.html#workbench"><img alt="ODE Lab logo" class="home-lab-logo" src="assets/lab-logos/ode-lab.webp"/><b>ODE Lab</b><p>Deterministic dynamics, trajectories, phase portraits and parameter sweeps.</p><em>Explore ODE Lab →</em></a>
+<a class="home-lab-card logo-card" href="optimization.html"><img alt="Optimization Lab logo" class="home-lab-logo" src="assets/lab-logos/optimization-lab.webp"/><b>Optimization Lab</b><p>Convex and non-convex search, constraints and Pareto frontier views.</p><em>Explore Optimization Lab →</em></a>
+<a class="home-lab-card logo-card" href="steady.html"><img alt="Steady-State Lab logo" class="home-lab-logo" src="assets/lab-logos/steady-state-lab.webp"/><b>Steady-State Lab</b><p>Algebraic systems, equilibria, Jacobian diagnostics and continuation.</p><em>Explore Steady-State Lab →</em></a>
+<a class="home-lab-card logo-card" href="stochastic.html"><img alt="Stochastic Lab logo" class="home-lab-logo" src="assets/lab-logos/stochastic-lab.webp"/><b>Stochastic Lab</b><p>CTMC/Gillespie simulation, ensembles, mean-field overlays and randomness.</p><em>Explore Stochastic Lab →</em></a>
+<a class="home-lab-card logo-card" href="symbolic.html"><span class="home-lab-logo math-logo">∂</span><b>Symbolic Lab</b><p>LaTeX equations, derivatives, Jacobians, equilibria notes and SymPy export.</p><em>Explore Symbolic Lab →</em></a>
+<a class="home-lab-card logo-card" href="agent.html"><span class="home-lab-logo math-logo">▦</span><b>Agent Lab</b><p>Individual-based grid models, local rules, emergent dynamics and population metrics.</p><em>Explore Agent Lab →</em></a>
+<a class="home-lab-card logo-card" href="beauty.html"><span class="home-lab-logo math-logo">∞</span><b>Mathematical Beauty</b><p>Fractals, curves, number theory and logic as public mathematical play.</p><em>Explore Math Beauty →</em></a>
 </section>
 <section class="home-lower">
-<div class="home-panel atlas-panel home-panel-with-logo"><div class="home-panel-title"><div><h2>Model Atlas</h2><p>Curated, executable examples across systems biology, epidemiology, ecology, optimization, steady-state analysis and stochastic processes.</p></div><img class="home-section-logo" alt="Model Atlas mark" src="assets/lab-logos/model-atlas.webp"/></div><div class="atlas-mini-grid"><span>Systems biology</span><span>Epidemiology</span><span>Ecology</span><span>Chemical kinetics</span><span>Foko Models</span><span>Paradoxes</span></div><a href="examples.html">Browse all models →</a></div>
+<div class="home-panel atlas-panel home-panel-with-logo"><div class="home-panel-title"><div><h2>Model Atlas</h2><p>Curated, executable examples across systems biology, epidemiology, ecology, optimization, steady-state analysis and stochastic processes.</p></div><img alt="Model Atlas mark" class="home-section-logo" src="assets/lab-logos/model-atlas.webp"/></div><div class="atlas-mini-grid"><span>Systems biology</span><span>Epidemiology</span><span>Ecology</span><span>Chemical kinetics</span><span>Teaching models</span><span>Paradoxes</span></div><a href="examples.html">Browse all models →</a></div>
 <div class="home-panel export-panel"><h2>Reproducible exports</h2><p>Export models, results and figures for transparent research and teaching workflows.</p><div class="export-badges"><span>CSV</span><span>JSON</span><span>Plotly</span><span>Python</span><span>Julia</span></div></div>
-<div class="home-panel creator-panel"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=2.7.4"/><div><p class="eyebrow">About the creator</p><h2>Dr. Chilperic Armel Foko Kuate</h2><p>Computational biologist and applied mathematician building mechanistic models and interactive tools that support education, research and discovery.</p><a href="https://chilperic.github.io/" target="_blank" rel="noopener noreferrer">Learn more about me →</a></div></div>
+<div class="home-panel creator-panel"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=2.7.4"/><div><p class="eyebrow">About the creator</p><h2>Dr. Chilperic Armel Foko Kuate</h2><p>Computational biologist and applied mathematician building mechanistic models and interactive tools that support education, research and discovery.</p><a href="https://chilperic.github.io/" rel="noopener noreferrer" target="_blank">Learn more about me →</a></div></div>
 </section>
 </main>
-<footer class="home-footer"><a class="footer-brand" href="index.html"><img alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a><p>Model deeply. Simulate confidently. Share reproducibly.</p><nav><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a><a href="examples.html">Model Atlas</a><a href="https://github.com/chilperic/chilperic_ode_solver">GitHub</a></nav></footer>
+<footer class="home-footer"><a class="footer-brand" href="index.html"><img alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a><p>Model deeply. Simulate confidently. Share reproducibly.</p><nav><a href="research.html">Research Hub</a><a href="platform.html">Platform</a><a href="symbolic.html">Symbolic Lab</a><a href="agent.html">Agent Lab</a><a href="beauty.html">Math Beauty</a><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a><a href="examples.html">Model Atlas</a><a href="https://github.com/chilperic/chilperic_ode_solver">GitHub</a></nav></footer>
 </div>
 <script>
 (function(){

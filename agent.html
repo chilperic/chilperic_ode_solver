@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Agent Lab runs individual-based models with compact selectors, visible parameters, custom rules and Atlas-based documentation." name="description"/>
+<title>Agent Lab · Foko Lab</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=v24-final-audit"></script>
+<link href="styles/style.css?v=v24-final-audit" rel="stylesheet"/>
+<link href="styles/agent-lab.css?v=v24-final-audit" rel="stylesheet"/>
+<!-- Adaptive & Learning Agents -->
+</head>
+<body data-lab="agent">
+<div class="app-shell">
+<header class="topbar">
+<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
+<nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
+<a href="workbench.html">Workbench Beta</a>
+<a href="ode.html#workbench">ODE Lab</a>
+<a href="optimization.html">Optimization Lab</a>
+<a href="steady.html">Steady-State Lab</a>
+<a href="stochastic.html">Stochastic Lab</a>
+<a href="symbolic.html">Symbolic Lab</a>
+<a class="active" href="agent.html">Agent Lab</a>
+<a href="beauty.html">Math Beauty</a>
+<a href="examples.html">Model Atlas</a>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
+<a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a></nav>
+</header>
+<main class="agent-page agent-page-compact">
+<section class="agent-hero compact-hero">
+<div>
+<p class="agent-eyebrow">INDIVIDUAL RULES → EMERGENT DYNAMICS</p>
+<h1>Agent Lab</h1>
+<p class="agent-lede">Run agent models from dropdowns. Explanations live in Docs and the Model Atlas; this page is for execution, tuning and authoring.</p><p class="agent-hidden-index">T-cell proliferation · SIR agents · Game of Life · fatty-acid de novo · Adaptive &amp; Learning Agents · vaccine hesitancy · meme-stock cascade</p>
+</div>
+<aside class="agent-boundary agent-shortcuts"><b>Reference</b><div class="agent-reference-links"><a class="open-link" href="examples.html#agent-atlas">Agent Model Atlas</a><a class="open-link" href="docs.html#agent-lab">Agent docs</a></div></aside>
+</section>
+<section class="agent-dashboard">
+<div class="agent-card agent-runbar">
+<div class="agent-selector-grid">
+<label>Example family<select id="agentModelFamily">
+<option value="all">All examples</option>
+<option value="biology">Biology / cells</option>
+<option value="social">Social contagion</option>
+<option value="crisis">Crisis / evacuation</option>
+<option value="finance">Finance / markets</option>
+<option value="urban">Urban systems</option>
+<option value="environment">Environment / enforcement</option>
+<option value="cellular">Cellular automata</option>
+<option value="custom">Custom / imported</option>
+</select></label>
+<label>Example model<select id="agentExample"></select></label>
+<label>Modeling approach<select id="agentApproach">
+<option value="rule_based">Rule-Based Decision Making</option>
+<option value="statechart">State-Driven Agents / Statecharts</option>
+<option value="adaptive">Adaptive &amp; Learning Agents</option>
+<option value="graph">Graph / Network-Based Approach</option>
+</select></label>
+<label>Time update<select id="agentTimeMode">
+<option value="discrete_sync">Discrete time · synchronous</option>
+<option value="discrete_async">Discrete time · asynchronous</option>
+<option value="continuous_rate">Continuous time · rate approximation</option>
+</select></label>
+<label>Neighborhood / topology<select id="agentTopology">
+<option value="moore">Moore grid · 8 neighbors</option>
+<option value="von_neumann">Von Neumann grid · 4 neighbors</option>
+<option value="random_graph">Random graph overlay</option>
+<option value="small_world">Small-world graph overlay</option>
+<option value="multilayer_social">Multilayer · spatial + social</option>
+<option value="multilayer_transport">Multilayer · spatial + social + transport</option>
+</select></label>
+<label>Plot mode<select id="agentPlotMode">
+<option value="population">population time series</option>
+<option value="composition">current composition</option>
+<option value="phase">phase portrait</option>
+<option value="events">event rates</option>
+<option value="trait">trait distribution</option>
+<option value="transition">transition / event matrix</option>
+<option value="network">network degree plot</option>
+<option value="spatial_summary">spatial occupancy profile</option>
+<option value="fadns_species">FADNS species tracker</option>
+<option value="layers">multilayer layer comparison</option>
+</select></label>
+</div>
+<div class="agent-approach-info compact" id="agentApproachInfo">Approach description.</div>
+</div>
+<div class="agent-card agent-parameter-strip">
+<div class="agent-param-grid" id="agentParamGrid">
+<label><span id="agentALabel">A</span> <output id="agentAOut">0.35</output><input id="agentA" max="100" min="0" type="range" value="35"/></label>
+<label><span id="agentBLabel">B</span> <output id="agentBOut">0.20</output><input id="agentB" max="100" min="0" type="range" value="20"/></label>
+<label><span id="agentCLabel">C</span> <output id="agentCOut">0.05</output><input id="agentC" max="100" min="0" type="range" value="5"/></label>
+<label><span id="agentDLabel">D</span> <output id="agentDOut">0.02</output><input id="agentD" max="100" min="0" type="range" value="2"/></label>
+</div>
+<details class="agent-run-settings"><summary>Run settings</summary><div class="agent-mini-controls">
+<label>grid <output id="agentSizeOut">46</output><input id="agentSize" max="100" min="20" type="range" value="46"/></label>
+<label>density <output id="agentDensityOut">42%</output><input id="agentDensity" max="95" min="1" type="range" value="42"/></label>
+<label>dt <output id="agentDtOut">1.00</output><input id="agentDt" max="200" min="1" type="range" value="100"/></label>
+<label>graph degree <output id="agentDegreeOut">6</output><input id="agentDegree" max="18" min="2" type="range" value="6"/></label>
+<label>seed<input id="agentSeed" type="number" value="2026"/></label>
+<label>steps<input id="agentSteps" max="5000" min="1" type="number" value="100"/></label>
+<label>delay ms<input id="agentDelay" max="1000" min="0" type="number" value="40"/></label>
+</div></details>
+<div class="agent-buttons"><button id="agentReset" type="button">Reset</button><button id="agentStep" type="button">Step</button><button id="agentRun" type="button">Run</button><button id="agentExport" type="button">Export JSON</button></div>
+<p class="agent-status" id="agentStatus">Ready.</p>
+</div>
+<section class="agent-accordion-grid agent-rule-strip">
+<details class="agent-card"><summary>Rule definition</summary><div class="agent-rule-summary" id="agentRuleSummary"></div></details>
+</section>
+<section class="agent-main-grid">
+<article class="agent-card agent-sim-card"><h2 id="agentTitle">Agent model</h2><canvas aria-label="Agent-based simulation grid" height="520" id="agentCanvas" width="760"></canvas><div class="agent-legend agent-legend-inline" id="agentLegend"></div><p class="agent-caption" id="agentCaption"></p></article>
+<article class="agent-card agent-plot-card"><h2>Diagnostic plots</h2><div class="agent-kpis" id="agentKpis"></div><div class="agent-metrics" id="agentMetrics"></div></article>
+</section>
+<section class="agent-accordion-grid">
+<details class="agent-card"><summary>Custom rule editor</summary>
+<label>Rule mode<select id="agentRuleMode"><option value="builtin">Use selected built-in rules</option><option value="custom">Use custom local rule</option></select></label>
+<p class="agent-code-help"><b>Sandboxed function body.</b> Custom code runs in <code>agent-rule-worker.js</code> with a timeout. Return a valid state index or <code>{state, trait, event}</code>. Available names: <code>cell</code>, <code>neighbors</code>, <code>counts</code>, <code>params</code>, <code>rand</code>, <code>x</code>, <code>y</code>, <code>t</code>, <code>trait</code>, <code>memory</code>, <code>dt</code>.</p>
+<textarea id="agentCustomCode" spellcheck="false">// Game-of-Life style rule
+if (cell === 1 &amp;&amp; (counts.alive === 2 || counts.alive === 3)) return 1;
+if (cell === 0 &amp;&amp; counts.alive === 3) return 1;
+return 0;</textarea>
+<div class="agent-buttons compact"><button id="agentLoadApproachTemplate" type="button">Load approach template</button><button id="agentLoadRuleTemplate" type="button">Load example rule</button><button id="agentApplyRule" type="button">Apply custom rule</button></div>
+</details>
+<details class="agent-card"><summary>Custom model JSON import</summary>
+<p class="agent-code-help">Define states, colors, parameter labels, default values, approach, topology and rule code. This is the correct route for your own Agent Lab model.</p>
+<div class="agent-buttons compact"><button id="agentLoadCustomModel" type="button">Load custom model skeleton</button><button id="agentApplyCustomModel" type="button">Apply custom model</button></div>
+<label>Custom model specification JSON<textarea id="agentCustomModelJson" placeholder="Define label, states, colors, parameter labels, initial distribution, approach and ruleCode." spellcheck="false"></textarea></label>
+<label>Import / export JSON<textarea id="agentJsonBox" placeholder="Paste exported Agent Lab JSON here, then click Import JSON." spellcheck="false"></textarea></label>
+<div class="agent-buttons compact"><button id="agentImport" type="button">Import JSON</button><button id="agentCopyJson" type="button">Copy JSON</button></div>
+</details>
+<details class="agent-card"><summary>Approach comparison</summary><div class="agent-approach-compare" id="agentApproachCompare"></div></details>
+</section>
+</section>
+</main>
+</div>
+<script src="src/agent-lab.js?v=v24-final-audit"></script>
+</body>
+</html>

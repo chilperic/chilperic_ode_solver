@@ -1,16 +1,30 @@
 const $ = id => document.getElementById(id);
 const clone = x => JSON.parse(JSON.stringify(x));
 const OPT_PRESETS = {
+
+  'Bundle-sheath thermal controller tuning': {family:'Foko research / dynamic control surrogate', optClass:'nonconvex', algorithm:'differential_evolution', narrative:'Protected reduced surrogate: tune water-flux cooling gain and stomatal response to drive bundle-sheath temperature toward a Rubisco-favorable setpoint while limiting overshoot and water cost. No plant source code or parameters are exported.', sense:'minimize', variables:[['Kp',0.9,0.05,2.8],['gs',0.12,0.02,0.40]], objective:'abs((318 - 10*tanh(1.2*Kp) - 7*tanh(8*gs)) - 306) + 0.22*Kp^2 + 1.4*gs^2 + 90*max(0,(318 - 10*tanh(1.2*Kp) - 7*tanh(8*gs)) - 313)^2', objective2:'Kp + 3*gs', ineq:['(318 - 10*tanh(1.2*Kp) - 7*tanh(8*gs)) - 313'], eq:[]},
+  'Robust C3-C4 crop phenotype design': {family:'Foko research / climate-robust trait optimization', optClass:'multiobjective', algorithm:'particle_swarm', narrative:'Protected phenotype-design surrogate: choose PEPC investment and hydraulic capacity to preserve assimilation under heat/drought while controlling leakiness and water risk. This communicates the optimization logic without exposing the unpublished full model.', sense:'minimize', variables:[['Vpmax',45,0,100],['Kl',3.2,0.5,9]], objective:'-(0.62*(48*(0.35+0.65*Vpmax/(25+Vpmax))*Kl/(1.6+Kl)) + 0.38*(36*(1-0.18*Vpmax/(80+Vpmax))*Kl/(1.3+Kl))) + 9*((Vpmax/100)^2/(Kl+0.3)) + 0.015*Vpmax', objective2:'(Vpmax/100)^2/(Kl+0.3) + 0.01*Vpmax', ineq:['(Vpmax/100)^2/(Kl+0.3) - 0.08'], eq:[]},
+  'FADNS CoA inhibition calibration': {family:'PhD metabolism / parameter fitting', optClass:'nonconvex', algorithm:'multi_start', narrative:'Fit a reduced FADNS CoA-inhibition surrogate. Tune CoA inhibition strength and termination bias to match a C16-dominant product profile while avoiding pathological CoA sequestration.', sense:'minimize', variables:[['kCoA',0.8,0.05,3.0],['term',0.55,0.05,1.5]], objective:'(0.18 + 0.14*exp(-term)/(1+kCoA) - 0.18)^2 + (0.52 + 0.28*term/(0.45+term) - 0.08*kCoA/(1+kCoA) - 0.68)^2 + (0.30 + 0.12*kCoA/(1+kCoA) - 0.10*term/(1+term) - 0.14)^2 + 0.18*(kCoA^2/(1+4*term))', objective2:'kCoA^2/(1+4*term)', ineq:['kCoA^2/(1+4*term) - 0.42'], eq:[]},
+  'T-cell generation-structure calibration': {family:'Quantitative immunology / parameter fitting', optClass:'nonconvex', algorithm:'multi_start', narrative:'Fit a reduced generation-structured T-cell proliferation surrogate against a CFSE-like target generation profile by tuning activation and death pressure.', sense:'minimize', variables:[['alpha',0.55,0.05,1.2],['delta',0.18,0.01,0.75]], objective:'((1-(0.82*alpha/(alpha+delta+0.2)))-0.22)^2 + ((0.82*alpha/(alpha+delta+0.2))*(1-(0.82*alpha/(alpha+delta+0.2)))-0.31)^2 + ((0.82*alpha/(alpha+delta+0.2))^2*(1-(0.82*alpha/(alpha+delta+0.2)))-0.26)^2 + ((0.82*alpha/(alpha+delta+0.2))^3-0.21)^2 + 50*max(0,0.45-exp(-2.2*delta))^2', objective2:'1-exp(-2.2*delta)', ineq:['0.45-exp(-2.2*delta)'], eq:[]},
   'Constrained quadratic': {family:'Convex', optClass:'convex', algorithm:'random_coord', narrative:'Smooth convex quadratic with one inequality. Good first constrained problem.', sense:'minimize', variables:[['x',1,0,10],['y',1,0,10]], objective:'(x-3)^2 + (y-2)^2', objective2:'', ineq:['x + y - 4'], eq:[]},
   'Convex bowl': {family:'Convex', optClass:'convex', algorithm:'coordinate', narrative:'Unconstrained smooth bowl. This is the safest first test because every algorithm should move toward the same minimum.', sense:'minimize', variables:[['x',0,-5,5],['y',0,-5,5]], objective:'(x-2)^2 + (y+1)^2', objective2:'', ineq:[], eq:[]},
   'Rosenbrock on disk': {family:'Non-convex', optClass:'nonconvex', algorithm:'multi_start', narrative:'Narrow curved valley plus a circular constraint. Shows why local search needs good starts.', sense:'minimize', variables:[['x',-1,-2,2],['y',1,-2,2]], objective:'(1-x)^2 + 100*(y-x^2)^2', objective2:'', ineq:['x^2 + y^2 - 2'], eq:[]},
   'Pareto design trade-off': {family:'Multi-objective', optClass:'multiobjective', algorithm:'differential_evolution', narrative:'Two objectives create a trade-off frontier rather than one universal best design.', sense:'minimize', variables:[['x',1,-4,6],['y',1,-4,6]], objective:'(x-2)^2 + (y-1)^2', objective2:'(x+1)^2 + (y-4)^2', ineq:['x + y - 6'], eq:[]},
   'Rugged Rastrigin': {family:'Metaheuristic', optClass:'metaheuristic', algorithm:'particle_swarm', narrative:'Highly multimodal landscape where metaheuristics are useful for exploration.', sense:'minimize', variables:[['x',3,-5.12,5.12],['y',-3,-5.12,5.12]], objective:'20 + x^2 - 10*cos(2*pi*x) + y^2 - 10*cos(2*pi*y)', objective2:'', ineq:[], eq:[]},
+  'Lasso regression geometry': {family:'Teaching / sparse fitting', optClass:'convex', algorithm:'differential_evolution', narrative:'L1 shrinkage creates a nonsmooth diamond geometry. The optimum can sit exactly on an axis, which explains coefficient selection.', sense:'minimize', variables:[['w1',0,-3,3],['w2',0,-3,3]], objective:'(w1-1.8)^2 + 0.45*(w2+1)^2 + 1.1*(abs(w1)+abs(w2))', objective2:'abs(w1)+abs(w2)', ineq:[], eq:[]},
+  'Runge fitting caution': {family:'Teaching / data fitting', optClass:'nonconvex', algorithm:'multi_start', narrative:'Polynomial coefficients are fitted to sparse samples of the Runge curve. Extra flexibility can reduce training error while amplifying edge oscillation.', sense:'minimize', variables:[['c0',0,-5,5],['c1',0,-5,5],['c2',0,-8,8],['c3',0,-8,8]], objective:'(c0-c1+c2-c3-0.038)^2 + (c0-0.5*c1+0.25*c2-0.125*c3-0.138)^2 + (c0-1)^2 + (c0+0.5*c1+0.25*c2+0.125*c3-0.138)^2 + (c0+c1+c2+c3-0.038)^2 + 0.02*(c2^2+c3^2)', objective2:'abs(c2)+abs(c3)', ineq:[], eq:[]},
   'Cylinder design': {family:'Engineering design', optClass:'convex', algorithm:'random_coord', narrative:'Minimize material area under a minimum volume requirement.', sense:'minimize', variables:[['r',1,.1,5],['h',2,.1,10]], objective:'2*pi*r*h + 2*pi*r^2', objective2:'-pi*r^2*h', ineq:['10 - pi*r^2*h'], eq:[]},
   'Portfolio toy model': {family:'Finance toy', optClass:'convex', algorithm:'random_coord', narrative:'Quadratic risk with full-investment equality. Educational only, not financial advice.', sense:'minimize', variables:[['x',.33,0,1],['y',.33,0,1],['z',.34,0,1]], objective:'0.2*x^2 + 0.12*y^2 + 0.18*z^2 - 0.08*x - 0.11*y - 0.07*z', objective2:'-(0.08*x + 0.11*y + 0.07*z)', ineq:[], eq:['x + y + z - 1']},
+  'Traffic signal timing': {family:'Real-world control', optClass:'nonconvex', algorithm:'differential_evolution', narrative:'Allocate green times and an offset for a two-direction intersection. The objective is a queue-delay surrogate; constraints impose a finite cycle budget. It is a teaching surrogate, not a traffic-engineering certificate.', sense:'minimize', variables:[['gNS',35,10,90],['gEW',35,10,90],['offset',8,0,30]], objective:'(520/(18*gNS + 80))^2 + (430/(16*gEW + 80))^2 + 0.0015*(gNS + gEW) + 0.0008*(offset - 12)^2', objective2:'gNS + gEW + offset', ineq:['gNS + gEW + 10 - 120'], eq:[]},
+  'Crop dose-buffer risk trade-off': {family:'Environmental risk', optClass:'multiobjective', algorithm:'differential_evolution', narrative:'Choose a field dose and buffer distance while trading efficacy, product use, and off-field exposure. The inequality constraints represent simplified aquatic and terrestrial exposure thresholds.', sense:'minimize', variables:[['dose',1.2,0.1,3.0],['buffer',12,1,35]], objective:'-(0.92*(1-exp(-1.15*dose))) + 0.035*dose^2 + 0.006*buffer', objective2:'0.32*dose*exp(-0.09*buffer) + 0.08*dose/(buffer+1)', ineq:['0.32*dose*exp(-0.09*buffer) - 0.08','0.08*dose/(buffer+1) - 0.02'], eq:[]},
+  'Reservoir pumping NPV surrogate': {family:'Energy / operations', optClass:'nonconvex', algorithm:'particle_swarm', narrative:'Select injection and production rates under capacity and water-cut limits. The profit surface is deliberately nonconvex because aggressive production increases water cut.', sense:'maximize', variables:[['qin',55,20,90],['qprod',55,20,90]], objective:'32*qprod*(1 - (0.10 + 0.50/(1 + exp(-(qprod-55)/8)))) - 5*qin - 4*qprod - 0.025*(qin-qprod)^2', objective2:'0.10 + 0.50/(1 + exp(-(qprod-55)/8))', ineq:['qin - 80','qprod - 85','0.10 + 0.50/(1 + exp(-(qprod-55)/8)) - 0.45'], eq:[]},
+
+  'Leaf heat-balance optimal control': {family:'Foko research / heat-transfer biology', optClass:'nonconvex', algorithm:'differential_evolution', narrative:'Reduced browser surrogate of the photosynthesis-climate-adaptation work: choose water-flux cooling F and stomatal conductance gs so bundle-sheath temperature stays near a Rubisco-optimal target while assimilation remains high. This is a portfolio surrogate, not the full CasADi/CMA-ES model.', sense:'minimize', variables:[['F',0.85,0.05,2.5],['gs',0.10,0.02,0.35]], objective:'((303 + 18/(1+F) + 7*exp(-4*gs) - 306)/4)^2 - 0.22*(36*gs/(0.08+gs))*exp(-((303 + 18/(1+F) + 7*exp(-4*gs) - 306)/9)^2) + 0.12*F^2 + 0.35*gs^2', objective2:'F + 2.5*gs', ineq:['303 + 18/(1+F) + 7*exp(-4*gs) - 316','0.075 - gs'], eq:[]},
+  'Hydraulic-carbon trade-off': {family:'Foko research / hydraulics + carbon gain', optClass:'multiobjective', algorithm:'differential_evolution', narrative:'Reduced trade-off between stomatal conductance and hydraulic conductance. Higher conductance can improve carbon gain, but water demand and hydraulic risk rise under drought.', sense:'minimize', variables:[['gs',0.12,0.02,0.40],['Kl',2.5,0.4,8.0]], objective:'-(42*gs/(0.06+gs)) + 0.55*(gs^2)/(Kl+0.2) + 0.10*Kl', objective2:'(gs^2)/(Kl+0.2) + 0.03*Kl', ineq:['(gs^2)/(Kl+0.2) - 0.018'], eq:[]},
+  'C3-C4 trait allocation': {family:'Foko research / evolutionary trait optimization', optClass:'multiobjective', algorithm:'particle_swarm', narrative:'Reduced C3-C4 continuum surrogate: allocate biochemical capacity between Rubisco-like carboxylation and PEPC-like carbon concentration while penalizing leakiness and over-investment.', sense:'minimize', variables:[['Vcmax_mes',38,10,90],['Vpmax',24,0,95],['gbs',0.035,0.005,0.12]], objective:'-(0.55*Vcmax_mes/(18+Vcmax_mes) + 0.65*Vpmax/(24+Vpmax) - 2.4*gbs*Vpmax/(10+Vpmax)) + 0.0008*(Vcmax_mes+Vpmax)^2', objective2:'abs(Vpmax/(Vcmax_mes+1e-6) - 0.9) + 8*gbs', ineq:['Vcmax_mes + Vpmax - 130','0.015 - gbs'], eq:[]},
   'Threshold stopping': {family:'Optimal stopping', optClass:'optimal_stopping', algorithm:'coordinate', narrative:'Choose a threshold balancing search cost and reward quality.', sense:'minimize', variables:[['tau',0.6,0,1]], objective:'(tau - 0.72)^2 + 0.08*tau', objective2:'', ineq:[], eq:[]}
 };
-const CORE_OPT = ['Convex bowl','Constrained quadratic','Rosenbrock on disk','Pareto design trade-off','Rugged Rastrigin'];
+const CORE_OPT = ['Bundle-sheath thermal controller tuning','Robust C3-C4 crop phenotype design','FADNS CoA inhibition calibration','T-cell generation-structure calibration','Crop dose-buffer risk trade-off','Leaf heat-balance optimal control'];
 let model, currentName='Constrained quadratic', worker=null, last=null;
 function init(){ setTheme(localStorage.getItem('chilperic-theme')||'aurora'); $('themeBtn')?.addEventListener('change',e=>setTheme(e.target.value)); initTabs(); bindSideNav(); renderLibrary(); loadPreset(new URLSearchParams(location.search).get('example') || currentName,false); wire(); }
 function setTheme(t){ document.documentElement.dataset.theme=t; if($('themeBtn')) $('themeBtn').value=t; localStorage.setItem('chilperic-theme',t); setTimeout(()=>['optPlotLeft','optPlotRight'].forEach(id=>{try{Plotly.Plots.resize(id)}catch{}}),60); }
@@ -29,9 +43,44 @@ function runOpt(){ if($('runOpt').disabled) return; readEditor(); $('optDiagnost
 function cancelOpt(){ if(worker){ worker.terminate(); worker=null; } $('runOpt').disabled=false; $('runOpt').textContent='▶ Optimize'; $('cancelOpt')?.classList.add('hidden'); if($('optProgressBar')) $('optProgressBar').style.width='0%'; $('optDiagnostics').textContent='Cancelled.'; if($('optTopStatus')) $('optTopStatus').textContent='Cancelled'; }
 function plotAll(){ plotOne('optPlotLeft',$('optPlotA').value); plotOne('optPlotRight',$('optPlotB').value); }
 function safePlot(id,traces,lay,config){ const el=$(id); if(!el) return; if(!window.Plotly){ el.innerHTML='<div class="diagnostics empty">Plotly is not loaded.</div>'; return; } if(!traces || !traces.length){ el.innerHTML='<div class="diagnostics empty">No data available for this plot.</div>'; return; } try{ if(el.querySelector('.diagnostics')) el.innerHTML=''; Plotly.purge(el); return Plotly.react(el,traces,lay,config||cfg()).then(()=>{ el.classList.add('plot-ready'); try{ Plotly.Plots.resize(el); }catch{} }).catch(err=>{ el.innerHTML='<div class="diagnostics empty">Plot error: '+esc(err.message||err)+'</div>'; }); }catch(err){ el.innerHTML='<div class="diagnostics empty">Plot error: '+esc(err.message||err)+'</div>'; } }
-function plotOne(id,type){ if(!last){ $(id).innerHTML='<div class="diagnostics empty">Run to plot.</div>'; return;} const pts=last.samples||[], vars=last.variables||[]; if(type==='landscape'){ plotLandscape(id,pts,vars); return; } if(type==='convergence'){ let best=[],b=Infinity; pts.forEach(p=>{b=Math.min(b,p.obj + (p.violation||0)); best.push(b);}); safePlot(id,[{x:best.map((_,i)=>i+1),y:best,type:'scatter',mode:'lines',name:'best'}],layout('Convergence','sample','best objective'),cfg()); return;} if(type==='pareto'){ const good=pts.filter(p=>Number.isFinite(p.obj2)); if(!good.length){ const el=$(id); if(el) el.innerHTML='<div class="diagnostics empty">This template has no secondary objective. Select Pareto design trade-off or add f2.</div>'; return; } safePlot(id,[{x:good.map(p=>p.obj),y:good.map(p=>p.obj2),mode:'markers',type:'scatter',name:'samples'}],layout('Objective trade-off','f1','f2'),cfg()); return;} if(type==='feasibility'){ safePlot(id,[{x:pts.map(p=>p.obj),y:pts.map(p=>p.violation),mode:'markers',type:'scatter',name:'constraint residual'}],layout('Feasibility','objective','constraint residual'),cfg()); return;} if(type==='variables'){ const traces=vars.map((name,j)=>({x:pts.map((_,i)=>i), y:pts.map(p=>p.x[j]), mode:'lines', type:'scatter', name})); safePlot(id,traces,layout('Candidate variable traces','sample','value'),cfg()); return; } const x=pts.map(p=>p.x[0]), y=pts.map(p=>vars.length>1?p.x[1]:p.obj), c=pts.map(p=>p.violation); safePlot(id,[{x,y,mode:'markers',type:'scatter',marker:{size:5,color:c,colorscale:'Viridis',showscale:true},name:'samples'},{x:[last.best[0]],y:[vars.length>1?last.best[1]:last.objective],mode:'markers',marker:{size:14,symbol:'star'},name:'best'}],layout('Samples and best candidate',vars[0]||'x',vars[1]||'objective'),cfg()); }
 
-function plotLandscape(id, pts, vars){
+function plotOne(id,type){
+  if(!last){ $(id).innerHTML='<div class="diagnostics empty">Run to plot.</div>'; return;}
+  const pts=last.samples||[], vars=last.variables||[];
+  if(type==='landscape'){ plotLandscape(id,pts,vars,{constraints:false}); return; }
+  if(type==='constraint_overlay'){ plotLandscape(id,pts,vars,{constraints:true}); return; }
+  if(type==='search_path'){ plotSearchPath(id,pts,vars); return; }
+  if(type==='constraint_history'){ plotConstraintHistory(id,pts); return; }
+  if(type==='active_constraints'){ plotActiveConstraints(id,pts); return; }
+  if(type==='importance'){ plotImportance(id,pts,vars); return; }
+  if(type==='parallel'){ plotParallel(id,pts,vars); return; }
+  if(type==='slice'){ plotSlice(id,pts,vars); return; }
+  if(type==='ecdf'){ plotECDF(id,pts); return; }
+  if(type==='radar'){ plotRadar(id,pts,vars); return; }
+  if(type==='step_response'){ plotStepResponse(id,pts,vars); return; }
+  if(type==='convergence'){
+    let current=[], best=[],b=Infinity;
+    pts.forEach(p=>{ const score=Number(p.obj)+(Number(p.violation)||0); current.push(score); b=Math.min(b,score); best.push(b);});
+    safePlot(id,[{x:best.map((_,i)=>i+1),y:current,type:'scatter',mode:'lines',name:'current penalized objective',opacity:.55},{x:best.map((_,i)=>i+1),y:best,type:'scatter',mode:'lines',name:'best so far',line:{width:4}}],layout('Convergence','sample','penalized objective'),cfg()); return;
+  }
+  if(type==='pareto'){
+    const good=pts.filter(p=>Number.isFinite(p.obj2));
+    if(!good.length){ const el=$(id); if(el) el.innerHTML='<div class="diagnostics empty">This template has no secondary objective. Select a multi-objective template or add f2.</div>'; return; }
+    const nd=paretoFlags(good);
+    safePlot(id,[{x:good.filter((_,i)=>!nd[i]).map(p=>p.obj),y:good.filter((_,i)=>!nd[i]).map(p=>p.obj2),mode:'markers',type:'scatter',name:'dominated samples',marker:{size:6,opacity:.45}},{x:good.filter((_,i)=>nd[i]).map(p=>p.obj),y:good.filter((_,i)=>nd[i]).map(p=>p.obj2),mode:'markers+lines',type:'scatter',name:'non-dominated front',marker:{size:8}}],layout('Objective trade-off / Pareto screen','f1','f2'),cfg()); return;
+  }
+  if(type==='feasibility'){
+    safePlot(id,[{x:pts.map(p=>p.obj),y:pts.map(p=>p.violation),mode:'markers',type:'scatter',name:'constraint residual',marker:{size:6,color:pts.map(p=>p.feasible?1:0),showscale:false}}],layout('Feasibility scatter','objective','constraint residual'),cfg()); return;
+  }
+  if(type==='variables'){
+    const traces=vars.map((name,j)=>({x:pts.map((_,i)=>i), y:pts.map(p=>p.x[j]), mode:'lines', type:'scatter', name})); safePlot(id,traces,layout('Candidate variable traces','sample','value'),cfg()); return;
+  }
+  const x=pts.map(p=>p.x[0]), y=pts.map(p=>vars.length>1?p.x[1]:p.obj), c=pts.map(p=>p.violation);
+  safePlot(id,[{x,y,mode:'markers',type:'scatter',marker:{size:5,color:c,colorscale:'Viridis',showscale:true,colorbar:{title:'violation'}},name:'samples'},{x:[last.best[0]],y:[vars.length>1?last.best[1]:last.objective],mode:'markers',marker:{size:14,symbol:'star'},name:'best'}],layout('Samples and best candidate',vars[0]||'x',vars[1]||'objective'),cfg());
+}
+
+
+function plotLandscape(id, pts, vars, options={}){
   const el=$(id);
   if(!vars || vars.length<2){ if(el) el.innerHTML='<div class="diagnostics empty">Landscape / contours require at least two decision variables.</div>'; return; }
   if(!window.math){ if(el) el.innerHTML='<div class="diagnostics empty">Math.js is not loaded, so the objective landscape cannot be evaluated.</div>'; return; }
@@ -49,10 +98,79 @@ function plotLandscape(id, pts, vars){
       return Number.isFinite(val)?val:null;
     }));
     const traces=[{x:xs,y:ys,z,type:'contour',colorscale:'Viridis',contours:{coloring:'heatmap'},colorbar:{title:'f'},name:'objective'}];
+    if(options.constraints){ addConstraintContours(traces,xs,ys); }
     if(pts && pts.length) traces.push({x:pts.map(p=>p.x[0]),y:pts.map(p=>p.x[1]),mode:'markers',type:'scatter',marker:{size:4,color:'rgba(255,255,255,.72)',line:{color:'#0f2b62',width:1}},name:'samples'});
     if(last && last.best) traces.push({x:[last.best[0]],y:[last.best[1]],mode:'markers',type:'scatter',marker:{size:15,symbol:'star',color:'#ef4444',line:{color:'#fff',width:1.5}},name:'best'});
-    safePlot(id,traces,layout('Objective landscape / contours',xvar,yvar),cfg());
+    safePlot(id,traces,layout(options.constraints?'Objective + feasible-region overlay':'Objective landscape / contours',xvar,yvar),cfg());
   }catch(err){ if(el) el.innerHTML='<div class="diagnostics empty">Landscape error: '+esc(err.message||err)+'</div>'; }
+}
+
+
+function pointScope(p){ const scope={}; model.variables.forEach((v,j)=>scope[v.name]=Array.isArray(p)?p[j]:p.x[j]); return scope; }
+function evalModelExpr(expr, scope){ if(!window.math || !expr) return NaN; try{ return Number(math.compile(expr).evaluate(scope)); }catch{ return NaN; } }
+function addConstraintContours(traces,xs,ys){
+  const constraints=[...(model.ineq||[]).map((expr,i)=>({expr,label:`g${i+1}=0`,kind:'ineq'})), ...(model.eq||[]).map((expr,i)=>({expr,label:`h${i+1}=0`,kind:'eq'}))];
+  constraints.slice(0,5).forEach((c,k)=>{
+    const zc=ys.map(y=>xs.map(x=>{ const scope={}; model.variables.forEach((v,j)=>scope[v.name]=j===0?x:j===1?y:Number(v.initial)); const v=evalModelExpr(c.expr,scope); return Number.isFinite(v)?v:null; }));
+    traces.push({x:xs,y:ys,z:zc,type:'contour',showscale:false,contours:{start:0,end:0,size:1,coloring:'lines'},line:{width:2},name:c.label});
+  });
+}
+function plotSearchPath(id,pts,vars){
+  if(!pts.length){ $(id).innerHTML='<div class="diagnostics empty">No candidate path available.</div>'; return; }
+  if(vars.length<2){ plotOne(id,'convergence'); return; }
+  const stride=Math.max(1,Math.floor(pts.length/450)); const slim=pts.filter((_,i)=>i%stride===0);
+  safePlot(id,[{x:slim.map(p=>p.x[0]),y:slim.map(p=>p.x[1]),mode:'lines+markers',type:'scatter',name:'candidate path',marker:{size:4,color:slim.map(p=>p.obj),colorscale:'Viridis',showscale:true,colorbar:{title:'f'}}},{x:[last.best[0]],y:[last.best[1]],mode:'markers',type:'scatter',name:'best',marker:{size:15,symbol:'star'}}],layout('Optimizer search path',vars[0],vars[1]),cfg());
+}
+function plotConstraintHistory(id,pts){
+  if(!pts.length){ $(id).innerHTML='<div class="diagnostics empty">No residual data available.</div>'; return; }
+  let best=[],b=Infinity; pts.forEach(p=>{ b=Math.min(b,Number(p.violation)||0); best.push(b); });
+  safePlot(id,[{x:pts.map((_,i)=>i+1),y:pts.map(p=>Number(p.violation)||0),type:'scatter',mode:'lines',name:'current violation',opacity:.55},{x:pts.map((_,i)=>i+1),y:best,type:'scatter',mode:'lines',name:'best violation',line:{width:4}}],{...layout('Constraint violation history','sample','violation'),yaxis:{title:'violation',type:'log',zeroline:false}},cfg());
+}
+function plotActiveConstraints(id,pts){
+  const constraints=[...(model.ineq||[]).map((expr,i)=>({expr,label:`g${i+1}: ${expr}`,kind:'ineq'})), ...(model.eq||[]).map((expr,i)=>({expr,label:`h${i+1}: ${expr}`,kind:'eq'}))];
+  if(!constraints.length){ $(id).innerHTML='<div class="diagnostics empty">This problem has no explicit constraints.</div>'; return; }
+  const sample=last && last.best ? last.best : (pts[pts.length-1]?.x||[]); const scope={}; model.variables.forEach((v,j)=>scope[v.name]=sample[j]);
+  const rows=constraints.map(c=>{ const raw=evalModelExpr(c.expr,scope); const residual=c.kind==='ineq'?Math.max(0,raw):Math.abs(raw); return {label:c.label,value:raw,residual,active:Math.abs(raw)<1e-3 || residual>0}; }).sort((a,b)=>Math.abs(b.value)-Math.abs(a.value));
+  safePlot(id,[{x:rows.map(r=>r.value),y:rows.map(r=>r.label),type:'bar',orientation:'h',name:'constraint value',text:rows.map(r=>r.active?'active / violated':'inactive')}],{...layout('Active-constraint diagnostic','constraint value at best','constraint'),margin:{l:180,r:25,t:55,b:55}},cfg());
+}
+
+function plotImportance(id,pts,vars){
+  if(!pts.length){ $(id).innerHTML='<div class="diagnostics empty">No samples available.</div>'; return; }
+  const rows=vars.map((name,j)=>{ const xs=pts.map(p=>Number(p.x[j])); const ys=pts.map(p=>Number(p.obj)); const mx=xs.reduce((a,b)=>a+b,0)/xs.length, my=ys.reduce((a,b)=>a+b,0)/ys.length; let cov=0,vx=0; xs.forEach((x,i)=>{cov+=(x-mx)*(ys[i]-my); vx+=(x-mx)*(x-mx);}); return {name,effect:Math.abs(cov)/(Math.sqrt(vx)+1e-12)}; }).sort((a,b)=>a.effect-b.effect);
+  safePlot(id,[{x:rows.map(r=>r.effect),y:rows.map(r=>r.name),type:'bar',orientation:'h',name:'importance'}],{...layout('Hyperparameter / variable importance','absolute association with objective','variable'),margin:{l:120,r:25,t:55,b:55}},cfg());
+}
+function plotParallel(id,pts,vars){
+  if(!pts.length){ $(id).innerHTML='<div class="diagnostics empty">No samples available.</div>'; return; }
+  const slim=pts.filter((_,i)=>i%Math.max(1,Math.floor(pts.length/120))===0);
+  const dims=vars.map((name,j)=>({label:name,values:slim.map(p=>p.x[j])})); dims.push({label:'objective',values:slim.map(p=>p.obj)}); dims.push({label:'violation',values:slim.map(p=>p.violation||0)});
+  safePlot(id,[{type:'parcoords',dimensions:dims,line:{color:slim.map(p=>p.obj),showscale:true}}],{...layout('Parallel coordinate plot','',''),margin:{l:55,r:55,t:50,b:35}},cfg());
+}
+function plotSlice(id,pts,vars){
+  if(!vars.length || !last?.best){ $(id).innerHTML='<div class="diagnostics empty">No best point available.</div>'; return; }
+  const v=model.variables[0], name=v.name, n=90, xs=[], ys=[]; const compiled=math.compile(model.objective||'0');
+  for(let i=0;i<n;i++){ const val=Number(v.lower)+(Number(v.upper)-Number(v.lower))*i/(n-1); const scope={}; model.variables.forEach((vv,j)=>scope[vv.name]=j===0?val:Number(last.best[j]??vv.initial)); xs.push(val); ys.push(Number(compiled.evaluate(scope))); }
+  safePlot(id,[{x:xs,y:ys,type:'scatter',mode:'lines',name:'objective slice'},{x:[last.best[0]],y:[last.objective],type:'scatter',mode:'markers',name:'best',marker:{size:12,symbol:'x'}}],layout('Slice / partial dependence plot',name,'objective'),cfg());
+}
+function plotECDF(id,pts){
+  const vals=pts.map(p=>p.obj).filter(Number.isFinite).sort((a,b)=>a-b); if(!vals.length){ $(id).innerHTML='<div class="diagnostics empty">No objective values available.</div>'; return; }
+  safePlot(id,[{x:vals,y:vals.map((_,i)=>(i+1)/vals.length),type:'scatter',mode:'lines',name:'ECDF'}],layout('Empirical cumulative distribution of objective values','objective value','cumulative probability'),cfg());
+}
+function plotRadar(id,pts,vars){
+  if(!last?.best){ $(id).innerHTML='<div class="diagnostics empty">No best point available.</div>'; return; }
+  const start=pts[0], best={x:last.best,obj:last.objective,obj2:evalModelExpr(model.objective2||'',pointScope(last.best)),violation:last.violation||0}; const keys=['objective','secondary','violation',...vars.slice(0,5)];
+  function vals(p){ const arr=[p.obj??p.objective, p.obj2??p.secondary??0, p.violation??0]; (p.x||[]).slice(0,5).forEach(v=>arr.push(v)); return arr; }
+  const a=vals(start), b=vals(best); function norm(arr,i){ const lo=Math.min(a[i],b[i],0), hi=Math.max(a[i],b[i],1e-12); return (arr[i]-lo)/(hi-lo+1e-12); }
+  safePlot(id,[{type:'scatterpolar',theta:keys,r:keys.map((_,i)=>norm(b,i)),fill:'toself',name:'best'},{type:'scatterpolar',theta:keys,r:keys.map((_,i)=>norm(a,i)),fill:'toself',name:'start'}],{title:'Multi-objective radar / spider chart',polar:{radialaxis:{visible:true,range:[0,1]}},margin:{l:45,r:45,t:55,b:35},paper_bgcolor:'rgba(0,0,0,0)'},cfg());
+}
+function plotStepResponse(id,pts,vars){
+  if(!last?.best){ $(id).innerHTML='<div class="diagnostics empty">No optimized point available.</div>'; return; }
+  const x=Number(last.best[0]||0), y=Number(last.best[1]||0); const t=[], out=[], target=[]; const plant=/thermal|bundle|crop|leaf|C3|C4/i.test(currentName); const set=plant?306:1; const tau=plant?18/(0.25+x+2.2*y):10/(0.2+Math.abs(x)+Math.abs(y)); const steady=plant?318-10*Math.tanh(1.2*x)-7*Math.tanh(8*y):set*(1-Math.exp(-Math.abs(x)))+0.15*y; const bump=plant?1.8*x/(1+5*y):0.4*Math.abs(x-y);
+  for(let i=0;i<=120;i++){ const ti=i*0.5; t.push(ti); target.push(set); out.push(steady+(plant?318:0-steady)*Math.exp(-ti/tau)+bump*ti*Math.exp(-ti/(tau*0.55))); }
+  safePlot(id,[{x:t,y:out,type:'scatter',mode:'lines',name:'optimized response',line:{width:4}},{x:t,y:target,type:'scatter',mode:'lines',name:'target',line:{dash:'dash'}}],layout('Step-response / simulation trajectory','time',plant?'temperature / response':'system output'),cfg());
+}
+
+function paretoFlags(points){
+  return points.map((p,i)=>!points.some((q,j)=>j!==i && q.obj<=p.obj && q.obj2<=p.obj2 && (q.obj<p.obj || q.obj2<p.obj2)));
 }
 
 function diagnostics(){ const vars=last.variables.map((n,i)=>`${n}=${last.best[i].toPrecision(6)}`).join(', '); const html=`<b>${last.feasible?'Feasible candidate':'Constraint violation remains'}</b><br>Browser optimization is approximate; validate scientific results externally.<br>Algorithm: ${esc(last.diagnostics?.method||model.algorithm)}<br>Seed: ${esc(last.diagnostics?.seed ?? '—')}<br>Best objective: ${last.objective.toPrecision(6)}<br>${vars}<br>Violation: ${last.violation.toExponential(3)}`; if($('optDiagnostics')) $('optDiagnostics').textContent=last.feasible?'Done. Feasible solution found.':'Done. Constraint violation remains.'; if($('optDiagPanel')) $('optDiagPanel').innerHTML=html; if($('optTopStatus')) $('optTopStatus').textContent=last.feasible?'Feasible':'Infeasible'; if($('optAlgoStatus')) $('optAlgoStatus').textContent=(last.diagnostics?.method||model.algorithm).replaceAll('_',' '); if($('optSamplesStatus')) $('optSamplesStatus').textContent=(last.samples||[]).length; if($('optBestStatus')) $('optBestStatus').textContent=Number(last.objective).toPrecision(4); if($('metricAlgo')) $('metricAlgo').textContent=(last.diagnostics?.method||model.algorithm).replaceAll('_',' '); if($('metricSamples')) $('metricSamples').textContent=(last.samples||[]).length; if($('metricBest')) $('metricBest').textContent=Number(last.objective).toPrecision(4); if($('metricFeasible')) $('metricFeasible').textContent=last.feasible?'yes':'no'; }
@@ -63,8 +181,10 @@ function wideCsv(){ if(!last) return 'sample,objective,violation,feasible\n'; re
 function longCsv(){ const rows=[['dataset','sample','axis','variable','value','extra'].join(',')]; if(last){ last.samples.forEach((p,i)=>{ rows.push(['optimization',i,'','objective',p.obj,`violation=${p.violation}; feasible=${p.feasible}`].map(csvCell).join(',')); p.x.forEach((v,j)=>rows.push(['optimization',i,'decision',last.variables[j],v,''].map(csvCell).join(','))); }); } return rows.join('\n'); }
 function dataExport(){ return {model,result:last,exportedAt:new Date().toISOString()}; } function plotlyExport(){ const pack={exportedAt:new Date().toISOString(),plots:{}}; ['optPlotLeft','optPlotRight'].forEach(id=>{ const el=$(id); if(el&&el.data) pack.plots[id]={data:el.data,layout:el.layout};}); return pack; }
 function pythonExport(){ const names=model.variables.map(v=>v.name); const unpack=names.map((n,i)=>`    ${n} = x[${i}]`).join('\n'); const bounds=JSON.stringify(model.variables.map(v=>[Number(v.lower),Number(v.upper)])); const x0=JSON.stringify(model.variables.map(v=>Number(v.initial))); const ineq=model.ineq.map(g=>`{'type': 'ineq', 'fun': lambda x: -(${pyExpr(g)})}`).join(',\n    '); const eq=model.eq.map(h=>`{'type': 'eq', 'fun': lambda x: (${pyExpr(h)})}`).join(',\n    '); const constraints=[ineq,eq].filter(Boolean).join(',\n    '); const algo=model.algorithm||'random_coord'; return `import numpy as np\nfrom scipy.optimize import minimize, differential_evolution\n\n# Foko Lab optimization export\n# Model: ${currentName}\n# Algorithm selected in the browser: ${algo}\n# Browser result is approximate; validate important results with a production solver.\n\ndef objective(x):\n${unpack}\n    return ${pyExpr(model.objective)}\n\ndef objective2(x):\n${unpack}\n    return ${model.objective2 ? pyExpr(model.objective2) : 'np.nan'}\n\nbounds = ${bounds}\nx0 = np.array(${x0}, dtype=float)\nconstraints = [\n    ${constraints}\n]\n\nif '${algo}' == 'differential_evolution':\n    result = differential_evolution(objective, bounds=bounds, tol=1e-9, polish=True)\nelse:\n    result = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints, options={'maxiter': 1000, 'ftol': 1e-9})\n\nprint(result)\nprint('x =', result.x)\nprint('f1 =', objective(result.x))\nprint('f2 =', objective2(result.x))\n`; }
-function exportById(e){ const id=e.target.id; const map={exportOptWide:['foko_lab_optimization_wide.csv',wideCsv(),'text/csv'],exportOptLong:['foko_lab_optimization_long.csv',longCsv(),'text/csv'],exportOptJson:['foko_lab_optimization_data.json',JSON.stringify(dataExport(),null,2),'application/json'],exportOptPlotJson:['foko_lab_optimization_plotly.json',JSON.stringify(plotlyExport(),null,2),'application/json'],exportOptModel:['foko_lab_optimization_model.json',JSON.stringify(model,null,2),'application/json'],exportOptPython:['foko_lab_optimization_export.py',pythonExport(),'text/x-python'],exportOptPython2:['foko_lab_optimization_export.py',pythonExport(),'text/x-python'],exportOptWide2:['foko_lab_optimization_wide.csv',wideCsv(),'text/csv'],exportOptLong2:['foko_lab_optimization_long.csv',longCsv(),'text/csv']}; const spec=map[id]; if(!spec) return; const [n,t,ty]=spec; download(n,t,ty); }
-function downloadPlot(id, fmt){ const node=$(id); if(node && node.data) Plotly.downloadImage(id,{format:fmt,filename:`foko-lab-optimization-${id}`}); }
+function isProtectedOptPreset(){ return /Bundle-sheath|Robust C3-C4|Leaf heat|Hydraulic-carbon|C3-C4 trait/i.test(currentName); }
+function protectedOptExport(){ if($('optDiagnostics')) $('optDiagnostics').textContent='Export disabled for protected unpublished plant surrogate.'; alert('Export disabled for protected unpublished plant surrogate.'); return false; }
+function exportById(e){ if(isProtectedOptPreset()) return protectedOptExport(); const id=e.target.id; const map={exportOptWide:['foko_lab_optimization_wide.csv',wideCsv(),'text/csv'],exportOptLong:['foko_lab_optimization_long.csv',longCsv(),'text/csv'],exportOptJson:['foko_lab_optimization_data.json',JSON.stringify(dataExport(),null,2),'application/json'],exportOptPlotJson:['foko_lab_optimization_plotly.json',JSON.stringify(plotlyExport(),null,2),'application/json'],exportOptModel:['foko_lab_optimization_model.json',JSON.stringify(model,null,2),'application/json'],exportOptPython:['foko_lab_optimization_export.py',pythonExport(),'text/x-python'],exportOptPython2:['foko_lab_optimization_export.py',pythonExport(),'text/x-python'],exportOptWide2:['foko_lab_optimization_wide.csv',wideCsv(),'text/csv'],exportOptLong2:['foko_lab_optimization_long.csv',longCsv(),'text/csv']}; const spec=map[id]; if(!spec) return; const [n,t,ty]=spec; download(n,t,ty); }
+function downloadPlot(id, fmt){ if(isProtectedOptPreset()) return protectedOptExport(); const node=$(id); if(node && node.data) Plotly.downloadImage(id,{format:fmt,filename:`foko-lab-optimization-${id}`}); }
 function download(name,text,type='text/plain'){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
 function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 function texExpr(s){ return String(s||'').replaceAll('^','^').replace(/\bpi\b/g,'\\pi').replace(/\*/g,'\\,'); }

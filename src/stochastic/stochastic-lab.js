@@ -285,6 +285,22 @@ const PRESETS = [
     compare: ['Naive strategy accepts good-looking offers early.', 'Optimal stopping sacrifices early choices to calibrate the threshold.'],
     insight: 'Waiting has option value. More uncertainty can justify stricter thresholds.',
     model: { params: { candidates: 100, observeFrac: 0.37 } }, settings: { runs: 5000, plotVariable: 'rank' }
+  },
+  {
+    id: 'monte-carlo-pi', family: 'Monte Carlo', engine: 'pi', title: 'Monte Carlo estimation of π',
+    tags: ['Monte Carlo', 'geometry', 'estimation'],
+    concept: 'Random points are thrown into the unit square. The fraction falling inside the quarter circle estimates π/4.',
+    compare: ['The exact geometric value is π.', 'The stochastic estimator converges slowly and visibly fluctuates as samples accumulate.'],
+    insight: 'Monte Carlo error decreases like 1/sqrt(n), so ten times more samples does not give ten times more precision.',
+    model: { params: { samples: 5000, displayPoints: 2500 } }, settings: { runs: 1, plotVariable: 'pi_hat' }
+  },
+  {
+    id: 'fibonacci-rabbits', family: 'Branching process', engine: 'fibonacci', title: 'Fibonacci rabbits with survival noise',
+    tags: ['Fibonacci', 'branching', 'population'],
+    concept: 'The deterministic rabbit-pair story gives Fibonacci growth. A stochastic survival/reproduction layer shows how randomness perturbs the ideal sequence.',
+    compare: ['Deterministic recurrence: F(n+1)=F(n)+F(n-1).', 'Stochastic version: newborn survival and reproductive success fluctuate between runs.'],
+    insight: 'The Fibonacci sequence is the reference skeleton; the stochastic model shows how demographic noise bends that skeleton.',
+    model: { params: { generations: 24, matureSurvival: 0.96, juvenileSurvival: 0.92, fertility: 1.0, z0: 1 } }, settings: { runs: 400, plotVariable: 'pairs' }
   }
 ];
 function makeTCellModel(h) {
@@ -790,6 +806,34 @@ function runRatchet(model, settings){
 }
 function runBandit(model, settings){const p=model.params,runs=settings.runs,h=Math.floor(p.horizon),probs=[p.true1,p.true2,p.true3,p.true4].slice(0,Math.floor(p.arms));const cumRewards=Array(h).fill(0),pulls=Array(probs.length).fill(0),regrets=Array(h).fill(0);const best=Math.max(...probs);for(let r=0;r<runs;r++){const rng=mulberry32(settings.seed+r*83),n=Array(probs.length).fill(0),rew=Array(probs.length).fill(0);let cr=0;for(let t=0;t<h;t++){let arm;if(rng()<p.epsilon){arm=Math.floor(rng()*probs.length);}else{arm=0;let bestScore=-1;for(let a=0;a<probs.length;a++){const avg=n[a]?rew[a]/n[a]:0.5;const ucb=avg+Math.sqrt(2*Math.log(t+2)/(n[a]+1));if(ucb>bestScore){bestScore=ucb;arm=a;}}}const reward=rng()<probs[arm]?1:0;n[arm]++;rew[arm]+=reward;pulls[arm]++;cr+=reward;cumRewards[t]+=cr;regrets[t]+=(t+1)*best-cr;}}const x=Array.from({length:h},(_,i)=>i+1);return {metrics:{runs,'mean final reward':cumRewards[h-1]/runs,'mean final regret':regrets[h-1]/runs,'most pulled arm':pulls.indexOf(Math.max(...pulls))+1},tracesA:[traceLine('mean cumulative reward',x,cumRewards.map(v=>v/runs)),traceLine('mean regret',x,regrets.map(v=>v/runs),{line:{dash:'dash'}})],tracesB:[{type:'bar',x:probs.map((_,i)=>'arm '+(i+1)),y:pulls.map(v=>v/runs),name:'mean pulls'}],titleA:'Learning curve',titleB:'Exploration allocation',xA:'round',yA:'value',xB:'arm',yB:'pulls per run'};}
 function runSecretary(model, settings){const p=model.params,runs=settings.runs,n=Math.floor(p.candidates),observe=Math.floor(n*p.observeFrac),ranks=[];let success=0;const rngBase=settings.seed;for(let r=0;r<runs;r++){const rng=mulberry32(rngBase+r*89);const vals=Array.from({length:n},()=>rng()).map((v,i)=>({v,i}));const best=Math.max(...vals.map(o=>o.v));const threshold=Math.max(...vals.slice(0,observe).map(o=>o.v));let chosen=vals[n-1];for(let i=observe;i<n;i++){if(vals[i].v>threshold){chosen=vals[i];break;}}if(chosen.v===best)success++;const sorted=[...vals].sort((a,b)=>b.v-a.v);ranks.push(sorted.findIndex(o=>o.i===chosen.i)+1);}const fracs=Array.from({length:95},(_,i)=>(i+3)/100),curve=fracs.map(f=>f*Math.log(1/f));const h=hist(ranks,30);return {metrics:{runs,'P(best selected)':success/runs,'mean selected rank':mean(ranks),'theoretical optimum fraction':1/Math.E},tracesA:[traceLine('success approximation',fracs,curve),traceMarker('chosen setting',[p.observeFrac],[p.observeFrac*Math.log(1/p.observeFrac)])],tracesB:[{type:'bar',x:h.x,y:h.y,name:'selected rank'}],titleA:'Classic stopping-rule approximation',titleB:'Selected-rank distribution',xA:'observation fraction',yA:'P(best)',xB:'rank, 1 is best',yB:'runs'};}
+function runMonteCarloPi(model, settings){
+  const p=model.params||{}, samples=Math.max(100,Math.floor(p.samples||5000)), show=Math.min(samples,Math.max(200,Math.floor(p.displayPoints||2500))), rng=mulberry32(settings.seed||12345);
+  let inside=0; const step=Math.max(1,Math.floor(samples/260)), x=[], y=[], err=[], sxIn=[], syIn=[], sxOut=[], syOut=[];
+  for(let i=1;i<=samples;i++){
+    const a=rng(), b=rng(), hit=a*a+b*b<=1; if(hit)inside++;
+    if(i<=show){ (hit?sxIn:sxOut).push(a); (hit?syIn:syOut).push(b); }
+    if(i%step===0 || i===samples){ x.push(i); const pi=4*inside/i; y.push(pi); err.push(Math.abs(pi-Math.PI)); }
+  }
+  const finalPi=4*inside/samples;
+  return {metrics:{samples,'inside quarter circle':inside,'pi estimate':finalPi,'absolute error':Math.abs(finalPi-Math.PI),'theoretical SE approx':Math.sqrt((Math.PI/4)*(1-Math.PI/4)/samples)*4},paths:[y],x, finals:[finalPi], tracesA:[traceLine('π estimate',x,y,{line:{width:3}}),traceLine('π', [x[0],x[x.length-1]],[Math.PI,Math.PI],{line:{dash:'dash'}})], tracesB:[{type:'scatter',mode:'markers',x:sxIn,y:syIn,name:'inside',marker:{size:4,opacity:.55}},{type:'scatter',mode:'markers',x:sxOut,y:syOut,name:'outside',marker:{size:4,opacity:.4}}],titleA:'Running Monte Carlo estimate of π',titleB:'Random points in the unit square',xA:'samples',yA:'π estimate',xB:'x',yB:'y'};
+}
+function fibonacciSequence(n){ const f=[1,1]; for(let i=2;i<=n;i++)f[i]=f[i-1]+f[i-2]; return f.slice(0,n+1); }
+function runFibonacciRabbits(model, settings){
+  const p=model.params||{}, runs=settings.runs, generations=Math.max(2,Math.floor(p.generations||24)), x=Array.from({length:generations+1},(_,i)=>i), paths=[], finals=[];
+  for(let r=0;r<runs;r++){
+    const rng=mulberry32((settings.seed||12345)+r*101); let juvenile=Math.max(0,Math.floor(p.z0||1)), adult=0; const y=[juvenile+adult];
+    for(let g=1;g<=generations;g++){
+      const survivingAdults=binom(adult, clamp(Number(p.matureSurvival ?? .96),0,1), rng);
+      const matured=binom(juvenile, clamp(Number(p.juvenileSurvival ?? .92),0,1), rng);
+      let newborn=0; for(let i=0;i<survivingAdults;i++) newborn += poisson(Math.max(0,Number(p.fertility ?? 1)), rng);
+      adult=survivingAdults+matured; juvenile=newborn; y.push(adult+juvenile);
+    }
+    paths.push(y); finals.push(y[y.length-1]);
+  }
+  const det=fibonacciSequence(generations).map(v=>v*(p.z0||1)); const meanPath=x.map((_,i)=>mean(paths.map(y=>y[i]))), h=hist(finals,35);
+  return {metrics:{runs,'mean final pairs':mean(finals),'median final pairs':quantile(finals,.5),'deterministic Fibonacci final':det[det.length-1],'variance final':variance(finals)},paths,x,finals,tracesA:[...paths.slice(0,20).map((y,i)=>traceLine('run '+(i+1),x,y,{opacity:.3,line:{width:1}})),traceLine('stochastic mean',x,meanPath,{line:{width:3}}),traceLine('deterministic Fibonacci',x,det,{line:{dash:'dash',width:3}})],tracesB:[{type:'bar',x:h.x,y:h.y,name:'final pairs'}],titleA:'Fibonacci reference vs stochastic rabbit pairs',titleB:'Final population distribution',xA:'generation',yA:'rabbit pairs',xB:'final pairs',yB:'runs'};
+}
+
 function computeResult() {
   readSettings();
   const e = currentPreset.engine;
@@ -804,6 +848,8 @@ function computeResult() {
   if (e === 'ratchet') return runRatchet(currentModel, currentSettings);
   if (e === 'bandit') return runBandit(currentModel, currentSettings);
   if (e === 'secretary') return runSecretary(currentModel, currentSettings);
+  if (e === 'pi') return runMonteCarloPi(currentModel, currentSettings);
+  if (e === 'fibonacci') return runFibonacciRabbits(currentModel, currentSettings);
   throw new Error('Unknown engine: ' + e);
 }
 function runCurrent() {

@@ -1,0 +1,9 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 170' role='img' aria-label='Generation-structured cell proliferation agent illustration'><rect width='360' height='170' rx='22' fill='#f8fafc'/><rect x='1' y='1' width='358' height='168' rx='22' fill='none' stroke='#d7e2f0'/><style>text{font-family:Inter,Arial,sans-serif;font-size:12px;fill:#334155;font-weight:700}.small{font-size:10px;fill:#64748b;font-weight:650}.line{stroke:#94a3b8;stroke-width:2;fill:none;stroke-linecap:round}.dash{stroke:#94a3b8;stroke-width:2;fill:none;stroke-dasharray:5 5}.node{stroke:#fff;stroke-width:2}</style>
+<text x='20' y='24'>cell-state proliferation</text>
+<g transform='translate(26 48)'>
+<circle cx='18' cy='46' r='15' fill='#94a3b8'/><text class='small' x='0' y='84'>quiescent</text>
+<path class='line' d='M38 46 H82'/><circle cx='104' cy='46' r='17' fill='#2563eb'/><text class='small' x='82' y='84'>active</text>
+<path class='line' d='M124 46 H166'/><circle cx='192' cy='28' r='13' fill='#0f766e'/><circle cx='192' cy='64' r='13' fill='#0f766e'/><text class='small' x='168' y='102'>divide</text>
+<path class='dash' d='M216 46 H270'/><circle cx='296' cy='46' r='12' fill='#ef4444'/><text class='small' x='278' y='84'>death</text>
+</g>
+</svg>

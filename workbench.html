@@ -1,44 +1,49 @@
 <!DOCTYPE html>
+
 <html data-theme="aurora" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="Foko Lab v3 model-centered workbench with robust ODE and stochastic analysis cards, offline plot fallback, parameter strips, contour scans, sensitivity heatmaps, LaTeX model display, GSA screens and reproducible exports."/>
-<meta property="og:title" content="Foko Lab Model Workbench"/>
-<meta property="og:description" content="No-scroll model-centered scientific analysis workspace for ODE, stochastic, steady-state and optimization models, sweeps, contour scans, GSA/robustness and exports."/>
-<meta property="og:type" content="website"/>
-<meta property="og:image" content="assets/homepage-preview.webp"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab v3 model-centered workbench with robust ODE and stochastic analysis cards, offline plot fallback, parameter strips, contour scans, sensitivity heatmaps, LaTeX model display, GSA screens and reproducible exports." name="description"/>
+<meta content="Foko Lab Model Workbench" property="og:title"/>
+<meta content="No-scroll model-centered scientific analysis workspace for ODE, stochastic, steady-state and optimization models, sweeps, contour scans, GSA/robustness and exports." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="assets/homepage-preview.webp" property="og:image"/>
 <title>v3 Model Workbench · Foko Lab</title>
 <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <script src="src/plot-fallback.js?v=3.0-current-plus-workbench"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
-<link href="styles/model-workbench-v3.css?v=3.0-current-plus-workbench" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<link href="styles/style.css?v=platform-v12" rel="stylesheet"/>
+<link href="styles/model-workbench-v3.css?v=platform-v12" rel="stylesheet"/>
+<!-- platform-v10 compatibility marker for plot-polish tests -->
 </head>
 <body data-lab="model-workbench">
 <div class="mw-shell">
 <header class="mw-topbar">
 <a aria-label="Foko Lab home" class="mw-brand" href="index.html"><img alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="mw-nav">
-<a href="index.html">Home</a>
+<nav aria-label="Primary navigation" class="mw-nav"><a href="index.html">Home</a>
+<a class="active" href="workbench.html">Workbench Beta</a>
 <a href="ode.html#workbench">ODE Lab</a>
 <a href="optimization.html">Optimization Lab</a>
 <a href="steady.html">Steady-State Lab</a>
 <a href="stochastic.html">Stochastic Lab</a>
+<a href="symbolic.html">Symbolic Lab</a>
+<a href="agent.html">Agent Lab</a>
+<a href="beauty.html">Math Beauty</a>
 <a href="examples.html">Model Atlas</a>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
 <a href="docs.html">Docs</a>
-<a href="tutorial.html">Tutorial</a>
-</nav>
+<a href="tutorial.html">Tutorial</a></nav>
 <div class="mw-actions">
 <button class="mw-ghost" id="openModelDrawer" type="button">Model details</button>
 <button class="mw-primary" id="exportReport" type="button">Export report</button>
 </div>
 </header>
-
 <main class="mw-page">
-<section class="mw-model-header" aria-label="Model context">
+<section aria-label="Model context" class="mw-model-header">
 <div>
 <p class="mw-eyebrow">V3 WORKBENCH · ODE · STOCHASTIC · STEADY-STATE · OPTIMIZATION</p>
 <h1 id="modelTitle">SIR epidemic</h1>
@@ -49,13 +54,29 @@
 <label for="modelSelect">Model</label>
 <select id="modelSelect"></select>
 <div class="mw-inline-buttons">
-<button id="resetModel" class="mw-secondary" type="button">Reset</button>
-<button id="runAll" class="mw-primary" type="button">Run / update</button>
+<button class="mw-secondary" id="resetModel" type="button">Reset</button>
+<button class="mw-primary" id="runAll" type="button">Run / update</button>
 </div>
 </div>
 </section>
-
-<section class="mw-param-section" aria-label="Simulation parameters">
+<section class="mw-custom-import" id="customModelImport">
+<details>
+<summary><span>Import your own model</span><strong>JSON · ODE or optimization</strong></summary>
+<div class="mw-custom-import-body">
+<div class="mw-custom-import-copy">
+<p><b>Run your own model in Workbench.</b> Start with the examples, edit the JSON, then import. Browser imports are intentionally lightweight: use them for ODE systems or 2D optimization surrogates; export to Python for heavy/stiff models.</p>
+<div class="mw-inline-buttons">
+<button class="mw-secondary" id="loadCustomOdeExample" type="button">Load ODE example</button>
+<button class="mw-secondary" id="loadCustomOptExample" type="button">Load optimization example</button>
+<button class="mw-primary" id="importCustomModel" type="button">Import and run</button>
+</div>
+<p class="mw-note" id="customModelStatus">Accepted expression functions: sin, cos, tan, exp, log, sqrt, pow, abs, max, min, tanh. Use <code>^</code> for powers; it is converted internally.</p>
+</div>
+<textarea aria-label="Custom model JSON" id="customModelJson" spellcheck="false"></textarea>
+</div>
+</details>
+</section>
+<section aria-label="Simulation parameters" class="mw-param-section">
 <div class="mw-section-title">
 <h2>Simulation parameters</h2>
 <span id="runStatus">Ready.</span>
@@ -64,19 +85,32 @@
 <details class="mw-advanced">
 <summary>Advanced simulation settings</summary>
 <div class="mw-advanced-grid">
-<label>t start <input id="tStart" type="number" step="0.1"/></label>
-<label>t end <input id="tEnd" type="number" step="0.1"/></label>
-<label>steps <input id="steps" type="number" min="50" max="5000" step="50"/></label>
+<label>t start <input id="tStart" step="0.1" type="number"/></label>
+<label>t end <input id="tEnd" step="0.1" type="number"/></label>
+<label>steps <input id="steps" max="5000" min="50" step="50" type="number"/></label>
 <label>primary output <select id="primaryVariable"></select></label>
 </div>
 <div class="mw-ic-grid" id="initialGrid"></div>
 </details>
 </section>
-
-<section class="mw-analyses" aria-label="Analyses">
+<section aria-label="Analyses" class="mw-analyses">
 <div class="mw-section-title">
 <h2>Analyses</h2>
 <div class="mw-add-analysis">
+<label class="mw-palette-control" for="plotPalette">Plot palette
+<select id="plotPalette">
+<option value="scientific">Scientific blue</option>
+<option value="colorblind">Colorblind safe</option>
+<option value="viridis">Viridis</option>
+<option value="cividis">Cividis</option>
+<option value="turbo">Turbo</option>
+<option value="plasma">Plasma</option>
+<option value="plant">Plant / climate</option>
+<option value="metabolic">Metabolic</option>
+<option value="mono">Monochrome</option>
+<option value="custom">Custom</option>
+</select>
+</label>
 <select id="analysisType">
 <option value="timecourse">Time course</option>
 <option value="phase">Phase portrait</option>
@@ -87,23 +121,52 @@
 <option value="equations">Equation math</option>
 <option value="diagnostics">Diagnostics</option>
 </select>
-<button id="addAnalysis" class="mw-secondary" type="button">+ Add analysis</button>
+<button class="mw-secondary" id="addAnalysis" type="button">+ Add analysis</button>
+</div>
+</div>
+<details class="mw-palette-editor" id="paletteEditor">
+<summary>Adjust palette colors</summary>
+<div class="mw-palette-editor-grid">
+<label>Categorical colors <textarea aria-label="Custom categorical colors" id="customCatColors" rows="2" spellcheck="false"></textarea></label>
+<label>Continuous low <input id="customLowColor" type="color" value="#00204c"/></label>
+<label>Continuous mid <input id="customMidColor" type="color" value="#958f78"/></label>
+<label>Continuous high <input id="customHighColor" type="color" value="#fdea45"/></label>
+</div>
+<div class="mw-palette-actions">
+<button class="mw-secondary" id="applyCustomPalette" type="button">Apply custom palette</button>
+<button class="mw-ghost" id="resetCustomPalette" type="button">Reset custom palette</button>
+<span aria-label="Custom palette preview" class="mw-palette-preview" id="customPalettePreview"></span>
+</div>
+<p class="mw-note">Use comma-separated hex colors for lines/categories. The low-mid-high colors define continuous heatmaps, contours, objective landscapes and parallel-coordinate scales.</p>
+</details>
+<div aria-label="Optimization plot palette" class="mw-opt-palette" id="optimizationPlotPalette">
+<h3>Advanced optimization plots</h3>
+<p>For optimization models, use these views to separate convergence, feasibility, trade-offs, sensitivity and dynamic response.</p>
+<div class="mw-opt-palette-grid">
+<button data-add-opt-plot="convergence" type="button">Optimization history</button>
+<button data-add-opt-plot="landscape" type="button">Contour / heatmap</button>
+<button data-add-opt-plot="importance" type="button">Parameter importance</button>
+<button data-add-opt-plot="parallel" type="button">Parallel coordinates</button>
+<button data-add-opt-plot="pareto" type="button">Pareto front</button>
+<button data-add-opt-plot="slice" type="button">Slice / partial dependence</button>
+<button data-add-opt-plot="ecdf" type="button">ECDF</button>
+<button data-add-opt-plot="radar" type="button">Multi-objective radar</button>
+<button data-add-opt-plot="trajectory" type="button">Step / trajectory</button>
+<button data-add-opt-plot="constraints" type="button">Constraint violation</button>
 </div>
 </div>
 <div class="mw-card-grid" id="analysisGrid"></div>
 </section>
-
-<details class="mw-equation-strip mw-equation-drawer" aria-label="Model equations">
+<details aria-label="Model equations" class="mw-equation-strip mw-equation-drawer">
 <summary><span>Model equations / reactions</span><strong>LaTeX display</strong></summary>
 <div class="mw-equation-preview" id="equationPreview"></div>
 </details>
 </main>
-
-<aside class="mw-drawer" id="modelDrawer" aria-hidden="true" aria-label="Model details drawer">
+<aside aria-hidden="true" aria-label="Model details drawer" class="mw-drawer" id="modelDrawer">
 <div class="mw-drawer-panel">
 <div class="mw-drawer-head">
 <div><p class="mw-eyebrow">MODEL DETAILS</p><h2 id="drawerTitle">Model</h2></div>
-<button id="closeModelDrawer" class="mw-icon-btn" type="button" aria-label="Close model details">×</button>
+<button aria-label="Close model details" class="mw-icon-btn" id="closeModelDrawer" type="button">×</button>
 </div>
 <div class="mw-drawer-tabs" role="tablist">
 <button class="active" data-detail-tab="equations" type="button">Equations</button>
@@ -114,9 +177,8 @@
 <div class="mw-detail-body" id="detailBody"></div>
 </div>
 </aside>
-
-<div class="mw-toast" id="toast" role="status" aria-live="polite"></div>
+<div aria-live="polite" class="mw-toast" id="toast" role="status"></div>
 </div>
-<script src="src/model-workbench-v3.js?v=3.0-current-plus-workbench"></script>
+<script src="src/model-workbench-v3.js?v=3.0-workbench-opt-v12"></script>
 </body>
 </html>

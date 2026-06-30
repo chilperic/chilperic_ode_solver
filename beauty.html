@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Mathematical Beauty is a public-facing gallery for fractals, curves, number theory, topology and Gödel-style limits of formal systems." name="description"/>
+<title>Mathematical Beauty · Foko Lab</title>
+<link href="styles/style.css?v=beauty-v14" rel="stylesheet"/>
+<link href="styles/symbolic-beauty.css?v=beauty-v18" rel="stylesheet"/>
+</head>
+<body data-lab="beauty">
+<div class="app-shell">
+<header class="topbar">
+<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
+<nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
+<a href="workbench.html">Workbench Beta</a>
+<a href="ode.html#workbench">ODE Lab</a>
+<a href="optimization.html">Optimization Lab</a>
+<a href="steady.html">Steady-State Lab</a>
+<a href="stochastic.html">Stochastic Lab</a>
+<a href="symbolic.html">Symbolic Lab</a>
+<a href="agent.html">Agent Lab</a>
+<a class="active" href="beauty.html">Math Beauty</a>
+<a href="examples.html">Model Atlas</a>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
+<a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a></nav>
+</header>
+<main class="beauty-page">
+<section class="beauty-hero">
+<p class="symbolic-eyebrow">MATHEMATICS AS STRUCTURE, PLAY AND LIMIT</p>
+<h1>Mathematical Beauty</h1>
+<p class="symbolic-lede">A separate public-engagement layer for fractals, curves, number theory and logic. It is intentionally separated from Symbolic Lab and Research Hub to avoid turning the modeling platform into a noisy museum.</p>
+<div class="symbolic-chip-row"><span>fractals in nature</span><span>trees / ferns / leaves</span><span>chaos</span><span>cellular automata</span><span>physical patterns</span><span>curves</span><span>number theory</span><span>topology</span><span>formal limits</span></div>
+</section>
+<section class="beauty-grid">
+<aside class="beauty-controls symbolic-panel">
+<label>Playground<select id="beautyExample"></select></label>
+<label>Detail / iterations<input id="beautyDetail" max="100" min="1" type="range" value="55"/></label>
+<label>Parameter A<input id="beautyA" max="200" min="-200" type="range" value="0"/></label>
+<label>Parameter B<input id="beautyB" max="200" min="-200" type="range" value="0"/></label>
+<label>Palette<select id="beautyPalette"><option value="cividis">Cividis</option><option value="aurora">Aurora</option><option value="fire">Fire</option><option value="ink">Ink</option><option value="forest">Forest</option></select></label>
+<label>Seed<input id="beautySeed" type="number" value="12345"/></label>
+<label>Steps / time<input id="beautySteps" max="5000" min="10" type="range" value="900"/></label>
+<div class="symbolic-buttons"><button id="beautyDraw" type="button">Draw</button><button id="beautyReset" type="button">Reset</button><button id="beautyExport" type="button">Export PNG</button></div>
+<p class="symbolic-note" id="beautyStatus">Choose an object and draw.</p>
+</aside>
+<section class="beauty-canvas-card">
+<h2 id="beautyTitle">Mandelbrot set</h2>
+<canvas aria-label="Mathematical visualization canvas" height="620" id="beautyCanvas" width="920"></canvas>
+<p class="beauty-caption" id="beautyCaption"></p>
+</section>
+</section>
+<section class="beauty-sections">
+<article class="symbolic-card"><h2>Fractals and nature</h2><p>Mandelbrot, Julia, Barnsley fern, leaves, trees, Sierpinski, Koch snowflakes, dragon curves, chaos games and L-systems show how repeated simple rules generate biological-looking complexity.</p></article>
+<article class="symbolic-card"><h2>Physical and spatial patterns</h2><p>Chladni-style node sets, simulated Lichtenberg branching, Voronoi cells, Lorenz flow, loxodromes, Apollonian-style packing, Game of Life, Langton’s ant and TSP tours are included as visual mathematics, not research claims.</p></article>
+<article class="symbolic-card"><h2>Curves and symmetry</h2><p>Butterfly, rhodonea, Lissajous and epicycloid curves expose the visual harmony of periodicity, exponentials and polar geometry.</p></article>
+<article class="symbolic-card"><h2>Number theory</h2><p>Prime spirals, modular clocks, Collatz paths, continued fractions and toy RSA show the computational play of discrete mathematics.</p></article>
+<article class="symbolic-card"><h2>Topology</h2><p>Möbius strips and torus sketches give a safe first view of orientability, holes and surface structure without pretending to be a full differential-geometry engine.</p></article>
+<article class="symbolic-card"><h2>Gödel and limits</h2><p>The logic section is framed as limits of formal systems: axioms, proof rules, self-reference, Gödel numbering, diagonalization and undecidable statements. Not a toy claim to “solve Gödel.”</p></article>
+</section>
+</main>
+</div>
+<script src="src/math-beauty.js?v=beauty-v18"></script>
+</body>
+</html>

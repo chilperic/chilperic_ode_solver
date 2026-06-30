@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Symbolic Lab connects equations to LaTeX, algebraic operations, Jacobians, numeric equilibria, phase plots, time courses, parameter scans and SymPy export." name="description"/>
+<title>Symbolic Lab · Foko Lab</title>
+<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=v24-final-audit"></script>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<link href="styles/style.css?v=v24-final-audit" rel="stylesheet"/>
+<link href="styles/symbolic-beauty.css?v=v24-final-audit" rel="stylesheet"/>
+</head>
+<body data-lab="symbolic">
+<div class="app-shell">
+<header class="topbar">
+<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
+<nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
+<a href="workbench.html">Workbench Beta</a>
+<a href="ode.html#workbench">ODE Lab</a>
+<a href="optimization.html">Optimization Lab</a>
+<a href="steady.html">Steady-State Lab</a>
+<a href="stochastic.html">Stochastic Lab</a>
+<a class="active" href="symbolic.html">Symbolic Lab</a>
+<a href="agent.html">Agent Lab</a>
+<a href="beauty.html">Math Beauty</a>
+<a href="examples.html">Model Atlas</a>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
+<a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a></nav>
+</header>
+<main class="symbolic-page symbolic-page-v23">
+<section class="symbolic-hero symbolic-hero-compact">
+<div>
+<p class="symbolic-eyebrow">EQUATIONS → ANALYSIS → PLOTS → EXPORT</p>
+<h1>Symbolic Lab</h1>
+<p class="symbolic-lede">Edit equations, inspect their symbolic structure, plot their dynamics and export a real SymPy script. This page is now an analysis surface, not a decorative equation viewer.</p>
+<div class="symbolic-chip-row"><span>editable equations</span><span>parameter sliders</span><span>phase plots</span><span>time courses</span><span>vector fields</span><span>equilibrium scan</span><span>parameter sweep</span><span>SymPy export</span></div>
+</div>
+<aside class="symbolic-warning"><b>Boundary</b><p>The browser layer performs light symbolic and numerical analysis. It is not a full in-browser CAS. Exact algebraic solving and formal verification remain in the exported SymPy workflow.</p></aside>
+<p class="symbolic-compact-note">Editor, plot and analysis are shown together on wide screens; on smaller screens the analysis panel becomes a normal section below the plot.</p></section>
+<section class="symbolic-layout-v19">
+<aside class="symbolic-panel controls-panel">
+<h2>Model editor</h2>
+<div class="symbolic-authoring-block">
+<label>Analysis approach<select id="symApproach">
+<option value="expression">Expression / algebraic analysis</option>
+<option value="ode_system">ODE system analysis</option>
+<option value="steady_state">Steady-state and linearization</option>
+<option value="bifurcation_scan">Parameter scan / bifurcation sketch</option>
+<option value="qssa">Reduction / QSSA helper</option>
+</select></label>
+<div class="symbolic-approach-info" id="symApproachInfo">Approach description.</div>
+</div>
+<label>Example system<select id="symExample"></select></label>
+<label>Variables<input id="symVars" spellcheck="false"/></label>
+<label>Parameters<input id="symParams" spellcheck="false"/></label>
+<label>Right-hand sides / expressions<textarea id="symRhs" spellcheck="false"></textarea></label>
+<div class="symbolic-two"><label>Expression<select id="symExprIndex"></select></label><label>Variable<select id="symDiffVar"></select></label></div>
+<label>Symbolic operation<select id="symOperation"><option value="simplify">Simplify</option><option value="expand">Expand</option><option value="factor">Factor</option><option value="differentiate">Differentiate</option><option value="integrate">Integrate</option></select></label>
+<div class="symbolic-buttons sticky-actions"><button id="symAnalyze" type="button">Analyze</button><button id="symPlot" type="button">Plot now</button><button id="symExport" type="button">Export SymPy</button><button id="symCopy" type="button">Copy Python</button><button id="symLoadJson" type="button">Load JSON</button><button id="symApplyJson" type="button">Apply JSON</button></div>
+<p class="symbolic-note" id="symStatus">Ready.</p>
+<label>Custom symbolic model JSON<textarea id="symModelJson" placeholder="Edit variables, parameters, RHS, numeric scope and preferred plot mode." spellcheck="false"></textarea></label>
+</aside>
+<section class="symbolic-mainplot symbolic-card">
+<h2>Symbolic plot preview</h2>
+<div class="plot-control-grid">
+<label>Plot mode<select id="symPlotMode"><option value="expression">Expression curve</option><option value="phase1d">1D RHS with zero crossings</option><option value="time1d">1D time course</option><option value="time2d">2D time course</option><option value="vector2d">2D vector field</option><option value="nullclines">2D vector field + nullcline scan</option><option value="sweep1d">1D parameter sweep / root scan</option></select></label>
+<label>x variable<select id="symPlotVar"></select></label>
+<label>y variable<select id="symPlotYVar"></select></label>
+<label>sweep parameter<select id="symSweepParam"></select></label>
+<label>x min<input id="symPlotMin" step="any" type="number" value="0"/></label>
+<label>x max<input id="symPlotMax" step="any" type="number" value="10"/></label>
+<label>y min<input id="symPlotYMin" step="any" type="number" value="0"/></label>
+<label>y max<input id="symPlotYMax" step="any" type="number" value="10"/></label>
+<label>t end<input id="symTimeEnd" step="any" type="number" value="20"/></label>
+<label>time step<input id="symTimeStep" step="any" type="number" value="0.05"/></label>
+<label>resolution <output id="symPlotResolutionOut">50</output><input id="symPlotResolution" max="120" min="20" type="range" value="50"/></label>
+<label>palette<select id="symPlotPalette"><option value="Cividis">Cividis</option><option value="Viridis">Viridis</option><option value="Turbo">Turbo</option><option value="Plasma">Plasma</option><option value="Portland">Portland</option></select></label>
+</div>
+<div aria-label="Numeric parameter controls" class="sym-param-controls" id="symParamControls"></div>
+<label class="sym-check"><input checked="" id="symAutoPlot" type="checkbox"/> auto-plot after analysis</label>
+<label>Numeric scope<textarea id="symPlotScope" placeholder="r=1
+K=10
+x=1" spellcheck="false"></textarea></label>
+<div class="sym-plot" id="symPlotBox"></div><p class="symbolic-note" id="symPlotStatus">Plots use numeric assignments from the scope and sliders.</p>
+</section>
+<section class="symbolic-results-v19 symbolic-analysis-panel"><h2 class="analysis-panel-title">Analysis panels</h2>
+<div class="symbolic-card result-card"><h2>LaTeX preview</h2><div class="math-box" id="symLatex"></div></div>
+<div class="symbolic-card result-card"><h2>Algebraic operation</h2><div class="math-box" id="symDerivative"></div></div>
+<div class="symbolic-card result-card"><h2>Jacobian matrix</h2><div class="math-box" id="symJacobian"></div></div>
+<div class="symbolic-card result-card"><h2>Numeric equilibria scan</h2><div class="symbolic-explain" id="symNumericEquilibria"></div></div>
+<div class="symbolic-card result-card"><h2>Equilibria and linearization</h2><div class="symbolic-explain" id="symEquilibria"></div></div>
+<div class="symbolic-card result-card"><h2>Eigenvalues / stability</h2><div class="symbolic-explain" id="symEigen"></div></div>
+<div class="symbolic-card result-card"><h2>Symbolic ODE solving</h2><div class="symbolic-explain" id="symOdeSolve"></div></div>
+<div class="symbolic-card wide result-card"><h2>Exported SymPy script</h2><textarea class="code-output" id="symPython" spellcheck="false"></textarea></div>
+</section>
+</section>
+<section class="symbolic-card symbolic-methods">
+<h2>Symbolic modeling approaches</h2>
+<p class="symbolic-note">The user can now author a symbolic model directly from equations or JSON, choose an analysis approach, plot it, and export a SymPy script. Browser operations remain lightweight; exact solving belongs in the export.</p>
+<div class="symbolic-method-grid" id="symApproachCompare">
+<article><b>Expression / algebraic analysis</b><p>Simplify, differentiate, integrate request, plot one expression.</p></article>
+<article><b>ODE system analysis</b><p>RHS system, Jacobian, phase plot, time trajectory and vector field.</p></article>
+<article><b>Steady-state and linearization</b><p>Numeric candidate equilibria, Jacobian and stability cues.</p></article>
+<article><b>Parameter scan / bifurcation sketch</b><p>Scan roots or trajectories over a parameter range.</p></article>
+<article><b>Reduction / QSSA helper</b><p>Use comments and export to SymPy for quasi-steady-state or nondimensionalization work.</p></article>
+</div>
+</section>
+</main>
+</div>
+<script src="src/symbolic-lab.js?v=v24-final-audit"></script>
+</body>
+</html>

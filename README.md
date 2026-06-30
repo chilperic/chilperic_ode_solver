@@ -39,3 +39,18 @@ Update in this package: replaced the main top-left Foko Lab logo with the correc
 
 
 v2.7.4: replaced the main header logo with the compact 560x150 SVG and fixed the header render size.
+
+
+## Research atlas and optimization plot grammar
+
+This package includes a portfolio-oriented research layer: `research.html`, new Model Atlas cards, improved Optimization Lab plots, and reduced Workbench surrogates for the photosynthesis climate-adaptation model. The browser models are deliberately reduced; use the Python repository for full CasADi/CMA-ES/SALib workflows.
+
+
+## Local test dependencies
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m pytest -q tests
+```

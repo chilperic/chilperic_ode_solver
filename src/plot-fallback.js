@@ -109,5 +109,5 @@
     const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=(opts.filename||'foko-plot')+'.svg'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},800);
     return Promise.resolve();
   }
-  window.Plotly = {react, purge, downloadImage, __fallback:true};
+  window.Plotly = {react, purge, downloadImage, Plots:{resize:()=>{}}, __fallback:true};
 })();

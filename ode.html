@@ -14,7 +14,7 @@
 <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+<link href="styles/style.css?v=platform-v10" rel="stylesheet"/>
 </head>
 <body data-lab="ode">
 <div class="app-shell">
@@ -23,13 +23,19 @@
 <img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/>
 </a>
 <nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
+<a href="workbench.html">Workbench Beta</a>
 <a class="active" href="ode.html#workbench">ODE Lab</a>
 <a href="optimization.html">Optimization Lab</a>
 <a href="steady.html">Steady-State Lab</a>
 <a href="stochastic.html">Stochastic Lab</a>
+<a href="symbolic.html">Symbolic Lab</a>
+<a href="agent.html">Agent Lab</a>
+<a href="beauty.html">Math Beauty</a>
 <a href="examples.html">Model Atlas</a>
-<a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a>
-</nav>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
+<a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a></nav>
 <div class="top-actions">
 <label aria-label="Theme" class="theme-picker">
 <span class="theme-icon">☼</span>
@@ -135,7 +141,6 @@
 <label><span title="Absolute tolerance: lower bound on the local error scale, important near zero-valued states.">atol</span><input id="atol" type="text" value="1e-9"/></label>
 <label><span>safety</span><input id="safety" type="text" value="0.9"/></label>
 </div>
-
 </details>
 <div class="solver-summary">
 <label><span>Solver</span><select id="methodMirror"><option value="rk45">RK45 adaptive</option></select></label>
@@ -145,7 +150,6 @@
 <button class="secondary subtle" id="toleranceShortcut" type="button">Tolerances &amp; step ⚙</button>
 </div>
 </section>
-
 <section class="import-drawer" id="importBlock">
 <details>
 <summary>Import model / templates</summary>
@@ -153,8 +157,8 @@
 <label class="upload-drop" for="modelFile" id="uploadDrop">
 <span>Click here or drag and drop JSON, CSV, TXT/ODE, YAML, Python config, or SBML/XML</span>
 <small>.json · .csv · .txt · .ode · .yml · .py</small>
-<input accept=".json,.csv,.txt,.ode,.eqn,.yaml,.yml,.py,.xml,.sbml,.md" id="modelFile" type="file">
-</input></label>
+<input accept=".json,.csv,.txt,.ode,.eqn,.yaml,.yml,.py,.xml,.sbml,.md" id="modelFile" type="file"/>
+</label>
 <div class="template-row">
 <select aria-label="Template" id="templateSelect">
 <option value="ode_json">ODE JSON</option>
@@ -167,6 +171,12 @@
 </div>
 </details>
 </section>
+<section class="card model-authoring-standard" id="modelAuthoringStandard">
+<div class="card-head"><h2>Custom ODE model and method choice</h2></div>
+<p class="note">This lab accepts user-defined models. The selected method controls how the browser interprets the model; exports remain the route for heavy or validated computation.</p>
+<table class="clean-table compact-table"><tbody><tr><td><b>Own model</b></td><td>Import JSON, CSV, TXT/ODE, YAML, Python config or SBML/XML from the import drawer.</td></tr><tr><td><b>Methods</b></td><td>RK45/RK5/RK4/Heun/Euler run in browser; Radau/BDF/LSODA/DOP853 are exported for Python.</td></tr><tr><td><b>Approach</b></td><td>Initial-value simulation, parameter sweep, phase portrait, vector field and export.</td></tr></tbody></table>
+</section>
+
 </aside>
 <section aria-label="Results workspace" class="workspace">
 <section aria-label="Numerical results" class="results-card" role="region">

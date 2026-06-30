@@ -1,39 +1,51 @@
 <!DOCTYPE html>
+
 <html data-theme="aurora" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="Foko Lab Optimization Lab: browser-side nonlinear optimization with algorithms, constraints, Pareto analysis, convergence plots, and reproducible exports."/>
-<meta property="og:title" content="Optimization Lab · Foko Lab"/>
-<meta property="og:description" content="Browser-only Optimization Lab for nonlinear programs, constraints, multi-objective trade-offs, and optimization export."/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab Optimization Lab: browser-side nonlinear optimization with algorithms, constraints, Pareto analysis, convergence plots, and reproducible exports." name="description"/>
+<meta content="Optimization Lab · Foko Lab" property="og:title"/>
+<meta content="Browser-only Optimization Lab for nonlinear programs, constraints, multi-objective trade-offs, and optimization export." property="og:description"/>
 <title>Optimization Lab · Foko Lab</title>
 <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+<link href="styles/style.css?v=platform-v10" rel="stylesheet"/>
 </head>
 <body data-lab="optimization">
 <div class="app-shell">
 <header class="topbar">
 <a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
 <nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
-<a href="ode.html#workbench">ODE Lab</a><a class="active" href="optimization.html">Optimization Lab</a><a href="steady.html">Steady-State Lab</a><a href="stochastic.html">Stochastic Lab</a><a href="examples.html">Model Atlas</a><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a>
-</nav>
-<div class="top-actions"><label class="theme-picker"><span class="theme-icon">☼</span><select id="themeBtn" class="theme-select" aria-label="Theme"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label><button id="resetOpt" class="avatar" title="Reset current template" type="button">↻</button></div>
+<a href="workbench.html">Workbench Beta</a>
+<a href="ode.html#workbench">ODE Lab</a>
+<a class="active" href="optimization.html">Optimization Lab</a>
+<a href="steady.html">Steady-State Lab</a>
+<a href="stochastic.html">Stochastic Lab</a>
+<a href="symbolic.html">Symbolic Lab</a>
+<a href="agent.html">Agent Lab</a>
+<a href="beauty.html">Math Beauty</a>
+<a href="examples.html">Model Atlas</a>
+<a href="research.html">Research Hub</a>
+<a href="platform.html">Platform</a>
+<a href="docs.html">Docs</a>
+<a href="tutorial.html">Tutorial</a></nav>
+<div class="top-actions"><label class="theme-picker"><span class="theme-icon">☼</span><select aria-label="Theme" class="theme-select" id="themeBtn"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label><button class="avatar" id="resetOpt" title="Reset current template" type="button">↻</button></div>
 </header>
 <main class="layout lab-mirror-layout" id="workbench">
-<aside class="side-nav" aria-label="Optimization workflow">
-<button class="nav-item active" type="button"><span>◇</span><b>Templates</b></button>
-<button class="nav-item" type="button"><span>ƒ</span><b>Objective</b></button>
-<button class="nav-item" type="button"><span>▣</span><b>Results</b></button>
-<button class="nav-item" type="button"><span>⇩</span><b>Export</b></button>
-<button class="collapse" type="button" id="collapseSidebar">‹</button>
+<aside aria-label="Optimization workflow" class="side-nav">
+<button class="nav-item active" data-jump="optTemplates" type="button"><span>◇</span><b>Templates</b></button>
+<button class="nav-item" data-jump="optEditor" type="button"><span>ƒ</span><b>Objective</b></button>
+<button class="nav-item" data-jump="optResults" type="button"><span>▣</span><b>Results</b></button>
+<button class="nav-item" data-jump="exportsBlock" type="button"><span>⇩</span><b>Export</b></button>
+<button class="collapse" id="collapseSidebar" type="button">‹</button>
 </aside>
-<aside class="work-panel controls" aria-label="Optimization controls">
-<section class="intro-card hero-with-mark"><div><p class="eyebrow mini">Optimization · constraints · search</p><b>Optimization Lab</b><p class="note compact-note">Choose a template, edit variables and constraints, then optimize while plots stay visible on the right.</p></div><img class="lab-mark" src="assets/lab-logos/optimization-lab.webp" alt="Optimization Lab mark"/></section>
-<section class="actionbar" aria-label="Run optimization">
+<aside aria-label="Optimization controls" class="work-panel controls">
+<section class="intro-card hero-with-mark"><div><p class="eyebrow mini">Optimization · constraints · search</p><b>Optimization Lab</b><p class="note compact-note">Choose a template, edit variables and constraints, then optimize while plots stay visible on the right.</p></div><img alt="Optimization Lab mark" class="lab-mark" src="assets/lab-logos/optimization-lab.webp"/></section>
+<section aria-label="Run optimization" class="actionbar">
 <button class="primary run-button" id="runOpt" type="button">▶ Optimize</button>
 <button class="ghost cancel-button hidden" id="cancelOpt" type="button">× Cancel</button>
 <button class="ghost" id="exportOptPython" type="button">🐍 Python</button>
@@ -42,14 +54,14 @@
 <div class="progress" id="optProgressWrap"><div id="optProgressBar"></div></div>
 <div class="status" id="optDiagnostics">Ready.</div>
 </section>
-<section class="examples-section">
-<div class="section-title flat"><h2>Templates</h2><button id="loadOpt" class="secondary subtle" type="button">Load</button></div>
-<select id="optSelect" aria-label="Optimization template"></select>
+<section class="examples-section" id="optTemplates">
+<div class="section-title flat"><h2>Templates</h2><button class="secondary subtle" id="loadOpt" type="button">Load</button></div>
+<select aria-label="Optimization template" id="optSelect"></select>
 <div class="model-deck" id="optDeck"></div>
 <p class="narrative" id="optNarrative">Select a template.</p>
 </section>
 <section class="additional-examples card"><details><summary>Additional examples</summary><div class="additional-example-grid" id="optAdditional"></div></details></section>
-<section class="editor-stack module-block">
+<section class="editor-stack module-block" id="optEditor">
 <article class="card"><div class="card-head"><h2 id="optTitle">Optimization model</h2><button class="icon-btn" id="addVar" type="button">＋ variable</button></div>
 <p class="eyebrow mini" id="optFamily">Optimization</p>
 <div class="two-col small-gap"><label><span>Problem class</span><select id="optClass"><option value="convex">Convex / smooth</option><option value="nonconvex">Non-convex</option><option value="metaheuristic">Metaheuristic / rugged</option><option value="multiobjective">Multi-objective</option><option value="optimal_stopping">Optimal stopping</option></select></label><label><span>Algorithm</span><select id="optAlgorithm"><option value="random_coord">Random + coordinate descent</option><option value="coordinate">Coordinate descent</option><option value="projected_gradient">Projected gradient penalty</option><option value="simulated_annealing">Simulated annealing</option><option value="differential_evolution">Differential evolution</option><option value="particle_swarm">Particle swarm</option><option value="genetic">Genetic algorithm</option><option value="multi_start">Multi-start local search</option></select></label><label><span>Sense</span><select id="optSense"><option value="minimize">Minimize</option><option value="maximize">Maximize</option></select></label></div>
@@ -60,14 +72,20 @@
 <label><span>Inequality constraints g(x) ≤ 0</span><textarea id="ineq" rows="3"></textarea></label>
 <label><span>Equality constraints h(x) = 0</span><textarea id="eqcon" rows="2"></textarea></label>
 </article>
-<article class="card advanced-card"><details open><summary>Advanced optimization settings</summary><div class="advanced-grid"><label><span>iterations / samples</span><input id="optSamples" type="number" min="100" max="100000" value="3500"/></label><label><span>penalty</span><input id="penalty" type="text" value="1000"/></label><label><span>refine steps</span><input id="refineSteps" type="number" value="80"/></label><label><span>population</span><input id="optPopulation" type="number" value="36"/></label><label><span>temperature</span><input id="optTemperature" type="text" value="1"/></label><label><span>tolerance</span><input id="optTolerance" type="text" value="1e-8"/></label></div></details></article>
+<article class="card advanced-card"><details open=""><summary>Advanced optimization settings</summary><div class="advanced-grid"><label><span>iterations / samples</span><input id="optSamples" max="100000" min="100" type="number" value="3500"/></label><label><span>penalty</span><input id="penalty" type="text" value="1000"/></label><label><span>refine steps</span><input id="refineSteps" type="number" value="80"/></label><label><span>population</span><input id="optPopulation" type="number" value="36"/></label><label><span>temperature</span><input id="optTemperature" type="text" value="1"/></label><label><span>tolerance</span><input id="optTolerance" type="text" value="1e-8"/></label></div></details></article>
 </section>
+<section class="card model-authoring-standard" id="modelAuthoringStandard">
+<div class="card-head"><h2>Custom optimization model and method choice</h2></div>
+<p class="note">This lab accepts user-defined models. The selected method controls how the browser interprets the model; exports remain the route for heavy or validated computation.</p>
+<table class="clean-table compact-table"><tbody><tr><td><b>Own model</b></td><td>Edit variables, bounds, objective, constraints and secondary objective directly.</td></tr><tr><td><b>Methods</b></td><td>Coordinate descent, projected-gradient penalty, simulated annealing, differential evolution, particle swarm, genetic and multi-start strategies.</td></tr><tr><td><b>Approach</b></td><td>Convex/smooth, non-convex, metaheuristic, multi-objective and optimal-stopping style problems.</td></tr></tbody></table>
+</section>
+
 </aside>
-<section class="workspace" aria-label="Optimization results">
+<section aria-label="Optimization results" class="workspace" id="optResults">
 <section class="results-card">
 <div class="status-strip"><div class="status-ok"><span>●</span><b id="optTopStatus">Ready</b></div><div><span>Algorithm</span><b id="optAlgoStatus">—</b></div><div><span>Samples</span><b id="optSamplesStatus">—</b></div><div><span>Best f</span><b id="optBestStatus">—</b></div></div>
 <div class="result-head"><div class="tabs" id="resultTabs"><button class="tab active" data-panel="plotsPanel" type="button">Plots</button><button class="tab" data-panel="diagnosticsPanel" type="button">Diagnostics</button></div></div>
-<div class="plot-toolbar-v2"><label><span>Left plot</span><select id="optPlotA"><option value="samples">Samples + best</option><option value="convergence">Convergence</option><option value="pareto">Pareto / objectives</option><option value="feasibility">Feasibility</option><option value="variables">Variable traces</option></select></label><label><span>Right plot</span><select id="optPlotB"><option value="convergence">Convergence</option><option value="samples">Samples + best</option><option value="feasibility">Feasibility</option><option value="pareto">Pareto / objectives</option><option value="variables">Variable traces</option></select></label><button id="optExportPng" class="secondary" type="button">PNG</button><button id="optExportSvg" class="secondary" type="button">SVG</button></div>
+<div class="plot-toolbar-v2"><label><span>Left plot</span><select id="optPlotA"><option value="landscape">Contour / heatmap plot</option><option value="constraint_overlay">Feasible-region overlay</option><option value="search_path">Optimizer search path</option><option value="convergence">Optimization history</option><option value="importance">Hyperparameter importance</option><option value="parallel">Parallel coordinate plot</option><option value="pareto">Pareto front</option><option value="slice">Slice / partial dependence</option><option value="ecdf">ECDF</option><option value="radar">Multi-objective radar</option><option value="step_response">Step-response / simulation trajectory</option><option value="constraint_history">Constraint violation history</option><option value="active_constraints">Active constraints</option><option value="samples">Samples + best</option><option value="variables">Variable traces</option><option value="feasibility">Feasibility scatter</option></select></label><label><span>Right plot</span><select id="optPlotB"><option value="convergence">Optimization history</option><option value="constraint_history">Constraint violation history</option><option value="pareto">Pareto front</option><option value="importance">Hyperparameter importance</option><option value="parallel">Parallel coordinates</option><option value="slice">Slice plot</option><option value="ecdf">ECDF</option><option value="radar">Multi-objective radar</option><option value="step_response">Step-response</option><option value="active_constraints">Active constraints</option><option value="constraint_overlay">Feasible-region overlay</option><option value="search_path">Search path</option><option value="samples">Samples + best</option><option value="variables">Variable traces</option><option value="feasibility">Feasibility scatter</option></select></label><button class="secondary" id="optExportPng" type="button">PNG</button><button class="secondary" id="optExportSvg" type="button">SVG</button></div>
 <div class="tab-panel active" id="plotsPanel"><div class="chart-grid"><article class="chart-card"><div class="chart-title"><h3>Primary plot</h3></div><div class="plot" id="optPlotLeft"></div></article><article class="chart-card"><div class="chart-title"><h3>Secondary plot</h3></div><div class="plot" id="optPlotRight"></div></article></div><div class="metrics-grid"><div class="metric-card"><small>Algorithm</small><b id="metricAlgo">—</b><em>worker method</em></div><div class="metric-card"><small>Samples</small><b id="metricSamples">—</b><em>evaluated candidates</em></div><div class="metric-card"><small>Best f</small><b id="metricBest">—</b><em>objective</em></div><div class="metric-card"><small>Feasible</small><b id="metricFeasible">—</b><em>constraints</em></div></div></div>
 <div class="tab-panel" id="diagnosticsPanel"><div class="diagnostics" id="optDiagPanel">Run the optimizer to see candidates, convergence, feasibility, and the best solution.</div></div>
 </section>
