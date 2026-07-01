@@ -4,71 +4,81 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Foko Lab is a browser-native scientific modeling environment for ODEs, optimization, steady-state systems, stochastic simulation, plotting and reproducible exports." name="description"/>
+<meta content="Foko Lab is a browser-native scientific modeling platform for equations, stochastic processes, optimization, symbolic inspection and agent-based systems." name="description"/>
 <meta content="Foko Lab" property="og:title"/>
-<meta content="Interactive scientific modeling in the browser." property="og:description"/>
+<meta content="Browser-native scientific modeling with reproducible exports." property="og:description"/>
 <meta content="website" property="og:type"/>
-<title>Foko Lab · Browser-native scientific modeling</title>
-<link href="styles/style.css?v=platform-v23-upload" rel="stylesheet"/>
+<meta content="assets/homepage-preview.webp" property="og:image"/>
+<title>Foko Lab · Scientific modeling in the browser</title>
+<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
 </head>
-<body data-lab="home">
-<script>
-(function(){
-  const q = new URLSearchParams(location.search);
-  if(q.has('example') || q.has('module')) location.replace('ode.html' + location.search + location.hash);
-})();
-</script>
-<div class="app-shell home-shell">
-<header class="topbar home-topbar">
-<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav"><a class="active" href="index.html">Home</a>
-<a href="workbench.html">Workbench Beta</a>
-<a href="ode.html#workbench">ODE Lab</a>
-<a href="optimization.html">Optimization Lab</a>
-<a href="steady.html">Steady-State Lab</a>
-<a href="stochastic.html">Stochastic Lab</a>
-<a href="symbolic.html">Symbolic Lab</a>
-<a href="agent.html">Agent Lab</a>
-<a href="beauty.html">Math Beauty</a>
-<a href="examples.html">Model Atlas</a>
-<a href="research.html">Research Hub</a>
-<a href="platform.html">Platform</a>
-<a href="docs.html">Docs</a>
-<a href="tutorial.html">Tutorial</a></nav>
-<div class="top-actions"><a class="primary launch-button" href="workbench.html">Workbench Beta</a></div>
-</header>
-<main class="home-page">
-<section class="home-hero">
-<div class="home-copy">
-<p class="home-pill">BROWSER-NATIVE <span>•</span> FAST <span>•</span> REPRODUCIBLE <span>•</span> OPEN</p>
-<h1>Interactive scientific modeling <span>in the browser.</span></h1>
-<p class="home-lead">Explore and build models across ODEs, optimization, steady-state systems, stochastic simulation, symbolic analysis and agent-based emergence, with visualization and reproducible exports.</p>
-<div class="home-actions"><a class="primary big-cta" href="workbench.html">▣ Open Workbench Beta</a><a class="secondary big-cta" href="examples.html">Explore Model Atlas</a><a class="secondary big-cta" href="ode.html#workbench">Legacy Labs</a></div>
+<body data-lab="home"><div class="app-shell identity-shell v36-clean">
+<header class="topbar public-topbar"><a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a><nav aria-label="Primary navigation" class="topnav public-nav">
+<a class="active" href="index.html">Home</a>
+<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
+<summary class="labs-summary">Workbench</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="workbench.html" role="menuitem"><b>Main</b></a>
+<a href="examples.html" role="menuitem"><b>Model Atlas</b></a>
+<a href="symbolic.html" role="menuitem"><b>Symbolic</b></a>
+<a href="agent.html" role="menuitem"><b>Agent</b></a>
 </div>
-<div class="home-visual"><img alt="Foko Lab scientific orbit logo" src="assets/foko-lab-hero-orbit.webp?v=2.7.4"/></div>
+</details>
+<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
+<summary class="labs-summary">Legacy</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="ode.html#workbench" role="menuitem"><b>ODE</b></a>
+<a href="optimization.html" role="menuitem"><b>Optimization</b></a>
+<a href="steady.html" role="menuitem"><b>Steady-State</b></a>
+<a href="stochastic.html" role="menuitem"><b>Stochastic</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
+<summary class="labs-summary">Learn</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="docs.html" role="menuitem"><b>Docs</b></a>
+<a href="tutorial.html" role="menuitem"><b>Tutorial</b></a>
+<a href="platform.html" role="menuitem"><b>Platform</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
+<summary class="labs-summary">About</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="research.html" role="menuitem"><b>Research</b></a>
+<a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
+<a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
+<a href="contact.html" role="menuitem"><b>Contact</b></a>
+</div>
+</details>
+</nav></header>
+<main class="identity-home">
+<section class="identity-hero">
+<div class="identity-copy">
+<p class="identity-kicker">Mechanistic · stochastic · symbolic · agent-based</p>
+<h1>Build models. <span>See dynamics.</span> Export cleanly.</h1>
+<p class="identity-lead">Foko Lab is a browser workspace for scientific modeling. Start from equations, rules, stochastic events or optimization problems; run lightweight experiments in the browser; export serious computations to local Python, SymPy or SciPy workflows.</p>
+<div class="identity-actions"><a class="primary big-cta" href="workbench.html">Open Workbench</a><a class="secondary big-cta" href="examples.html">Browse Model Atlas</a><a class="secondary big-cta" href="research.html">Research Hub</a></div>
+</div>
+<aside aria-label="Creator and platform identity" class="identity-card">
+<div class="identity-logo-wrap compact-logo"><img alt="Foko Lab scientific orbit logo" src="assets/foko-lab-hero-orbit.webp?v=2.7.4"/></div>
+<div class="identity-profile large-profile"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=2.7.4"/><div><b>Dr. Chilperic Armel Foko Kuate</b><span>computational biology · applied mathematics · scientific software</span><a class="profile-link" href="https://chilperic.github.io/" rel="noopener" target="_blank">More about me</a></div></div>
+</aside>
 </section>
-<section aria-label="Foko Lab modules" class="home-labs">
-<a class="home-lab-card logo-card" href="ode.html#workbench"><img alt="ODE Lab logo" class="home-lab-logo" src="assets/lab-logos/ode-lab.webp"/><b>ODE Lab</b><p>Deterministic dynamics, trajectories, phase portraits and parameter sweeps.</p><em>Explore ODE Lab →</em></a>
-<a class="home-lab-card logo-card" href="optimization.html"><img alt="Optimization Lab logo" class="home-lab-logo" src="assets/lab-logos/optimization-lab.webp"/><b>Optimization Lab</b><p>Convex and non-convex search, constraints and Pareto frontier views.</p><em>Explore Optimization Lab →</em></a>
-<a class="home-lab-card logo-card" href="steady.html"><img alt="Steady-State Lab logo" class="home-lab-logo" src="assets/lab-logos/steady-state-lab.webp"/><b>Steady-State Lab</b><p>Algebraic systems, equilibria, Jacobian diagnostics and continuation.</p><em>Explore Steady-State Lab →</em></a>
-<a class="home-lab-card logo-card" href="stochastic.html"><img alt="Stochastic Lab logo" class="home-lab-logo" src="assets/lab-logos/stochastic-lab.webp"/><b>Stochastic Lab</b><p>CTMC/Gillespie simulation, ensembles, mean-field overlays and randomness.</p><em>Explore Stochastic Lab →</em></a>
-<a class="home-lab-card logo-card" href="symbolic.html"><span class="home-lab-logo math-logo">∂</span><b>Symbolic Lab</b><p>LaTeX equations, derivatives, Jacobians, equilibria notes and SymPy export.</p><em>Explore Symbolic Lab →</em></a>
-<a class="home-lab-card logo-card" href="agent.html"><span class="home-lab-logo math-logo">▦</span><b>Agent Lab</b><p>Individual-based grid models, local rules, emergent dynamics and population metrics.</p><em>Explore Agent Lab →</em></a>
-<a class="home-lab-card logo-card" href="beauty.html"><span class="home-lab-logo math-logo">∞</span><b>Mathematical Beauty</b><p>Fractals, curves, number theory and logic as public mathematical play.</p><em>Explore Math Beauty →</em></a>
-</section>
-<section class="home-lower">
-<div class="home-panel atlas-panel home-panel-with-logo"><div class="home-panel-title"><div><h2>Model Atlas</h2><p>Curated, executable examples across systems biology, epidemiology, ecology, optimization, steady-state analysis and stochastic processes.</p></div><img alt="Model Atlas mark" class="home-section-logo" src="assets/lab-logos/model-atlas.webp"/></div><div class="atlas-mini-grid"><span>Systems biology</span><span>Epidemiology</span><span>Ecology</span><span>Chemical kinetics</span><span>Teaching models</span><span>Paradoxes</span></div><a href="examples.html">Browse all models →</a></div>
-<div class="home-panel export-panel"><h2>Reproducible exports</h2><p>Export models, results and figures for transparent research and teaching workflows.</p><div class="export-badges"><span>CSV</span><span>JSON</span><span>Plotly</span><span>Python</span><span>Julia</span></div></div>
-<div class="home-panel creator-panel"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=2.7.4"/><div><p class="eyebrow">About the creator</p><h2>Dr. Chilperic Armel Foko Kuate</h2><p>Computational biologist and applied mathematician building mechanistic models and interactive tools that support education, research and discovery.</p><a href="https://chilperic.github.io/" rel="noopener noreferrer" target="_blank">Learn more about me →</a></div></div>
+<section aria-labelledby="labsTitle" class="lab-card-section"><div class="section-heading"><p>Choose a route</p><h2 id="labsTitle">One Workbench layer for modern slider-first use. Symbolic and Agent are inside that Workbench suite. One Legacy layer for older form-based editors.</h2></div><div class="identity-lab-grid primary-routes">
+<a class="identity-lab-card workbench priority-card" href="workbench.html"><span class="home-lab-logo math-logo">▣</span><b>Workbench Suite</b><p>Model Bench, Symbolic, Agent and Atlas grouped as the modern slider-first layer.</p><em>Start here →</em></a>
+<a class="identity-lab-card atlas priority-card" href="examples.html"><span class="home-lab-logo math-logo">▤</span><b>Model Atlas</b><p>Model library and example entry point. It remains inside the Workbench family, but can be opened directly.</p><em>Browse models →</em></a>
+<a class="identity-lab-card symbolic priority-card" href="symbolic.html"><span class="home-lab-logo math-logo">∂</span><b>Symbolic Lab</b><p>Modern equation workspace with parameter sliders, plots, Jacobians, equilibria and SymPy export.</p><em>Open Symbolic Lab →</em></a>
+<a class="identity-lab-card agent priority-card" href="agent.html"><span class="home-lab-logo math-logo">◌</span><b>Agent Lab</b><p>Modern rule-based workspace with visible sliders for grid, density, timing and model-specific controls.</p><em>Open Agent Lab →</em></a>
+</div>
+<div aria-label="Legacy form-based labs" class="legacy-lab-cluster"><div><b>Legacy form-based labs</b><p>ODE, Optimization, Steady-State and Stochastic stay available, but they are grouped as legacy because their parameter control surface is still form/table based rather than slider-first.</p></div><nav>
+<a href="ode.html#workbench">ODE</a><a href="optimization.html">Optimization</a><a href="steady.html">Steady-State</a><a href="stochastic.html">Stochastic</a>
+</nav></div></section>
+<section class="identity-lower clean-home-panels">
+<article class="identity-panel color-panel"><h2>Model</h2><p>Define equations, rules, stochastic reactions, objectives or steady-state systems.</p><div class="accent-dots"><span></span><span></span><span></span></div></article>
+<article class="identity-panel"><h2>Inspect</h2><p>Use plots, diagnostics, equilibria, sweeps, trajectories and rule outcomes to understand behavior.</p><a href="docs.html">Read docs →</a></article>
+<article class="identity-panel"><h2>Export</h2><p>Move beyond browser-scale experiments with Python, SymPy, SciPy, JSON and figure exports.</p><a href="platform.html">Platform overview →</a></article>
 </section>
 </main>
-<footer class="home-footer"><a class="footer-brand" href="index.html"><img alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a><p>Model deeply. Simulate confidently. Share reproducibly.</p><nav><a href="research.html">Research Hub</a><a href="platform.html">Platform</a><a href="symbolic.html">Symbolic Lab</a><a href="agent.html">Agent Lab</a><a href="beauty.html">Math Beauty</a><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a><a href="examples.html">Model Atlas</a><a href="https://github.com/chilperic/chilperic_ode_solver">GitHub</a></nav></footer>
-</div>
-<script>
-(function(){
-  const saved = localStorage.getItem('chilperic-theme') || 'aurora';
-  document.documentElement.dataset.theme = saved;
-})();
-</script>
-</body>
+<footer class="quiet-footer identity-footer"><p>Foko Lab · Dr. Chilperic Armel Foko Kuate</p><nav><a href="docs.html">Docs</a><a href="tutorial.html">Tutorial</a><a href="acknowledgement.html">Acknowledgement</a><a href="contact.html">Contact</a></nav></footer>
+</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=41"></script></body>
 </html>

@@ -64,8 +64,8 @@ const EXAMPLE_AUTHORS = {
   'Robertson': 'H. H. Robertson',
   'Enzyme kinetics': 'Leonor Michaelis; Maud Menten',
   'Van der Pol': 'Balthasar van der Pol',
-  'FA metabolism bistability': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh',
-  'FADNS semi-mechanistic': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh',
+  'FA metabolism bistability': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh, Adélaïde Raguin and Barbara Bakker',
+  'FADNS semi-mechanistic': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh, Adélaïde Raguin and Barbara Bakker',
   'Love–hate oscillator': 'Steven Strogatz; Romeo–Juliet teaching model',
   'Braess routing dynamics': 'Dietrich Braess',
   'Ziegler destabilization': 'Hans Ziegler',
@@ -75,8 +75,8 @@ const EXAMPLE_AUTHORS = {
   'SIR beta–gamma': 'W. O. Kermack; A. G. McKendrick',
   'SEIR incubation': 'Kermack–McKendrick epidemic-modeling tradition',
   'Enzyme kinetics sweep': 'Leonor Michaelis; Maud Menten',
-  'FA metabolism parameter sweep': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh',
-  'FADNS semi-mechanistic sweep': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh',
+  'FA metabolism parameter sweep': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh, Adélaïde Raguin and Barbara Bakker',
+  'FADNS semi-mechanistic sweep': 'Chilperic Armel Foko Kuate; supervised by Oliver Ebenhöh, Adélaïde Raguin and Barbara Bakker',
   'Braess shortcut sweep': 'Dietrich Braess',
   'Calvin regeneration sweep': 'Melvin Calvin; Andrew Benson; James Bassham',
   'Constrained quadratic': 'Foko Lab teaching example',
@@ -197,7 +197,7 @@ function wire(){
   $('addVar')?.addEventListener('click',addVariable);
   $('runBtn').addEventListener('click',runDefault);
   $('runSweep').addEventListener('click',runSweep);
-  $('cancelBtn').addEventListener('click',cancelWorker);
+  $('cancelBtn').addEventListener('click',cancelWorker); $('openSymbolic')?.addEventListener('click',openCurrentInSymbolic); $('openSteady')?.addEventListener('click',openCurrentInSteady);
   $('method').addEventListener('change',()=>{ syncSummary(); updatePythonTargets(); });
   ['t0','t1','points'].forEach(id=>$(id).addEventListener('input',syncSummary));
   $('methodMirror').addEventListener('change',e=>{ $('method').value=e.target.value; syncSummary(); });
@@ -360,7 +360,7 @@ function renderTable(id,heads,rows,callback,deletable=false){
 function deleteTableRow(id,i){ if(id==='paramRows'){ const k=Object.keys(state.model.params)[i]; delete state.model.params[k]; renderOdeControls(); } if(id==='variableRows'){ state.model.variables.splice(i,1); renderOptControls(); } updateMathPreview(); refreshAllSelects(); }
 function addEquation(){ const n='u'+(state.model.vars.filter(v=>v.startsWith('u')).length+1); state.model.vars.push(n); state.model.eqs.push('0'); state.model.y0.push(0); renderOdeControls(); refreshAllSelects(); updateMathPreview(); }
 function addVariable(){ state.model.variables.push({name:'x'+(state.model.variables.length+1),initial:0,lower:-10,upper:10}); renderOptControls(); }
-function readOde(){ state.model.t0=num($('t0').value); state.model.t1=num($('t1').value); state.model.points=Math.max(2,+$('points').value||800); state.model.method=$('method').value; syncSummary(); }
+function readOde(){ compiledEquationCacheKey=''; compiledEquationCache=null; state.model.t0=num($('t0').value); state.model.t1=num($('t1').value); state.model.points=Math.max(2,+$('points').value||800); state.model.method=$('method').value; syncSummary(); }
 function readOpt(){ state.model.optClass=$('optClass')?.value || state.model.optClass || 'nonconvex'; state.model.algorithm=$('optAlgorithm')?.value || state.model.algorithm || defaultOptAlgorithm(state.model.optClass); state.model.sense=$('optSense').value; state.model.objective=$('objective').value; state.model.objective2=$('objective2')?.value?.trim()||''; state.model.ineq=$('ineq').value.split('\n').map(s=>s.trim()).filter(Boolean); state.model.eq=$('eqcon').value.split('\n').map(s=>s.trim()).filter(Boolean); }
 function paramValues(){ const out={}; Object.entries(state.model.params||{}).forEach(([k,a])=>out[k]=Number(a[0])); return out; }
 function paramDefs(){ const out={}; Object.entries(state.model.params||{}).forEach(([k,a])=>out[k]={value:Number(a[0]),min:Number(a[1]),max:Number(a[2])}); return out; }
@@ -426,14 +426,28 @@ function texName(v){ return /^[A-Za-z]$/.test(String(v))?v:`\\mathrm{${String(v)
 
 function runDefault(){ if(state.module==='param') state.resultKind='default'; state.module==='opt' ? runOpt() : runOde(); }
 function runOde(){
-  try{ readOde(); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value}; startBusy('Solving...'); worker().postMessage({type:'solve',payload}); }catch(e){ setStatus(actionable(e.message),true); }
+  try{ readOde(); FokoSession?.save?.('ode', state.model); const check=window.FokoModelValidator?.validate?.(state.model,'ode'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value}; startBusy('Solving...'); worker().postMessage({type:'solve',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
 function runSweep(){
-  try{ readOde(); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, sweepA:$('sweepA').value, sweepB:$('sweepB').value, sweepVar:$('sweepVar').value, sweepMetric:$('sweepMetric').value, sweepN:+$('sweepN').value}; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
+  try{ readOde(); FokoSession?.save?.('ode', state.model); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, sweepA:$('sweepA').value, sweepB:$('sweepB').value, sweepVar:$('sweepVar').value, sweepMetric:$('sweepMetric').value, sweepN:+$('sweepN').value}; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
-function runOpt(){ try{ readOpt(); const payload={...state.model, samples:+$('optSamples').value, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population:+($('optPopulation')?.value||36), temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy('Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
-function worker(){ if(state.worker) state.worker.terminate(); state.worker=new Worker('src/worker.js'); state.worker.onmessage=e=>{ const d=e.data; if(d.progress!==undefined){ $('progressWrap').classList.remove('hidden'); $('progressBar').style.width=Math.round(d.progress*100)+'%'; setStatus(`${d.text||'Running'} ${Math.round(d.progress*100)}%`); return; } finishRun(d); }; return state.worker; }
-function cancelWorker(){ if(state.worker){ state.worker.postMessage({type:'cancel'}); state.worker.terminate(); state.worker=null; } document.querySelector('.results-card').classList.remove('stale-results'); endBusy('Cancelled.'); }
+function runOpt(){ try{ readOpt(); FokoSession?.save?.('optimization', state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const payload={...state.model, samples:+$('optSamples').value, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population:+($('optPopulation')?.value||36), temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy('Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
+function worker(){
+  if(state.worker) return state.worker;
+  state.worker=new Worker('src/worker.js');
+  state.worker.onmessage=e=>{ const d=e.data; if(d.progress!==undefined){ $('progressWrap').classList.remove('hidden'); $('progressBar').style.width=Math.round(d.progress*100)+'%'; setStatus(`${d.text||'Running'} ${Math.round(d.progress*100)}%`); return; } finishRun(d); };
+  state.worker.onerror=err=>{
+    // MUST null the reference first — the keep-alive guard in worker() checks
+    // if(state.worker) return state.worker; a dead worker here means the next
+    // run silently postMessages into a terminated thread and produces no result.
+    state.worker = null;
+    document.querySelector('.results-card')?.classList.remove('stale-results');
+    endBusy('Worker error.');
+    setStatus(actionable(err.message||'ODE worker crashed. Reload or run again to restart.'), true);
+  };
+  return state.worker;
+}
+function cancelWorker(){ if(state.worker){ state.worker.postMessage({type:'cancel'}); } document.querySelector('.results-card').classList.remove('stale-results'); endBusy('Cancelled.'); }
 function startBusy(msg){ document.querySelector('.results-card').classList.add('stale-results'); $('runBtn').disabled=true; $('runSweep').disabled=true; $('runBtn').dataset.label=$('runBtn').textContent; $('runBtn').textContent=state.module==='opt'?'Optimizing...':'Solving...'; $('cancelBtn').classList.remove('hidden'); $('progressWrap').classList.remove('hidden'); $('progressBar').style.width='5%'; setStatus(msg); }
 function endBusy(msg){ $('runBtn').disabled=false; $('runSweep').disabled=false; $('runBtn').textContent=$('runBtn').dataset.label || (state.module==='opt'?'Optimize':(state.module==='param'?'Run default':'Run')); $('cancelBtn').classList.add('hidden'); $('progressWrap').classList.add('hidden'); $('progressBar').style.width='0%'; setStatus(msg); }
 function finishRun(d){ document.querySelector('.results-card').classList.remove('stale-results'); endBusy(d.ok?'Done.':'Error.'); if(!d.ok){ setStatus(actionable(d.error),true); return; }
@@ -445,9 +459,13 @@ function actionable(m){ m=String(m||'Unknown error'); if(/diverged|stiff|Step li
 function resetStatus(){ ['runtimeValue','acceptedValue','rejectedValue','stepsMetric','evalMetric','cpuMetric','errorMetric'].forEach(id=>safeText($(id),'—')); safeText($('topStatus'),'Ready'); setStatus('Ready.'); }
 function setStatus(msg,bad=false){ $('status').textContent=msg; $('status').className='status '+(bad?'bad':''); }
 function updateMetrics(d){ safeText($('topStatus'),'Integration successful'); safeText($('runtimeValue'),fmtRuntime(d.runtime)); safeText($('acceptedValue'),fmt(d.accepted)); safeText($('rejectedValue'),fmt(d.rejected)); safeText($('stepsMetric'),fmt(d.accepted)); safeText($('evalMetric'),fmt(d.functionEvaluations)); safeText($('cpuMetric'),fmtRuntime(d.runtime)); safeText($('errorMetric'),$('rtol').value || '—'); }
+function diagnosticsTable(obj){
+  const rows=Object.entries(obj||{}).map(([k,v])=>`<tr><th>${escapeHtml(k)}</th><td>${escapeHtml(typeof v==='number'?String(Number(v.toPrecision ? v.toPrecision(6) : v)):String(v??'—'))}</td></tr>`).join('');
+  return `<table class="clean-table compact-table diagnostic-table"><tbody>${rows||'<tr><td>No diagnostics.</td></tr>'}</tbody></table>`;
+}
 function updateOptMetrics(d){ safeText($('topStatus'),`${d.feasible?'Feasible':'Approximate'} · ${d.diagnostics?.method||'optimizer'}`); safeText($('runtimeValue'),fmtRuntime(d.diagnostics.runtime)); safeText($('acceptedValue'),fmt(d.diagnostics.samples)); safeText($('rejectedValue'),d.feasible?'0':'violation'); safeText($('stepsMetric'),fmt(d.diagnostics.samples)); safeText($('evalMetric'),fmt(d.samples?.length||0)); safeText($('cpuMetric'),fmtRuntime(d.diagnostics.runtime)); safeText($('errorMetric'),Number(d.violation).toExponential(2)); }
-function showDiagnostics(d){ $('diagnostics').textContent=JSON.stringify(d,null,2); }
-function showOptDiagnostics(d){ $('diagnostics').textContent=JSON.stringify({best:d.best, objective:d.objective, violation:d.violation, feasible:d.feasible, diagnostics:d.diagnostics},null,2); }
+function showDiagnostics(d){ $('diagnostics').innerHTML=diagnosticsTable(d); }
+function showOptDiagnostics(d){ $('diagnostics').innerHTML=diagnosticsTable({status:d.feasible?'feasible':'constraint violation remains', objective:d.objective, violation:d.violation, best:(d.best||[]).map(v=>Number(v).toPrecision(5)).join(', '), ...(d.diagnostics||{})}); }
 
 function colors(){ return PALETTES[$('palette').value] || PALETTES.seaborn; }
 function cssVar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
@@ -494,26 +512,18 @@ function forcePlotVisible(id){
 }
 function drawPlot(target,traces,layout={},config={}){
   const id = typeof target === 'string' ? target : target?.id;
-  const old = typeof target === 'string' ? $(target) : target;
-  if(!id || !old) return Promise.reject(new Error('Missing plot target'));
-  const h = Number(layout.height) || Number(old.style.height?.replace('px','')) || 430;
+  let el = typeof target === 'string' ? $(target) : target;
+  if(!id || !el) return Promise.reject(new Error('Missing plot target'));
+  const h = Number(layout.height) || Number(el.style.height?.replace('px','')) || 430;
+  el.style.height=Math.max(360,h)+'px'; el.style.minHeight=el.style.height; el.style.width='100%'; el.style.display='block'; el.style.visibility='visible'; el.style.opacity='1';
+  observePlotNode(el);
   plotRenderSeq[id]=(plotRenderSeq[id]||0)+1;
   const seq=plotRenderSeq[id];
-  const el = resetPlotNode(id,h);
-  if(!el) return Promise.reject(new Error('Missing plot target'));
-  const finalLayout = {...layout, height:Math.max(360,h), autosize:true, uirevision:`${state.module}-${state.resultKind}-${id}-${seq}`};
+  const finalLayout = {...layout, height:Math.max(360,h), autosize:true, uirevision:`${state.module}-${state.resultKind}-${id}`};
   const finalConfig = {responsive:true, displaylogo:false, scrollZoom:false, ...config};
-  const p = Plotly.newPlot(el,traces,finalLayout,finalConfig);
-  Promise.resolve(p).then(()=>{
-    if(plotRenderSeq[id]!==seq) return;
-    forcePlotVisible(id);
-    requestAnimationFrame(()=>{ if(plotRenderSeq[id]===seq) forcePlotVisible(id); });
-    setTimeout(()=>{ if(plotRenderSeq[id]===seq) forcePlotVisible(id); },90);
-  }).catch(err=>{
-    if(plotRenderSeq[id]!==seq) return;
-    const node=$(id);
-    if(node) node.innerHTML=`<div class="diagnostics empty">${escapeHtml(actionable(err.message||err))}</div>`;
-  });
+  const method = (el.data && typeof Plotly.react==='function') ? Plotly.react : Plotly.newPlot;
+  const p = method(el,traces,finalLayout,finalConfig);
+  Promise.resolve(p).then(()=>{ if(plotRenderSeq[id]!==seq) return; forcePlotVisible(id); requestAnimationFrame(()=>{ if(plotRenderSeq[id]===seq) forcePlotVisible(id); }); }).catch(err=>{ if(plotRenderSeq[id]!==seq) return; const node=$(id); if(node) node.innerHTML=`<div class="diagnostics empty">${escapeHtml(actionable(err.message||err))}</div>`; });
   return p;
 }
 
@@ -581,7 +591,8 @@ function renderOdePlot(target,p){ if(!state.result) throw new Error('Run the mod
 function plotTrajectory(target,p){ const cs=colors(); const idxs=visibleSeriesIndices(); const traces=idxs.map((i,k)=>{ const v=state.result.vars[i]; return {x:state.result.T,y:state.result.Y[i],mode:'lines',name:`${v}(t)`,line:{color:cs[k%cs.length],width:p.lineWidth}}; }); const layout=baseLayout({...p,xLabel:p.xLabel||'t',yLabel:p.yLabel||'state'}); if((state.result.vars||[]).length>idxs.length){ layout.annotations=[{text:`Showing ${idxs.length} key variables of ${state.result.vars.length}. Export CSV/Python for all states.`,xref:'paper',yref:'paper',x:1,y:1.12,showarrow:false,font:{size:11,color:cssVar('--muted')||'#667085'},xanchor:'right'}]; } drawPlot(target,traces,layout,{responsive:true,displaylogo:false}); }
 function plotPhase2D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1); if(ix===iy){ drawPlot(target,[],{...baseLayout({...p,title:'Phase portrait requires 2 different variables',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),annotations:[{text:'Select different X and Y variables in Figure settings.',xref:'paper',yref:'paper',x:.5,y:.5,showarrow:false,font:{size:14}}]},{responsive:true,displaylogo:false}); return; } const trace={x:state.result.Y[ix],y:state.result.Y[iy],mode:'lines',type:'scatter',name:`${vars[ix]} vs ${vars[iy]}`,line:{color:cs[1]||cs[0],width:p.lineWidth}}; drawPlot(target,[trace],baseLayout({...p,xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
 function plotPhase3D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1), iz=indexOfVar(p.z,2); if(vars.length<3) throw new Error('3D phase portrait requires at least three variables.'); const trace={x:state.result.Y[ix],y:state.result.Y[iy],z:state.result.Y[iz],mode:'lines',type:'scatter3d',name:`${vars[ix]}-${vars[iy]}-${vars[iz]}`,line:{color:cs[0],width:p.lineWidth*1.6}}; drawPlot(target,[trace],{...baseLayout(p),scene:{xaxis:{title:p.xLabel||vars[ix]},yaxis:{title:p.yLabel||vars[iy]},zaxis:{title:p.zLabel||vars[iz]}},margin:{l:0,r:0,t:45,b:0},showlegend:false},{responsive:true,displaylogo:false}); }
-function compileMainEquations(){ const allowed=new Set(['t',...state.model.vars,...Object.keys(state.model.params||{}),'sin','cos','tan','exp','log','sqrt','abs','min','max','pow','pi','e']); return state.model.eqs.map(e=>{ const n=math.parse(e); const symbols=[]; n.traverse(node=>{if(node.isSymbolNode)symbols.push(node.name);}); symbols.forEach(s=>{if(!allowed.has(s)) throw new Error(`Unknown symbol ${s}`);}); return n.compile(); }); }
+let compiledEquationCacheKey='', compiledEquationCache=null;
+function compileMainEquations(){ const key=JSON.stringify({vars:state.model.vars, params:Object.keys(state.model.params||{}), eqs:state.model.eqs}); if(compiledEquationCache && compiledEquationCacheKey===key) return compiledEquationCache; const allowed=new Set(['t',...state.model.vars,...Object.keys(state.model.params||{}),'sin','cos','tan','exp','log','sqrt','abs','min','max','pow','pi','e']); compiledEquationCache=state.model.eqs.map(e=>{ const n=math.parse(e); const symbols=[]; n.traverse(node=>{if(node.isSymbolNode)symbols.push(node.name);}); symbols.forEach(s=>{if(!allowed.has(s)) throw new Error(`Unknown symbol ${s}`);}); return n.compile(); }); compiledEquationCacheKey=key; return compiledEquationCache; }
 function evalRhsAt(x,y,p){ const comps=compileMainEquations(), vars=state.model.vars, params=paramValues(); const scope={t:0,...params}; vars.forEach((v,i)=>scope[v]=state.model.y0[i]||0); scope[p.x]=x; scope[p.y]=y; if(p.z && vars.includes(p.z)) scope[p.z]=num(p.plane); return comps.map(c=>c.evaluate(scope)); }
 function plotVectorField(target,p){
   const vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1);
@@ -824,6 +835,10 @@ function plotlyDataExport(){
   ['leftPlot','rightPlot'].forEach(id=>{ const el=$(id); if(el && el.data) pack.plots[id]={data:el.data, layout:el.layout}; });
   return pack;
 }
+
+function openCurrentInSymbolic(){ try{ readOde(); const model={name:state.model.name||'ODE import', variables:state.model.vars, parameters:Object.keys(state.model.params||{}), rhs:state.model.eqs, numericScope:{...paramValues(), ...Object.fromEntries(state.model.vars.map((v,i)=>[v,state.model.y0[i]||0]))}}; sessionStorage.setItem('foko-symbolic-import', JSON.stringify(model)); window.location.href='symbolic.html?import=session'; }catch(e){ setStatus(actionable(e.message),true); } }
+function openCurrentInSteady(){ try{ readOde(); const steady={name:state.model.name||'ODE steady import', family:'Imported from ODE Lab', narrative:'Imported ODE right-hand sides as f(x,p)=0 equations.', vars:state.model.vars.map((v,i)=>[v,state.model.y0[i]||0]), equations:state.model.eqs, params:paramValues()}; sessionStorage.setItem('foko-steady-import', JSON.stringify(steady)); window.location.href='steady.html?import=session'; }catch(e){ setStatus(actionable(e.message),true); } }
+
 function currentConfig(){ ensurePlot('left'); ensurePlot('right'); return {module:state.module,model:state.model,plots:state.plots}; }
 function copyInstall(){ const text=`# Linux/macOS\npython3 -m venv .venv\nsource .venv/bin/activate\npip install numpy scipy matplotlib casadi pyomo\n\n# Windows PowerShell\npy -m venv .venv\n.\\.venv\\Scripts\\Activate.ps1\npip install numpy scipy matplotlib casadi pyomo`; navigator.clipboard?.writeText(text); setStatus('Install block copied.'); }
 

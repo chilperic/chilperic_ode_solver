@@ -96,6 +96,13 @@ function rk45Step(rhs,t,y,h,params,rtol,atol){
   }
   return { y:y5, err };
 }
+function rhsEvalCount(method, adaptive=false){
+  if (adaptive) return method === 'heun_adaptive' ? 6 : 6;
+  if (method === 'euler') return 1;
+  if (method === 'heun' || method === 'heun_fixed') return 2;
+  if (method === 'rk5' || method === 'rk5_fixed') return 6;
+  return 4;
+}
 function solveJob(cfg){
   const rhs = makeRhs(cfg);
   const t0=Number(cfg.t0), t1=Number(cfg.t1);
@@ -129,7 +136,7 @@ function solveJob(cfg){
         if (++guard > 200000) throw new Error('Step limit reached. Problem may be stiff or unstable. Export Python and use Radau/BDF/LSODA.');
         if (Math.abs(h) > Math.abs(target-t)) h = target-t;
         const st = method === 'heun_adaptive' ? heunAdaptiveStep(rhs,t,y,h,params,rtol,atol) : rk45Step(rhs,t,y,h,params,rtol,atol);
-        functionEvaluations += method === 'heun_adaptive' ? 6 : 6;
+        functionEvaluations += rhsEvalCount(method, true);
         const err = st.err;
         if (err <= 1 || Math.abs(h) < 1e-14) {
           t += h; y = st.y; accepted++; minStep=Math.min(minStep,Math.abs(h)); maxUsed=Math.max(maxUsed,Math.abs(h));
@@ -149,7 +156,7 @@ function solveJob(cfg){
       if (cancelled) return {ok:false,cancelled:true,error:'Cancelled'};
       const h = targetTs[i]-targetTs[i-1];
       y = fixedStep(rhs, method, targetTs[i-1], y, h, params);
-      functionEvaluations += method === 'euler' ? 1 : (method === 'heun' || method === 'heun_fixed') ? 2 : (method === 'rk5' || method === 'rk5_fixed') ? 6 : 4;
+      functionEvaluations += rhsEvalCount(method, false);
       if (!y.every(Number.isFinite) || norm(y)>1e12) throw new Error('Solution diverged. Increase points, reduce t end, or export Python for stiff solvers.');
       accepted++; minStep=Math.min(minStep,Math.abs(h)); maxUsed=Math.max(maxUsed,Math.abs(h));
       pushSample(targetTs[i],y);

@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 
 <html data-theme="aurora" lang="en">
-<head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="PhD fatty-acid metabolism and FADNS research page." name="description"/><title>Fatty-acid metabolism · Research Hub</title><link href="../styles/style.css?v=platform-v11" rel="stylesheet"/></head>
+<head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="PhD fatty-acid metabolism and FADNS research page." name="description"/><title>Fatty-acid metabolism · Research Hub</title><link href="../styles/style.css?v=2.7.4" rel="stylesheet"/><meta content="assets/homepage-preview.webp" property="og:image"/>
+</head>
 <body><div class="app-shell"><header class="topbar">
 <a class="brand" href="../index.html"><img alt="Foko Lab" class="logo" src="../assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav"><a href="../index.html">Home</a>
-<a href="../workbench.html">Workbench Beta</a>
-<a href="../ode.html#workbench">ODE Lab</a>
-<a href="../optimization.html">Optimization Lab</a>
-<a href="../steady.html">Steady-State Lab</a>
-<a href="../stochastic.html">Stochastic Lab</a>
-<a href="../symbolic.html">Symbolic Lab</a>
-<a href="../agent.html">Agent Lab</a>
-<a href="../beauty.html">Math Beauty</a>
-<a href="../examples.html">Model Atlas</a>
-<a class="active" href="../research.html">Research Hub</a>
-<a href="../platform.html">Platform</a>
-<a href="../docs.html">Docs</a>
-<a href="../tutorial.html">Tutorial</a></nav>
+<nav aria-label="Primary navigation" class="topnav public-nav">
+<a href="../index.html">Home</a>
+<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
+<summary class="labs-summary">Workbench</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="../workbench.html" role="menuitem"><b>Main</b></a>
+<a href="../examples.html" role="menuitem"><b>Model Atlas</b></a>
+<a href="../symbolic.html" role="menuitem"><b>Symbolic</b></a>
+<a href="../agent.html" role="menuitem"><b>Agent</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
+<summary class="labs-summary">Legacy</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="../ode.html#workbench" role="menuitem"><b>ODE</b></a>
+<a href="../optimization.html" role="menuitem"><b>Optimization</b></a>
+<a href="../steady.html" role="menuitem"><b>Steady-State</b></a>
+<a href="../stochastic.html" role="menuitem"><b>Stochastic</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
+<summary class="labs-summary">Learn</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="../docs.html" role="menuitem"><b>Docs</b></a>
+<a href="../tutorial.html" role="menuitem"><b>Tutorial</b></a>
+<a href="../platform.html" role="menuitem"><b>Platform</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
+<summary class="labs-summary active">About</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="../research.html" role="menuitem"><b>Research</b></a>
+<a href="../beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
+<a href="../acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
+<a href="../contact.html" role="menuitem"><b>Contact</b></a>
+</div>
+</details>
+</nav>
 </header><main class="doc-page model-atlas research-project-page"><div id="top"></div><nav aria-label="Research project navigation" class="project-nav-bar"><a href="../research.html">← Back to Research Hub</a><a href="photosynthesis.html">Previous project</a><a href="tcell-proliferation.html">Next project</a></nav>
 <section class="card hero-doc atlas-hero project-launch-hero">
 <div class="project-launch-copy"><p class="eyebrow">PhD research · metabolic systems biology</p><h1>Fatty-acid metabolism and de novo synthesis</h1><p class="project-subtitle">Dynamic computational modeling of hepatic lipid regulation</p><p class="research-lead">A two-layer PhD modeling project: qualitative fatty-acid metabolic switching through steady states and bistability, plus a semi-mechanistic FADNS elongation model fitted to fatty-acid time-course data.</p><div class="research-pill-row"><span>ODE systems</span><span>enzyme kinetics</span><span>bistability</span><span>steady states</span><span>FADNS</span><span>parameter fitting</span><span>metabolic disease</span></div></div>
 <figure class="source-derived project-launch-figure"><img alt="Semi-mechanistic fatty-acid de novo synthesis elongation scheme" decoding="async" loading="eager" src="../assets/research/fatty-acid/denovo_scheme.webp"/><figcaption>FADNS graphical abstract: initialization, cyclic elongation, termination and CoA-linked inhibition.</figcaption></figure></section>
-<section class="card project-ownership"><h2>Project ownership</h2><table class="research-matrix"><tbody><tr><td>Lead contributor / project owner</td><td>Chilperic Armel Foko Kuate.</td></tr><tr><td>PhD supervision</td><td>Prof. Dr. Oliver Ebenhöh.</td></tr><tr><td>PhD co-supervision</td><td>Dr. Adélaïde Raguin.</td></tr><tr><td>Main contributions by Chilperic</td><td>Designed and developed the fatty-acid metabolism modeling framework; built the coarse-grained ODE model; derived conditions for multiple steady states and bistability; developed the semi-mechanistic FADNS elongation model; reduced biochemical mechanisms into mass-action modules; integrated acetyl-CoA, malonyl-CoA, NADPH, CoA and C14/C16/C18 fatty-acid production; performed fitting and interpretation against time-course data.</td></tr></tbody></table></section>
+<section class="card project-ownership"><h2>Project ownership</h2><table class="research-matrix"><tbody><tr><td>Lead contributor / project owner</td><td>Chilperic Armel Foko Kuate.</td></tr><tr><td>PhD supervision</td><td>Prof. Dr. Oliver Ebenhöh, Dr. Adélaïde Raguin and Prof. Dr. Barbara Bakker.</td></tr><tr><td>Main contributions by Chilperic</td><td>Designed and developed the fatty-acid metabolism modeling framework; built the coarse-grained ODE model; derived conditions for multiple steady states and bistability; developed the semi-mechanistic FADNS elongation model; reduced biochemical mechanisms into mass-action modules; integrated acetyl-CoA, malonyl-CoA, NADPH, CoA and C14/C16/C18 fatty-acid production; performed fitting and interpretation against time-course data.</td></tr></tbody></table></section>
 <section class="card simulation-callout"><div><h2>Open reduced simulations</h2><p>The PhD-derived models can be communicated more openly than the unpublished plant work, but the browser versions are still reduced teaching/portfolio models.</p></div><div class="callout-actions"><a class="open-link workbench-link" href="../workbench.html?model=fa-metabolism">Open FA metabolism model</a><a class="open-link workbench-link" href="../workbench.html?model=fadns-coa">Open FADNS / CoA model</a><a class="open-link workbench-link" href="../workbench.html?model=fadns-coa-calibration-opt">Open FADNS CoA calibration optimization</a></div></section>
 <section class="card"><h2>Research question / Scientific problem</h2><p class="research-quote">How can the liver switch between fatty-acid synthesis and degradation, and what mechanistic model is missing for fatty-acid de novo synthesis?</p><p>The clinical background is inborn errors of metabolism and fatty-acid oxidation disorders. Existing modeling was biased toward degradation and β-oxidation, while synthesis-side dynamics were underdeveloped. The project therefore had to build both biological knowledge and mathematical structure: first by reviewing enzyme kinetics, then by constructing analyzable models.</p></section>
 <section class="card"><h2>What I built</h2><p>The project combines a qualitative metabolic switch model and a fatty-acid synthase / FADNS model. This is the core fatty-acid synthase modeling contribution.</p></section><section class="card"><h2>Two-layer contribution</h2><p class="figure-policy"><b>Scientific figures.</b> These are source-derived/project figures. The simplified workflow is treated as text, not as the main scientific scheme.</p><div class="research-split"><div><h3>1. Coarse-grained FA metabolism</h3><p>A minimal open ODE system with acetyl-CoA, malonyl-CoA, fatty acids and triglycerides. Its purpose was qualitative: derive conditions for multiple steady states and identify how liver FA use can support a switch between synthesis-dominant and degradation-dominant regimes.</p></div><figure class="source-derived research-figure"><img alt="Coarse-grained fatty-acid metabolism model with synthesis, degradation and inhibition flows" src="../assets/research/fatty-acid/coarse_grained.webp"/><figcaption>Qualitative dynamical-system layer: steady states and bistability.</figcaption></figure></div><div class="research-split"><figure class="source-derived research-figure"><img alt="Semi-mechanistic FADNS elongation cycle with CoA inhibition" src="../assets/research/fatty-acid/denovo_scheme.webp"/><figcaption>Semi-mechanistic layer: reduced FASN elongation cycle and product formation.</figcaption></figure><div><h3>2. Semi-mechanistic FADNS</h3><p>A tractable mass-action model for the elongation part of fatty-acid de novo synthesis. The model connects acetyl-CoA, malonyl-CoA, NADPH and CoA logic to C14:0, C16:0 and C18:0 product trajectories.</p></div></div></section>
@@ -32,4 +57,4 @@
 <section class="card"><h2>Results narrative</h2><p>The coarse model provided a theoretical explanation for metabolic flexibility: fatty-acid metabolism can admit multiple steady-state regimes corresponding to synthesis and degradation. The FADNS model provided a synthesis-side building block by representing elongation with a reduced but interpretable reaction structure. Fitting exposed both what the model can explain and where missing kinetic information limits predictive claims.</p></section>
 <section class="card"><h2>What this sells</h2><p>This project sells mechanistic systems biology, dynamic modeling, qualitative analysis, and data-driven fitting in one PhD arc.</p></section><section class="card"><h2>What this project demonstrates about my profile</h2><table class="research-matrix"><tbody><tr><td>Mechanistic systems biology</td><td>Biochemical pathways were decomposed into variables, reactions, rate laws and interpretable parameters.</td></tr><tr><td>Dynamical-systems analysis</td><td>The project used steady-state and stability reasoning rather than only numerical simulation.</td></tr><tr><td>Data-driven modeling</td><td>The semi-mechanistic FADNS model was fitted to fatty-acid time-course data.</td></tr><tr><td>Scientific judgment</td><td>The thesis clearly separates qualitative insight, semi-mechanistic fitting and limitations from missing kinetic parameters.</td></tr></tbody></table></section>
 <section class="card"><h2>Limitations</h2><ul><li>Some kinetic parameters for animal fatty-acid synthesis remain sparse or inconsistent in the literature.</li><li>The coarse-grained model is designed to explain switching logic, not to reproduce the full hepatic lipid network.</li><li>The FADNS model abstracts a complex multifunctional enzyme cycle into tractable reaction classes.</li><li>The public browser models are reduced communication models, not a replacement for the PhD code and analysis notebooks.</li></ul></section>
-<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="photosynthesis.html">Previous</a><a href="tcell-proliferation.html">Next</a><a href="#top">Back to top ↑</a></section></main></div></body></html>
+<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="photosynthesis.html">Previous</a><a href="tcell-proliferation.html">Next</a><a href="#top">Back to top ↑</a></section></main></div><script defer="" src="../src/navigation.js?v=41"></script></body></html>

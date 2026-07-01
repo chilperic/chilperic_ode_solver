@@ -1,31 +1,35 @@
 from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ['index.html','workbench.html','ode.html','optimization.html','steady.html','stochastic.html','examples.html','research.html','platform.html','docs.html','tutorial.html','symbolic.html','agent.html','beauty.html']
-EXPECTED = ['Home','Workbench Beta','ODE Lab','Optimization Lab','Steady-State Lab','Stochastic Lab','Symbolic Lab','Math Beauty','Model Atlas','Research Hub','Platform','Docs','Tutorial']
+PAGES = ['index.html','workbench.html','ode.html','optimization.html','steady.html','stochastic.html','symbolic.html','agent.html','beauty.html','examples.html','research.html','platform.html','docs.html','tutorial.html','acknowledgement.html','contact.html']
+WORKBENCH_LINKS = ['Main','Model Atlas','Symbolic','Agent']
+LEGACY_LINKS = ['ODE','Optimization','Steady-State','Stochastic']
+LEARN_LINKS = ['Docs','Tutorial','Platform']
+ABOUT_LINKS = ['Research','Mathematical Beauty','Acknowledgement','Contact']
 
-def labels(page):
-    soup = BeautifulSoup((ROOT/page).read_text(encoding='utf-8'), 'html.parser')
-    nav = soup.find('nav', attrs={'aria-label':'Primary navigation'})
-    assert nav is not None, page
-    return [a.get_text(' ', strip=True) for a in nav.find_all('a')]
+def soup(page):
+    return BeautifulSoup((ROOT/page).read_text(encoding='utf-8'),'html.parser')
 
-def test_primary_navigation_exposes_symbolic_and_beauty_everywhere():
+def labels(s, cls):
+    return [a.find('b').get_text(strip=True) for a in s.select(f'.{cls} .labs-menu-panel a')]
+
+def test_clean_header_and_dropdown_available_on_all_pages():
     for page in PAGES:
-        labs = labels(page)
-        for expected in EXPECTED:
-            assert expected in labs, (page, expected, labs)
-        assert labs.count('Symbolic Lab') == 1, page
-        assert labs.count('Math Beauty') == 1, page
+        s=soup(page)
+        top=[a.get_text(strip=True) for a in s.select('.topnav > a')]
+        assert top == ['Home'], page
+        assert s.select_one('.topnav details.workbench-menu summary').get_text(strip=True) == 'Workbench', page
+        assert s.select_one('.topnav details.legacy-menu summary').get_text(strip=True) == 'Legacy', page
+        assert s.select_one('.topnav details.learn-menu summary').get_text(strip=True) == 'Learn', page
+        assert s.select_one('.topnav details.about-menu summary').get_text(strip=True) == 'About', page
+        assert labels(s, 'workbench-menu') == WORKBENCH_LINKS
+        assert labels(s, 'legacy-menu') == LEGACY_LINKS
+        assert labels(s, 'learn-menu') == LEARN_LINKS
+        assert labels(s, 'about-menu') == ABOUT_LINKS
 
-def test_primary_navigation_has_no_duplicate_labels():
+def test_no_old_noisy_nav_terms_in_header():
     for page in PAGES:
-        labs = labels(page)
-        assert len(labs) == len(set(labs)), (page, labs)
-
-def test_symbolic_and_beauty_pages_are_reachable_from_non_home_labs():
-    for page in ['workbench.html','ode.html','optimization.html','steady.html','stochastic.html','examples.html','research.html','docs.html','tutorial.html']:
-        html = (ROOT/page).read_text(encoding='utf-8')
-        assert 'href="symbolic.html"' in html, page
-        assert 'href="beauty.html"' in html, page
-        assert 'href="agent.html"' in html, page
+        text=' '.join(soup(page).select_one('.topnav').stripped_strings)
+        assert 'Explore / portfolio' not in text
+        assert 'Specialist labs' not in text
+        assert 'WorkbenchWorkbench' not in text

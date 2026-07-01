@@ -7,56 +7,84 @@
 <meta content="Foko Lab Steady-State / Algebraic Lab for f(x,p)=0 systems, equilibria, residuals, stability, and continuation." name="description"/>
 <title>Steady-State / Algebraic Lab · Foko Lab</title>
 <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link as="script" crossorigin="" href="https://cdn.plot.ly/plotly-2.35.2.min.js" rel="preload"/>
 <link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
 <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="styles/style.css?v=platform-v10" rel="stylesheet"/>
+<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+<meta content="assets/homepage-preview.webp" property="og:image"/>
 </head>
 <body data-lab="steady">
 <div class="app-shell">
 <header class="topbar">
 <a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
-<a href="workbench.html">Workbench Beta</a>
-<a href="ode.html#workbench">ODE Lab</a>
-<a href="optimization.html">Optimization Lab</a>
-<a class="active" href="steady.html">Steady-State Lab</a>
-<a href="stochastic.html">Stochastic Lab</a>
-<a href="symbolic.html">Symbolic Lab</a>
-<a href="agent.html">Agent Lab</a>
-<a href="beauty.html">Math Beauty</a>
-<a href="examples.html">Model Atlas</a>
-<a href="research.html">Research Hub</a>
-<a href="platform.html">Platform</a>
-<a href="docs.html">Docs</a>
-<a href="tutorial.html">Tutorial</a></nav>
+<nav aria-label="Primary navigation" class="topnav public-nav">
+<a href="index.html">Home</a>
+<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
+<summary class="labs-summary">Workbench</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="workbench.html" role="menuitem"><b>Main</b></a>
+<a href="examples.html" role="menuitem"><b>Model Atlas</b></a>
+<a href="symbolic.html" role="menuitem"><b>Symbolic</b></a>
+<a href="agent.html" role="menuitem"><b>Agent</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
+<summary class="labs-summary active">Legacy</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="ode.html#workbench" role="menuitem"><b>ODE</b></a>
+<a href="optimization.html" role="menuitem"><b>Optimization</b></a>
+<a href="steady.html" role="menuitem"><b>Steady-State</b></a>
+<a href="stochastic.html" role="menuitem"><b>Stochastic</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
+<summary class="labs-summary">Learn</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="docs.html" role="menuitem"><b>Docs</b></a>
+<a href="tutorial.html" role="menuitem"><b>Tutorial</b></a>
+<a href="platform.html" role="menuitem"><b>Platform</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
+<summary class="labs-summary">About</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="research.html" role="menuitem"><b>Research</b></a>
+<a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
+<a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
+<a href="contact.html" role="menuitem"><b>Contact</b></a>
+</div>
+</details>
+</nav>
 <div class="top-actions"><label class="theme-picker"><span class="theme-icon">☼</span><select class="theme-select" id="themeBtn"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label><button class="avatar" id="resetSteady" title="Reset current model" type="button">↻</button></div>
 </header>
 <main class="layout lab-mirror-layout" id="workbench">
-<aside aria-label="Steady-state workflow" class="side-nav"><button class="nav-item active" type="button"><span>⊙</span><b>Models</b></button><button class="nav-item" type="button"><span>f=0</span><b>Equations</b></button><button class="nav-item" type="button"><span>λ</span><b>Continuation</b></button><button class="nav-item" type="button"><span>⇩</span><b>Export</b></button><button class="collapse" id="collapseSidebar" type="button">‹</button></aside>
+<aside aria-label="Steady-state workflow" class="side-nav"><button class="nav-item active" data-jump="steadySelect" type="button"><span>⊙</span><b>Models</b></button><button class="nav-item" data-jump="steadyEquations" type="button"><span>f=0</span><b>Equations</b></button><button class="nav-item" data-jump="steadyContParam" type="button"><span>λ</span><b>Continuation</b></button><button class="nav-item" data-jump="exportsBlock" type="button"><span>⇩</span><b>Export</b></button><button class="collapse" id="collapseSidebar" type="button">‹</button></aside>
 <aside aria-label="Steady-state controls" class="work-panel controls">
 <section class="intro-card hero-with-mark"><div><p class="eyebrow mini">Algebraic systems · equilibria · continuation</p><b>Steady-State / Algebraic Lab</b><p class="note compact-note">Solve f(x,p)=0 systems, inspect residuals and stability, then run continuation while plots stay visible.</p></div><img alt="Steady-State Lab mark" class="lab-mark" src="assets/lab-logos/steady-state-lab.webp"/></section>
 <section class="actionbar"><button class="primary run-button" id="solveSteady" type="button">▶ Solve</button><button class="primary sweep-button" id="runContinuation" type="button">↻ Continuation</button><button class="ghost" id="resetSteady2" type="button">Reset</button><label class="ghost file-label"><input accept="application/json,.json" hidden="" id="steadyImport" type="file"/>Import JSON</label><div class="progress" id="steadyProgressWrap"><div id="steadyProgress"></div></div><div class="status" id="steadyStatus">Ready.</div></section>
 <section class="examples-section"><div class="section-title flat"><h2>Examples</h2><button class="secondary subtle" id="loadSteady" type="button">Load</button></div><select aria-label="Steady-state example" id="steadySelect"></select><div class="model-deck" id="steadyDeck"></div><p class="narrative" id="steadyNarrative">Select a model.</p></section>
 <section class="additional-examples card"><details><summary>Additional examples</summary><div class="additional-example-grid" id="steadyAdditional"></div></details></section>
 <section class="editor-stack module-block">
-<article class="card"><div class="card-head"><h2 id="steadyTitle">Algebraic model</h2><button class="icon-btn" id="addSteadyVar" type="button">＋ variable</button></div><p class="eyebrow mini" id="steadyFamily">Steady state</p><div class="small-title">Variables and initial guess</div><div class="clean-table compact-table" id="steadyVars"></div><label><span>Equations f(x,p)=0, one per line</span><textarea id="steadyEquations" rows="6"></textarea>
+<article class="card"><div class="card-head"><h2 id="steadyTitle">Algebraic model</h2><button class="icon-btn" id="addSteadyVar" type="button">＋ variable</button></div><p class="eyebrow mini" id="steadyFamily">Steady state</p><div class="small-title">Variables and initial guess</div><div class="clean-table compact-table" id="steadyVars"></div><label><span>Equations f(x,p)=0, one per line</span><textarea id="steadyEquations" rows="6"></textarea></label>
 <section class="card model-authoring-standard" id="modelAuthoringStandard">
 <div class="card-head"><h2>Custom steady-state model and method choice</h2></div>
 <p class="note">This lab accepts user-defined models. The selected method controls how the browser interprets the model; exports remain the route for heavy or validated computation.</p>
 <table class="clean-table compact-table"><tbody><tr><td><b>Own model</b></td><td>Add variables, parameters and equations f(x,p)=0; import/export JSON.</td></tr><tr><td><b>Methods</b></td><td>Newton-style solve, continuation branch and local stability/eigenvalue diagnostics.</td></tr><tr><td><b>Approach</b></td><td>Equilibrium solving, continuation, bifurcation sketch and algebraic model checking.</td></tr></tbody></table>
 </section>
-</label><div class="math-preview inline-math" id="steadyPreview">Equation preview.</div><div class="card-head"><h2>Parameters</h2><button class="icon-btn" id="addSteadyParam" type="button">＋ parameter</button></div><div class="clean-table compact-table" id="steadyParams"></div></article>
+<div class="math-preview inline-math" id="steadyPreview">Equation preview.</div><div class="card-head"><h2>Parameters</h2><button class="icon-btn" id="addSteadyParam" type="button">＋ parameter</button></div><div class="clean-table compact-table" id="steadyParams"></div></article>
 <article class="card advanced-card"><details open=""><summary>Continuation and Newton settings</summary><div class="advanced-grid"><label><span>continuation parameter</span><select id="steadyContParam"></select></label><label><span>from</span><input id="steadyContMin" step="any" type="number" value="0"/></label><label><span>to</span><input id="steadyContMax" step="any" type="number" value="4"/></label><label><span>points</span><input id="steadyContN" max="100" min="3" type="number" value="30"/></label><label><span>max iterations</span><input id="steadyMaxIter" type="number" value="80"/></label><label><span>tolerance</span><input id="steadyTol" type="text" value="1e-9"/></label><label><span>damping</span><input id="steadyDamping" type="text" value="0.8"/></label></div></details></article>
 </section>
 </aside>
 <section aria-label="Steady-state results" class="workspace">
 <section class="results-card"><div class="status-strip"><div class="status-ok"><span>●</span><b id="steadyTopStatus">Ready</b></div><div><span>Runtime</span><b id="steadyRuntime">—</b></div><div><span>Iterations</span><b id="steadyIterations">—</b></div><div><span>Residual</span><b id="steadyResidual">—</b></div></div><div class="result-head"><div class="tabs" id="resultTabs"><button class="tab active" data-panel="plotsPanel" type="button">Plots</button><button class="tab" data-panel="diagnosticsPanel" type="button">Diagnostics</button></div></div><div class="plot-toolbar-v2"><label><span>Left plot</span><select id="leftPlotType"><option value="equilibrium">Equilibrium values</option><option value="residual">Newton residual</option><option value="continuation">Continuation branch</option><option value="stability">Stability</option></select></label><label><span>Right plot</span><select id="rightPlotType"><option value="residual">Newton residual</option><option value="equilibrium">Equilibrium values</option><option value="continuation-residual">Continuation residual</option><option value="jacobian">Jacobian heatmap</option></select></label><button class="secondary" id="exportSteadyPng" type="button">PNG</button><button class="secondary" id="exportSteadySvg" type="button">SVG</button></div><div class="tab-panel active" id="plotsPanel"><div class="chart-grid"><article class="chart-card"><div class="chart-title"><h3>Primary plot</h3></div><div class="plot" id="leftPlot"></div></article><article class="chart-card"><div class="chart-title"><h3>Secondary plot</h3></div><div class="plot" id="rightPlot"></div></article></div><div class="metrics-grid"><div class="metric-card"><small>Converged</small><b id="steadyMetricConverged">—</b><em>Newton status</em></div><div class="metric-card"><small>Stability</small><b id="steadyMetricStability">—</b><em>Jacobian</em></div><div class="metric-card"><small>Variables</small><b id="steadyMetricVars">—</b><em>unknowns</em></div><div class="metric-card"><small>Alternatives</small><b id="steadyMetricAlt">—</b><em>nearby roots</em></div></div></div><div class="tab-panel" id="diagnosticsPanel"><div class="diagnostics" id="steadyDiagnostics">Solve a model to see residuals, stability, and equilibrium values.</div></div></section>
-<section class="exports-card" id="exportsBlock"><div class="export-row"><button class="secondary" id="exportSteadyWide" type="button">Wide CSV</button><button class="secondary" id="exportSteadyLong" type="button">Long CSV</button><button class="secondary" id="exportSteadyJson" type="button">Data JSON</button><button class="secondary" id="exportSteadyPlotJson" type="button">Plotly JSON</button><button class="secondary" id="exportSteadyModel" type="button">Model JSON</button></div><p class="note">Steady-state exports include the model, equilibrium, Newton history, stability classification, and continuation branch.</p></section>
+<section class="exports-card" id="exportsBlock"><div class="export-row"><button class="secondary" id="exportSteadyWide" type="button">Wide CSV</button><button class="secondary" id="exportSteadyLong" type="button">Long CSV</button><button class="secondary" id="exportSteadyJson" type="button">Data JSON</button><button class="secondary" id="exportSteadyPlotJson" type="button">Plotly JSON</button><button class="secondary" id="exportSteadyModel" type="button">Model JSON</button><button class="secondary" id="exportSteadyPython" type="button">Python root/fsolve</button></div><p class="note">Steady-state exports include the model, equilibrium, Newton history, stability classification, and continuation branch.</p></section>
 </section>
 </main>
 </div>
 <script src="src/steady-state-lab.js?v=2.7.4"></script>
-</body>
+<script src="src/model-validator.js?v=2.7.4"></script>
+<script src="src/model-session.js?v=2.7.4"></script>
+<script defer="" src="src/navigation.js?v=41"></script></body>
 </html>

@@ -38,7 +38,7 @@ def test_all_specialist_labs_expose_custom_model_and_method_standard():
 
 def test_docs_tutorial_cover_all_labs_authoring_and_agent_approach_comparison():
     docs=text('docs.html'); tutorial=text('tutorial.html')
-    for token in ['All labs model-authoring standard','ODE Lab','Optimization Lab','Steady-State Lab','Stochastic Lab','Symbolic Lab','Agent Lab','continuous vs discrete time']:
+    for token in ['Core workflow','ODE Lab','Optimization Lab','Steady-State Lab','Stochastic Lab','Symbolic Lab','Agent Lab']:
         assert token in docs
-    for token in ['All labs custom model route','Rule-Based Decision Making','State-Driven / Statecharts','Adaptive & Learning Agents','Graph / Network-Based Approach','Continuous vs. Discrete Time']:
+    for token in ['Equation model','Symbolic route','Agent route','Workbench route','Failure checks']:
         assert token in tutorial

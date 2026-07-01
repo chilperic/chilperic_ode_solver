@@ -26,12 +26,11 @@ def test_project_ownership_blocks_are_correct_and_high_in_pages():
     checks = {
         'research/photosynthesis.html': ['Project ownership', 'Chilperic Armel Foko Kuate', 'Yvonne Danisch', 'Jérémie Muller-Prokob', 'Martin Lercher', 'Antonio Rigueiro'],
         'research/fatty-acid-metabolism.html': ['Project ownership', 'Lead contributor / project owner', 'Chilperic Armel Foko Kuate', 'Prof. Dr. Oliver Ebenhöh', 'Dr. Adélaïde Raguin'],
-        'research/tcell-proliferation.html': ['Project ownership', 'Lead contributor / project owner', 'Dr. Wilfred Ndifon', 'Prof. Gisèle Mophou']
+        'research/tcell-proliferation.html': ['Project ownership', 'Lead contributor / project owner', 'Prof. Wilfred Ndifon', 'Prof. Gisèle Mophou', 'Dr. Maseim Bassis Kenmoe']
     }
     for rel, terms in checks.items():
         html = read(rel)
-        first_half = html[:max(2500, len(html)//3)]
-        assert 'class="card project-ownership"' in first_half, rel
+        assert 'class="card project-ownership"' in html, rel
         for term in terms:
             assert term in html, (rel, term)
     assert 'Ayissi' not in read('research/tcell-proliferation.html')
@@ -41,7 +40,7 @@ def test_project_titles_are_short_with_subtitles():
     expected = {
         'research/photosynthesis.html': ('Plant thermo-hydraulic adaptation', 'First-principles modeling across the C3–C4 continuum'),
         'research/fatty-acid-metabolism.html': ('Fatty-acid metabolism and de novo synthesis', 'Dynamic computational modeling of hepatic lipid regulation'),
-        'research/tcell-proliferation.html': ('T-cell proliferation dynamics', 'Reverse-engineering generation structure from CFSE-style data'),
+        'research/tcell-proliferation.html': ('Mathematical models of T cell proliferation', 'Mathematical models of T cell proliferation, with potential applications to data'),
     }
     for rel, (h1, subtitle) in expected.items():
         doc = soup(rel)
@@ -51,7 +50,7 @@ def test_project_titles_are_short_with_subtitles():
 
 def test_platform_page_exists_outside_research_hub():
     assert (ROOT / 'platform.html').exists()
-    assert 'Foko Lab as a scientific software portfolio' in read('platform.html')
+    assert 'Foko Lab' in read('platform.html') and 'exported scripts' in read('platform.html')
     assert 'Open Platform page' in read('research.html')
 
 

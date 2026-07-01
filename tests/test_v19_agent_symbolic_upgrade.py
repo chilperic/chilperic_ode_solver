@@ -55,8 +55,8 @@ def test_symbolic_js_has_timecourse_root_scan_sweep_and_vector_field():
 def test_docs_and_tutorial_explain_v19_controls_without_overclaiming():
     docs = text('docs.html')
     tutorial = text('tutorial.html')
-    for term in ['custom local JavaScript rule', 'cell neighbors counts params rand x y and t', 'Parameter sweep', 'Plot standard']:
+    for term in ['agent-rule-worker.js', 'worker timeout', 'Plot standard', 'Custom models']:
         assert term in docs
-    for term in ['custom local rule', 'Rule definition', 'Symbolic plot blank', 'Agent result unclear']:
+    for term in ['Symbolic route', 'Agent route', 'Symbolic plot blank', 'Agent result unclear']:
         assert term in tutorial
     assert 'not a full in-browser CAS' in read('symbolic.html')

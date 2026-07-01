@@ -431,3 +431,11 @@ body[data-lab="model-workbench"] .mw-palette-preview i{
 @media(max-width:620px){
   body[data-lab="model-workbench"] .mw-palette-editor-grid{grid-template-columns:1fr;}
 }
+
+
+/* v41 Workbench suite tabs */
+body[data-lab="model-workbench"] .mw-suite-tabs{background:#fff;border:1px solid var(--mw-line);border-radius:16px;box-shadow:0 10px 24px rgba(19,35,61,.06);padding:8px;display:flex;gap:8px;flex-wrap:wrap;}
+body[data-lab="model-workbench"] .mw-suite-tabs a{display:inline-flex;align-items:center;min-height:34px;padding:0 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-weight:900;color:var(--mw-ink);}
+body[data-lab="model-workbench"] .mw-suite-tabs a:hover{background:#f1f6fb;border-color:var(--mw-line);color:var(--mw-accent);}
+body[data-lab="model-workbench"] .mw-suite-tabs a.active{background:linear-gradient(135deg,#007d87,#0c80d6);color:#fff;border-color:transparent;}
+@media (max-width:760px){body[data-lab="model-workbench"] .mw-suite-tabs{overflow-x:auto;flex-wrap:nowrap}body[data-lab="model-workbench"] .mw-suite-tabs a{white-space:nowrap}}

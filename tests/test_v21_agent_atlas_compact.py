@@ -36,6 +36,6 @@ def test_docs_and_platform_reflect_agent_atlas_compact_execution_boundary():
     docs = text('docs.html')
     tutorial = text('tutorial.html')
     platform = text('platform.html')
-    for token in ['Model Atlas', 'compact dropdown selectors', 'Agent Model Atlas']:
+    for token in ['Model Atlas', 'Agent Lab', 'exported scripts']:
         assert token in docs or token in tutorial or token in platform
-    assert 'individual-based and network models' in platform
+    assert 'Foko Lab' in platform and 'exported scripts' in platform

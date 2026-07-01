@@ -7,28 +7,54 @@
 <meta content="Foko Lab Stochastic Lab: browser-side stochastic processes, Gillespie CTMC models, branching processes, random walks, SDE examples, diagnostics, plots, and reproducible exports." name="description"/>
 <title>Stochastic Lab · Foko Lab</title>
 <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link as="script" crossorigin="" href="https://cdn.plot.ly/plotly-2.35.2.min.js" rel="preload"/>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="styles/style.css?v=platform-v10" rel="stylesheet"/>
+<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+<meta content="assets/homepage-preview.webp" property="og:image"/>
 </head>
 <body data-lab="stochastic">
 <div class="app-shell stochastic-page lab-page">
 <header class="topbar">
 <a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
-<a href="workbench.html">Workbench Beta</a>
-<a href="ode.html#workbench">ODE Lab</a>
-<a href="optimization.html">Optimization Lab</a>
-<a href="steady.html">Steady-State Lab</a>
-<a class="active" href="stochastic.html">Stochastic Lab</a>
-<a href="symbolic.html">Symbolic Lab</a>
-<a href="agent.html">Agent Lab</a>
-<a href="beauty.html">Math Beauty</a>
-<a href="examples.html">Model Atlas</a>
-<a href="research.html">Research Hub</a>
-<a href="platform.html">Platform</a>
-<a href="docs.html">Docs</a>
-<a href="tutorial.html">Tutorial</a></nav>
+<nav aria-label="Primary navigation" class="topnav public-nav">
+<a href="index.html">Home</a>
+<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
+<summary class="labs-summary">Workbench</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="workbench.html" role="menuitem"><b>Main</b></a>
+<a href="examples.html" role="menuitem"><b>Model Atlas</b></a>
+<a href="symbolic.html" role="menuitem"><b>Symbolic</b></a>
+<a href="agent.html" role="menuitem"><b>Agent</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
+<summary class="labs-summary active">Legacy</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="ode.html#workbench" role="menuitem"><b>ODE</b></a>
+<a href="optimization.html" role="menuitem"><b>Optimization</b></a>
+<a href="steady.html" role="menuitem"><b>Steady-State</b></a>
+<a href="stochastic.html" role="menuitem"><b>Stochastic</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
+<summary class="labs-summary">Learn</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="docs.html" role="menuitem"><b>Docs</b></a>
+<a href="tutorial.html" role="menuitem"><b>Tutorial</b></a>
+<a href="platform.html" role="menuitem"><b>Platform</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
+<summary class="labs-summary">About</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="research.html" role="menuitem"><b>Research</b></a>
+<a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
+<a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
+<a href="contact.html" role="menuitem"><b>Contact</b></a>
+</div>
+</details>
+</nav>
 <div class="top-actions">
 <label aria-label="Theme" class="theme-picker"><span class="theme-icon">☼</span><select aria-label="Theme" class="theme-select" id="themeBtn"><option value="aurora">Aurora</option><option value="clarity">Clarity</option><option value="ocean">Ocean</option><option value="lavender">Lavender</option><option value="midnight">Midnight</option><option value="slate">Slate</option><option value="paper">Paper</option><option value="forest">Forest</option></select></label>
 <button class="avatar" id="resetModelTop" title="Reset current stochastic template" type="button">↻</button>
@@ -120,5 +146,5 @@
 </div>
 <script src="src/stochastic/stochastic-lab.js?v=2.7.4"></script>
 <script>document.getElementById('resetModelTop')?.addEventListener('click',()=>document.getElementById('resetModel')?.click());document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'})));document.getElementById('collapseSidebar')?.addEventListener('click',()=>document.getElementById('workbench')?.classList.toggle('sidebar-collapsed'));</script>
-</body>
+<script defer="" src="src/navigation.js?v=41"></script></body>
 </html>

@@ -2,35 +2,66 @@
 
 <html data-theme="aurora" lang="en">
 <head>
+<link as="script" crossorigin="" href="https://cdn.plot.ly/plotly-2.35.2.min.js" rel="preload"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="Agent Lab runs individual-based models with compact selectors, visible parameters, custom rules and Atlas-based documentation." name="description"/>
 <title>Agent Lab · Foko Lab</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=v24-final-audit"></script>
-<link href="styles/style.css?v=v24-final-audit" rel="stylesheet"/>
+<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
 <link href="styles/agent-lab.css?v=v24-final-audit" rel="stylesheet"/>
 <!-- Adaptive & Learning Agents -->
+<meta content="assets/homepage-preview.webp" property="og:image"/>
 </head>
 <body data-lab="agent">
 <div class="app-shell">
 <header class="topbar">
 <a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav"><a href="index.html">Home</a>
-<a href="workbench.html">Workbench Beta</a>
-<a href="ode.html#workbench">ODE Lab</a>
-<a href="optimization.html">Optimization Lab</a>
-<a href="steady.html">Steady-State Lab</a>
-<a href="stochastic.html">Stochastic Lab</a>
-<a href="symbolic.html">Symbolic Lab</a>
-<a class="active" href="agent.html">Agent Lab</a>
-<a href="beauty.html">Math Beauty</a>
-<a href="examples.html">Model Atlas</a>
-<a href="research.html">Research Hub</a>
-<a href="platform.html">Platform</a>
-<a href="docs.html">Docs</a>
-<a href="tutorial.html">Tutorial</a></nav>
+<nav aria-label="Primary navigation" class="topnav public-nav">
+<a href="index.html">Home</a>
+<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
+<summary class="labs-summary active">Workbench</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="workbench.html" role="menuitem"><b>Main</b></a>
+<a href="examples.html" role="menuitem"><b>Model Atlas</b></a>
+<a href="symbolic.html" role="menuitem"><b>Symbolic</b></a>
+<a href="agent.html" role="menuitem"><b>Agent</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
+<summary class="labs-summary">Legacy</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="ode.html#workbench" role="menuitem"><b>ODE</b></a>
+<a href="optimization.html" role="menuitem"><b>Optimization</b></a>
+<a href="steady.html" role="menuitem"><b>Steady-State</b></a>
+<a href="stochastic.html" role="menuitem"><b>Stochastic</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
+<summary class="labs-summary">Learn</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="docs.html" role="menuitem"><b>Docs</b></a>
+<a href="tutorial.html" role="menuitem"><b>Tutorial</b></a>
+<a href="platform.html" role="menuitem"><b>Platform</b></a>
+</div>
+</details>
+<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
+<summary class="labs-summary">About</summary>
+<div class="labs-menu-panel" role="menu">
+<a href="research.html" role="menuitem"><b>Research</b></a>
+<a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
+<a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
+<a href="contact.html" role="menuitem"><b>Contact</b></a>
+</div>
+</details>
+</nav>
 </header>
-<main class="agent-page agent-page-compact">
+<main class="agent-page agent-page-compact"><nav aria-label="Workbench suite" class="workbench-suite-tabs">
+<a href="workbench.html">Model Bench</a>
+<a href="symbolic.html">Symbolic</a>
+<a aria-current="page" class="active" href="agent.html">Agent</a>
+<a href="examples.html">Atlas</a>
+</nav>
 <section class="agent-hero compact-hero">
 <div>
 <p class="agent-eyebrow">INDIVIDUAL RULES → EMERGENT DYNAMICS</p>
@@ -137,5 +168,7 @@ return 0;</textarea>
 </main>
 </div>
 <script src="src/agent-lab.js?v=v24-final-audit"></script>
-</body>
+<script src="src/model-validator.js?v=2.7.4"></script>
+<script src="src/model-session.js?v=2.7.4"></script>
+<script defer="" src="src/navigation.js?v=41"></script></body>
 </html>

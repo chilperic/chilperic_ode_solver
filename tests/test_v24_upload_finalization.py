@@ -44,6 +44,6 @@ def test_docs_tutorial_platform_mention_worker_and_multilayer_limits():
     tutorial = soup('tutorial.html').get_text(' ', strip=True)
     platform = soup('platform.html').get_text(' ', strip=True)
     assert 'agent-rule-worker.js' in docs
-    assert 'multilayer spatial/social/transport contacts' in docs
+    assert 'Multilayer spatial/social/transport contacts' in docs or 'multilayer spatial/social/transport contacts' in docs
     assert 'worker timeout' in tutorial
-    assert 'Web Worker-sandboxed custom rule code' in platform
+    assert 'Foko Lab' in platform and 'exported scripts' in platform

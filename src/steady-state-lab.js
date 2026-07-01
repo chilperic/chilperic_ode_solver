@@ -26,7 +26,7 @@ function init(){
   setTheme(localStorage.getItem('chilperic-theme') || 'aurora');
   $('themeBtn')?.addEventListener('change', e => setTheme(e.target.value));
   initTabs(); bindSideNav(); renderLibrary();
-  loadPreset(new URLSearchParams(location.search).get('example') || currentName, false);
+  const params=new URLSearchParams(location.search); if(params.get('import')==='session' && sessionStorage.getItem('foko-steady-import')){ try{ const obj=JSON.parse(sessionStorage.getItem('foko-steady-import')); model={family:obj.family||'Imported', narrative:obj.narrative||'Imported steady-state model.', vars:obj.vars, equations:obj.equations, params:obj.params||{}}; currentName=obj.name||'Imported from ODE'; renderLibrary(); renderEditor(); clearResults(); }catch(_e){ loadPreset(params.get('example') || currentName, false); } } else { loadPreset(params.get('example') || currentName, false); }
   wire();
 }
 function setTheme(t){ document.documentElement.dataset.theme=t; if($('themeBtn')) $('themeBtn').value=t; localStorage.setItem('chilperic-theme',t); setTimeout(resizePlots,60); }
@@ -48,6 +48,7 @@ function wire(){
   $('exportSteadyJson')?.addEventListener('click', () => downloadText('foko_lab_steady_data.json', JSON.stringify(dataExport(),null,2), 'application/json'));
   $('exportSteadyPlotJson')?.addEventListener('click', () => downloadText('foko_lab_steady_plotly.json', JSON.stringify(plotlyExport(),null,2), 'application/json'));
   $('exportSteadyModel')?.addEventListener('click', () => downloadText('foko_lab_steady_model.json', JSON.stringify(model,null,2), 'application/json'));
+  $('exportSteadyPython')?.addEventListener('click', () => downloadText('foko_lab_steady_root.py', pythonExport(), 'text/x-python'));
   $('exportSteadyPng')?.addEventListener('click', () => safeImage('leftPlot','png'));
   $('exportSteadySvg')?.addEventListener('click', () => safeImage('leftPlot','svg'));
   document.addEventListener('keydown', e => { if((e.ctrlKey||e.metaKey) && e.key === 'Enter'){ e.preventDefault(); solveCurrent(); } });
@@ -141,7 +142,7 @@ function localJacobianClassification(J){
 function findAlternatives(sol){ const roots=[]; const base=sol.x; const starts=[]; base.forEach((v,i)=>{ let a=base.slice(); a[i]=(v||1)*0.5; starts.push(a); let b=base.slice(); b[i]=(v||1)*1.8+0.1; starts.push(b); }); starts.forEach(s=>{ try{ const r=newton(s); if(r.converged && dist(r.x, sol.x)>1e-3 && !roots.some(q=>dist(q.x,r.x)<1e-3)) roots.push(r); }catch{} }); return roots.slice(0,4); }
 function dist(a,b){ return Math.sqrt(a.reduce((s,x,i)=>s+(x-b[i])**2,0)); }
 function setRunState(running, msg){ const b=$('solveSteady'); const c=$('runContinuation'); if(b){ b.disabled=running; b.textContent=running?'Solving…':'▶ Solve'; } if(c) c.disabled=running; if($('steadyProgress')) $('steadyProgress').style.width=running?'40%':'0%'; if($('steadyStatus')) $('steadyStatus').textContent=msg; }
-function solveCurrent(){ if($('solveSteady')?.disabled) return; setRunState(true,'Solving algebraic system…'); setTimeout(()=>{ const t0=performance.now(); try{ last=newton(model.vars.map(v=>Number(v[1]))); last.runtimeMs=performance.now()-t0; last.stability=localJacobianClassification(last.J); last.alternatives=findAlternatives(last); continuation=[]; updateStatus(); renderPlots(); renderDiagnostics(); setPanel('plotsPanel'); setRunState(false,last.converged?'Solved.':'Approximate solution.'); }catch(e){ showError(e); } },20); }
+function solveCurrent(){ if($('solveSteady')?.disabled) return; try{ readEditor(); FokoSession?.save?.('steady', model); const check=window.FokoModelValidator?.validate?.(model,'steady'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); }catch(e){ showError(e); return; } setRunState(true,'Solving algebraic system…'); setTimeout(()=>{ const t0=performance.now(); try{ last=newton(model.vars.map(v=>Number(v[1]))); last.runtimeMs=performance.now()-t0; last.stability=localJacobianClassification(last.J); last.alternatives=findAlternatives(last); continuation=[]; updateStatus(); renderPlots(); renderDiagnostics(); setPanel('plotsPanel'); setRunState(false,last.converged?'Solved.':'Approximate solution.'); }catch(e){ showError(e); } },20); }
 function runContinuation(){ if(!model || $('runContinuation')?.disabled) return; const param=$('steadyContParam').value; if(!param){ $('steadyStatus').textContent='No continuation parameter available.'; return; } setRunState(true,'Running continuation…'); setTimeout(()=>{ const t0=performance.now(); try{ continuation=[]; const min=Number($('steadyContMin').value), max=Number($('steadyContMax').value), N=Math.max(3,+$('steadyContN').value||30); let guess=last?.x?.slice() || model.vars.map(v=>Number(v[1])); for(let k=0;k<N;k++){ const val=min+(max-min)*(k/(N-1)); const params={...model.params,[param]:val}; try{ const r=newton(guess, params); guess=r.x; const row={param:val,residual:r.norm,converged:r.converged}; model.vars.forEach((v,i)=>row[v[0]]=r.x[i]); continuation.push(row); }catch(err){ continuation.push({param:val,residual:NaN,converged:false}); } } if($('leftPlotType')) $('leftPlotType').value='continuation'; if($('rightPlotType')) $('rightPlotType').value='continuation-residual'; renderPlots(); setPanel('plotsPanel'); $('steadyDiagnostics').textContent=`Continuation complete over ${param}. ${continuation.filter(r=>r.converged).length}/${continuation.length} points converged.`; $('steadyTopStatus').textContent='Continuation'; $('steadyRuntime').textContent=(performance.now()-t0).toFixed(1)+' ms'; setRunState(false,'Continuation complete.'); }catch(e){ showError(e); } },20); }
 function showError(e){ if($('steadyDiagnostics')) $('steadyDiagnostics').textContent=e.message || String(e); if($('steadyTopStatus')) $('steadyTopStatus').textContent='Error'; setPanel('diagnosticsPanel'); setRunState(false,'Error.'); }
 function renderPlots(){ renderOne('leftPlot', $('leftPlotType')?.value || 'equilibrium'); renderOne('rightPlot', $('rightPlotType')?.value || 'residual'); resizePlots(); }
@@ -159,6 +160,45 @@ function steadyWideCsv(){ const rows=[['variable','equilibrium','residual_norm',
 function steadyLongCsv(){ const rows=[['dataset','index','variable','value','extra'].join(',')]; if(last){ model.vars.forEach((v,i)=>rows.push(['equilibrium',i,v[0],last.x[i],`residual=${last.norm}`].map(csv).join(','))); last.history.forEach((v,i)=>rows.push(['newton',i,'residual',v,''].map(csv).join(','))); } continuation.forEach((r,i)=>Object.keys(r).forEach(k=>{ if(k!=='param') rows.push(['continuation',i,k,r[k],`param=${r.param}`].map(csv).join(',')); })); return rows.join('\n'); }
 function dataExport(){ return {model,currentName,solution:last,continuation,exportedAt:new Date().toISOString()}; }
 function plotlyExport(){ const out={exportedAt:new Date().toISOString(),plots:{}}; ['leftPlot','rightPlot'].forEach(id=>{ const el=$(id); if(el&&el.data) out.plots[id]={data:el.data,layout:el.layout}; }); return out; }
+
+function pythonExport(){
+  const names=model.vars.map(v=>v[0]);
+  const guesses=model.vars.map(v=>Number(v[1])||0);
+  const params=JSON.stringify(model.params||{}, null, 2);
+  const eqs=JSON.stringify(model.equations||[], null, 2);
+  return `# Foko Lab Steady-State export
+# Browser result is exploratory. Validate locally with SciPy root/fsolve.
+import numpy as np
+from scipy.optimize import root, fsolve
+
+variables = ${JSON.stringify(names)}
+x0 = np.array(${JSON.stringify(guesses)}, dtype=float)
+params = ${params}
+equations = ${eqs}
+
+# Safe eval scope for compact exported models.
+def system(x, params=params):
+    scope = dict(params)
+    scope.update({name: float(x[i]) for i, name in enumerate(variables)})
+    scope.update({
+        'sin': np.sin, 'cos': np.cos, 'tan': np.tan, 'exp': np.exp,
+        'log': np.log, 'sqrt': np.sqrt, 'abs': abs, 'min': min, 'max': max,
+        'pow': pow, 'pi': np.pi, 'e': np.e
+    })
+    return np.array([eval(expr.replace('^','**'), {'__builtins__': {}}, scope) for expr in equations], dtype=float)
+
+sol = root(system, x0, method='hybr')
+print('root success:', sol.success, sol.message)
+print(dict(zip(variables, sol.x)))
+print('residual norm:', np.linalg.norm(system(sol.x)))
+
+# fsolve alternative
+x_fsolve, info, ier, msg = fsolve(system, x0, full_output=True)
+print('fsolve ier:', ier, msg)
+print(dict(zip(variables, x_fsolve)))
+`;
+}
+
 function downloadText(name,text,type='text/plain'){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
 function safeImage(id,format){ const el=$(id); if(el&&el.data) Plotly.downloadImage(id,{format,filename:`foko-lab-steady-${id}`}); else $('steadyStatus').textContent='Run a plot before exporting an image.'; }
 function csv(v){ const s=String(v??''); return /[,\n"]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }

@@ -1,13 +1,13 @@
 # Foko Lab v2.7.4
 
-Foko Lab is a browser-native modeling environment for interactive scientific exploration across four labs:
+Foko Lab is a browser-native modeling environment for interactive scientific exploration. The GUI now separates tools by interaction surface, not by mathematical topic.
 
-- **ODE Lab** — deterministic ODEs, trajectories, phase portraits, parameter sweeps and reproducible exports.
-- **Optimization Lab** — educational constrained and unconstrained optimization with diagnostics and export.
-- **Steady-State / Algebraic Lab** — systems of equations, residuals, local Jacobian classification and continuation.
-- **Stochastic Lab** — CTMC/Gillespie simulation, ensembles, mean-field overlays and stochastic examples.
+- **Workbench** — modern slider-first layer: Unified Workbench, Model Atlas, Symbolic Lab and Agent Lab.
+- **Legacy** — older form/table layer: ODE Lab, Optimization Lab, Steady-State Lab and Stochastic Lab.
+- **Learn** — Docs, Tutorial and Platform.
+- **About** — Research Hub, Mathematical Beauty, Acknowledgement and Contact.
 
-The root page is now a product homepage. The ODE lab is available at `ode.html`.
+The root page is the product homepage. The recommended entry point is `workbench.html`.
 
 ## Local use
 
@@ -54,3 +54,15 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 python -m pytest -q tests
 ```
+
+
+## Navigation rule
+
+The public GUI distinguishes modern slider-first workspaces from legacy form-based labs.
+
+- Workbench menu: Unified Workbench, Model Atlas, Symbolic Lab, Agent Lab.
+- Legacy menu: ODE Lab, Optimization Lab, Steady-State Lab, Stochastic Lab.
+- Learn menu: Docs, Tutorial, Platform.
+- About menu: Research Hub, Mathematical Beauty, Acknowledgement, Contact.
+
+The dropdowns are dynamic: hover opens on desktop; mouse-leave closes them; outside click, Escape, focus loss and link click also close them.

@@ -69,6 +69,43 @@
   async function copyPython(){try{await navigator.clipboard.writeText($('symPython').value); $('symStatus').textContent='Python script copied.';}catch(_){$('symPython').focus();$('symPython').select();$('symStatus').textContent='Select/copy the script manually.';}}
   function downloadPython(){const blob=new Blob([$('symPython').value],{type:'text/x-python'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='foko_symbolic_export_v23.py'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);}
   function bind(){[['symExample','change',loadExample],['symApproach','change',()=>{updateApproachInfo();analyze();}],['symLoadJson','click',loadJsonSkeleton],['symApplyJson','click',applyJsonModel],['symAnalyze','click',analyze],['symPlot','click',drawPlot],['symExport','click',downloadPython],['symCopy','click',copyPython],['symExprIndex','change',analyze],['symDiffVar','change',analyze],['symOperation','change',analyze],['symPlotMode','change',drawPlot],['symPlotVar','change',drawPlot],['symPlotYVar','change',drawPlot],['symSweepParam','change',drawPlot],['symPlotPalette','change',drawPlot],['symAutoPlot','change',()=>{if($('symAutoPlot').checked)drawPlot();}]].forEach(([id,ev,fn])=>$(id)?.addEventListener(ev,fn)); ['symVars','symParams','symRhs'].forEach(id=>$(id)?.addEventListener('input',()=>{refreshSelectors(); analyze(); updateApproachInfo(); if($('symModelJson')&&!$('symModelJson').value)loadJsonSkeleton();})); ['symPlotMin','symPlotMax','symPlotYMin','symPlotYMax','symTimeEnd','symTimeStep','symPlotScope'].forEach(id=>$(id)?.addEventListener('input',()=>{if($('symAutoPlot')?.checked)drawPlot();})); $('symPlotResolution')?.addEventListener('input',()=>{ $('symPlotResolutionOut').textContent=String(res()); if($('symAutoPlot')?.checked)drawPlot();});}
-  function init(){bind(); populate();}
+  function init(){
+    bind();
+    // Check for ODE→Symbolic handoff (written by app.js openCurrentInSymbolic).
+    // Mirrors the identical pattern in steady-state-lab.js init().
+    // Gate on ?import=session so a direct visit to symbolic.html is unaffected.
+    const params = new URLSearchParams(location.search);
+    if(params.get('import') === 'session'){
+      const raw = sessionStorage.getItem('foko-symbolic-import');
+      if(raw){
+        try{
+          const obj = JSON.parse(raw);
+          // Populate editor fields from the ODE model payload
+          if($('symVars')   && Array.isArray(obj.variables))
+            $('symVars').value   = obj.variables.join(', ');
+          if($('symParams') && Array.isArray(obj.parameters))
+            $('symParams').value = obj.parameters.join(', ');
+          if($('symRhs')    && Array.isArray(obj.rhs))
+            $('symRhs').value    = obj.rhs.join('\n');
+          // Restore numeric scope (initial conditions + parameter values)
+          if($('symPlotScope') && typeof obj.numericScope === 'object'){
+            $('symPlotScope').value = Object.entries(obj.numericScope||{})
+              .map(([k,v])=>`${k}=${Number(v).toPrecision(6).replace(/\.0+$/,'')}`)
+              .join('\n');
+          }
+          populate();  // populate example selector (does not overwrite current fields)
+          refreshSelectors();
+          analyze();
+          updateApproachInfo();
+          if($('symStatus'))
+            $('symStatus').textContent = `Imported from ODE Lab: ${obj.name||'unnamed model'}. Edit or run analysis.`;
+          return;
+        }catch(_e){
+          // Malformed payload — fall through to default populate()
+        }
+      }
+    }
+    populate();
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init();
 })();

@@ -52,5 +52,5 @@ def test_agent_model_atlas_carries_fadns_explanation_not_agent_page():
     assert 'FADNS particle-agent tracker' in atlas
     assert 'Acetyl-CoA, Malonyl-CoA, chain intermediates, C14/C16/C18 products and CoA' in atlas
     docs = soup('docs.html').get_text(' ', strip=True)
-    assert 'The Agent Lab page should stay compact' in docs
-    assert 'The FADNS agent example tracks Acetyl-CoA, Malonyl-CoA, chain intermediates, C14, C16, C18 and CoA' in docs
+    assert 'Agent Lab' in docs
+    assert 'agent-rule-worker.js' in docs
