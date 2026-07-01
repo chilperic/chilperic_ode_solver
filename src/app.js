@@ -175,6 +175,16 @@ function visibleSeriesIndices(){
   return idx;
 }
 
+
+function sessionKeyForModule(moduleName){
+  // Keep storage keys aligned with existing save paths.
+  // The UI calls the optimization module `opt`, but historical session storage uses `optimization`.
+  // Parametric ODE mode reuses the ODE editor and currently saves under `ode`.
+  if(moduleName === 'opt') return 'optimization';
+  if(moduleName === 'param') return 'ode';
+  return moduleName || 'ode';
+}
+
 function init(){
   wire();
   setTheme(localStorage.getItem('chilperic-theme') || 'aurora');
@@ -183,6 +193,29 @@ function init(){
   const m = params.get('module') || (path === 'optimization.html' ? 'opt' : 'ode');
   const ex = params.get('example');
   setModule(EXAMPLES[m] ? m : 'ode');
+
+  // FIX: restore last session when no explicit example is requested via URL.
+  // FokoSession.save() is called on every run; FokoSession.load() was never
+  // called in init(), so persistence was write-only.  This completes the cycle:
+  // load the saved model, populate the editor, and prompt the user to re-run.
+  // Guard with optional chaining so the app degrades gracefully if the
+  // model-session.js script fails to load.
+  const saved = (!ex) ? window.FokoSession?.load?.(sessionKeyForModule(state.module)) : null;
+  if (saved && saved.payload) {
+    state.model = saved.payload;
+    if (state.module === 'opt') {
+      loadOpt(state.model);
+    } else {
+      loadOde(state.model);
+    }
+    updateMathPreview();
+    refreshAllSelects();
+    updatePlotOptions();
+    clearPlots();
+    setStatus(`Session restored from ${(saved.savedAt || '').slice(0, 10) || 'previous visit'}. Press Run to re-solve.`);
+    return;
+  }
+
   if(ex && EXAMPLES[state.module]?.[ex]) loadExample(ex);
 }
 
@@ -426,12 +459,12 @@ function texName(v){ return /^[A-Za-z]$/.test(String(v))?v:`\\mathrm{${String(v)
 
 function runDefault(){ if(state.module==='param') state.resultKind='default'; state.module==='opt' ? runOpt() : runOde(); }
 function runOde(){
-  try{ readOde(); FokoSession?.save?.('ode', state.model); const check=window.FokoModelValidator?.validate?.(state.model,'ode'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value}; startBusy('Solving...'); worker().postMessage({type:'solve',payload}); }catch(e){ setStatus(actionable(e.message),true); }
+  try{ readOde(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'ode'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value}; startBusy('Solving...'); worker().postMessage({type:'solve',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
 function runSweep(){
-  try{ readOde(); FokoSession?.save?.('ode', state.model); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, sweepA:$('sweepA').value, sweepB:$('sweepB').value, sweepVar:$('sweepVar').value, sweepMetric:$('sweepMetric').value, sweepN:+$('sweepN').value}; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
+  try{ readOde(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, sweepA:$('sweepA').value, sweepB:$('sweepB').value, sweepVar:$('sweepVar').value, sweepMetric:$('sweepMetric').value, sweepN:+$('sweepN').value}; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
-function runOpt(){ try{ readOpt(); FokoSession?.save?.('optimization', state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const payload={...state.model, samples:+$('optSamples').value, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population:+($('optPopulation')?.value||36), temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy('Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
+function runOpt(){ try{ readOpt(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const payload={...state.model, samples:+$('optSamples').value, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population:+($('optPopulation')?.value||36), temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy('Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
 function worker(){
   if(state.worker) return state.worker;
   state.worker=new Worker('src/worker.js');

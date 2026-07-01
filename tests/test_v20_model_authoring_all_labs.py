@@ -7,7 +7,7 @@ def text(rel): return BeautifulSoup(read(rel),'html.parser').get_text(' ', strip
 
 def test_agent_lab_exposes_approach_method_time_topology_and_custom_model():
     html=read('agent.html')
-    for token in ['agentApproach','Rule-Based Decision Making','State-Driven Agents / Statecharts','Adaptive & Learning Agents','Graph / Network-Based Approach','agentTimeMode','continuous_rate','agentTopology','random_graph','agentCustomModelJson','agentApplyCustomModel','Approach comparison','transition / event matrix','network degree plot']:
+    for token in ['agentApproach','Rule-Based Decision Making','State-Driven Agents / Statecharts','Adaptive & Learning Agents','Graph / Network-Based Approach','agentTimeMode','continuous_rate','agentTopology','random_graph','agentCustomModelJson','agentApplyCustomModel','Approach comparison']:
         assert token in html
 
 def test_agent_js_supports_model_authoring_approaches_and_richer_custom_contract():

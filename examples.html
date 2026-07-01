@@ -14,50 +14,13 @@
 <div class="app-shell">
 <header class="topbar">
 <a class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav">
-<a href="index.html">Home</a>
-<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
-<summary class="labs-summary active">Workbench</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="workbench.html" role="menuitem"><b>Main</b></a>
-<a href="examples.html" role="menuitem"><b>Model Atlas</b></a>
-<a href="symbolic.html" role="menuitem"><b>Symbolic</b></a>
-<a href="agent.html" role="menuitem"><b>Agent</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
-<summary class="labs-summary">Legacy</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="ode.html#workbench" role="menuitem"><b>ODE</b></a>
-<a href="optimization.html" role="menuitem"><b>Optimization</b></a>
-<a href="steady.html" role="menuitem"><b>Steady-State</b></a>
-<a href="stochastic.html" role="menuitem"><b>Stochastic</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
-<summary class="labs-summary">Learn</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="docs.html" role="menuitem"><b>Docs</b></a>
-<a href="tutorial.html" role="menuitem"><b>Tutorial</b></a>
-<a href="platform.html" role="menuitem"><b>Platform</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
-<summary class="labs-summary">About</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="research.html" role="menuitem"><b>Research</b></a>
-<a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
-<a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
-<a href="contact.html" role="menuitem"><b>Contact</b></a>
-</div>
-</details>
-</nav>
+<nav aria-label="Primary navigation" class="topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html" role="menuitem"><b>Model</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
 </header>
 <main class="doc-page model-atlas">
 <section class="card hero-doc atlas-hero hero-with-mark">
 <div><p class="eyebrow">Visual guide</p>
 <h1>Model Atlas</h1>
-<p>Teaching and benchmark models only. This page uses polished teaching visuals. Research figures are kept separate in the Research Hub. Personal research projects stay in the Research Hub with provenance, limitations and protected boundaries.</p></div>
+<p>Curated model examples for opening directly in the labs.</p></div>
 <img alt="Model Atlas mark" class="lab-mark" src="assets/lab-logos/model-atlas.webp"/>
 </section>
 <section aria-label="Model filters" class="atlas-filters card">
@@ -80,12 +43,12 @@
 <button class="filter" data-filter="environment">Environment</button>
 <button class="filter" data-filter="engineering">Engineering</button>
 </section>
-<section class="card"><h2>Research Hub is separate from the Model Atlas</h2><p>The Model Atlas is reserved for classical systems, teaching examples and benchmark problems. Chilperic’s research portfolio is kept separate, with project provenance, contributors, limitations, selected figures and protected simulation boundaries.</p><p><a class="open-link workbench-link" href="research.html">Open Research Hub</a></p></section>
+<section class="card"><h2>Research projects</h2><p>For thesis, postdoc and software projects, open the Research Hub.</p><p><a class="open-link workbench-link" href="research.html">Open Research Hub</a></p></section>
 <section class="card agent-atlas-section" id="agent-atlas">
 <div class="atlas-section-head"><p class="eyebrow">Agent-based modeling</p><h2>Agent Model Atlas</h2><p>Detailed scenario descriptions live here, not on the Agent Lab execution page. Open a model in Agent Lab to run it, then change approach, topology, update scheme, parameters or custom rule code.</p></div>
 <div class="agent-atlas-grid">
 <article data-category="agent biology"><figure class="agent-atlas-thumb"><img alt="Generation-structured cell proliferation agents illustration" decoding="async" loading="lazy" src="assets/agent-atlas/tcell.svg"/></figure><h3>Generation-structured cell proliferation agents</h3><p>Statechart ABM: quiescent cells activate, divide into local space and die. Useful for linking cell-proliferation research concepts to individual-based dynamics.</p><a class="open-link workbench-link" href="agent.html?example=tcell">Open in Agent Lab</a></article>
-<article data-category="agent biology chemistry"><figure class="agent-atlas-thumb"><img alt="FADNS particle-agent tracker illustration" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>FADNS particle-agent tracker</h3><p>Tracks Acetyl-CoA, Malonyl-CoA, chain intermediates, C14/C16/C18 products and CoA release as a toy ABM analogy. This is not the calibrated FADNS ODE model; it is a teaching bridge between reaction events and agent-state transitions.</p><p><b>States:</b> empty, Acetyl-CoA, Malonyl-CoA, chain intermediate, C14, C16, C18, CoA.</p><a class="open-link workbench-link" href="agent.html?example=fadns_particle">Open in Agent Lab</a></article>
+<article data-category="agent biology chemistry"><figure class="agent-atlas-thumb"><img alt="FADNS particle-agent tracker illustration" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>FADNS particle-agent tracker</h3><p>Tracks Acetyl-CoA, Malonyl-CoA, chain intermediates, C14/C16/C18 products and CoA release as a toy ABM analogy. A teaching bridge between reaction events and agent-state transitions.</p><p><b>States:</b> empty, Acetyl-CoA, Malonyl-CoA, chain intermediate, C14, C16, C18, CoA.</p><a class="open-link workbench-link" href="agent.html?example=fadns_particle">Open in Agent Lab</a></article>
 <article data-category="agent biology stochastic"><figure class="agent-atlas-thumb"><img alt="Outbreak + vaccine hesitancy illustration" decoding="async" loading="lazy" src="assets/agent-atlas/vax_hesitancy.svg"/></figure><h3>Outbreak + vaccine hesitancy</h3><p>Rumors spread on contact networks and reduce effective herd immunity during an outbreak. Separates infection pressure from misinformation pressure.</p><a class="open-link workbench-link" href="agent.html?example=vax_hesitancy">Open in Agent Lab</a></article>
 <article data-category="agent environment crisis"><figure class="agent-atlas-thumb"><img alt="Wildfire evacuation + panic misinformation illustration" decoding="async" loading="lazy" src="assets/agent-atlas/evacuation_panic.svg"/></figure><h3>Wildfire evacuation + panic misinformation</h3><p>Fake route information spreads through local groups and redirects agents into congested paths. Useful for crisis communication and transport behavior prototypes.</p><a class="open-link workbench-link" href="agent.html?example=evacuation_panic">Open in Agent Lab</a></article>
 <article data-category="agent finance"><figure class="agent-atlas-thumb"><img alt="Meme-stock cascade illustration" decoding="async" loading="lazy" src="assets/agent-atlas/meme_stock.svg"/></figure><h3>Meme-stock cascade</h3><p>Viral hype and clustered investor influence create waves of buying and selling. A compact graph-contagion model for financial social dynamics.</p><a class="open-link workbench-link" href="agent.html?example=meme_stock">Open in Agent Lab</a></article>
@@ -381,5 +344,5 @@
     });
   }));
 </script>
-<script defer="" src="src/navigation.js?v=41"></script></body>
+<script defer="" src="src/navigation.js?v=48"></script></body>
 </html>

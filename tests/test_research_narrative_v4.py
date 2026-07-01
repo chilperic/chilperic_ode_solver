@@ -72,7 +72,7 @@ def test_no_personal_research_cards_in_model_atlas_text():
     forbidden = ['Fatty-acid metabolism bistability','FADNS with CoA sequestration','T-cell proliferation','Leaf gas-exchange operating point','workbench.html?model=leaf-gas-steady']
     for item in forbidden:
         assert item not in html
-    assert 'Research Hub is separate from the Model Atlas' in html
+    assert 'Research projects' in html
 
 
 def test_research_hub_has_graphical_abstract_cards_and_no_overflow_prone_first_view():

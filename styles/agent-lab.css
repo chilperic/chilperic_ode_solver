@@ -66,3 +66,51 @@
 .agent-status[data-tone="warn"]{color:#a16207;font-weight:760}
 @media(max-width:980px){.agent-parameter-strip .agent-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.agent-parameter-strip .agent-buttons{grid-template-columns:1fr}.agent-reference-links{max-width:100%}}
+
+/* v43 Agent UX: plotting parity, compact controls and clearer simulation surface */
+.agent-selector-grid{grid-template-columns:repeat(4,minmax(150px,1fr));gap:.5rem;}
+.agent-selector-grid label{min-width:0;}.agent-selector-grid select{min-height:38px;}
+.agent-main-grid{grid-template-columns:minmax(520px,1fr) minmax(520px,1fr);align-items:stretch;}
+.agent-sim-card,.agent-plot-card{display:flex;flex-direction:column;}.agent-card canvas{max-height:48vh;border-radius:18px;}
+.agent-metrics{min-height:420px;flex:1;}.agent-kpis{margin-bottom:.55rem;}
+.agent-kpis div{min-height:58px;display:flex;flex-direction:column;justify-content:center;}
+.agent-plot-card h2,.agent-sim-card h2{font-size:1rem;}
+.agent-approach-info.compact{line-height:1.35;}
+@media(max-width:1180px){.agent-selector-grid{grid-template-columns:repeat(2,minmax(150px,1fr));}.agent-main-grid{grid-template-columns:1fr}.agent-metrics{min-height:340px}}
+@media(max-width:640px){.agent-selector-grid{grid-template-columns:1fr}.agent-card canvas{max-height:54vh}.agent-metrics{min-height:300px}}
+
+/* v44 agent coherence: plots are a visible diagnostic workspace, not a hidden global setting. */
+.agent-selector-grid{grid-template-columns:repeat(5,minmax(150px,1fr));}
+.agent-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.65rem;}
+.agent-card-header h2{margin:0 0 .2rem!important;}
+.agent-card-header p{margin:0;color:var(--muted,#64748b);font-size:.84rem;line-height:1.35;}
+.agent-plot-controls{display:grid;grid-template-columns:minmax(190px,1.25fr) minmax(140px,.75fr);gap:.55rem;min-width:min(100%,390px);}
+.agent-plot-controls label{font-size:.76rem;font-weight:900;color:var(--muted,#64748b);}
+.agent-plot-controls select{width:100%;box-sizing:border-box;margin-top:.2rem;border:1px solid rgba(120,140,170,.32);border-radius:12px;padding:.5rem .56rem;background:#fff;color:inherit;font:inherit;min-height:38px;}
+.agent-plot-card{overflow:hidden;}
+.agent-metrics{min-height:430px;display:block;}
+.agent-empty-plot{display:grid;place-items:center;min-height:280px;border:1px dashed rgba(100,116,139,.35);border-radius:18px;color:var(--muted,#64748b);background:rgba(248,250,252,.72);font-weight:800;text-align:center;padding:1rem;}
+.agent-main-grid{grid-template-columns:minmax(540px,1.03fr) minmax(520px,.97fr);gap:.9rem;}
+.agent-sim-card,.agent-plot-card{min-height:620px;}
+.agent-card canvas{max-height:52vh;}
+@media(max-width:1180px){.agent-selector-grid{grid-template-columns:repeat(2,minmax(150px,1fr));}.agent-card-header{display:block}.agent-plot-controls{margin-top:.55rem;min-width:0;grid-template-columns:1fr 1fr}.agent-main-grid{grid-template-columns:1fr}.agent-sim-card,.agent-plot-card{min-height:0}}
+@media(max-width:640px){.agent-selector-grid,.agent-plot-controls{grid-template-columns:1fr}.agent-metrics{min-height:320px}}
+
+
+/* v45 agent declutter: keep only model choice visible; move method metadata behind details. */
+.agent-primary-selectors{grid-template-columns:minmax(180px,.42fr) minmax(260px,.58fr)!important;max-width:760px;}
+.agent-model-details{margin-top:.55rem;border:1px solid rgba(120,140,170,.18);border-radius:16px;padding:.55rem .65rem;background:rgba(248,250,252,.72);}
+.agent-model-details>summary{cursor:pointer;font-weight:900;color:#0f172a;list-style:none;}
+.agent-model-details>summary::-webkit-details-marker{display:none;}
+.agent-model-details>summary::after{content:'▸';float:right;color:var(--accent,#0f766e);}
+.agent-model-details[open]>summary::after{content:'▾';}
+.agent-secondary-selectors{grid-template-columns:repeat(3,minmax(150px,1fr))!important;margin-top:.55rem;}
+.agent-approach-info.compact{border-left:0!important;background:transparent!important;padding:.25rem 0 0!important;margin:.35rem 0 0!important;font-size:.78rem;}
+@media(max-width:760px){.agent-primary-selectors,.agent-secondary-selectors{grid-template-columns:1fr!important;}}
+
+/* v46 Agent Lab identity colors */
+.agent-hero{background:linear-gradient(135deg,color-mix(in srgb,#fff 88%,var(--foko-teal,#14b8a6)),color-mix(in srgb,#fff 91%,var(--foko-magenta,#d946ef)));border-color:color-mix(in srgb,var(--foko-cyan,#06b6d4) 24%,rgba(120,140,170,.24));}
+.agent-buttons button:first-child{background:linear-gradient(135deg,var(--foko-teal,#14b8a6),var(--foko-cyan,#06b6d4),var(--foko-magenta,#d946ef));}
+.agent-card,.agent-panel,.agent-boundary{border-color:color-mix(in srgb,var(--foko-cyan,#06b6d4) 22%,rgba(120,140,170,.24));}
+.agent-card h2,.agent-visible-title{color:color-mix(in srgb,var(--foko-teal,#14b8a6) 76%,var(--text,#142033));}
+.agent-plot-controls select,.agent-selector-grid select{border-color:color-mix(in srgb,var(--foko-teal,#14b8a6) 24%,rgba(120,140,170,.3));}

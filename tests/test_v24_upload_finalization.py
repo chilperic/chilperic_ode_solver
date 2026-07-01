@@ -27,8 +27,9 @@ def test_agent_custom_rule_runs_through_worker_sandbox():
 def test_agent_has_real_multilayer_network_options_and_layer_plot():
     html = read('agent.html')
     js = read('src/agent-lab.js')
-    for token in ['multilayer_social', 'multilayer_transport', 'multilayer layer comparison']:
+    for token in ['multilayer_social', 'multilayer_transport']:
         assert token in html
+    assert 'multilayer layer comparison' in js or 'Layer comparison' in js
     for token in ['networkLayers', 'layers.spatial', 'layers.social', 'layers.transport', "mode==='layers'", 'Mean degree by network layer']:
         assert token in js
 

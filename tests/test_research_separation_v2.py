@@ -29,7 +29,7 @@ def test_model_atlas_contains_no_personal_research_cards():
     for item in forbidden:
         assert item not in html
     assert 'Open Research Hub' in html
-    assert 'Teaching and benchmark models only' in html
+    assert 'Curated model examples for opening directly in the labs.' in html
 
 
 def test_research_hub_contains_all_research_projects():
@@ -38,7 +38,7 @@ def test_research_hub_contains_all_research_projects():
         'Photosynthesis climate adaptation',
         'Fatty-acid metabolism and FADNS',
         'T-cell proliferation dynamics',
-        'Research portfolio, separated from examples',
+        'Research portfolio',
     ]:
         assert item in html
     for rel in [

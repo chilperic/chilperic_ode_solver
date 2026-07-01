@@ -2,8 +2,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 
-WORKBENCH = ['Main', 'Model Atlas', 'Symbolic', 'Agent']
-LEGACY = ['ODE', 'Optimization', 'Steady-State', 'Stochastic']
+WORKBENCH = ['Model', 'Symbolic', 'Agent', 'Model Atlas']
 LEARN = ['Docs', 'Tutorial', 'Platform']
 ABOUT = ['Research', 'Mathematical Beauty', 'Acknowledgement', 'Contact']
 
@@ -18,7 +17,7 @@ def test_docs_and_tutorial_keep_clean_header():
         labels=[a.get_text(strip=True) for a in s.select('.topnav > a')]
         assert labels == ['Home']
         assert menu_labels(s, 'workbench-menu') == WORKBENCH
-        assert menu_labels(s, 'legacy-menu') == LEGACY
+        assert [a.get_text(strip=True) for a in s.select('.topnav details.legacy-menu .labs-menu-panel a')] == ['ODE','Optimization','Steady-State','Stochastic']
         assert menu_labels(s, 'learn-menu') == LEARN
         assert menu_labels(s, 'about-menu') == ABOUT
 
@@ -36,7 +35,7 @@ def test_tutorial_standard_content_remains():
 def test_workbench_suite_tabs_are_compact():
     doc = soup('workbench.html')
     labels = [a.get_text(strip=True) for a in doc.select('.mw-suite-tabs a')]
-    assert labels == ['Model Bench', 'Symbolic', 'Agent', 'Atlas']
-    assert doc.select_one('.mw-suite-tabs a.active').get_text(strip=True) == 'Model Bench'
+    assert labels == ['Model', 'Symbolic', 'Agent', 'Model Atlas']
+    assert doc.select_one('.mw-suite-tabs a.active').get_text(strip=True) == 'Model'
     for menu in doc.select('.workbench-menu .labs-menu-panel a'):
         assert not menu.find('span')

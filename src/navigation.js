@@ -61,17 +61,27 @@
         if (canHover()) openMenu(menu);
       });
 
-      menu.addEventListener('mouseenter', () => {
-        if (canHover()) openMenu(menu);
-      });
+      // FIX: guard mouseenter behind a PointerEvent feature-detection check.
+      // On browsers that support Pointer Events (all modern desktop/mobile),
+      // pointerenter fires first and is sufficient.  Registering mouseenter
+      // unconditionally causes openMenu() to be called twice per hover — once
+      // per event type — triggering unnecessary closeAll() + DOM churn.
+      if (!window.PointerEvent) {
+        menu.addEventListener('mouseenter', () => {
+          if (canHover()) openMenu(menu);
+        });
+      }
 
       menu.addEventListener('pointerleave', () => {
         if (canHover()) scheduleClose(menu, 60);
       });
 
-      menu.addEventListener('mouseleave', () => {
-        if (canHover()) scheduleClose(menu, 60);
-      });
+      // FIX: same guard for pointerleave/mouseleave pair.
+      if (!window.PointerEvent) {
+        menu.addEventListener('mouseleave', () => {
+          if (canHover()) scheduleClose(menu, 60);
+        });
+      }
 
       summary.addEventListener('click', (event) => {
         event.preventDefault();
@@ -96,6 +106,8 @@
         }
       });
 
+      // FIX: panel hover events keep both pointer and mouse for broad compat —
+      // clearTimeout is idempotent so double-fire here is harmless.
       panel.addEventListener('pointerenter', () => window.clearTimeout(closeTimer));
       panel.addEventListener('mouseenter', () => window.clearTimeout(closeTimer));
 
@@ -112,12 +124,16 @@
       if (!event.target.closest('.nav-menu, .labs-menu')) closeAll();
     });
 
+    // FIX: {passive: true} is required here.  This listener fires on every
+    // mouse movement globally.  Without passive:true the browser must pause
+    // rendering to wait for the handler before deciding whether to scroll,
+    // causing frame drops whenever a dropdown is open.
     document.addEventListener('mousemove', (event) => {
       if (!canHover() || !activeMenu) return;
       const target = event.target;
       if (target instanceof Element && activeMenu.contains(target)) return;
       scheduleClose(activeMenu, 80);
-    });
+    }, { passive: true });
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeAll();

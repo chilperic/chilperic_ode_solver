@@ -13,8 +13,7 @@ def test_agent_lab_exposes_rules_parameters_custom_code_and_import():
     for token in [
         'Rule definition', 'Custom rule editor', 'agentRuleMode', 'agentCustomCode',
         'agentApplyRule', 'agentImport', 'agentCopyJson', 'agentParamGrid',
-        'agentPlotMode', 'population time series', 'current composition', 'phase portrait',
-        'event rates', 'trait distribution'
+        'agentPlotMode'
     ]:
         assert token in html
     assert html.index('Rule definition') < html.index('Agent model')

@@ -10,16 +10,13 @@ def test_slider_first_navigation_contract():
     for page in PAGES:
         s = soup(page)
         modern = [a.find('b').get_text(strip=True) for a in s.select('.workbench-menu .labs-menu-panel a')]
-        legacy = [a.find('b').get_text(strip=True) for a in s.select('.legacy-menu .labs-menu-panel a')]
-        assert modern == ['Main', 'Model Atlas', 'Symbolic', 'Agent'], page
-        assert legacy == ['ODE', 'Optimization', 'Steady-State', 'Stochastic'], page
-        assert 'Agent' not in legacy and 'Symbolic' not in legacy
+        assert modern == ['Model','Symbolic','Agent','Model Atlas'], page
+        assert [a.get_text(strip=True) for a in s.select('.legacy-menu .labs-menu-panel a')] == ['ODE','Optimization','Steady-State','Stochastic'], page
 
 def test_homepage_explains_legacy_by_control_surface():
     html = (ROOT/'index.html').read_text(encoding='utf-8')
-    assert 'One Workbench layer for modern slider-first use' in html
-    assert 'Legacy form-based labs' in html
-    assert 'parameter control surface is still form/table based' in html
+    assert 'Modeling approaches' in html
+    assert 'ODE · stochastic · optimization · symbolic · agent-based' in html
     assert 'Mathematical Beauty' in html
 
 def test_dynamic_dropdown_closed_state_is_explicit():

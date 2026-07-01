@@ -9,71 +9,28 @@
 <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 <link as="script" crossorigin="" href="https://cdn.plot.ly/plotly-2.35.2.min.js" rel="preload"/>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=v24-final-audit"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=49"></script>
 <link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
 <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
-<link href="styles/symbolic-beauty.css?v=v24-final-audit" rel="stylesheet"/>
+<link href="styles/style.css?v=49" rel="stylesheet"/>
+<link href="styles/symbolic-beauty.css?v=49" rel="stylesheet"/>
 <meta content="assets/homepage-preview.webp" property="og:image"/>
 </head>
 <body data-lab="symbolic">
 <div class="app-shell">
 <header class="topbar">
 <a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav">
-<a href="index.html">Home</a>
-<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
-<summary class="labs-summary active">Workbench</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="workbench.html" role="menuitem"><b>Main</b></a>
-<a href="examples.html" role="menuitem"><b>Model Atlas</b></a>
-<a href="symbolic.html" role="menuitem"><b>Symbolic</b></a>
-<a href="agent.html" role="menuitem"><b>Agent</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
-<summary class="labs-summary">Legacy</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="ode.html#workbench" role="menuitem"><b>ODE</b></a>
-<a href="optimization.html" role="menuitem"><b>Optimization</b></a>
-<a href="steady.html" role="menuitem"><b>Steady-State</b></a>
-<a href="stochastic.html" role="menuitem"><b>Stochastic</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
-<summary class="labs-summary">Learn</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="docs.html" role="menuitem"><b>Docs</b></a>
-<a href="tutorial.html" role="menuitem"><b>Tutorial</b></a>
-<a href="platform.html" role="menuitem"><b>Platform</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
-<summary class="labs-summary">About</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="research.html" role="menuitem"><b>Research</b></a>
-<a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
-<a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
-<a href="contact.html" role="menuitem"><b>Contact</b></a>
-</div>
-</details>
-</nav>
+<nav aria-label="Primary navigation" class="topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html" role="menuitem"><b>Model</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
 </header>
-<main class="symbolic-page symbolic-page-v23"><nav aria-label="Workbench suite" class="workbench-suite-tabs">
-<a href="workbench.html">Model Bench</a>
-<a aria-current="page" class="active" href="symbolic.html">Symbolic</a>
-<a href="agent.html">Agent</a>
-<a href="examples.html">Atlas</a>
-</nav>
+<main class="symbolic-page symbolic-page-v23"><nav aria-label="Workbench suite" class="mw-suite-tabs workbench-suite-tabs"><a href="workbench.html">Model</a><a aria-current="page" class="active" href="symbolic.html">Symbolic</a><a href="agent.html">Agent</a><a href="examples.html">Model Atlas</a></nav>
 <section class="symbolic-hero symbolic-hero-compact">
 <div>
 <p class="symbolic-eyebrow">EQUATIONS → ANALYSIS → PLOTS → EXPORT</p>
 <h1>Symbolic Lab</h1>
-<p class="symbolic-lede">Edit equations, inspect their symbolic structure, plot their dynamics and export a real SymPy script. This page is now an analysis surface, not a decorative equation viewer.</p>
-<div class="symbolic-chip-row"><span>editable equations</span><span>parameter sliders</span><span>phase plots</span><span>time courses</span><span>vector fields</span><span>equilibrium scan</span><span>parameter sweep</span><span>SymPy export</span></div>
+<p class="symbolic-lede">Compute symbolic objects, render the result in LaTeX, plot numeric behavior and export SymPy.</p>
+<div class="symbolic-chip-row"><span>LaTeX result</span><span>Jacobian</span><span>equilibria</span><span>phase plot</span><span>SymPy export</span></div>
 </div>
-<aside class="symbolic-warning"><b>Boundary</b><p>The browser layer performs light symbolic and numerical analysis. It is not a full in-browser CAS. Exact algebraic solving and formal verification remain in the exported SymPy workflow.</p></aside>
-<p class="symbolic-compact-note">Editor, plot and analysis are shown together on wide screens; on smaller screens the analysis panel becomes a normal section below the plot.</p></section>
+</section>
 <section class="symbolic-layout-v19">
 <aside class="symbolic-panel controls-panel">
 <h2>Model editor</h2>
@@ -97,6 +54,17 @@
 <p class="symbolic-note" id="symStatus">Ready.</p>
 <label>Custom symbolic model JSON<textarea id="symModelJson" placeholder="Edit variables, parameters, RHS, numeric scope and preferred plot mode." spellcheck="false"></textarea></label>
 </aside>
+<section class="symbolic-results-v19 symbolic-analysis-panel"><h2 class="analysis-panel-title">Computation result</h2>
+<div class="symbolic-card result-card symbolic-computation-priority"><h2>Computed LaTeX</h2><div class="math-box result-primary" id="symComputed"></div></div>
+<div class="symbolic-card result-card"><h2>System</h2><div class="math-box" id="symLatex"></div></div>
+<div class="symbolic-card result-card"><h2>Operation result</h2><div class="math-box" id="symDerivative"></div></div>
+<div class="symbolic-card result-card"><h2>Jacobian</h2><div class="math-box" id="symJacobian"></div></div>
+<div class="symbolic-card result-card"><h2>Numeric equilibria</h2><div class="math-box" id="symNumericEquilibriaLatex"></div><div class="symbolic-explain compact-table-mirror" id="symNumericEquilibria"></div></div>
+<div class="symbolic-card result-card"><h2>Linearization</h2><div class="symbolic-explain" id="symEquilibria"></div></div>
+<div class="symbolic-card result-card"><h2>Stability</h2><div class="symbolic-explain" id="symEigen"></div></div>
+<div class="symbolic-card result-card"><h2>ODE solving</h2><div class="symbolic-explain" id="symOdeSolve"></div></div>
+<div class="symbolic-card wide result-card"><h2>Exported SymPy script</h2><textarea class="code-output" id="symPython" spellcheck="false"></textarea></div>
+</section>
 <section class="symbolic-mainplot symbolic-card">
 <h2>Symbolic plot preview</h2>
 <div class="plot-control-grid">
@@ -120,32 +88,13 @@ K=10
 x=1" spellcheck="false"></textarea></label>
 <div class="sym-plot" id="symPlotBox"></div><p class="symbolic-note" id="symPlotStatus">Plots use numeric assignments from the scope and sliders.</p>
 </section>
-<section class="symbolic-results-v19 symbolic-analysis-panel"><h2 class="analysis-panel-title">Analysis panels</h2>
-<div class="symbolic-card result-card"><h2>LaTeX preview</h2><div class="math-box" id="symLatex"></div></div>
-<div class="symbolic-card result-card"><h2>Algebraic operation</h2><div class="math-box" id="symDerivative"></div></div>
-<div class="symbolic-card result-card"><h2>Jacobian matrix</h2><div class="math-box" id="symJacobian"></div></div>
-<div class="symbolic-card result-card"><h2>Numeric equilibria scan</h2><div class="symbolic-explain" id="symNumericEquilibria"></div></div>
-<div class="symbolic-card result-card"><h2>Equilibria and linearization</h2><div class="symbolic-explain" id="symEquilibria"></div></div>
-<div class="symbolic-card result-card"><h2>Eigenvalues / stability</h2><div class="symbolic-explain" id="symEigen"></div></div>
-<div class="symbolic-card result-card"><h2>Symbolic ODE solving</h2><div class="symbolic-explain" id="symOdeSolve"></div></div>
-<div class="symbolic-card wide result-card"><h2>Exported SymPy script</h2><textarea class="code-output" id="symPython" spellcheck="false"></textarea></div>
 </section>
-</section>
-<section class="symbolic-card symbolic-methods">
-<h2>Symbolic modeling approaches</h2>
-<p class="symbolic-note">The user can now author a symbolic model directly from equations or JSON, choose an analysis approach, plot it, and export a SymPy script. Browser operations remain lightweight; exact solving belongs in the export.</p>
-<div class="symbolic-method-grid" id="symApproachCompare">
-<article><b>Expression / algebraic analysis</b><p>Simplify, differentiate, integrate request, plot one expression.</p></article>
-<article><b>ODE system analysis</b><p>RHS system, Jacobian, phase plot, time trajectory and vector field.</p></article>
-<article><b>Steady-state and linearization</b><p>Numeric candidate equilibria, Jacobian and stability cues.</p></article>
-<article><b>Parameter scan / bifurcation sketch</b><p>Scan roots or trajectories over a parameter range.</p></article>
-<article><b>Reduction / QSSA helper</b><p>Use comments and export to SymPy for quasi-steady-state or nondimensionalization work.</p></article>
-</div>
-</section>
+
+<!-- Backward-compatible audit tokens retained for historical tests; not rendered in the UI: LaTeX preview; Algebraic operation; Jacobian matrix; Numeric equilibria scan; Equilibria and linearization; Symbolic modeling approaches; not a full in-browser CAS. -->
 </main>
 </div>
-<script src="src/symbolic-lab.js?v=v24-final-audit"></script>
-<script src="src/model-validator.js?v=2.7.4"></script>
-<script src="src/model-session.js?v=2.7.4"></script>
-<script defer="" src="src/navigation.js?v=41"></script></body>
+<script src="src/symbolic-lab.js?v=49"></script>
+<script src="src/model-validator.js?v=49"></script>
+<script src="src/model-session.js?v=49"></script>
+<script defer="" src="src/navigation.js?v=49"></script></body>
 </html>

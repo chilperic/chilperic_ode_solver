@@ -19,11 +19,10 @@ def test_research_pages_have_real_project_narrative():
 
 def test_research_index_is_a_portfolio_not_a_gallery():
     html = text('research.html')
-    for term in ['Project map','Positioning claim','Boundary rules','Core question','Methods','Portfolio signal']:
+    for term in ['Project map','Positioning claim','Core question','Methods','Portfolio signal']:
         assert term in html
-    assert 'The Model Atlas is for teaching and benchmark examples' in html
-    assert 'Foko Lab platform' not in html
-    assert 'platform.html' in html
+    assert 'Selected research projects with provenance, figures and method context.' in html
+    assert 'Platform engineering moved out of Research Hub' not in html
 
 def test_plant_project_remains_protected_from_downloads():
     doc = soup('research/photosynthesis.html')

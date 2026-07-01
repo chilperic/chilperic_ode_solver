@@ -28,7 +28,7 @@ def test_mathematical_beauty_is_separate_from_symbolic_lab():
     html=read('beauty.html')
     for term in ['Mathematical Beauty','Fractals and nature','Curves and symmetry','Number theory','Gödel and limits']:
         assert term in html
-    assert 'intentionally separated from Symbolic Lab and Research Hub' in html
+    assert 'Explore fractals, patterns, curves, number theory, topology and formal limits.' in html
     js=read('src/math-beauty.js')
     for key in ['mandelbrot','julia','fern','sierpinski','koch','butterfly','ulam','collatz','godel']:
         assert key in js.lower()

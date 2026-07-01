@@ -9,7 +9,7 @@
 <title>Agent Lab · Foko Lab</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=v24-final-audit"></script>
 <link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
-<link href="styles/agent-lab.css?v=v24-final-audit" rel="stylesheet"/>
+<link href="styles/agent-lab.css?v=v45-agent-clean" rel="stylesheet"/>
 <!-- Adaptive & Learning Agents -->
 <meta content="assets/homepage-preview.webp" property="og:image"/>
 </head>
@@ -17,63 +17,21 @@
 <div class="app-shell">
 <header class="topbar">
 <a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav">
-<a href="index.html">Home</a>
-<details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench">
-<summary class="labs-summary active">Workbench</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="workbench.html" role="menuitem"><b>Main</b></a>
-<a href="examples.html" role="menuitem"><b>Model Atlas</b></a>
-<a href="symbolic.html" role="menuitem"><b>Symbolic</b></a>
-<a href="agent.html" role="menuitem"><b>Agent</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy">
-<summary class="labs-summary">Legacy</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="ode.html#workbench" role="menuitem"><b>ODE</b></a>
-<a href="optimization.html" role="menuitem"><b>Optimization</b></a>
-<a href="steady.html" role="menuitem"><b>Steady-State</b></a>
-<a href="stochastic.html" role="menuitem"><b>Stochastic</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu learn-menu" data-nav-menu="learn">
-<summary class="labs-summary">Learn</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="docs.html" role="menuitem"><b>Docs</b></a>
-<a href="tutorial.html" role="menuitem"><b>Tutorial</b></a>
-<a href="platform.html" role="menuitem"><b>Platform</b></a>
-</div>
-</details>
-<details class="labs-menu nav-menu about-menu" data-nav-menu="about">
-<summary class="labs-summary">About</summary>
-<div class="labs-menu-panel" role="menu">
-<a href="research.html" role="menuitem"><b>Research</b></a>
-<a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a>
-<a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a>
-<a href="contact.html" role="menuitem"><b>Contact</b></a>
-</div>
-</details>
-</nav>
+<nav aria-label="Primary navigation" class="topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html" role="menuitem"><b>Model</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
 </header>
-<main class="agent-page agent-page-compact"><nav aria-label="Workbench suite" class="workbench-suite-tabs">
-<a href="workbench.html">Model Bench</a>
-<a href="symbolic.html">Symbolic</a>
-<a aria-current="page" class="active" href="agent.html">Agent</a>
-<a href="examples.html">Atlas</a>
-</nav>
+<main class="agent-page agent-page-compact"><nav aria-label="Workbench suite" class="mw-suite-tabs workbench-suite-tabs"><a href="workbench.html">Model</a><a href="symbolic.html">Symbolic</a><a aria-current="page" class="active" href="agent.html">Agent</a><a href="examples.html">Model Atlas</a></nav>
 <section class="agent-hero compact-hero">
 <div>
 <p class="agent-eyebrow">INDIVIDUAL RULES → EMERGENT DYNAMICS</p>
 <h1>Agent Lab</h1>
-<p class="agent-lede">Run agent models from dropdowns. Explanations live in Docs and the Model Atlas; this page is for execution, tuning and authoring.</p><p class="agent-hidden-index">T-cell proliferation · SIR agents · Game of Life · fatty-acid de novo · Adaptive &amp; Learning Agents · vaccine hesitancy · meme-stock cascade</p>
+<p class="agent-lede">Select a model, tune parameters, run the simulation and inspect diagnostics.</p><p class="agent-hidden-index">T-cell proliferation · SIR agents · Game of Life · fatty-acid de novo · Adaptive &amp; Learning Agents · vaccine hesitancy · meme-stock cascade</p>
 </div>
 <aside class="agent-boundary agent-shortcuts"><b>Reference</b><div class="agent-reference-links"><a class="open-link" href="examples.html#agent-atlas">Agent Model Atlas</a><a class="open-link" href="docs.html#agent-lab">Agent docs</a></div></aside>
 </section>
 <section class="agent-dashboard">
 <div class="agent-card agent-runbar">
-<div class="agent-selector-grid">
-<label>Example family<select id="agentModelFamily">
+<div class="agent-selector-grid agent-primary-selectors">
+<label>Family<select id="agentModelFamily">
 <option value="all">All examples</option>
 <option value="biology">Biology / cells</option>
 <option value="social">Social contagion</option>
@@ -84,8 +42,11 @@
 <option value="cellular">Cellular automata</option>
 <option value="custom">Custom / imported</option>
 </select></label>
-<label>Example model<select id="agentExample"></select></label>
-<label>Modeling approach<select id="agentApproach">
+<label>Model<select id="agentExample"></select></label>
+</div>
+<details class="agent-model-details"><summary>Model details</summary>
+<div class="agent-selector-grid agent-secondary-selectors">
+<label>Approach<select id="agentApproach">
 <option value="rule_based">Rule-Based Decision Making</option>
 <option value="statechart">State-Driven Agents / Statecharts</option>
 <option value="adaptive">Adaptive &amp; Learning Agents</option>
@@ -96,7 +57,7 @@
 <option value="discrete_async">Discrete time · asynchronous</option>
 <option value="continuous_rate">Continuous time · rate approximation</option>
 </select></label>
-<label>Neighborhood / topology<select id="agentTopology">
+<label>Topology<select id="agentTopology">
 <option value="moore">Moore grid · 8 neighbors</option>
 <option value="von_neumann">Von Neumann grid · 4 neighbors</option>
 <option value="random_graph">Random graph overlay</option>
@@ -104,20 +65,9 @@
 <option value="multilayer_social">Multilayer · spatial + social</option>
 <option value="multilayer_transport">Multilayer · spatial + social + transport</option>
 </select></label>
-<label>Plot mode<select id="agentPlotMode">
-<option value="population">population time series</option>
-<option value="composition">current composition</option>
-<option value="phase">phase portrait</option>
-<option value="events">event rates</option>
-<option value="trait">trait distribution</option>
-<option value="transition">transition / event matrix</option>
-<option value="network">network degree plot</option>
-<option value="spatial_summary">spatial occupancy profile</option>
-<option value="fadns_species">FADNS species tracker</option>
-<option value="layers">multilayer layer comparison</option>
-</select></label>
 </div>
-<div class="agent-approach-info compact" id="agentApproachInfo">Approach description.</div>
+<div class="agent-approach-info compact" id="agentApproachInfo">Model details.</div>
+</details>
 </div>
 <div class="agent-card agent-parameter-strip">
 <div class="agent-param-grid" id="agentParamGrid">
@@ -143,7 +93,23 @@
 </section>
 <section class="agent-main-grid">
 <article class="agent-card agent-sim-card"><h2 id="agentTitle">Agent model</h2><canvas aria-label="Agent-based simulation grid" height="520" id="agentCanvas" width="760"></canvas><div class="agent-legend agent-legend-inline" id="agentLegend"></div><p class="agent-caption" id="agentCaption"></p></article>
-<article class="agent-card agent-plot-card"><h2>Diagnostic plots</h2><div class="agent-kpis" id="agentKpis"></div><div class="agent-metrics" id="agentMetrics"></div></article>
+<article class="agent-card agent-plot-card"><div class="agent-card-header agent-plot-header">
+<div>
+<h2>Diagnostic plots</h2>
+<p id="agentPlotContext">Population metrics for the selected agent model.</p>
+</div>
+<div class="agent-plot-controls">
+<label>Plot<select id="agentPlotMode"></select></label>
+<label>Palette<select id="agentPalette">
+<option value="model">Model colors</option>
+<option value="scientific">Scientific</option>
+<option value="aurora">Aurora</option>
+<option value="viridis">Viridis</option>
+<option value="magma">Magma</option>
+<option value="mono">Mono</option>
+</select></label>
+</div>
+</div><div class="agent-kpis" id="agentKpis"></div><div class="agent-metrics" id="agentMetrics"></div></article>
 </section>
 <section class="agent-accordion-grid">
 <details class="agent-card"><summary>Custom rule editor</summary>
@@ -167,8 +133,8 @@ return 0;</textarea>
 </section>
 </main>
 </div>
-<script src="src/agent-lab.js?v=v24-final-audit"></script>
+<script src="src/agent-lab.js?v=47"></script>
 <script src="src/model-validator.js?v=2.7.4"></script>
 <script src="src/model-session.js?v=2.7.4"></script>
-<script defer="" src="src/navigation.js?v=41"></script></body>
+<script defer="" src="src/navigation.js?v=48"></script></body>
 </html>

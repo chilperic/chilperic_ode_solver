@@ -5,6 +5,38 @@
   const esc=v=>String(v??'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
   let canvas,ctx,state,timer=null,history=[],compiledCustom=null,MODEL_LIBRARY={},customWorker=null,workerSeq=0,workerReady=false,stepBusy=false;
 
+  const AGENT_PALETTES={
+    scientific:['#ffffff','#0072b2','#009e73','#d55e00','#cc79a7','#56b4e9','#f0e442','#64748b','#111827'],
+    aurora:['#ffffff','#0f766e','#c026d3','#2563eb','#f97316','#22c55e','#e11d48','#64748b','#111827'],
+    viridis:['#ffffff','#440154','#31688e','#21918c','#35b779','#90d743','#fde725','#64748b','#111827'],
+    magma:['#ffffff','#3b0f70','#8c2981','#de4968','#fe9f6d','#fcfdbf','#f97316','#64748b','#111827'],
+    mono:['#ffffff','#111827','#334155','#475569','#64748b','#94a3b8','#cbd5e1','#e2e8f0','#0f172a']
+  };
+
+
+
+  const AGENT_PLOT_MODES={
+    population:'Population time series',
+    population_stacked:'Stacked population area',
+    composition:'Current composition',
+    state_rank:'State ranking',
+    phase:'Phase portrait',
+    events:'Event rates',
+    cumulative_events:'Cumulative events',
+    diversity:'State diversity / entropy',
+    trait:'Trait distribution',
+    transition:'Transition / event matrix',
+    network:'Network degree plot',
+    spatial_summary:'Spatial occupancy profile',
+    spatial_heatmap:'Spatial state heatmap',
+    layers:'Layer comparison',
+    fadns_species:'FADNS species tracker'
+  };
+  const BASE_PLOT_MODES=['population','population_stacked','composition','state_rank','phase','events','cumulative_events','diversity','transition','spatial_summary','spatial_heatmap'];
+  const GRAPH_PLOT_MODES=['network','layers'];
+  const TRAIT_PLOT_MODES=['trait'];
+  const FADNS_PLOT_MODES=['fadns_species'];
+
   const EXAMPLES={
     tcell:{family:'biology',label:'T-cell proliferation agents',caption:'Quiescent cells activate, divide locally and die. A=activation/division, B=death, C=spontaneous activation, D=crowding death.',states:['empty','quiescent','activated','dead'],colors:['#ffffff','#93c5fd','#14b8a6','#f97316'],params:['activation/division','death','spontaneous activation','crowding death'],a:35,b:20,c:4,d:3,approach:'statechart',timeMode:'continuous_rate',topology:'moore',rule:['0 empty space','1 quiescent: may activate','2 activated: may divide into empty neighbor or die','3 dead/removed lineage']},
     fadns_particle:{family:'biology',label:'FADNS particle-agent tracker',caption:'Toy agent analogy for FADNS. Tracks Acetyl-CoA, Malonyl-CoA, chain intermediates, C14/C16/C18 products and CoA release. Not the calibrated PhD ODE model.',states:['empty','Acetyl-CoA','Malonyl-CoA','chain intermediate','C14 product','C16 product','C18 product','CoA released'],colors:['#ffffff','#60a5fa','#38bdf8','#14b8a6','#fbbf24','#f97316','#dc2626','#64748b'],params:['condensation / chain start','elongation bias','product release / CoA recycling','substrate inflow'],a:34,b:48,c:22,d:28,approach:'statechart',timeMode:'continuous_rate',topology:'moore',behavior:'fadns',rule:['0 empty site','1 Acetyl-CoA substrate pool','2 Malonyl-CoA substrate pool','3 chain intermediate after condensation','4/5/6 products: C14, C16, C18','7 CoA released/recycled']},
@@ -87,15 +119,47 @@
   function params(){return {A:num('agentA')/100,B:num('agentB')/100,C:num('agentC')/100,D:num('agentD')/100,dt:dt(),degree:num('agentDegree',6)|0};}
   function dt(){return clamp(num('agentDt',100),1,200)/100;} function rateProb(rate){return 1-Math.exp(-Math.max(0,rate)*dt());}
   function size(){return clamp(num('agentSize',46),20,100)|0;} function density(){return clamp(num('agentDensity',42),1,95)/100;}
-  function model(){return MODEL_LIBRARY[state?.kind]||MODEL_LIBRARY[$('agentExample')?.value]||MODEL_LIBRARY.tcell||EXAMPLES.tcell;}
+  function selectedModelKey(){return state?.kind || $('agentExample')?.value || 'tcell';}
+  function model(){return MODEL_LIBRARY[selectedModelKey()]||MODEL_LIBRARY.tcell||EXAMPLES.tcell;}
+  function isFadnsPlotModel(kind, ex){return kind==='fadns_particle' || ex?.behavior==='fadns';}
+  function allowedPlotModes(kind=selectedModelKey(), ex=model()){
+    const topo=$('agentTopology')?.value || ex.topology || 'moore';
+    const out=[...BASE_PLOT_MODES];
+    if(['plant','evolution'].includes(kind)) out.splice(8,0,...TRAIT_PLOT_MODES);
+    if(['graph','random_graph','small_world','multilayer_social','multilayer_transport'].includes(ex.approach) || topo.includes('graph') || topo.includes('multilayer')) out.push(...GRAPH_PLOT_MODES);
+    if(isFadnsPlotModel(kind, ex)) out.push(...FADNS_PLOT_MODES);
+    return [...new Set(out)];
+  }
+  function defaultPlotMode(kind=selectedModelKey(), ex=model()){
+    if(isFadnsPlotModel(kind, ex)) return 'fadns_species';
+    if(['plant','evolution'].includes(kind)) return 'trait';
+    return 'population';
+  }
+  function populatePlotModes(preferred=null, forceDefault=false){
+    const sel=$('agentPlotMode'); if(!sel)return;
+    const kind=$('agentExample')?.value || selectedModelKey(); const ex=MODEL_LIBRARY[kind]||model();
+    const allowed=allowedPlotModes(kind, ex); const wanted=forceDefault ? defaultPlotMode(kind, ex) : (preferred || sel.value || defaultPlotMode(kind, ex));
+    sel.innerHTML=''; allowed.forEach(key=>{const o=document.createElement('option'); o.value=key; o.textContent=AGENT_PLOT_MODES[key]||key; sel.appendChild(o);});
+    sel.value=allowed.includes(wanted) ? wanted : defaultPlotMode(kind, ex);
+    if(sel.value==='fadns_species' && !isFadnsPlotModel(kind, ex)) sel.value=defaultPlotMode(kind, ex);
+    const ctx=$('agentPlotContext'); if(ctx){
+      const label=AGENT_PLOT_MODES[sel.value]||'Diagnostic plot';
+      ctx.textContent=`${label} for ${ex.label || 'selected model'}.`;
+    }
+  }
   function idx(x,y){const n=state.n;return ((y+n)%n)*n+((x+n)%n)}
   function status(msg,tone=''){const el=$('agentStatus'); if(el){el.textContent=msg; el.dataset.tone=tone;}}
+  function paletteKey(){return $('agentPalette')?.value||'model';}
+  function activePalette(){const ex=model(); const key=paletteKey(); return key==='model' ? (ex.colors||AGENT_PALETTES.scientific) : (AGENT_PALETTES[key]||AGENT_PALETTES.scientific);}
+  function stateColor(i){const pal=activePalette(); return pal[i % pal.length] || '#0f766e';}
+  function plotColor(i){const pal=activePalette().filter((_,idx)=>idx!==0); return pal[i % Math.max(1,pal.length)] || '#0f766e';}
+  function plotTemplate(){const text=getComputedStyle(document.documentElement).getPropertyValue('--text')||'#0f172a'; const muted=getComputedStyle(document.documentElement).getPropertyValue('--muted')||'#64748b'; return {margin:{l:58,r:44,t:38,b:70},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'Inter, system-ui, sans-serif',size:12,color:text},legend:{orientation:'h',y:-.32},xaxis:{automargin:true,tickfont:{color:muted},gridcolor:'rgba(148,163,184,.18)'},yaxis:{automargin:true,tickfont:{color:muted},gridcolor:'rgba(148,163,184,.18)'}};}
   function updateOutputs(){[['agentSizeOut',size()],['agentDensityOut',Math.round(density()*100)+'%'],['agentAOut',params().A.toFixed(2)],['agentBOut',params().B.toFixed(2)],['agentCOut',params().C.toFixed(2)],['agentDOut',params().D.toFixed(2)],['agentDtOut',dt().toFixed(2)],['agentDegreeOut',String(params().degree)]].forEach(([id,val])=>{const el=$(id);if(el)el.textContent=val;});}
-  function updateParamLabels(){const ex=MODEL_LIBRARY[$('agentExample')?.value]||EXAMPLES.tcell; ['A','B','C','D'].forEach((k,i)=>{const lab=$('agent'+k+'Label'),input=$('agent'+k); if(lab)lab.textContent=ex.params[i]||k; if(input)input.value=ex[k.toLowerCase()]??input.value;}); if($('agentApproach'))$('agentApproach').value=ex.approach||'rule_based'; if(ex.timeMode&&$('agentTimeMode'))$('agentTimeMode').value=ex.timeMode; if(ex.topology&&$('agentTopology'))$('agentTopology').value=ex.topology; updateOutputs(); renderApproach();}
+  function updateParamLabels(){const ex=MODEL_LIBRARY[$('agentExample')?.value]||EXAMPLES.tcell; ['A','B','C','D'].forEach((k,i)=>{const lab=$('agent'+k+'Label'),input=$('agent'+k); if(lab)lab.textContent=ex.params[i]||k; if(input)input.value=ex[k.toLowerCase()]??input.value;}); if($('agentApproach'))$('agentApproach').value=ex.approach||'rule_based'; if(ex.timeMode&&$('agentTimeMode'))$('agentTimeMode').value=ex.timeMode; if(ex.topology&&$('agentTopology'))$('agentTopology').value=ex.topology; populatePlotModes(null,true); updateOutputs(); renderApproach();}
   function populate(){MODEL_LIBRARY={...EXAMPLES}; populateExampleOptions($('agentExample')?.value||'tcell');}
   function populateExampleOptions(preferred){const sel=$('agentExample'); if(!sel)return; const family=$('agentModelFamily')?.value||'all'; const previous=preferred||sel.value||'tcell'; sel.innerHTML=''; Object.entries(MODEL_LIBRARY).filter(([_,v])=>family==='all'||v.family===family).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;sel.appendChild(o);}); if([...sel.options].some(o=>o.value===previous))sel.value=previous; else if(sel.options.length)sel.value=sel.options[0].value; else {const o=document.createElement('option');o.value='tcell';o.textContent='T-cell proliferation agents';sel.appendChild(o);sel.value='tcell';}}
   function bind(){
-    [['agentReset','click',reset],['agentStep','click',stepAndDraw],['agentRun','click',toggleRun],['agentExport','click',()=>downloadJson()],['agentApplyRule','click',applyCustomRule],['agentLoadRuleTemplate','click',loadRuleTemplate],['agentLoadApproachTemplate','click',loadApproachTemplate],['agentLoadCustomModel','click',loadCustomModelSkeleton],['agentApplyCustomModel','click',applyCustomModel],['agentImport','click',importJson],['agentCopyJson','click',copyJson],['agentPlotMode','change',metrics],['agentApproach','change',()=>{loadApproachTemplate();renderApproach();}],['agentTopology','change',()=>{buildGraph();renderApproach();draw();metrics();}],['agentTimeMode','change',()=>{renderApproach();status('Time update changed. Step or reset to inspect the effect.');}]].forEach(([id,ev,fn])=>$(id)?.addEventListener(ev,fn));
+    [['agentReset','click',reset],['agentStep','click',stepAndDraw],['agentRun','click',toggleRun],['agentExport','click',()=>downloadJson()],['agentApplyRule','click',applyCustomRule],['agentLoadRuleTemplate','click',loadRuleTemplate],['agentLoadApproachTemplate','click',loadApproachTemplate],['agentLoadCustomModel','click',loadCustomModelSkeleton],['agentApplyCustomModel','click',applyCustomModel],['agentImport','click',importJson],['agentCopyJson','click',copyJson],['agentPlotMode','change',()=>{populatePlotModes($('agentPlotMode')?.value,false);metrics();}],['agentPalette','change',()=>{draw();metrics();status('Palette updated.');}],['agentApproach','change',()=>{loadApproachTemplate();renderApproach();}],['agentTopology','change',()=>{populatePlotModes($('agentPlotMode')?.value,false);buildGraph();renderApproach();draw();metrics();}],['agentTimeMode','change',()=>{renderApproach();status('Time update changed. Step or reset to inspect the effect.');}]].forEach(([id,ev,fn])=>$(id)?.addEventListener(ev,fn));
     $('agentModelFamily')?.addEventListener('change',()=>{populateExampleOptions();updateParamLabels();loadRuleTemplate();reset();});
     $('agentExample')?.addEventListener('change',()=>{updateParamLabels();loadRuleTemplate();reset();});
     ['agentSize','agentDensity','agentSeed','agentDegree'].forEach(id=>$(id)?.addEventListener('change',()=>{updateOutputs();reset();}));
@@ -156,24 +220,94 @@
   function counts(){const ex=model(), nStates=Math.max(4,(ex.states||[]).length), o={empty:0,a:0,b:0,c:0,trait:0,ntrait:0,states:Array(nStates).fill(0)}; state.cells.forEach((v,i)=>{const sv=clamp(Number(v)||0,0,nStates-1)|0; o.states[sv]=(o.states[sv]||0)+1; if(!sv)o.empty++; if(sv===1)o.a++; if(sv===2)o.b++; if(sv===3)o.c++; if(sv&&state.traits[i]){o.trait+=state.traits[i];o.ntrait++;}}); for(let i=0;i<o.states.length;i++)o['s'+i]=o.states[i]||0; o.meanTrait=o.ntrait?o.trait/o.ntrait:0; return o;}
   function record(){const cc=counts(), ev=state.events||eventBag(); history.push({t:state.t,...cc,...ev}); if(history.length>900)history.shift();}
   function fitCanvasDpr(){ if(!canvas||!ctx)return; const rect=canvas.getBoundingClientRect(); const logicalW=Math.max(320, rect.width||760), logicalH=Math.max(260, rect.height||520); const dpr=window.devicePixelRatio||1; if(canvas.width!==Math.round(logicalW*dpr)||canvas.height!==Math.round(logicalH*dpr)){ canvas.width=Math.round(logicalW*dpr); canvas.height=Math.round(logicalH*dpr); ctx.setTransform(dpr,0,0,dpr,0,0); canvas.dataset.logicalWidth=String(logicalW); canvas.dataset.logicalHeight=String(logicalH); } }
-  function draw(){if(!ctx)return; fitCanvasDpr(); const n=state.n,w=Number(canvas.dataset.logicalWidth)||760,h=Number(canvas.dataset.logicalHeight)||520,cell=Math.min(w,h)/n,ox=(w-cell*n)/2,oy=(h-cell*n)/2,ex=model(); ctx.clearRect(0,0,w,h); ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--panel')||'#f8fafc'; ctx.fillRect(0,0,w,h); for(let y=0;y<n;y++)for(let x=0;x<n;x++){const id=idx(x,y),v=state.cells[id]; if(v){if(['evolution','plant'].includes(state.kind)&&state.traits[id])ctx.fillStyle=state.kind==='plant'?`hsl(${105+state.traits[id]*8},58%,38%)`:`hsl(${180+state.traits[id]*18},70%,42%)`; else ctx.fillStyle=ex.colors[v]||'#0f766e'; ctx.fillRect(ox+x*cell,oy+y*cell,Math.ceil(cell),Math.ceil(cell));}} if(state.kind==='langton'){ctx.fillStyle='#dc2626'; ctx.beginPath(); ctx.arc(ox+(state.ant.x+.5)*cell,oy+(state.ant.y+.5)*cell,Math.max(3,cell*.45),0,Math.PI*2); ctx.fill();}}
-  function renderRule(){const ex=model(); $('agentTitle').textContent=ex.label; $('agentCaption').textContent=ex.caption; const mode=$('agentRuleMode')?.value==='custom'?'Custom local rule':'Built-in rule'; const tm=$('agentTimeMode')?.value||'discrete_sync', topo=$('agentTopology')?.value||'moore'; $('agentRuleSummary').innerHTML=`<p><b>${esc(mode)}.</b> ${esc(ex.caption)}</p><ol>${(ex.rule||[]).map(r=>`<li>${esc(r)}</li>`).join('')}</ol><p><b>Update:</b> ${esc(tm.replaceAll('_',' '))}; <b>Topology:</b> ${esc(topo.replaceAll('_',' '))}; <b>dt:</b> ${dt().toFixed(2)}.</p><p><b>Parameter meaning:</b> ${(ex.params||[]).map((p,i)=>`${'ABCD'[i]}=${esc(p)}`).join('; ')}.</p>`; $('agentLegend').innerHTML=(ex.states||[]).map((s,i)=>`<span><i style="background:${(ex.colors||[])[i]||'#ccc'}"></i>${esc(i+': '+s)}</span>`).join('');}
-  function renderApproach(){const key=$('agentApproach')?.value||model().approach||'rule_based',ap=APPROACHES[key]||APPROACHES.rule_based; const time=$('agentTimeMode')?.value||'discrete_sync', topo=$('agentTopology')?.value||'moore'; const info=$('agentApproachInfo'); if(info)info.innerHTML=`<b>Engine:</b> ${esc(ap.label)} · ${esc(time.replaceAll('_',' '))} · ${esc(topo.replaceAll('_',' '))}. Sandboxed custom rules run in a Web Worker; graph modes use explicit network layers. Details: <a href="docs.html#agent-lab">Docs</a> / <a href="examples.html#agent-atlas">Model Atlas</a>.`; const box=$('agentApproachCompare'); if(box)box.innerHTML=`<table><thead><tr><th>Approach</th><th>Strength</th><th>When to use</th><th>User-code contract</th></tr></thead><tbody>${Object.values(APPROACHES).map(a=>`<tr><td><b>${esc(a.label)}</b></td><td>${esc(a.summary)}</td><td>${esc(a.best)}</td><td>${esc(a.signature)}</td></tr>`).join('')}<tr><td><b>Continuous vs. discrete time</b></td><td>Continuous mode converts rates to probabilities with 1-exp(-rate·dt); discrete modes apply direct step probabilities.</td><td>Use continuous-time mode when A-D represent event rates rather than per-step probabilities.</td><td>Set dt and choose synchronous/asynchronous/rate approximation.</td></tr></tbody></table>`; renderRule();}
+  function draw(){if(!ctx)return; fitCanvasDpr(); const n=state.n,w=Number(canvas.dataset.logicalWidth)||760,h=Number(canvas.dataset.logicalHeight)||520,cell=Math.min(w,h)/n,ox=(w-cell*n)/2,oy=(h-cell*n)/2,ex=model(); ctx.clearRect(0,0,w,h); ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--panel')||'#f8fafc'; ctx.fillRect(0,0,w,h); for(let y=0;y<n;y++)for(let x=0;x<n;x++){const id=idx(x,y),v=state.cells[id]; if(v){if(['evolution','plant'].includes(state.kind)&&state.traits[id])ctx.fillStyle=state.kind==='plant'?`hsl(${105+state.traits[id]*8},58%,38%)`:`hsl(${180+state.traits[id]*18},70%,42%)`; else ctx.fillStyle=stateColor(v); ctx.fillRect(ox+x*cell,oy+y*cell,Math.ceil(cell),Math.ceil(cell));}} if(state.kind==='langton'){ctx.fillStyle='#dc2626'; ctx.beginPath(); ctx.arc(ox+(state.ant.x+.5)*cell,oy+(state.ant.y+.5)*cell,Math.max(3,cell*.45),0,Math.PI*2); ctx.fill();}}
+  function renderRule(){const ex=model(); $('agentTitle').textContent=ex.label; $('agentCaption').textContent=ex.caption; const mode=$('agentRuleMode')?.value==='custom'?'Custom local rule':'Built-in rule'; const tm=$('agentTimeMode')?.value||'discrete_sync', topo=$('agentTopology')?.value||'moore'; $('agentRuleSummary').innerHTML=`<p><b>${esc(mode)}.</b> ${esc(ex.caption)}</p><ol>${(ex.rule||[]).map(r=>`<li>${esc(r)}</li>`).join('')}</ol><p><b>Update:</b> ${esc(tm.replaceAll('_',' '))}; <b>Topology:</b> ${esc(topo.replaceAll('_',' '))}; <b>dt:</b> ${dt().toFixed(2)}.</p><p><b>Parameter meaning:</b> ${(ex.params||[]).map((p,i)=>`${'ABCD'[i]}=${esc(p)}`).join('; ')}.</p>`; $('agentLegend').innerHTML=(ex.states||[]).map((s,i)=>`<span><i style="background:${stateColor(i)}"></i>${esc(i+': '+s)}</span>`).join('');}
+  function renderApproach(){const key=$('agentApproach')?.value||model().approach||'rule_based',ap=APPROACHES[key]||APPROACHES.rule_based; const time=$('agentTimeMode')?.value||'discrete_sync', topo=$('agentTopology')?.value||'moore'; const info=$('agentApproachInfo'); if(info)info.textContent=`${ap.label} · ${time.replaceAll('_',' ')} · ${topo.replaceAll('_',' ')}`; const box=$('agentApproachCompare'); if(box)box.innerHTML=`<table><thead><tr><th>Approach</th><th>Strength</th><th>Use when</th></tr></thead><tbody>${Object.values(APPROACHES).map(a=>`<tr><td><b>${esc(a.label)}</b></td><td>${esc(a.summary)}</td><td>${esc(a.best)}</td></tr>`).join('')}</tbody></table>`; renderRule();}
   function stateLabel(i){return (model().states||[])[i]||('state '+i);}
   function kpiHtml(cc){const occupied=state.cells.length-(cc.states?.[0]||cc.empty||0); const names=model().states||[]; let cards=[`<div><b>${state.t}</b><span>step</span></div>`,`<div><b>${occupied}</b><span>occupied</span></div>`]; for(let i=1;i<Math.min(names.length,6);i++)cards.push(`<div><b>${cc.states?.[i]||0}</b><span>${esc(names[i])}</span></div>`); if(names.length>6){const tail=(cc.states||[]).slice(6).reduce((a,b)=>a+b,0); cards.push(`<div><b>${tail}</b><span>other tracked</span></div>`);} if(cc.meanTrait)cards.push(`<div><b>${cc.meanTrait.toFixed(2)}</b><span>mean trait</span></div>`); return cards.join('');}
-  function metrics(){const box=$('agentMetrics'),cc=counts(), ex=model(), names=ex.states||['empty','state 1','state 2','state 3']; $('agentKpis').innerHTML=kpiHtml(cc); if(!history.length)record(); if(!window.Plotly){box.innerHTML='<p>Plotly unavailable. Counts: '+esc(JSON.stringify(cc))+'</p>'; return;} const mode=$('agentPlotMode')?.value||'population', xs=history.map(d=>d.t); let traces=[],lay={margin:{l:58,r:44,t:38,b:70},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'Inter, system-ui, sans-serif',size:12},legend:{orientation:'h',y:-.32},xaxis:{automargin:true},yaxis:{automargin:true}};
+  function entropyFromCounts(arr){const total=arr.reduce((a,b)=>a+b,0)||1; return arr.reduce((h,c)=>{const p=c/total; return p>0?h-p*Math.log2(p):h;},0);}
+  function cumulative(key){let acc=0; return history.map(d=>{acc+=d[key]||0; return acc;});}
+  function heatmapRows(){const n=state.n, z=[]; for(let y=0;y<n;y++){const row=[]; for(let x=0;x<n;x++)row.push(state.cells[idx(x,y)]||0); z.push(row);} return z;}
+  function metrics(){
+    const box=$('agentMetrics'),cc=counts(), ex=model(), names=ex.states||['empty','state 1','state 2','state 3'];
+    $('agentKpis').innerHTML=kpiHtml(cc);
+    if(!history.length)record();
+    if(!window.Plotly){box.innerHTML='<p>Plotly unavailable. Counts: '+esc(JSON.stringify(cc))+'</p>'; return;}
+    let mode=$('agentPlotMode')?.value||defaultPlotMode(state.kind,ex); if(!allowedPlotModes(state.kind,ex).includes(mode)){populatePlotModes(null,true); mode=$('agentPlotMode')?.value||defaultPlotMode(state.kind,ex);} const xs=history.map(d=>d.t), pal=activePalette();
+    let traces=[],lay=plotTemplate();
     const countsNow=names.map((_,i)=>cc.states?.[i]||0);
-    if(mode==='composition'){traces=[{type:'bar',x:names,y:countsNow,name:'cells'}]; lay.title={text:'Current state composition',font:{size:14}}; lay.xaxis.tickangle=names.length>5?-25:0;}
-    else if(mode==='phase'){traces=[{type:'scatter',mode:'lines+markers',x:history.map(d=>d.states?.[1]||d.a||0),y:history.map(d=>d.states?.[2]||d.b||0),name:`${stateLabel(1)} vs ${stateLabel(2)}`,marker:{size:4}}]; lay.title={text:'Phase portrait from simulation history',font:{size:14}}; lay.xaxis.title=stateLabel(1); lay.yaxis.title=stateLabel(2);}
-    else if(mode==='trait'){const vals=state.traits.filter((v,i)=>state.cells[i]&&v); traces=[{type:'histogram',x:vals,name:'trait',xbins:{size:1}}]; lay.title={text:'Current trait distribution',font:{size:14}}; lay.xaxis.title='trait'; lay.yaxis.title='count';}
-    else if(mode==='events'){['births','deaths','infections','recoveries','mutations','productsC14','productsC16','productsC18','customChanges'].forEach(k=>traces.push({type:'scatter',mode:'lines',x:xs,y:history.map(d=>d[k]||0),name:k})); lay.title={text:'Events per step',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='events';}
-    else if(mode==='transition'){const ev=state.events||{}; traces=[{type:'bar',x:['0→1','1→2','2→3','3→4','4/5/6→CoA','custom'],y:[ev.transitions01||0,ev.transitions12||0,ev.transitions23||0,ev.transitions34||0,ev.transitions67||0,ev.customChanges||0],name:'last-step transitions'}]; lay.title={text:'Last-step transition/event summary',font:{size:14}}; lay.yaxis.title='events';}
-    else if(mode==='network'){const layers=state.networkLayers||{}; const deg=state.graph?.length?state.graph.map(g=>g.length):[countNeighbors(0,0).degree]; traces=[{type:'histogram',x:deg,name:'merged graph degree'}]; if(layers.social?.length)traces.push({type:'histogram',x:layers.social.map(g=>g.length),name:'social layer',opacity:.62}); if(layers.transport?.length)traces.push({type:'histogram',x:layers.transport.map(g=>g.length),name:'transport layer',opacity:.62}); lay.barmode='overlay'; lay.title={text:'Network / multilayer degree distribution',font:{size:14}}; lay.xaxis.title='degree'; lay.yaxis.title='cells';}
-    else if(mode==='layers'){const layers=state.networkLayers||{}; const namesL=['spatial','social','transport']; traces=[{type:'bar',x:namesL,y:namesL.map(k=>layers[k]?.length?layers[k].reduce((a,g)=>a+g.length,0)/layers[k].length:0),name:'mean degree'}]; lay.title={text:'Mean degree by network layer',font:{size:14}}; lay.yaxis.title='mean degree';}
-    else if(mode==='spatial_summary'){const n=state.n, rows=[]; for(let y=0;y<n;y++){let c=0;for(let x=0;x<n;x++)if(state.cells[idx(x,y)])c++;rows.push(c/n);} traces=[{type:'scatter',mode:'lines',x:rows.map((_,i)=>i),y:rows,name:'occupied fraction'}]; lay.title={text:'Spatial occupancy profile by row',font:{size:14}}; lay.xaxis.title='row'; lay.yaxis.title='occupied fraction';}
-    else if(mode==='fadns_species'){const ids=[1,2,3,4,5,6,7].filter(i=>i<names.length); traces=ids.map(i=>({x:xs,y:history.map(d=>d.states?.[i]||0),mode:'lines',name:names[i]})); lay.title={text:'FADNS tracked species: substrates, intermediates, C14/C16/C18 and CoA',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='agent count';}
-    else {for(let i=1;i<names.length;i++)traces.push({x:xs,y:history.map(d=>d.states?.[i]||0),mode:'lines',name:names[i]||('state '+i)}); if(['plant','evolution'].includes(state.kind))traces.push({x:xs,y:history.map(d=>d.meanTrait),mode:'lines',name:'mean trait',yaxis:'y2'}); lay.title={text:'Population metrics',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='count'; if(['plant','evolution'].includes(state.kind))lay.yaxis2={overlaying:'y',side:'right',title:'trait',automargin:true};}
-    Plotly.react(box,traces,lay,{responsive:true,displaylogo:false});}
+    const lineTrace=(i,name)=>({x:xs,y:history.map(d=>d.states?.[i]||0),mode:'lines',name,line:{color:plotColor(i-1),width:2.25}});
+    if(mode==='composition'){
+      traces=[{type:'bar',x:names,y:countsNow,name:'cells',marker:{color:names.map((_,i)=>stateColor(i))}}];
+      lay.title={text:'Current state composition',font:{size:14}}; lay.xaxis.tickangle=names.length>5?-25:0;
+    }
+    else if(mode==='state_rank'){
+      const ranked=names.map((n,i)=>({name:n,count:countsNow[i],idx:i})).sort((a,b)=>b.count-a.count);
+      traces=[{type:'bar',orientation:'h',y:ranked.map(r=>r.name).reverse(),x:ranked.map(r=>r.count).reverse(),name:'cells',marker:{color:ranked.map(r=>stateColor(r.idx)).reverse()}}];
+      lay.title={text:'State ranking at current step',font:{size:14}}; lay.xaxis.title='cells'; lay.margin.l=110;
+    }
+    else if(mode==='population_stacked'){
+      traces=names.slice(1).map((name,offset)=>({x:xs,y:history.map(d=>d.states?.[offset+1]||0),mode:'lines',stackgroup:'agents',name,line:{color:plotColor(offset),width:1.6},fillcolor:plotColor(offset)}));
+      lay.title={text:'Stacked population composition over time',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='agent count';
+    }
+    else if(mode==='phase'){
+      traces=[{type:'scatter',mode:'lines+markers',x:history.map(d=>d.states?.[1]||d.a||0),y:history.map(d=>d.states?.[2]||d.b||0),name:`${stateLabel(1)} vs ${stateLabel(2)}`,line:{color:plotColor(0)},marker:{size:4,color:plotColor(1)}}];
+      lay.title={text:'Phase portrait from simulation history',font:{size:14}}; lay.xaxis.title=stateLabel(1); lay.yaxis.title=stateLabel(2);
+    }
+    else if(mode==='trait'){
+      const vals=state.traits.filter((v,i)=>state.cells[i]&&v);
+      traces=[{type:'histogram',x:vals,name:'trait',xbins:{size:1},marker:{color:plotColor(0)}}];
+      lay.title={text:'Current trait distribution',font:{size:14}}; lay.xaxis.title='trait'; lay.yaxis.title='count';
+    }
+    else if(mode==='events'){
+      ['births','deaths','infections','recoveries','mutations','productsC14','productsC16','productsC18','customChanges'].forEach((k,i)=>traces.push({type:'scatter',mode:'lines',x:xs,y:history.map(d=>d[k]||0),name:k,line:{color:plotColor(i),width:2}}));
+      lay.title={text:'Events per step',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='events';
+    }
+    else if(mode==='cumulative_events'){
+      ['births','deaths','infections','recoveries','mutations','productsC14','productsC16','productsC18','customChanges'].forEach((k,i)=>traces.push({type:'scatter',mode:'lines',x:xs,y:cumulative(k),name:k,line:{color:plotColor(i),width:2.1}}));
+      lay.title={text:'Cumulative event burden',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='cumulative events';
+    }
+    else if(mode==='diversity'){
+      traces=[{type:'scatter',mode:'lines',x:xs,y:history.map(d=>entropyFromCounts((d.states||[]).slice(1))),name:'Shannon entropy',line:{color:plotColor(0),width:2.4}},{type:'scatter',mode:'lines',x:xs,y:history.map(d=>((d.states||[]).filter((c,i)=>i>0&&c>0).length)),name:'active states',line:{color:plotColor(2),width:2,dash:'dot'},yaxis:'y2'}];
+      lay.title={text:'State diversity during the simulation',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='entropy'; lay.yaxis2={overlaying:'y',side:'right',title:'active states',automargin:true};
+    }
+    else if(mode==='transition'){
+      const ev=state.events||{}; const labs=['0→1','1→2','2→3','3→4','4/5/6→CoA','custom']; const vals=[ev.transitions01||0,ev.transitions12||0,ev.transitions23||0,ev.transitions34||0,ev.transitions67||0,ev.customChanges||0];
+      traces=[{type:'bar',x:labs,y:vals,name:'last-step transitions',marker:{color:labs.map((_,i)=>plotColor(i))}}]; lay.title={text:'Last-step transition/event summary',font:{size:14}}; lay.yaxis.title='events';
+    }
+    else if(mode==='network'){
+      const layers=state.networkLayers||{}; const deg=state.graph?.length?state.graph.map(g=>g.length):[countNeighbors(0,0).degree];
+      traces=[{type:'histogram',x:deg,name:'merged graph degree',marker:{color:plotColor(0)}}];
+      if(layers.social?.length)traces.push({type:'histogram',x:layers.social.map(g=>g.length),name:'social layer',opacity:.62,marker:{color:plotColor(1)}});
+      if(layers.transport?.length)traces.push({type:'histogram',x:layers.transport.map(g=>g.length),name:'transport layer',opacity:.62,marker:{color:plotColor(2)}});
+      lay.barmode='overlay'; lay.title={text:'Network / multilayer degree distribution',font:{size:14}}; lay.xaxis.title='degree'; lay.yaxis.title='cells';
+    }
+    else if(mode==='layers'){
+      const layers=state.networkLayers||{}; const namesL=['spatial','social','transport'];
+      traces=[{type:'bar',x:namesL,y:namesL.map(k=>layers[k]?.length?layers[k].reduce((a,g)=>a+g.length,0)/layers[k].length:0),name:'mean degree',marker:{color:namesL.map((_,i)=>plotColor(i))}}];
+      lay.title={text:'Mean degree by network layer',font:{size:14}}; lay.yaxis.title='mean degree';
+    }
+    else if(mode==='spatial_summary'){
+      const n=state.n, rows=[]; for(let y=0;y<n;y++){let c=0;for(let x=0;x<n;x++)if(state.cells[idx(x,y)])c++;rows.push(c/n);}
+      traces=[{type:'scatter',mode:'lines',x:rows.map((_,i)=>i),y:rows,name:'occupied fraction',line:{color:plotColor(0),width:2.4}}]; lay.title={text:'Spatial occupancy profile by row',font:{size:14}}; lay.xaxis.title='row'; lay.yaxis.title='occupied fraction';
+    }
+    else if(mode==='spatial_heatmap'){
+      traces=[{type:'heatmap',z:heatmapRows(),colorscale:pal.map((c,i)=>[i/Math.max(1,pal.length-1),c]),showscale:true,colorbar:{title:'state'}}];
+      lay.title={text:'Spatial state heatmap',font:{size:14}}; lay.xaxis.title='x'; lay.yaxis.title='y'; lay.yaxis.autorange='reversed';
+    }
+    else if(mode==='fadns_species'){
+      if(!isFadnsPlotModel(state.kind, ex)){populatePlotModes(null,true); return metrics();}
+      const ids=[1,2,3,4,5,6,7].filter(i=>i<names.length); traces=ids.map((i,k)=>({x:xs,y:history.map(d=>d.states?.[i]||0),mode:'lines',name:names[i],line:{color:plotColor(k),width:2.25}})); lay.title={text:'FADNS tracked species: substrates, intermediates, C14/C16/C18 and CoA',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='agent count';
+    }
+    else {
+      for(let i=1;i<names.length;i++)traces.push(lineTrace(i,names[i]||('state '+i)));
+      if(['plant','evolution'].includes(state.kind))traces.push({x:xs,y:history.map(d=>d.meanTrait),mode:'lines',name:'mean trait',line:{color:plotColor(names.length),width:2,dash:'dash'},yaxis:'y2'});
+      lay.title={text:'Population metrics',font:{size:14}}; lay.xaxis.title='step'; lay.yaxis.title='count'; if(['plant','evolution'].includes(state.kind))lay.yaxis2={overlaying:'y',side:'right',title:'trait',automargin:true};
+    }
+    const ctx=$('agentPlotContext'); if(ctx)ctx.textContent=`${AGENT_PLOT_MODES[mode]||'Diagnostic plot'} for ${ex.label||'selected model'}.`;
+    if(!traces.length){box.innerHTML='<div class="agent-empty-plot">No diagnostic trace is available for this model and plot combination.</div>'; return;}
+    Plotly.react(box,traces,lay,{responsive:true,displaylogo:false}).then(()=>{try{Plotly.Plots.resize(box);}catch(_e){}});
+  }
 
   function ensureRuleWorker(){if(customWorker)return customWorker; if(!window.Worker){workerReady=false; return null;} customWorker=new Worker('src/agent-rule-worker.js?v=v24-final-audit'); customWorker.onerror=e=>{workerReady=false; status('Custom rule worker error: '+(e.message||'unknown error'),'error');}; return customWorker;}
   function workerCall(payload,timeout=900){return new Promise((resolve,reject)=>{const w=ensureRuleWorker(); if(!w)return reject(new Error('Web Worker unavailable. Serve the page through http://localhost, not file://.')); const id=++workerSeq; const timer=setTimeout(()=>{w.terminate(); customWorker=null; workerReady=false; reject(new Error('custom rule timeout; worker was reset'));},timeout); const handler=ev=>{if(ev.data?.requestId!==id)return; clearTimeout(timer); w.removeEventListener('message',handler); ev.data.ok?resolve(ev.data):reject(new Error(ev.data.error||'worker failure'));}; w.addEventListener('message',handler); w.postMessage({requestId:id,...payload});});}
@@ -197,14 +331,14 @@ if (cell === 7 && rand() < params.C * 0.12) return 0;
 return cell;`,life:`// Conway's Game of Life\nif (cell === 1 && (counts.alive === 2 || counts.alive === 3)) return 1;\nif (cell === 0 && counts.alive === 3) return 1;\nreturn 0;`,forest:`// Forest-fire local rule\nif (cell === 0 && rand() < params.A * 0.05) return 1;\nif (cell === 1 && (counts.b > 0 || rand() < params.B * 0.01)) return 2;\nif (cell === 2) return 3;\nif (cell === 3 && rand() > params.D) return 0;\nreturn cell;`}; if(SOCIAL_MODELS.has(kind)) return `// Social / network-contagion rule template\n// 0 outside, 1 baseline/compliant, 2 activated by rumor/hype/panic, 3 corrected/resistant/removed\nconst pressure = (counts.b + 0.6 * counts.c) / Math.max(1, counts.degree);\nif (cell === 1 && rand() < params.A * pressure + params.B * 0.035) return {state:2, event:'contagion'};\nif (cell === 2 && rand() < params.C * 0.08) return {state:3, event:'correction'};\nif (cell === 3 && rand() < params.D * 0.015) return 1;\nreturn cell;`; return byKind[kind]||templates[approach]||templates.rule_based;}
   function loadRuleTemplate(){const k=$('agentExample')?.value||'life'; if($('agentCustomCode'))$('agentCustomCode').value=templateFor(k); applyCustomRule(false); status('Rule template loaded. Switch to custom mode to run it.');}
   function loadApproachTemplate(){if($('agentCustomCode'))$('agentCustomCode').value=templateFor($('agentExample')?.value||'life'); applyCustomRule(false); status('Approach template loaded.');}
-  function customSkeleton(){return {lab:'Agent Lab',version:'v24',id:'my-custom-agent-model',family:'custom',label:'My custom agent model',caption:'Define state meanings, parameters and a local update rule.',approach:$('agentApproach')?.value||'rule_based',timeMode:$('agentTimeMode')?.value||'discrete_sync',topology:$('agentTopology')?.value||'moore',states:['empty','state 1','state 2','state 3'],colors:['#ffffff','#2563eb','#dc2626','#16a34a'],params:['birth / activation','death / recovery','mutation / import','crowding / memory'],a:25,b:10,c:5,d:2,density:35,rule:['document your transition rules here'],ruleCode:templateFor('custom')};}
+  function customSkeleton(){return {lab:'Agent Lab',version:'v47',id:'my-custom-agent-model',family:'custom',label:'My custom agent model',caption:'Define state meanings, parameters and a local update rule.',approach:$('agentApproach')?.value||'rule_based',timeMode:$('agentTimeMode')?.value||'discrete_sync',topology:$('agentTopology')?.value||'moore',states:['empty','state 1','state 2','state 3'],colors:['#ffffff','#2563eb','#dc2626','#16a34a'],params:['birth / activation','death / recovery','mutation / import','crowding / memory'],a:25,b:10,c:5,d:2,density:35,rule:['document your transition rules here'],ruleCode:templateFor('custom')};}
   function loadCustomModelSkeleton(report=true){const box=$('agentCustomModelJson'); if(box)box.value=JSON.stringify(customSkeleton(),null,2); if(report)status('Custom model skeleton loaded. Edit JSON, then apply.');}
   function applyCustomModel(){try{const cfg=JSON.parse($('agentCustomModelJson')?.value||'{}'); const id=(cfg.id||'custom_'+Date.now()).replace(/[^A-Za-z0-9_-]/g,'_'); MODEL_LIBRARY[id]={family:cfg.family||'custom',label:cfg.label||'Custom agent model',caption:cfg.caption||'Custom Agent Lab model.',states:cfg.states||['empty','state 1','state 2','state 3'],colors:cfg.colors||['#fff','#2563eb','#dc2626','#16a34a'],params:cfg.params||['A','B','C','D'],a:cfg.a??25,b:cfg.b??10,c:cfg.c??5,d:cfg.d??2,approach:cfg.approach||'rule_based',timeMode:cfg.timeMode,topology:cfg.topology,behavior:cfg.behavior,rule:cfg.rule||['custom rule']}; const sel=$('agentExample'); if(![...sel.options].some(o=>o.value===id)){const o=document.createElement('option');o.value=id;o.textContent=MODEL_LIBRARY[id].label;sel.appendChild(o);} sel.value=id; if(cfg.timeMode&&$('agentTimeMode'))$('agentTimeMode').value=cfg.timeMode; if(cfg.topology&&$('agentTopology'))$('agentTopology').value=cfg.topology; if(cfg.density&&$('agentDensity'))$('agentDensity').value=cfg.density; if(cfg.ruleCode){$('agentCustomCode').value=cfg.ruleCode; $('agentRuleMode').value='custom';} updateParamLabels(); applyCustomRule(false); reset(); status('Applied custom model specification.');}catch(e){status('Custom model JSON failed: '+(e.message||e),'error');}}
-  function configObject(){return {lab:'Agent Lab',version:'v24',example:state.kind,approach:$('agentApproach')?.value,timeMode:$('agentTimeMode')?.value,topology:$('agentTopology')?.value,dt:dt(),ruleMode:$('agentRuleMode')?.value,customRule:$('agentCustomCode')?.value,customModel:$('agentCustomModelJson')?.value,gridSize:state.n,density:density(),parameters:params(),seed:num('agentSeed',2026),step:state.t,plotMode:$('agentPlotMode')?.value,states:model().states};}
+  function configObject(){return {lab:'Agent Lab',version:'v47',example:state.kind,approach:$('agentApproach')?.value,timeMode:$('agentTimeMode')?.value,topology:$('agentTopology')?.value,dt:dt(),ruleMode:$('agentRuleMode')?.value,customRule:$('agentCustomCode')?.value,customModel:$('agentCustomModelJson')?.value,gridSize:state.n,density:density(),parameters:params(),seed:num('agentSeed',2026),step:state.t,plotMode:$('agentPlotMode')?.value,palette:paletteKey(),states:model().states};}
   function exportConfig(){return configObject();}
   function jsonText(){return JSON.stringify(configObject(),null,2);}
-  function downloadJson(){const txt=jsonText(); $('agentJsonBox').value=txt; const blob=new Blob([txt],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='foko-agent-model-v24.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); status('JSON exported.');}
+  function downloadJson(){const txt=jsonText(); $('agentJsonBox').value=txt; const blob=new Blob([txt],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='foko-agent-model-v44.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); status('JSON exported.');}
   async function copyJson(){const txt=jsonText(); $('agentJsonBox').value=txt; try{await navigator.clipboard.writeText(txt); status('JSON copied.');}catch(_){status('JSON placed in the text box for manual copy.');}}
-  function importJson(){try{const cfg=JSON.parse($('agentJsonBox').value); if(cfg.customModel){$('agentCustomModelJson').value=typeof cfg.customModel==='string'?cfg.customModel:JSON.stringify(cfg.customModel,null,2); applyCustomModel(); return;} if(cfg.example&&MODEL_LIBRARY[cfg.example]){$('agentExample').value=cfg.example;updateParamLabels();} ['agentApproach','agentTimeMode','agentTopology','agentPlotMode','agentRuleMode'].forEach(id=>{if(cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())]&&$(id))$(id).value=cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())];}); if(cfg.gridSize)$('agentSize').value=cfg.gridSize; if(cfg.density)$('agentDensity').value=clamp(cfg.density*100,1,95); if(cfg.parameters){$('agentA').value=clamp(cfg.parameters.A*100,0,100);$('agentB').value=clamp(cfg.parameters.B*100,0,100);$('agentC').value=clamp(cfg.parameters.C*100,0,100);$('agentD').value=clamp(cfg.parameters.D*100,0,100);} if(cfg.seed)$('agentSeed').value=cfg.seed; if(cfg.ruleMode)$('agentRuleMode').value=cfg.ruleMode; if(cfg.customRule)$('agentCustomCode').value=cfg.customRule; updateOutputs(); applyCustomRule(false); reset(); status('Imported JSON configuration.');}catch(e){status('Import failed: '+(e.message||e),'error');}}
+  function importJson(){try{const cfg=JSON.parse($('agentJsonBox').value); if(cfg.customModel){$('agentCustomModelJson').value=typeof cfg.customModel==='string'?cfg.customModel:JSON.stringify(cfg.customModel,null,2); applyCustomModel(); return;} if(cfg.example&&MODEL_LIBRARY[cfg.example]){$('agentExample').value=cfg.example;updateParamLabels();} ['agentApproach','agentTimeMode','agentTopology','agentPlotMode','agentPalette','agentRuleMode'].forEach(id=>{if(cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())]&&$(id))$(id).value=cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())];}); if(cfg.gridSize)$('agentSize').value=cfg.gridSize; if(cfg.density)$('agentDensity').value=clamp(cfg.density*100,1,95); if(cfg.parameters){$('agentA').value=clamp(cfg.parameters.A*100,0,100);$('agentB').value=clamp(cfg.parameters.B*100,0,100);$('agentC').value=clamp(cfg.parameters.C*100,0,100);$('agentD').value=clamp(cfg.parameters.D*100,0,100);} if(cfg.seed)$('agentSeed').value=cfg.seed; if(cfg.ruleMode)$('agentRuleMode').value=cfg.ruleMode; if(cfg.customRule)$('agentCustomCode').value=cfg.customRule; updateOutputs(); applyCustomRule(false); reset(); status('Imported JSON configuration.');}catch(e){status('Import failed: '+(e.message||e),'error');}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init();
 })();

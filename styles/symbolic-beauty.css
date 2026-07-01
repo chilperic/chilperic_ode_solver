@@ -75,3 +75,28 @@
 .symbolic-page-v23 .symbolic-mainplot{min-width:0}.symbolic-page-v23 .sym-plot{min-height:500px}
 @media(max-width:1180px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "plot" "results"}.symbolic-analysis-panel{grid-template-columns:1fr!important}}
 @media(max-width:640px){.symbolic-page-v23 .sticky-actions{grid-template-columns:1fr}.symbolic-page-v23 .sym-plot{min-height:360px}}
+
+
+/* v49 symbolic audit: computation result first, plot second. */
+.symbolic-hero-compact{grid-template-columns:1fr!important;}
+.symbolic-hero-compact .symbolic-lede{max-width:72ch;}
+.symbolic-page-v23 .symbolic-layout-v19{
+  grid-template-columns:minmax(280px,320px) minmax(0,1fr)!important;
+  grid-template-areas:"controls results" "controls plot"!important;
+  gap:.9rem!important;
+}
+.symbolic-analysis-panel{
+  grid-area:results!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:start;
+}
+.symbolic-computation-priority{grid-column:1/-1!important;border-color:color-mix(in srgb,var(--foko-teal) 34%,var(--line))!important;}
+.symbolic-computation-priority .result-primary{min-height:118px;font-size:1.04rem;background:linear-gradient(135deg,color-mix(in srgb,var(--panel) 93%,var(--foko-cyan)),color-mix(in srgb,var(--panel) 95%,var(--foko-magenta)));}
+.symbolic-mainplot{grid-area:plot!important;}
+.symbolic-mainplot h2::after{content:' numeric preview';font-size:.78rem;color:var(--muted);font-weight:700;margin-left:.35rem;}
+.compact-table-mirror{display:none;}
+.symbolic-page-v23 .plot-control-grid{grid-template-columns:repeat(3,minmax(120px,1fr))!important;}
+.symbolic-page-v23 .sym-plot{min-height:420px!important;}
+.symbolic-analysis-panel .math-box{overflow-x:auto;}
+@media(max-width:1180px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr!important;grid-template-areas:"controls" "results" "plot"!important}.symbolic-analysis-panel{grid-template-columns:1fr!important}}
+@media(max-width:760px){.symbolic-page-v23 .plot-control-grid{grid-template-columns:1fr!important}.symbolic-computation-priority .result-primary{font-size:.95rem}}

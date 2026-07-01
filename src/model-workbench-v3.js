@@ -558,6 +558,11 @@
   };
 
   const MODELS = {...ODE_MODELS, ...CTMC_MODELS, ...STEADY_MODELS, ...OPT_MODELS};
+  const ROUTE_MODEL_OPTIONS = [
+    {group:'Symbolic', items:[{id:'route:symbolic', name:'Open Symbolic Lab', href:'symbolic.html'}]},
+    {group:'Agent', items:[{id:'route:agent', name:'Open Agent Lab', href:'agent.html'}]},
+    {group:'Model Atlas', items:[{id:'route:atlas', name:'Open Model Atlas', href:'examples.html'}]}
+  ];
 
   const RESEARCH_MODEL_IDS = new Set([
     'fa-metabolism','fadns-coa','tcell',
@@ -1073,6 +1078,11 @@
       research.forEach(m=>{ const o=document.createElement('option'); o.value=m.id; o.textContent=m.name; optg.appendChild(o); });
       sel.appendChild(optg);
     }
+    ROUTE_MODEL_OPTIONS.forEach(group=>{
+      const optg=document.createElement('optgroup'); optg.label=group.group;
+      group.items.forEach(item=>{ const o=document.createElement('option'); o.value=item.id; o.textContent=item.name; o.dataset.href=item.href; optg.appendChild(o); });
+      sel.appendChild(optg);
+    });
     if(CUSTOM_MODEL_IDS.size){
       const optg=document.createElement('optgroup'); optg.label='Custom imported models';
       [...CUSTOM_MODEL_IDS].forEach(id=>{ const m=MODELS[id]; if(m){ const o=document.createElement('option'); o.value=m.id; o.textContent=m.name; optg.appendChild(o); }});
@@ -1734,7 +1744,12 @@ print('ST', dict(zip(problem['names'], Si['ST'])))
     const optExample=$('loadCustomOptExample'); if(optExample) optExample.addEventListener('click',()=>renderCustomModelExample('opt'));
     const importBtn=$('importCustomModel'); if(importBtn) importBtn.addEventListener('click',importCustomModelFromTextarea);
     if($('customModelJson') && !$('customModelJson').value) renderCustomModelExample('ode');
-    $('modelSelect').addEventListener('change', e=>{ setDefaults(e.target.value); renderAll(); run(); });
+    $('modelSelect').addEventListener('change', e=>{
+      const selected=e.target.selectedOptions?.[0];
+      const href=selected?.dataset?.href;
+      if(href){ window.location.href=href; return; }
+      setDefaults(e.target.value); renderAll(); run();
+    });
     $('resetModel').addEventListener('click',()=>{ setDefaults(state.modelId); renderAll(); run(); });
     $('runAll').addEventListener('click',run); $('exportReport').addEventListener('click',exportResultJson);
     $('addAnalysis').addEventListener('click',()=>{ const type=$('analysisType').value; const settings=['importance','parallel','slice','ecdf','radar','trajectory'].includes(type)?{computed:true}:{}; state.cards.push({id:'ca_'+uid(),type,settings}); renderCards(); });

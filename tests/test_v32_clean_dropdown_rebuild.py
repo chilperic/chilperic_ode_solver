@@ -16,7 +16,7 @@ def test_labs_dropdown_is_single_clean_access_point():
     for page in PAGES:
         s=soup(page)
         assert len(s.select('.topnav details.workbench-menu')) == 1, page
-        assert len(s.select('.topnav details.legacy-menu')) == 1, page
+        assert [a.get_text(strip=True) for a in s.select('.topnav details.legacy-menu .labs-menu-panel a')] == ['ODE','Optimization','Steady-State','Stochastic'], page
         assert len(s.select('.topnav details.learn-menu')) == 1, page
         assert len(s.select('.topnav details.about-menu')) == 1, page
         assert not s.select('.floating-labs, .floating-labs-toggle, .labs-strip'), page

@@ -1093,3 +1093,217 @@ body[data-lab="home"]{background:radial-gradient(circle at 72% 18%,rgba(45,212,1
 .workbench-suite-tabs a.active,.mw-suite-tabs a.active{background:linear-gradient(135deg,var(--foko-teal,#007d87),var(--foko-magenta,#c026d3));color:#fff;border-color:transparent;}
 .symbolic-page .workbench-suite-tabs,.agent-page .workbench-suite-tabs{width:min(1180px,calc(100vw - 32px));margin:16px auto 10px;}
 @media(max-width:640px){.workbench-suite-tabs,.mw-suite-tabs{overflow-x:auto;flex-wrap:nowrap}.workbench-suite-tabs a,.mw-suite-tabs a{white-space:nowrap}}
+
+/* v43 UX audit: compact homepage proportions and faster product entry */
+.identity-home{width:min(1180px,calc(100% - 40px));padding:clamp(18px,3vw,34px) 0 30px;}
+.identity-hero{grid-template-columns:minmax(0,1.08fr) minmax(280px,.56fr);gap:clamp(18px,3vw,36px);min-height:360px;}
+.identity-copy h1{font-size:clamp(2.55rem,5vw,5.25rem);line-height:.94;letter-spacing:-.065em;margin-bottom:.65rem;}
+.identity-lead{max-width:680px;font-size:clamp(.98rem,1.15vw,1.12rem);line-height:1.55;}
+.identity-kicker{margin-bottom:.7rem;padding:.38rem .72rem;font-size:.7rem;}
+.identity-actions{margin-top:1rem;gap:9px}.identity-actions .big-cta{min-height:38px;padding:.58rem .86rem;}
+.identity-card{border-radius:24px;padding:14px;}.identity-logo-wrap{padding:10px;border-radius:18px}.identity-logo-wrap img{max-height:160px;}
+.identity-profile{grid-template-columns:62px 1fr;gap:10px;margin-top:10px;padding:10px;border-radius:18px}.identity-profile img{width:62px;height:62px;border-radius:16px}.identity-profile span{font-size:.78rem;line-height:1.28}.profile-link{font-size:.82rem;}
+.section-heading{margin:8px 0 12px;align-items:start}.section-heading h2{font-size:clamp(1.18rem,2vw,1.75rem);letter-spacing:-.025em;max-width:780px;}.section-heading p{font-size:.7rem;}
+.identity-lab-grid{gap:12px;margin-bottom:14px;}.identity-lab-card{grid-template-columns:52px 1fr;min-height:122px;padding:15px;border-radius:20px;gap:4px 12px}.identity-lab-card img,.identity-lab-card .home-lab-logo{width:48px;height:48px;border-radius:14px;font-size:24px}.identity-lab-card b{font-size:1rem}.identity-lab-card p{font-size:.82rem;line-height:1.3}.identity-lab-card em{font-size:.8rem;}
+.legacy-lab-cluster{margin-top:12px;padding:14px 16px;border-radius:20px;grid-template-columns:minmax(240px,.9fr) minmax(0,1.4fr);}.legacy-lab-cluster p{font-size:.86rem;line-height:1.35}.legacy-lab-cluster a{min-height:34px;padding:0 11px;font-size:.84rem;}
+.identity-lower.clean-home-panels{display:none;}
+.identity-footer{padding-top:16px;margin-top:0;}
+@media(max-width:1180px){.identity-hero{grid-template-columns:1fr}.identity-card{max-width:460px}.identity-lab-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:640px){.identity-home{width:min(100% - 24px,1180px);padding-top:14px}.identity-copy h1{font-size:2.35rem}.identity-lab-grid{grid-template-columns:1fr}.identity-lab-card{min-height:112px}.legacy-lab-cluster{grid-template-columns:1fr}.legacy-lab-cluster nav{justify-content:flex-start}}
+
+/* v44 navigation/UX contract: Workbench is the complete modeling gateway. */
+.identity-lab-grid.primary-routes{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+.identity-lab-card.ode::before{background:linear-gradient(90deg,#2563eb,#38bdf8);}
+.identity-lab-card.opt::before{background:linear-gradient(90deg,var(--foko-magenta),var(--foko-orange));}
+.identity-lab-card.steady::before{background:linear-gradient(90deg,#4f46e5,#60a5fa);}
+.identity-lab-card.stoch::before{background:linear-gradient(90deg,#6d28d9,#a855f7);}
+.mw-suite-tabs,.workbench-suite-tabs{gap:6px;}
+.mw-suite-tabs a,.workbench-suite-tabs a{min-height:32px;padding:0 10px;font-size:.88rem;}
+.workbench-menu .labs-menu-panel{width:min(380px,calc(100vw - 32px))!important;max-width:min(380px,calc(100vw - 32px))!important;}
+@media(max-width:1180px){.identity-lab-grid.primary-routes{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:640px){.identity-lab-grid.primary-routes{grid-template-columns:1fr;}}
+
+
+/* v45 declutter: homepage and gallery chips are navigation, not static labels. */
+.symbolic-chip-row a{border:1px solid rgba(120,140,170,.24);border-radius:999px;padding:.4rem .62rem;font-size:.82rem;font-weight:760;background:rgba(255,255,255,.7);color:var(--text);text-decoration:none;}
+.symbolic-chip-row a:hover{background:color-mix(in srgb,var(--accent) 10%,white);color:var(--accent);}
+
+/* v46 identity color pass: teal / cyan / magenta across public, workbench and legacy pages */
+:root{
+  --foko-teal:#14b8a6;
+  --foko-cyan:#06b6d4;
+  --foko-magenta:#d946ef;
+  --foko-pink:#ec4899;
+  --accent:var(--foko-cyan);
+  --accent2:var(--foko-teal);
+  --accent3:var(--foko-magenta);
+}
+body{
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb,var(--foko-cyan) 13%,transparent), transparent 26rem),
+    radial-gradient(circle at 92% 6%, color-mix(in srgb,var(--foko-magenta) 10%,transparent), transparent 26rem),
+    var(--bg);
+}
+.topbar,.public-topbar{
+  box-shadow:inset 0 -2px 0 color-mix(in srgb,var(--foko-teal) 35%,transparent),0 8px 28px rgba(15,23,42,.045);
+}
+.logo,.mw-brand img{filter:drop-shadow(0 8px 18px color-mix(in srgb,var(--foko-cyan) 16%,transparent));}
+.topnav a.active,.labs-summary.active{color:var(--text);border-color:var(--foko-teal);}
+.topnav a:hover,.labs-summary:hover{color:var(--foko-magenta);}
+.labs-menu-panel{
+  border:1px solid color-mix(in srgb,var(--foko-cyan) 24%,var(--line));
+  box-shadow:0 18px 42px color-mix(in srgb,var(--foko-cyan) 12%,rgba(15,23,42,.14));
+}
+.labs-menu-panel a:hover{
+  color:var(--text);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--foko-teal) 13%,transparent),color-mix(in srgb,var(--foko-magenta) 10%,transparent));
+}
+.primary,.big-cta.primary,.open-link.workbench-link,.run-button,.agent-buttons button:first-child,
+button.primary,button.run,.mw-primary{
+  background:linear-gradient(135deg,var(--foko-teal),var(--foko-cyan) 52%,var(--foko-magenta));
+  border-color:transparent;
+  color:#fff;
+  box-shadow:0 14px 34px color-mix(in srgb,var(--foko-cyan) 22%,transparent);
+}
+.secondary,.big-cta.secondary,.agent-buttons button:nth-child(n+2),.mw-secondary{
+  border-color:color-mix(in srgb,var(--foko-teal) 30%,var(--line));
+  color:color-mix(in srgb,var(--foko-teal) 78%,var(--text));
+  background:linear-gradient(135deg,color-mix(in srgb,var(--foko-teal) 9%,var(--panel)),color-mix(in srgb,var(--foko-cyan) 8%,var(--panel)));
+}
+.identity-hero,.quiet-hero,.public-hero,.agent-hero,.hero-card,.lab-card-section,.research-hero{
+  background:
+    linear-gradient(135deg,color-mix(in srgb,var(--panel) 88%,var(--foko-teal)),color-mix(in srgb,var(--panel) 91%,var(--foko-magenta)));
+  border-color:color-mix(in srgb,var(--foko-cyan) 22%,var(--line));
+}
+.identity-kicker,.quiet-kicker,.agent-eyebrow,.section-heading p,.mw-eyebrow,.research-kicker{
+  color:var(--foko-magenta);
+}
+.identity-lab-card,.card,.quiet-card,.research-card,.agent-card,.agent-panel,.agent-boundary{
+  border-color:color-mix(in srgb,var(--foko-cyan) 20%,var(--line));
+}
+.identity-lab-card::before,.card::before,.quiet-card::before,.agent-card::before{
+  content:'';
+  display:block;
+  height:3px;
+  margin:-1rem -1rem .85rem;
+  border-radius:18px 18px 0 0;
+  background:linear-gradient(90deg,var(--foko-teal),var(--foko-cyan),var(--foko-magenta));
+}
+.identity-lab-card:hover,.card:hover,.quiet-card:hover,.agent-card:hover{
+  border-color:color-mix(in srgb,var(--foko-magenta) 34%,var(--line));
+  box-shadow:0 20px 48px color-mix(in srgb,var(--foko-cyan) 14%,rgba(15,23,42,.08));
+}
+.home-lab-logo,.math-logo{
+  color:var(--foko-teal);
+  text-shadow:0 0 20px color-mix(in srgb,var(--foko-cyan) 28%,transparent);
+}
+.workbench-suite-tabs,.mw-suite-tabs{
+  border-color:color-mix(in srgb,var(--foko-cyan) 24%,var(--line));
+}
+.workbench-suite-tabs a.active,.mw-suite-tabs a.active{
+  background:linear-gradient(135deg,var(--foko-teal),var(--foko-cyan),var(--foko-magenta));
+  color:#fff;
+}
+input[type="range"]{accent-color:var(--foko-teal);}
+
+/* v48 UX consistency pass: clickable controls, compact docs, overflow repair */
+:root{
+  --foko-action-gradient:linear-gradient(135deg,var(--foko-teal),var(--foko-cyan) 55%,var(--foko-magenta));
+  --foko-action-shadow:0 14px 34px color-mix(in srgb,var(--foko-cyan) 22%,transparent);
+}
+html,body{max-width:100%;overflow-x:hidden;}
+.public-topbar,.topbar{max-width:100vw;}
+.public-nav,.topnav{min-width:0;}
+.labs-summary{white-space:nowrap;}
+.labs-menu-panel{width:min(240px,calc(100vw - 32px))!important;max-height:min(70vh,520px);overflow:auto;}
+.labs-menu-panel a{min-height:40px;display:flex;align-items:center;border-radius:10px;}
+
+/* All public CTAs share one action language. Non-clickable chips remain neutral. */
+a.primary,a.secondary,.primary,.secondary,.big-cta,.open-link,.profile-link,.doc-actions a,
+.identity-lab-card em,.quiet-card a,.research-project-panel .open-link,.platform-route-cards a{
+  --_action:var(--foko-action-gradient);
+}
+a.primary,a.secondary,.primary,.secondary,.big-cta,.open-link,.doc-actions a{
+  border:1px solid transparent!important;
+  background:var(--_action)!important;
+  color:#fff!important;
+  box-shadow:var(--foko-action-shadow);
+}
+.profile-link,.identity-lab-card em,.quiet-card a:not(.open-link){
+  color:var(--foko-teal)!important;
+  font-weight:950;
+}
+a.primary:hover,a.secondary:hover,.primary:hover,.secondary:hover,.big-cta:hover,.open-link:hover,.doc-actions a:hover{
+  transform:translateY(-1px);
+  filter:saturate(1.08);
+}
+.research-pill-row span,.mw-chip,.symbolic-chip-row a:not(:hover),.atlas-filter-chip,.home-pill{
+  background:color-mix(in srgb,var(--panel) 92%,var(--foko-cyan));
+  border-color:color-mix(in srgb,var(--foko-cyan) 18%,var(--line));
+  color:var(--text);
+  box-shadow:none;
+}
+
+/* Public cards: consistent proportion, no accidental giant panels. */
+.identity-home{width:min(100% - 36px,1320px);padding-top:20px;}
+.identity-hero{min-height:320px!important;}
+.identity-copy h1{font-size:clamp(2.7rem,5vw,5.4rem)!important;}
+.identity-lead{max-width:760px;}
+.identity-actions .big-cta{min-width:180px;min-height:44px;justify-content:center;}
+.identity-lab-grid.primary-routes{grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;}
+.identity-lab-card{min-height:132px!important;align-content:center;}
+.identity-lab-card p{max-width:34ch;}
+.identity-lower.clean-home-panels{display:none!important;}
+.section-heading{margin-bottom:12px;}
+.section-heading p{margin-bottom:0;}
+
+/* Docs/tutorial/platform pages: compact hero with real padding and rounded proportions. */
+.clean-doc-page,.quiet-page.clean-platform-page{width:min(1120px,calc(100vw - 42px));padding-top:24px;}
+.clean-doc-page .clean-doc-hero,.platform-identity-hero,.quiet-hero{
+  border-radius:24px!important;
+  padding:clamp(22px,3.4vw,42px)!important;
+  margin-bottom:20px;
+  box-shadow:0 16px 42px rgba(15,23,42,.06);
+  overflow:hidden;
+}
+.clean-doc-page .clean-doc-hero h1,.platform-identity-hero h1,.quiet-hero h1{
+  font-size:clamp(2rem,4vw,3.5rem)!important;
+  line-height:1.05;
+  letter-spacing:-.04em;
+  margin:.25rem 0 .6rem;
+}
+.doc-eyebrow,.quiet-kicker{margin:0 0 .45rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;}
+.doc-lede{max-width:760px;color:var(--muted);line-height:1.55;}
+.clean-doc-page .no-sidebar{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start;}
+.clean-doc-page .doc-card{border:1px solid color-mix(in srgb,var(--foko-cyan) 16%,var(--line));border-radius:18px;background:var(--panel);box-shadow:0 12px 30px rgba(15,23,42,.05);}
+.clean-doc-page .doc-card::before{display:none!important;}
+.simple-doc-table{width:100%;table-layout:fixed;}
+.simple-doc-table td:first-child{width:34%;}
+.simple-doc-table td{vertical-align:top;word-break:normal;}
+
+/* Navigation cards and logos should not overflow on laptop widths. */
+.home-lab-logo,.math-logo{flex:0 0 auto;}
+.public-topbar .logo,.topbar .logo{max-width:min(300px,26vw)!important;}
+@media(max-width:1180px){.public-topbar,.topbar{height:auto;min-height:82px;align-items:flex-start;padding-block:12px}.topnav{flex-wrap:wrap;gap:14px}.identity-card{display:none}.identity-hero{grid-template-columns:1fr}.clean-doc-page,.quiet-page.clean-platform-page{width:min(100% - 26px,1120px)}}
+@media(max-width:760px){.identity-actions .big-cta,.doc-actions a{width:100%}.identity-lab-card{grid-template-columns:54px 1fr}.clean-doc-page .clean-doc-hero,.platform-identity-hero,.quiet-hero{padding:18px!important}.simple-doc-table td:first-child{width:auto}.simple-doc-table td{display:block;border-bottom:0!important}.public-topbar .logo,.topbar .logo{max-width:210px!important}}
+
+
+/* v49 UX repair: color accents should not draw artificial top bars through cards.
+   The previous pseudo-elements became visible as misplaced cyan/magenta lines and
+   even pushed the first Model Atlas filter outside the frame. */
+.identity-lab-card::before,.card::before,.quiet-card::before,.agent-card::before,
+.clean-doc-hero::before,.hero-doc::before,.atlas-filters::before{
+  content:none!important;
+  display:none!important;
+  height:0!important;
+  margin:0!important;
+  background:none!important;
+}
+.identity-lab-card,.card,.quiet-card,.agent-card{overflow:visible;}
+.atlas-filters.card{padding:14px 16px!important;overflow:visible!important;align-items:center;}
+.atlas-filters .filter{position:relative;z-index:1;margin:0;}
+.filter.active{background:var(--foko-action-gradient)!important;color:#fff!important;}
+.model-atlas{overflow:visible;}
+
+/* v49: neutralize internal audit colors as layout dividers; keep color for buttons and focus only. */
+.topbar,.public-topbar{box-shadow:0 8px 28px rgba(15,23,42,.045)!important;}

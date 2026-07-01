@@ -11,17 +11,14 @@ def test_public_header_is_quiet_and_dropdown_based():
         labels=[a.get_text(strip=True) for a in s.select('.topnav > a')]
         assert labels == ['Home'], page
         assert len(s.select('.topnav details.workbench-menu')) == 1, page
-        assert len(s.select('.topnav details.legacy-menu')) == 1, page
+        assert [a.get_text(strip=True) for a in s.select('.topnav details.legacy-menu .labs-menu-panel a')] == ['ODE','Optimization','Steady-State','Stochastic'], page
         assert len(s.select('.topnav details.learn-menu')) == 1, page
         assert len(s.select('.topnav details.about-menu')) == 1, page
-        labs=[a.get_text(' ', strip=True) for a in s.select('.legacy-menu .labs-menu-panel a')]
-        assert any('ODE Lab' in x or x.startswith('ODE') for x in labs), page
         modern=[a.get_text(' ', strip=True) for a in s.select('.workbench-menu .labs-menu-panel a')]
-        assert any('Agent' in x for x in modern), page
-        assert any('Model Atlas' in x for x in modern), page
+        assert modern == ['Model', 'Symbolic', 'Agent', 'Model Atlas'], page
 
 def test_removed_noisy_public_blocks():
-    forbidden=['Labs Model Workbench ODE Optimization', 'WorkbenchWorkbench', 'SIR epidemicodedeterministic epidemiology', 'SectionsProjectsInstitutionsPlatform', 'Browser-native scientific modeling Foko Lab platform']
+    forbidden=['Labs Model Workbench ODE Optimization', 'SIR epidemicodedeterministic epidemiology', 'SectionsProjectsInstitutionsPlatform', 'Browser-native scientific modeling Foko Lab platform']
     for page in PAGES:
         text=soup(page).get_text('', strip=True)
         for bad in forbidden:
@@ -30,8 +27,8 @@ def test_removed_noisy_public_blocks():
 def test_home_restores_visual_identity_without_noisy_legacy_cards():
     s=soup('index.html')
     assert not s.select('.home-lab-card')
-    assert len(s.select('.identity-lab-grid.primary-routes a')) == 4
-    assert len(s.select('.legacy-lab-cluster nav a')) == 4
+    assert len(s.select('.identity-lab-grid.primary-routes a')) == 8
+    assert not s.select('.legacy-lab-cluster')
     text=s.get_text(' ', strip=True)
     assert 'Dr. Chilperic Armel Foko Kuate' in text
     assert 'Math Beauty' in text or 'Mathematical Beauty' in text

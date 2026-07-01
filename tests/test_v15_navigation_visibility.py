@@ -2,8 +2,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = ['index.html','workbench.html','ode.html','optimization.html','steady.html','stochastic.html','symbolic.html','agent.html','beauty.html','examples.html','research.html','platform.html','docs.html','tutorial.html','acknowledgement.html','contact.html']
-WORKBENCH_LINKS = ['Main','Model Atlas','Symbolic','Agent']
-LEGACY_LINKS = ['ODE','Optimization','Steady-State','Stochastic']
+WORKBENCH_LINKS = ['Model','Symbolic','Agent','Model Atlas']
 LEARN_LINKS = ['Docs','Tutorial','Platform']
 ABOUT_LINKS = ['Research','Mathematical Beauty','Acknowledgement','Contact']
 
@@ -19,11 +18,10 @@ def test_clean_header_and_dropdown_available_on_all_pages():
         top=[a.get_text(strip=True) for a in s.select('.topnav > a')]
         assert top == ['Home'], page
         assert s.select_one('.topnav details.workbench-menu summary').get_text(strip=True) == 'Workbench', page
-        assert s.select_one('.topnav details.legacy-menu summary').get_text(strip=True) == 'Legacy', page
+        assert [a.get_text(strip=True) for a in s.select('.topnav details.legacy-menu .labs-menu-panel a')] == ['ODE','Optimization','Steady-State','Stochastic'], page
         assert s.select_one('.topnav details.learn-menu summary').get_text(strip=True) == 'Learn', page
         assert s.select_one('.topnav details.about-menu summary').get_text(strip=True) == 'About', page
         assert labels(s, 'workbench-menu') == WORKBENCH_LINKS
-        assert labels(s, 'legacy-menu') == LEGACY_LINKS
         assert labels(s, 'learn-menu') == LEARN_LINKS
         assert labels(s, 'about-menu') == ABOUT_LINKS
 

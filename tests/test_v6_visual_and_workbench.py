@@ -12,7 +12,7 @@ def test_research_hub_uses_two_column_safe_cards_and_no_duplicate_claim():
     css = read('styles/style.css')
     assert 'Research Hub' in html
     assert 'research-panel-list' in css
-    assert html.count('The Model Atlas is for teaching and benchmark examples.') == 1
+    assert 'Selected research projects with provenance' in html
     assert 'research-project-panel' in html
 
 
