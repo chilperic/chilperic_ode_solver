@@ -27,7 +27,11 @@ def test_agent_custom_model_preserves_initial_distribution():
     js = text('src/agent-lab.js')
     assert 'initial:cfg.initial||null' in js
     assert 'cfg.initialFractions' in js
-    assert "foko-agent-model-v54.json" in js
+    # The download filename is now constructed from the FOKO_BUILD constant
+    # (single source of truth) rather than a hard-coded literal. Assert the
+    # construction and that the build resolves to the current version.
+    assert "'foko-agent-model-'+FOKO_BUILD+'.json'" in js
+    assert "FOKO_BUILD='v60'" in js.replace(" ", "")
 
 
 def test_git_ready_noise_removed_from_root():

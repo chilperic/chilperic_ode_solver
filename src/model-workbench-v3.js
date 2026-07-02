@@ -944,8 +944,9 @@
   function renderLatexInto(el, formulas){
     if(!el) return; el.innerHTML='';
     formulas.forEach(f=>{ const d=document.createElement('div'); d.className='mw-latex-item';
-      if(window.katex){ try{ window.katex.render(f,d,{throwOnError:false,displayMode:true}); } catch(e){ d.textContent=f; } }
-      else d.textContent=f;
+      const fx=(window.FokoTex&&window.FokoTex.greekify)?window.FokoTex.greekify(String(f)):f;
+      if(window.katex){ try{ window.katex.render(fx,d,{throwOnError:false,displayMode:true}); } catch(e){ d.textContent=fx; } }
+      else d.textContent=fx;
       el.appendChild(d);
     });
   }
