@@ -2,7 +2,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 
-WORKBENCH = ['ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization', 'Symbolic', 'Agent', 'Model Atlas']
+WORKBENCH = ['ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization', 'Symbolic', 'Agent', 'SciML', 'Model Atlas']
 LEARN = ['Docs', 'Tutorial', 'Platform']
 ABOUT = ['Research', 'Mathematical Beauty', 'Acknowledgement', 'Contact']
 

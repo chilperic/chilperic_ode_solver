@@ -455,7 +455,7 @@ function updateMathPreview(){
   }catch(e){ const target=state.module==='opt'?'optPreview':'mathPreview'; $(target).textContent='Math preview unavailable.'; }
 }
 function renderKatex(id,latex){ const el=$(id); if(!el) return; el.innerHTML=''; if(!latex) return; const div=document.createElement('div'); div.className='math-line'; katex.render(latex,div,{throwOnError:false,displayMode:true}); el.append(div); }
-function toTex(s){ try{const raw=math.parse(String(s||'0')).toTex({parenthesis:'keep',implicit:'show'}).replaceAll('~',' '); return (window.FokoTex&&window.FokoTex.greekify)?window.FokoTex.greekify(raw):raw;}catch{return escapeHtml(String(s));} }
+function toTex(s){ try{return math.parse(String(s||'0')).toTex({parenthesis:'keep',implicit:'show'}).replaceAll('~',' ');}catch{return escapeHtml(String(s));} }
 function texName(v){ return /^[A-Za-z]$/.test(String(v))?v:`\\mathrm{${String(v).replace(/[^A-Za-z0-9_]/g,'')}}`; }
 
 function runDefault(){ if(state.module==='param') state.resultKind='default'; state.module==='opt' ? runOpt() : runOde(); }

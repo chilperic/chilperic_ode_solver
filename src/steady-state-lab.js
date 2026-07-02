@@ -127,7 +127,7 @@ function renderPreview(){
   if($('steadyParsedPreview')) $('steadyParsedPreview').textContent = 'Parsed as:\n' + model.equations.map((e,i)=>`${model.vars[i]?.[0]||'f'}: ${e} = 0`).join('\n');
   try { if(window.katex) katex.render(raw, $('steadyPreview'), {displayMode:true, throwOnError:false}); else $('steadyPreview').textContent = raw; } catch(e) { $('steadyPreview').textContent = model.equations.map((e,i)=>`${model.vars[i]?.[0]||'f'}: ${e} = 0`).join('\n'); }
 }
-function toTex(expr){ try{ const raw=math.parse(expr).toTex({parenthesis:'keep'}); return (window.FokoTex&&window.FokoTex.greekify)?window.FokoTex.greekify(raw):raw; }catch{ return tex(expr); } }
+function toTex(expr){ try{ return math.parse(expr).toTex({parenthesis:'keep'}); }catch{ return tex(expr); } }
 function latexSymbol(s){ return String(s).replace('lambda','\\lambda').replace(/_/g,'\\_'); }
 function readModel(){ model.equations = parseEquationText($('steadyEquations').value); $('steadyEquations').value = model.equations.join('\n'); renderPreview(); }
 function compileSystem(){ readModel(); if(model.equations.length !== model.vars.length) throw new Error(`Expected ${model.vars.length} equations, found ${model.equations.length}. Use one equation per variable.`); const names=model.vars.map(v=>v[0]); const allowed=new Set([...names,...Object.keys(model.params),'pi','e']); const comps=model.equations.map(e=>{ validateSymbols(e, allowed); return math.compile(e); }); return {names, comps}; }

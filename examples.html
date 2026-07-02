@@ -19,7 +19,7 @@
 <div class="app-shell">
 <header class="topbar">
 <a class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=3.1.0"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html?model=sir" role="menuitem"><b>ODE</b></a><a href="workbench.html?model=stoch-sir" role="menuitem"><b>Stochastic CTMC</b></a><a href="workbench.html?model=enzyme-steady" role="menuitem"><b>Steady-State</b></a><a href="workbench.html?model=quadratic" role="menuitem"><b>Optimization</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
+<nav aria-label="Primary navigation" class="topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html?model=sir" role="menuitem"><b>ODE</b></a><a href="workbench.html?model=stoch-sir" role="menuitem"><b>Stochastic CTMC</b></a><a href="workbench.html?model=enzyme-steady" role="menuitem"><b>Steady-State</b></a><a href="workbench.html?model=quadratic" role="menuitem"><b>Optimization</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="sciml.html" role="menuitem"><b>SciML</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
 </header>
 <main class="doc-page model-atlas">
 <section class="card hero-doc atlas-hero hero-with-mark">
@@ -35,6 +35,7 @@
 <button class="filter" data-filter="steady">Steady State</button>
 <button class="filter" data-filter="stochastic">Stochastic</button>
 <button class="filter" data-filter="agent">Agent / ABM</button>
+<button class="filter" data-filter="sciml">SciML</button>
 <span aria-hidden="true" class="filter-separator"></span>
 <button class="filter" data-filter="biology">Biology</button>
 <button class="filter" data-filter="physics">Physics</button>
@@ -70,6 +71,41 @@
 <article data-category="agent biology environment"><figure class="agent-atlas-thumb"><img alt="Plant competition toy model illustration" decoding="async" loading="lazy" src="assets/agent-atlas/plant.svg"/></figure><h3>Plant competition toy model</h3><p>Individual plants compete for local space and carry a mutable trait. Useful for connecting ecological ABM to plant modeling ideas.</p><a class="open-link workbench-link" href="agent.html?example=plant">Open in Agent Lab</a></article>
 </div>
 </section>
+
+<section class="card sciml-atlas-section" id="sciml-atlas">
+<div class="atlas-section-head"><p class="eyebrow">Scientific machine learning</p><h2>Foko SciML Atlas</h2><p>Atlas-linked machine-learning tasks for modelers. Each card opens SciML Lab with a specific data/modeling problem, not a decorative AI label.</p></div>
+<div class="agent-atlas-grid sciml-atlas-grid">
+<article data-category="sciml ode biology teaching simulation"><figure class="agent-atlas-thumb"><img alt="SINDy logistic equation discovery" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></figure><h3>SINDy logistic discovery</h3><p>Recover a sparse growth law from trajectory data. Use derivative-fit, residual and coefficient plots to validate the discovered equation.</p><a class="open-link workbench-link" href="sciml.html?example=logistic&approach=sindy">Open in SciML Lab</a></article>
+<article data-category="sciml ode biology core simulation"><figure class="agent-atlas-thumb"><img alt="Lotka Volterra SINDy discovery" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></figure><h3>Lotka–Volterra from data</h3><p>Discover predator–prey interaction terms and inspect phase-space and sparse coefficient diagnostics.</p><a class="open-link workbench-link" href="sciml.html?example=lotka&approach=sindy">Open in SciML Lab</a></article>
+<article data-category="sciml ode physics teaching simulation"><figure class="agent-atlas-thumb"><img alt="Van der Pol SciML oscillator" decoding="async" loading="lazy" src="assets/model-atlas/vanderpol.webp"/></figure><h3>Van der Pol sparse dynamics</h3><p>Use nonlinear libraries to recover oscillator terms and detect residual failure regions.</p><a class="open-link workbench-link" href="sciml.html?example=vanderpol&approach=sindy">Open in SciML Lab</a></article>
+<article data-category="sciml biology inverse environment teaching"><figure class="agent-atlas-thumb"><img alt="SIR inverse parameter identification" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></figure><h3>SIR inverse parameter identification</h3><p>Frame unknown β and γ as an inverse problem with residual plots and calibration export.</p><a class="open-link workbench-link" href="sciml.html?example=sir&approach=inverse">Open in SciML Lab</a></article>
+<article data-category="sciml engineering surrogate control simulation"><figure class="agent-atlas-thumb"><img alt="Surrogate modeling diagnostics" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></figure><h3>Surrogate emulator diagnostics</h3><p>Build the validation view modelers need: loss curves, predicted-vs-reference, error heatmaps and cross-validation residuals.</p><a class="open-link workbench-link" href="sciml.html?example=lotka&approach=surrogate">Open in SciML Lab</a></article>
+<article data-category="sciml physics neural engineering simulation"><figure class="agent-atlas-thumb"><img alt="PINN PyTorch export scaffold" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></figure><h3>PINN / PyTorch diagnostic scaffold</h3><p>Configure physics-loss export and inspect the diagnostic plots expected for PDE/ODE neural models.</p><a class="open-link workbench-link" href="sciml.html?example=vanderpol&approach=pinn">Open in SciML Lab</a></article>
+<article data-category="sciml biology genetics surrogate teaching"><figure class="agent-atlas-thumb"><img alt="GNN biological network export scaffold" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>Biological network ML scaffold</h3><p>Export graph/scikit-learn templates for pathways, omics features and network-structured biological processes.</p><a class="open-link workbench-link" href="sciml.html?example=sir&approach=network">Open in SciML Lab</a></article>
+<article data-category="sciml environment assimilation control"><figure class="agent-atlas-thumb"><img alt="Data assimilation scaffold" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></figure><h3>Data assimilation scaffold</h3><p>Blend forecasts and observations with an export-ready filtering workflow for dynamical systems.</p><a class="open-link workbench-link" href="sciml.html?example=logistic&approach=assimilation">Open in SciML Lab</a></article>
+
+<article data-category="sciml biology chemistry inverse teaching"><figure class="agent-atlas-thumb"><img alt="Michaelis Menten inverse kinetics" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></figure><h3>Michaelis–Menten inverse kinetics</h3><p>Estimate kinetic parameters from substrate/product observations and export a calibration scaffold.</p><a class="open-link workbench-link" href="sciml.html?example=michaelis&approach=inverse">Open in SciML Lab</a></article>
+<article data-category="sciml biology genetics control network"><figure class="agent-atlas-thumb"><img alt="Genetic toggle switch SciML" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>Genetic toggle switch</h3><p>Inspect regulatory dynamics, graph/network export scaffolds and residual diagnostics for gene-circuit models.</p><a class="open-link workbench-link" href="sciml.html?example=toggle&approach=network">Open in SciML Lab</a></article>
+<article data-category="sciml physics surrogate simulation"><figure class="agent-atlas-thumb"><img alt="Lorenz surrogate stress test" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></figure><h3>Lorenz surrogate stress test</h3><p>Stress-test surrogate validation on a chaotic ODE: short-horizon prediction, residuals and bias plots matter.</p><a class="open-link workbench-link" href="sciml.html?example=lorenz&approach=surrogate">Open in SciML Lab</a></article>
+<article data-category="sciml physics engineering surrogate simulation"><figure class="agent-atlas-thumb"><img alt="1D heat equation surrogate" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></figure><h3>1D heat-equation surrogate</h3><p>Use a discretized PDE example for error heatmaps, neural-operator export and spatial/temporal diagnostics.</p><a class="open-link workbench-link" href="sciml.html?example=heat1d&approach=operator">Open in SciML Lab</a></article>
+<article data-category="sciml biology engineering inverse environment"><figure class="agent-atlas-thumb"><img alt="Chemostat growth calibration" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></figure><h3>Chemostat growth calibration</h3><p>Connect biological process modeling to inverse calibration, surrogate acceleration and residual validation.</p><a class="open-link workbench-link" href="sciml.html?example=chemostat&approach=inverse">Open in SciML Lab</a></article>
+<article data-category="sciml biology environment teaching simulation"><figure class="agent-atlas-thumb"><img alt="Allee effect population model" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></figure><h3>Allee-effect population model</h3><p>Test whether equation discovery distinguishes logistic growth from threshold-dependent ecological dynamics.</p><a class="open-link workbench-link" href="sciml.html?example=allee&approach=sindy">Open in SciML Lab</a></article>
+
+
+<article data-category="sciml biology engineering surrogate genetics"><figure class="agent-atlas-thumb"><img alt="De novo protein structure and function" decoding="async" loading="lazy" src="assets/sciml-atlas/protein-design.svg"/></figure><h3>De novo protein structure and function</h3><p>Latent folding, binding and stability scaffold for interpretable surrogate design rather than black-box sequence magic.</p><a class="open-link workbench-link" href="sciml.html?example=protein_design&approach=surrogate">Open in SciML Lab</a></article>
+<article data-category="sciml biology control simulation"><figure class="agent-atlas-thumb"><img alt="Dynamic cell signaling networks" decoding="async" loading="lazy" src="assets/sciml-atlas/signaling-network.svg"/></figure><h3>Dynamic cell signaling network</h3><p>MAPK/NF-κB-style feedback scaffold for inverse kinetic identification, residual analysis and multi-state phase portraits.</p><a class="open-link workbench-link" href="sciml.html?example=signaling&approach=inverse">Open in SciML Lab</a></article>
+<article data-category="sciml biology chemistry environment"><figure class="agent-atlas-thumb"><img alt="Metabolic shifts under stress" decoding="async" loading="lazy" src="assets/sciml-atlas/metabolic-stress.svg"/></figure><h3>Metabolic shifts under stress</h3><p>Oxygen, ATP and lactate rewiring under deprivation with interpretable state dynamics and calibration export.</p><a class="open-link workbench-link" href="sciml.html?example=metabolic_stress&approach=inverse">Open in SciML Lab</a></article>
+<article data-category="sciml biology genetics teaching"><figure class="agent-atlas-thumb"><img alt="In silico gene knockout screening" decoding="async" loading="lazy" src="assets/sciml-atlas/gene-knockout.svg"/></figure><h3>In silico gene knockout screening</h3><p>Compensation and fitness-loss scaffold for CRISPR-style dependency studies and synthetic-lethality reasoning.</p><a class="open-link workbench-link" href="sciml.html?example=gene_knockout&approach=inverse">Open in SciML Lab</a></article>
+<article data-category="sciml biology simulation engineering"><figure class="agent-atlas-thumb"><img alt="Spatial tumor microenvironment" decoding="async" loading="lazy" src="assets/sciml-atlas/tumor-microenv.svg"/></figure><h3>Spatial tumor microenvironment</h3><p>Reduced tumor–immune–nutrient dynamics with surrogate and residual diagnostics for localized behavior.</p><a class="open-link workbench-link" href="sciml.html?example=tumor_microenv&approach=surrogate">Open in SciML Lab</a></article>
+<article data-category="sciml biology physics engineering"><figure class="agent-atlas-thumb"><img alt="Tissue-scale drug penetration" decoding="async" loading="lazy" src="assets/sciml-atlas/drug-penetration.svg"/></figure><h3>Tissue-scale drug penetration</h3><p>Diffusion-style tissue transport scaffold for PINN and operator diagnostics, heatmaps and field residuals.</p><a class="open-link workbench-link" href="sciml.html?example=drug_penetration&approach=pinn">Open in SciML Lab</a></article>
+<article data-category="sciml optimization biology control"><figure class="agent-atlas-thumb"><img alt="Optimizing multi-drug combination schedules" decoding="async" loading="lazy" src="assets/sciml-atlas/drug-schedule.svg"/></figure><h3>Optimizing multi-drug combination schedules</h3><p>Sensitive/resistant population scaffold for schedule optimization, resistance prevention and interpretable policy export.</p><a class="open-link workbench-link" href="sciml.html?example=drug_schedule&approach=surrogate">Open in SciML Lab</a></article>
+<article data-category="sciml biology simulation teaching"><figure class="agent-atlas-thumb"><img alt="Virtual patient stratification" decoding="async" loading="lazy" src="assets/sciml-atlas/virtual-patients.svg"/></figure><h3>Virtual patient stratification</h3><p>Digital-twin style latent-state scaffold for responder vs non-responder cohorts and biomarker-driven predictions.</p><a class="open-link workbench-link" href="sciml.html?example=virtual_patients&approach=surrogate">Open in SciML Lab</a></article>
+<article data-category="sciml biology chemistry physics"><figure class="agent-atlas-thumb"><img alt="Allosteric regulation mechanisms" decoding="async" loading="lazy" src="assets/sciml-atlas/allosteric.svg"/></figure><h3>Allosteric regulation mechanisms</h3><p>Open/closed/bound conformational scaffold for interpretable switching, inference and structural-biology workflows.</p><a class="open-link workbench-link" href="sciml.html?example=allosteric&approach=inverse">Open in SciML Lab</a></article>
+<article data-category="sciml biology environment simulation"><figure class="agent-atlas-thumb"><img alt="Microbial community dynamics" decoding="async" loading="lazy" src="assets/sciml-atlas/microbiome.svg"/></figure><h3>Microbial community dynamics</h3><p>Generalized Lotka–Volterra microbiome scaffold for coexistence, stability, surrogate diagnostics and 3D phase structure.</p><a class="open-link workbench-link" href="sciml.html?example=microbiome&approach=sindy">Open in SciML Lab</a></article>
+<article data-category="sciml biology teaching simulation"><figure class="agent-atlas-thumb"><img alt="SEIR outbreak dynamics" decoding="async" loading="lazy" src="assets/sciml-atlas/seir.svg"/></figure><h3>SEIR outbreak structure and calibration</h3><p>Four-state epidemic example with selectable 2D and 3D phase portraits, inverse fitting and interpretable outbreak dynamics.</p><a class="open-link workbench-link" href="sciml.html?example=seir&approach=inverse">Open in SciML Lab</a></article>
+</div>
+</section>
+
 <section class="atlas-grid" id="atlasGrid">
 <article class="atlas-card" data-category="ode biology core">
 <div class="scheme atlas-figure"><img alt="Lotka–Volterra predator-prey schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></div>
@@ -340,14 +376,53 @@
 </main>
 </div>
 <script>
-  document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{
-    document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const f=btn.dataset.filter;
-    document.querySelectorAll('.atlas-card, .agent-atlas-grid article').forEach(card=>{
-      card.hidden = f !== 'all' && !card.dataset.category.includes(f);
+(function(){
+  const alias = {
+    all:['all'],
+    steady:['steady','steady-state','steadystate'],
+    stochastic:['stochastic','ctmc'],
+    agent:['agent','abm'],
+    sciml:['sciml','scientific-machine-learning'],
+    biology:['biology','genetics'],
+    physics:['physics'],
+    chemistry:['chemistry'],
+    paradox:['paradox','paradoxes'],
+    teaching:['teaching'],
+    simulation:['simulation','simulator'],
+    genetics:['genetics','biology'],
+    finance:['finance'],
+    control:['control'],
+    environment:['environment'],
+    engineering:['engineering']
+  };
+  function tokens(card){
+    return String(card.dataset.category || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g,' ')
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+  function matches(card, key){
+    if(key === 'all') return true;
+    const t = tokens(card);
+    const keys = alias[key] || [key];
+    return keys.some(k => t.includes(k));
+  }
+  function applyFilter(key){
+    const cards = Array.from(document.querySelectorAll('.atlas-card, .agent-atlas-grid article'));
+    cards.forEach(card => { card.hidden = !matches(card, key); });
+    document.querySelectorAll('.agent-atlas-section, .sciml-atlas-section, #atlasGrid').forEach(section => {
+      const contained = Array.from(section.querySelectorAll('.atlas-card, article'));
+      section.hidden = contained.length ? contained.every(card => card.hidden) : false;
     });
+  }
+  document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilter(btn.dataset.filter || 'all');
   }));
+  applyFilter('all');
+})();
 </script>
 <script defer="" src="src/navigation.js?v=53"></script></body>
 </html>

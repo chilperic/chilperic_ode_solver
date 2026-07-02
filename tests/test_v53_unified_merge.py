@@ -62,13 +62,9 @@ def test_optimization_budget_warning_exists_in_both_optimization_surfaces():
 
 
 def test_v53_cache_tokens_are_intentional_and_no_stale_v51_agent_export():
-    # The Agent export filename is now built from the FOKO_BUILD constant, and
-    # the build was bumped to v60. The agent-lab.js cache token moves with it.
-    agent_js = read('src/agent-lab.js')
-    assert "'foko-agent-model-'+FOKO_BUILD+'.json'" in agent_js
-    assert "FOKO_BUILD='v60'" in agent_js.replace(" ", "")
+    assert 'foko-agent-model-v54.json' in read('src/agent-lab.js')
     html = read('agent.html')
-    assert 'src/agent-lab.js?v=v60' in html
+    assert 'src/agent-lab.js?v=v54' in html
     assert 'src/navigation.js?v=53' in html
     sym = read('symbolic.html')
     assert ('src/symbolic-lab.js?v=54' in sym) or ('src/symbolic-lab.js?v=58' in sym) or ('src/symbolic-lab.js?v=59' in sym) or ('src/symbolic-lab.js?v=60' in sym)

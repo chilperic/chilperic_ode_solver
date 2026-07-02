@@ -9,6 +9,7 @@ EXPECTED = [
     'Optimization',
     'Symbolic',
     'Agent',
+    'SciML',
     'Model Atlas',
 ]
 LEGACY = ['ODE', 'Optimization', 'Steady-State', 'Stochastic']
@@ -55,5 +56,6 @@ def test_research_pages_use_parent_relative_workbench_links():
             '../workbench.html?model=quadratic',
             '../symbolic.html',
             '../agent.html',
+            '../sciml.html',
             '../examples.html',
         ]

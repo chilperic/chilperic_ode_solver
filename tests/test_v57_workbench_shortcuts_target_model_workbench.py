@@ -2,19 +2,8 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_LABELS = [
-    'ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization',
-    'Symbolic', 'Agent', 'Model Atlas'
-]
-EXPECTED_ROOT_HREFS = [
-    'workbench.html?model=sir',
-    'workbench.html?model=stoch-sir',
-    'workbench.html?model=enzyme-steady',
-    'workbench.html?model=quadratic',
-    'symbolic.html',
-    'agent.html',
-    'examples.html',
-]
+EXPECTED_LABELS = ['ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization', 'Symbolic', 'Agent', 'SciML', 'Model Atlas']
+EXPECTED_ROOT_HREFS = ['workbench.html?model=sir', 'workbench.html?model=stoch-sir', 'workbench.html?model=enzyme-steady', 'workbench.html?model=quadratic', 'symbolic.html', 'agent.html', 'sciml.html', 'examples.html']
 
 
 def soup(rel):
@@ -37,7 +26,7 @@ def test_workbench_global_dropdown_shortcuts_target_workbench_models_not_legacy_
 
 
 def test_workbench_suite_tabs_shortcuts_target_workbench_model_selection_not_legacy_pages():
-    for rel in ['workbench.html', 'symbolic.html', 'agent.html']:
+    for rel in ['workbench.html', 'symbolic.html', 'agent.html', 'sciml.html']:
         links = soup(rel).select('nav.workbench-suite-tabs a')
         assert [a.get_text(strip=True) for a in links] == EXPECTED_LABELS
         assert [a.get('href') for a in links] == EXPECTED_ROOT_HREFS

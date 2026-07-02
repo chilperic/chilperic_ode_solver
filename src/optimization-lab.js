@@ -187,6 +187,6 @@ function exportById(e){ if(isProtectedOptPreset()) return protectedOptExport(); 
 function downloadPlot(id, fmt){ if(isProtectedOptPreset()) return protectedOptExport(); const node=$(id); if(node && node.data) Plotly.downloadImage(id,{format:fmt,filename:`foko-lab-optimization-${id}`}); }
 function download(name,text,type='text/plain'){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
 function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-function texExpr(s){ const raw=String(s||'').replaceAll('^','^').replace(/\bpi\b/g,'\\pi').replace(/\*/g,'\\,'); return (window.FokoTex&&window.FokoTex.greekify)?window.FokoTex.greekify(raw):raw; }
+function texExpr(s){ return String(s||'').replaceAll('^','^').replace(/\bpi\b/g,'\\pi').replace(/\*/g,'\\,'); }
 function pyExpr(s){ return String(s||'0').replace(/\^/g,'**').replace(/\bpi\b/g,'np.pi').replace(/\bcos\(/g,'np.cos(').replace(/\bsin\(/g,'np.sin(').replace(/\bexp\(/g,'np.exp(').replace(/\blog\(/g,'np.log(').replace(/\bsqrt\(/g,'np.sqrt('); }
 window.addEventListener('load',init);

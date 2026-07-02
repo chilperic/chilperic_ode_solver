@@ -9,6 +9,7 @@ SUITE_EXPECTED = [
     'Optimization',
     'Symbolic',
     'Agent',
+    'SciML',
     'Model Atlas',
 ]
 
@@ -24,7 +25,7 @@ def suite_labels(rel: str):
 
 
 def test_workbench_suite_tabs_do_not_expose_generic_model_tab():
-    for rel in ['workbench.html', 'symbolic.html', 'agent.html']:
+    for rel in ['workbench.html', 'symbolic.html', 'agent.html', 'sciml.html']:
         labels = suite_labels(rel)
         assert labels == SUITE_EXPECTED
         assert 'Model' not in labels

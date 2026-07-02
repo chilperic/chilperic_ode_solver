@@ -11,7 +11,7 @@ def soup(path: str) -> BeautifulSoup:
 
 
 def test_v54_workbench_dropdown_exposes_explicit_model_classes():
-    expected = ['ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization', 'Symbolic', 'Agent', 'Model Atlas']
+    expected = ['ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization', 'Symbolic', 'Agent', 'SciML', 'Model Atlas']
     for page in ['index.html','workbench.html','symbolic.html','agent.html','docs.html','examples.html']:
         doc = soup(page)
         labels = [a.get_text(strip=True) for a in doc.select('.workbench-menu .labs-menu-panel a')]

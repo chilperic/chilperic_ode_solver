@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko SciML Lab adds interpretable machine learning to mechanistic modeling: equation discovery, inverse problems, surrogate validation, PINN scaffolds, biological AI workflows and atlas-linked diagnostics." name="description"/>
+<title>Foko SciML Lab · Foko Lab</title>
+<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=50"></script>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<link rel="icon" type="image/svg+xml" href="assets/brand/foko-lab-mark.svg?v=3.1.0"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png?v=3.1.0"/>
+<link rel="icon" href="favicon.ico?v=3.1.0" sizes="any"/>
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png?v=3.1.0"/>
+<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
+<link href="styles/sciml-lab.css?v=65" rel="stylesheet"/>
+<meta content="assets/homepage-preview.webp" property="og:image"/>
+</head>
+<body data-lab="sciml">
+<div class="app-shell">
+<header class="topbar">
+<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=3.1.0"/></a>
+<nav aria-label="Primary navigation" class="topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html?model=sir" role="menuitem"><b>ODE</b></a><a href="workbench.html?model=stoch-sir" role="menuitem"><b>Stochastic CTMC</b></a><a href="workbench.html?model=enzyme-steady" role="menuitem"><b>Steady-State</b></a><a href="workbench.html?model=quadratic" role="menuitem"><b>Optimization</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="sciml.html" role="menuitem"><b>SciML</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
+</header>
+<main class="sciml-page">
+<nav aria-label="Workbench suite" class="mw-suite-tabs workbench-suite-tabs"><a href="workbench.html?model=sir">ODE</a><a href="workbench.html?model=stoch-sir">Stochastic CTMC</a><a href="workbench.html?model=enzyme-steady">Steady-State</a><a href="workbench.html?model=quadratic">Optimization</a><a href="symbolic.html">Symbolic</a><a href="agent.html">Agent</a><a aria-current="page" class="active" href="sciml.html">SciML</a><a href="examples.html">Model Atlas</a></nav>
+<section class="sciml-hero">
+<div>
+<p class="sciml-eyebrow">SCIENTIFIC MACHINE LEARNING · INTERPRETABLE MODELING</p>
+<h1>Foko SciML Lab</h1>
+<p class="sciml-lede">Start from a Model Atlas example, choose a modeling problem, run browser-scale diagnostics, then export the rigorous Python workflow.</p>
+
+</div>
+<aside class="sciml-principle"><b>Boundary</b><p>The browser layer returns equations, residuals, diagnostics and scripts. It does not pretend that heavy neural training happened in a panel.</p><a class="open-link workbench-link" href="examples.html#sciml-atlas">Open SciML Atlas</a></aside>
+</section>
+
+<section class="sciml-layout">
+<aside class="sciml-panel sciml-controls">
+<h2>Modeling setup</h2>
+<label>Model Atlas example<select id="sciExample">
+<option value="logistic">SINDy logistic discovery</option>
+<option value="lotka">Lotka–Volterra from data</option>
+<option value="vanderpol">Van der Pol sparse dynamics</option>
+<option value="sir">SIR inverse parameter identification</option>
+<option value="seir">SEIR outbreak structure and calibration</option>
+<option value="michaelis">Michaelis–Menten inverse kinetics</option>
+<option value="toggle">Genetic toggle switch</option>
+<option value="lorenz">Lorenz surrogate stress test</option>
+<option value="heat1d">1D heat-equation surrogate</option>
+<option value="chemostat">Chemostat growth calibration</option>
+<option value="allee">Allee-effect population model</option>
+<option value="protein_design">De novo protein structure and function</option>
+<option value="signaling">Dynamic cell signaling network</option>
+<option value="metabolic_stress">Metabolic shifts under stress</option>
+<option value="gene_knockout">In silico gene knockout screening</option>
+<option value="tumor_microenv">Spatial tumor microenvironment</option>
+<option value="drug_penetration">Tissue-scale drug penetration</option>
+<option value="drug_schedule">Multi-drug combination scheduling</option>
+<option value="virtual_patients">Virtual patient stratification</option>
+<option value="allosteric">Allosteric regulation mechanisms</option>
+<option value="microbiome">Microbial community dynamics</option>
+</select></label>
+<label>Modeling problem<select id="sciApproach"><option value="sindy">Equation discovery / SINDy</option><option value="surrogate">Surrogate modeling / acceleration</option><option value="inverse">Inverse problem / parameter identification</option><option value="assimilation">Data assimilation</option><option value="pinn">PINN / physics-constrained neural model</option><option value="operator">Neural operator surrogate</option><option value="network">Biological network ML scaffold</option></select></label>
+
+<div class="sciml-two"><label>points<input id="sciPoints" type="number" min="30" max="800" value="180"/></label><label>time step<input id="sciDt" type="number" min="0.001" step="0.01" value="0.05"/></label></div>
+<div class="sciml-two"><label>noise<input id="sciNoise" type="number" min="0" step="0.001" value="0"/></label><label>SINDy threshold λ<input id="sciThreshold" type="number" min="0" step="0.001" value="0.05"/></label></div>
+<div class="sciml-two"><label>ridge<input id="sciRidge" type="number" min="0" step="0.0001" value="0.0001"/></label><label>iterations<input id="sciIterations" type="number" min="1" max="20" value="8"/></label></div>
+<details open class="sciml-library"><summary>Candidate library for equation discovery</summary>
+<label><input checked type="checkbox" id="libConstant"/> constant</label>
+<label><input checked type="checkbox" id="libLinear"/> linear terms</label>
+<label><input checked type="checkbox" id="libQuadratic"/> quadratic powers</label>
+<label><input checked type="checkbox" id="libInteractions"/> interactions</label>
+<label><input type="checkbox" id="libCubic"/> cubic powers</label>
+<label><input type="checkbox" id="libTrig"/> sin / cos</label>
+</details>
+<div class="sciml-buttons">
+<button class="secondary" id="sciResetExample" type="button">Reset atlas data</button>
+<button class="primary run-button" id="sciRunAnalysis" type="button">Run analysis</button>
+<button class="secondary" id="sciUpdatePlot" type="button">Update plot</button>
+</div>
+<p class="sciml-status" id="sciStatus">Ready.</p>
+</aside>
+
+<section class="sciml-main">
+<section class="sciml-card">
+<div class="sciml-card-head"><div><p class="sciml-card-kicker" id="sciAtlasKicker">Atlas example</p><h2 id="sciExampleTitle">SINDy logistic discovery</h2></div><div class="sciml-inline"><a class="secondary open-link" href="examples.html#sciml-atlas">Model Atlas</a><button class="secondary" id="sciOpenNativeModel" type="button">Open native model</button></div></div>
+<p class="sciml-note" id="sciExampleDescription"></p>
+</section>
+
+<section class="sciml-card sciml-compact-data">
+<details>
+<summary><span>Trajectory / observations</span><strong>CSV editor</strong></summary>
+<div class="sciml-card-head compact-inside"><h2>Editable data</h2><div class="sciml-inline"><button class="secondary" id="sciReadCsv" type="button">Read CSV</button><button class="ghost" id="sciCopyCsv" type="button">Copy CSV</button></div></div>
+<textarea id="sciCsv" spellcheck="false" aria-label="CSV trajectory data"></textarea>
+<p class="sciml-note">CSV format: first column time, then state variables. Example: <code>t,x,y</code>. Atlas examples load editable synthetic data.</p>
+</details>
+</section>
+
+<section class="sciml-grid">
+<article class="sciml-card result-card">
+<h2>Model artifact</h2>
+<div class="sciml-math" id="sciEquations"></div>
+<div class="sciml-diagnostics" id="sciDiagnostics"></div>
+</article>
+<article class="sciml-card">
+<div class="sciml-card-head sciml-plot-head">
+<div>
+<p class="sciml-card-kicker">Diagnostic view</p>
+<h2 id="sciPlotLabel">Trajectory / observations</h2>
+</div>
+<div class="sciml-plot-tools">
+<label class="sciml-plot-select">Plot<select id="sciPlotType"><option value="trajectory">Trajectory / observations</option><option value="loss">Training and validation loss</option><option value="derivative">Derivative fit</option><option value="predicted">Predicted vs reference</option><option value="error_heatmap">Spatial/temporal error heatmap</option><option value="residual_time">Residuals over time</option><option value="residual_hist">Pointwise error distribution</option><option value="cv_residuals">Cross-validation residuals</option><option value="coefficients">Sparse coefficient spectrum</option><option value="library_heatmap">Candidate-library heatmap</option><option value="phase2d">2D phase portrait</option><option value="phase3d">3D phase portrait</option></select></label>
+<div class="sciml-phase-controls" id="sciPhaseControls">
+<label>X<select id="sciPhaseX"></select></label>
+<label>Y<select id="sciPhaseY"></select></label>
+<label>Z<select id="sciPhaseZ"></select></label>
+</div>
+</div>
+</div>
+<div class="sciml-plot" id="sciPlot"></div>
+</article>
+</section>
+
+<section class="sciml-card sciml-compact-export">
+<details>
+<summary><span>Export selected modeling problem</span><strong>Python / JSON</strong></summary>
+<div class="sciml-card-head compact-inside"><h2>Export</h2><div class="sciml-inline"><button class="secondary" id="sciCopyJson" type="button">Copy model JSON</button><button class="secondary" id="sciGenerateExport" type="button">Generate export</button><button class="ghost" id="sciCopyExport" type="button">Copy export</button></div></div>
+<textarea id="sciExport" spellcheck="false" aria-label="SciML export"></textarea>
+</details>
+</section>
+</section>
+</section>
+</main>
+<footer class="quiet-footer identity-footer"><p>Foko SciML Lab · interpretable AI for mechanistic modeling</p><nav><a href="examples.html#sciml-atlas">SciML Atlas</a><a href="workbench.html">Workbench</a><a href="docs.html">Docs</a></nav></footer>
+</div>
+<script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script>
+<script defer src="src/navigation.js?v=65"></script>
+<script defer src="src/sciml-lab.js?v=65"></script>
+</body>
+</html>

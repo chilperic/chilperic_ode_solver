@@ -7,7 +7,7 @@ PAGES = [
     'symbolic.html','agent.html','beauty.html','examples.html','research.html','platform.html',
     'docs.html','tutorial.html','acknowledgement.html','contact.html'
 ]
-WORKBENCH = ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','Model Atlas']
+WORKBENCH = ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','SciML','Model Atlas']
 
 
 def read(rel: str) -> str:
@@ -34,8 +34,8 @@ def test_workbench_dropdown_is_complete_modeling_gateway_on_all_pages():
 def test_home_exposes_all_major_modeling_routes_without_legacy_cluster():
     doc = soup('index.html')
     cards = [a.get_text(' ', strip=True) for a in doc.select('.identity-lab-grid.primary-routes a')]
-    assert len(cards) == 8
-    for term in ['Workbench', 'ODE', 'Optimization', 'Steady-State', 'Stochastic', 'Symbolic Lab', 'Agent Lab', 'Model Atlas']:
+    assert len(cards) == 9
+    for term in ['Workbench', 'ODE', 'Optimization', 'Steady-State', 'Stochastic', 'Symbolic Lab', 'Agent Lab', 'SciML Lab', 'Model Atlas']:
         assert any(term in card for card in cards), term
     assert not doc.select('.legacy-lab-cluster')
 

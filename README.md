@@ -78,3 +78,34 @@ Final Foko Lab brand assets are stored in `assets/brand/`:
 - `foko-lab-logo.svg` — primary header/logo lockup
 - `foko-lab-mark.svg` — icon-only scientific mark
 - `favicon-32.png`, `apple-touch-icon.png`, `favicon.ico` — browser/app icons
+
+
+## Foko SciML Lab
+
+Built from the v60 symbolic/branding legacy baseline. The SciML layer is Atlas-linked and uses machine learning as a modeling instrument, not as a decorative chatbot.
+
+Browser features:
+- Atlas-linked examples for equation discovery, surrogate modeling, inverse problems, data assimilation, PINN diagnostics and biological network ML.
+- Additional modeling examples: Michaelis–Menten kinetics, genetic toggle switch, Lorenz surrogate stress test, 1D heat-equation surrogate, chemostat growth calibration and Allee-effect population dynamics.
+- SINDy-style sparse equation discovery from trajectory data.
+- Plot selection placed directly above the diagnostic plot for faster visual iteration.
+- User-selectable modeling problems, not static labels.
+- Modeler-grade diagnostics: trajectory/observations, training and validation loss template, derivative fit, predicted-vs-reference, x-t error heatmap, residuals over time, pointwise error distribution, cross-validation residuals, coefficient spectrum, candidate-library heatmap and phase portrait.
+- JSON model artifact export.
+
+Export-tier workflows:
+- PySINDy equation discovery.
+- scikit-learn surrogate validation.
+- scipy inverse-problem calibration.
+- data-assimilation scaffold.
+- PyTorch/PINN scaffold.
+- neural-operator scaffold.
+- biological network ML scaffold.
+
+The rule is explicit: browser ML returns readable equations, diagnostics or model artifacts; heavy neural training is exported.
+
+
+### v65 SciML example expansion
+- Added richer SciML examples: SEIR, de novo protein design, signaling networks, metabolic stress, gene knockout screening, tumor microenvironment, tissue drug penetration, multi-drug scheduling, virtual patients, allostery and microbial communities.
+- Added user-selectable 2D and 3D phase portraits with X/Y/Z variable selection directly above the diagnostic plot.
+- Added designed SciML Atlas thumbnails for the new examples.

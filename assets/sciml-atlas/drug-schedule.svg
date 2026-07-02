@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" fill="none">
+<defs>
+<linearGradient id="g" x1="40" y1="30" x2="600" y2="360" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EEF9F8"/>
+<stop offset="0.55" stop-color="#EEF4FF"/>
+<stop offset="1" stop-color="#FCEAF7"/>
+</linearGradient>
+<filter id="shadow" x="0" y="0" width="640" height="400" filterUnits="userSpaceOnUse"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0B1D3D" flood-opacity="0.12"/></filter>
+</defs>
+<rect width="640" height="400" rx="28" fill="url(#g)"/>
+<rect x="22" y="22" width="596" height="356" rx="26" fill="white" fill-opacity="0.42" stroke="#059669" stroke-opacity="0.26"/>
+<g filter="url(#shadow)"><rect x="38" y="52" width="180" height="180" rx="30" fill="#F8FBFF" stroke="#059669" stroke-opacity="0.18"/></g>
+<g transform="translate(58 72)">
+<path d="M24 112 C38 70, 56 56, 76 64 C94 72, 108 60, 120 38" stroke="#059669" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24 92 C40 96, 60 84, 120 104" stroke="#0B1D3D" stroke-opacity="0.38" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="258" y="112" fill="#0B1D3D" font-size="34" font-family="Inter, Arial, sans-serif" font-weight="800">Drug Scheduling</text>
+<text x="258" y="162" fill="#48607C" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="600">Sensitive</text>
+<text x="258" y="192" fill="#48607C" font-size="22" font-family="Inter, Arial, sans-serif" font-weight="600">resistant · dose</text>
+<rect x="258" y="236" width="154" height="34" rx="17" fill="#059669" fill-opacity="0.12" stroke="#059669" stroke-opacity="0.22"/>
+<text x="282" y="258" fill="#059669" font-size="15" font-family="Inter, Arial, sans-serif" font-weight="800">Foko SciML Atlas</text>
+<circle cx="534" cy="92" r="44" fill="#059669" fill-opacity="0.10" stroke="#059669" stroke-opacity="0.18"/>
+<path d="M510 92h48M534 68v48" stroke="#059669" stroke-width="8" stroke-linecap="round"/>
+<circle cx="534" cy="212" r="10" fill="#00B4A6" fill-opacity="0.85"/>
+<circle cx="564" cy="242" r="10" fill="#00AEEF" fill-opacity="0.85"/>
+<circle cx="504" cy="242" r="10" fill="#E6007E" fill-opacity="0.85"/>
+</svg>
