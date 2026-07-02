@@ -1062,7 +1062,6 @@
 
   function renderModelSelect(){
     const sel=$('modelSelect'); sel.innerHTML='';
-    const currentIsResearch = RESEARCH_MODEL_IDS.has(state.modelId);
     const regularGroups={ODE:Object.values(ODE_MODELS),CTMC:Object.values(CTMC_MODELS),STEADY:Object.values(STEADY_MODELS),OPT:Object.values(OPT_MODELS)};
     Object.entries(regularGroups).forEach(([label,models])=>{
       const visible=models.filter(m=>!RESEARCH_MODEL_IDS.has(m.id));
@@ -1072,9 +1071,9 @@
       visible.forEach(m=>{ const o=document.createElement('option'); o.value=m.id; o.textContent=m.name; optg.appendChild(o); });
       sel.appendChild(optg);
     });
-    if(currentIsResearch){
-      const research=Object.values(MODELS).filter(m=>RESEARCH_MODEL_IDS.has(m.id));
-      const optg=document.createElement('optgroup'); optg.label='Research surrogates · opened from Research Hub';
+    const research=Object.values(MODELS).filter(m=>RESEARCH_MODEL_IDS.has(m.id));
+    if(research.length){
+      const optg=document.createElement('optgroup'); optg.label='Research / portfolio models';
       research.forEach(m=>{ const o=document.createElement('option'); o.value=m.id; o.textContent=m.name; optg.appendChild(o); });
       sel.appendChild(optg);
     }

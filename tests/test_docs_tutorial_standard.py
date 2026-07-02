@@ -2,7 +2,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 
-WORKBENCH = ['Model', 'Symbolic', 'Agent', 'Model Atlas']
+WORKBENCH = ['ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization', 'Symbolic', 'Agent', 'Model Atlas']
 LEARN = ['Docs', 'Tutorial', 'Platform']
 ABOUT = ['Research', 'Mathematical Beauty', 'Acknowledgement', 'Contact']
 
@@ -32,10 +32,10 @@ def test_tutorial_standard_content_remains():
         assert term in html
 
 
-def test_workbench_suite_tabs_are_compact():
+def test_workbench_suite_tabs_are_explicit_modeling_approaches():
     doc = soup('workbench.html')
     labels = [a.get_text(strip=True) for a in doc.select('.mw-suite-tabs a')]
-    assert labels == ['Model', 'Symbolic', 'Agent', 'Model Atlas']
-    assert doc.select_one('.mw-suite-tabs a.active').get_text(strip=True) == 'Model'
+    assert labels == WORKBENCH
+    assert 'Model' not in labels
     for menu in doc.select('.workbench-menu .labs-menu-panel a'):
         assert not menu.find('span')

@@ -15,7 +15,7 @@ def test_public_header_is_quiet_and_dropdown_based():
         assert len(s.select('.topnav details.learn-menu')) == 1, page
         assert len(s.select('.topnav details.about-menu')) == 1, page
         modern=[a.get_text(' ', strip=True) for a in s.select('.workbench-menu .labs-menu-panel a')]
-        assert modern == ['Model', 'Symbolic', 'Agent', 'Model Atlas'], page
+        assert modern == ['ODE', 'Stochastic CTMC', 'Steady-State', 'Optimization', 'Symbolic', 'Agent', 'Model Atlas'], page
 
 def test_removed_noisy_public_blocks():
     forbidden=['Labs Model Workbench ODE Optimization', 'SIR epidemicodedeterministic epidemiology', 'SectionsProjectsInstitutionsPlatform', 'Browser-native scientific modeling Foko Lab platform']

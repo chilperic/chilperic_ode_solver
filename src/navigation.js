@@ -1,4 +1,64 @@
 (function () {
+  // ── Shared theme control ──────────────────────────────────────────────────
+  // The theme is applied on every page (boot script reads chilperic-theme) but
+  // the picker markup was hand-placed on only four lab pages. Any page without
+  // a control is a one-way door: a user on a dark theme who lands there cannot
+  // switch back. We inject a single, consistent picker into the topbar of every
+  // page that lacks one, wired to the same key and the same known-theme list.
+  var KNOWN_THEMES = ['aurora', 'clarity', 'ocean', 'lavender', 'slate', 'midnight', 'paper', 'forest'];
+  var THEME_LABELS = {
+    aurora: 'Aurora', clarity: 'Clarity', ocean: 'Ocean', lavender: 'Lavender',
+    slate: 'Slate', midnight: 'Midnight', paper: 'Paper', forest: 'Forest'
+  };
+
+  function currentTheme() {
+    var t = null;
+    try { t = localStorage.getItem('chilperic-theme'); } catch (e) { t = null; }
+    return KNOWN_THEMES.indexOf(t) >= 0 ? t : 'aurora';
+  }
+
+  function applyTheme(t) {
+    if (KNOWN_THEMES.indexOf(t) < 0) t = 'aurora';
+    document.documentElement.dataset.theme = t;
+    try { localStorage.setItem('chilperic-theme', t); } catch (e) { /* ignore */ }
+    // Notify any page-local plot code that theme changed (core labs listen).
+    window.dispatchEvent(new CustomEvent('foko-theme-change', { detail: { theme: t } }));
+  }
+
+  function injectThemeControl() {
+    // If the page already ships a picker (the four core labs), leave it alone —
+    // its own handler manages plot re-rendering. Only inject where missing.
+    if (document.getElementById('themeBtn')) return;
+    var bar = document.querySelector('.topbar, .public-topbar, .home-topbar, .mw-topbar, .mw-brandbar');
+    if (!bar) return;
+
+    var wrap = document.createElement('div');
+    wrap.className = 'theme-picker nav-injected-theme';
+    wrap.style.marginLeft = 'auto';
+
+    var label = document.createElement('span');
+    label.className = 'theme-icon';
+    label.setAttribute('aria-hidden', 'true');
+    label.textContent = '◑';
+
+    var select = document.createElement('select');
+    select.className = 'theme-select';
+    select.id = 'themeBtn';
+    select.setAttribute('aria-label', 'Theme');
+    KNOWN_THEMES.forEach(function (key) {
+      var opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = THEME_LABELS[key] || key;
+      select.appendChild(opt);
+    });
+    select.value = currentTheme();
+    select.addEventListener('change', function () { applyTheme(select.value); });
+
+    wrap.appendChild(label);
+    wrap.appendChild(select);
+    bar.appendChild(wrap);
+  }
+
   function initNavigationMenus() {
     const menus = Array.from(document.querySelectorAll('.nav-menu, .labs-menu'));
     if (!menus.length) return;
@@ -140,9 +200,14 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNavigationMenus);
-  } else {
+  function boot() {
+    injectThemeControl();
     initNavigationMenus();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
   }
 }());

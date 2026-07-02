@@ -76,7 +76,7 @@ ALL_PAGES = [
 ]
 
 # Expected dropdown labels for each group — canonical form as <b> text
-WORKBENCH_LABELS = ["Model", "Symbolic", "Agent", "Model Atlas"]
+WORKBENCH_LABELS = ["ODE", "Stochastic CTMC", "Steady-State", "Optimization", "Symbolic", "Agent", "Model Atlas"]
 LEARN_LABELS     = ["Docs", "Tutorial", "Platform"]
 ABOUT_LABELS     = ["Research", "Mathematical Beauty", "Acknowledgement", "Contact"]
 

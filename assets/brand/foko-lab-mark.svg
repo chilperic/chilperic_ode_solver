@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Foko Lab scientific modeling mark">
+  <defs>
+    <linearGradient id="loopA" x1="8" y1="64" x2="120" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00B4A6"/>
+      <stop offset="0.48" stop-color="#00AEEF"/>
+      <stop offset="1" stop-color="#E6007E"/>
+    </linearGradient>
+    <linearGradient id="tealBlue" x1="18" y1="20" x2="72" y2="98" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00B4A6"/>
+      <stop offset="1" stop-color="#00AEEF"/>
+    </linearGradient>
+    <linearGradient id="bluePink" x1="58" y1="28" x2="116" y2="98" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00AEEF"/>
+      <stop offset="0.52" stop-color="#7A4CC2"/>
+      <stop offset="1" stop-color="#E6007E"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0B1D3D" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#soft)">
+    <path d="M17 65C17 39 42 32 64 64C86 96 111 89 111 64C111 39 86 32 64 64C42 96 17 91 17 65Z" stroke="url(#loopA)" stroke-width="8"/>
+    <path d="M28 25A48 48 0 0 1 64 16A48 48 0 0 1 100 25" stroke="url(#loopA)" stroke-width="4" stroke-dasharray="1 6"/>
+    <path d="M28 103A48 48 0 0 0 64 112A48 48 0 0 0 100 103" stroke="url(#loopA)" stroke-width="4" stroke-dasharray="1 6"/>
+    <circle cx="64" cy="64" r="6" fill="#00AEEF" stroke="white" stroke-width="2"/>
+
+    <!-- Mathematics / distribution / steady-state cue -->
+    <path d="M27 73H55" stroke="#00B4A6" stroke-width="3"/>
+    <path d="M32 73C38 73 39 52 46 52C53 52 54 73 60 73" stroke="#00B4A6" stroke-width="3"/>
+    <path d="M46 47V80" stroke="#00B4A6" stroke-width="2" stroke-dasharray="5 5"/>
+    <circle cx="27" cy="73" r="3" fill="#00B4A6"/>
+    <circle cx="60" cy="73" r="3" fill="#00AEEF"/>
+
+    <!-- Biology / interaction network cue -->
+    <g stroke="#E6007E" stroke-width="2.6">
+      <path d="M86 57L96 51L105 60L101 73L88 73L82 64Z"/>
+      <path d="M96 51L99 41M105 60L114 56M101 73L110 82M88 73L82 84"/>
+    </g>
+    <g fill="#E6007E">
+      <circle cx="86" cy="57" r="4"/><circle cx="96" cy="51" r="4"/><circle cx="105" cy="60" r="4"/>
+      <circle cx="101" cy="73" r="4"/><circle cx="88" cy="73" r="4"/><circle cx="99" cy="41" r="3.5"/>
+      <circle cx="114" cy="56" r="3.5"/><circle cx="110" cy="82" r="3.5"/><circle cx="82" cy="84" r="3.5"/>
+    </g>
+  </g>
+</svg>

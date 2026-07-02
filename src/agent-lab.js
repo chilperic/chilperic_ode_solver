@@ -116,10 +116,68 @@
 
   function rngFactory(seed){let a=(Number(seed)>>>0)||1;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;};}
   function num(id,fallback=0){const el=$(id); const v=Number(el?.value); return Number.isFinite(v)?v:fallback;}
+  // SCALE: visible sliders use 0–100 percentages; runtime rates use 0–1 fractions.
+  // Library/custom fields a,b,c,d are stored as 0–100 slider values. Exported
+  // config parameters.{A..D} are stored as 0–1 runtime values. importJson()
+  // accepts both forms defensively: values <= 1 are treated as runtime rates,
+  // values > 1 are treated as slider percentages. This prevents a hand-written
+  // model with A:25 from being clamped to 100 after import.
+  function sliderPercentFromParameter(v){const n=Number(v); if(!Number.isFinite(n))return 0; return n<=1 ? n*100 : n;}
   function params(){return {A:num('agentA')/100,B:num('agentB')/100,C:num('agentC')/100,D:num('agentD')/100,dt:dt(),degree:num('agentDegree',6)|0};}
   function dt(){return clamp(num('agentDt',100),1,200)/100;} function rateProb(rate){return 1-Math.exp(-Math.max(0,rate)*dt());}
-  function size(){return clamp(num('agentSize',46),20,100)|0;} function density(){return clamp(num('agentDensity',42),1,95)/100;}
+  function size(){return clamp(num('agentSize',46),20,100)|0;}
+  function totalSites(){const n=size(); return n*n;}
+  function density(){return clamp(num('agentDensity',42),1,95)/100;}
+  function syncInitialCountFromDensity(){const el=$('agentInitialCount'); if(!el)return; const total=totalSites(); el.max=String(total); el.value=String(clamp(Math.round(total*density()),0,total));}
+  function initialPopulationCount(){const el=$('agentInitialCount'); const total=totalSites(); if(el){el.max=String(total); return clamp(Math.round(Number(el.value)||0),0,total);} return clamp(Math.round(total*density()),0,total);}
+  function initialPopulationFraction(){return totalSites()?initialPopulationCount()/totalSites():0;}
+  function updateDensityFromInitialCount(){const d=$('agentDensity'); if(!d)return; const total=totalSites(); const pct=total?Math.round(100*initialPopulationCount()/total):0; d.value=String(clamp(pct,1,95));}
   function selectedModelKey(){return state?.kind || $('agentExample')?.value || 'tcell';}
+  function defaultInitialPercentages(kind, ex){
+    const nStates=Math.max(2,(ex.states||[]).length), out=Array(nStates).fill(0);
+    const set=(pairs)=>{pairs.forEach(([i,v])=>{if(i>0&&i<nStates)out[i]=clamp(Number(v)||0,0,100);}); return out;};
+    if(ex.initial && typeof ex.initial==='object'){
+      Object.entries(ex.initial).forEach(([k,v])=>{const i=Number(k); if(Number.isFinite(i)&&i>0&&i<nStates)out[i]=clamp(Number(v)||0,0,100);});
+      return out;
+    }
+    if(kind==='tcell') return set([[1,90],[2,10],[3,0]]);
+    if(kind==='sir') return set([[1,93],[2,7],[3,0]]);
+    if(kind==='predprey') return set([[1,70],[2,30]]);
+    if(kind==='fadns_particle') return set([[1,32],[2,32],[3,12],[4,5],[5,5],[6,5],[7,9]]);
+    if(kind==='plant' || kind==='evolution' || kind==='life' || kind==='forest') return set([[1,100]]);
+    if(SOCIAL_MODELS.has(kind)) return set([[1,90],[2,10],[3,0]]);
+    return set([[1,100]]);
+  }
+  function populateInitialConditions(preserve=true){
+    const box=$('agentInitialGrid'); if(!box)return;
+    const kind=$('agentExample')?.value || selectedModelKey(), ex=MODEL_LIBRARY[kind]||model(), states=ex.states||['empty','state 1'];
+    const old={}; box.querySelectorAll('[data-init-state]').forEach(inp=>{old[inp.dataset.initState]=Number(inp.value)||0;});
+    const defaults=defaultInitialPercentages(kind,ex);
+    box.innerHTML='';
+    states.slice(1).forEach((name,offset)=>{
+      const i=offset+1, v=preserve && Object.prototype.hasOwnProperty.call(old,String(i)) ? old[String(i)] : (defaults[i]||0);
+      const label=document.createElement('label'); label.className='agent-init-control';
+      label.innerHTML=`<span>${esc(name)}</span><output id="agentInitOut${i}">${Math.round(v)}%</output><input data-init-state="${i}" id="agentInit${i}" type="range" min="0" max="100" value="${clamp(v,0,100)}"/>`;
+      box.appendChild(label);
+      label.querySelector('input')?.addEventListener('input',()=>{updateInitialOutputs(); markStale(); status('Reset needed.','busy');});
+    });
+    updateInitialOutputs();
+  }
+  function initialFractions(){
+    const ex=model(), nStates=Math.max(2,(ex.states||[]).length), composition=Array(nStates).fill(0);
+    $('agentInitialGrid')?.querySelectorAll('[data-init-state]').forEach(inp=>{const i=Number(inp.dataset.initState); if(i>0&&i<nStates)composition[i]=clamp(Number(inp.value)||0,0,100);});
+    let sum=composition.slice(1).reduce((a,b)=>a+b,0);
+    if(sum<=0){composition[1]=100; sum=100;}
+    const occupied=initialPopulationFraction();
+    const vals=Array(nStates).fill(0);
+    vals[0]=1-occupied;
+    for(let i=1;i<nStates;i++) vals[i]=occupied*(composition[i]/sum);
+    return vals;
+  }
+  function pickInitialState(rand, fractions){let r=rand(), acc=0; for(let i=0;i<fractions.length;i++){acc+=fractions[i]||0; if(r<=acc)return i;} return 0;}
+  function updateInitialOutputs(){
+    $('agentInitialGrid')?.querySelectorAll('[data-init-state]').forEach(inp=>{const out=$('agentInitOut'+inp.dataset.initState); if(out)out.textContent=Math.round(Number(inp.value)||0)+'%';});
+  }
   function model(){return MODEL_LIBRARY[selectedModelKey()]||MODEL_LIBRARY.tcell||EXAMPLES.tcell;}
   function isFadnsPlotModel(kind, ex){return kind==='fadns_particle' || ex?.behavior==='fadns';}
   function allowedPlotModes(kind=selectedModelKey(), ex=model()){
@@ -154,19 +212,24 @@
   function stateColor(i){const pal=activePalette(); return pal[i % pal.length] || '#0f766e';}
   function plotColor(i){const pal=activePalette().filter((_,idx)=>idx!==0); return pal[i % Math.max(1,pal.length)] || '#0f766e';}
   function plotTemplate(){const text=getComputedStyle(document.documentElement).getPropertyValue('--text')||'#0f172a'; const muted=getComputedStyle(document.documentElement).getPropertyValue('--muted')||'#64748b'; return {margin:{l:58,r:44,t:38,b:70},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'Inter, system-ui, sans-serif',size:12,color:text},legend:{orientation:'h',y:-.32},xaxis:{automargin:true,tickfont:{color:muted},gridcolor:'rgba(148,163,184,.18)'},yaxis:{automargin:true,tickfont:{color:muted},gridcolor:'rgba(148,163,184,.18)'}};}
-  function updateOutputs(){[['agentSizeOut',size()],['agentDensityOut',Math.round(density()*100)+'%'],['agentAOut',params().A.toFixed(2)],['agentBOut',params().B.toFixed(2)],['agentCOut',params().C.toFixed(2)],['agentDOut',params().D.toFixed(2)],['agentDtOut',dt().toFixed(2)],['agentDegreeOut',String(params().degree)]].forEach(([id,val])=>{const el=$(id);if(el)el.textContent=val;});}
-  function updateParamLabels(){const ex=MODEL_LIBRARY[$('agentExample')?.value]||EXAMPLES.tcell; ['A','B','C','D'].forEach((k,i)=>{const lab=$('agent'+k+'Label'),input=$('agent'+k); if(lab)lab.textContent=ex.params[i]||k; if(input)input.value=ex[k.toLowerCase()]??input.value;}); if($('agentApproach'))$('agentApproach').value=ex.approach||'rule_based'; if(ex.timeMode&&$('agentTimeMode'))$('agentTimeMode').value=ex.timeMode; if(ex.topology&&$('agentTopology'))$('agentTopology').value=ex.topology; populatePlotModes(null,true); updateOutputs(); renderApproach();}
+  function updateOutputs(){updateInitialOutputs();const ic=$('agentInitialCount'); if(ic)ic.max=String(totalSites()); [['agentSizeOut',size()],['agentDensityOut',Math.round(initialPopulationFraction()*100)+'%'],['agentAOut',params().A.toFixed(2)],['agentBOut',params().B.toFixed(2)],['agentCOut',params().C.toFixed(2)],['agentDOut',params().D.toFixed(2)],['agentDtOut',dt().toFixed(2)],['agentDegreeOut',String(params().degree)]].forEach(([id,val])=>{const el=$(id);if(el)el.textContent=val;});}
+  function updateParamLabels(){const ex=MODEL_LIBRARY[$('agentExample')?.value]||EXAMPLES.tcell; ['A','B','C','D'].forEach((k,i)=>{const lab=$('agent'+k+'Label'),input=$('agent'+k); if(lab)lab.textContent=ex.params[i]||k; if(input)input.value=ex[k.toLowerCase()]??input.value;}); if($('agentApproach'))$('agentApproach').value=ex.approach||'rule_based'; if(ex.timeMode&&$('agentTimeMode'))$('agentTimeMode').value=ex.timeMode; if(ex.topology&&$('agentTopology'))$('agentTopology').value=ex.topology; populateInitialConditions(false); populatePlotModes(null,true); updateOutputs(); renderApproach();}
   function populate(){MODEL_LIBRARY={...EXAMPLES}; populateExampleOptions($('agentExample')?.value||'tcell');}
   function populateExampleOptions(preferred){const sel=$('agentExample'); if(!sel)return; const family=$('agentModelFamily')?.value||'all'; const previous=preferred||sel.value||'tcell'; sel.innerHTML=''; Object.entries(MODEL_LIBRARY).filter(([_,v])=>family==='all'||v.family===family).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.label;sel.appendChild(o);}); if([...sel.options].some(o=>o.value===previous))sel.value=previous; else if(sel.options.length)sel.value=sel.options[0].value; else {const o=document.createElement('option');o.value='tcell';o.textContent='T-cell proliferation agents';sel.appendChild(o);sel.value='tcell';}}
   function bind(){
     [['agentReset','click',reset],['agentStep','click',stepAndDraw],['agentRun','click',toggleRun],['agentExport','click',()=>downloadJson()],['agentApplyRule','click',applyCustomRule],['agentLoadRuleTemplate','click',loadRuleTemplate],['agentLoadApproachTemplate','click',loadApproachTemplate],['agentLoadCustomModel','click',loadCustomModelSkeleton],['agentApplyCustomModel','click',applyCustomModel],['agentImport','click',importJson],['agentCopyJson','click',copyJson],['agentPlotMode','change',()=>{populatePlotModes($('agentPlotMode')?.value,false);metrics();}],['agentPalette','change',()=>{draw();metrics();status('Palette updated.');}],['agentApproach','change',()=>{loadApproachTemplate();renderApproach();}],['agentTopology','change',()=>{populatePlotModes($('agentPlotMode')?.value,false);buildGraph();renderApproach();draw();metrics();}],['agentTimeMode','change',()=>{renderApproach();status('Time update changed. Step or reset to inspect the effect.');}]].forEach(([id,ev,fn])=>$(id)?.addEventListener(ev,fn));
     $('agentModelFamily')?.addEventListener('change',()=>{populateExampleOptions();updateParamLabels();loadRuleTemplate();reset();});
     $('agentExample')?.addEventListener('change',()=>{updateParamLabels();loadRuleTemplate();reset();});
-    ['agentSize','agentDensity','agentSeed','agentDegree'].forEach(id=>$(id)?.addEventListener('change',()=>{updateOutputs();reset();}));
-    ['agentA','agentB','agentC','agentD','agentDt'].forEach(id=>$(id)?.addEventListener('input',()=>{updateOutputs(); status('Parameter changed. Continue stepping or reset to reinitialize.'); if($('agentRuleMode')?.value==='custom')applyCustomRule(false);}));
+    $('agentSize')?.addEventListener('change',()=>{syncInitialCountFromDensity();updateOutputs();reset();});
+    ['agentSeed','agentDegree'].forEach(id=>$(id)?.addEventListener('change',()=>{updateOutputs();reset();}));
+    $('agentInitialCount')?.addEventListener('input',()=>{updateDensityFromInitialCount();updateOutputs();markStale();status('Reset needed.','busy');});
+    $('agentInitialCount')?.addEventListener('change',()=>{reset();});
+    $('agentDensity')?.addEventListener('input',()=>{syncInitialCountFromDensity(); updateOutputs(); markStale(); status('Reset needed.','busy');});
+    $('agentDensity')?.addEventListener('change',()=>{reset();});
+    ['agentA','agentB','agentC','agentD','agentDt'].forEach(id=>$(id)?.addEventListener('input',()=>{updateOutputs(); markStale(); status('Reset needed.','busy'); if($('agentRuleMode')?.value==='custom')applyCustomRule(false);}));
     $('agentRuleMode')?.addEventListener('change',()=>{applyCustomRule(false); renderRule(); status($('agentRuleMode').value==='custom'?'Custom rule mode enabled.':'Built-in rule mode enabled.');});
   }
-  function init(){canvas=$('agentCanvas');ctx=canvas?.getContext('2d'); fitCanvasDpr(); window.addEventListener('resize',()=>{fitCanvasDpr();draw();});populate(); const q=new URLSearchParams(window.location.search); const requested=q.get('example'); if(requested&&EXAMPLES[requested]){if($('agentModelFamily'))$('agentModelFamily').value='all'; populateExampleOptions(requested); if($('agentExample'))$('agentExample').value=requested;} bind();updateParamLabels();loadRuleTemplate();loadCustomModelSkeleton(false);reset();}
+  function init(){canvas=$('agentCanvas');ctx=canvas?.getContext('2d'); fitCanvasDpr(); window.addEventListener('resize',()=>{fitCanvasDpr();draw();});populate(); const q=new URLSearchParams(window.location.search); const requested=q.get('example'); if(requested&&EXAMPLES[requested]){if($('agentModelFamily'))$('agentModelFamily').value='all'; populateExampleOptions(requested); if($('agentExample'))$('agentExample').value=requested;} bind();syncInitialCountFromDensity();updateParamLabels();loadRuleTemplate();loadCustomModelSkeleton(false);reset();}
 
   function gridNeighborhoodIds(x,y,mode){const out=[]; const dirs=mode==='von_neumann'?[[1,0],[-1,0],[0,1],[0,-1]]:[[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]]; dirs.forEach(([dx,dy])=>out.push(idx(x+dx,y+dy))); return out;}
   function makeLayer(total){return Array.from({length:total},()=>[]);} 
@@ -186,12 +249,17 @@
   function emptyNeighbors(x,y,base=state.cells){return neighborhoodIds(x,y).filter(i=>base[i]===0);}
   function eventBag(){return {births:0,deaths:0,infections:0,recoveries:0,mutations:0,customChanges:0,transitions01:0,transitions12:0,transitions23:0,transitions34:0,transitions45:0,transitions56:0,transitions67:0,productsC14:0,productsC16:0,productsC18:0};}
   function reset(){stop(); const n=size(), rand=rngFactory(num('agentSeed',2026)); state={kind:$('agentExample')?.value||'tcell',n,t:0,cells:new Array(n*n).fill(0),traits:new Array(n*n).fill(0),memory:new Array(n*n).fill(0),rand,ant:{x:Math.floor(n/2),y:Math.floor(n/2),dir:0},events:{},graph:[]}; const kind=state.kind;
-    buildGraph(); for(let i=0;i<n*n;i++){const r=rand(); if(kind==='predprey')state.cells[i]=r<density()*.72?1:r<density()?2:0; else if(kind==='life')state.cells[i]=r<density()?1:0; else if(kind==='forest')state.cells[i]=r<density()?1:0; else if(kind==='plant'){state.cells[i]=r<density()?1:0;state.traits[i]=state.cells[i]?Math.floor(rand()*5)+1:0;} else if(kind==='evolution'){state.cells[i]=r<density()?1:0;state.traits[i]=state.cells[i]?Math.floor(rand()*9)+1:0;} else if(kind==='langton')state.cells[i]=0; else state.cells[i]=r<density()?1:0;}
-    if(kind==='sir'){let infected=0; for(let i=0;i<state.cells.length&&infected<Math.max(2,n/14);i++)if(state.cells[i]===1&&rand()<.08){state.cells[i]=2;infected++;}}
-    if(SOCIAL_MODELS.has(kind)){let hot=0; for(let i=0;i<state.cells.length&&hot<Math.max(3,n/10);i++)if(state.cells[i]===1&&rand()<.06){state.cells[i]=2;hot++;} for(let i=0;i<state.cells.length;i++)if(state.cells[i]===1&&rand()<.08)state.cells[i]=3;}
-    if(kind==='fadns_particle'){for(let i=0;i<state.cells.length;i++){const r=rand(); if(r<density()*.32)state.cells[i]=1; else if(r<density()*.64)state.cells[i]=2; else if(r<density()*.76)state.cells[i]=3; else if(r<density()*.82)state.cells[i]=4; else if(r<density()*.88)state.cells[i]=5; else if(r<density()*.92)state.cells[i]=6; else if(r<density()*.97)state.cells[i]=7; else state.cells[i]=0;}}
-    if(kind==='forest')for(let i=0;i<state.cells.length;i++)if(state.cells[i]===1&&rand()<.015)state.cells[i]=2;
-    if($('agentRuleMode')?.value==='custom')applyCustomRule(false); history=[]; record(); renderRule(); renderApproach(); draw(); metrics(); status('Reset.');}
+    buildGraph(); const fractions=kind==='langton' ? [1] : initialFractions();
+    for(let i=0;i<n*n;i++){
+      state.cells[i]=pickInitialState(rand,fractions);
+      if(kind==='plant'&&state.cells[i])state.traits[i]=Math.floor(rand()*5)+1;
+      if(kind==='evolution'&&state.cells[i])state.traits[i]=Math.floor(rand()*9)+1;
+    }
+    if($('agentRuleMode')?.value==='custom')applyCustomRule(false); history=[]; record(); renderRule(); renderApproach(); draw(); metrics(); clearStale(); status('Reset.');}
+  // Mark/clear the "results no longer match the controls" state. Reuses the
+  // .stale-results grayscale treatment from the four core labs for consistency.
+  function markStale(){document.querySelector('.agent-sim-card')?.classList.add('stale-results');}
+  function clearStale(){document.querySelector('.agent-sim-card')?.classList.remove('stale-results');}
 
   function orderIds(){const total=state.n*state.n, arr=[...Array(total).keys()]; if($('agentTimeMode')?.value==='discrete_async'){for(let i=arr.length-1;i>0;i--){const j=Math.floor(state.rand()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}} return arr;}
   async function step(){const n=state.n,c=state.cells,next=c.slice(),rand=state.rand,p=params(),k=state.kind,ev=eventBag(); state.t++;
@@ -331,14 +399,14 @@ if (cell === 7 && rand() < params.C * 0.12) return 0;
 return cell;`,life:`// Conway's Game of Life\nif (cell === 1 && (counts.alive === 2 || counts.alive === 3)) return 1;\nif (cell === 0 && counts.alive === 3) return 1;\nreturn 0;`,forest:`// Forest-fire local rule\nif (cell === 0 && rand() < params.A * 0.05) return 1;\nif (cell === 1 && (counts.b > 0 || rand() < params.B * 0.01)) return 2;\nif (cell === 2) return 3;\nif (cell === 3 && rand() > params.D) return 0;\nreturn cell;`}; if(SOCIAL_MODELS.has(kind)) return `// Social / network-contagion rule template\n// 0 outside, 1 baseline/compliant, 2 activated by rumor/hype/panic, 3 corrected/resistant/removed\nconst pressure = (counts.b + 0.6 * counts.c) / Math.max(1, counts.degree);\nif (cell === 1 && rand() < params.A * pressure + params.B * 0.035) return {state:2, event:'contagion'};\nif (cell === 2 && rand() < params.C * 0.08) return {state:3, event:'correction'};\nif (cell === 3 && rand() < params.D * 0.015) return 1;\nreturn cell;`; return byKind[kind]||templates[approach]||templates.rule_based;}
   function loadRuleTemplate(){const k=$('agentExample')?.value||'life'; if($('agentCustomCode'))$('agentCustomCode').value=templateFor(k); applyCustomRule(false); status('Rule template loaded. Switch to custom mode to run it.');}
   function loadApproachTemplate(){if($('agentCustomCode'))$('agentCustomCode').value=templateFor($('agentExample')?.value||'life'); applyCustomRule(false); status('Approach template loaded.');}
-  function customSkeleton(){return {lab:'Agent Lab',version:'v47',id:'my-custom-agent-model',family:'custom',label:'My custom agent model',caption:'Define state meanings, parameters and a local update rule.',approach:$('agentApproach')?.value||'rule_based',timeMode:$('agentTimeMode')?.value||'discrete_sync',topology:$('agentTopology')?.value||'moore',states:['empty','state 1','state 2','state 3'],colors:['#ffffff','#2563eb','#dc2626','#16a34a'],params:['birth / activation','death / recovery','mutation / import','crowding / memory'],a:25,b:10,c:5,d:2,density:35,rule:['document your transition rules here'],ruleCode:templateFor('custom')};}
+  function customSkeleton(){return {lab:'Agent Lab',version:'v54',id:'my-custom-agent-model',family:'custom',label:'My custom agent model',caption:'Define state meanings, parameters and a local update rule.',approach:$('agentApproach')?.value||'rule_based',timeMode:$('agentTimeMode')?.value||'discrete_sync',topology:$('agentTopology')?.value||'moore',states:['empty','state 1','state 2','state 3'],colors:['#ffffff','#2563eb','#dc2626','#16a34a'],params:['birth / activation','death / recovery','mutation / import','crowding / memory'],a:25,b:10,c:5,d:2,density:35,initial:{1:32,2:3,3:0},rule:['document your transition rules here'],ruleCode:templateFor('custom')};}
   function loadCustomModelSkeleton(report=true){const box=$('agentCustomModelJson'); if(box)box.value=JSON.stringify(customSkeleton(),null,2); if(report)status('Custom model skeleton loaded. Edit JSON, then apply.');}
-  function applyCustomModel(){try{const cfg=JSON.parse($('agentCustomModelJson')?.value||'{}'); const id=(cfg.id||'custom_'+Date.now()).replace(/[^A-Za-z0-9_-]/g,'_'); MODEL_LIBRARY[id]={family:cfg.family||'custom',label:cfg.label||'Custom agent model',caption:cfg.caption||'Custom Agent Lab model.',states:cfg.states||['empty','state 1','state 2','state 3'],colors:cfg.colors||['#fff','#2563eb','#dc2626','#16a34a'],params:cfg.params||['A','B','C','D'],a:cfg.a??25,b:cfg.b??10,c:cfg.c??5,d:cfg.d??2,approach:cfg.approach||'rule_based',timeMode:cfg.timeMode,topology:cfg.topology,behavior:cfg.behavior,rule:cfg.rule||['custom rule']}; const sel=$('agentExample'); if(![...sel.options].some(o=>o.value===id)){const o=document.createElement('option');o.value=id;o.textContent=MODEL_LIBRARY[id].label;sel.appendChild(o);} sel.value=id; if(cfg.timeMode&&$('agentTimeMode'))$('agentTimeMode').value=cfg.timeMode; if(cfg.topology&&$('agentTopology'))$('agentTopology').value=cfg.topology; if(cfg.density&&$('agentDensity'))$('agentDensity').value=cfg.density; if(cfg.ruleCode){$('agentCustomCode').value=cfg.ruleCode; $('agentRuleMode').value='custom';} updateParamLabels(); applyCustomRule(false); reset(); status('Applied custom model specification.');}catch(e){status('Custom model JSON failed: '+(e.message||e),'error');}}
-  function configObject(){return {lab:'Agent Lab',version:'v47',example:state.kind,approach:$('agentApproach')?.value,timeMode:$('agentTimeMode')?.value,topology:$('agentTopology')?.value,dt:dt(),ruleMode:$('agentRuleMode')?.value,customRule:$('agentCustomCode')?.value,customModel:$('agentCustomModelJson')?.value,gridSize:state.n,density:density(),parameters:params(),seed:num('agentSeed',2026),step:state.t,plotMode:$('agentPlotMode')?.value,palette:paletteKey(),states:model().states};}
+  function applyCustomModel(){try{const cfg=JSON.parse($('agentCustomModelJson')?.value||'{}'); const id=(cfg.id||'custom_'+Date.now()).replace(/[^A-Za-z0-9_-]/g,'_'); MODEL_LIBRARY[id]={family:cfg.family||'custom',label:cfg.label||'Custom agent model',caption:cfg.caption||'Custom Agent Lab model.',states:cfg.states||['empty','state 1','state 2','state 3'],colors:cfg.colors||['#fff','#2563eb','#dc2626','#16a34a'],params:cfg.params||['A','B','C','D'],a:cfg.a??25,b:cfg.b??10,c:cfg.c??5,d:cfg.d??2,approach:cfg.approach||'rule_based',timeMode:cfg.timeMode,topology:cfg.topology,initial:cfg.initial||null,behavior:cfg.behavior,rule:cfg.rule||['custom rule']}; const sel=$('agentExample'); if(![...sel.options].some(o=>o.value===id)){const o=document.createElement('option');o.value=id;o.textContent=MODEL_LIBRARY[id].label;sel.appendChild(o);} sel.value=id; if(cfg.timeMode&&$('agentTimeMode'))$('agentTimeMode').value=cfg.timeMode; if(cfg.topology&&$('agentTopology'))$('agentTopology').value=cfg.topology; if(cfg.density!==undefined&&$('agentDensity'))$('agentDensity').value=cfg.density; if(cfg.ruleCode){$('agentCustomCode').value=cfg.ruleCode; $('agentRuleMode').value='custom';} updateParamLabels(); applyCustomRule(false); reset(); status('Applied custom model specification.');}catch(e){status('Custom model JSON failed: '+(e.message||e),'error');}}
+  function configObject(){return {lab:'Agent Lab',version:'v54',example:state.kind,approach:$('agentApproach')?.value,timeMode:$('agentTimeMode')?.value,topology:$('agentTopology')?.value,dt:dt(),ruleMode:$('agentRuleMode')?.value,customRule:$('agentCustomCode')?.value,customModel:$('agentCustomModelJson')?.value,gridSize:state.n,initialPopulation:initialPopulationCount(),density:initialPopulationFraction(),parameters:params(),initialFractions:initialFractions(),seed:num('agentSeed',2026),step:state.t,plotMode:$('agentPlotMode')?.value,palette:paletteKey(),states:model().states};}
   function exportConfig(){return configObject();}
   function jsonText(){return JSON.stringify(configObject(),null,2);}
-  function downloadJson(){const txt=jsonText(); $('agentJsonBox').value=txt; const blob=new Blob([txt],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='foko-agent-model-v44.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); status('JSON exported.');}
+  function downloadJson(){const txt=jsonText(); $('agentJsonBox').value=txt; const blob=new Blob([txt],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='foko-agent-model-v54.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); status('JSON exported.');}
   async function copyJson(){const txt=jsonText(); $('agentJsonBox').value=txt; try{await navigator.clipboard.writeText(txt); status('JSON copied.');}catch(_){status('JSON placed in the text box for manual copy.');}}
-  function importJson(){try{const cfg=JSON.parse($('agentJsonBox').value); if(cfg.customModel){$('agentCustomModelJson').value=typeof cfg.customModel==='string'?cfg.customModel:JSON.stringify(cfg.customModel,null,2); applyCustomModel(); return;} if(cfg.example&&MODEL_LIBRARY[cfg.example]){$('agentExample').value=cfg.example;updateParamLabels();} ['agentApproach','agentTimeMode','agentTopology','agentPlotMode','agentPalette','agentRuleMode'].forEach(id=>{if(cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())]&&$(id))$(id).value=cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())];}); if(cfg.gridSize)$('agentSize').value=cfg.gridSize; if(cfg.density)$('agentDensity').value=clamp(cfg.density*100,1,95); if(cfg.parameters){$('agentA').value=clamp(cfg.parameters.A*100,0,100);$('agentB').value=clamp(cfg.parameters.B*100,0,100);$('agentC').value=clamp(cfg.parameters.C*100,0,100);$('agentD').value=clamp(cfg.parameters.D*100,0,100);} if(cfg.seed)$('agentSeed').value=cfg.seed; if(cfg.ruleMode)$('agentRuleMode').value=cfg.ruleMode; if(cfg.customRule)$('agentCustomCode').value=cfg.customRule; updateOutputs(); applyCustomRule(false); reset(); status('Imported JSON configuration.');}catch(e){status('Import failed: '+(e.message||e),'error');}}
+  function importJson(){try{const cfg=JSON.parse($('agentJsonBox').value); if(cfg.customModel){$('agentCustomModelJson').value=typeof cfg.customModel==='string'?cfg.customModel:JSON.stringify(cfg.customModel,null,2); applyCustomModel(); return;} if(cfg.example&&MODEL_LIBRARY[cfg.example]){$('agentExample').value=cfg.example;updateParamLabels();} ['agentApproach','agentTimeMode','agentTopology','agentPlotMode','agentPalette','agentRuleMode'].forEach(id=>{if(cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())]&&$(id))$(id).value=cfg[id.replace('agent','').replace(/^[A-Z]/,m=>m.toLowerCase())];}); if(cfg.gridSize)$('agentSize').value=cfg.gridSize; if(cfg.initialPopulation!==undefined&&$('agentInitialCount'))$('agentInitialCount').value=clamp(Number(cfg.initialPopulation)||0,0,totalSites()); else if(cfg.density){$('agentDensity').value=clamp(cfg.density*100,1,95); syncInitialCountFromDensity();} if(cfg.parameters){$('agentA').value=clamp(sliderPercentFromParameter(cfg.parameters.A),0,100);$('agentB').value=clamp(sliderPercentFromParameter(cfg.parameters.B),0,100);$('agentC').value=clamp(sliderPercentFromParameter(cfg.parameters.C),0,100);$('agentD').value=clamp(sliderPercentFromParameter(cfg.parameters.D),0,100);} if(cfg.initialFractions){populateInitialConditions(false); cfg.initialFractions.forEach((v,i)=>{const inp=$('agentInit'+i); if(inp)inp.value=clamp(Number(v)*100,0,100);}); updateInitialOutputs();} if(cfg.seed)$('agentSeed').value=cfg.seed; if(cfg.ruleMode)$('agentRuleMode').value=cfg.ruleMode; if(cfg.customRule)$('agentCustomCode').value=cfg.customRule; updateOutputs(); applyCustomRule(false); reset(); status('Imported JSON configuration.');}catch(e){status('Import failed: '+(e.message||e),'error');}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init();
 })();

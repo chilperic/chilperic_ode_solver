@@ -10,7 +10,7 @@ def test_slider_first_navigation_contract():
     for page in PAGES:
         s = soup(page)
         modern = [a.find('b').get_text(strip=True) for a in s.select('.workbench-menu .labs-menu-panel a')]
-        assert modern == ['Model','Symbolic','Agent','Model Atlas'], page
+        assert modern == ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','Model Atlas'], page
         assert [a.get_text(strip=True) for a in s.select('.legacy-menu .labs-menu-panel a')] == ['ODE','Optimization','Steady-State','Stochastic'], page
 
 def test_homepage_explains_legacy_by_control_surface():

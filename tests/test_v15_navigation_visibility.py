@@ -2,7 +2,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = ['index.html','workbench.html','ode.html','optimization.html','steady.html','stochastic.html','symbolic.html','agent.html','beauty.html','examples.html','research.html','platform.html','docs.html','tutorial.html','acknowledgement.html','contact.html']
-WORKBENCH_LINKS = ['Model','Symbolic','Agent','Model Atlas']
+WORKBENCH_LINKS = ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','Model Atlas']
 LEARN_LINKS = ['Docs','Tutorial','Platform']
 ABOUT_LINKS = ['Research','Mathematical Beauty','Acknowledgement','Contact']
 

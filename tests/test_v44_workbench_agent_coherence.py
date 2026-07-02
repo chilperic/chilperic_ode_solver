@@ -7,7 +7,7 @@ PAGES = [
     'symbolic.html','agent.html','beauty.html','examples.html','research.html','platform.html',
     'docs.html','tutorial.html','acknowledgement.html','contact.html'
 ]
-WORKBENCH = ['Model','Symbolic','Agent','Model Atlas']
+WORKBENCH = ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','Model Atlas']
 
 
 def read(rel: str) -> str:

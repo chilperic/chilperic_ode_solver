@@ -1,4 +1,5 @@
 :root{--border:var(--line);--bg:#f6f9fc;--panel:#ffffff;--panel2:#f9fbfe;--text:#102033;--muted:#647084;--line:#dce6f1;--accent:#0969da;--accent2:#0ea5a3;--accent3:#6366f1;--danger:#d4482f;--warn:#b56d00;--ok:#059669;--shadow:0 14px 36px rgba(15,31,55,.07);--radius:18px;--grid:rgba(90,100,120,.18)}
+html[data-theme='aurora']{--bg:#f4f9fb;--panel:#ffffff;--panel2:#eef6fa;--text:#0d1f2d;--muted:#5c6b7a;--line:#d5e5ee;--accent:#0e7c86;--accent2:#14b8a6;--accent3:#d946ef;--danger:#d4482f;--warn:#b56d00;--ok:#059669;--shadow:0 14px 36px rgba(14,124,134,.10);--grid:rgba(14,124,134,.16)}
 html[data-theme='clarity']{--bg:#f7f8fb;--panel:#ffffff;--panel2:#f4f6fa;--text:#111827;--muted:#5f6b7a;--line:#d9e0ea;--accent:#155eef;--accent2:#0b9e9a;--accent3:#6d5dfc;--shadow:0 12px 32px rgba(16,24,40,.075);--grid:rgba(100,116,139,.18)}
 html[data-theme='ocean']{--bg:#eef9fb;--panel:#ffffff;--panel2:#f2fbfc;--text:#0b2532;--muted:#5b7280;--line:#cfe6ed;--accent:#0477bf;--accent2:#00a7a7;--accent3:#2d6cdf;--shadow:0 16px 42px rgba(0,88,120,.10);--grid:rgba(4,119,191,.18)}
 html[data-theme='lavender']{--bg:#faf7ff;--panel:#ffffff;--panel2:#f6f0ff;--text:#211a33;--muted:#746a87;--line:#e6dcf7;--accent:#7c3aed;--accent2:#0f9f9a;--accent3:#c026d3;--shadow:0 16px 40px rgba(91,33,182,.10);--grid:rgba(124,58,237,.16)}
@@ -1307,3 +1308,42 @@ a.primary:hover,a.secondary:hover,.primary:hover,.secondary:hover,.big-cta:hover
 
 /* v49: neutralize internal audit colors as layout dividers; keep color for buttons and focus only. */
 .topbar,.public-topbar{box-shadow:0 8px 28px rgba(15,23,42,.045)!important;}
+
+/* v61 logo refactor: final Foko Lab identity */
+.public-topbar .brand,
+.topbar .brand,
+.mw-brand{
+  min-width:0!important;
+  max-width:260px!important;
+  flex:0 0 auto!important;
+  overflow:visible!important;
+}
+.public-topbar .logo,
+.topbar .logo,
+.mw-brand img{
+  width:232px!important;
+  max-width:232px!important;
+  height:auto!important;
+  max-height:58px!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 8px 18px color-mix(in srgb,var(--foko-cyan, #00AEEF) 14%,transparent));
+}
+.identity-logo-wrap.compact-logo{
+  width:min(100%,360px)!important;
+  min-height:220px;
+  display:grid;
+  place-items:center;
+}
+.identity-logo-wrap.compact-logo img{
+  width:min(100%,320px)!important;
+  max-height:260px!important;
+  object-fit:contain!important;
+}
+@media(max-width:960px){
+  .public-topbar .logo,.topbar .logo,.mw-brand img{width:200px!important;max-width:200px!important;max-height:52px!important;}
+  .public-topbar .brand,.topbar .brand,.mw-brand{max-width:220px!important;}
+}
+@media(max-width:760px){
+  .public-topbar .logo,.topbar .logo,.mw-brand img{width:176px!important;max-width:176px!important;max-height:48px!important;}
+}
+

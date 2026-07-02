@@ -264,7 +264,8 @@ function wire(){
   ['leftPlot','rightPlot'].forEach(id=>{ const el=$(id); if(el) observePlotNode(el); });
 }
 
-function setTheme(t){ state.theme=t; document.documentElement.dataset.theme=t; $('themeBtn').value=t; localStorage.setItem('chilperic-theme',t); renderPlots(); setTimeout(()=>renderPlots(),120); }
+const KNOWN_THEMES=['aurora','clarity','ocean','lavender','slate','midnight','paper','forest'];
+function setTheme(t){ t=KNOWN_THEMES.includes(t)?t:'aurora'; state.theme=t; document.documentElement.dataset.theme=t; const sel=$('themeBtn'); if(sel)sel.value=t; localStorage.setItem('chilperic-theme',t); renderPlots(); setTimeout(()=>renderPlots(),120); }
 function setModule(m){
   state.module=m; state.result=null; state.sweep=null; state.opt=null; state.resultKind=m==='opt'?'optimization':'default';
   $('moduleSelect').value=m;
@@ -464,7 +465,7 @@ function runOde(){
 function runSweep(){
   try{ readOde(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, sweepA:$('sweepA').value, sweepB:$('sweepB').value, sweepVar:$('sweepVar').value, sweepMetric:$('sweepMetric').value, sweepN:+$('sweepN').value}; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
-function runOpt(){ try{ readOpt(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const payload={...state.model, samples:+$('optSamples').value, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population:+($('optPopulation')?.value||36), temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy('Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
+function runOpt(){ try{ readOpt(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const samples=+$('optSamples').value, population=+($('optPopulation')?.value||36); const budget=samples*population; const payload={...state.model, samples, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population, temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy(budget>50000?`Optimizing large browser budget (${budget.toLocaleString()} evaluations). Reduce samples/population if the tab slows down.`:'Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
 function worker(){
   if(state.worker) return state.worker;
   state.worker=new Worker('src/worker.js');

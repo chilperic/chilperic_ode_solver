@@ -80,7 +80,7 @@ def test_unpublished_plant_workbench_exports_are_disabled():
 def test_research_models_hidden_from_generic_workbench_dropdown_logic():
     js = text('src/model-workbench-v3.js')
     assert 'const visible=models.filter(m=>!RESEARCH_MODEL_IDS.has(m.id));' in js
-    assert "Research surrogates · opened from Research Hub" in js
+    assert "Research / portfolio models" in js
 
 
 def test_photosynthesis_uses_sellable_figures():

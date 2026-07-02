@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="0; url=workbench.html" http-equiv="refresh"/>
 <meta content="Foko Lab v3 model-centered workbench with robust ODE and stochastic analysis cards, offline plot fallback, parameter strips, contour scans, sensitivity heatmaps, LaTeX model display, GSA screens and reproducible exports." name="description"/>
 <meta content="Foko Lab Model Workbench" property="og:title"/>
 <meta content="No-scroll model-centered scientific analysis workspace for ODE, stochastic, steady-state and optimization models, sweeps, contour scans, GSA/robustness and exports." property="og:description"/>
@@ -16,6 +17,11 @@
 <script src="src/plot-fallback.js?v=3.0-current-plus-workbench"></script>
 <link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
 <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+<link rel="icon" type="image/svg+xml" href="assets/brand/foko-lab-mark.svg?v=3.1.0"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png?v=3.1.0"/>
+<link rel="icon" href="favicon.ico?v=3.1.0" sizes="any"/>
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png?v=3.1.0"/>
 <link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
 <link href="styles/model-workbench-v3.css?v=platform-v48" rel="stylesheet"/>
 <meta content="assets/homepage-preview.webp" property="og:image"/>
@@ -23,99 +29,13 @@
 <body data-lab="model-workbench">
 <div class="mw-shell">
 <header class="mw-topbar">
-<a aria-label="Foko Lab home" class="mw-brand" href="index.html"><img alt="Foko Lab" src="assets/foko-lab-logo-v271.svg?v=2.7.4"/></a>
-<nav aria-label="Primary navigation" class="mw-nav topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html" role="menuitem"><b>Model</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
+<a aria-label="Foko Lab home" class="mw-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg?v=3.1.0"/></a>
+<nav aria-label="Primary navigation" class="mw-nav topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html?model=sir" role="menuitem"><b>ODE</b></a><a href="workbench.html?model=stoch-sir" role="menuitem"><b>Stochastic CTMC</b></a><a href="workbench.html?model=enzyme-steady" role="menuitem"><b>Steady-State</b></a><a href="workbench.html?model=quadratic" role="menuitem"><b>Optimization</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
 <div class="mw-actions">
 <button class="mw-ghost" id="openModelDrawer" type="button">Model details</button>
 <button class="mw-primary" id="exportReport" type="button">Export report</button>
 </div>
 </header>
-<main class="mw-page"><nav aria-label="Workbench suite" class="mw-suite-tabs workbench-suite-tabs"><a aria-current="page" class="active" href="workbench.html">Model</a><a href="symbolic.html">Symbolic</a><a href="agent.html">Agent</a><a href="examples.html">Model Atlas</a></nav><section aria-label="Modeling approaches" class="mw-approach-map">
-<div class="mw-section-title"><h2>Model</h2><span>Choose the modeling formalism.</span></div>
-<div class="mw-approach-grid">
-<a href="ode.html#workbench"><b>ODE</b><span>Continuous deterministic dynamics</span></a>
-<a href="stochastic.html"><b>Stochastic</b><span>Random trajectories and event processes</span></a>
-<a href="optimization.html"><b>Optimization</b><span>Objectives, constraints and trade-offs</span></a>
-<a href="steady.html"><b>Steady-State</b><span>Equilibria and root-finding</span></a>
-<a href="symbolic.html"><b>Symbolic</b><span>Equations, Jacobians and algebraic checks</span></a>
-<a href="agent.html"><b>Agent</b><span>Individual rules and emergent behavior</span></a>
-<a href="examples.html"><b>Model Atlas</b><span>Curated examples and references</span></a>
-</div>
-</section>
-<section aria-label="Model context" class="mw-model-header">
-<div>
-<p class="mw-eyebrow">V3 WORKBENCH · ODE · STOCHASTIC · STEADY-STATE · OPTIMIZATION</p>
-<h1 id="modelTitle">SIR epidemic</h1>
-<p id="modelSummary">A deterministic infection-recovery model.</p>
-<div class="mw-meta" id="modelMeta"></div>
-</div>
-<div class="mw-model-select-wrap">
-<label for="modelSelect">Model</label>
-<select id="modelSelect"></select>
-<div class="mw-inline-buttons">
-<button class="mw-secondary" id="resetModel" type="button">Reset</button>
-<button class="mw-primary" id="runAll" type="button">Run / update</button>
-</div>
-</div>
-</section>
-<section aria-label="Simulation parameters" class="mw-param-section">
-<div class="mw-section-title">
-<h2>Simulation parameters</h2>
-<span id="runStatus">Ready.</span>
-</div>
-<div class="mw-param-grid" id="parameterStrip"></div>
-<details class="mw-advanced">
-<summary>Advanced simulation settings</summary>
-<div class="mw-advanced-grid">
-<label>t start <input id="tStart" step="0.1" type="number"/></label>
-<label>t end <input id="tEnd" step="0.1" type="number"/></label>
-<label>steps <input id="steps" max="5000" min="50" step="50" type="number"/></label>
-<label>primary output <select id="primaryVariable"></select></label>
-</div>
-<div class="mw-ic-grid" id="initialGrid"></div>
-</details>
-</section>
-<section aria-label="Analyses" class="mw-analyses">
-<div class="mw-section-title">
-<h2>Analyses</h2>
-<div class="mw-add-analysis">
-<select id="analysisType">
-<option value="timecourse">Time course</option>
-<option value="phase">Phase portrait</option>
-<option value="sweep">Parameter sweep</option>
-<option value="contour">2D heatmap / contour</option>
-<option value="gsa">GSA / sensitivity</option>
-<option value="sensitivity">Sensitivity heatmap</option>
-<option value="equations">Equation math</option>
-<option value="diagnostics">Diagnostics</option>
-</select>
-<button class="mw-secondary" id="addAnalysis" type="button">+ Add analysis</button>
-</div>
-</div>
-<div class="mw-card-grid" id="analysisGrid"></div>
-</section>
-<details aria-label="Model equations" class="mw-equation-strip mw-equation-drawer">
-<summary><span>Model equations / reactions</span><strong>LaTeX display</strong></summary>
-<div class="mw-equation-preview" id="equationPreview"></div>
-</details>
-</main>
-<aside aria-hidden="true" aria-label="Model details drawer" class="mw-drawer" id="modelDrawer">
-<div class="mw-drawer-panel">
-<div class="mw-drawer-head">
-<div><p class="mw-eyebrow">MODEL DETAILS</p><h2 id="drawerTitle">Model</h2></div>
-<button aria-label="Close model details" class="mw-icon-btn" id="closeModelDrawer" type="button">×</button>
-</div>
-<div class="mw-drawer-tabs" role="tablist">
-<button class="active" data-detail-tab="equations" type="button">Equations</button>
-<button data-detail-tab="parameters" type="button">Parameters</button>
-<button data-detail-tab="json" type="button">JSON</button>
-<button data-detail-tab="exports" type="button">Exports</button>
-</div>
-<div class="mw-detail-body" id="detailBody"></div>
-</div>
-</aside>
-<div aria-live="polite" class="mw-toast" id="toast" role="status"></div>
-</div>
-<script src="src/model-workbench-v3.js?v=48"></script>
-<script defer="" src="src/navigation.js?v=48"></script></body>
-</html>
+<main class="doc-standard clean-doc-page redirect-page"><section class="doc-hero clean-doc-hero"><p class="doc-eyebrow">Redirect</p><h1>Workbench</h1><p>This route has moved to the Workbench.</p><div class="doc-actions"><a class="primary" href="workbench.html">Open Workbench</a></div></section></main>
+<script>window.location.replace('workbench.html');</script>
+</div></body></html>

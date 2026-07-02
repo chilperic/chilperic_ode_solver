@@ -25,10 +25,9 @@ def test_v48_public_pages_do_not_expose_internal_architecture_noise():
 def test_v48_workbench_dropdown_is_model_symbolic_agent_atlas_only():
     html = read('index.html')
     panel = html.split('data-nav-menu="workbench"', 1)[1].split('</details>', 1)[0]
-    for label in ['Model','Symbolic','Agent','Model Atlas']:
+    for label in ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','Model Atlas']:
         assert f'<b>{label}</b>' in panel
-    for legacy in ['ODE','Optimization','Steady-State','Stochastic']:
-        assert f'<b>{legacy}</b>' not in panel
+    assert '<b>Model</b>' not in panel
 
 
 def test_v48_legacy_dropdown_remains_specialist_shortcut():

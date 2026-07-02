@@ -521,3 +521,28 @@ body[data-lab="model-workbench"] .mw-opt-palette button{border-color:#b8e3e5;col
 body[data-lab="model-workbench"] .mw-card{min-width:0;}
 body[data-lab="model-workbench"] .mw-card-grid{grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));}
 @media(max-width:900px){body[data-lab="model-workbench"] .mw-actions{display:none}body[data-lab="model-workbench"] .mw-model-header{grid-template-columns:1fr}body[data-lab="model-workbench"] .mw-inline-buttons{grid-template-columns:1fr 1fr}}
+
+/* v54: compact analysis header so the user sees results without avoidable scrolling. */
+body[data-lab="model-workbench"] .mw-analyses > .mw-section-title{
+  display:grid;
+  grid-template-columns:auto minmax(360px,560px);
+  align-items:end;
+  gap:10px 14px;
+  margin-bottom:8px;
+}
+body[data-lab="model-workbench"] .mw-analyses{padding:10px 14px 14px;}
+body[data-lab="model-workbench"] .mw-add-analysis{
+  display:grid;
+  grid-template-columns:minmax(160px,1fr) minmax(180px,1fr) auto;
+  gap:8px;
+  justify-content:stretch;
+  align-items:end;
+}
+body[data-lab="model-workbench"] .mw-add-analysis label{margin:0;}
+body[data-lab="model-workbench"] .mw-add-analysis select,
+body[data-lab="model-workbench"] .mw-palette-control select{width:100%;}
+body[data-lab="model-workbench"] .mw-palette-editor{margin:8px 0 10px;}
+@media(max-width:900px){
+  body[data-lab="model-workbench"] .mw-analyses > .mw-section-title{grid-template-columns:1fr;}
+  body[data-lab="model-workbench"] .mw-add-analysis{grid-template-columns:1fr;}
+}

@@ -19,7 +19,7 @@ def test_dropdowns_are_labels_only_no_explanatory_spans():
                 assert len(a.get_text(' ', strip=True).split()) <= 2, (page, a.get_text(' ', strip=True))
 
 def test_compact_navigation_labels():
-    assert labels('index.html', 'workbench-menu') == ['Model','Symbolic','Agent','Model Atlas']
+    assert labels('index.html', 'workbench-menu') == ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','Model Atlas']
     assert labels('index.html', 'legacy-menu') == ['ODE','Optimization','Steady-State','Stochastic']
     assert labels('index.html', 'learn-menu') == ['Docs', 'Tutorial', 'Platform']
     assert labels('index.html', 'about-menu') == ['Research', 'Mathematical Beauty', 'Acknowledgement', 'Contact']
