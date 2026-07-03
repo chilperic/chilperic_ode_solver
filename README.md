@@ -109,3 +109,11 @@ The rule is explicit: browser ML returns readable equations, diagnostics or mode
 - Added richer SciML examples: SEIR, de novo protein design, signaling networks, metabolic stress, gene knockout screening, tumor microenvironment, tissue drug penetration, multi-drug scheduling, virtual patients, allostery and microbial communities.
 - Added user-selectable 2D and 3D phase portraits with X/Y/Z variable selection directly above the diagnostic plot.
 - Added designed SciML Atlas thumbnails for the new examples.
+
+## v70 IDE dashboard release
+
+This release implements the dark scientific IDE header, top-right About avatar, a dashboard-style home page, a cleaned Workbench dropdown, and a teal/blue interface palette without magenta UI accents.
+## v70.1 correction release
+
+This release fixes the v70 navigation regressions: the Workbench dropdown now has stronger contrast, the classic/legacy labs are restored inside the Workbench menu, and Research Hub is a first-class header route. The clickable profile avatar remains the About entry point. Internal audit notes are stored under `release-audits/`, not presented as learner-facing UI.
+

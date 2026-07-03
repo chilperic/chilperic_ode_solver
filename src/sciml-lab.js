@@ -3,7 +3,7 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const esc = v => String(v ?? '').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-  const COLORS = ['#00B4A6','#00AEEF','#E6007E','#0B1D3D','#7c3aed','#f59e0b','#64748b'];
+  const COLORS = ['#00A7A7','#155EEF','#145374','#0B1D3D','#2F855A','#FF7A1A','#64748B'];
 
   const EXAMPLES = {
     logistic:{title:'SINDy logistic discovery',atlas:'SciML Atlas · teaching ODE',native:'workbench.html?model=logistic',vars:['x'],params:{r:1,K:10},x0:[0.7],rhs:(x,p)=>[p.r*x[0]*(1-x[0]/p.K)],truth:['r*x - (r/K)*x^2'],desc:'Compact growth system for checking whether sparse regression recovers a readable governing equation.',phase:['x'],defaults:{points:180,dt:0.05,threshold:0.03,ridge:0.0001,noise:0}},
@@ -31,6 +31,7 @@
       p.r2*x[1]*(1-p.a21*x[0]-x[1]-p.a23*x[2]),
       p.r3*x[2]*(1-p.a31*x[0]-p.a32*x[1]-x[2])],truth:['r1*B1*(1-B1-a12*B2-a13*B3)','r2*B2*(1-a21*B1-B2-a23*B3)','r3*B3*(1-a31*B1-a32*B2-B3)'],desc:'Generalized Lotka–Volterra microbiome scaffold for competition, coexistence and stability diagnostics.',phase:['B1','B2','B3'],defaults:{points:280,dt:0.03,threshold:0.02,ridge:0.0002,noise:0.001}}
   };
+  const EXPORT_ONLY = new Set(['assimilation','pinn','operator','network']);
   const APPROACH = {
     sindy:'Equation discovery / SINDy: construct candidate terms, estimate derivatives and recover readable ODEs by sparse thresholded least squares.',
     surrogate:'Surrogate modeling: validate a fast emulator against a reference simulation with predicted-vs-reference, error and cross-validation diagnostics.',
@@ -75,14 +76,73 @@
   function randn(){ let u=0,v=0; while(!u)u=Math.random(); while(!v)v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
   function rk4(x,dt,f,p){ const add=(a,b,s)=>a.map((v,i)=>v+s*b[i]); const k1=f(x,p),k2=f(add(x,k1,dt/2),p),k3=f(add(x,k2,dt/2),p),k4=f(add(x,k3,dt),p); return x.map((v,i)=>v+dt*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6); }
 
-  function loadExampleData(){
-    const e=ex(), d=e.defaults||{}; set('sciPoints',d.points||180); set('sciDt',d.dt||.05); set('sciThreshold',d.threshold||.05); set('sciRidge',d.ridge||.0001); set('sciNoise',d.noise||0);
-    $('sciExampleTitle').textContent=e.title; $('sciAtlasKicker').textContent=e.atlas; describe();
+  function numberAttr(v){ return Number.isFinite(Number(v)) ? String(Number(v)) : '0'; }
+  function paramRangeDefault(value){
+    const v=Number(value); const span=Math.max(1e-6, Math.abs(v)||1);
+    return {min:v>=0?0:v-2*span, max:v>=0?v+2*span:v+2*span};
+  }
+  function populateModelInputs(){
+    const e=ex();
+    const stateBox=$('sciInitialEditor'), paramBox=$('sciParamEditor');
+    if(stateBox){
+      stateBox.innerHTML=e.vars.map((v,i)=>`<label><span>${esc(v)}₀</span><input class="sci-x0" data-var="${esc(v)}" type="number" step="any" value="${numberAttr(e.x0[i] ?? 0)}"></label>`).join('');
+    }
+    if(paramBox){
+      paramBox.innerHTML=Object.entries(e.params||{}).map(([k,v])=>{
+        const r=paramRangeDefault(v);
+        return `<div class="sci-param-row" data-param="${esc(k)}"><label><span>${esc(k)}</span><input class="sci-param-value" type="number" step="any" value="${numberAttr(v)}"></label><label><span>min</span><input class="sci-param-min" type="number" step="any" value="${numberAttr(r.min)}"></label><label><span>max</span><input class="sci-param-max" type="number" step="any" value="${numberAttr(r.max)}"></label></div>`;
+      }).join('') || '<p class="sciml-note">No parameters declared for this example.</p>';
+    }
+  }
+  function readModelInputs(){
+    const e=ex();
+    const x0=Array.from(document.querySelectorAll('.sci-x0')).map((el,i)=>{
+      const v=Number(el.value); return Number.isFinite(v)?v:(e.x0[i]??0);
+    });
+    const params={}; const ranges={};
+    document.querySelectorAll('.sci-param-row').forEach(row=>{
+      const key=row.dataset.param;
+      const val=Number(row.querySelector('.sci-param-value')?.value);
+      const min=Number(row.querySelector('.sci-param-min')?.value);
+      const max=Number(row.querySelector('.sci-param-max')?.value);
+      params[key]=Number.isFinite(val)?val:Number(e.params?.[key]||0);
+      ranges[key]={min:Number.isFinite(min)?min:paramRangeDefault(params[key]).min, max:Number.isFinite(max)?max:paramRangeDefault(params[key]).max};
+      if(ranges[key].max < ranges[key].min){ const tmp=ranges[key].min; ranges[key].min=ranges[key].max; ranges[key].max=tmp; }
+    });
+    return {x0:x0.length?x0:e.x0.slice(), params:Object.keys(params).length?params:Object.assign({},e.params), ranges};
+  }
+  function buildDataFromCurrentInputs(){
+    const e=ex(), d=e.defaults||{}, edited=readModelInputs();
     const m=Math.max(30,Math.min(800,Math.round(n('sciPoints',d.points||180)))), dt=Math.max(1e-4,n('sciDt',d.dt||.05)), noise=Math.max(0,n('sciNoise',0));
-    const t=[], X=[]; let x=e.x0.slice();
-    for(let i=0;i<m;i++){ t.push(i*dt); X.push(x.map(v=>v+noise*randn())); x=rk4(x,dt,e.rhs,e.params).map(v=>Number.isFinite(v)?v:0); }
-    DATA={t,vars:e.vars.slice(),X,source:e.title,native:e.native,truth:e.truth.slice()};
-    $('sciCsv').value=toCsv(DATA); MODEL=null; ANALYSIS=null; renderMath([`\\text{Loaded atlas data: } ${e.vars.join(', ')}`]); $('sciDiagnostics').innerHTML='<p>'+esc(e.desc)+'</p>'; status('Atlas data loaded. Choose a modeling problem and run analysis.'); drawPlot();
+    const t=[], X=[]; let x=edited.x0.slice();
+    for(let i=0;i<m;i++){ t.push(i*dt); X.push(x.map(v=>v+noise*randn())); x=rk4(x,dt,e.rhs,edited.params).map(v=>Number.isFinite(v)?v:0); }
+    DATA={t,vars:e.vars.slice(),X,source:e.title,native:e.native,truth:e.truth.slice(),params:edited.params,paramRanges:edited.ranges,x0:edited.x0};
+    refreshPhaseSelectors();
+    $('sciCsv').value=toCsv(DATA);
+    MODEL=null; ANALYSIS=null;
+    return DATA;
+  }
+  function applyInputsAndAnalyze(){
+    buildDataFromCurrentInputs();
+    runAnalysis();
+  }
+  function updatePhaseControlVisibility(){
+    const k=$('sciPlotType')?.value||'trajectory';
+    const controls=$('sciPhaseControls');
+    if(controls) controls.hidden = !(k==='phase2d' || k==='phase3d');
+  }
+
+  function loadExampleData(){
+    const e=ex(), d=e.defaults||{};
+    set('sciPoints',d.points||180); set('sciDt',d.dt||.05); set('sciThreshold',d.threshold||.05); set('sciRidge',d.ridge||.0001); set('sciNoise',d.noise||0);
+    $('sciExampleTitle').textContent=e.title; $('sciAtlasKicker').textContent=e.atlas; describe();
+    populateModelInputs();
+    const data=buildDataFromCurrentInputs();
+    renderMath([`\text{Loaded atlas data: } ${e.vars.join(', ')}`]);
+    $('sciDiagnostics').innerHTML='<p>'+esc(e.desc)+'</p>';
+    status('Defaults restored. Edit initial conditions or parameters, then apply inputs.');
+    updatePhaseControlVisibility();
+    drawPlot();
   }
   function describe(){ $('sciExampleDescription').textContent = ex().desc + ' ' + (APPROACH[approach()]||''); }
   function toCsv(data){ return [['t',...data.vars].join(',')].concat(data.t.map((tt,i)=>[tt,...data.X[i]].map(v=>Number(v).toPrecision(9)).join(','))).join('\n'); }
@@ -91,7 +151,7 @@
     const lines=raw.split(/\n+/).map(s=>s.trim()).filter(Boolean); if(lines.length<5)throw new Error('CSV needs a header and at least four rows.');
     const head=lines[0].split(',').map(s=>s.trim()).filter(Boolean); if(head.length<2)throw new Error('CSV header must be t plus state variables.');
     const t=[],X=[]; for(let i=1;i<lines.length;i++){ const row=lines[i].split(',').map(s=>Number(s.trim())); if(row.length!==head.length||row.some(v=>!Number.isFinite(v)))throw new Error('Invalid numeric row '+(i+1)); t.push(row[0]); X.push(row.slice(1)); }
-    DATA={t,vars:head.slice(1),X,source:'CSV input',native:ex().native,truth:[]}; refreshPhaseSelectors(); return DATA;
+    { const edited=readModelInputs(); DATA={t,vars:head.slice(1),X,source:'CSV input',native:ex().native,truth:[],params:edited.params,paramRanges:edited.ranges,x0:edited.x0}; } refreshPhaseSelectors(); return DATA;
   }
   function derivative(data){ const m=data.X.length,d=data.vars.length,out=Array.from({length:m},()=>Array(d).fill(0)); for(let i=0;i<m;i++){ const im=Math.max(0,i-1),ip=Math.min(m-1,i+1),dt=data.t[ip]-data.t[im]; for(let j=0;j<d;j++)out[i][j]=dt?(data.X[ip][j]-data.X[im][j])/dt:0; } return out; }
   function terms(vars){ const a=[], add=(name,fn)=>a.push({name,fn}); if($('libConstant')?.checked)add('1',()=>1); if($('libLinear')?.checked)vars.forEach((v,i)=>add(v,r=>r[i])); if($('libQuadratic')?.checked)vars.forEach((v,i)=>add(v+'^2',r=>r[i]*r[i])); if($('libInteractions')?.checked)for(let i=0;i<vars.length;i++)for(let j=i+1;j<vars.length;j++)add(vars[i]+'*'+vars[j],r=>r[i]*r[j]); if($('libCubic')?.checked)vars.forEach((v,i)=>add(v+'^3',r=>r[i]*r[i]*r[i])); if($('libTrig')?.checked)vars.forEach((v,i)=>{add('sin('+v+')',r=>Math.sin(r[i])); add('cos('+v+')',r=>Math.cos(r[i]));}); if(!a.length)throw new Error('Candidate library is empty.'); return a; }
@@ -100,30 +160,100 @@
   function mm(A,B){ const Bt=tr(B); return A.map(r=>Bt.map(c=>r.reduce((s,v,i)=>s+v*c[i],0))); }
   function mv(A,b){ return A.map(r=>r.reduce((s,v,i)=>s+v*b[i],0)); }
   function lsq(Th,y,ridge){ if(!hasMath())throw new Error('math.js linear algebra unavailable.'); const TT=tr(Th),A=mm(TT,Th),b=mv(TT,y); for(let i=0;i<A.length;i++)A[i][i]+=ridge; const sol=math.lusolve(A,b).valueOf(); return sol.map(v=>Array.isArray(v)?Number(v[0]):Number(v)); }
-  function runSindy(data){
-    const T=terms(data.vars), Th=theta(data.X,T), xd=derivative(data), lam=Math.max(0,n('sciThreshold',.05)), ridge=Math.max(0,n('sciRidge',1e-4)), its=Math.max(1,Math.min(20,Math.round(n('sciIterations',8)))), coeff=[];
-    for(let j=0;j<data.vars.length;j++){ const y=xd.map(r=>r[j]); let active=T.map(()=>true), xi=lsq(Th,y,ridge); for(let it=0;it<its;it++){ xi.forEach((c,k)=>{if(Math.abs(c)<lam)active[k]=false;}); const idx=active.map((v,k)=>v?k:-1).filter(k=>k>=0); if(!idx.length){xi=T.map(()=>0);break;} const sub=lsq(Th.map(r=>idx.map(k=>r[k])),y,ridge); xi=T.map(()=>0); idx.forEach((k,a)=>xi[k]=sub[a]); } coeff.push(xi); }
-    return {vars:data.vars.slice(),terms:T,theta:Th,xdot:xd,coeff,data,threshold:lam,ridge};
+  // Read the checkbox library spec from the UI toggles.
+  function librarySpec(){
+    return {
+      constant: !!$('libConstant')?.checked,
+      linear: !!$('libLinear')?.checked,
+      quadratic: !!$('libQuadratic')?.checked,
+      interactions: !!$('libInteractions')?.checked,
+      cubic: !!$('libCubic')?.checked,
+      trig: !!$('libTrig')?.checked
+    };
   }
+  // Run discovery via the shared, unit-tested engine (window.FokoSINDy) and adapt
+  // its result to the MODEL shape the rest of this lab consumes:
+  //   {vars, terms:[{name,fn}], theta, xdot, coeff:[perVar][perFeat], data, threshold, ridge}
+  function runSindy(data){
+    assert(window.FokoSINDy, 'SINDy engine (sindy.js) not loaded.');
+    const spec = librarySpec();
+    const lam = Math.max(0, n('sciThreshold',.05));
+    const ridge = Math.max(0, n('sciRidge',1e-4));
+    const its = Math.max(1, Math.min(20, Math.round(n('sciIterations',10))));
+    const res = window.FokoSINDy.discover({
+      X:data.X, t:data.t, varNames:data.vars, library:spec,
+      lambda:lam, ridge:ridge, iterations:its
+    });
+    // Rebuild the {name,fn} term list locally so downstream code that calls
+    // t.fn (none currently) and t.name (coefficient labels, heatmaps) keeps working.
+    const lib = window.FokoSINDy.buildLibrary(data.X, Object.assign({varNames:data.vars}, spec));
+    // coeff is per-variable rows: coeff[j][k] = Xi[k][j].
+    const coeff = data.vars.map((_,j)=>res.featureNames.map((_,k)=>res.Xi[k][j]));
+    return {vars:data.vars.slice(), terms:lib.feats, theta:res.Theta, xdot:res.Xdot,
+            coeff, data, threshold:lam, ridge, rmse:res.rmse};
+  }
+  function assert(c,m){ if(!c) throw new Error(m); }
   function expr(c,T){ const p=[]; c.forEach((v,i)=>{ if(Math.abs(v)>1e-12){ const sign=v<0?'-':(p.length?'+':''); const mag=Math.abs(v); p.push(sign+(Math.abs(mag-1)<1e-12?'':mag.toPrecision(5)+'*')+T[i].name); }}); return p.join(' ')||'0'; }
   function predictDerivative(model){ return model.theta.map(row=>model.coeff.map(c=>row.reduce((s,v,k)=>s+v*c[k],0))); }
   function residuals(model){ const pred=predictDerivative(model); return model.xdot.map((row,i)=>row.map((v,j)=>v-pred[i][j])); }
   function renderMath(lines){ const box=$('sciEquations'); box.innerHTML=''; lines.forEach(line=>{ const d=document.createElement('div'); d.className='sciml-math-line'; const latex=String(line).replace(/([A-Za-z]\w*)'/g,"$1^{\\prime}").replace(/\*/g,'\\cdot ').replace(/\^2/g,'^{2}').replace(/\^3/g,'^{3}'); if(window.katex){try{katex.render(latex,d,{displayMode:true,throwOnError:false});}catch(_){d.textContent=line;}} else d.textContent=line; box.appendChild(d); }); }
   function table(html){ $('sciDiagnostics').innerHTML=html; }
+
+  function thetaObjectToArray(obj,names){ return names.map(k=>Number(obj[k])); }
+  function currentParam(name,fallback){ const inputs=readModelInputs(); const v=Number(inputs.params[name]); return Number.isFinite(v)?v:fallback; }
+  function arrayToObject(names,vals){ const o={}; names.forEach((k,i)=>o[k]=vals[i]); return o; }
+  function inverseSpec(exampleKey){
+    const e=ex();
+    if(exampleKey==='sir') return {names:['beta','gamma'], theta0:[currentParam('beta',0.2),currentParam('gamma',0.25)], rhs:(t,x,th)=>[-th[0]*x[0]*x[1], th[0]*x[0]*x[1]-th[1]*x[1], th[1]*x[1]]};
+    if(exampleKey==='seir') return {names:['beta','sigma','gamma'], theta0:[currentParam('beta',0.55),currentParam('sigma',0.2),currentParam('gamma',0.25)], rhs:(t,x,th)=>[-th[0]*x[0]*x[2], th[0]*x[0]*x[2]-th[1]*x[1], th[1]*x[1]-th[2]*x[2], th[2]*x[2]]};
+    if(exampleKey==='michaelis') return {names:['Vmax','Km'], theta0:[currentParam('Vmax',0.5),currentParam('Km',2.0)], rhs:(t,x,th)=>{const v=th[0]*x[0]/(th[1]+x[0]); return [-v,v];}};
+    if(exampleKey==='logistic') return {names:['r','K'], theta0:[currentParam('r',0.55),currentParam('K',6.5)], rhs:(t,x,th)=>[th[0]*x[0]*(1-x[0]/th[1])]};
+    if(exampleKey==='allee') return {names:['r','K','A'], theta0:[currentParam('r',0.55),currentParam('K',7),currentParam('A',1.5)], rhs:(t,x,th)=>[th[0]*x[0]*(1-x[0]/th[1])*(x[0]/th[2]-1)]};
+    return null;
+  }
+  function runInverseEngine(data){
+    if(!window.FokoInverse) throw new Error('FokoInverse engine missing');
+    const key=$('sciExample')?.value||'sir'; const spec=inverseSpec(key);
+    if(!spec) return {exportOnly:true, message:'Inverse calibration for this example is export-only. Choose SIR, SEIR, logistic, Allee or Michaelis–Menten for browser calibration.'};
+    const res=window.FokoInverse.calibrate({rhs:spec.rhs,x0:data.X[0],t:data.t,data:data.X,theta0:spec.theta0,mode:'fd',maxIter:80});
+    return {spec,res,thetaObject:arrayToObject(spec.names,res.theta),exportOnly:false};
+  }
+  function runSurrogateEngine(data){
+    if(!window.FokoSurrogate) throw new Error('FokoSurrogate engine missing');
+    const inputs=data.t.map(t=>[t]); const outputs=data.X.map(r=>r[0]);
+    const split=Math.max(6,Math.floor(inputs.length*0.7));
+    const model=window.FokoSurrogate.fit({inputs:inputs.slice(0,split),outputs:outputs.slice(0,split),degree:Math.min(4,Math.max(2,Math.floor(data.vars.length/2)+2))});
+    const pred=inputs.map(x=>window.FokoSurrogate.predict(model,x));
+    const testY=outputs.slice(split), testP=pred.slice(split); const mean=testY.reduce((a,b)=>a+b,0)/Math.max(1,testY.length);
+    let ssRes=0,ssTot=0; testY.forEach((y,i)=>{ssRes+=(y-testP[i])**2; ssTot+=(y-mean)**2;});
+    return {model,pred,cvError:model.cvError,r2:ssTot?1-ssRes/ssTot:1,split,exportOnly:false};
+  }
+
   function runAnalysis(){
     try{
-      const data=parseCsv(), a=approach(); MODEL=runSindy(data);
+      const data=parseCsv(), a=approach(); MODEL=runSindy(data); ANALYSIS={approach:a, exportOnly:EXPORT_ONLY.has(a)};
+      if(a==='inverse') ANALYSIS.inverse=runInverseEngine(data);
+      if(a==='surrogate') ANALYSIS.surrogate=runSurrogateEngine(data);
       const eqs=MODEL.vars.map((v,j)=>`${v}' = ${expr(MODEL.coeff[j],MODEL.terms)}`);
-      if(a==='sindy') renderMath(eqs); else renderMath([`\\text{${title(a)}}`, `\\text{Browser diagnostics computed; rigorous training/export generated below.}`]);
-      renderDiagnostics(MODEL,a); $('sciExport').value=exportScript(a); ANALYSIS={approach:a}; status(title(a)+' completed.'); drawPlot();
+      if(a==='sindy') renderMath(eqs);
+      else if(a==='inverse' && ANALYSIS.inverse && !ANALYSIS.inverse.exportOnly) renderMath([`\\text{Inverse calibration recovered parameters}`, ...Object.entries(ANALYSIS.inverse.thetaObject).map(([k,v])=>`${k} = ${Number(v).toPrecision(5)}`)]);
+      else if(a==='surrogate' && ANALYSIS.surrogate) renderMath([`\\text{Surrogate emulator fitted}`, `R^2_{heldout} = ${Number(ANALYSIS.surrogate.r2).toPrecision(4)}`, `CV\\ RMSE = ${Number(ANALYSIS.surrogate.cvError).toPrecision(4)}`]);
+      else renderMath([`\\text{${title(a)}}`, `\\text{Export-only: generated script, no fake browser training.}`]);
+      renderDiagnostics(MODEL,a); $('sciExport').value=exportScript(a); status(title(a)+(ANALYSIS.exportOnly?' export generated.':' completed.')); drawPlot();
     }catch(e){showError(e);}
   }
   function title(a){ return {sindy:'Equation discovery / SINDy',surrogate:'Surrogate modeling / acceleration',inverse:'Inverse problem / parameter identification',assimilation:'Data assimilation',pinn:'PINN / physics-constrained neural model',operator:'Neural operator surrogate',network:'Biological network ML scaffold'}[a]||'SciML analysis'; }
   function renderDiagnostics(model,a){
     const res=residuals(model), rows=model.vars.map((v,j)=>{ const r=res.map(x=>x[j]), mse=r.reduce((s,x)=>s+x*x,0)/r.length, max=Math.max(...r.map(Math.abs)), active=model.coeff[j].filter(c=>Math.abs(c)>1e-12).length; return `<tr><td>${esc(v)}</td><td>${active}</td><td>${mse.toExponential(3)}</td><td>${max.toExponential(3)}</td></tr>`; }).join('');
-    table(`<p>${esc(APPROACH[a]||'')}</p><table><thead><tr><th>state</th><th>active terms</th><th>residual MSE</th><th>max |residual|</th></tr></thead><tbody>${rows}</tbody></table>`);
+    let extra='';
+    if(DATA?.x0){ extra += `<p><b>Initial conditions:</b> ${DATA.vars.map((v,i)=>`${esc(v)}₀=${Number(DATA.x0[i]).toPrecision(5)}`).join(', ')}</p>`; }
+    if(DATA?.params){ extra += `<p><b>Parameter values:</b> ${Object.entries(DATA.params).map(([k,v])=>`${esc(k)}=${Number(v).toPrecision(5)}`).join(', ')}</p>`; }
+    if(a==='inverse' && ANALYSIS?.inverse && !ANALYSIS.inverse.exportOnly){ extra=`<p><b>Recovered parameters:</b> ${Object.entries(ANALYSIS.inverse.thetaObject).map(([k,v])=>`${esc(k)}=${Number(v).toPrecision(5)}`).join(', ')} · final cost ${Number(ANALYSIS.inverse.res.finalCost).toExponential(3)}</p>`; }
+    if(a==='surrogate' && ANALYSIS?.surrogate){ extra=`<p><b>Surrogate:</b> held-out R² ${Number(ANALYSIS.surrogate.r2).toPrecision(4)} · CV RMSE ${Number(ANALYSIS.surrogate.cvError).toExponential(3)}</p>`; }
+    if(EXPORT_ONLY.has(a)) extra=`<p><b>Export-only.</b> This approach generates a rigorous Python scaffold instead of pretending to train a neural model in the browser.</p>`;
+    table(`${extra}<p>${esc(APPROACH[a]||'')}</p><table><thead><tr><th>state</th><th>active terms</th><th>residual MSE</th><th>max |residual|</th></tr></thead><tbody>${rows}</tbody></table>`);
   }
-  function modelJson(){ if(!MODEL)return {status:'No analysis yet'}; return {id:'sciml-discovered-model',name:'SciML discovered model',type:'ODE',family:'SciML',variables:MODEL.vars,parameters:{},equations:MODEL.vars.map((v,j)=>expr(MODEL.coeff[j],MODEL.terms)),source:'Foko SciML Lab'}; }
+  function modelJson(){ if(!MODEL)return {status:'No analysis yet'}; return {id:'sciml-discovered-model',name:'SciML discovered model',type:'ODE',family:'SciML',variables:MODEL.vars,parameters:(DATA?.params||{}), initialConditions:(DATA?.x0||[]), parameterRanges:(DATA?.paramRanges||{}), equations:MODEL.vars.map((v,j)=>expr(MODEL.coeff[j],MODEL.terms)),source:'Foko SciML Lab'}; }
   function layout(title,x,y){ return {title:{text:title,font:{size:15}},xaxis:{title:x,zeroline:true,automargin:true},yaxis:{title:y,zeroline:true,automargin:true},margin:{l:64,r:34,t:50,b:76},legend:{orientation:'h',y:-.25},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'Inter, system-ui, sans-serif',size:12}}; }
   function config(){ return {responsive:true,displaylogo:false,displayModeBar:'hover'}; }
   function ensure(){ if(!MODEL)MODEL=runSindy(parseCsv()); return MODEL; }
@@ -132,7 +262,7 @@
   function drawPlot(){
     const box=$('sciPlot'); if(!box||!window.Plotly)return;
     try{
-      const data=DATA||parseCsv(), kind=$('sciPlotType')?.value||'trajectory'; let traces=[], lay=layout('Trajectory / observations','time','state');
+      updatePhaseControlVisibility(); const data=DATA||parseCsv(), kind=$('sciPlotType')?.value||'trajectory'; let traces=[], lay=layout('Trajectory / observations','time','state');
       if(kind==='trajectory'||!MODEL){ traces=data.vars.map((v,j)=>({x:data.t,y:data.X.map(r=>r[j]),mode:'lines',name:v,line:{color:COLORS[j%COLORS.length]}})); }
       else {
         const m=ensure(), pred=predictDerivative(m), res=residuals(m);
@@ -153,18 +283,17 @@
       Plotly.react(box,traces,lay,config());
     }catch(e){ if(box)box.innerHTML=`<div class="sciml-error">${esc(e.message||e)}</div>`; }
   }
-  function exportScript(a=approach()){ const vars=(DATA?.vars)||ex().vars, csv=$('sciCsv')?.value||''; const common=`# Generated by Foko SciML Lab v65\n# Selected modeling problem: ${title(a)}\n`; if(a==='sindy')return common+`# pip install pysindy pandas numpy matplotlib scikit-learn\nimport io, pandas as pd, numpy as np, pysindy as ps\ncsv_data=${JSON.stringify(csv)}\ndf=pd.read_csv(io.StringIO(csv_data)); t=df.iloc[:,0].to_numpy(); X=df[${JSON.stringify(vars)}].to_numpy()\ndt=float(np.median(np.diff(t)))\nmodel=ps.SINDy(feature_library=ps.PolynomialLibrary(degree=3,include_interaction=True), optimizer=ps.STLSQ(threshold=${n('sciThreshold',.05)}, alpha=${n('sciRidge',1e-4)}), feature_names=${JSON.stringify(vars)})\nmodel.fit(X,t=dt); model.print()\n`; if(a==='surrogate')return common+`# scikit-learn surrogate validation: train/test split, predicted-vs-reference, residuals, error histogram.\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import Ridge\nfrom sklearn.gaussian_process import GaussianProcessRegressor\n# Fit emulator to expensive solver outputs, then plot y_pred vs y_ref and residuals.\n`; if(a==='inverse')return common+`# scipy least_squares inverse problem scaffold: infer hidden ODE parameters from sparse observations.\nfrom scipy.integrate import solve_ivp\nfrom scipy.optimize import least_squares\n# Define rhs(t,y,theta), residual(theta), then inspect fitted trajectory and residual plots.\n`; if(a==='assimilation')return common+`# Data assimilation scaffold: forecast + observation update.\n# Replace with EnKF/UKF/particle filter. Plot innovation sequence and analysis residuals.\n`; if(a==='pinn')return common+`# PyTorch PINN scaffold. Train outside browser. Plot train/validation loss, physics residual, predicted-vs-reference and error heatmap.\nimport torch, torch.nn as nn\nclass MLP(nn.Module):\n    def __init__(self,width=64,depth=4,out_dim=1):\n        super().__init__(); layers=[nn.Linear(1,width),nn.Tanh()]\n        for _ in range(depth-1): layers += [nn.Linear(width,width),nn.Tanh()]\n        layers += [nn.Linear(width,out_dim)]; self.net=nn.Sequential(*layers)\n    def forward(self,t): return self.net(t)\n`; if(a==='operator')return common+`# Neural-operator scaffold: train field-to-field surrogate outside the browser.\n# Suggested stack: PyTorch + neuraloperator / JAX. Validate with x-t error heatmaps and cross-validation residuals.\n`; return common+`# Biological network ML scaffold: graph/omics features, GNN templates, pathway-level interpretation and SBML/BioNetGen export hooks.\n`; }
+  function exportScript(a=approach()){ const vars=(DATA?.vars)||ex().vars, csv=$('sciCsv')?.value||''; const common=`# Generated by Foko SciML Lab v68\n# Selected modeling problem: ${title(a)}\n`; if(a==='sindy')return common+`# pip install pysindy pandas numpy matplotlib scikit-learn\nimport io, pandas as pd, numpy as np, pysindy as ps\ncsv_data=${JSON.stringify(csv)}\ndf=pd.read_csv(io.StringIO(csv_data)); t=df.iloc[:,0].to_numpy(); X=df[${JSON.stringify(vars)}].to_numpy()\ndt=float(np.median(np.diff(t)))\nmodel=ps.SINDy(feature_library=ps.PolynomialLibrary(degree=3,include_interaction=True), optimizer=ps.STLSQ(threshold=${n('sciThreshold',.05)}, alpha=${n('sciRidge',1e-4)}), feature_names=${JSON.stringify(vars)})\nmodel.fit(X,t=dt); model.print()\n`; if(a==='surrogate')return common+`# scikit-learn surrogate validation: train/test split, predicted-vs-reference, residuals, error histogram.\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import Ridge\nfrom sklearn.gaussian_process import GaussianProcessRegressor\n# Fit emulator to expensive solver outputs, then plot y_pred vs y_ref and residuals.\n`; if(a==='inverse')return common+`# scipy least_squares inverse problem scaffold: infer hidden ODE parameters from sparse observations.\nfrom scipy.integrate import solve_ivp\nfrom scipy.optimize import least_squares\n# Define rhs(t,y,theta), residual(theta), then inspect fitted trajectory and residual plots.\n`; if(a==='assimilation')return common+`# Data assimilation scaffold: forecast + observation update.\n# Replace with EnKF/UKF/particle filter. Plot innovation sequence and analysis residuals.\n`; if(a==='pinn')return common+`# PyTorch PINN scaffold. Train outside browser. Plot train/validation loss, physics residual, predicted-vs-reference and error heatmap.\nimport torch, torch.nn as nn\nclass MLP(nn.Module):\n    def __init__(self,width=64,depth=4,out_dim=1):\n        super().__init__(); layers=[nn.Linear(1,width),nn.Tanh()]\n        for _ in range(depth-1): layers += [nn.Linear(width,width),nn.Tanh()]\n        layers += [nn.Linear(width,out_dim)]; self.net=nn.Sequential(*layers)\n    def forward(self,t): return self.net(t)\n`; if(a==='operator')return common+`# Neural-operator scaffold: train field-to-field surrogate outside the browser.\n# Suggested stack: PyTorch + neuraloperator / JAX. Validate with x-t error heatmaps and cross-validation residuals.\n`; return common+`# Biological network ML scaffold: graph/omics features, GNN templates, pathway-level interpretation and SBML/BioNetGen export hooks.\n`; }
   async function copy(text,msg){ try{await navigator.clipboard.writeText(text);status(msg);}catch(_){$('sciExport').value=text;$('sciExport').focus();$('sciExport').select();status('Select/copy from export box.');} }
   function showError(e){ status(String(e.message||e),true); $('sciEquations').innerHTML=`<div class="sciml-error">${esc(e.message||e)}</div>`; }
   function bind(){
     $('sciExample')?.addEventListener('change',()=>{loadExampleData(); runAnalysis();});
-    $('sciApproach')?.addEventListener('change',()=>{describe(); if(MODEL)runAnalysis(); else $('sciExport').value=exportScript();});
+    $('sciApproach')?.addEventListener('change',()=>{describe(); if(DATA)runAnalysis(); else $('sciExport').value=exportScript();});
     $('sciPlotType')?.addEventListener('change',drawPlot);
     ['sciPhaseX','sciPhaseY','sciPhaseZ'].forEach(id=>$(id)?.addEventListener('change',drawPlot));
     $('sciResetExample')?.addEventListener('click',()=>{loadExampleData(); runAnalysis();});
-    $('sciRunAnalysis')?.addEventListener('click',runAnalysis);
-    $('sciUpdatePlot')?.addEventListener('click',drawPlot);
-    $('sciReadCsv')?.addEventListener('click',()=>{try{parseCsv();MODEL=null;status('CSV read. Run analysis next.');drawPlot();}catch(e){showError(e);}});
+    $('sciRunAnalysis')?.addEventListener('click',applyInputsAndAnalyze);
+        $('sciReadCsv')?.addEventListener('click',()=>{try{parseCsv();MODEL=null;status('CSV read. Run analysis next.');drawPlot();}catch(e){showError(e);}});
     $('sciCopyCsv')?.addEventListener('click',()=>copy($('sciCsv').value,'CSV copied.'));
     $('sciCopyJson')?.addEventListener('click',()=>copy(JSON.stringify(modelJson(),null,2),'Model JSON copied.'));
     $('sciGenerateExport')?.addEventListener('click',()=>{$('sciExport').value=exportScript();status('Export generated for selected modeling problem.');});

@@ -1,0 +1,289 @@
+/* Foko Lab v70.4 consistency layer
+   Purpose: remove false-selected visual states, repair dark-theme docs,
+   stabilize plot toolbars, and make dense scientific controls legible. */
+
+:root{
+  --state-selected-bg:#007d87;
+  --state-selected-fg:#ffffff;
+  --state-selected-border:#007d87;
+  --state-hover-bg:#eef8f9;
+  --state-hover-border:#9bd5da;
+  --state-focus-ring:0 0 0 3px rgba(0,125,135,.22);
+  --control-bg:#ffffff;
+  --control-border:#cbd5e1;
+  --control-text:#0f172a;
+}
+html[data-theme='slate'],html[data-theme='midnight'],html[data-theme='graphite'],html[data-theme='forest']{
+  --state-hover-bg:rgba(148,219,224,.12);
+  --state-hover-border:rgba(148,219,224,.35);
+  --control-bg:var(--panel2);
+  --control-border:var(--line);
+  --control-text:var(--text);
+}
+
+/* 1. Navigation state discipline: hover is not selection. */
+.foko-main-nav > a,
+.foko-main-nav .labs-summary,
+.topnav > a,
+.topnav .labs-summary{
+  position:relative!important;
+  box-shadow:none!important;
+}
+.foko-main-nav > a:not(.active):not([aria-current='page']):hover,
+.foko-main-nav .labs-summary:not(.active):hover,
+.topnav > a:not(.active):not([aria-current='page']):hover,
+.topnav .labs-summary:not(.active):hover{
+  background:rgba(255,255,255,.08)!important;
+  color:#ffffff!important;
+  border-color:rgba(255,255,255,.22)!important;
+  box-shadow:none!important;
+}
+.foko-main-nav > a.active,
+.foko-main-nav > a[aria-current='page'],
+.foko-main-nav .labs-summary.active,
+.topnav > a.active,
+.topnav > a[aria-current='page'],
+.topnav .labs-summary.active{
+  background:rgba(0,125,135,.38)!important;
+  color:#ffffff!important;
+  border-color:rgba(180,246,248,.42)!important;
+  box-shadow:inset 0 -3px 0 #5eead4!important;
+}
+.foko-main-nav details[open] > summary{
+  background:rgba(255,255,255,.12)!important;
+  border-color:rgba(255,255,255,.24)!important;
+}
+
+/* 2. Dropdown: white, readable, grouped; section labels cannot disappear. */
+.foko-main-nav .labs-menu-panel.v70-workbench-panel{
+  background:#ffffff!important;
+  color:#0f172a!important;
+  width:min(430px,calc(100vw - 28px))!important;
+  max-width:min(430px,calc(100vw - 28px))!important;
+  padding:14px!important;
+  border:1px solid #b8c9d6!important;
+  box-shadow:0 26px 60px rgba(2,20,30,.34),0 0 0 1px rgba(255,255,255,.85)!important;
+}
+.foko-main-nav .labs-menu-panel.v70-workbench-panel .menu-section-title{
+  display:block!important;
+  margin:2px 0 8px!important;
+  padding:8px 10px!important;
+  border-radius:10px!important;
+  background:#e6f7f8!important;
+  border:1px solid #a7d8dd!important;
+  color:#063b43!important;
+  font-size:.76rem!important;
+  font-weight:950!important;
+  letter-spacing:.11em!important;
+  text-transform:uppercase!important;
+  line-height:1.15!important;
+  opacity:1!important;
+}
+.foko-main-nav .labs-menu-panel.v70-workbench-panel .menu-section-classic .menu-section-title{
+  background:#fff7ed!important;
+  border-color:#fed7aa!important;
+  color:#7c2d12!important;
+}
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a{
+  display:grid!important;
+  grid-template-columns:32px 1fr!important;
+  gap:10px!important;
+  align-items:center!important;
+  padding:10px 12px!important;
+  margin:2px 0!important;
+  background:#ffffff!important;
+  border:1px solid transparent!important;
+  color:#0f172a!important;
+  border-radius:12px!important;
+  text-decoration:none!important;
+}
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a:hover,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a:focus-visible{
+  background:#eef8f9!important;
+  border-color:#9bd5da!important;
+  color:#063b43!important;
+  outline:0!important;
+  box-shadow:var(--state-focus-ring)!important;
+}
+.foko-main-nav .labs-menu-panel.v70-workbench-panel b{color:#0f172a!important;font-weight:950!important;line-height:1.14!important;}
+.foko-main-nav .labs-menu-panel.v70-workbench-panel small{color:#475569!important;font-weight:700!important;line-height:1.25!important;}
+.foko-main-nav .labs-menu-panel.v70-workbench-panel .menu-icon{color:#007d87!important;font-weight:950!important;text-align:center!important;}
+
+/* 3. Buttons and tabs: selected state is reserved for real active controls. */
+.primary,.run-button,.sweep-button,.big-cta.primary,.v70-run,.mw-primary{
+  background:#007d87!important;
+  color:#ffffff!important;
+  border-color:#007d87!important;
+  background-image:none!important;
+  box-shadow:0 10px 22px rgba(0,125,135,.16)!important;
+}
+.secondary,.ghost,.subtle,.icon-btn,.top-utility,.v70-actionbar a:not(.v70-run),.doc-actions a:not(.primary){
+  background:var(--control-bg)!important;
+  color:var(--control-text)!important;
+  border:1px solid var(--control-border)!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+.secondary:hover,.ghost:hover,.subtle:hover,.icon-btn:hover,.doc-actions a:not(.primary):hover{
+  background:var(--state-hover-bg)!important;
+  border-color:var(--state-hover-border)!important;
+  color:var(--accent)!important;
+}
+.tab,.mode-tab,.stoch2-tab,.filter,.model-card,.mw-suite-tabs a,.workbench-suite-tabs a{
+  background:transparent!important;
+  color:var(--muted)!important;
+  border:1px solid transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+}
+.tab:hover,.mode-tab:hover,.stoch2-tab:hover,.filter:hover,.model-card:hover,.mw-suite-tabs a:hover,.workbench-suite-tabs a:hover{
+  background:var(--state-hover-bg)!important;
+  color:var(--accent)!important;
+  border-color:var(--state-hover-border)!important;
+}
+.tab.active,.mode-tab.active,.stoch2-tab.active,.filter.active,.model-card.active,.mw-suite-tabs a.active,.workbench-suite-tabs a.active{
+  background:var(--state-selected-bg)!important;
+  color:var(--state-selected-fg)!important;
+  border-color:var(--state-selected-border)!important;
+  box-shadow:inset 4px 0 0 #5eead4!important;
+}
+
+/* 4. Documentation and tutorial: force readable surfaces in every theme. */
+body[data-lab='docs'],body[data-lab='tutorial'],body[data-lab='platform']{
+  background:var(--bg)!important;
+  color:var(--text)!important;
+}
+.clean-doc-page,.quiet-page.clean-platform-page,.tutorial-doc{
+  color:var(--text)!important;
+}
+.clean-doc-page .clean-doc-hero,
+.clean-doc-page .doc-card,
+.clean-doc-page .card,
+body[data-lab='tutorial'] .clean-doc-hero,
+body[data-lab='tutorial'] .doc-card,
+body[data-lab='tutorial'] .card,
+body[data-lab='platform'] .clean-doc-hero,
+body[data-lab='platform'] .doc-card,
+body[data-lab='platform'] .card{
+  background:var(--panel)!important;
+  color:var(--text)!important;
+  border:1px solid var(--line)!important;
+}
+.clean-doc-page h1,.clean-doc-page h2,.clean-doc-page h3,
+body[data-lab='tutorial'] h1,body[data-lab='tutorial'] h2,body[data-lab='tutorial'] h3,
+body[data-lab='platform'] h1,body[data-lab='platform'] h2,body[data-lab='platform'] h3{
+  color:var(--text)!important;
+}
+.clean-doc-page p,.clean-doc-page li,.clean-doc-page td,
+body[data-lab='tutorial'] p,body[data-lab='tutorial'] li,body[data-lab='tutorial'] td,
+body[data-lab='platform'] p,body[data-lab='platform'] li,body[data-lab='platform'] td{
+  color:var(--text)!important;
+}
+.clean-doc-page .doc-lede,.clean-doc-page .note,body[data-lab='tutorial'] .doc-lede,body[data-lab='tutorial'] .note{color:var(--muted)!important;}
+.clean-doc-hero h1{font-size:clamp(2.1rem,5vw,4.8rem)!important;line-height:.98!important;max-width:14ch!important;overflow-wrap:normal!important;}
+.doc-actions{display:flex!important;gap:10px!important;flex-wrap:wrap!important;align-items:center!important;}
+.doc-actions a{min-height:42px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;border-radius:999px!important;padding:10px 16px!important;font-weight:900!important;}
+
+/* 5. Classic-lab diagnostics: toolbar above plot, no stacked labels. */
+.results-card .result-head{
+  padding:10px 14px!important;
+  border-bottom:1px solid var(--line)!important;
+  background:var(--panel)!important;
+}
+.results-card .tabs{display:flex!important;flex-wrap:wrap!important;gap:8px!important;align-items:center!important;}
+.results-card .tab{
+  max-width:260px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  line-height:1.1!important;
+}
+.plot-toolbar-v2{
+  display:grid!important;
+  grid-template-columns:minmax(220px,1fr) minmax(220px,1fr) repeat(4,auto)!important;
+  gap:10px!important;
+  align-items:end!important;
+  padding:12px 16px!important;
+  background:var(--panel2)!important;
+  border-bottom:1px solid var(--line)!important;
+  overflow:visible!important;
+}
+.plot-toolbar-v2 label{
+  display:grid!important;
+  grid-template-rows:auto auto!important;
+  gap:5px!important;
+  margin:0!important;
+  min-width:0!important;
+}
+.plot-toolbar-v2 label span{
+  display:block!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  font-size:.76rem!important;
+  line-height:1.15!important;
+  color:var(--muted)!important;
+  font-weight:900!important;
+  text-transform:uppercase!important;
+  letter-spacing:.05em!important;
+}
+.plot-toolbar-v2 select,.plot-toolbar-v2 button{
+  height:42px!important;
+  min-width:0!important;
+}
+.plot-toolbar-v2 > select{min-width:130px!important;max-width:180px!important;}
+.chart-title{padding:8px 10px!important;min-height:38px!important;}
+.chart-title h3{font-size:1rem!important;line-height:1.2!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+.chart-card .plot{margin-top:0!important;}
+@media(max-width:980px){.plot-toolbar-v2{grid-template-columns:1fr 1fr!important}.plot-toolbar-v2 > button,.plot-toolbar-v2 > select{width:100%!important;max-width:none!important}}
+@media(max-width:620px){.plot-toolbar-v2{grid-template-columns:1fr!important}.results-card .tab{max-width:100%!important}}
+
+/* 6. Workbench optimization setup: numeric inputs must not clip values. */
+.mw-opt-method-grid select,.mw-opt-method-grid input,
+.mw-opt-editor-table input,
+.mw-card-control.mw-opt-setup-block input,
+.mw-card-control.mw-opt-setup-block select{
+  background:var(--control-bg)!important;
+  color:var(--control-text)!important;
+  border:1px solid var(--control-border)!important;
+  border-radius:12px!important;
+  min-height:40px!important;
+}
+.mw-opt-editor-table input[type='number'],
+.mw-card-control.mw-opt-setup-block input[type='number']{
+  min-width:8.5ch!important;
+  width:100%!important;
+  max-width:none!important;
+  text-align:right!important;
+  font-variant-numeric:tabular-nums!important;
+  padding-inline:10px!important;
+}
+.mw-opt-editor-table th,.mw-opt-editor-table td{white-space:nowrap!important;}
+.mw-opt-editor-table td small{white-space:normal!important;}
+.mw-opt-editor-table table{min-width:360px!important;}
+.mw-card-control.mw-opt-setup-block{border-left:4px solid var(--accent)!important;background:var(--panel)!important;}
+
+/* 7. General control affordance and accessible focus. */
+input,select,textarea,button,a[href]{outline-offset:2px;}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a[href]:focus-visible{
+  outline:2px solid var(--accent)!important;
+  box-shadow:var(--state-focus-ring)!important;
+}
+[aria-disabled='true'],button:disabled,.disabled{
+  opacity:.55!important;
+  cursor:not-allowed!important;
+  box-shadow:none!important;
+}
+
+/* 8. Header utilities: theme selector is a utility, not an active nav tab. */
+.foko-theme-picker{
+  min-width:0!important;
+  max-width:188px!important;
+}
+.foko-theme-picker .theme-select{
+  max-width:126px!important;
+}
+.profile-avatar-link:hover{box-shadow:0 0 0 3px rgba(94,234,212,.28)!important;}
+
+/* 9. Keep hidden hash anchors from occupying layout. */
+.anchor-target{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(1px,1px,1px,1px)!important;}

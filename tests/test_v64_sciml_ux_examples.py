@@ -52,5 +52,8 @@ def test_sciml_data_and_export_are_collapsible_to_reduce_noise():
 
 def test_v64_assets_are_versioned():
     html = read('sciml.html')
-    assert 'styles/sciml-lab.css?v=65' in html
-    assert 'src/sciml-lab.js?v=65' in html
+    assert 'styles/sciml-lab.css?v=70.7.0' in html
+    # sciml-lab.js changed in v66 (cutover to the shared SINDy engine); its cache
+    # token moved with it, and the engine script must load ahead of the lab.
+    assert 'src/sciml-lab.js?v=70.7.0' in html
+    assert 'src/sindy.js?v=70.7.0' in html

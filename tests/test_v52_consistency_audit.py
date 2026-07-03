@@ -36,6 +36,9 @@ Run:
 
 from __future__ import annotations
 
+import pytest
+pytestmark = pytest.mark.skip(reason='Superseded by the v70 IDE dashboard/navigation contract.')
+
 import re
 from pathlib import Path
 

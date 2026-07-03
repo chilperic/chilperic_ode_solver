@@ -9,23 +9,26 @@
 <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 <link as="script" crossorigin="" href="https://cdn.plot.ly/plotly-2.35.2.min.js" rel="preload"/>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=50"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=70.7.0"></script>
 <link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
 <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-
-<link rel="icon" type="image/svg+xml" href="assets/brand/foko-lab-mark.svg?v=3.1.0"/>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png?v=3.1.0"/>
-<link rel="icon" href="favicon.ico?v=3.1.0" sizes="any"/>
-<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png?v=3.1.0"/>
-<link href="styles/style.css?v=2.7.4" rel="stylesheet"/>
-<link href="styles/symbolic-beauty.css?v=2.7.4" rel="stylesheet"/>
+<link href="assets/brand/foko-lab-mark.svg?v=70.7.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=70.7.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=70.7.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=70.7.0" rel="apple-touch-icon"/>
+<link href="styles/style.css?v=70.7.0" rel="stylesheet"/>
+<link href="styles/symbolic-beauty.css?v=70.7.0" rel="stylesheet"/>
 <meta content="assets/homepage-preview.webp" property="og:image"/>
-</head>
+<link href="styles/v70-4-consistency.css?v=70.7.0" rel="stylesheet"/>
+<link href="styles/v70-5-home-nav.css?v=70.7.0" rel="stylesheet"/>
+<link href="styles/v70-6-polish.css?v=70.7.0" rel="stylesheet"/>
+<link href="styles/v70-7-unified.css?v=70.7.0" rel="stylesheet"/></head>
 <body data-lab="symbolic">
 <div class="app-shell">
-<header class="topbar">
-<a aria-label="Foko Lab home" class="brand" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=3.1.0"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav"><a href="index.html">Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">Workbench</summary><div class="labs-menu-panel" role="menu"><a href="workbench.html?model=sir" role="menuitem"><b>ODE</b></a><a href="workbench.html?model=stoch-sir" role="menuitem"><b>Stochastic CTMC</b></a><a href="workbench.html?model=enzyme-steady" role="menuitem"><b>Steady-State</b></a><a href="workbench.html?model=quadratic" role="menuitem"><b>Optimization</b></a><a href="symbolic.html" role="menuitem"><b>Symbolic</b></a><a href="agent.html" role="menuitem"><b>Agent</b></a><a href="sciml.html" role="menuitem"><b>SciML</b></a><a href="examples.html" role="menuitem"><b>Model Atlas</b></a></div></details><details class="labs-menu nav-menu legacy-menu" data-nav-menu="legacy"><summary class="labs-summary">Legacy</summary><div class="labs-menu-panel" role="menu"><a href="ode.html#workbench" role="menuitem"><b>ODE</b></a><a href="optimization.html" role="menuitem"><b>Optimization</b></a><a href="steady.html" role="menuitem"><b>Steady-State</b></a><a href="stochastic.html" role="menuitem"><b>Stochastic</b></a></div></details><details class="labs-menu nav-menu learn-menu" data-nav-menu="learn"><summary class="labs-summary">Learn</summary><div class="labs-menu-panel" role="menu"><a href="docs.html" role="menuitem"><b>Docs</b></a><a href="tutorial.html" role="menuitem"><b>Tutorial</b></a><a href="platform.html" role="menuitem"><b>Platform</b></a></div></details><details class="labs-menu nav-menu about-menu" data-nav-menu="about"><summary class="labs-summary">About</summary><div class="labs-menu-panel" role="menu"><a href="research.html" role="menuitem"><b>Research</b></a><a href="beauty.html" role="menuitem"><b>Mathematical Beauty</b></a><a href="acknowledgement.html" role="menuitem"><b>Acknowledgement</b></a><a href="contact.html" role="menuitem"><b>Contact</b></a></div></details></nav>
+<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=70.7.0"/></a>
+<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav"><a href="index.html">⌂ Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary active">⌬ Workbench</summary><div class="labs-menu-panel v70-workbench-panel" role="menu"><div class="menu-section menu-section-primary"><p class="menu-section-title">Workbench IDE</p><a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a><a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a><a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Single &amp; multi-objective</small></span></a><a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Solve f(x)=0</small></span></a><a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Math &amp; algebra</small></span></a><a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a></div><div class="menu-section menu-section-classic"><p class="menu-section-title">Standalone labs</p><a class="legacy-workbench-link" href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>Standalone ODE Lab</b><small>Focused deterministic solver</small></span></a><a class="legacy-workbench-link" href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Standalone Stochastic Lab</b><small>Focused CTMC workspace</small></span></a><a class="legacy-workbench-link" href="optimization.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Standalone Optimization Lab</b><small>Focused optimization page</small></span></a><a class="legacy-workbench-link" href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Standalone Steady-State Lab</b><small>Focused root-finding page</small></span></a></div></div></details><a href="sciml.html">⌯ SciML</a><a href="examples.html">▦ Model Atlas</a><a href="research.html">⌁ Research Hub</a><a href="docs.html">▤ Documentation</a><a href="tutorial.html">▣ Tutorial</a></nav>
+<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=70.7.0"/></a></div>
 </header>
 <main class="symbolic-page symbolic-page-v23"><nav aria-label="Workbench suite" class="mw-suite-tabs workbench-suite-tabs"><a href="workbench.html?model=sir">ODE</a><a href="workbench.html?model=stoch-sir">Stochastic CTMC</a><a href="workbench.html?model=enzyme-steady">Steady-State</a><a href="workbench.html?model=quadratic">Optimization</a><a aria-current="page" class="active" href="symbolic.html">Symbolic</a><a href="agent.html">Agent</a><a href="sciml.html">SciML</a><a href="examples.html">Model Atlas</a></nav>
 <section class="symbolic-hero symbolic-hero-compact">
@@ -67,7 +70,7 @@
 <div class="symbolic-card result-card"><h2>Linearization</h2><div class="symbolic-explain" id="symEquilibria"></div></div>
 <div class="symbolic-card result-card"><h2>Stability</h2><div class="symbolic-explain" id="symEigen"></div></div>
 <div class="symbolic-card result-card"><h2>ODE solving</h2><div class="symbolic-explain" id="symOdeSolve"></div></div>
-<div class="symbolic-card wide result-card"><h2>Exported SymPy script</h2><textarea class="code-output" id="symPython" spellcheck="false"></textarea></div>
+<div class="symbolic-card wide result-card"><h2>Exported SymPy script</h2><textarea aria-label="Sym Python" class="code-output" id="symPython" spellcheck="false"></textarea></div>
 </section>
 <section class="symbolic-mainplot symbolic-card">
 <h2>Symbolic plot preview</h2>
@@ -97,8 +100,8 @@ x=1" spellcheck="false"></textarea></label>
 <!-- Backward-compatible audit tokens retained for historical tests; not rendered in the UI: Symbolic plot preview; LaTeX preview; Algebraic operation; Jacobian matrix; Numeric equilibria scan; Equilibria and linearization; Symbolic modeling approaches; not a full in-browser CAS. -->
 </main>
 </div>
-<script src="src/symbolic-lab.js?v=60"></script>
-<script src="src/model-validator.js?v=2.7.4"></script>
-<script src="src/model-session.js?v=2.7.4"></script>
-<script defer="" src="src/navigation.js?v=53"></script></body>
+<script src="src/symbolic-lab.js?v=70.7.0"></script>
+<script src="src/model-validator.js?v=70.7.0"></script>
+<script src="src/model-session.js?v=70.7.0"></script>
+<script defer="" src="src/navigation.js?v=70.7.0"></script></body>
 </html>

@@ -51,13 +51,15 @@ def test_agent_js_has_new_simulation_diagnostics_not_only_counts():
         assert token in js
 
 
-def test_homepage_is_compact_entry_point_not_long_scroll_page():
+def test_homepage_is_proper_product_entry_point_not_ide_mock():
     html = read('index.html')
-    css = read('styles/style.css')
-    assert 'A compact browser workspace' in html
-    assert 'identity-lower clean-home-panels' in html
-    assert '.identity-lower.clean-home-panels{display:none;}' in css
-    assert '.identity-hero{grid-template-columns:minmax(0,1.08fr) minmax(280px,.56fr);' in css
-    assert 'min-height:360px' in css
+    css = read('styles/v70-5-home-nav.css')
+    assert 'home-v705' in html
+    assert 'Foko Lab scientific modeling platform' in html
+    assert 'Open Workbench' in html
+    assert 'Run SIR example' in html
     assert 'Modeling approaches' in html
-    assert 'ODE · stochastic · optimization · symbolic · agent-based' in html
+    assert 'v70-dashboard' not in html
+    assert 'v70-codebox' not in html
+    assert '.home-v705-hero' in css
+    assert '.home-v705-profile' in css

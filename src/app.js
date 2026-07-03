@@ -222,7 +222,7 @@ function init(){
 function wire(){
   document.querySelectorAll('.mode-tab').forEach(b=>b.addEventListener('click',()=>setModule(b.dataset.mode)));
   document.querySelectorAll('[data-mode-jump]').forEach(b=>b.addEventListener('click',()=>setModule(b.dataset.modeJump)));
-  $('themeBtn').addEventListener('change',e=>setTheme(e.target.value));
+  $('themeBtn')?.addEventListener('change',e=>setTheme(e.target.value));
   $('resetBtn').addEventListener('click',()=>loadExample($('exampleSelect').value));
   $('loadExample').addEventListener('click',()=>loadExample($('exampleSelect').value));
   $('exampleSelect').addEventListener('change',e=>previewExampleSelection(e.target.value));
@@ -264,7 +264,7 @@ function wire(){
   ['leftPlot','rightPlot'].forEach(id=>{ const el=$(id); if(el) observePlotNode(el); });
 }
 
-const KNOWN_THEMES=['aurora','clarity','ocean','lavender','slate','midnight','paper','forest'];
+const KNOWN_THEMES=['aurora','clarity','ocean','emerald','steel','royal','olive','copper','paper','graphite','slate','midnight','forest','contrast'];
 function setTheme(t){ t=KNOWN_THEMES.includes(t)?t:'aurora'; state.theme=t; document.documentElement.dataset.theme=t; const sel=$('themeBtn'); if(sel)sel.value=t; localStorage.setItem('chilperic-theme',t); renderPlots(); setTimeout(()=>renderPlots(),120); }
 function setModule(m){
   state.module=m; state.result=null; state.sweep=null; state.opt=null; state.resultKind=m==='opt'?'optimization':'default';

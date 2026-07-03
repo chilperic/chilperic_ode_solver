@@ -109,7 +109,7 @@
 @media(max-width:760px){.agent-primary-selectors,.agent-secondary-selectors{grid-template-columns:1fr!important;}}
 
 /* v46 Agent Lab identity colors */
-.agent-hero{background:linear-gradient(135deg,color-mix(in srgb,#fff 88%,var(--foko-teal,#14b8a6)),color-mix(in srgb,#fff 91%,var(--foko-magenta,#d946ef)));border-color:color-mix(in srgb,var(--foko-cyan,#06b6d4) 24%,rgba(120,140,170,.24));}
+.agent-hero{background:linear-gradient(135deg,color-mix(in srgb,#fff 88%,var(--foko-teal,#14b8a6)),color-mix(in srgb,#fff 91%,var(--foko-magenta,#155EEF)));border-color:color-mix(in srgb,var(--foko-cyan,#06b6d4) 24%,rgba(120,140,170,.24));}
 .agent-card,.agent-panel,.agent-boundary{border-color:color-mix(in srgb,var(--foko-cyan,#06b6d4) 22%,rgba(120,140,170,.24));}
 .agent-card h2,.agent-visible-title{color:color-mix(in srgb,var(--foko-teal,#14b8a6) 76%,var(--text,#142033));}
 .agent-plot-controls select,.agent-selector-grid select{border-color:color-mix(in srgb,var(--foko-teal,#14b8a6) 24%,rgba(120,140,170,.3));}

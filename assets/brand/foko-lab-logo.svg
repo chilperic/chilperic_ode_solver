@@ -1,32 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 124" role="img" aria-label="Foko Lab logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 108" role="img" aria-label="Foko Lab logo">
   <defs>
-    <linearGradient id="loopA" x1="8" y1="64" x2="120" y2="64" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#00B4A6"/>
-      <stop offset="0.48" stop-color="#00AEEF"/>
-      <stop offset="1" stop-color="#E6007E"/>
+    <linearGradient id="tealBlue" x1="8" y1="18" x2="104" y2="94" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#14B8A6"/>
+      <stop offset="1" stop-color="#155EEF"/>
     </linearGradient>
-    <linearGradient id="labGrad" x1="298" y1="20" x2="462" y2="90" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#00AEEF"/>
-      <stop offset="0.55" stop-color="#00B4A6"/>
-      <stop offset="1" stop-color="#E6007E"/>
-    </linearGradient>
-    <filter id="soft" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0B1D3D" flood-opacity="0.10"/>
-    </filter>
   </defs>
-  <g transform="translate(8 6) scale(.86)" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#soft)">
-    <path d="M17 65C17 39 42 32 64 64C86 96 111 89 111 64C111 39 86 32 64 64C42 96 17 91 17 65Z" stroke="url(#loopA)" stroke-width="8"/>
-    <path d="M28 25A48 48 0 0 1 64 16A48 48 0 0 1 100 25" stroke="url(#loopA)" stroke-width="4" stroke-dasharray="1 6"/>
-    <path d="M28 103A48 48 0 0 0 64 112A48 48 0 0 0 100 103" stroke="url(#loopA)" stroke-width="4" stroke-dasharray="1 6"/>
-    <circle cx="64" cy="64" r="6" fill="#00AEEF" stroke="white" stroke-width="2"/>
-    <path d="M27 73H55" stroke="#00B4A6" stroke-width="3"/>
-    <path d="M32 73C38 73 39 52 46 52C53 52 54 73 60 73" stroke="#00B4A6" stroke-width="3"/>
-    <path d="M46 47V80" stroke="#00B4A6" stroke-width="2" stroke-dasharray="5 5"/>
-    <circle cx="27" cy="73" r="3" fill="#00B4A6"/><circle cx="60" cy="73" r="3" fill="#00AEEF"/>
-    <g stroke="#E6007E" stroke-width="2.6"><path d="M86 57L96 51L105 60L101 73L88 73L82 64Z"/><path d="M96 51L99 41M105 60L114 56M101 73L110 82M88 73L82 84"/></g>
-    <g fill="#E6007E"><circle cx="86" cy="57" r="4"/><circle cx="96" cy="51" r="4"/><circle cx="105" cy="60" r="4"/><circle cx="101" cy="73" r="4"/><circle cx="88" cy="73" r="4"/><circle cx="99" cy="41" r="3.5"/><circle cx="114" cy="56" r="3.5"/><circle cx="110" cy="82" r="3.5"/><circle cx="82" cy="84" r="3.5"/></g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M54 9 96 32v47L54 102 12 79V32L54 9Z" stroke="#EAFBFF" stroke-width="4"/>
+    <path d="M28 70 C39 36, 70 35, 81 70 C68 88, 41 88, 28 70 Z" stroke="url(#tealBlue)" stroke-width="6"/>
+    <path d="M36 57 C46 46, 63 46, 73 57" stroke="#EAFBFF" stroke-opacity=".72" stroke-width="4"/>
+    <path d="M37 78 L73 42" stroke="#14B8A6" stroke-width="4"/>
   </g>
-  <text x="136" y="78" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="58" font-weight="750" letter-spacing="-2" fill="#0B1D3D">Foko</text>
-  <text x="288" y="78" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="58" font-weight="750" letter-spacing="-2" fill="url(#labGrad)">Lab</text>
-  <text x="138" y="104" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="3.1" fill="#637083">MODEL · SIMULATE · UNDERSTAND</text>
+  <circle cx="54" cy="62" r="6" fill="#14B8A6"/>
+  <circle cx="37" cy="78" r="4" fill="#155EEF"/>
+  <circle cx="73" cy="42" r="4" fill="#EAFBFF"/>
+  <text x="124" y="48" font-family="Inter, ui-sans-serif, system-ui, Segoe UI, Arial, sans-serif" font-size="35" font-weight="900" fill="#FFFFFF" letter-spacing="-.9">FOKO LAB</text>
+  <text x="126" y="76" font-family="Inter, ui-sans-serif, system-ui, Segoe UI, Arial, sans-serif" font-size="17" font-weight="650" fill="#D7F8FA">Scientific Modeling Platform</text>
 </svg>

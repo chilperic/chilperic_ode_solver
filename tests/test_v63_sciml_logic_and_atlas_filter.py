@@ -3,7 +3,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
-WORKBENCH = ['ODE','Stochastic CTMC','Steady-State','Optimization','Symbolic','Agent','SciML','Model Atlas']
+WORKBENCH = ['ODE Lab','Stochastic Lab','Optimization Lab','Steady-State Lab','Symbolic Lab','Agent Lab']
 
 def read(path):
     return (ROOT / path).read_text(encoding='utf-8')
@@ -16,8 +16,8 @@ def test_sciml_lab_has_coherent_modeling_setup_not_bizarre_buttons():
     assert 'Modeling setup' in html
     assert 'Model Atlas example' in html
     assert 'Modeling problem' in html
-    assert 'Reset atlas data' in html
-    assert 'Run analysis' in html
+    assert 'Restore example defaults' in html
+    assert 'Apply inputs and run' in html
     assert 'Generate trajectory' not in html
     assert 'Run selected workflow' not in html
 
@@ -56,5 +56,5 @@ def test_model_atlas_filter_uses_tokens_and_aliases():
 
 def test_global_workbench_navigation_includes_sciml():
     for page in ['index.html','workbench.html','symbolic.html','agent.html','sciml.html','examples.html']:
-        labels = [a.get_text(strip=True) for a in soup(page).select('.workbench-menu .labs-menu-panel a')]
+        labels = [a.find('b').get_text(strip=True) for a in soup(page).select('.workbench-menu .menu-section-primary a')]
         assert labels == WORKBENCH, page

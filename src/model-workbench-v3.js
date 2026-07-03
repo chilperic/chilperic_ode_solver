@@ -253,7 +253,7 @@
     },
     gbm: {
       id:'gbm', name:'Geometric Brownian motion proxy', type:'CTMC', family:'stochastic growth approximation',
-      summary:'Birth-death multiplicative-growth proxy for geometric Brownian motion. Legacy lab contains the direct GBM simulator.',
+      summary:'Birth-death multiplicative-growth proxy for geometric Brownian motion. Specialist lab contains the direct GBM simulator.',
       variables:['X'], primary:'X', tStart:0, tEnd:40, steps:350, runs:250, seed:41,
       params:{ up:{value:0.25,min:0.01,max:1.0,step:0.01,label:'up rate'}, down:{value:0.20,min:0.01,max:1.0,step:0.01,label:'down rate'} },
       initials:{X:50}, latex:[String.raw`X \rightarrow X+1`,String.raw`X \rightarrow X-1`],
@@ -262,7 +262,7 @@
     },
     parrondo: {
       id:'parrondo', name:'Parrondo-style random walk', type:'CTMC', family:'paradox / random walk approximation',
-      summary:'Capital random walk with state-dependent winning probability. Legacy lab contains the full Parrondo game comparison.',
+      summary:'Capital random walk with state-dependent winning probability. Specialist lab contains the full Parrondo game comparison.',
       variables:['capital'], primary:'capital', tStart:0, tEnd:160, steps:400, runs:250, seed:43,
       params:{ pBad:{value:0.10,min:0.01,max:0.49,step:0.01,label:'bad state win p'}, pGood:{value:0.74,min:0.5,max:0.95,step:0.01,label:'good state win p'}, M:{value:3,min:2,max:8,step:1,label:'modulo period'}, rate:{value:1,min:0.1,max:3,step:0.05,label:'play rate'} },
       initials:{capital:10}, latex:[String.raw`X \rightarrow X+1`,String.raw`X \rightarrow X-1`],
@@ -280,7 +280,7 @@
     },
     ratchet: {
       id:'ratchet', name:'Flashing ratchet transport proxy', type:'CTMC', family:'Brownian motor approximation',
-      summary:'Biased random-walk proxy for flashing ratchet transport. Legacy lab contains the specialized ratchet view.',
+      summary:'Biased random-walk proxy for flashing ratchet transport. Specialist lab contains the specialized ratchet view.',
       variables:['position'], primary:'position', tStart:0, tEnd:120, steps:400, runs:250, seed:53,
       params:{ forward:{value:0.56,min:0.3,max:0.9,step:0.01,label:'forward probability'}, switchRate:{value:1,min:0.1,max:4,step:0.05,label:'switching rate'} },
       initials:{position:0}, latex:[String.raw`X \rightarrow X+1`,String.raw`X \rightarrow X-1`],
@@ -298,7 +298,7 @@
     },
     bandit: {
       id:'bandit', name:'Multi-armed bandit learning proxy', type:'CTMC', family:'decision under uncertainty',
-      summary:'Reward-accumulation proxy for bandit learning. Legacy lab contains full arm-pull and regret analysis.',
+      summary:'Reward-accumulation proxy for bandit learning. Specialist lab contains full arm-pull and regret analysis.',
       variables:['reward'], primary:'reward', tStart:0, tEnd:120, steps:320, runs:250, seed:61,
       params:{ exploit:{value:0.7,min:0,max:1,step:0.01,label:'exploitation'}, rewardRate:{value:1,min:0.1,max:3,step:0.05,label:'reward rate'} },
       initials:{reward:0}, latex:[String.raw`R \rightarrow R+1`],
@@ -579,7 +579,7 @@
   let state = {
     modelId:'sir', params:{}, initials:{}, tStart:0, tEnd:10, steps:500, runs:200, seed:1, palette:'cividis',
     customPalette:{categorical:['#0f52d9','#12b8a6','#f59e0b','#7c3aed','#ef4444','#334155','#06b6d4'], continuous:['#00204c','#958f78','#fdea45']},
-    primaryVariable:'', result:null, cards:[], detailTab:'equations'
+    primaryVariable:'', optMethod:'coordinate', optPopulation:36, optTolerance:1e-7, optSeed:11, result:null, cards:[], detailTab:'equations'
   };
 
   function currentModel(){ return MODELS[state.modelId]; }
@@ -624,12 +624,26 @@
       {id:'c_diag',type:'diagnostics',settings:{}}
     ];
   }
+
+  function defaultOptMethod(m){
+    const hay=(m.family+' '+m.summary+' '+m.name).toLowerCase();
+    if(/convex|smooth|quadratic/.test(hay)) return 'projected_gradient';
+    if(/multimodal|rugged|rastrigin|metaheuristic|global/.test(hay)) return 'simulated_annealing';
+    if(/multi-objective|trade-off|pareto/.test(hay)) return 'particle_swarm';
+    if(/calibration|fit|inverse/.test(hay)) return 'multi_start';
+    return 'coordinate';
+  }
   function setDefaults(modelId){
     const m=MODELS[modelId]; state.modelId=modelId; state.params={}; state.initials={};
     Object.entries(m.params).forEach(([k,d])=>state.params[k]=d.value);
     Object.entries(m.initials).forEach(([k,v])=>state.initials[k]=v);
     state.tStart=m.tStart; state.tEnd=m.tEnd; state.steps=m.steps; state.runs=m.runs||200; state.seed=m.seed||1;
-    state.primaryVariable=m.primary||m.variables[0]; state.result=null; state.cards=defaultCards(m);
+    state.primaryVariable=m.primary||m.variables[0];
+    state.optMethod = m.type==='OPT' ? defaultOptMethod(m) : state.optMethod;
+    state.optPopulation = Number(m.population || state.optPopulation || 36);
+    state.optTolerance = Number(m.tolerance || state.optTolerance || 1e-7);
+    state.optSeed = Number(m.seed || state.optSeed || 11);
+    state.result=null; state.cards=defaultCards(m);
   }
 
   function rk4Step(x, t, h, rhs, p, vars){
@@ -677,10 +691,28 @@
     const series={}, variance={}; vars.forEach(v=>{ series[v]=sums[v].map(x=>x/runs); variance[v]=sums2[v].map((x,i)=>Math.max(0,x/runs-series[v][i]*series[v][i])); });
     return {kind:'CTMC',t,series,variance,paths,finals,runs,steps:t.length-1,eventCount,params:{...params},initials:{...initials},bad:false};
   }
+  function optObjectiveValue(m,x,y,params,penaltyScale=1){
+    const base=Number(m.objective(x,y,params));
+    const residual=m.constraint ? Math.max(0, Number(m.constraint(x,y,params))) : 0;
+    return base + Math.max(0,penaltyScale-1)*residual*residual;
+  }
+  function finiteGradient(m,x,y,params){
+    const hx=1e-5*Math.max(1,Math.abs(x));
+    const hy=1e-5*Math.max(1,Math.abs(y));
+    return {
+      gx:(optObjectiveValue(m,x+hx,y,params)-optObjectiveValue(m,x-hx,y,params))/(2*hx),
+      gy:(optObjectiveValue(m,x,y+hy,params)-optObjectiveValue(m,x,y-hy,params))/(2*hy)
+    };
+  }
   function simulateOPT(params=state.params, initials=state.initials, opt={}){
     const m=currentModel();
-    const iterations=clamp(Math.round(opt.iterations || params.iterations || state.steps || 220),20,1200);
+    const method=opt.method || state.optMethod || defaultOptMethod(m);
+    const iterations=clamp(Math.round(opt.iterations || params.iterations || state.steps || 220),20,1600);
     const bounds=m.bounds||{};
+    const seed=Number(opt.seed || state.optSeed || 11);
+    const rng=makeRng(seed);
+    const population=clamp(Math.round(opt.population || state.optPopulation || 36),4,250);
+    const tol=Math.max(0, Number(opt.tolerance || state.optTolerance || 1e-7));
     const projectPoint=(px,py)=>({
       x:Array.isArray(bounds.x)?clamp(px,bounds.x[0],bounds.x[1]):px,
       y:Array.isArray(bounds.y)?clamp(py,bounds.y[0],bounds.y[1]):py
@@ -689,30 +721,81 @@
     let x=start.x, y=start.y;
     let step=Math.max(1e-4, Number(params.step || 0.5));
     const t=[], series={x:[],y:[],f:[],best_f:[],constraint:[]}, path=[];
-    let bestX=x, bestY=y, bestF=m.objective(x,y,params), accepted=0;
+    let bestX=x, bestY=y, bestF=optObjectiveValue(m,x,y,params), accepted=0;
     const directions=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
+    const swarm=Array.from({length:population},()=>{
+      const bx=Array.isArray(bounds.x)?bounds.x:[x-5,x+5];
+      const by=Array.isArray(bounds.y)?bounds.y:[y-5,y+5];
+      const p=projectPoint(bx[0]+rng()*(bx[1]-bx[0]), by[0]+rng()*(by[1]-by[0]));
+      return {...p,vx:0,vy:0,bx:p.x,by:p.y,bf:optObjectiveValue(m,p.x,p.y,params)};
+    });
     for(let i=0;i<=iterations;i++){
-      const f=m.objective(x,y,params); const c=m.constraint?m.constraint(x,y,params):0;
+      const f=optObjectiveValue(m,x,y,params); const c=m.constraint?m.constraint(x,y,params):0;
       if(Number.isFinite(f) && f<bestF){ bestF=f; bestX=x; bestY=y; }
-      t.push(i); series.x.push(x); series.y.push(y); series.f.push(f); series.best_f.push(bestF); series.constraint.push(c); path.push({x,y,f,best_f:bestF,constraint:c});
-      if(i===iterations) break;
-      let candX=x, candY=y, candF=f;
-      for(const [dx,dy] of directions){
-        const scale=(Math.abs(dx)+Math.abs(dy)>1)?Math.SQRT1_2:1;
-        const p=projectPoint(x+dx*step*scale, y+dy*step*scale);
-        const nf=m.objective(p.x,p.y,params);
+      for(const a of swarm){ if(Number.isFinite(a.bf) && a.bf<bestF){ bestF=a.bf; bestX=a.bx; bestY=a.by; } }
+      t.push(i); series.x.push(x); series.y.push(y); series.f.push(f); series.best_f.push(bestF); series.constraint.push(c); path.push({x,y,f,best_f:bestF,constraint:c,method});
+      if(i===iterations || (i>12 && Math.abs(series.best_f.at(-1)-series.best_f.at(-Math.min(i,12)))<tol)) break;
+      if(method==='projected_gradient' || method==='gradient_descent' || method==='adam'){
+        const g=finiteGradient(m,x,y,params);
+        const rate=method==='adam' ? step/(1+0.01*i) : step/(1+i*0.02);
+        const p=projectPoint(x-rate*g.gx, y-rate*g.gy); const nf=optObjectiveValue(m,p.x,p.y,params);
+        if(Number.isFinite(nf) && nf <= f){ x=p.x; y=p.y; accepted++; } else step*=0.55;
+      } else if(method==='simulated_annealing'){
+        const temp=Math.max(1e-4, step*Math.pow(0.985,i));
+        const p=projectPoint(x+(rng()*2-1)*step, y+(rng()*2-1)*step); const nf=optObjectiveValue(m,p.x,p.y,params);
+        if(Number.isFinite(nf) && (nf<f || Math.exp((f-nf)/temp)>rng())){ x=p.x; y=p.y; accepted++; }
+        step*=0.992;
+      } else if(method==='particle_swarm'){
+        const w=0.62,c1=1.35,c2=1.35;
+        for(const a of swarm){
+          a.vx=w*a.vx+c1*rng()*(a.bx-a.x)+c2*rng()*(bestX-a.x);
+          a.vy=w*a.vy+c1*rng()*(a.by-a.y)+c2*rng()*(bestY-a.y);
+          const p=projectPoint(a.x+0.12*a.vx, a.y+0.12*a.vy); a.x=p.x; a.y=p.y;
+          const af=optObjectiveValue(m,a.x,a.y,params); if(Number.isFinite(af) && af<a.bf){ a.bf=af; a.bx=a.x; a.by=a.y; }
+        }
+        x=bestX; y=bestY; accepted++;
+      } else if(method==='genetic'){
+        swarm.sort((a,b)=>a.bf-b.bf);
+        const keep=Math.max(2,Math.floor(population*0.35));
+        for(let j=keep;j<swarm.length;j++){
+          const a=swarm[Math.floor(rng()*keep)], b=swarm[Math.floor(rng()*keep)];
+          const mix=rng(); const p=projectPoint(mix*a.x+(1-mix)*b.x+(rng()*2-1)*step, mix*a.y+(1-mix)*b.y+(rng()*2-1)*step);
+          swarm[j]={...swarm[j],x:p.x,y:p.y,bx:p.x,by:p.y,bf:optObjectiveValue(m,p.x,p.y,params)};
+        }
+        x=swarm[0].x; y=swarm[0].y; accepted++;
+      } else if(method==='multi_start'){
+        let cand={x,y,f};
+        const trials=Math.max(4,Math.min(population,32));
+        const bx=Array.isArray(bounds.x)?bounds.x:[x-step,x+step], by=Array.isArray(bounds.y)?bounds.y:[y-step,y+step];
+        for(let j=0;j<trials;j++){
+          const startP=projectPoint(bx[0]+rng()*(bx[1]-bx[0]), by[0]+rng()*(by[1]-by[0]));
+          let lx=startP.x, ly=startP.y, lstep=step;
+          for(let k=0;k<4;k++){
+            let best={x:lx,y:ly,f:optObjectiveValue(m,lx,ly,params)};
+            for(const [dx,dy] of directions){ const p=projectPoint(lx+dx*lstep,ly+dy*lstep); const nf=optObjectiveValue(m,p.x,p.y,params); if(nf<best.f) best={x:p.x,y:p.y,f:nf}; }
+            lx=best.x; ly=best.y; lstep*=0.55;
+          }
+          const lf=optObjectiveValue(m,lx,ly,params); if(Number.isFinite(lf) && lf<cand.f) cand={x:lx,y:ly,f:lf};
+        }
+        if(cand.f<f){ x=cand.x; y=cand.y; accepted++; }
+      } else {
+        let candX=x, candY=y, candF=f;
+        for(const [dx,dy] of directions){
+          const scale=(Math.abs(dx)+Math.abs(dy)>1)?Math.SQRT1_2:1;
+          const p=projectPoint(x+dx*step*scale, y+dy*step*scale);
+          const nf=optObjectiveValue(m,p.x,p.y,params);
+          if(Number.isFinite(nf) && nf<candF){ candX=p.x; candY=p.y; candF=nf; }
+        }
+        const p=projectPoint(x+step*0.55*Math.sin(0.37*i+1.7), y+step*0.55*Math.cos(0.29*i+0.4));
+        const nf=optObjectiveValue(m,p.x,p.y,params);
         if(Number.isFinite(nf) && nf<candF){ candX=p.x; candY=p.y; candF=nf; }
+        if(candF < f-1e-12){ x=candX; y=candY; accepted++; step*=0.995; }
+        else { step*=0.86; }
       }
-      // deterministic exploratory proposal helps multimodal landscapes without random noise, but stays inside model bounds
-      const p=projectPoint(x+step*0.55*Math.sin(0.37*i+1.7), y+step*0.55*Math.cos(0.29*i+0.4));
-      const nf=m.objective(p.x,p.y,params);
-      if(Number.isFinite(nf) && nf<candF){ candX=p.x; candY=p.y; candF=nf; }
-      if(candF < f-1e-12){ x=candX; y=candY; accepted++; step*=0.995; }
-      else { step*=0.86; }
       if(step<1e-7) step=Math.max(1e-7, Number(params.step||0.5)*0.001);
     }
     const residual=m.constraint?m.constraint(bestX,bestY,params):0;
-    return {kind:'OPT',t,series,path,params:{...params},initials:{...initials},best:{x:bestX,y:bestY,f:bestF,constraint:residual},accepted,steps:iterations,bad:false};
+    return {kind:'OPT',t,series,path,params:{...params},initials:{...initials},best:{x:bestX,y:bestY,f:bestF,constraint:residual},accepted,steps:t.length-1,bad:false,method,seed,population,tolerance:tol};
   }
 
   function solveSteady(params=state.params, initials=state.initials, opt={}){
@@ -955,7 +1038,7 @@
     $('runStatus').textContent=currentModel().type==='CTMC' ? 'Running ensemble…' : currentModel().type==='OPT' ? 'Optimizing…' : currentModel().type==='STEADY' ? 'Solving steady state…' : 'Integrating…';
     state.result=simulate();
     const res=state.result;
-    $('runStatus').textContent = res.kind==='CTMC' ? `Done · ${res.runs} runs · ${res.eventCount} events` : res.kind==='OPT' ? `Done · best f=${fmt(res.best.f,5)} at (${fmt(res.best.x,4)}, ${fmt(res.best.y,4)})` : res.kind==='STEADY' ? `Done · residual ${fmt(res.residual,3)} · ${res.stable?'stable':'unstable / marginal'}` : (res.bad ? 'Stopped: numerical warning' : `Done · ${res.steps} steps`);
+    $('runStatus').textContent = res.kind==='CTMC' ? `Done · ${res.runs} runs · ${res.eventCount} events` : res.kind==='OPT' ? `Done · ${res.method||state.optMethod} · best f=${fmt(res.best.f,5)} at (${fmt(res.best.x,4)}, ${fmt(res.best.y,4)})` : res.kind==='STEADY' ? `Done · residual ${fmt(res.residual,3)} · ${res.stable?'stable':'unstable / marginal'}` : (res.bad ? 'Stopped: numerical warning' : `Done · ${res.steps} steps`);
     renderCards();
   }
   function debounceRun(){ clearTimeout(debounceRun.timer); debounceRun.timer=setTimeout(run,250); }
@@ -1106,6 +1189,7 @@
     renderMathStrip();
   }
 
+  function paramsValue(name, fallback){ return Object.prototype.hasOwnProperty.call(state.params,name) ? state.params[name] : fallback; }
   function renderParameterStrip(){
     const m=currentModel(); const wrap=$('parameterStrip'); wrap.innerHTML='';
     for(const [name,def] of Object.entries(m.params)){
@@ -1118,7 +1202,41 @@
     const ic=$('initialGrid'); ic.innerHTML='<div class="mw-card-control"><label>Initial conditions</label><span class="mw-note">editable state at t start</span></div>';
 
     if(m.type==='OPT'){
-      ic.innerHTML='<div class="mw-card-control"><label>Optimization controls</label><span class="mw-note">Starting point, step size, iterations and penalties are controlled in the top strip. Objective landscape uses the problem bounds.</span></div>';
+      const bounds=m.bounds||{};
+      ic.innerHTML=`<div class="mw-card-control mw-opt-setup-block"><label>Optimization setup</label><span class="mw-note">Choose the method, edit the initial guess, bounds, parameter values and search budget before running.</span></div>`;
+      const methodWrap=document.createElement('div'); methodWrap.className='mw-opt-method-grid';
+      methodWrap.innerHTML=`
+        <label>method family
+          <select id="mwOptMethod">
+            <optgroup label="Gradient-based / numerical">
+              <option value="projected_gradient">Projected gradient</option>
+              <option value="gradient_descent">Gradient descent</option>
+              <option value="adam">Adam-style descent</option>
+            </optgroup>
+            <optgroup label="Classical deterministic">
+              <option value="coordinate">Coordinate descent</option>
+              <option value="multi_start">Multi-start local search</option>
+            </optgroup>
+            <optgroup label="Heuristic / metaheuristic">
+              <option value="simulated_annealing">Simulated annealing</option>
+              <option value="particle_swarm">Particle swarm</option>
+              <option value="genetic">Genetic algorithm</option>
+            </optgroup>
+          </select>
+        </label>
+        <label>population / starts <input id="mwOptPopulation" type="number" min="4" max="250" step="1" value="${state.optPopulation}"/></label>
+        <label>tolerance <input id="mwOptTolerance" type="text" value="${state.optTolerance}"/></label>
+        <label>seed <input id="mwOptSeed" type="number" min="1" max="999999" step="1" value="${state.optSeed}"/></label>`;
+      ic.appendChild(methodWrap);
+      const methodSel=methodWrap.querySelector('#mwOptMethod'); if(methodSel) methodSel.value=state.optMethod || defaultOptMethod(m);
+      const table=document.createElement('div'); table.className='mw-opt-editor-table';
+      const rows=['x','y'].map(v=>`<tr><td><b>${safe(v)}</b></td><td><input type="number" step="any" value="${Number(paramsValue(v+'0', state.initials[v] ?? 0))}" data-opt-initial="${v}"/></td><td><input type="number" step="any" value="${Array.isArray(bounds[v])?bounds[v][0]:-5}" data-opt-bound="${v}" data-bound-side="min"/></td><td><input type="number" step="any" value="${Array.isArray(bounds[v])?bounds[v][1]:5}" data-opt-bound="${v}" data-bound-side="max"/></td></tr>`).join('');
+      table.innerHTML=`<table class="mw-table"><thead><tr><th>variable</th><th>initial guess</th><th>min</th><th>max</th></tr></thead><tbody>${rows}</tbody></table>`;
+      ic.appendChild(table);
+      const pTable=document.createElement('div'); pTable.className='mw-opt-editor-table mw-opt-param-table';
+      const pRows=Object.entries(m.params).map(([name,def])=>`<tr><td><b>${safe(name)}</b><small>${safe(def.label||'')}</small></td><td><input type="number" step="any" value="${state.params[name]}" data-opt-param="${safe(name)}" data-param-field="value"/></td><td><input type="number" step="any" value="${def.min}" data-opt-param="${safe(name)}" data-param-field="min"/></td><td><input type="number" step="any" value="${def.max}" data-opt-param="${safe(name)}" data-param-field="max"/></td></tr>`).join('');
+      pTable.innerHTML=`<div class="mw-card-control"><label>Parameters and ranges</label><span class="mw-note">Ranges drive sliders, sweeps, calibration starts and surrogate sampling.</span></div><table class="mw-table"><thead><tr><th>parameter</th><th>value</th><th>min</th><th>max</th></tr></thead><tbody>${pRows}</tbody></table>`;
+      ic.appendChild(pTable);
     } else {
       if(m.type==='STEADY'){ ic.innerHTML='<div class="mw-card-control"><label>Initial guess</label><span class="mw-note">Starting point for equilibrium relaxation.</span></div>'; }
       m.variables.forEach(v=>{ const label=document.createElement('label'); label.innerHTML=`${safe(v)}<input type="number" step="0.001" value="${state.initials[v]}" data-initial="${safe(v)}"/>`; ic.appendChild(label); });
@@ -1758,7 +1876,23 @@ print('ST', dict(zip(problem['names'], Si['ST'])))
     $('modelDrawer').addEventListener('click',e=>{ if(e.target.id==='modelDrawer') $('closeModelDrawer').click(); });
     document.querySelectorAll('[data-detail-tab]').forEach(btn=>btn.addEventListener('click',()=>{ document.querySelectorAll('[data-detail-tab]').forEach(b=>b.classList.toggle('active',b===btn)); state.detailTab=btn.dataset.detailTab; renderDetail(); }));
     $('parameterStrip').addEventListener('input', e=>{ const p=e.target.dataset.param; if(!p) return; state.params[p]=Number(e.target.value); const lab=$('pv_'+p); if(lab) lab.textContent=fmt(state.params[p],5); debounceRun(); });
-    $('initialGrid').addEventListener('change', e=>{ const v=e.target.dataset.initial; if(v){ state.initials[v]=Number(e.target.value); debounceRun(); } if(e.target.id==='runs'){ state.runs=Number(e.target.value); debounceRun(); } if(e.target.id==='seed'){ state.seed=Number(e.target.value); debounceRun(); } });
+    $('initialGrid').addEventListener('change', e=>{
+      const v=e.target.dataset.initial; if(v){ state.initials[v]=Number(e.target.value); debounceRun(); }
+      if(e.target.id==='runs'){ state.runs=Number(e.target.value); debounceRun(); }
+      if(e.target.id==='seed'){ state.seed=Number(e.target.value); debounceRun(); }
+      if(e.target.id==='mwOptMethod'){ state.optMethod=e.target.value; debounceRun(); }
+      if(e.target.id==='mwOptPopulation'){ state.optPopulation=Number(e.target.value); debounceRun(); }
+      if(e.target.id==='mwOptTolerance'){ state.optTolerance=Number(e.target.value); debounceRun(); }
+      if(e.target.id==='mwOptSeed'){ state.optSeed=Number(e.target.value); debounceRun(); }
+      const oi=e.target.dataset.optInitial;
+      if(oi){ const val=Number(e.target.value); state.initials[oi]=val; if((oi+'0') in state.params) state.params[oi+'0']=val; debounceRun(); }
+      const ob=e.target.dataset.optBound;
+      if(ob){ const m=currentModel(); m.bounds=m.bounds||{}; const cur=Array.isArray(m.bounds[ob])?m.bounds[ob].slice():[-5,5]; const val=Number(e.target.value); if(e.target.dataset.boundSide==='min') cur[0]=val; else cur[1]=val; if(cur[0]>cur[1]) cur.reverse(); m.bounds[ob]=cur; debounceRun(); }
+      const op=e.target.dataset.optParam;
+      if(op){ const m=currentModel(); const field=e.target.dataset.paramField; const val=Number(e.target.value); if(field==='value'){ state.params[op]=val; }
+        if(field==='min'||field==='max'){ m.params[op][field]=val; }
+        renderParameterStrip(); debounceRun(); }
+    });
     ['tStart','tEnd','steps'].forEach(id=>$(id).addEventListener('change',e=>{ state[id]=Number(e.target.value); debounceRun(); }));
     $('primaryVariable').addEventListener('change',e=>{ state.primaryVariable=e.target.value; renderCards(); });
     const plotPal=$('plotPalette'); if(plotPal){ plotPal.addEventListener('change',e=>{ state.palette=e.target.value; renderPlotPalette(); renderCards(); }); }
@@ -1771,7 +1905,7 @@ print('ST', dict(zip(problem['names'], Si['ST'])))
   }
   function renderAll(){ renderModelSelect(); renderHeader(); renderParameterStrip(); renderAnalysisTypeSelect(); renderOptimizationPalette(); renderPlotPalette(); renderCards(); renderDetail(); }
   function toast(msg){ const t=$('toast'); if(!t) return; t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
-  function init(){ loadCustomPalette(); const q=new URLSearchParams(location.search); const model=q.get('model') || q.get('example') || 'sir'; setDefaults(MODELS[model]?model:'sir'); renderAll(); bind(); run(); toast('Model workbench RC ready'); window.addEventListener('load',()=>{ renderMathStrip(); renderDetail(); renderCards(); }); }
+  function init(){ loadCustomPalette(); const q=new URLSearchParams(location.search); const model=q.get('model') || q.get('example') || 'sir'; setDefaults(MODELS[model]?model:'sir'); renderAll(); bind(); run();  window.addEventListener('load',()=>{ renderMathStrip(); renderDetail(); renderCards(); }); }
   document.addEventListener('DOMContentLoaded',init);
 })();
 

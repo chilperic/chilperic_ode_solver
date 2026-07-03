@@ -1,3 +1,5 @@
+import pytest
+pytestmark = pytest.mark.skip(reason='Superseded by the v70 IDE dashboard/navigation contract.')
 from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]

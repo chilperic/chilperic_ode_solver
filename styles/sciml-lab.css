@@ -58,3 +58,19 @@
 .sciml-plot-head{align-items:flex-end}
 @media(max-width:1100px){.sciml-plot-tools{min-width:100%;justify-content:stretch}.sciml-phase-controls{min-width:100%}}
 @media(max-width:700px){.sciml-phase-controls{grid-template-columns:1fr}.sciml-plot-tools{flex-direction:column;align-items:stretch}}
+
+
+/* v67 SciML plot toolbar fix */
+.sciml-plot-head{display:grid!important;grid-template-columns:minmax(180px,.7fr) minmax(260px,1.3fr);gap:12px;align-items:end}.sciml-plot-tools{display:grid!important;grid-template-columns:minmax(220px,1fr) minmax(240px,1fr);gap:10px;align-items:end;width:100%;min-width:0}.sciml-plot-select,.sciml-phase-controls{min-width:0!important;width:100%!important}.sciml-phase-controls{grid-template-columns:repeat(3,minmax(0,1fr))!important}.sciml-phase-controls select,.sciml-plot-select select{max-width:100%;min-width:0}.sciml-plot{min-height:430px}.sciml-controls{font-size:14px}.sciml-controls h2{font-size:16px!important}.sciml-hero h1{font-size:clamp(30px,4vw,54px)!important}.sciml-lede{font-size:15px!important}
+@media(max-width:1050px){.sciml-plot-head,.sciml-plot-tools{grid-template-columns:1fr!important}.sciml-phase-controls{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:620px){.sciml-phase-controls{grid-template-columns:1fr!important}}
+
+
+/* v68 SciML modeling controls: editable ICs/parameters and non-overflow plot toolbar */
+.sciml-buttons{grid-template-columns:1fr!important}.sciml-buttons button{min-height:42px}.sciml-model-inputs{margin:12px 0;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}
+.sciml-model-inputs summary{font-weight:950;color:var(--text);cursor:pointer}.sciml-input-section{margin-top:12px}.sciml-input-section h3{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.sciml-edit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.sciml-param-grid{display:flex;flex-direction:column;gap:8px}.sci-param-row{display:grid;grid-template-columns:minmax(92px,1fr) minmax(72px,.8fr) minmax(72px,.8fr);gap:8px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.sciml-edit-grid label,.sci-param-row label{margin:0!important;text-transform:none!important}.sciml-edit-grid input,.sci-param-row input{min-height:38px;font-weight:800}.sciml-note.compact{font-size:12px;line-height:1.35;margin:10px 0 0}
+.sciml-plot-head{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(260px,auto)!important;align-items:end!important}.sciml-plot-tools{display:grid!important;grid-template-columns:minmax(190px,280px) minmax(210px,360px)!important;gap:10px!important;align-items:end!important;min-width:0!important}.sciml-plot-select{min-width:0!important;width:100%!important}.sciml-phase-controls{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;min-width:0!important}.sciml-phase-controls[hidden]{display:none!important}.sciml-phase-controls label{min-width:0!important;margin:0!important}.sciml-phase-controls select,.sciml-plot-select select{width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis!important}.sciml-card{overflow:hidden}.sciml-plot{min-width:0!important}
+@media(max-width:1180px){.sciml-plot-head{grid-template-columns:1fr!important}.sciml-plot-tools{grid-template-columns:1fr!important;width:100%!important}.sciml-phase-controls{grid-template-columns:repeat(3,minmax(0,1fr))!important}.sci-param-row{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:700px){.sciml-edit-grid,.sci-param-row,.sciml-phase-controls{grid-template-columns:1fr!important}.sciml-layout{grid-template-columns:1fr!important}}
