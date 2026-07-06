@@ -13,8 +13,12 @@ def soup(rel):
 def test_v707_unified_stylesheet_loaded_last_on_core_pages():
     for page in ['index.html','workbench.html','docs.html','tutorial.html','sciml.html','ode.html']:
         links = [l.get('href','') for l in soup(page).find_all('link', rel=lambda v: v and 'stylesheet' in v)]
-        assert any('styles/v70-7-unified.css?v=70.7.0' in href for href in links), page
-        assert links[-1].startswith('styles/v70-7-unified.css'), (page, links[-1])
+        assert any('styles/v70-7-unified.css?v=71.46.0' in href for href in links), page
+        # V71.38: the per-lab identity layer intentionally loads AFTER the v70
+        # override stack (identity must win). v70-7-unified must therefore be the
+        # last sheet of the override stack, i.e. last among non-identity sheets.
+        non_identity = [h for h in links if 'lab-identity.css' not in h]
+        assert non_identity[-1].startswith('styles/v70-7-unified.css'), (page, non_identity[-1])
 
 
 def test_v707_navigation_panel_is_normalized_in_js():

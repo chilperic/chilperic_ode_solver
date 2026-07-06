@@ -510,7 +510,7 @@ class TestCssVersionDrift:
         P2 — collect the style.css version token from every page; they must all
         be identical.
 
-        FAILS on v51: symbolic.html uses ?v=50, all others ?v=2.7.4.
+        FAILS on v51: symbolic.html uses ?v=71.46.0, all others ?v=71.46.0
         """
         tokens: dict[str, str] = {}
         for page in ALL_PAGES:

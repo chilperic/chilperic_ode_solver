@@ -1,0 +1,295 @@
+/* v70.10: modeling-logic consolidation.
+   Purpose: stop exposing implementation tiers, make analysis tools usable, make active/hover states unambiguous,
+   and surface Mathematical Beauty as a real route. */
+:root{
+  --v710-ink:#0e1f33;
+  --v710-muted:#5d6d82;
+  --v710-panel:#ffffff;
+  --v710-soft:#edf8f9;
+  --v710-line:#d5e1ec;
+  --v710-accent:#007d87;
+  --v710-accent-dark:#005f68;
+  --v710-blue:#155EEF;
+  --v710-shadow:0 18px 46px rgba(2, 20, 32, .11);
+}
+html[data-theme='graphite'],html[data-theme='slate'],html[data-theme='midnight'],html[data-theme='forest']{
+  --v710-ink:var(--v70-text,#eaf2ff);
+  --v710-muted:var(--v70-muted,#b9c5d3);
+  --v710-panel:var(--v70-panel,#0f172a);
+  --v710-soft:var(--v70-accent-soft,#172337);
+  --v710-line:var(--v70-border,#334155);
+  --v710-accent:var(--v70-accent,#5eead4);
+  --v710-accent-dark:var(--v70-accent,#5eead4);
+  --v710-shadow:0 18px 46px rgba(0,0,0,.34);
+}
+
+/* Current page is filled; open/hover is not. This removes the false-selected-button problem. */
+.foko-main-nav > a,
+.foko-main-nav > details > summary{
+  position:relative!important;
+  min-height:38px!important;
+  border-radius:12px!important;
+  border:1px solid transparent!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:rgba(255,255,255,.92)!important;
+}
+.foko-main-nav > a:hover,
+.foko-main-nav > details > summary:hover,
+.foko-main-nav > details[open] > summary:not(.active):not([aria-current='page']){
+  background:rgba(255,255,255,.08)!important;
+  border-color:rgba(255,255,255,.20)!important;
+  box-shadow:none!important;
+  color:#fff!important;
+}
+.foko-main-nav > a.active,
+.foko-main-nav > a[aria-current='page'],
+.foko-main-nav > details > summary.active,
+.foko-main-nav > details > summary[aria-current='page']{
+  background:linear-gradient(180deg,rgba(4,143,153,.46),rgba(0,93,103,.34))!important;
+  border-color:rgba(144,245,239,.66)!important;
+  color:#fff!important;
+  box-shadow:inset 0 -4px 0 #8ff4ef,0 0 0 1px rgba(255,255,255,.05)!important;
+}
+
+/* Dropdowns: same grammar for Workbench and Data & Analysis; no invisible links. */
+.foko-main-nav .analysis-menu,
+.foko-main-nav .workbench-menu{position:relative!important;}
+.foko-main-nav .analysis-menu-panel,
+.foko-main-nav details[open] > .analysis-menu-panel,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel,
+.foko-main-nav details[open] > .labs-menu-panel.v70-workbench-panel{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:10px!important;
+  width:min(430px,calc(100vw - 28px))!important;
+  max-height:min(78vh,620px)!important;
+  overflow-y:auto!important;
+  padding:12px!important;
+  background:#ffffff!important;
+  background-image:none!important;
+  border:1px solid #b6cbd4!important;
+  border-radius:16px!important;
+  box-shadow:0 24px 56px rgba(2,20,30,.34)!important;
+  color:#0f172a!important;
+  z-index:10000!important;
+}
+.foko-main-nav .analysis-menu-panel .menu-section,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel .menu-section{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:5px!important;
+  margin:0!important;
+  padding:0!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.foko-main-nav .analysis-menu-panel .menu-section + .menu-section,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel .menu-section + .menu-section{
+  border-top:1px solid #dbe5ee!important;
+  margin-top:4px!important;
+  padding-top:10px!important;
+}
+.foko-main-nav .analysis-menu-panel .menu-section-title,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel .menu-section-title{
+  display:block!important;
+  margin:0 0 5px!important;
+  padding:7px 10px!important;
+  border-radius:9px!important;
+  border:1px solid #a7d8dd!important;
+  background:#e6f7f8!important;
+  color:#063b43!important;
+  font-size:.70rem!important;
+  line-height:1.15!important;
+  font-weight:950!important;
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
+}
+.foko-main-nav .analysis-menu-panel .menu-section-classic .menu-section-title{
+  background:#eef2ff!important;
+  border-color:#c7d2fe!important;
+  color:#1e3a8a!important;
+}
+.foko-main-nav .analysis-menu-panel a,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a{
+  display:grid!important;
+  grid-template-columns:30px minmax(0,1fr)!important;
+  gap:9px!important;
+  align-items:center!important;
+  min-height:49px!important;
+  padding:8px 10px!important;
+  border-radius:11px!important;
+  border:1px solid transparent!important;
+  background:#fff!important;
+  color:#0f172a!important;
+  text-decoration:none!important;
+  visibility:visible!important;
+  opacity:1!important;
+  overflow:visible!important;
+  transform:none!important;
+}
+.foko-main-nav .analysis-menu-panel a b,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a b{
+  display:block!important;
+  color:#0f172a!important;
+  font-size:.92rem!important;
+  font-weight:950!important;
+  line-height:1.12!important;
+  white-space:normal!important;
+}
+.foko-main-nav .analysis-menu-panel a small,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a small{
+  display:block!important;
+  margin-top:2px!important;
+  color:#475569!important;
+  font-size:.74rem!important;
+  font-weight:700!important;
+  line-height:1.22!important;
+  white-space:normal!important;
+}
+.foko-main-nav .analysis-menu-panel .menu-icon,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel .menu-icon{
+  width:30px!important;height:30px!important;border-radius:10px!important;display:grid!important;place-items:center!important;
+  background:#e6f7f8!important;color:#007d87!important;font-weight:950!important;
+}
+.foko-main-nav .analysis-menu-panel a:hover,
+.foko-main-nav .analysis-menu-panel a:focus-visible,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a:hover,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a:focus-visible{
+  background:#e6f7f8!important;
+  border-color:#9bd5da!important;
+  outline:2px solid #0f766e!important;
+  outline-offset:1px!important;
+}
+.foko-main-nav .analysis-menu-panel a.active,
+.foko-main-nav .analysis-menu-panel a[aria-current='page'],
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a.active,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a[aria-current='page']{
+  background:#0f766e!important;
+  border-color:#0f766e!important;
+  color:#fff!important;
+}
+.foko-main-nav .analysis-menu-panel a.active b,
+.foko-main-nav .analysis-menu-panel a.active small,
+.foko-main-nav .analysis-menu-panel a[aria-current='page'] b,
+.foko-main-nav .analysis-menu-panel a[aria-current='page'] small,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a.active b,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a.active small,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a[aria-current='page'] b,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a[aria-current='page'] small{color:#fff!important;}
+.foko-main-nav .analysis-menu-panel a.active .menu-icon,
+.foko-main-nav .analysis-menu-panel a[aria-current='page'] .menu-icon,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a.active .menu-icon,
+.foko-main-nav .labs-menu-panel.v70-workbench-panel a[aria-current='page'] .menu-icon{background:#ccfbf1!important;color:#065f46!important;}
+
+/* Theme selector is a utility, not a selected page. */
+.foko-theme-picker{height:34px!important;border-radius:10px!important;background:rgba(15,23,42,.30)!important;border-color:rgba(255,255,255,.22)!important;}
+.foko-theme-picker .theme-select{height:26px!important;min-width:94px!important;max-width:112px!important;font-size:.78rem!important;font-weight:800!important;}
+
+/* Home: Beauty must be visible without depending on footer. */
+body[data-lab='home'] .home-v705-actions a[href='beauty.html']{
+  background:#f8fafc!important;
+  color:#0f2a3d!important;
+  border:1px solid #b9dfe3!important;
+}
+body[data-lab='home'] .home-v705-route-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+body[data-lab='home'] .home-v705-route-grid a[href='beauty.html'],
+body[data-lab='home'] .home-v705-card-grid a[href='beauty.html']{
+  border-color:#8bd7dd!important;
+  background:linear-gradient(180deg,#ffffff,#effafb)!important;
+  box-shadow:inset 0 0 0 1px rgba(0,125,135,.08)!important;
+}
+@media(max-width:980px){body[data-lab='home'] .home-v705-route-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+@media(max-width:680px){body[data-lab='home'] .home-v705-route-grid{grid-template-columns:1fr!important;}}
+
+/* Analysis pages: turn raw forms into product-level tools. */
+body[data-lab='analysis'] .analysis-shell,
+body[data-lab='analysis']{background:var(--v70-bg,#f6f9fc)!important;color:var(--v710-ink)!important;}
+.analysis-page{
+  width:min(1180px,calc(100% - 38px))!important;
+  margin:0 auto!important;
+  padding:28px 0 46px!important;
+  color:var(--v710-ink)!important;
+}
+.analysis-hero{
+  display:grid!important;
+  gap:10px!important;
+  padding:24px 28px!important;
+  margin-bottom:18px!important;
+  border:1px solid var(--v710-line)!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,var(--v710-panel),color-mix(in srgb,var(--v710-panel) 86%,var(--v710-soft)))!important;
+  box-shadow:var(--v710-shadow)!important;
+}
+.analysis-eyebrow{
+  margin:0!important;
+  color:var(--v710-accent)!important;
+  font-size:.74rem!important;
+  font-weight:950!important;
+  letter-spacing:.11em!important;
+  text-transform:uppercase!important;
+}
+.analysis-hero h1{margin:0!important;font-size:clamp(1.9rem,3vw,2.65rem)!important;line-height:1.04!important;letter-spacing:-.035em!important;color:var(--v710-ink)!important;}
+.analysis-hero p:not(.analysis-eyebrow){max-width:760px!important;margin:0!important;color:var(--v710-muted)!important;font-size:1rem!important;line-height:1.55!important;}
+.analysis-grid{display:grid!important;grid-template-columns:minmax(320px,.82fr) minmax(420px,1.18fr)!important;gap:18px!important;align-items:start!important;}
+.analysis-panel{
+  min-width:0!important;
+  padding:20px!important;
+  border:1px solid var(--v710-line)!important;
+  border-radius:20px!important;
+  background:var(--v710-panel)!important;
+  box-shadow:var(--v710-shadow)!important;
+  color:var(--v710-ink)!important;
+}
+.analysis-panel h2{margin:0 0 14px!important;font-size:1.05rem!important;letter-spacing:.02em!important;color:var(--v710-ink)!important;}
+.analysis-panel label{display:grid!important;gap:6px!important;margin:0 0 12px!important;color:var(--v710-muted)!important;font-size:.82rem!important;font-weight:850!important;}
+.analysis-panel textarea,
+.analysis-panel input,
+.analysis-panel select{
+  width:100%!important;
+  box-sizing:border-box!important;
+  border:1px solid var(--v710-line)!important;
+  border-radius:12px!important;
+  background:color-mix(in srgb,var(--v710-panel) 84%,var(--v710-soft))!important;
+  color:var(--v710-ink)!important;
+  padding:10px 12px!important;
+  font:500 .9rem/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
+}
+.analysis-panel select,.analysis-panel input{min-height:42px!important;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial,sans-serif!important;font-weight:750!important;}
+.analysis-panel textarea{min-height:170px!important;resize:vertical!important;}
+.analysis-two{display:grid!important;grid-template-columns:minmax(0,1fr) 110px!important;gap:12px!important;align-items:end!important;}
+.analysis-run{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+  min-height:42px!important;padding:0 16px!important;border:1px solid var(--v710-accent)!important;border-radius:12px!important;
+  background:var(--v710-accent)!important;color:#fff!important;font-weight:900!important;box-shadow:none!important;cursor:pointer!important;
+}
+.analysis-run:hover{background:var(--v710-accent-dark)!important;border-color:var(--v710-accent-dark)!important;}
+.analysis-run:focus-visible{outline:3px solid color-mix(in srgb,var(--v710-accent) 30%,transparent)!important;outline-offset:2px!important;}
+.analysis-output{
+  min-height:150px!important;
+  max-height:360px!important;
+  overflow:auto!important;
+  white-space:pre-wrap!important;
+  margin:0 0 14px!important;
+  padding:14px!important;
+  border:1px solid var(--v710-line)!important;
+  border-radius:14px!important;
+  background:color-mix(in srgb,var(--v710-panel) 78%,var(--v710-soft))!important;
+  color:var(--v710-ink)!important;
+  font:700 .88rem/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;
+}
+.analysis-plot{
+  min-height:320px!important;
+  border:1px solid var(--v710-line)!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  overflow:hidden!important;
+}
+@media(max-width:900px){.analysis-grid{grid-template-columns:1fr!important}.analysis-page{width:min(100% - 24px,1180px)!important}.analysis-two{grid-template-columns:1fr!important}}
+
+/* Documentation/tutorial templates. */
+.lab-template-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:18px 0 0;}
+.lab-template-card{border:1px solid var(--line,#dbe5ee);border-radius:16px;background:var(--panel,#fff);padding:16px;box-shadow:0 10px 26px rgba(2,20,30,.06);}
+.lab-template-card h3{margin:0 0 8px;color:var(--text,#102033);font-size:1rem;}
+.lab-template-card p{margin:0 0 10px;color:var(--muted,#617086);font-size:.88rem;line-height:1.45;}
+.lab-template-card pre{margin:0;padding:11px;border-radius:12px;background:#0f172a;color:#e2f8ff;overflow:auto;font-size:.78rem;line-height:1.45;}

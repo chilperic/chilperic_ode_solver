@@ -30,6 +30,6 @@ def test_home_css_has_v69_creator_overlap_contract():
 
 def test_cache_tokens_bumped_for_style_and_logo():
     html = text('index.html')
-    assert 'styles/style.css?v=2.7.5' in html
-    assert 'foko-lab-logo.svg?v=3.2.0' in html
-    assert 'foko-lab-mark.svg?v=3.2.0' in html
+    assert 'styles/style.css?v=71.46.0' in html
+    assert 'foko-lab-logo.svg?v=71.46.0' in html
+    assert 'foko-lab-mark.svg?v=71.46.0' in html

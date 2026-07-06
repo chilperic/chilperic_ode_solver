@@ -13,6 +13,7 @@ self.onmessage = (ev) => {
     if (msg.type === 'solve') respond(solveJob(msg.payload));
     if (msg.type === 'sweep') respond(sweepJob(msg.payload));
     if (msg.type === 'opt') respond(optJob(msg.payload));
+    if (msg.type === 'fitOde') respond(fitOdeJob(msg.payload));
   } catch (err) {
     respond({ ok:false, error: cleanErr(err) });
   }
@@ -190,6 +191,120 @@ function sweepJob(cfg){
   }
   return {ok:true, kind:'sweep', x:xs, y:ys, z, sweepA:cfg.sweepA, sweepB:cfg.sweepB, sweepVar:cfg.sweepVar, sweepMetric:cfg.sweepMetric};
 }
+
+function interpAt(T, Yrow, t){
+  if(t<=T[0]) return Yrow[0];
+  if(t>=T[T.length-1]) return Yrow[Yrow.length-1];
+  let lo=0, hi=T.length-1;
+  while(hi-lo>1){ const mid=(lo+hi)>>1; if(T[mid]<=t) lo=mid; else hi=mid; }
+  const a=(t-T[lo])/Math.max(1e-12,T[hi]-T[lo]);
+  return Yrow[lo]*(1-a)+Yrow[hi]*a;
+}
+
+function solve(A,b){
+  A=A.map(r=>r.slice().map(Number)); b=b.slice().map(Number);
+  const n=A.length;
+  for(let k=0;k<n;k++){
+    let p=k; for(let i=k+1;i<n;i++) if(Math.abs(A[i][k])>Math.abs(A[p][k])) p=i;
+    if(Math.abs(A[p][k])<1e-14) throw new Error('Singular normal matrix during ODE fit. Narrow the fitted parameters or improve data coverage.');
+    [A[k],A[p]]=[A[p],A[k]]; [b[k],b[p]]=[b[p],b[k]];
+    const piv=A[k][k]; for(let j=k;j<n;j++) A[k][j]/=piv; b[k]/=piv;
+    for(let i=0;i<n;i++) if(i!==k){ const f=A[i][k]; for(let j=k;j<n;j++) A[i][j]-=f*A[k][j]; b[i]-=f*b[k]; }
+  }
+  return b;
+}
+
+function fitResidualVector(cfg, params){
+  const sol=solveJob({...cfg, params, points:Math.min(Math.max(Number(cfg.points)||800, 200), 1800), method:['radau','bdf','lsoda','dop853'].includes(cfg.method)?'rk45':cfg.method});
+  const obs=cfg.observations, rows=obs.rows||[], cols=obs.columns||[];
+  const r=[];
+  for(const row of rows){
+    const t=Number(row[obs.timeCol]); if(!Number.isFinite(t)) continue;
+    for(const col of cols){
+      const vi=cfg.vars.indexOf(col);
+      if(vi<0 || !Number.isFinite(Number(row[col]))) continue;
+      r.push(interpAt(sol.T, sol.Y[vi], t)-Number(row[col]));
+    }
+  }
+  if(!r.length) throw new Error('Observed data columns must match at least one ODE variable for fitting.');
+  return {r, sol};
+}
+function sseOf(v){ return v.reduce((a,b)=>a+b*b,0); }
+function fitOdeJob(cfg){
+  const vary=(cfg.vary||[]).filter(k=>cfg.paramDefs && cfg.paramDefs[k]);
+  if(!vary.length) throw new Error('No variable parameters supplied for ODE fitting.');
+  const maxIter=Math.max(4, Math.min(80, Number(cfg.maxIter)||36));
+  let params={...(cfg.params||{})};
+  let theta=vary.map(k=>Number(params[k]));
+  const lower=vary.map(k=>Number(cfg.paramDefs[k].min));
+  const upper=vary.map(k=>Number(cfg.paramDefs[k].max));
+  function clampTheta(th){ return th.map((v,i)=>Math.max(Math.min(v, upper[i]), lower[i])); }
+  function toParams(th){ const p={...params}; vary.forEach((k,i)=>p[k]=th[i]); return p; }
+  let best=fitResidualVector(cfg, toParams(theta));
+  let bestSse=sseOf(best.r), lambda=1e-2;
+  for(let it=0; it<maxIter; it++){
+    if(cancelled) return {ok:false,cancelled:true,error:'Cancelled'};
+    const baseR=best.r, n=baseR.length, m=theta.length;
+    const J=Array.from({length:n},()=>Array(m).fill(0));
+    for(let j=0;j<m;j++){
+      const h=Math.max(1e-5, Math.abs(theta[j])*1e-4, Math.abs(upper[j]-lower[j])*1e-5);
+      const thp=clampTheta(theta.map((v,i)=>i===j?v+h:v));
+      const thm=clampTheta(theta.map((v,i)=>i===j?v-h:v));
+      const rp=fitResidualVector(cfg, toParams(thp)).r;
+      const rm=fitResidualVector(cfg, toParams(thm)).r;
+      const den=Math.max(1e-12, thp[j]-thm[j]);
+      for(let i=0;i<n;i++) J[i][j]=(rp[i]-rm[i])/den;
+    }
+    const A=Array.from({length:m},()=>Array(m).fill(0)), g=Array(m).fill(0);
+    for(let i=0;i<n;i++) for(let a=0;a<m;a++){ g[a]+=J[i][a]*baseR[i]; for(let b=0;b<m;b++) A[a][b]+=J[i][a]*J[i][b]; }
+    for(let a=0;a<m;a++) A[a][a]+=lambda;
+    let step;
+    try{ step=solve(A,g); }catch(e){ break; }
+    const cand=clampTheta(theta.map((v,i)=>v-step[i]));
+    const candFit=fitResidualVector(cfg, toParams(cand));
+    const candSse=sseOf(candFit.r);
+    if(candSse<bestSse){ theta=cand; best=candFit; bestSse=candSse; lambda*=0.6; }
+    else lambda*=2.5;
+    progress((it+1)/maxIter,'Fitting ODE');
+    if(Math.sqrt(step.reduce((a,b)=>a+b*b,0))<1e-7) break;
+  }
+  params=toParams(theta);
+  const final=fitResidualVector(cfg, params);
+  const n=final.r.length, m=theta.length, sigma2=sseOf(final.r)/Math.max(1,n-m);
+  const J=Array.from({length:n},()=>Array(m).fill(0));
+  for(let j=0;j<m;j++){
+    const h=Math.max(1e-5, Math.abs(theta[j])*1e-4, Math.abs(upper[j]-lower[j])*1e-5);
+    const thp=clampTheta(theta.map((v,i)=>i===j?v+h:v));
+    const thm=clampTheta(theta.map((v,i)=>i===j?v-h:v));
+    const rp=fitResidualVector(cfg, toParams(thp)).r;
+    const rm=fitResidualVector(cfg, toParams(thm)).r;
+    const den=Math.max(1e-12, thp[j]-thm[j]);
+    for(let i=0;i<n;i++) J[i][j]=(rp[i]-rm[i])/den;
+  }
+  const JTJ=Array.from({length:m},()=>Array(m).fill(0));
+  for(let row of J) for(let a=0;a<m;a++) for(let b=0;b<m;b++) JTJ[a][b]+=row[a]*row[b];
+  const ci=[]; const samples=[theta.slice()];
+  for(let j=0;j<m;j++){
+    let se=NaN;
+    try{ const e=Array(m).fill(0); e[j]=1; const col=solve(JTJ,e); se=Math.sqrt(Math.max(0,col[j]*sigma2)); }catch(_e){ se=(upper[j]-lower[j])/10; }
+    const low=Math.max(lower[j], theta[j]-1.96*se), high=Math.min(upper[j], theta[j]+1.96*se);
+    ci.push({name:vary[j],estimate:theta[j],se,low,high});
+    const lo=theta.slice(); lo[j]=low; samples.push(lo);
+    const hi=theta.slice(); hi[j]=high; samples.push(hi);
+  }
+  const baseSol=final.sol;
+  const bands={};
+  cfg.vars.forEach((v,vi)=>{ bands[v]={low:baseSol.Y[vi].slice(), high:baseSol.Y[vi].slice()}; });
+  for(const th of samples.slice(1,13)){
+    try{
+      const sol=solveJob({...cfg, params:toParams(th), points:baseSol.T.length, method:['radau','bdf','lsoda','dop853'].includes(cfg.method)?'rk45':cfg.method});
+      cfg.vars.forEach((v,vi)=>{ for(let i=0;i<baseSol.T.length;i++){ bands[v].low[i]=Math.min(bands[v].low[i], sol.Y[vi][i]); bands[v].high[i]=Math.max(bands[v].high[i], sol.Y[vi][i]); } });
+    }catch(_e){}
+  }
+  const k=m, rmse=Math.sqrt(sseOf(final.r)/Math.max(1,n));
+  return {ok:true, kind:'ode_fit', params, ci, rmse, sse:sseOf(final.r), aic:n*Math.log(Math.max(1e-12,sseOf(final.r)/n))+2*k, bic:n*Math.log(Math.max(1e-12,sseOf(final.r)/n))+k*Math.log(Math.max(1,n)), bands, solution:baseSol};
+}
+
 function optJob(cfg){
   const names = cfg.variables.map(v=>v.name);
   const allowed = new Set(names);

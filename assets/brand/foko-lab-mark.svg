@@ -1,15 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Foko Lab modeling mark">
-  <defs>
-    <linearGradient id="tealBlue" x1="18" y1="16" x2="112" y2="110" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#14B8A6"/>
-      <stop offset="1" stop-color="#155EEF"/>
-    </linearGradient>
-  </defs>
-  <path d="M64 10 112 37v54l-48 27-48-27V37L64 10Z" fill="#053743" stroke="#EAFBFF" stroke-width="4"/>
-  <path d="M31 79 C45 34, 83 34, 97 79 C81 103, 47 103, 31 79 Z" fill="none" stroke="url(#tealBlue)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M40 64 C53 49, 76 49, 88 64" fill="none" stroke="#EAFBFF" stroke-opacity=".72" stroke-width="5" stroke-linecap="round"/>
-  <path d="M40 88 L88 40" stroke="#14B8A6" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="64" cy="64" r="8" fill="#14B8A6"/>
-  <circle cx="42" cy="86" r="5" fill="#155EEF"/>
-  <circle cx="88" cy="42" r="5" fill="#EAFBFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">Foko Lab mark</title><desc id="desc">Infinity phase trajectory and network motif.</desc>
+<defs><linearGradient id="orbit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2DD4BF"/><stop offset="0.45" stop-color="#38BDF8"/><stop offset="1" stop-color="#155EEF"/></linearGradient><radialGradient id="core" cx="45%" cy="42%" r="70%"><stop offset="0" stop-color="#E8FFFC"/><stop offset="0.55" stop-color="#38BDF8"/><stop offset="1" stop-color="#155EEF"/></radialGradient></defs>
+<rect width="128" height="128" rx="30" fill="#061B2A"/>
+<path d="M17 66 C35 21 75 18 100 43 C124 68 93 107 61 69 C30 32 15 64 17 66 Z" fill="none" stroke="url(#orbit)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20 87 C39 57 63 54 82 71 C94 82 105 86 111 75" fill="none" stroke="#E8FFFC" stroke-width="3.2" stroke-linecap="round" opacity=".94"/>
+<path d="M27 64 H106 M64 26 V102" stroke="#BFEFFF" stroke-width="2.3" opacity=".42" stroke-linecap="round"/>
+<circle cx="64" cy="64" r="8" fill="url(#core)" stroke="#F8FEFF" stroke-width="2.5"/>
+<circle cx="35" cy="89" r="5.3" fill="#2DD4BF"/><circle cx="94" cy="40" r="5.3" fill="#38BDF8"/>
+<g stroke="#38BDF8" stroke-width="2.3" opacity=".92"><line x1="86" y1="79" x2="102" y2="69"/><line x1="86" y1="79" x2="104" y2="92"/><line x1="104" y1="92" x2="112" y2="76"/></g>
+<circle cx="86" cy="79" r="4.2" fill="#2DD4BF"/><circle cx="102" cy="69" r="4.2" fill="#38BDF8"/><circle cx="104" cy="92" r="4.2" fill="#155EEF"/><circle cx="112" cy="76" r="4.2" fill="#BFFAF3"/>
 </svg>

@@ -1,0 +1,118 @@
+/* v70.13 — coherent product header. This file must load last. */
+.foko-main-nav.foko-unified-nav,
+.topnav.foko-unified-nav{
+  margin-left:auto!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  min-width:0!important;
+  flex-wrap:nowrap!important;
+  white-space:nowrap!important;
+}
+.foko-main-nav.foko-unified-nav > a,
+.foko-main-nav.foko-unified-nav > details > summary{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:40px!important;
+  padding:0 14px!important;
+  border-radius:14px!important;
+  border:1px solid transparent!important;
+  background:transparent!important;
+  color:var(--muted)!important;
+  font-weight:800!important;
+  font-size:.95rem!important;
+  line-height:1!important;
+  text-decoration:none!important;
+  cursor:pointer!important;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease!important;
+}
+.foko-main-nav.foko-unified-nav > a:hover,
+.foko-main-nav.foko-unified-nav > details > summary:hover{
+  background:color-mix(in srgb,var(--accent) 8%, transparent)!important;
+  color:var(--text)!important;
+}
+.foko-main-nav.foko-unified-nav > a.active,
+.foko-main-nav.foko-unified-nav > a[aria-current="page"],
+.foko-main-nav.foko-unified-nav > details > summary.active,
+.foko-main-nav.foko-unified-nav > details > summary[aria-current="page"]{
+  background:color-mix(in srgb,var(--accent) 16%, transparent)!important;
+  border-color:color-mix(in srgb,var(--accent) 52%, transparent)!important;
+  color:var(--text)!important;
+  box-shadow:inset 0 -3px 0 color-mix(in srgb,var(--accent) 85%, white 15%)!important;
+}
+.foko-main-nav.foko-unified-nav > details{position:relative!important; display:inline-block!important;}
+.foko-main-nav.foko-unified-nav > details > summary{list-style:none!important;}
+.foko-main-nav.foko-unified-nav > details > summary::-webkit-details-marker{display:none!important;}
+.foko-main-nav.foko-unified-nav > details > summary::after{content:'▾';font-size:.78rem;margin-left:.5rem;opacity:.78;}
+.foko-main-nav.foko-unified-nav .labs-menu-panel{
+  position:absolute!important;
+  top:calc(100% + 10px)!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  width:min(620px, calc(100vw - 32px))!important;
+  padding:14px!important;
+  border-radius:18px!important;
+  background:color-mix(in srgb,var(--panel) 96%, white 4%)!important;
+  border:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%)!important;
+  box-shadow:0 24px 56px rgba(0,0,0,.22)!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:12px!important;
+  z-index:200!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.foko-main-nav.foko-unified-nav .labs-menu-panel[data-cols="1"]{grid-template-columns:1fr!important;width:min(420px,calc(100vw - 32px))!important;}
+.foko-main-nav.foko-unified-nav .labs-menu-panel::before{
+  content:'';position:absolute;top:-8px;left:50%;width:16px;height:16px;
+  border-left:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%);
+  border-top:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%);
+  background:color-mix(in srgb,var(--panel) 96%, white 4%);
+  transform:translateX(-50%) rotate(45deg);
+}
+.foko-main-nav.foko-unified-nav .menu-section{display:grid!important;gap:8px!important;align-content:start!important;min-width:0!important;}
+.foko-main-nav.foko-unified-nav .menu-section-title{
+  margin:0 0 2px!important;
+  padding:9px 12px!important;
+  border-radius:12px!important;
+  background:color-mix(in srgb,var(--accent) 6%, transparent)!important;
+  color:var(--text)!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+  font-size:.8rem!important;
+  font-weight:900!important;
+}
+.foko-main-nav.foko-unified-nav .labs-menu-panel a{
+  display:grid!important;
+  grid-template-columns:28px minmax(0,1fr)!important;
+  gap:12px!important;
+  align-items:start!important;
+  padding:10px 12px!important;
+  border-radius:12px!important;
+  color:var(--text)!important;
+  text-decoration:none!important;
+  background:transparent!important;
+  opacity:1!important;
+  min-width:0!important;
+}
+.foko-main-nav.foko-unified-nav .labs-menu-panel a:hover,
+.foko-main-nav.foko-unified-nav .labs-menu-panel a.active,
+.foko-main-nav.foko-unified-nav .labs-menu-panel a[aria-current="page"]{background:color-mix(in srgb,var(--accent) 10%, transparent)!important;}
+.foko-main-nav.foko-unified-nav .labs-menu-panel a span{display:block!important;min-width:0!important;overflow:visible!important;color:var(--text)!important;}
+.foko-main-nav.foko-unified-nav .labs-menu-panel a b{display:block!important;font-size:.95rem!important;line-height:1.25!important;color:var(--text)!important;}
+.foko-main-nav.foko-unified-nav .labs-menu-panel a small{display:block!important;margin-top:2px!important;font-size:.82rem!important;line-height:1.35!important;color:var(--muted)!important;white-space:normal!important;}
+.foko-main-nav.foko-unified-nav .menu-icon{width:28px!important;height:28px!important;border-radius:999px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;background:color-mix(in srgb,var(--accent) 12%, transparent)!important;color:var(--accent)!important;font-weight:900!important;font-size:1rem!important;}
+.foko-main-nav.foko-unified-nav .nav-menu[data-menu-open="true"] > summary,
+.foko-main-nav.foko-unified-nav details[open] > summary{background:color-mix(in srgb,var(--accent) 12%, transparent)!important;color:var(--text)!important;border-color:color-mix(in srgb,var(--accent) 35%, transparent)!important;}
+.foko-main-nav.foko-unified-nav .menu-panel-wide{width:min(700px,calc(100vw - 32px))!important;}
+.foko-main-nav.foko-unified-nav .menu-panel-compact{width:min(360px,calc(100vw - 32px))!important;}
+.public-topbar .foko-top-actions,.topbar .foko-top-actions{flex:0 0 auto!important;}
+@media (max-width:1180px){
+  .public-topbar,.topbar,.home-topbar,.mw-topbar{flex-wrap:wrap!important;align-items:flex-start!important;}
+  .foko-main-nav.foko-unified-nav{width:100%!important;overflow-x:auto!important;padding-bottom:4px!important;}
+}
+@media (max-width:760px){
+  .foko-main-nav.foko-unified-nav .labs-menu-panel{left:0!important;transform:none!important;right:auto!important;width:min(94vw, 420px)!important;grid-template-columns:1fr!important;}
+  .foko-main-nav.foko-unified-nav > a,.foko-main-nav.foko-unified-nav > details > summary{padding:0 12px!important;font-size:.88rem!important;}
+}

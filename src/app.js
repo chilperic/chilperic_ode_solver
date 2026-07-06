@@ -111,6 +111,7 @@ const plotRenderSeq = {};
 const state = {
   module:'ode', model:null, result:null, sweep:null, opt:null, worker:null, theme:'aurora', resultKind:'default', activePanel:'plots',
   plotSide:'left',
+  observations:null, fitBridge:null, fitResult:null,
   plots:{
     left:{type:'trajectory',x:null,y:null,z:null,plane:0,title:'Trajectory',xLabel:'t',yLabel:'state',zLabel:'z',colorLabel:'',width:760,height:430,fontSize:13,lineWidth:2.4,markerSize:5,legend:true,grid:true},
     right:{type:'phase2d',x:null,y:null,z:null,plane:0,title:'Phase portrait',xLabel:'x',yLabel:'z',zLabel:'z',colorLabel:'',width:760,height:430,fontSize:13,lineWidth:2.4,markerSize:5,legend:true,grid:true}
@@ -223,7 +224,7 @@ function wire(){
   document.querySelectorAll('.mode-tab').forEach(b=>b.addEventListener('click',()=>setModule(b.dataset.mode)));
   document.querySelectorAll('[data-mode-jump]').forEach(b=>b.addEventListener('click',()=>setModule(b.dataset.modeJump)));
   $('themeBtn')?.addEventListener('change',e=>setTheme(e.target.value));
-  $('resetBtn').addEventListener('click',()=>loadExample($('exampleSelect').value));
+  $('resetBtn')?.addEventListener('click',()=>loadExample($('exampleSelect').value));
   $('loadExample').addEventListener('click',()=>loadExample($('exampleSelect').value));
   $('exampleSelect').addEventListener('change',e=>previewExampleSelection(e.target.value));
   $('addEq').addEventListener('click',addEquation);
@@ -254,6 +255,13 @@ function wire(){
   $('exportResultJson')?.addEventListener('click',()=>download('foko_lab_result_data.json', JSON.stringify(resultDataExport(),null,2), 'application/json'));
   $('exportJson').addEventListener('click',()=>download('foko_lab_model_config.json', JSON.stringify(currentConfig(),null,2), 'application/json'));
   $('exportPlotlyJson')?.addEventListener('click',()=>download('foko_lab_plotly_data.json', JSON.stringify(plotlyDataExport(),null,2), 'application/json'));
+  $('overlayData')?.addEventListener('click',()=>{ try{ loadObservationData(); renderPlots(); }catch(e){ setStatus(actionable(e.message), true); } });
+  $('clearOverlay')?.addEventListener('click',()=>{ state.observations=null; updateObservationSummary(); renderPlots(); });
+  $('overlayVisible')?.addEventListener('change',renderPlots);
+  $('prepareFitBridge')?.addEventListener('click',prepareFitBridge);
+  $('runOdeFit')?.addEventListener('click',runOdeFit);
+  $('fitBandVisible')?.addEventListener('change',renderPlots);
+  $('downloadFitBridge')?.addEventListener('click',()=>{ const cfg=prepareFitBridge(true); if(cfg) download('foko_lab_fit_bridge_config.json', JSON.stringify(cfg,null,2), 'application/json'); });
   $('copyInstall').addEventListener('click',copyInstall);
   $('downloadTemplate').addEventListener('click',downloadSelectedTemplate);
   $('modelFile').addEventListener('change',e=>handleFiles(e.target.files));
@@ -403,7 +411,7 @@ function syncSummary(){
   $('methodMirror').innerHTML=browser.map(([v,l])=>`<option value="${v}">${l}</option>`).join(''); $('methodMirror').value=browser.some(([v])=>v===$('method').value)?$('method').value:'rk45';
   $('t0Mirror').value=$('t0').value; $('t1Mirror').value=$('t1').value; $('pointsMirror').value=$('points').value;
 }
-function refreshAllSelects(){
+function refreshAllSelects(){ refreshObservationVariableSelect();
   const vars = state.module==='opt' ? state.model.variables.map(v=>v.name) : state.model.vars;
   ['cfgX','cfgY','cfgZ','sweepVar'].forEach(id=>{ const el=$(id); if(!el) return; el.innerHTML=''; vars.forEach(v=>el.append(new Option(v,v))); });
   const sweepParams = Object.entries(state.model?.params||{}).filter(([k,a])=>Number(a[1])!==Number(a[2]) && k!=='N');
@@ -465,10 +473,22 @@ function runOde(){
 function runSweep(){
   try{ readOde(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, sweepA:$('sweepA').value, sweepB:$('sweepB').value, sweepVar:$('sweepVar').value, sweepMetric:$('sweepMetric').value, sweepN:+$('sweepN').value}; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
+function runOdeFit(){
+  try{
+    readOde();
+    if(!state.observations) loadObservationData();
+    const vary=Object.entries(paramDefs()).filter(([k,d])=>Number(d.min)!==Number(d.max)).map(([k])=>k);
+    if(!vary.length) throw new Error('No fitted parameters available. Give at least one parameter different min and max values.');
+    if(!state.observations?.rows?.length) throw new Error('Load observed data before fitting.');
+    const payload={...state.model, params:paramValues(), paramDefs:paramDefs(), rtol:$('rtol').value, atol:$('atol').value, maxStep:$('maxStep').value, stepSize:$('stepSize').value, initialStep:$('initialStep').value, safety:$('safety').value, observations:state.observations, vary, maxIter:36};
+    startBusy('Fitting ODE parameters...');
+    worker().postMessage({type:'fitOde',payload});
+  }catch(e){ setStatus(actionable(e.message), true); }
+}
 function runOpt(){ try{ readOpt(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const samples=+$('optSamples').value, population=+($('optPopulation')?.value||36); const budget=samples*population; const payload={...state.model, samples, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population, temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy(budget>50000?`Optimizing large browser budget (${budget.toLocaleString()} evaluations). Reduce samples/population if the tab slows down.`:'Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
 function worker(){
   if(state.worker) return state.worker;
-  state.worker=new Worker('src/worker.js');
+  state.worker = window.FokoComputeBus?.createLegacyHandle ? window.FokoComputeBus.createLegacyHandle({workerUrl:'src/worker.js?v=71.46.0'}) : new Worker('src/worker.js?v=71.46.0');
   state.worker.onmessage=e=>{ const d=e.data; if(d.progress!==undefined){ $('progressWrap').classList.remove('hidden'); $('progressBar').style.width=Math.round(d.progress*100)+'%'; setStatus(`${d.text||'Running'} ${Math.round(d.progress*100)}%`); return; } finishRun(d); };
   state.worker.onerror=err=>{
     // MUST null the reference first — the keep-alive guard in worker() checks
@@ -486,9 +506,39 @@ function startBusy(msg){ document.querySelector('.results-card').classList.add('
 function endBusy(msg){ $('runBtn').disabled=false; $('runSweep').disabled=false; $('runBtn').textContent=$('runBtn').dataset.label || (state.module==='opt'?'Optimize':(state.module==='param'?'Run default':'Run')); $('cancelBtn').classList.add('hidden'); $('progressWrap').classList.add('hidden'); $('progressBar').style.width='0%'; setStatus(msg); }
 function finishRun(d){ document.querySelector('.results-card').classList.remove('stale-results'); endBusy(d.ok?'Done.':'Error.'); if(!d.ok){ setStatus(actionable(d.error),true); return; }
   if(d.kind==='ode'){ state.result=d; state.opt=null; state.resultKind='default'; updatePlotOptions(); showDiagnostics(d.diagnostics); updateMetrics(d.diagnostics); renderPlots(); setStatus(d.diagnostics.warning||'Solved.'); }
+  if(d.kind==='ode_fit'){ applyOdeFitResult(d); return; }
   if(d.kind==='sweep'){ state.sweep=d; state.resultKind='sweep'; updatePlotOptions(); showDiagnostics({method:'parameter sweep',runtime:0,accepted:'—',rejected:'—',functionEvaluations:'—'}); updateMetrics({runtime:0,accepted:'—',rejected:'—',functionEvaluations:'—'}); renderPlots(); setStatus('Sweep complete.'); }
   if(d.kind==='opt'){ state.opt=d; state.resultKind='optimization'; updatePlotOptions(); showOptDiagnostics(d); updateOptMetrics(d); renderPlots(); setStatus(d.feasible?'Optimization complete: feasible candidate found.':'Optimization complete: constraint violation remains. Export Python for serious solve.'); }
 }
+
+function applyOdeFitResult(d){
+  state.fitResult=d;
+  if(d.params){ Object.entries(d.params).forEach(([k,v])=>{ if(state.model.params[k]) state.model.params[k][0]=Number(v); }); renderOdeControls(); refreshAllSelects(); }
+  if(d.solution){ state.result={...d.solution, ok:true, kind:'ode', diagnostics:{...(d.solution.diagnostics||{}), fitRMSE:d.rmse, fitAIC:d.aic, fitBIC:d.bic}}; state.resultKind='default'; }
+  updatePlotOptions();
+  showDiagnostics({method:'ODE parameter fit', rmse:d.rmse, aic:d.aic, bic:d.bic, parameters:Object.entries(d.params||{}).map(([k,v])=>`${k}=${Number(v).toPrecision(6)}`).join(', ')});
+  renderFitSummary(d);
+  updateMetrics(state.result?.diagnostics||{});
+  renderPlots();
+  setStatus(`ODE fit complete. RMSE ${Number(d.rmse||0).toPrecision(4)}.`);
+}
+function renderFitSummary(d){
+  const el=$('fitBridgePreview'); if(!el) return;
+  const ci=(d.ci||[]).map(r=>`${r.name}: ${Number(r.estimate).toPrecision(5)} [${Number(r.low).toPrecision(5)}, ${Number(r.high).toPrecision(5)}]`).join(' | ');
+  el.textContent=`Fit complete. RMSE ${Number(d.rmse||0).toPrecision(4)}. 95% parameter CI: ${ci || 'not available'}.`;
+}
+function fitBandsForVariable(v){
+  const fr=state.fitResult;
+  if(!fr || !$('fitBandVisible')?.checked) return [];
+  const band=fr.bands?.[v];
+  if(!band || !state.result?.T?.length) return [];
+  const t=state.result.T;
+  return [
+    {x:t,y:band.low,mode:'lines',type:'scatter',name:`${v} fit lower`,line:{width:0,color:'rgba(15,118,110,.15)'},hoverinfo:'skip',showlegend:false},
+    {x:t,y:band.high,mode:'lines',type:'scatter',name:`${v} 95% fit band`,line:{width:0,color:'rgba(15,118,110,.15)'},fill:'tonexty',fillcolor:'rgba(15,118,110,.12)',hoverinfo:'skip'}
+  ];
+}
+
 function actionable(m){ m=String(m||'Unknown error'); if(/diverged|stiff|Step limit/i.test(m)) return `${m} Try shorter time range, more points, or export Python with Radau/BDF/LSODA.`; if(/Unknown symbol/i.test(m)) return `${m} Check variable and parameter spelling.`; if(/parse/i.test(m)) return `${m} Use syntax like x^2, sin(t), exp(-k*t), a*x.`; return m; }
 function resetStatus(){ ['runtimeValue','acceptedValue','rejectedValue','stepsMetric','evalMetric','cpuMetric','errorMetric'].forEach(id=>safeText($(id),'—')); safeText($('topStatus'),'Ready'); setStatus('Ready.'); }
 function setStatus(msg,bad=false){ $('status').textContent=msg; $('status').className='status '+(bad?'bad':''); }
@@ -500,6 +550,98 @@ function diagnosticsTable(obj){
 function updateOptMetrics(d){ safeText($('topStatus'),`${d.feasible?'Feasible':'Approximate'} · ${d.diagnostics?.method||'optimizer'}`); safeText($('runtimeValue'),fmtRuntime(d.diagnostics.runtime)); safeText($('acceptedValue'),fmt(d.diagnostics.samples)); safeText($('rejectedValue'),d.feasible?'0':'violation'); safeText($('stepsMetric'),fmt(d.diagnostics.samples)); safeText($('evalMetric'),fmt(d.samples?.length||0)); safeText($('cpuMetric'),fmtRuntime(d.diagnostics.runtime)); safeText($('errorMetric'),Number(d.violation).toExponential(2)); }
 function showDiagnostics(d){ $('diagnostics').innerHTML=diagnosticsTable(d); }
 function showOptDiagnostics(d){ $('diagnostics').innerHTML=diagnosticsTable({status:d.feasible?'feasible':'constraint violation remains', objective:d.objective, violation:d.violation, best:(d.best||[]).map(v=>Number(v).toPrecision(5)).join(', '), ...(d.diagnostics||{})}); }
+
+
+function splitCsvLine(line){
+  const out=[]; let cur='', q=false;
+  for(let i=0;i<String(line).length;i++){
+    const ch=line[i];
+    if(ch==='"' && line[i+1]==='"'){ cur+='"'; i++; continue; }
+    if(ch==='"'){ q=!q; continue; }
+    if((ch===',' || ch==='\t' || ch===';') && !q){ out.push(cur.trim()); cur=''; continue; }
+    cur+=ch;
+  }
+  out.push(cur.trim());
+  return out;
+}
+function parseObservationTable(text){
+  const lines=String(text||'').split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(lines.length<2) throw new Error('Observed data needs a header row and at least one numeric row.');
+  const header=splitCsvLine(lines[0]).map(h=>h.trim()).filter(Boolean);
+  if(header.length<2) throw new Error('Observed data needs at least a time column and one variable column.');
+  const rows=[];
+  for(const line of lines.slice(1)){
+    const cells=splitCsvLine(line);
+    const row={};
+    header.forEach((h,i)=>{ const v=Number(cells[i]); if(Number.isFinite(v)) row[h]=v; });
+    if(Object.keys(row).length>=2) rows.push(row);
+  }
+  if(!rows.length) throw new Error('Observed data contains no numeric rows.');
+  return {header, rows};
+}
+function loadObservationData(){
+  const parsed=parseObservationTable($('obsData')?.value||'');
+  const timeCol=($('obsTimeCol')?.value||parsed.header[0]).trim();
+  if(!parsed.header.includes(timeCol)) throw new Error(`Time column "${timeCol}" was not found in observed data.`);
+  const vars=currentVars();
+  const columns=parsed.header.filter(h=>h!==timeCol && parsed.rows.some(r=>Number.isFinite(r[h])));
+  state.observations={timeCol, columns, rows:parsed.rows, fallback:$('obsFallbackVar')?.value||vars[0]||columns[0]};
+  updateObservationSummary();
+  return state.observations;
+}
+function updateObservationSummary(){
+  const el=$('fitBridgePreview'); if(!el) return;
+  refreshObservationVariableSelect();
+  if(!state.observations){ el.textContent='No observed data loaded.'; return; }
+  const o=state.observations;
+  el.textContent=`Loaded ${o.rows.length} observed rows. Columns: ${o.columns.join(', ')}. Overlay is drawn as markers when a data column matches a plotted variable.`;
+}
+function refreshObservationVariableSelect(){
+  const sel=$('obsFallbackVar'); if(!sel) return;
+  const prev=sel.value;
+  sel.innerHTML='';
+  currentVars().forEach(v=>sel.append(new Option(v,v)));
+  if(prev && Array.from(sel.options).some(o=>o.value===prev)) sel.value=prev;
+}
+function observationVisible(){ return !!(state.observations && ($('overlayVisible')?.checked ?? true)); }
+function observationTraceForVariable(v, colorIndex=0){
+  if(!observationVisible()) return null;
+  const o=state.observations;
+  const col=o.columns.includes(v) ? v : (o.columns.length===1 ? o.columns[0] : null);
+  if(!col) return null;
+  const x=[], y=[];
+  o.rows.forEach(r=>{ if(Number.isFinite(r[o.timeCol]) && Number.isFinite(r[col])){ x.push(r[o.timeCol]); y.push(r[col]); } });
+  if(!x.length) return null;
+  const cs=colors();
+  return {x,y,mode:'markers',type:'scatter',name:`observed ${col}`,marker:{size:Math.max(5,ensurePlot('left').markerSize+1),symbol:'circle-open',line:{width:1.8,color:cs[colorIndex%cs.length]},color:cs[colorIndex%cs.length]}};
+}
+function observationPhaseTrace(xVar,yVar,zVar=null){
+  if(!observationVisible()) return null;
+  const o=state.observations;
+  if(!o.columns.includes(xVar) || !o.columns.includes(yVar)) return null;
+  const x=[], y=[], z=[];
+  o.rows.forEach(r=>{ if(Number.isFinite(r[xVar]) && Number.isFinite(r[yVar])){ x.push(r[xVar]); y.push(r[yVar]); if(zVar && Number.isFinite(r[zVar])) z.push(r[zVar]); } });
+  if(!x.length) return null;
+  if(zVar && o.columns.includes(zVar)) return {x,y,z,mode:'markers',type:'scatter3d',name:'observed phase data',marker:{size:4,symbol:'circle-open',color:'#111827'}};
+  return {x,y,mode:'markers',type:'scatter',name:'observed phase data',marker:{size:7,symbol:'circle-open',line:{width:1.7,color:'#111827'},color:'#ffffff'}};
+}
+function prepareFitBridge(silent=false){
+  try{
+    readOde();
+    if(!state.observations && ($('obsData')?.value||'').trim()) loadObservationData();
+    const cfg={
+      kind:'foko-fit-bridge', version:'71.12.0', source:'ode.html', createdAt:new Date().toISOString(),
+      model:currentConfig().model, params:paramValues(), paramDefinitions:paramDefs(),
+      observations:state.observations,
+      fit:{engine:'curve-fitting', method:'least_squares', target:'trajectory', vary:Object.keys(paramValues()), notes:'First bridge hook: generated from ODE Lab. Use Curve Fitting Lab or future dynamic fitting bridge to estimate parameters.'}
+    };
+    state.fitBridge=cfg;
+    try{ localStorage.setItem('foko-fit-bridge-config', JSON.stringify(cfg)); }catch(_e){}
+    const el=$('fitBridgePreview'); if(el) el.textContent=`Fitting bridge prepared for ${cfg.fit.vary.length} parameters and ${cfg.observations?.rows?.length||0} observed rows. Stored in local browser storage and available for export.`;
+    if(!silent) setStatus('Fitting bridge config prepared.');
+    return cfg;
+  }catch(e){ if(!silent) setStatus(actionable(e.message), true); return null; }
+}
 
 function colors(){ return PALETTES[$('palette').value] || PALETTES.seaborn; }
 function cssVar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
@@ -622,9 +764,9 @@ function PLOT_LABEL(t){ const all=[...PLOTS.ode.default,...PLOTS.param.default,.
 function plotAllowed(type){ const opts=((PLOTS[state.module]||{})[state.resultKind]||[]).map(o=>o[0]); return opts.includes(type); }
 function updatePlotHint(){ const hint = state.module==='param' && state.resultKind==='sweep' ? 'Sweep views use parameter ranges. Use Run default to return to trajectory/phase plots.' : state.module==='opt' ? 'Optimization Lab plots show search samples, convergence, feasibility, Pareto/frontier views, and objective/constraint trade-offs.' : 'For stiff systems, export Python to use BDF, Radau, or LSODA locally.'; safeText($('plotHint'), 'ⓘ '+hint); }
 function renderOdePlot(target,p){ if(!state.result) throw new Error('Run the model first.'); if(p.type==='trajectory') return plotTrajectory(target,p); if(p.type==='phase2d') return plotPhase2D(target,p); if(p.type==='phase3d') return plotPhase3D(target,p); if(p.type==='vector') return plotVectorField(target,p); if(p.type==='poincare') return plotPoincare(target,p); if(p.type==='matrix') return plotMatrix(target,p); }
-function plotTrajectory(target,p){ const cs=colors(); const idxs=visibleSeriesIndices(); const traces=idxs.map((i,k)=>{ const v=state.result.vars[i]; return {x:state.result.T,y:state.result.Y[i],mode:'lines',name:`${v}(t)`,line:{color:cs[k%cs.length],width:p.lineWidth}}; }); const layout=baseLayout({...p,xLabel:p.xLabel||'t',yLabel:p.yLabel||'state'}); if((state.result.vars||[]).length>idxs.length){ layout.annotations=[{text:`Showing ${idxs.length} key variables of ${state.result.vars.length}. Export CSV/Python for all states.`,xref:'paper',yref:'paper',x:1,y:1.12,showarrow:false,font:{size:11,color:cssVar('--muted')||'#667085'},xanchor:'right'}]; } drawPlot(target,traces,layout,{responsive:true,displaylogo:false}); }
-function plotPhase2D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1); if(ix===iy){ drawPlot(target,[],{...baseLayout({...p,title:'Phase portrait requires 2 different variables',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),annotations:[{text:'Select different X and Y variables in Figure settings.',xref:'paper',yref:'paper',x:.5,y:.5,showarrow:false,font:{size:14}}]},{responsive:true,displaylogo:false}); return; } const trace={x:state.result.Y[ix],y:state.result.Y[iy],mode:'lines',type:'scatter',name:`${vars[ix]} vs ${vars[iy]}`,line:{color:cs[1]||cs[0],width:p.lineWidth}}; drawPlot(target,[trace],baseLayout({...p,xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
-function plotPhase3D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1), iz=indexOfVar(p.z,2); if(vars.length<3) throw new Error('3D phase portrait requires at least three variables.'); const trace={x:state.result.Y[ix],y:state.result.Y[iy],z:state.result.Y[iz],mode:'lines',type:'scatter3d',name:`${vars[ix]}-${vars[iy]}-${vars[iz]}`,line:{color:cs[0],width:p.lineWidth*1.6}}; drawPlot(target,[trace],{...baseLayout(p),scene:{xaxis:{title:p.xLabel||vars[ix]},yaxis:{title:p.yLabel||vars[iy]},zaxis:{title:p.zLabel||vars[iz]}},margin:{l:0,r:0,t:45,b:0},showlegend:false},{responsive:true,displaylogo:false}); }
+function plotTrajectory(target,p){ const cs=colors(); const idxs=visibleSeriesIndices(); const traces=[]; idxs.forEach((i,k)=>{ const v=state.result.vars[i]; traces.push(...fitBandsForVariable(v)); traces.push({x:state.result.T,y:state.result.Y[i],mode:'lines',name:`${v}(t)`,line:{color:cs[k%cs.length],width:p.lineWidth}}); }); idxs.forEach((i,k)=>{ const obs=observationTraceForVariable(state.result.vars[i],k); if(obs) traces.push(obs); }); const layout=baseLayout({...p,xLabel:p.xLabel||'t',yLabel:p.yLabel||'state'}); if((state.result.vars||[]).length>idxs.length){ layout.annotations=[{text:`Showing ${idxs.length} key variables of ${state.result.vars.length}. Export CSV/Python for all states.`,xref:'paper',yref:'paper',x:1,y:1.12,showarrow:false,font:{size:11,color:cssVar('--muted')||'#667085'},xanchor:'right'}]; } drawPlot(target,traces,layout,{responsive:true,displaylogo:false}); }
+function plotPhase2D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1); if(ix===iy){ drawPlot(target,[],{...baseLayout({...p,title:'Phase portrait requires 2 different variables',xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),annotations:[{text:'Select different X and Y variables in Figure settings.',xref:'paper',yref:'paper',x:.5,y:.5,showarrow:false,font:{size:14}}]},{responsive:true,displaylogo:false}); return; } const trace={x:state.result.Y[ix],y:state.result.Y[iy],mode:'lines',type:'scatter',name:`${vars[ix]} vs ${vars[iy]}`,line:{color:cs[1]||cs[0],width:p.lineWidth}}; const obs=observationPhaseTrace(vars[ix],vars[iy]); drawPlot(target,obs?[trace,obs]:[trace],baseLayout({...p,xLabel:p.xLabel||vars[ix],yLabel:p.yLabel||vars[iy]}),{responsive:true,displaylogo:false}); }
+function plotPhase3D(target,p){ const cs=colors(), vars=state.result.vars, ix=indexOfVar(p.x,0), iy=indexOfVar(p.y,1), iz=indexOfVar(p.z,2); if(vars.length<3) throw new Error('3D phase portrait requires at least three variables.'); const trace={x:state.result.Y[ix],y:state.result.Y[iy],z:state.result.Y[iz],mode:'lines',type:'scatter3d',name:`${vars[ix]}-${vars[iy]}-${vars[iz]}`,line:{color:cs[0],width:p.lineWidth*1.6}}; const obs=observationPhaseTrace(vars[ix],vars[iy],vars[iz]); drawPlot(target,obs?[trace,obs]:[trace],{...baseLayout(p),scene:{xaxis:{title:p.xLabel||vars[ix]},yaxis:{title:p.yLabel||vars[iy]},zaxis:{title:p.zLabel||vars[iz]}},margin:{l:0,r:0,t:45,b:0},showlegend:false},{responsive:true,displaylogo:false}); }
 let compiledEquationCacheKey='', compiledEquationCache=null;
 function compileMainEquations(){ const key=JSON.stringify({vars:state.model.vars, params:Object.keys(state.model.params||{}), eqs:state.model.eqs}); if(compiledEquationCache && compiledEquationCacheKey===key) return compiledEquationCache; const allowed=new Set(['t',...state.model.vars,...Object.keys(state.model.params||{}),'sin','cos','tan','exp','log','sqrt','abs','min','max','pow','pi','e']); compiledEquationCache=state.model.eqs.map(e=>{ const n=math.parse(e); const symbols=[]; n.traverse(node=>{if(node.isSymbolNode)symbols.push(node.name);}); symbols.forEach(s=>{if(!allowed.has(s)) throw new Error(`Unknown symbol ${s}`);}); return n.compile(); }); compiledEquationCacheKey=key; return compiledEquationCache; }
 function evalRhsAt(x,y,p){ const comps=compileMainEquations(), vars=state.model.vars, params=paramValues(); const scope={t:0,...params}; vars.forEach((v,i)=>scope[v]=state.model.y0[i]||0); scope[p.x]=x; scope[p.y]=y; if(p.z && vars.includes(p.z)) scope[p.z]=num(p.plane); return comps.map(c=>c.evaluate(scope)); }

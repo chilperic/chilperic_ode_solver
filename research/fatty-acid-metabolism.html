@@ -2,19 +2,107 @@
 
 <html data-theme="aurora" lang="en">
 <head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="PhD fatty-acid metabolism and FADNS research page." name="description"/><title>Fatty-acid metabolism · Research Hub</title>
-<link href="../assets/brand/foko-lab-mark.svg?v=70.7.0" rel="icon" type="image/svg+xml"/>
-<link href="../assets/brand/favicon-32.png?v=70.7.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="../favicon.ico?v=70.7.0" rel="icon" sizes="any"/>
-<link href="../assets/brand/apple-touch-icon.png?v=70.7.0" rel="apple-touch-icon"/>
-<link href="../styles/style.css?v=70.7.0" rel="stylesheet"/><meta content="assets/homepage-preview.webp" property="og:image"/>
-<link href="../styles/v70-4-consistency.css?v=70.7.0" rel="stylesheet"/>
-<link href="../styles/v70-5-home-nav.css?v=70.7.0" rel="stylesheet"/><link href="styles/v70-6-polish.css?v=70.7.0" rel="stylesheet"/>
-<link href="styles/v70-7-unified.css?v=70.7.0" rel="stylesheet"/>
-</head>
+<link href="../assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
+<link href="../assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
+<link href="../assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
+<link href="../styles/style.css?v=71.46.0" rel="stylesheet"/><meta content="assets/homepage-preview.webp" property="og:image"/>
+<link href="../styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
+<link href="../styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/>
+<link href="../styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/></head>
 <body><div class="app-shell"><header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="../index.html"><img alt="Foko Lab" class="logo" src="../assets/brand/foko-lab-logo.svg?v=70.7.0"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav"><a href="../index.html">⌂ Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary">⌬ Workbench</summary><div class="labs-menu-panel v70-workbench-panel" role="menu"><div class="menu-section menu-section-primary"><p class="menu-section-title">Workbench IDE</p><a href="../workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a><a href="../workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a><a href="../workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Single &amp; multi-objective</small></span></a><a href="../workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Solve f(x)=0</small></span></a><a href="../symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Math &amp; algebra</small></span></a><a href="../agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a></div><div class="menu-section menu-section-classic"><p class="menu-section-title">Standalone labs</p><a class="legacy-workbench-link" href="../ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>Standalone ODE Lab</b><small>Focused deterministic solver</small></span></a><a class="legacy-workbench-link" href="../stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Standalone Stochastic Lab</b><small>Focused CTMC workspace</small></span></a><a class="legacy-workbench-link" href="../optimization.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Standalone Optimization Lab</b><small>Focused optimization page</small></span></a><a class="legacy-workbench-link" href="../steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Standalone Steady-State Lab</b><small>Focused root-finding page</small></span></a></div></div></details><a href="../sciml.html">⌯ SciML</a><a href="../examples.html">▦ Model Atlas</a><a class="active" href="../research.html">⌁ Research Hub</a><a href="../docs.html">▤ Documentation</a><a href="../tutorial.html">▣ Tutorial</a></nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="Contact" class="github-pill" href="../contact.html">Contact</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="../research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="../assets/profile-chilperic.webp?v=70.7.0"/></a></div>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="../index.html"><img alt="Foko Lab" class="logo" src="../assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
+  <a class="active" aria-current="page" href="../index.html">Home</a>
+  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
+    <summary class="modeling-summary labs-summary">Modeling</summary>
+    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
+      <div class="menu-section menu-section-primary">
+        <p class="menu-section-title">Modeling workspaces</p>
+        <a href="../workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
+        <a href="../workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
+        <a href="../workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
+        <a href="../workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
+        <a href="../symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
+        <a href="../agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
+      </div></div>
+  </details>
+  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
+    <summary class="standalone-summary labs-summary">Focused Labs</summary>
+    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Standalone scientific labs</p>
+        <a href="../ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
+        <a href="../stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
+        <a href="../optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
+        <a href="../steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
+    <summary class="sciml-summary labs-summary">SciML</summary>
+    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Scientific machine learning</p>
+        <a href="../sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
+        <a href="../ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
+        <a href="../docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
+    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
+    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Model output analysis</p>
+        <a href="../statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
+        <a href="../fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
+      </div>
+      <div class="menu-section">
+        <p class="menu-section-subtitle">Structure and geometry</p>
+        <a href="../linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
+        <a href="../networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
+    <summary class="resources-summary labs-summary">Explore</summary>
+    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Examples and mathematical culture</p>
+        <a href="../examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
+        <a href="../beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
+    <summary class="guide-summary labs-summary">Learn</summary>
+    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Guides and templates</p>
+        <a href="../docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
+        <a href="../tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
+    <summary class="creator-summary labs-summary">Creator</summary>
+    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Profile and research</p>
+        <a href="../cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
+        <a href="../research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
+      </div>
+      <div class="menu-section">
+        <p class="menu-section-title">Contact and context</p>
+        <a href="../contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
+        <a href="../acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
+      </div>
+    </div>
+  </details>
+</nav>
+<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="Contact" class="github-pill" href="../contact.html">Contact</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="../research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="../assets/profile-chilperic.webp?v=71.46.0"/></a></div>
 </header><main class="doc-page model-atlas research-project-page"><div id="top"></div><nav aria-label="Research project navigation" class="project-nav-bar"><a href="../research.html">← Back to Research Hub</a><a href="photosynthesis.html">Previous project</a><a href="tcell-proliferation.html">Next project</a></nav>
 <section class="card hero-doc atlas-hero project-launch-hero">
 <div class="project-launch-copy"><p class="eyebrow">PhD research · metabolic systems biology</p><h1>Fatty-acid metabolism and de novo synthesis</h1><p class="project-subtitle">Dynamic computational modeling of hepatic lipid regulation</p><p class="research-lead">A two-layer PhD modeling project: qualitative fatty-acid metabolic switching through steady states and bistability, plus a semi-mechanistic FADNS elongation model fitted to fatty-acid time-course data.</p><div class="research-pill-row"><span>ODE systems</span><span>enzyme kinetics</span><span>bistability</span><span>steady states</span><span>FADNS</span><span>parameter fitting</span><span>metabolic disease</span></div></div>
@@ -29,4 +117,4 @@
 <section class="card"><h2>Results narrative</h2><p>The coarse model provided a theoretical explanation for metabolic flexibility: fatty-acid metabolism can admit multiple steady-state regimes corresponding to synthesis and degradation. The FADNS model provided a synthesis-side building block by representing elongation with a reduced but interpretable reaction structure. Fitting exposed both what the model can explain and where missing kinetic information limits predictive claims.</p></section>
 <section class="card"><h2>What this sells</h2><p>This project sells mechanistic systems biology, dynamic modeling, qualitative analysis, and data-driven fitting in one PhD arc.</p></section><section class="card"><h2>What this project demonstrates about my profile</h2><table class="research-matrix"><tbody><tr><td>Mechanistic systems biology</td><td>Biochemical pathways were decomposed into variables, reactions, rate laws and interpretable parameters.</td></tr><tr><td>Dynamical-systems analysis</td><td>The project used steady-state and stability reasoning rather than only numerical simulation.</td></tr><tr><td>Data-driven modeling</td><td>The semi-mechanistic FADNS model was fitted to fatty-acid time-course data.</td></tr><tr><td>Scientific judgment</td><td>The thesis clearly separates qualitative insight, semi-mechanistic fitting and limitations from missing kinetic parameters.</td></tr></tbody></table></section>
 <section class="card"><h2>Limitations</h2><ul><li>Some kinetic parameters for animal fatty-acid synthesis remain sparse or inconsistent in the literature.</li><li>The coarse-grained model is designed to explain switching logic, not to reproduce the full hepatic lipid network.</li><li>The FADNS model abstracts a complex multifunctional enzyme cycle into tractable reaction classes.</li><li>The public browser models are reduced communication models, not a replacement for the PhD code and analysis notebooks.</li></ul></section>
-<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="photosynthesis.html">Previous</a><a href="tcell-proliferation.html">Next</a><a href="#top">Back to top ↑</a></section></main></div><script defer="" src="../src/navigation.js?v=70.7.0"></script></body></html>
+<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="photosynthesis.html">Previous</a><a href="tcell-proliferation.html">Next</a><a href="#top">Back to top ↑</a></section></main></div><script defer="" src="../src/navigation.js?v=71.46.0"></script></body></html>

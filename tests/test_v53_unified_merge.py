@@ -64,8 +64,8 @@ def test_optimization_budget_warning_exists_in_both_optimization_surfaces():
 def test_v53_cache_tokens_are_intentional_and_no_stale_v51_agent_export():
     assert 'foko-agent-model-v54.json' in read('src/agent-lab.js')
     html = read('agent.html')
-    assert 'src/agent-lab.js?v=70.7.0' in html
-    assert 'src/navigation.js?v=70.7.0' in html
+    assert 'src/agent-lab.js?v=71.46.0' in html
+    assert 'src/navigation.js?v=71.46.0' in html
     sym = read('symbolic.html')
-    assert 'src/symbolic-lab.js?v=70.7.0' in sym
-    assert 'src/navigation.js?v=70.7.0' in sym
+    assert 'src/symbolic-lab.js?v=71.46.0' in sym
+    assert 'src/navigation.js?v=71.46.0' in sym

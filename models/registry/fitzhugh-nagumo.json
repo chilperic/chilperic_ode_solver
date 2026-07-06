@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "fitzhugh_nagumo",
+  "title": "FitzHugh\u2013Nagumo excitable system",
+  "vars": [
+    "v",
+    "w"
+  ],
+  "params": {
+    "a": 0.7,
+    "b": 0.8,
+    "tau": 12.5,
+    "I": 0.5
+  },
+  "init": {
+    "v": -1,
+    "w": 1
+  },
+  "eqs": {
+    "v": "v-v^3/3-w+I",
+    "w": "(v+a-b*w)/tau"
+  },
+  "tspan": [
+    0,
+    100
+  ]
+}

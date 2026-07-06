@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "chemostat",
+  "title": "Chemostat",
+  "vars": [
+    "S",
+    "X"
+  ],
+  "params": {
+    "D": 0.3,
+    "Sin": 10,
+    "mumax": 1,
+    "Ks": 1,
+    "Y": 0.5
+  },
+  "init": {
+    "S": 5,
+    "X": 1
+  },
+  "eqs": {
+    "S": "D*(Sin-S)-(mumax*S/(Ks+S))*X/Y",
+    "X": "((mumax*S/(Ks+S))-D)*X"
+  },
+  "tspan": [
+    0,
+    50
+  ]
+}

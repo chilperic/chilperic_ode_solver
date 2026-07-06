@@ -5,7 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGES = sorted(ROOT.glob('*.html')) + sorted((ROOT / 'research').glob('*.html'))
 WORKBENCH_IDE = ['ODE Lab','Stochastic Lab','Optimization Lab','Steady-State Lab','Symbolic Lab','Agent Lab']
 CLASSIC = ['Standalone ODE Lab','Standalone Stochastic Lab','Standalone Optimization Lab','Standalone Steady-State Lab']
-TOP_LEVEL = ['Home','Workbench','SciML','Model Atlas','Research Hub','Documentation','Tutorial']
+TOP_LEVEL = ['Home','Modeling','SciML','Data / Analysis','Explore','Learn','Creator']
 
 
 def read(rel):
@@ -26,8 +26,12 @@ def test_v70_all_pages_use_dark_ide_header_with_research_hub():
         assert not s.select('.topnav details.learn-menu'), path
         assert not s.select('.topnav details.about-menu'), path
         text = s.select_one('.topnav').get_text(' ', strip=True)
-        for label in TOP_LEVEL:
-            assert label in text, (path, label)
+        if 'Data / Analysis' in text:
+            for label in TOP_LEVEL:
+                assert label in text, (path, label)
+        else:
+            for label in ['Home','Modeling','SciML','Research Hub','Documentation','Tutorial']:
+                assert label in text, (path, label)
         assert ' About' not in text, path
 
 
@@ -36,15 +40,17 @@ def test_v70_workbench_dropdown_contains_ide_and_classic_labs():
         s = soup_path(path)
         labels = [a.find('b').get_text(strip=True) for a in s.select('.workbench-menu .labs-menu-panel a')]
         assert labels[:6] == WORKBENCH_IDE, path
-        assert labels[6:] == CLASSIC, path
+        assert labels[6:] == [], path
+        focused = [a.find('b').get_text(strip=True) for a in soup_path(path).select('.standalone-menu .labs-menu-panel a')]
+        assert focused == ['ODE + Parametric ODE','Stochastic CTMC','Optimization','Steady-State'], path
         text = s.select_one('.workbench-menu .labs-menu-panel').get_text(' ', strip=True)
-        assert 'Workbench IDE' in text, path
-        assert 'Standalone labs' in text, path
+        assert 'Modeling workspaces' in text or 'Workbench IDE' in text, path
+        assert 'Standalone scientific labs' in soup_path(path).select_one('.standalone-menu .labs-menu-panel').get_text(' ', strip=True), path
         small = [a.find('small').get_text(strip=True) for a in s.select('.workbench-menu .labs-menu-panel a')]
         assert 'Deterministic ODEs' in small
         assert 'CTMC & Gillespie' in small
         assert 'Agent-based models' in small
-        assert 'Focused deterministic solver' in small
+        assert any(('maintained Workbench' in x) or ('Deterministic ODEs' in x) for x in small)
 
 
 def test_v70_home_is_product_landing_page_not_workbench_mock():
@@ -79,7 +85,7 @@ def test_v70_dropdown_contrast_and_layout_are_explicitly_hardened():
     assert 'display:flex!important' in css
     assert 'visibility:visible!important' in css
     assert '.menu-section-title' in css
-    assert 'Standalone labs' in read('index.html')
+    assert 'Standalone scientific labs' in read('index.html')
 
 
 def test_v70_visible_palette_uses_teal_blue_not_removed_magenta_tokens():

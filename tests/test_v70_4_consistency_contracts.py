@@ -20,8 +20,8 @@ def test_v70_4_css_loaded_after_main_styles():
     for path in HTML:
         s = soup(path)
         links = [l.get('href', '') for l in s.find_all('link', rel=lambda v: v and 'stylesheet' in v)]
-        assert any('v70-4-consistency.css?v=70.7.0' in href for href in links), path
-        assert any('v70-5-home-nav.css?v=70.7.0' in href for href in links), path
+        assert any('v70-4-consistency.css?v=71.46.0' in href for href in links), path
+        assert any('v70-5-home-nav.css?v=71.46.0' in href for href in links), path
         assert 'v=70.3.0' not in path.read_text(encoding='utf-8'), path
 
 

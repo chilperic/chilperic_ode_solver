@@ -29,9 +29,6 @@ def test_v70_3_css_fixes_dark_docs_plot_toolbar_and_optimization_editor():
 def test_v70_3_release_token_is_consistent_for_local_assets():
     for path in ROOT.glob('*.html'):
         html = path.read_text(encoding='utf-8')
-        assert '?v=53' not in html
-        assert '?v=48' not in html
-        assert '?v=68' not in html
-        assert '?v=3.2.0' not in html
-        assert '?v=4.0.0' not in html
-        assert '?v=70.7.0' in html
+        assert '?v=71.46.0' in html
+        for old in ['70.13.0','70.19.0','70.11.0','70.10.0','70.15.0','2.7.5','3.2.0']:
+            assert ('?v=' + old) not in html

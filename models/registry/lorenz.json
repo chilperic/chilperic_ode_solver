@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "lorenz",
+  "title": "Lorenz attractor",
+  "vars": [
+    "x",
+    "y",
+    "z"
+  ],
+  "params": {
+    "sigma": 10,
+    "rho": 28,
+    "beta": 2.6666667
+  },
+  "init": {
+    "x": 1,
+    "y": 1,
+    "z": 1
+  },
+  "eqs": {
+    "x": "sigma*(y-x)",
+    "y": "x*(rho-z)-y",
+    "z": "x*y-beta*z"
+  },
+  "tspan": [
+    0,
+    40
+  ],
+  "reference": "Lorenz, E. N. (1963). Deterministic nonperiodic flow."
+}

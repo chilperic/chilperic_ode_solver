@@ -10,7 +10,7 @@ def soup(page):
 
 def test_v706_stylesheet_loaded_on_public_pages():
     for page in ['index.html','workbench.html','docs.html','tutorial.html','sciml.html']:
-        assert 'styles/v70-6-polish.css?v=70.7.0' in text(page), page
+        assert 'styles/v70-6-polish.css?v=71.46.0' in text(page), page
 
 def test_home_no_giant_slogan_copy():
     h = soup('index.html').find(id='homeTitle')
@@ -31,6 +31,7 @@ def test_workbench_menu_contains_visible_items_and_standalone_not_legacy_label()
     assert panel is not None
     labels = [a.get_text(' ', strip=True) for a in panel.select('a')]
     assert any('ODE Lab' in x for x in labels)
-    assert any('Standalone ODE Lab' in x for x in labels)
+    focused = [a.get_text(' ',strip=True) for a in s.select('.standalone-menu .labs-menu-panel a')]
+    assert any('ODE + Parametric ODE' in x for x in focused)
     assert 'Classic / legacy labs' not in panel.get_text(' ', strip=True)
-    assert 'Standalone labs' in panel.get_text(' ', strip=True)
+    assert 'Standalone scientific labs' in s.select_one('.standalone-menu .labs-menu-panel').get_text(' ', strip=True)

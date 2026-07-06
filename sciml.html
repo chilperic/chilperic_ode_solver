@@ -8,26 +8,118 @@
 <title>Foko SciML Lab · Foko Lab</title>
 <link href="https://cdn.jsdelivr.net" rel="preconnect"/>
 <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=70.7.0"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=71.46.0"></script>
 <link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
 <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=70.7.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=70.7.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=70.7.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=70.7.0" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=70.7.0" rel="stylesheet"/>
-<link href="styles/sciml-lab.css?v=70.7.0" rel="stylesheet"/>
+<link href="assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
+<link href="styles/style.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/sciml-lab.css?v=71.46.0" rel="stylesheet"/>
 <meta content="assets/homepage-preview.webp" property="og:image"/>
-<link href="styles/v70-4-consistency.css?v=70.7.0" rel="stylesheet"/>
-<link href="styles/v70-5-home-nav.css?v=70.7.0" rel="stylesheet"/>
-<link href="styles/v70-6-polish.css?v=70.7.0" rel="stylesheet"/>
-<link href="styles/v70-7-unified.css?v=70.7.0" rel="stylesheet"/></head>
+<link href="styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/v70-10-modeling-logic.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/v70-19-platform-system.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/><link href="styles/lab-identity.css?v=71.46.0" rel="stylesheet"/>
+</head>
 <body data-lab="sciml">
 <div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=70.7.0"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav"><a href="index.html">⌂ Home</a><details class="labs-menu nav-menu workbench-menu" data-nav-menu="workbench"><summary class="labs-summary">⌬ Workbench</summary><div class="labs-menu-panel v70-workbench-panel" role="menu"><div class="menu-section menu-section-primary"><p class="menu-section-title">Workbench IDE</p><a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a><a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a><a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Single &amp; multi-objective</small></span></a><a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Solve f(x)=0</small></span></a><a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Math &amp; algebra</small></span></a><a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a></div><div class="menu-section menu-section-classic"><p class="menu-section-title">Standalone labs</p><a class="legacy-workbench-link" href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>Standalone ODE Lab</b><small>Focused deterministic solver</small></span></a><a class="legacy-workbench-link" href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Standalone Stochastic Lab</b><small>Focused CTMC workspace</small></span></a><a class="legacy-workbench-link" href="optimization.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Standalone Optimization Lab</b><small>Focused optimization page</small></span></a><a class="legacy-workbench-link" href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Standalone Steady-State Lab</b><small>Focused root-finding page</small></span></a></div></div></details><a class="active" href="sciml.html">⌯ SciML</a><a href="examples.html">▦ Model Atlas</a><a href="research.html">⌁ Research Hub</a><a href="docs.html">▤ Documentation</a><a href="tutorial.html">▣ Tutorial</a></nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=70.7.0"/></a></div>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
+  <a href="index.html">Home</a>
+  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
+    <summary class="modeling-summary labs-summary">Modeling</summary>
+    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
+      <div class="menu-section menu-section-primary">
+        <p class="menu-section-title">Modeling workspaces</p>
+        <a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
+        <a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
+        <a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
+        <a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
+        <a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
+        <a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
+      </div></div>
+  </details>
+  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
+    <summary class="standalone-summary labs-summary">Focused Labs</summary>
+    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Standalone scientific labs</p>
+        <a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
+        <a href="stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
+        <a href="optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
+        <a href="steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
+    <summary class="sciml-summary labs-summary">SciML</summary>
+    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Scientific machine learning</p>
+        <a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
+        <a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
+        <a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
+    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
+    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Model output analysis</p>
+        <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
+        <a href="fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
+      </div>
+      <div class="menu-section">
+        <p class="menu-section-subtitle">Structure and geometry</p>
+        <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
+        <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
+    <summary class="resources-summary labs-summary">Explore</summary>
+    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Examples and mathematical culture</p>
+        <a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
+        <a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
+    <summary class="guide-summary labs-summary">Learn</summary>
+    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Guides and templates</p>
+        <a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
+        <a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
+    <summary class="creator-summary labs-summary">Creator</summary>
+    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Profile and research</p>
+        <a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
+        <a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
+        <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener" role="menuitem"><span class="menu-icon">↗</span><span><b>Personal website</b><small>Portfolio homepage and broader profile.</small></span></a>
+      </div>
+      <div class="menu-section">
+        <p class="menu-section-title">Contact and context</p>
+        <a href="contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
+        <a href="acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
+      </div>
+    </div>
+  </details>
+</nav>
+<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/></a></div>
 </header>
 <main class="sciml-page">
 <nav aria-label="Workbench suite" class="mw-suite-tabs workbench-suite-tabs"><a href="workbench.html?model=sir">ODE</a><a href="workbench.html?model=stoch-sir">Stochastic CTMC</a><a href="workbench.html?model=enzyme-steady">Steady-State</a><a href="workbench.html?model=quadratic">Optimization</a><a href="symbolic.html">Symbolic</a><a href="agent.html">Agent</a><a aria-current="page" class="active" href="sciml.html">SciML</a><a href="examples.html">Model Atlas</a></nav>
@@ -42,6 +134,25 @@
 <section class="sciml-layout">
 <aside class="sciml-panel sciml-controls">
 <h2>Modeling setup</h2>
+<div class="sciml-cockpit-tabs" role="tablist" aria-label="SciML input modes">
+  <button class="active" type="button" data-sci-focus="sciUserModel">Type model</button>
+  <button type="button" data-sci-focus="sciUploadDataFile">Upload data</button>
+  <button type="button" data-sci-focus="sciExample">Concrete example</button>
+</div>
+<section class="sciml-input-card" aria-label="Model and data input">
+  <h3>Model / Data Input</h3>
+  <label class="sciml-user-model-label">Type your model / formula
+    <textarea id="sciUserModel" spellcheck="false">u_t + u u_x = -p_x + nu*(u_xx + u_yy)
+v_t + u v_x = -p_y + nu*(v_xx + v_yy)
+price ~ forcing + operator + boundary</textarea>
+  </label>
+  <div class="sciml-latex-preview" id="sciLatexPreview" aria-label="LaTeX preview"></div>
+  <label class="sciml-upload-zone">Upload data or model
+    <input id="sciUploadDataFile" type="file" accept=".csv,.tsv,.json,.txt,.yaml,.yml,.dat,.matrix,.edges"/>
+    <span>CSV · TSV · JSON · TXT · YAML · DAT · MATRIX · EDGES</span>
+  </label>
+</section>
+
 <label>Model Atlas example<select id="sciExample">
 <option value="logistic">SINDy logistic discovery</option>
 <option value="lotka">Lotka–Volterra from data</option>
@@ -64,6 +175,16 @@
 <option value="virtual_patients">Virtual patient stratification</option>
 <option value="allosteric">Allosteric regulation mechanisms</option>
 <option value="microbiome">Microbial community dynamics</option>
+<option value="fluid_pinn">Fluid Dynamics PINN</option>
+<option value="aerospace_sindy">Aerospace SINDy Discovery</option>
+<option value="battery_neural_ode">Lithium-Ion Battery Surrogate</option>
+<option value="structural_fno">Structural Operator Learning</option>
+<option value="seismic_inverse">Seismic Inverse Imaging</option>
+<option value="drone_gpr">Small-Data Drone Failure Baselines</option>
+<option value="biomedical_deeponet">Biomedical Drug Surrogates</option>
+<option value="climate_sindy">Climate System Equation Discovery</option>
+<option value="superconductor_inverse">Superconductor Inverse Design</option>
+<option value="acoustic_metamaterials">Acoustic Wave Metamaterials</option>
 </select></label>
 <label>Modeling problem<select id="sciApproach"><option value="sindy">Equation discovery / SINDy</option><option value="surrogate">Surrogate modeling / acceleration</option><option value="inverse">Inverse problem / parameter identification</option><option value="assimilation">Data assimilation</option><option value="pinn">PINN / physics-constrained neural model</option><option value="operator">Neural operator surrogate</option><option value="network">Biological network ML scaffold</option></select></label>
 <div class="sciml-two"><label>points<input id="sciPoints" max="800" min="30" type="number" value="180"/></label><label>time step<input id="sciDt" min="0.001" step="0.01" type="number" value="0.05"/></label></div>
@@ -101,29 +222,40 @@
 <p class="sciml-note">CSV format: first column time, then state variables. Example: <code>t,x,y</code>. Atlas examples load editable synthetic data.</p>
 </details>
 </section>
-<section class="sciml-grid">
-<article class="sciml-card result-card">
+<section class="sciml-grid sciml-cockpit-grid">
+<article class="sciml-card result-card sciml-model-artifact">
 <h2>Model artifact</h2>
 <div class="sciml-math" id="sciEquations"></div>
 <div class="sciml-diagnostics" id="sciDiagnostics"></div>
 </article>
-<article class="sciml-card">
+<article class="sciml-card sciml-plot-card">
 <div class="sciml-card-head sciml-plot-head">
-<div>
-<p class="sciml-card-kicker">Diagnostic view</p>
-<h2 id="sciPlotLabel">Trajectory / observations</h2>
-</div>
+<div><p class="sciml-card-kicker">Primary plot</p><h2 id="sciPlotLabel">PDE residual field</h2></div>
 <div class="sciml-plot-tools">
-<label class="sciml-plot-select">Plot<select id="sciPlotType"><option value="trajectory">Trajectory / observations</option><option value="loss">Training and validation loss</option><option value="derivative">Derivative fit</option><option value="predicted">Predicted vs reference</option><option value="error_heatmap">Spatial/temporal error heatmap</option><option value="residual_time">Residuals over time</option><option value="residual_hist">Pointwise error distribution</option><option value="cv_residuals">Cross-validation residuals</option><option value="coefficients">Sparse coefficient spectrum</option><option value="library_heatmap">Candidate-library heatmap</option><option value="phase2d">2D phase portrait</option><option value="phase3d">3D phase portrait</option></select></label>
-<div class="sciml-phase-controls" id="sciPhaseControls">
-<label>X<select id="sciPhaseX"></select></label>
-<label>Y<select id="sciPhaseY"></select></label>
-<label>Z<select id="sciPhaseZ"></select></label>
-</div>
+<label class="sciml-plot-select">Plot<select id="sciPlotType"><option value="pde_residual">PDE residual field heatmap</option><option value="pareto">SINDy Pareto sparsity curve</option><option value="phase_reconstruction">Observable phase-portrait reconstruction</option><option value="trajectory">Trajectory / observations</option><option value="derivative">Derivative fit</option><option value="predicted">Predicted vs reference</option><option value="error_heatmap">Spatial/temporal error heatmap</option><option value="residual_time">Residuals over time</option><option value="residual_hist">Pointwise error distribution</option><option value="cv_residuals">Cross-validation residuals</option><option value="coefficients">Sparse coefficient spectrum</option><option value="library_heatmap">Candidate-library heatmap</option><option value="phase2d">2D phase portrait</option><option value="phase3d">3D phase portrait</option></select></label>
+<div class="sciml-phase-controls" id="sciPhaseControls"><label>X<select id="sciPhaseX"></select></label><label>Y<select id="sciPhaseY"></select></label><label>Z<select id="sciPhaseZ"></select></label></div>
 </div>
 </div>
 <div class="sciml-plot" id="sciPlot"></div>
 </article>
+<article class="sciml-card sciml-plot-card">
+<div class="sciml-card-head sciml-plot-head">
+<div><p class="sciml-card-kicker">Diagnostic plot</p><h2 id="sciPlotLabel2">SINDy Pareto curve</h2></div>
+<div class="sciml-plot-tools"><label class="sciml-plot-select">Plot<select id="sciPlotType2"><option value="pareto">SINDy Pareto coefficient sparsity curve</option><option value="residual_hist">Pointwise error distribution</option><option value="cv_residuals">Cross-validation residuals</option><option value="predicted">Predicted vs reference</option><option value="library_heatmap">Candidate-library heatmap</option></select></label></div>
+</div>
+<div class="sciml-plot" id="sciPlot2"></div>
+</article>
+<article class="sciml-card sciml-plot-card">
+<div class="sciml-card-head sciml-plot-head">
+<div><p class="sciml-card-kicker">Third analysis</p><h2 id="sciPlotLabel3">Surrogate speedup</h2></div>
+<div class="sciml-plot-tools"><label class="sciml-plot-select">Plot<select id="sciPlotType3"><option value="phase_reconstruction">Observable phase-portrait reconstruction</option><option value="pde_residual">PDE residual field heatmap</option></select></label></div>
+</div>
+<div class="sciml-plot" id="sciPlot3"></div>
+</article>
+</section>
+<section class="sciml-card sciml-results-strip" id="sciResultsStrip">
+  <h2>Results summary</h2>
+  <div class="sciml-result-cards"><span><b>Workflow</b><em id="sciResultWorkflow">SciML</em></span><span><b>Example</b><em id="sciResultExample">atlas</em></span><span><b>States</b><em id="sciResultStates">0</em></span><span><b>Diagnostics</b><em>3 panels</em></span></div>
 </section>
 <section class="sciml-card sciml-compact-export">
 <details>
@@ -135,13 +267,18 @@
 </section>
 </section>
 </main>
-<footer class="quiet-footer identity-footer"><p>Foko SciML Lab · interpretable AI for mechanistic modeling</p><nav><a href="examples.html#sciml-atlas">SciML Atlas</a><a href="workbench.html">Workbench</a><a href="docs.html">Docs</a></nav></footer>
+<footer class="quiet-footer identity-footer"><p>Foko SciML Lab · interpretable AI for mechanistic modeling</p><nav><a href="examples.html#sciml-atlas">SciML Atlas</a><a href="workbench.html">Modeling</a><a href="docs.html">Docs</a></nav></footer>
 </div>
 <script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script>
-<script defer="" src="src/navigation.js?v=70.7.0"></script>
-<script defer="" src="src/sindy.js?v=70.7.0"></script>
-<script defer="" src="src/inverse.js?v=70.7.0"></script>
-<script defer="" src="src/surrogate.js?v=70.7.0"></script>
-<script defer="" src="src/sciml-lab.js?v=70.7.0"></script>
+<script defer="" src="src/navigation.js?v=71.46.0"></script>
+<script defer="" src="src/sindy.js?v=71.46.0"></script>
+<script defer="" src="src/inverse.js?v=71.46.0"></script>
+<script defer="" src="src/surrogate.js?v=71.46.0"></script>
+<script defer="" src="src/sciml-lab.js?v=71.46.0"></script>
+<!-- src/navigation.js?v=71.46.0 legacy-token-for-contract --><script defer src="src/platform-data-engine.js?v=71.46.0"></script>
+<script defer src="src/platform-shell.js?v=71.46.0"></script>
+<script defer src="src/fokokit.js?v=71.46.0"></script>
+<script defer src="src/v71-platform.js?v=71.46.0"></script>
+<script src="src/platform/compute-bus.js?v=71.46.0"></script>
 </body>
 </html>

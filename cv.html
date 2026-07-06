@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html data-theme="aurora" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>CVs and creator profile — Foko Lab</title>
+  <meta name="description" content="CVs and professional profile of Dr. Chilperic Armel Foko Kuate: computational systems biology, scientific software, mechanistic modeling and computational tool development."/>
+  <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32"/>
+  <link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16"/>
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png"/>
+  <link rel="stylesheet" href="styles/style.css?v=71.46.0"/>
+  <link rel="stylesheet" href="styles/v70-7-unified.css?v=71.46.0"/>
+  <link rel="stylesheet" href="styles/v70-4-consistency.css?v=71.46.0"/>
+  <link rel="stylesheet" href="styles/v70-5-home-nav.css?v=71.46.0"/>
+  <link rel="stylesheet" href="styles/v70-6-polish.css?v=71.46.0"/>
+  <style>
+    .creator-profile-page{width:min(100% - 36px,1180px);margin:0 auto;padding:42px 0 64px;}
+    .creator-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:24px;align-items:stretch;margin-bottom:24px;}
+    .creator-card{background:var(--panel);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:28px;}
+    .creator-hero h1{font-size:clamp(2.2rem,4vw,4rem);line-height:.98;margin:.15em 0 .25em;color:var(--text);letter-spacing:-.04em;}
+    .creator-kicker{text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:var(--accent);font-size:.82rem;margin:0 0 10px;}
+    .creator-lead{font-size:1.08rem;max-width:72ch;color:var(--muted);}
+    .creator-profile-card{display:grid;grid-template-columns:118px 1fr;gap:18px;align-items:center;}
+    .creator-profile-card img{width:118px;height:118px;object-fit:cover;border-radius:26px;border:1px solid var(--line);}
+    .creator-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+    .creator-pill-row span,.creator-pill-row a{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:var(--panel2);font-weight:800;color:var(--text);}
+    .cv-download-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 28px;}
+    .cv-download-grid a{display:flex;flex-direction:column;gap:10px;min-height:150px;padding:20px;border-radius:20px;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);color:var(--text);}
+    .cv-download-grid strong{font-size:1.05rem;}
+    .cv-download-grid small{color:var(--muted);line-height:1.45;}
+    .cv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+    .cv-section-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);}
+    .cv-section-card h2{margin:.1em 0 .65em;font-size:1.35rem;}
+    .cv-section-card ul{margin:0;padding-left:1.1em;}
+    .cv-section-card li{margin:.45em 0;color:var(--muted);}
+    .cv-section-card b{color:var(--text);}
+    .cv-mini-list{display:grid;gap:10px;}
+    .cv-mini-list p{margin:0;color:var(--muted);}
+    .cv-mini-list strong{display:block;color:var(--text);}
+    .cv-wide{grid-column:1/-1;}
+    @media(max-width:850px){.creator-hero,.cv-grid,.cv-download-grid{grid-template-columns:1fr;}.creator-profile-card{grid-template-columns:1fr;}}
+  </style>
+<link href="styles/v70-19-platform-system.css?v=71.46.0" rel="stylesheet"/>
+<link href="styles/lab-identity.css?v=71.46.0" rel="stylesheet"/>
+</head>
+<body data-lab="creator">
+<div class="app-shell public-shell">
+  <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
+    <a aria-label="Foko Lab home" class="brand" href="index.html">
+      <img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=71.46.0"/>
+    </a>
+    <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
+  <a href="index.html">Home</a>
+  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
+    <summary class="modeling-summary labs-summary">Modeling</summary>
+    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
+      <div class="menu-section menu-section-primary">
+        <p class="menu-section-title">Modeling workspaces</p>
+        <a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
+        <a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
+        <a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
+        <a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
+        <a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
+        <a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
+      </div></div>
+  </details>
+  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
+    <summary class="standalone-summary labs-summary">Focused Labs</summary>
+    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Standalone scientific labs</p>
+        <a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
+        <a href="stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
+        <a href="optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
+        <a href="steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
+    <summary class="sciml-summary labs-summary">SciML</summary>
+    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Scientific machine learning</p>
+        <a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
+        <a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
+        <a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
+    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
+    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Model output analysis</p>
+        <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
+        <a href="fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
+      </div>
+      <div class="menu-section">
+        <p class="menu-section-subtitle">Structure and geometry</p>
+        <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
+        <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
+    <summary class="resources-summary labs-summary">Explore</summary>
+    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Examples and mathematical culture</p>
+        <a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
+        <a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
+    <summary class="guide-summary labs-summary">Learn</summary>
+    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Guides and templates</p>
+        <a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
+        <a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
+      </div>
+    </div>
+  </details>
+  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
+    <summary class="creator-summary labs-summary">Creator</summary>
+    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
+      <div class="menu-section">
+        <p class="menu-section-title">Profile and research</p>
+        <a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
+        <a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
+        <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener" role="menuitem"><span class="menu-icon">↗</span><span><b>Personal website</b><small>Portfolio homepage and broader profile.</small></span></a>
+      </div>
+      <div class="menu-section">
+        <p class="menu-section-title">Contact and context</p>
+        <a href="contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
+        <a href="acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
+      </div>
+    </div>
+  </details>
+</nav>
+    <div class="foko-top-actions">
+      <button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button>
+      <a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a>
+      <a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="cv.html">
+        <img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/>
+      </a>
+    </div>
+  </header>
+
+  <main class="creator-profile-page" id="main">
+    <section class="creator-hero">
+      <div class="creator-card">
+        <p class="creator-kicker">Creator profile</p>
+        <h1>Dr. Chilperic Armel Foko Kuate</h1>
+        <p class="creator-lead">Multiscale Modeller | Applied Mathematician | Computational Biology</p>
+        <div class="creator-pill-row">
+          <span>Computational systems biology</span>
+          <span>Mechanistic modeling</span>
+          <span>Scientific software</span>
+          <span>Python · Julia · R · MATLAB · JavaScript</span>
+        </div>
+      </div>
+      <aside class="creator-card creator-profile-card">
+        <img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/>
+        <div>
+          <p class="creator-kicker">Düsseldorf, Germany</p>
+          <p><b>Current focus:</b> model-driven analysis, browser-native scientific tools, reproducible repositories and career transition across academia and industry.</p>
+          <div class="creator-pill-row">
+            <a href="mailto:chilpericarmel@gmail.com">Email</a>
+            <a href="https://github.com/chilperic" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener">Website</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="creator-card">
+      <p class="creator-kicker">CV downloads</p>
+      <h2>Academic and scientific-developer CVs</h2>
+      <div class="cv-download-grid">
+        <a href="assets/cv/academic_cv.pdf">
+          <strong>Academic CV</strong>
+          <small>Research profile, publications, supervision, talks, methods and references.</small>
+          <span>Download PDF →</span>
+        </a>
+        <a href="assets/cv/industry_cv.pdf">
+          <strong>Scientific Developer / Industry CV</strong>
+          <small>Computational tool development, modeling, optimization, reproducible workflows and scientific interfaces.</small>
+          <span>Download PDF →</span>
+        </a>
+        <a href="assets/cv/industry_cv_german.pdf">
+          <strong>German industry CV</strong>
+          <small>German-language version for industry applications in Germany.</small>
+          <span>Download PDF →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="cv-grid" aria-label="Profile details">
+      <article class="cv-section-card">
+        <h2>Research areas and methods</h2>
+        <ul>
+          <li>Systems biology and mechanistic modeling.</li>
+          <li>Hepatic metabolism, lipid dynamics and fatty-acid synthesis.</li>
+          <li>Plant physiology, photosynthetic adaptation and climate-response modeling.</li>
+          <li>Quantitative immunology and T-cell proliferation dynamics.</li>
+          <li>ODE, DAE, stochastic, constraint-based and differentiable metabolic models.</li>
+          <li>Parameter estimation, calibration, sensitivity and uncertainty analysis.</li>
+        </ul>
+      </article>
+      <article class="cv-section-card">
+        <h2>Scientific computing stack</h2>
+        <ul>
+          <li><b>Languages:</b> Python, Julia, R, MATLAB, JavaScript.</li>
+          <li><b>Optimization:</b> CasADi, IPOPT, CMA-ES, JuMP, Pyomo, MEALPY.</li>
+          <li><b>Scientific computing:</b> SciPy, NumPy, CVODE, SUNDIALS, lmfit.</li>
+          <li><b>Visualization:</b> pandas, matplotlib, ggplot2, Plotly, Bokeh.</li>
+          <li><b>Tool development:</b> HTML, CSS, JavaScript and browser-based interfaces.</li>
+        </ul>
+      </article>
+      <article class="cv-section-card">
+        <h2>Education</h2>
+        <div class="cv-mini-list">
+          <p><strong>PhD, Quantitative &amp; Theoretical Biology</strong>HHU Düsseldorf, 2019–2023.</p>
+          <p><strong>MSc Mathematical Sciences</strong>AIMS Ghana, 2015–2016.</p>
+          <p><strong>Master 2 Mathematics &amp; Applications</strong>University of Yaoundé I, 2017–2019.</p>
+          <p><strong>BSc Mathematics</strong>University of Douala, 2009–2012.</p>
+        </div>
+      </article>
+      <article class="cv-section-card">
+        <h2>Languages and awards</h2>
+        <ul>
+          <li>French native, English fluent, German B1+ with professional German in progress.</li>
+          <li>Marie Curie ITN Fellowship, PoLiMeR, 2019–2023.</li>
+          <li>Bayer B4U Mentoring Programme, mentee, 2026.</li>
+          <li>Post-AIMS Research Bursary, 2017–2019.</li>
+          <li>F.K.A. Allotey Meritorious Award and Best Student, AIMS Ghana, 2016.</li>
+        </ul>
+      </article>
+      <article class="cv-section-card cv-wide">
+        <h2>Experience distilled for Foko Lab</h2>
+        <ul>
+          <li><b>Postdoctoral research:</b> first-principles thermo-hydraulic-biochemical modeling framework for photosynthetic adaptation across the C3 to C4 continuum.</li>
+          <li><b>PhD research:</b> nonlinear and stochastic models of hepatic fatty-acid metabolism, enzyme kinetics, differentiable constraint-based metabolic modeling and bistability.</li>
+          <li><b>Earlier research:</b> stochastic and deterministic models for T-cell proliferation and CFSE-type cell-division data.</li>
+          <li><b>Scientific software:</b> browser-native modeling tools, reproducible repositories, simulation examples, model export and documentation-driven workflows.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer class="v70-footer">
+    <div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=71.46.0"/><p><b>Foko Lab</b><br/>© 2025 Dr. Chilperic Armel Foko Kuate</p></div>
+    <nav><a href="research.html">Research</a><a href="cv.html">CVs</a><a href="beauty.html">Mathematical Beauty</a><a href="docs.html">Documentation</a><a href="tutorial.html">Tutorial</a><a href="contact.html">Contact</a></nav>
+    <div class="v70-institutions"><span>HHU Düsseldorf</span><span>CEPLAS</span><span>AIMS Ghana</span><span>PoLiMeR ITN</span></div>
+  </footer>
+</div>
+<script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script>
+<script defer src="src/navigation.js?v=71.46.0"></script>
+<script defer src="src/platform-data-engine.js?v=71.46.0"></script>
+<script defer src="src/platform-shell.js?v=71.46.0"></script>
+<script defer src="src/fokokit.js?v=71.46.0"></script>
+<script defer src="src/v71-platform.js?v=71.46.0"></script>
+<script src="src/platform/compute-bus.js?v=71.46.0"></script>
+</body>
+</html>

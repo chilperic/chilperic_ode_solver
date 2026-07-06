@@ -1,0 +1,460 @@
+/* V71.29 focused-lab style for Data / Analysis pages. */
+.foko-shell-frame{display:grid;grid-template-columns:minmax(320px,420px) minmax(0,1fr);gap:18px;width:min(1520px,calc(100% - 32px));margin:18px auto 28px;align-items:start}
+.foko-shell-controls,.foko-shell-results{min-width:0}
+.foko-shell-controls.work-panel{position:sticky;top:84px;align-self:start;background:var(--panel,#fff);border:1px solid var(--line,#dbe3ee);border-radius:24px;box-shadow:0 18px 50px rgba(15,42,68,.08);padding:16px;display:grid;gap:14px}
+.foko-shell-results.workspace{background:transparent;border:0;box-shadow:none;padding:0;display:grid;gap:14px}
+.foko-shell-title.intro-card{display:block;margin:0;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,#ffffff,#f8fafc);border:1px solid var(--line,#dbe3ee)}
+.foko-shell-title b{display:block;font-size:1.05rem;line-height:1.2;margin-bottom:4px}.foko-shell-subtitle{display:block;color:#52677f;font-size:.92rem;line-height:1.4}
+.analysis-mode-strip.mode-strip{display:flex;gap:8px;padding:6px;background:#eef6f6;border:1px solid #cfe3e1;border-radius:16px}.analysis-mode-strip .mode-tab{border:0;border-radius:12px;padding:8px 10px;background:transparent;font-weight:850;color:#325}.analysis-mode-strip .mode-tab.active{background:#0f766e;color:#fff;box-shadow:0 10px 24px rgba(15,118,110,.18)}
+.foko-shell-actions.actionbar{display:flex;flex-wrap:wrap;gap:10px;margin:0}.foko-shell-run,.foko-shell-secondary{appearance:none;border-radius:13px;border:1px solid #b8d7d3;padding:9px 13px;font-weight:850;cursor:pointer;font:inherit}.foko-shell-run{background:#0f766e;color:white}.foko-shell-secondary{background:#f8fafc;color:#123}.foko-shell-run:hover,.foko-shell-run:focus-visible{background:#0b5f59}.foko-shell-secondary:hover,.foko-shell-secondary:focus-visible{border-color:#0f766e;background:#ecfeff}
+.foko-shell-status-strip.status-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;background:var(--panel,#fff);border:1px solid var(--line,#dbe3ee);border-radius:20px;padding:10px;box-shadow:0 14px 42px rgba(15,42,68,.07)}
+.foko-shell-status-strip>div{min-width:0;background:#f8fafc;border:1px solid #dbe3ee;border-radius:14px;padding:9px 10px}.foko-shell-status-strip span{display:block;color:#64748b;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800}.foko-shell-status-strip b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.foko-shell-status-strip .status-ok span:first-child{display:inline;margin-right:4px;color:#0f766e}
+.foko-shell-plot-toolbar.plot-toolbar-v2{display:flex;gap:10px;align-items:center;background:var(--panel,#fff);border:1px solid var(--line,#dbe3ee);border-radius:16px;padding:9px 12px;box-shadow:0 10px 30px rgba(15,42,68,.05)}.foko-shell-plot-toolbar span{font-weight:850;color:#234;background:#f8fafc;border:1px solid #dbe3ee;border-radius:999px;padding:6px 10px}
+.foko-shell-plot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:stretch}.foko-shell-plot{min-height:430px;border:1px solid #dbe3ee;border-radius:22px;background:#fff;padding:8px;overflow:hidden;box-shadow:0 18px 50px rgba(15,42,68,.08)}.foko-shell-plot .analysis-plot{width:100%;height:410px;min-height:410px}
+.foko-shell-output.results-card{min-height:120px;max-height:260px;white-space:normal;background:var(--panel,#fff);border:1px solid #dbe3ee;border-radius:20px;padding:14px;overflow:auto;margin:0;box-shadow:0 14px 38px rgba(15,42,68,.06)}.foko-shell-output pre{white-space:pre-wrap}.foko-shell-error{border-color:#dc2626!important;color:#991b1b!important;background:#fff1f2!important}
+.descriptor-page .analysis-panel{margin:0;background:transparent;border:0;box-shadow:none;padding:0}.descriptor-page .analysis-panel h2{font-size:1rem;margin:.15rem 0 .55rem}.descriptor-page .analysis-panel h3{font-size:.9rem;margin:.8rem 0 .4rem}.descriptor-page .analysis-output{white-space:pre-wrap}.descriptor-page .analysis-button-row{display:flex;flex-wrap:wrap;gap:10px}.descriptor-page .analysis-microcopy{display:none}.descriptor-page label{display:grid;gap:5px;margin:.55rem 0;font-weight:800;color:#263445}.descriptor-page textarea,.descriptor-page input,.descriptor-page select{width:100%;border:1px solid #cdd8e6;border-radius:12px;padding:8px 10px;background:#fff;font:inherit}.descriptor-page textarea{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem;line-height:1.35}.descriptor-page .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}.descriptor-page .analysis-script{display:none}.analysis-cockpit-page>.analysis-hero{display:none!important}
+.descriptor-page #statisticsShellApp,.descriptor-page #fittingShellApp,.descriptor-page #linalgShellApp,.descriptor-page #networkShellApp,.descriptor-page #mlShellApp{margin:0 auto 2rem;max-width:1520px}
+@media(max-width:1180px){.foko-shell-frame{grid-template-columns:1fr}.foko-shell-controls.work-panel{position:static}.foko-shell-plot-grid{grid-template-columns:1fr}.foko-shell-plot{min-height:340px}.foko-shell-plot .analysis-plot{height:320px;min-height:320px}.foko-shell-status-strip.status-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* V71.29 Data/Analysis cockpit rebuild: public pages should feel like focused labs, not a generic descriptor shell. */
+.analysis-cockpit{display:grid;grid-template-columns:minmax(340px,430px) minmax(0,1fr);gap:18px;width:min(1540px,calc(100% - 32px));margin:18px auto 30px;align-items:start}
+.analysis-cockpit-controls{position:sticky;top:88px;align-self:start;background:var(--panel,#fff);border:1px solid var(--line,#dbe3ee);border-radius:24px;box-shadow:0 18px 50px rgba(15,42,68,.08);padding:16px;display:grid;gap:14px;min-width:0}
+.analysis-cockpit-workspace{min-width:0;background:transparent;border:0;box-shadow:none;padding:0;display:grid;gap:14px}
+.analysis-example-card{margin:0;padding:14px 16px;border-radius:18px;background:linear-gradient(180deg,#fff,#f8fafc);border:1px solid var(--line,#dbe3ee)}
+.analysis-example-card .eyebrow{margin:0 0 4px;color:#0f766e;font-weight:900;text-transform:uppercase;letter-spacing:.08em;font-size:.72rem}.analysis-example-card h2{margin:0 0 6px;font-size:1.15rem}.analysis-example-card p{margin:0;color:#52677f;line-height:1.4}
+.analysis-control-host .analysis-panel{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;display:grid;gap:10px}.analysis-control-host label{display:grid!important;gap:5px!important;margin:0!important;font-weight:850;color:#263445}.analysis-control-host textarea,.analysis-control-host input,.analysis-control-host select{width:100%;border:1px solid #cdd8e6;border-radius:12px;padding:8px 10px;background:#fff;font:inherit}.analysis-control-host textarea{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem;line-height:1.35;min-height:82px;max-height:210px}.analysis-control-host .analysis-button-row{display:none!important}
+.analysis-method-card,.analysis-data-preview{background:#f8fafc;border:1px solid #dbe3ee;border-radius:18px;padding:12px;overflow:hidden}.analysis-method-card h3,.analysis-data-preview h3{margin:0 0 8px;font-size:.92rem}.analysis-method-grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 10px;margin:0}.analysis-method-grid dt{color:#64748b;font-weight:900;text-transform:uppercase;font-size:.68rem;letter-spacing:.06em}.analysis-method-grid dd{margin:0;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.analysis-data-preview table{width:100%;border-collapse:collapse;font-size:.78rem}.analysis-data-preview th,.analysis-data-preview td{border:1px solid #e2e8f0;padding:4px 6px;text-align:left;max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.analysis-data-preview th{background:#ecfeff;color:#0f766e}.analysis-actions{display:flex;gap:10px;flex-wrap:wrap;margin:0}.analysis-run-main,.analysis-reset,.analysis-export{appearance:none;border-radius:13px;border:1px solid #b8d7d3;padding:9px 13px;font-weight:850;cursor:pointer;font:inherit}.analysis-run-main{background:#0f766e;color:#fff;border:0}.analysis-reset,.analysis-export{background:#f8fafc;color:#123}.analysis-run-main:hover,.analysis-run-main:focus-visible{background:#0b5f59}.analysis-reset:hover,.analysis-export:hover{border-color:#0f766e;background:#ecfeff}
+.analysis-status-strip{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;background:var(--panel,#fff)!important;border:1px solid var(--line,#dbe3ee)!important;border-radius:20px!important;padding:10px!important;box-shadow:0 14px 42px rgba(15,42,68,.07)!important}.analysis-status-strip>div{min-width:0!important;background:#f8fafc!important;border:1px solid #dbe3ee!important;border-radius:14px!important;padding:9px 10px!important;display:block!important}.analysis-status-strip span{display:block!important;color:#64748b!important;font-size:.72rem!important;text-transform:uppercase!important;letter-spacing:.06em!important;font-weight:800!important}.analysis-status-strip b{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.analysis-status-strip .status-ok span:first-child{display:inline!important;margin-right:4px!important;color:#0f766e!important}
+.analysis-plot-toolbar{display:flex!important;gap:10px!important;align-items:center!important;background:var(--panel,#fff)!important;border:1px solid var(--line,#dbe3ee)!important;border-radius:16px!important;padding:9px 12px!important;box-shadow:0 10px 30px rgba(15,42,68,.05)!important}.analysis-plot-toolbar b,.analysis-plot-toolbar span{font-weight:850!important;color:#234!important;background:#f8fafc!important;border:1px solid #dbe3ee!important;border-radius:999px!important;padding:6px 10px!important;font-size:.88rem!important}
+.analysis-plot-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}.analysis-plot-card{min-height:430px;border:1px solid #dbe3ee;border-radius:22px;background:#fff;padding:8px;overflow:hidden;box-shadow:0 18px 50px rgba(15,42,68,.08)}.analysis-plot-card .analysis-plot{width:100%;height:410px;min-height:410px;margin:0;border:0;background:#fff}.analysis-result-panel{min-height:120px;background:var(--panel,#fff);border:1px solid #dbe3ee;border-radius:20px;padding:14px;overflow:auto;margin:0;box-shadow:0 14px 38px rgba(15,42,68,.06)}.analysis-result-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.analysis-result-card{background:#f8fafc;border:1px solid #dbe3ee;border-radius:16px;padding:12px}.analysis-result-card small{display:block;color:#64748b;text-transform:uppercase;letter-spacing:.05em;font-size:.67rem;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.analysis-result-card b{display:block;margin-top:4px;font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.analysis-raw-drawer{margin-top:12px}.analysis-raw-drawer summary{cursor:pointer;font-weight:900;color:#0f766e}.analysis-raw-drawer pre{max-height:220px;overflow:auto;background:#f8fafc;border:1px solid #dbe3ee;border-radius:14px;padding:10px;white-space:pre-wrap}.foko-shell-frame,.foko-shell-title,.foko-shell-actions,.foko-shell-output,.foko-shell-plot-grid{all:unset}.descriptor-page [id$="Contracts"]{display:none!important}.analysis-cockpit-page>.analysis-hero{display:none!important}
+@media(max-width:1180px){.analysis-cockpit{grid-template-columns:1fr}.analysis-cockpit-controls{position:static}.analysis-plot-grid{grid-template-columns:1fr}.analysis-plot-card{min-height:340px}.analysis-plot-card .analysis-plot{height:320px;min-height:320px}.analysis-status-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}.analysis-result-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* V71.31 wide analysis workspace, third diagnostic slot and user input/model authoring. */
+.analysis-cockpit.analysis-wide-workspace{width:min(1880px,calc(100% - 28px));grid-template-columns:minmax(340px,430px) minmax(0,1fr)}
+.analysis-cockpit.analysis-wide-workspace .analysis-cockpit-workspace{max-width:none;width:100%}
+.analysis-user-input-card{background:#f8fafc;border:1px solid #dbe3ee;border-radius:18px;padding:12px;display:grid;gap:10px;overflow:hidden}
+.analysis-user-input-card h3{margin:0;font-size:.94rem}.analysis-user-input-card label{display:grid;gap:5px;margin:0;font-weight:850;color:#263445}.analysis-user-input-card input[type=file],.analysis-user-input-card textarea{width:100%;border:1px solid #cdd8e6;border-radius:12px;padding:8px 10px;background:#fff;font:inherit}.analysis-user-input-card textarea{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem;line-height:1.35}.analysis-upload-status{margin:0;color:#52677f;font-size:.83rem}.analysis-latex-preview{min-height:42px;border:1px dashed #b8d7d3;border-radius:14px;background:#fff;padding:10px;overflow:auto;color:#0f172a}
+.analysis-plot-toolbar.analysis-plot-toolbar-carded{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;align-items:stretch!important}.analysis-plot-picker{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;min-width:0}.analysis-plot-picker span{grid-column:1/-1;text-transform:uppercase;letter-spacing:.06em;font-size:.72rem}.analysis-plot-picker select{width:100%;border:1px solid #cdd8e6;border-radius:12px;padding:8px 10px;background:#fff;font:inherit;font-weight:850;min-width:0}.analysis-plot-size{border:1px solid #b8d7d3;border-radius:12px;background:#f8fafc;color:#0f766e;font-weight:900;padding:8px 10px;cursor:pointer}.analysis-plot-size:hover,.analysis-plot-size:focus-visible{background:#ecfeff}
+.analysis-plot-grid.analysis-plot-grid-three{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.analysis-plot-grid-three .analysis-plot-card{min-height:420px}.analysis-plot-grid-three .analysis-plot-card .analysis-plot{height:400px;min-height:400px}.analysis-plot-card.analysis-plot-wide{grid-column:span 2}.analysis-plot-grid.has-wide-plot{grid-template-columns:repeat(3,minmax(0,1fr))}.analysis-plot-error,.analysis-plot-wait{display:grid;place-items:center;min-height:320px;color:#52677f;font-weight:850;background:#f8fafc;border-radius:16px}
+@media(max-width:1500px){.analysis-plot-grid.analysis-plot-grid-three{grid-template-columns:repeat(2,minmax(0,1fr))}.analysis-plot-tertiary{grid-column:1/-1}.analysis-plot-toolbar.analysis-plot-toolbar-carded{grid-template-columns:repeat(2,minmax(0,1fr))!important}.analysis-plot-picker-tertiary{grid-column:1/-1}}
+@media(max-width:1180px){.analysis-cockpit.analysis-wide-workspace{grid-template-columns:1fr;width:min(100%,calc(100% - 24px))}.analysis-plot-grid.analysis-plot-grid-three{grid-template-columns:1fr}.analysis-plot-tertiary,.analysis-plot-card.analysis-plot-wide{grid-column:auto}.analysis-plot-toolbar.analysis-plot-toolbar-carded{grid-template-columns:1fr!important}.analysis-plot-grid-three .analysis-plot-card{min-height:340px}.analysis-plot-grid-three .analysis-plot-card .analysis-plot{height:320px;min-height:320px}}
+
+/* v71_32: make every cockpit card either functional or compact, and add per-plot palettes. */
+.analysis-workflow-tabs .mode-tab{cursor:pointer;border:0;font:inherit}
+.analysis-workflow-tabs .mode-tab:focus-visible{outline:3px solid rgba(14,165,233,.35);outline-offset:2px}
+.analysis-section-focus{box-shadow:0 0 0 4px rgba(15,118,110,.18),0 18px 50px rgba(15,42,68,.08)!important;transition:box-shadow .2s ease}
+.analysis-live-status{display:flex!important;align-items:center!important;gap:12px!important;flex-wrap:wrap!important;background:rgba(255,255,255,.82)!important;border:1px solid var(--line,#dbe3ee)!important;border-radius:18px!important;padding:10px 14px!important;box-shadow:0 10px 28px rgba(15,42,68,.05)!important}
+.analysis-live-status>span{display:inline-flex!important;align-items:center!important;gap:5px!important;background:transparent!important;border:0!important;border-radius:0!important;padding:0!important;color:#334155!important;font-size:.92rem!important;font-weight:750!important}
+.analysis-live-status>span+span::before{content:'·';color:#94a3b8;margin-right:7px}.analysis-live-status b{font-weight:900!important;color:#102033!important}.analysis-live-status .analysis-live-state b{color:#0f766e!important}.analysis-live-status[data-state="running"] .analysis-live-state b{color:#b45309!important}.analysis-live-status[data-state="error"] .analysis-live-state b{color:#b91c1c!important}
+.analysis-toolbar-note{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}.analysis-toolbar-note span{background:transparent!important;border:0!important;padding:0!important;color:#52677f!important}.analysis-toolbar-note b{background:#eef6f6!important;border-color:#cfe3e1!important;color:#0f766e!important}
+.analysis-plot-card{display:grid;grid-template-rows:auto 1fr;padding:0!important;overflow:hidden!important}.analysis-plot-card-head{display:grid;grid-template-columns:minmax(120px,1fr) minmax(170px,1.2fr) minmax(130px,.8fr) auto;gap:8px;align-items:end;padding:10px 12px;border-bottom:1px solid #e2e8f0;background:linear-gradient(180deg,#fff,#f8fafc)}.analysis-plot-card-head strong{align-self:center;font-size:.95rem;color:#102033}.analysis-plot-card-head label{margin:0!important;display:grid!important;gap:3px!important}.analysis-plot-card-head label span{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:#64748b;font-weight:900}.analysis-plot-card-head select{width:100%;border:1px solid #cdd8e6;border-radius:10px;padding:7px 9px;background:#fff;font:inherit;font-weight:850;min-width:0}.analysis-palette-picker select{min-width:110px}.analysis-plot-card .analysis-plot-body{min-height:410px;padding:8px}.analysis-plot-card .analysis-plot-body .analysis-plot{height:400px;min-height:400px}.analysis-plot-card.analysis-plot-wide{grid-column:span 2}.analysis-plot-wide .analysis-plot-body .analysis-plot{height:460px;min-height:460px}.analysis-plot-wide .analysis-plot-body{min-height:470px}.analysis-plot-wait,.analysis-plot-error{min-height:380px}.analysis-left-plot-hidden{display:none!important}
+@media(max-width:1500px){.analysis-plot-card-head{grid-template-columns:1fr 1fr;}.analysis-plot-card-head strong{grid-column:1/-1}.analysis-plot-card-head .analysis-plot-size{justify-self:start}.analysis-plot-card.analysis-plot-wide{grid-column:1/-1}}
+@media(max-width:760px){.analysis-plot-card-head{grid-template-columns:1fr}.analysis-toolbar-note{align-items:flex-start!important}.analysis-live-status{gap:8px!important}.analysis-live-status>span+span::before{display:none}.analysis-plot-card .analysis-plot-body .analysis-plot{height:320px;min-height:320px}.analysis-plot-card .analysis-plot-body{min-height:330px}}
+
+/* V71.33 — faithful model/data input dashboard implementation. */
+[data-lab="analysis"] #v71SessionBar{display:none!important}
+.analysis-dashboard-shell{width:min(1920px,calc(100vw - 24px));margin:12px auto 28px;display:grid;gap:14px}
+.analysis-dashboard-top{display:grid!important;grid-template-columns:auto auto auto auto 1fr!important;align-items:center!important;gap:10px!important;background:rgba(255,255,255,.92)!important;border:1px solid #dbe3ee!important;border-radius:18px!important;padding:10px 12px!important;box-shadow:0 10px 28px rgba(15,42,68,.05)!important}
+.analysis-dashboard-top .analysis-brand-chip,.analysis-dashboard-top .analysis-info-chip{display:inline-flex!important;align-items:center!important;gap:8px!important;background:#f8fafc!important;border:1px solid #dbe3ee!important;border-radius:12px!important;padding:8px 12px!important;min-height:38px!important;font-weight:850!important;color:#102033!important}.analysis-dashboard-top span{font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;color:#64748b;font-weight:900}.analysis-dashboard-top b{font-weight:900}.analysis-dot{color:#16a34a!important;font-size:.85rem!important;text-transform:none!important;letter-spacing:0!important}.analysis-session-actions{justify-self:end;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.analysis-session-actions button{border:0;background:transparent;color:#102033;font-weight:850;padding:8px 9px;border-radius:10px;cursor:pointer}.analysis-session-actions button:hover,.analysis-session-actions button:focus-visible{background:#eef6f6;color:#0f766e;outline:none}
+.analysis-cockpit.analysis-implementation-ready{width:100%!important;max-width:none!important;margin:0!important;display:grid!important;grid-template-columns:minmax(340px,430px) minmax(0,1fr)!important;gap:16px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+.analysis-input-rail{position:sticky;top:86px;align-self:start;max-height:calc(100vh - 112px);overflow:auto;background:#fff!important;border:1px solid #dbe3ee!important;border-radius:18px!important;padding:14px!important;box-shadow:0 18px 50px rgba(15,42,68,.06)!important}.analysis-input-rail::-webkit-scrollbar{width:8px}.analysis-input-rail::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}
+.analysis-input-rail .analysis-workflow-tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;padding:0!important;border:1px solid #dbe3ee!important;border-radius:14px!important;overflow:hidden!important;background:#f8fafc!important;box-shadow:none!important;margin-bottom:12px!important}.analysis-input-rail .mode-tab{min-height:48px!important;border-radius:0!important;background:#fff!important;color:#475569!important;font-weight:900!important}.analysis-input-rail .mode-tab.active{background:#eef6f6!important;color:#0f766e!important;box-shadow:inset 0 -3px 0 #0f766e!important}
+.analysis-native-controls{display:grid!important;gap:10px!important}.analysis-native-controls label{margin:0!important;font-size:.78rem!important;font-weight:900!important;color:#24364a!important}.analysis-native-controls select,.analysis-native-controls input{width:100%!important;border:1px solid #cdd8e6!important;border-radius:10px!important;background:#fff!important;padding:8px 10px!important;font:inherit!important;font-weight:800!important}.analysis-native-controls .analysis-data-editor{display:none!important}.analysis-native-controls .control-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+.analysis-model-data-input{background:transparent!important;border:0!important;padding:0!important;display:grid!important;gap:12px!important;box-shadow:none!important}.analysis-model-data-input h3{margin:4px 0 0!important;font-size:.95rem!important;color:#102033!important}.analysis-model-data-input label{font-size:.78rem!important;font-weight:900!important;color:#24364a!important}.analysis-paste-label textarea,.analysis-formula-label textarea{width:100%!important;border:1px solid #cdd8e6!important;border-radius:12px!important;background:#fff!important;padding:9px 10px!important;font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace!important;color:#102033!important;resize:vertical!important}.analysis-paste-label textarea{min-height:140px!important}.analysis-formula-label textarea{min-height:52px!important}.analysis-upload-zone{border:0!important;margin:0!important;padding:0!important}.analysis-upload-zone h4{margin:0 0 7px!important;font-size:.78rem!important;color:#24364a!important}.analysis-dropzone{display:grid!important;place-items:center!important;gap:5px!important;min-height:92px!important;border:1px dashed #9fc9c6!important;border-radius:14px!important;background:#f8ffff!important;padding:12px!important;text-align:center!important;cursor:pointer!important}.analysis-dropzone input{position:absolute!important;inline-size:1px!important;block-size:1px!important;opacity:0!important;pointer-events:none!important}.analysis-dropzone span{font-weight:900!important;color:#102033!important}.analysis-dropzone small{display:block!important;color:#64748b!important;font-size:.72rem!important}.analysis-upload-status{font-size:.78rem!important;color:#52677f!important;margin:0!important}.analysis-latex-preview{min-height:54px!important;border:1px solid #dbe3ee!important;border-radius:12px!important;background:#fff!important;display:grid!important;place-items:center!important;padding:10px!important;color:#102033!important}.analysis-run-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}.analysis-run-actions .analysis-run-main{grid-column:1/-1!important;width:100%!important;min-height:48px!important;border-radius:12px!important;background:#0f766e!important;color:white!important}.analysis-run-actions button{min-height:38px!important;border-radius:10px!important;font-weight:900!important}
+.analysis-main-workspace{display:grid!important;gap:14px!important;min-width:0!important}.analysis-v33-plot-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}.analysis-v33-plot-grid .analysis-plot-card{min-width:0!important;min-height:480px!important;border:1px solid #dbe3ee!important;border-radius:18px!important;background:#fff!important;box-shadow:0 16px 44px rgba(15,42,68,.06)!important;overflow:hidden!important}.analysis-v33-plot-grid .analysis-plot-card-head{display:grid!important;grid-template-columns:auto minmax(150px,1fr) minmax(110px,.55fr) auto!important;gap:8px!important;align-items:center!important;padding:12px 14px!important}.analysis-v33-plot-grid .analysis-plot-card-head strong{font-size:1rem!important;color:#102033!important;white-space:nowrap!important}.analysis-v33-plot-grid .analysis-plot-card-head label span{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important}.analysis-v33-plot-grid .analysis-plot-card-head select{height:38px!important;border-radius:10px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}.analysis-v33-plot-grid .analysis-plot-size{height:38px!important;min-width:38px!important;border-radius:10px!important;padding:0 8px!important}.analysis-v33-plot-grid .analysis-plot-body{padding:10px!important;min-height:385px!important}.analysis-v33-plot-grid .analysis-plot-body .analysis-plot{height:378px!important;min-height:378px!important}.analysis-plot-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid #e2e8f0;padding:8px 12px;background:#fbfdff;color:#475569;font-size:.78rem;font-weight:850}.analysis-plot-foot button{border:1px solid #dbe3ee;background:#fff;border-radius:9px;padding:6px 10px;font-weight:900;color:#102033;cursor:pointer}.analysis-plot-foot button:hover{background:#eef6f6;color:#0f766e}.analysis-v33-plot-grid .analysis-plot-wide{grid-column:span 2!important}.analysis-v33-plot-grid .analysis-plot-wide .analysis-plot-body,.analysis-v33-plot-grid .analysis-plot-wide .analysis-plot-body .analysis-plot{height:460px!important;min-height:460px!important}
+.analysis-v33-results{display:grid!important;gap:12px!important;background:#fff!important;border:1px solid #dbe3ee!important;border-radius:18px!important;box-shadow:0 16px 44px rgba(15,42,68,.05)!important;padding:14px!important;max-height:none!important;overflow:visible!important}.analysis-v33-results::before{content:'Results summary';font-weight:950;color:#102033;font-size:1rem}.analysis-v33-results .analysis-result-cards{grid-template-columns:repeat(8,minmax(110px,1fr))!important;gap:10px!important}.analysis-v33-results .analysis-result-card{min-height:74px!important;background:#f8fafc!important}.analysis-v33-results .analysis-result-card b{font-size:1rem!important}.analysis-v33-results .analysis-raw-drawer pre{max-height:260px!important;overflow:auto!important}
+@media(max-width:1620px){.analysis-v33-plot-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.analysis-v33-plot-grid .analysis-plot-tertiary{grid-column:1/-1!important}.analysis-v33-plot-grid .analysis-plot-card{min-height:430px!important}.analysis-v33-plot-grid .analysis-plot-body,.analysis-v33-plot-grid .analysis-plot-body .analysis-plot{height:350px!important;min-height:350px!important}.analysis-v33-results .analysis-result-cards{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media(max-width:1180px){.analysis-cockpit.analysis-implementation-ready{grid-template-columns:1fr!important}.analysis-input-rail{position:static;max-height:none}.analysis-v33-plot-grid{grid-template-columns:1fr!important}.analysis-v33-plot-grid .analysis-plot-tertiary,.analysis-v33-plot-grid .analysis-plot-wide{grid-column:auto!important}.analysis-dashboard-top{grid-template-columns:1fr 1fr!important}.analysis-session-actions{grid-column:1/-1;justify-self:start}.analysis-v33-results .analysis-result-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:760px){.analysis-dashboard-shell{width:min(100%,calc(100vw - 12px))}.analysis-dashboard-top{grid-template-columns:1fr!important}.analysis-input-rail .analysis-workflow-tabs{grid-template-columns:1fr!important}.analysis-native-controls .control-grid{grid-template-columns:1fr!important}.analysis-v33-plot-grid .analysis-plot-card-head{grid-template-columns:1fr!important}.analysis-v33-results .analysis-result-cards{grid-template-columns:1fr!important}}
+
+/* v71.32 compatibility split marker: no decorative four-card status grid after this marker. */
+
+
+/* V71.34 — full-width analysis dashboard ratio + visible model input. */
+.analysis-page.analysis-cockpit-page,
+main.analysis-page.descriptor-page.analysis-cockpit-page{
+  width:calc(100vw - 24px)!important;
+  max-width:none!important;
+  margin:0 auto!important;
+  padding:14px 0 42px!important;
+}
+.analysis-page.analysis-cockpit-page .analysis-hero.compact{
+  display:none!important;
+}
+.analysis-dashboard-shell.analysis-dashboard-v33{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  gap:12px!important;
+}
+.analysis-cockpit.analysis-implementation-ready{
+  grid-template-columns:minmax(340px,390px) minmax(0,1fr)!important;
+  gap:14px!important;
+}
+.analysis-input-rail{
+  top:92px!important;
+  max-height:calc(100vh - 108px)!important;
+  padding:12px!important;
+}
+.analysis-main-workspace{
+  min-width:0!important;
+  overflow:visible!important;
+}
+.analysis-v33-plot-grid{
+  grid-template-columns:repeat(3,minmax(250px,1fr))!important;
+  gap:12px!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card{
+  min-height:430px!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head{
+  grid-template-columns:auto minmax(126px,1fr) minmax(96px,.52fr) auto!important;
+  gap:7px!important;
+  padding:10px 12px!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head strong{
+  font-size:.92rem!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head select{
+  height:36px!important;
+  padding:6px 8px!important;
+  font-size:.86rem!important;
+}
+.analysis-v33-plot-grid .analysis-plot-body{
+  min-height:340px!important;
+  padding:8px!important;
+}
+.analysis-v33-plot-grid .analysis-plot-body .analysis-plot{
+  height:335px!important;
+  min-height:335px!important;
+}
+.analysis-model-data-input{
+  border:1px solid #dbe3ee!important;
+  background:#fbfdff!important;
+  border-radius:14px!important;
+  padding:12px!important;
+}
+.analysis-model-data-input h3{
+  font-size:1rem!important;
+}
+.analysis-formula-label textarea{
+  min-height:44px!important;
+}
+.analysis-latex-preview{
+  min-height:62px!important;
+  overflow:auto!important;
+  text-align:center!important;
+}
+.analysis-latex-preview .katex-display{
+  margin:.1rem 0!important;
+}
+.analysis-dashboard-top{
+  grid-template-columns:auto auto auto auto minmax(0,1fr)!important;
+  overflow:hidden!important;
+}
+.analysis-session-actions{
+  flex-wrap:nowrap!important;
+  overflow:auto!important;
+  max-width:100%!important;
+}
+.analysis-session-actions button{
+  white-space:nowrap!important;
+}
+@media(max-width:1500px){
+  .analysis-cockpit.analysis-implementation-ready{grid-template-columns:minmax(320px,370px) minmax(0,1fr)!important;}
+  .analysis-v33-plot-grid{grid-template-columns:repeat(2,minmax(280px,1fr))!important;}
+  .analysis-v33-plot-grid .analysis-plot-tertiary{grid-column:1/-1!important;}
+}
+@media(max-width:1100px){
+  .analysis-cockpit.analysis-implementation-ready{grid-template-columns:1fr!important;}
+  .analysis-input-rail{position:static!important;max-height:none!important;}
+  .analysis-v33-plot-grid{grid-template-columns:1fr!important;}
+  .analysis-v33-plot-grid .analysis-plot-tertiary{grid-column:auto!important;}
+}
+
+
+/* V71.35 — analysis dashboard unclipping + stable two/three plot ratio. */
+body[data-lab="analysis"] .app-shell,
+body[data-lab="analysis"] .analysis-shell{
+  width:100%!important;
+  max-width:none!important;
+  overflow-x:hidden!important;
+}
+body[data-lab="analysis"] main.analysis-page.descriptor-page.analysis-cockpit-page,
+body[data-lab="analysis"] .analysis-page.analysis-cockpit-page{
+  width:100%!important;
+  max-width:none!important;
+  padding:12px clamp(12px,1.5vw,28px) 42px!important;
+  margin:0!important;
+}
+.analysis-dashboard-shell.analysis-dashboard-v33{
+  width:100%!important;
+  max-width:none!important;
+}
+.analysis-cockpit.analysis-implementation-ready{
+  width:100%!important;
+  grid-template-columns:clamp(300px,22vw,380px) minmax(0,1fr)!important;
+  align-items:start!important;
+}
+.analysis-input-rail{
+  min-width:0!important;
+  overflow:auto!important;
+}
+.analysis-main-workspace{
+  min-width:0!important;
+  width:100%!important;
+  overflow:hidden!important;
+}
+.analysis-v33-plot-grid{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  align-items:stretch!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card{
+  min-width:0!important;
+  width:100%!important;
+  overflow:hidden!important;
+}
+.analysis-v33-plot-grid .analysis-plot-tertiary{
+  grid-column:1/-1!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  gap:8px!important;
+  min-width:0!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head>*{
+  min-width:0!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head strong{
+  flex:0 0 auto!important;
+  max-width:100%!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head label{
+  flex:1 1 150px!important;
+  min-width:120px!important;
+  max-width:260px!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head select{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  text-overflow:ellipsis!important;
+}
+.analysis-v33-plot-grid .analysis-plot-size{
+  flex:0 0 38px!important;
+}
+.analysis-v33-plot-grid .analysis-plot-body{
+  overflow:hidden!important;
+}
+.analysis-v33-plot-grid .analysis-plot-body .analysis-plot,
+.analysis-v33-plot-grid .analysis-plot-body .js-plotly-plot{
+  width:100%!important;
+  max-width:100%!important;
+}
+@media(min-width:1840px){
+  .analysis-cockpit.analysis-implementation-ready{grid-template-columns:clamp(320px,20vw,390px) minmax(0,1fr)!important;}
+  .analysis-v33-plot-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .analysis-v33-plot-grid .analysis-plot-tertiary{grid-column:auto!important;}
+}
+@media(max-width:1320px){
+  .analysis-cockpit.analysis-implementation-ready{grid-template-columns:minmax(280px,330px) minmax(0,1fr)!important;}
+  .analysis-v33-plot-grid{grid-template-columns:1fr!important;}
+  .analysis-v33-plot-grid .analysis-plot-tertiary{grid-column:auto!important;}
+}
+@media(max-width:980px){
+  .analysis-cockpit.analysis-implementation-ready{grid-template-columns:1fr!important;}
+}
+
+/* V71.37 — stable header restore + analysis layout unclipping.
+   Keep the working static nav/header; do not reintroduce generated chrome. */
+body[data-lab="analysis"] .topbar,
+body[data-lab="analysis"] .public-topbar,
+body[data-lab="analysis"] .foko-ide-topbar{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  position:sticky!important;
+  top:0!important;
+  z-index:1200!important;
+  width:100%!important;
+  max-width:100vw!important;
+}
+body[data-lab="analysis"] .topbar .brand,
+body[data-lab="analysis"] .public-topbar .brand,
+body[data-lab="analysis"] .foko-ide-topbar .brand{
+  display:flex!important;
+  visibility:visible!important;
+}
+body[data-lab="analysis"] .platform-ribbon,
+body[data-lab="analysis"] .platform-projectbar{
+  display:none!important;
+}
+body[data-lab="analysis"] main.analysis-page.descriptor-page.analysis-cockpit-page{
+  width:min(100%,calc(100vw - 20px))!important;
+  max-width:none!important;
+  margin:10px auto 34px!important;
+  padding:0!important;
+  overflow-x:hidden!important;
+}
+body[data-lab="analysis"] .analysis-cockpit.analysis-implementation-ready{
+  width:100%!important;
+  max-width:none!important;
+  grid-template-columns:clamp(320px,24vw,400px) minmax(0,1fr)!important;
+  gap:14px!important;
+}
+body[data-lab="analysis"] .analysis-main-workspace,
+body[data-lab="analysis"] .analysis-cockpit-workspace{
+  min-width:0!important;
+  overflow:hidden!important;
+}
+body[data-lab="analysis"] .analysis-v33-plot-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+body[data-lab="analysis"] .analysis-v33-plot-grid .analysis-plot-tertiary{
+  grid-column:1 / -1!important;
+}
+body[data-lab="analysis"] .analysis-v33-plot-grid .analysis-plot-card{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+}
+body[data-lab="analysis"] .analysis-v33-plot-grid .analysis-plot-card-head{
+  display:grid!important;
+  grid-template-columns:auto minmax(160px,1fr) minmax(110px,.44fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  overflow:visible!important;
+}
+body[data-lab="analysis"] .analysis-v33-plot-grid .analysis-plot-card-head strong{
+  white-space:nowrap!important;
+}
+body[data-lab="analysis"] .analysis-v33-plot-grid .analysis-plot-card-head select{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+@media (min-width:1900px){
+  body[data-lab="analysis"] .analysis-v33-plot-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  body[data-lab="analysis"] .analysis-v33-plot-grid .analysis-plot-tertiary{
+    grid-column:auto!important;
+  }
+}
+@media (max-width:1150px){
+  body[data-lab="analysis"] .analysis-cockpit.analysis-implementation-ready{
+    grid-template-columns:1fr!important;
+  }
+  body[data-lab="analysis"] .analysis-input-rail{
+    position:static!important;
+    max-height:none!important;
+  }
+  body[data-lab="analysis"] .analysis-v33-plot-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* V71.43 · Analysis plot header repair: titles no longer collide with dropdowns. */
+.analysis-v33-plot-grid .analysis-plot-card-head,
+.analysis-plot-grid .analysis-plot-card-head{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(112px,150px) 38px!important;
+  grid-template-areas:
+    "title title title"
+    "plot palette size"!important;
+  gap:8px!important;
+  align-items:center!important;
+  padding:8px 8px 9px!important;
+  min-width:0!important;
+  border-bottom:1px solid color-mix(in srgb,var(--lab-accent,#0e7c86) 15%,#dbe3ee)!important;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--lab-accent,#0e7c86) 7%,transparent),transparent)!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head strong,
+.analysis-plot-grid .analysis-plot-card-head strong{
+  grid-area:title!important;
+  display:block!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-size:.96rem!important;
+  line-height:1.2!important;
+}
+.analysis-v33-plot-grid .analysis-plot-picker,
+.analysis-plot-grid .analysis-plot-picker{
+  grid-area:plot!important;
+  min-width:0!important;
+  max-width:none!important;
+  width:100%!important;
+  margin:0!important;
+}
+.analysis-v33-plot-grid .analysis-palette-picker,
+.analysis-plot-grid .analysis-palette-picker{
+  grid-area:palette!important;
+  min-width:0!important;
+  max-width:none!important;
+  width:100%!important;
+  margin:0!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head label>span,
+.analysis-plot-grid .analysis-plot-card-head label>span{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+.analysis-v33-plot-grid .analysis-plot-card-head select,
+.analysis-plot-grid .analysis-plot-card-head select{
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  padding:7px 28px 7px 10px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  border-color:color-mix(in srgb,var(--lab-accent,#0e7c86) 35%,#cdd8e6)!important;
+}
+.analysis-v33-plot-grid .analysis-plot-size,
+.analysis-plot-grid .analysis-plot-size{
+  grid-area:size!important;
+  width:36px!important;
+  min-width:36px!important;
+  height:36px!important;
+  padding:0!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  border-color:color-mix(in srgb,var(--lab-accent,#0e7c86) 35%,#cdd8e6)!important;
+  color:var(--lab-accent-strong,#0a5b62)!important;
+}
+body[data-lab] .analysis-plot-card{
+  box-shadow:0 16px 42px color-mix(in srgb,var(--lab-accent,#0e7c86) 8%,rgba(15,42,68,.08))!important;
+}
+body[data-lab] .analysis-plot-foot button,
+body[data-lab] [data-analysis-download]{
+  border-color:color-mix(in srgb,var(--lab-accent,#0e7c86) 35%,#cdd8e6)!important;
+  color:var(--lab-accent-strong,#0a5b62)!important;
+}
+@media(max-width:900px){
+  .analysis-v33-plot-grid .analysis-plot-card-head,
+  .analysis-plot-grid .analysis-plot-card-head{
+    grid-template-columns:minmax(0,1fr) 38px!important;
+    grid-template-areas:"title title" "plot plot" "palette size"!important;
+  }
+}

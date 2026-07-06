@@ -320,6 +320,7 @@ let currentPreset = null;
 let currentModel = null;
 let currentSettings = null;
 let lastResult = null;
+let stochasticBusJob = null;
 let activeTab = 'model';
 let jsonDirty = false;
 const CORE_STOCH = ['birth-death', 'sir', 'gene-expression', 'michaelis-menten-ssa'];
@@ -373,7 +374,7 @@ function loadPreset(id, updateHash = false) {
   currentPreset = PRESETS.find(p => p.id === id) || PRESETS[0];
   currentModel = clone(currentPreset.model);
   jsonDirty = false;
-  currentSettings = { runs: currentPreset.settings?.runs || 200, seed: 12345, tEnd: currentPreset.settings?.tEnd || currentModel.params?.tEnd || 100, grid: 241, maxEvents: 50000, plotVariable: currentPreset.settings?.plotVariable || firstVariable(currentModel), showMeanField: true };
+  currentSettings = { runs: currentPreset.settings?.runs || 200, seed: 12345, tEnd: currentPreset.settings?.tEnd || currentModel.params?.tEnd || 100, grid: 241, maxEvents: 50000, method: 'gillespie', tau: 0.25, sdeSigma: 1, plotVariable: currentPreset.settings?.plotVariable || firstVariable(currentModel), showMeanField: true };
   if (updateHash) history.replaceState(null, '', `?example=${encodeURIComponent(currentPreset.id)}`);
   renderLibrary();
   renderAll();
@@ -395,7 +396,7 @@ function loadCustomCTMC(model = null, title = 'Blank CTMC model', updateHash = t
   currentPreset = customPreset('ctmc', title);
   currentModel = clone(model || blankCTMCModel());
   jsonDirty = false;
-  currentSettings = { runs: 200, seed: 12345, tEnd: 100, grid: 241, maxEvents: 50000, plotVariable: firstVariable(currentModel), showMeanField: true };
+  currentSettings = { runs: 200, seed: 12345, tEnd: 100, grid: 241, maxEvents: 50000, method: 'gillespie', tau: 0.25, sdeSigma: 1, plotVariable: firstVariable(currentModel), showMeanField: true };
   if (updateHash) history.replaceState(null, '', '?example=custom-ctmc');
   renderLibrary();
   renderAll();
@@ -622,7 +623,7 @@ function applyJson() {
     currentPreset = customPreset(parsed.engine, parsed.title || 'Custom stochastic model');
     currentPreset.family = parsed.family || 'Custom model';
     currentModel = parsed.model;
-    currentSettings = { ...(currentSettings || {}), runs: currentSettings?.runs || 200, seed: currentSettings?.seed || 12345, tEnd: currentSettings?.tEnd || currentModel.params?.tEnd || 100, grid: currentSettings?.grid || 241, maxEvents: currentSettings?.maxEvents || 50000, plotVariable: firstVariable(currentModel), showMeanField: true };
+    currentSettings = { ...(currentSettings || {}), runs: currentSettings?.runs || 200, seed: currentSettings?.seed || 12345, tEnd: currentSettings?.tEnd || currentModel.params?.tEnd || 100, grid: currentSettings?.grid || 241, maxEvents: currentSettings?.maxEvents || 50000, method: currentSettings?.method || 'gillespie', tau: currentSettings?.tau || 0.25, sdeSigma: currentSettings?.sdeSigma ?? 1, plotVariable: firstVariable(currentModel), showMeanField: true };
     jsonDirty = false; renderLibrary(); renderAll(); renderJsonEditor(true); showValidation('JSON applied.'); maybeAutoRun();
   } catch (err) { $('validationStatus').textContent = 'Invalid JSON: ' + err.message; $('validationStatus').classList.add('bad'); }
 }
@@ -633,6 +634,9 @@ function renderSettings() {
   $('tEndInput').value = currentSettings.tEnd;
   $('gridInput').value = currentSettings.grid;
   $('maxEventsInput').value = currentSettings.maxEvents;
+  if ($('methodInput')) $('methodInput').value = currentSettings.method || 'gillespie';
+  if ($('tauInput')) $('tauInput').value = currentSettings.tau || 0.25;
+  if ($('sdeSigmaInput')) $('sdeSigmaInput').value = currentSettings.sdeSigma ?? 1;
   $('meanFieldToggle').checked = currentSettings.showMeanField && currentPreset.engine === 'ctmc';
   $('meanFieldToggle').disabled = currentPreset.engine !== 'ctmc';
   $('meanFieldToggle').closest('label')?.classList.toggle('hidden', currentPreset.engine !== 'ctmc');
@@ -649,12 +653,15 @@ function readSettings() {
   currentSettings.tEnd = Number($('tEndInput').value);
   currentSettings.grid = Number($('gridInput').value);
   currentSettings.maxEvents = Number($('maxEventsInput').value);
+  currentSettings.method = $('methodInput')?.value || 'gillespie';
+  currentSettings.tau = Math.max(1e-4, Number($('tauInput')?.value || 0.25));
+  currentSettings.sdeSigma = Math.max(0, Number($('sdeSigmaInput')?.value ?? 1));
   currentSettings.plotVariable = $('plotVariable').value;
   currentSettings.showMeanField = currentPreset.engine === 'ctmc' && $('meanFieldToggle').checked;
 }
 function renderGuide() {
   const map = {
-    ctmc: ['path ensemble', 'mean and quantile bands', 'final-state distribution', 'event counts and extinction/fade-out diagnostics'],
+    ctmc: ['Gillespie exact SSA, tau-leaping and Euler–Maruyama approximations', 'ensemble paths with 5–95% uncertainty bands', 'final-state distribution', 'event counts and extinction/fade-out diagnostics'],
     branching: ['population genealogy', 'extinction probability', 'final population distribution', 'survival fraction by generation'],
     gambler: ['absorbing boundary probability', 'hitting time', 'sample capital paths'],
     ehrenfest: ['relaxation to equilibrium', 'recurrence risk', 'stationary-like distribution'],
@@ -729,6 +736,74 @@ function runCTMC(model, settings, rng) {
   fillUntil(settings.tEnd + 1e-9);
   return { x: tGrid, y, finalState: st, final: y[y.length - 1], events: eventCounts, steps, truncated: steps >= settings.maxEvents };
 }
+
+function poissonSample(lambda, rng) {
+  lambda = Math.max(0, Number(lambda) || 0);
+  if (lambda > 50) {
+    const z = Math.sqrt(-2 * Math.log(Math.max(rng(), 1e-12))) * Math.cos(2 * Math.PI * rng());
+    return Math.max(0, Math.round(lambda + Math.sqrt(lambda) * z));
+  }
+  const L = Math.exp(-lambda); let k = 0, prob = 1;
+  do { k += 1; prob *= rng(); } while (prob > L);
+  return k - 1;
+}
+function normalSample(rng) {
+  return Math.sqrt(-2 * Math.log(Math.max(rng(), 1e-12))) * Math.cos(2 * Math.PI * rng());
+}
+function runTauLeapingCTMC(model, settings, rng) {
+  const events = model.events.map(e => ({ ...e, fn: compileExpr(e.propensity) }));
+  const tGrid = grid(settings.tEnd, settings.grid);
+  const y = Array(settings.grid).fill(0); const eventCounts = Object.fromEntries(model.events.map(e => [e.name, 0]));
+  let st = stateObjectFrom(model.states); let t = 0, idx = 0, steps = 0;
+  const tau = Math.max(1e-4, Number(settings.tau || 0.25));
+  const fillUntil = time => { while (idx < tGrid.length && tGrid[idx] <= time) { y[idx] = valueOfVar(st, model, settings.plotVariable); idx++; } };
+  fillUntil(0);
+  while (t < settings.tEnd - 1e-12 && steps < settings.maxEvents) {
+    const h = Math.min(tau, settings.tEnd - t);
+    const ctx = { ...st, ...(model.params || {}) };
+    const delta = Object.fromEntries((model.states || []).map(v => [v.name, 0]));
+    events.forEach(ev => {
+      const a = eventIsEnabled(ev, st) ? ev.fn(ctx) : 0;
+      const fires = poissonSample(a * h, rng);
+      if (fires <= 0) return;
+      for (const [k, stoich] of Object.entries(ev.updates || {})) delta[k] = (delta[k] || 0) + Number(stoich) * fires;
+      eventCounts[ev.name] += fires;
+      steps += fires;
+    });
+    for (const k of Object.keys(delta)) st[k] = Math.max(0, (Number(st[k]) || 0) + delta[k]);
+    t += h; fillUntil(t);
+  }
+  fillUntil(settings.tEnd + 1e-9);
+  return { x: tGrid, y, finalState: st, final: y[y.length - 1], events: eventCounts, steps, truncated: steps >= settings.maxEvents, approximate: true };
+}
+function runEulerMaruyamaCTMC(model, settings, rng) {
+  const events = model.events.map(e => ({ ...e, fn: compileExpr(e.propensity) }));
+  const stateNames = (model.states || []).map(v => v.name);
+  const tGrid = grid(settings.tEnd, settings.grid);
+  const y = Array(settings.grid).fill(0); let st = stateObjectFrom(model.states); let t = 0, idx = 0;
+  const dt = Math.max(1e-4, Number(settings.tau || 0.05));
+  const noiseScale = Math.max(0, Number(settings.sdeSigma ?? 1));
+  const fillUntil = time => { while (idx < tGrid.length && tGrid[idx] <= time) { y[idx] = valueOfVar(st, model, settings.plotVariable); idx++; } };
+  fillUntil(0);
+  while (t < settings.tEnd - 1e-12) {
+    const h = Math.min(dt, settings.tEnd - t);
+    const ctx = { ...st, ...(model.params || {}) };
+    const d = Object.fromEntries(stateNames.map(n => [n, 0]));
+    events.forEach(ev => {
+      const a = Math.max(0, ev.fn(ctx));
+      const z = normalSample(rng);
+      for (const [k, stoich] of Object.entries(ev.updates || {})) {
+        const nu = Number(stoich) || 0;
+        d[k] = (d[k] || 0) + nu * a * h + nu * Math.sqrt(Math.max(a, 0) * h) * noiseScale * z;
+      }
+    });
+    stateNames.forEach(k => { st[k] = Math.max(0, (Number(st[k]) || 0) + (d[k] || 0)); });
+    t += h; fillUntil(t);
+  }
+  fillUntil(settings.tEnd + 1e-9);
+  return { x: tGrid, y, finalState: st, final: y[y.length - 1], events: {}, steps: Math.ceil(settings.tEnd / dt), truncated: false, approximate: true };
+}
+
 function meanFieldCTMC(model, settings) {
   const names = (model.states || []).map(s => s.name); const p = model.params || {}; const events = model.events.map(e => ({ ...e, fn: compileExpr(e.propensity) }));
   let st = stateObjectFrom(model.states); const tGrid = grid(settings.tEnd, settings.grid); const y = [];
@@ -743,21 +818,25 @@ function runEnsembleGeneric(singleRunner, model, settings) {
   for (let r = 0; r < runs; r++) { const out = singleRunner(model, settings, mulberry32(rngSeed + r * 9973)); paths.push(out.y); finals.push(out.final); extra.push(out); }
   const x = extra[0]?.x || grid(settings.tEnd, settings.grid);
   const meanPath = x.map((_, i) => mean(paths.map(p => p[i])));
-  const q10 = x.map((_, i) => quantile(paths.map(p => p[i]), 0.1));
-  const q90 = x.map((_, i) => quantile(paths.map(p => p[i]), 0.9));
-  return { x, paths, finals, extra, meanPath, q10, q90 };
+  const q05 = x.map((_, i) => quantile(paths.map(p => p[i]), 0.05));
+  const q50 = x.map((_, i) => quantile(paths.map(p => p[i]), 0.50));
+  const q95 = x.map((_, i) => quantile(paths.map(p => p[i]), 0.95));
+  return { x, paths, finals, extra, meanPath, q05, q50, q95 };
 }
 function resultFromCTMC(model, settings) {
-  const ens = runEnsembleGeneric(runCTMC, model, settings);
+  const method = settings.method || 'gillespie';
+  const runner = method === 'tau-leaping' ? runTauLeapingCTMC : method === 'euler-maruyama' ? runEulerMaruyamaCTMC : runCTMC;
+  const ens = runEnsembleGeneric(runner, model, settings);
   const extinction = ens.finals.filter(v => v <= 0).length / ens.finals.length;
   const traces = ens.paths.slice(0, 12).map((y, i) => traceLine('path ' + (i + 1), ens.x, y, { line: { width: 1 }, opacity: 0.45 }));
-  traces.push(traceLine('mean', ens.x, ens.meanPath, { line: { width: 3 } }));
-  traces.push(traceLine('10–90% band lower', ens.x, ens.q10, { line: { dash: 'dot', width: 1 } }));
-  traces.push(traceLine('10–90% band upper', ens.x, ens.q90, { line: { dash: 'dot', width: 1 }, fill: 'tonexty', opacity: 0.18 }));
-  let mf = null; if (settings.showMeanField) { mf = meanFieldCTMC(model, settings); traces.push(traceLine('mean-field', mf.x, mf.y, { line: { dash: 'dash', width: 3 } })); }
+  traces.push(traceLine('5% quantile', ens.x, ens.q05, { line: { dash: 'dot', width: 1 } }));
+  traces.push(traceLine('95% quantile', ens.x, ens.q95, { line: { dash: 'dot', width: 1 }, fill: 'tonexty', opacity: 0.18 }));
+  traces.push(traceLine('median', ens.x, ens.q50, { line: { width: 3 } }));
+  traces.push(traceLine('mean', ens.x, ens.meanPath, { line: { width: 3, dash: 'dash' } }));
+  let mf = null; if (settings.showMeanField) { mf = meanFieldCTMC(model, settings); traces.push(traceLine('mean-field', mf.x, mf.y, { line: { dash: 'longdash', width: 3 } })); }
   const h = hist(ens.finals);
-  const eventMean = {}; Object.keys(ens.extra[0]?.events || {}).forEach(k => eventMean[k] = mean(ens.extra.map(e => e.events[k] || 0)));
-  return { engine: 'ctmc', x: ens.x, paths: ens.paths, finals: ens.finals, meanField: mf, eventMean, metrics: { runs: ens.paths.length, 'mean final': mean(ens.finals), 'variance final': variance(ens.finals), 'P(final=0)': extinction, 'mean events': mean(ens.extra.map(e => e.steps)), 'paths at maxEvents': ens.extra.filter(e => e.truncated).length }, tracesA: traces, tracesB: [{ type: 'bar', x: h.x, y: h.y, name: 'final distribution' }], titleA: `${settings.plotVariable}: stochastic paths and mean`, titleB: `Final ${settings.plotVariable} distribution`, xA: 'time', yA: settings.plotVariable, xB: `final ${settings.plotVariable}`, yB: 'runs' };
+  const eventMean = {}; Object.keys(ens.extra[0]?.events || {}).forEach(k => eventMean[k] = mean(ens.extra.map(e => e.events?.[k] || 0)));
+  return { engine: 'ctmc', method, x: ens.x, paths: ens.paths, finals: ens.finals, meanPath: ens.meanPath, q05: ens.q05, q50: ens.q50, q95: ens.q95, meanField: mf, eventMean, metrics: { runs: ens.paths.length, method, 'mean final': mean(ens.finals), 'variance final': variance(ens.finals), 'P(final=0)': extinction, 'mean events/steps': mean(ens.extra.map(e => e.steps || 0)), 'paths at maxEvents': ens.extra.filter(e => e.truncated).length }, tracesA: traces, tracesB: [{ type: 'bar', x: h.x, y: h.y, name: 'final distribution' }], titleA: `${settings.plotVariable}: ${method} ensemble with 5–95% band`, titleB: `Final ${settings.plotVariable} distribution`, xA: 'time', yA: settings.plotVariable, xB: `final ${settings.plotVariable}`, yB: 'runs' };
 }
 
 function runBranching(model, settings) {
@@ -859,14 +938,22 @@ function runCurrent() {
   const validation = validateCurrentModel();
   if (!validation.ok) { showValidation('Fix the model before running.'); $('runStatus').textContent = 'Model validation failed.'; $('runProgress').style.width = '0%'; return; }
   if (btn) { btn.disabled = true; btn.textContent = 'Running…'; }
-  $('runStatus').textContent = 'Running…'; $('runProgress').style.width = '35%';
-  window.setTimeout(() => {
-    try {
-      const started = performance.now(); lastResult = computeResult(); lastResult.runtimeMs = performance.now() - started;
-      $('runProgress').style.width = '100%'; $('runStatus').textContent = `Done in ${fmt(lastResult.runtimeMs)} ms.`; renderResult(); updateExportPreview();
-    } catch (err) { $('runStatus').textContent = 'Error: ' + err.message; $('runProgress').style.width = '0%'; console.error(err); }
-    finally { if (btn) { btn.disabled = false; btn.textContent = '▶ Run ensemble'; } }
-  }, 20);
+  $('runStatus').textContent = 'Running through compute bus…'; $('runProgress').style.width = '20%';
+  const started = performance.now();
+  const bus = window.FokoComputeBus;
+  const job = { id: 'stochastic-' + Date.now(), type: 'stochastic-ensemble', payload: { preset: currentPreset?.id, settings: clone(currentSettings || {}) }, progress: p => { if($('runProgress')) $('runProgress').style.width = Math.max(8, Math.min(95, Number(p.progress || 0) * 100)).toFixed(0) + '%'; if($('runStatus')) $('runStatus').textContent = p.text || 'Running…'; } };
+  stochasticBusJob = job.id;
+  const exec = () => { const result = computeResult(); result.runtimeMs = performance.now() - started; result.computeBus = { routed: true, type: job.type, jobId: job.id }; return result; };
+  const promise = bus?.runLocal ? bus.runLocal(job, exec) : new Promise((resolve,reject)=>setTimeout(()=>{ try{ resolve(exec()); }catch(e){ reject(e); } }, 20));
+  promise.then(result => {
+    lastResult = result;
+    $('runProgress').style.width = '100%'; $('runStatus').textContent = `Done via compute bus in ${fmt(lastResult.runtimeMs)} ms.`; renderResult(); updateExportPreview();
+  }).catch(err => {
+    $('runStatus').textContent = 'Error: ' + (err.message || err); $('runProgress').style.width = '0%'; console.error(err);
+  }).finally(() => {
+    stochasticBusJob = null;
+    if (btn) { btn.disabled = false; btn.textContent = '▶ Run ensemble'; }
+  });
 }
 function renderResult() {
   const m = { ...(lastResult.metrics || {}), 'runtime ms': lastResult.runtimeMs };
@@ -879,7 +966,7 @@ function renderResult() {
   if ($('metricRuns')) $('metricRuns').textContent = fmt(lastResult.metrics?.runs ?? currentSettings?.runs ?? '—');
   if ($('metricRuntime')) $('metricRuntime').textContent = fmt(lastResult.runtimeMs) + ' ms';
   if ($('metricVariable')) $('metricVariable').textContent = currentSettings?.plotVariable || '—';
-  if ($('metricEngine')) $('metricEngine').textContent = currentPreset?.engine || '—';
+  if ($('metricEngine')) $('metricEngine').textContent = [currentPreset?.engine, currentSettings?.method].filter(Boolean).join(' / ') || '—';
   populateStochasticPlotTypes();
   renderSelectedPlots();
   renderMeanFieldBox();
@@ -891,6 +978,8 @@ function renderStochasticWarnings() {
   const truncated = Number(lastResult.metrics?.['paths at maxEvents'] || 0);
   const parts = [];
   if (currentPreset?.engine === 'ctmc') parts.push('CTMC events that would create negative state counts are blocked before firing, not clamped after firing.');
+  if (lastResult.method === 'tau-leaping') parts.push('Tau-leaping is approximate; reduce tau and compare with Gillespie before trusting low-copy-number regimes.');
+  if (lastResult.method === 'euler-maruyama') parts.push('Euler–Maruyama is a continuous-noise approximation; it is useful for large-copy-number regimes, not exact event statistics.');
   if (truncated > 0) parts.push(`${truncated} path(s) reached maxEvents; increase max events or shorten the horizon before trusting tail statistics.`);
   if (lastResult.meanField) parts.push('Mean-field overlay is a deterministic large-count approximation. It can fail near extinction, low copy numbers, or strong nonlinear propensities.');
   box.textContent = parts.join(' ') || 'No stochastic warnings for this run.';
@@ -903,6 +992,7 @@ function populateStochasticPlotTypes() {
   const rightVal = right.value || 'diagnostic';
   const leftOpts = [
     ['ensemble', 'Ensemble paths'],
+    ['bands', 'Median + 5–95% band'],
     ['mean', 'Mean trajectory'],
     ['single', 'Single path'],
     ['default', 'Model default']
@@ -910,6 +1000,7 @@ function populateStochasticPlotTypes() {
   if (lastResult.meanField) leftOpts.splice(2, 0, ['mean-field', 'Mean + mean-field']);
   const rightOpts = [
     ['diagnostic', 'Distribution / diagnostic'],
+    ['bands', 'Median + 5–95% band'],
     ['metrics', 'Metrics bar chart']
   ];
   left.innerHTML = leftOpts.map(([v,l]) => `<option value="${v}">${l}</option>`).join('');
@@ -934,6 +1025,9 @@ function buildLeftPlot(type) {
   if (type === 'single' && paths.length) {
     return { traces: [traceLine('run 1', x, paths[0], { line: { width: 2 } })], title: 'Single stochastic path', xLabel: lastResult.xA || '', yLabel: lastResult.yA || '' };
   }
+  if (type === 'bands' && paths.length && lastResult.q05 && lastResult.q95) {
+    return { traces: [traceLine('5% quantile', x, lastResult.q05, { line: { dash: 'dot', width: 1 } }), traceLine('95% quantile', x, lastResult.q95, { line: { dash: 'dot', width: 1 }, fill: 'tonexty', opacity: 0.18 }), traceLine('median', x, lastResult.q50 || lastResult.meanPath, { line: { width: 3 } }), traceLine('mean', x, lastResult.meanPath || x.map((_, i) => mean(paths.map(p => p[i]))), { line: { dash: 'dash', width: 2 } })], title: 'Median and 5–95% uncertainty band', xLabel: lastResult.xA || '', yLabel: lastResult.yA || '' };
+  }
   if (type === 'mean' && paths.length) {
     const y = x.map((_, i) => mean(paths.map(p => p[i])));
     return { traces: [traceLine('ensemble mean', x, y, { line: { width: 3 } })], title: 'Ensemble mean', xLabel: lastResult.xA || '', yLabel: lastResult.yA || '' };
@@ -946,13 +1040,14 @@ function buildLeftPlot(type) {
     const traces = paths.slice(0, 24).map((y,i)=>traceLine('run '+(i+1), x, y, { opacity:.35, line:{width:1} }));
     const y = x.map((_, i) => mean(paths.map(p => p[i])));
     traces.push(traceLine('mean', x, y, { line: { width: 3 } }));
+    if (lastResult.q05 && lastResult.q95) { traces.push(traceLine('5% quantile', x, lastResult.q05, { line:{dash:'dot',width:1} })); traces.push(traceLine('95% quantile', x, lastResult.q95, { line:{dash:'dot',width:1}, fill:'tonexty', opacity:0.14 })); }
     if (lastResult.meanField) traces.push(traceLine('mean-field', lastResult.meanField.x, lastResult.meanField.y, { line: { dash: 'dash', width: 3 } }));
     return { traces, title: 'Stochastic ensemble', xLabel: lastResult.xA || '', yLabel: lastResult.yA || '' };
   }
   return { traces: lastResult.tracesA || [], title: lastResult.titleA || 'Main plot', xLabel: lastResult.xA || '', yLabel: lastResult.yA || '' };
 }
 function buildRightPlot(type) {
-  if (['ensemble','mean','single','mean-field'].includes(type)) return buildLeftPlot(type);
+  if (['ensemble','bands','mean','single','mean-field'].includes(type)) return buildLeftPlot(type);
   if (type === 'metrics') {
     const entries = Object.entries(lastResult.metrics || {}).filter(([,v]) => Number.isFinite(Number(v))).slice(0, 12);
     return { traces: [{ type:'bar', x: entries.map(e=>e[0]), y: entries.map(e=>Number(e[1])), name:'metrics' }], title: 'Run metrics', xLabel: 'metric', yLabel: 'value' };
@@ -1107,15 +1202,19 @@ if __name__ == '__main__':
 function populatePlotTypeSelects() {
   const leftOpts = [
     ['ensemble', 'Ensemble paths'],
+    ['bands', 'Median + 5–95% band'],
     ['mean', 'Mean trajectory'],
     ['single', 'Single path'],
     ['mean-field', 'Mean + mean-field'],
     ['diagnostic', 'Distribution / diagnostic'],
+    ['bands', 'Median + 5–95% band'],
     ['metrics', 'Metrics chart']
   ];
   const rightOpts = [
     ['diagnostic', 'Distribution / diagnostic'],
+    ['bands', 'Median + 5–95% band'],
     ['ensemble', 'Ensemble paths'],
+    ['bands', 'Median + 5–95% band'],
     ['mean', 'Mean trajectory'],
     ['single', 'Single path'],
     ['mean-field', 'Mean + mean-field'],
@@ -1145,7 +1244,7 @@ function bindEvents() {
   $('stochExportSvg')?.addEventListener('click', () => safeDownloadPlot('leftPlot', 'svg', 'primary'));
   $('stochExportPngRight')?.addEventListener('click', () => safeDownloadPlot('rightPlot', 'png', 'secondary'));
   $('stochExportSvgRight')?.addEventListener('click', () => safeDownloadPlot('rightPlot', 'svg', 'secondary'));
-  ['runsInput','seedInput','tEndInput','gridInput','maxEventsInput','plotVariable','meanFieldToggle'].forEach(id => $(id).addEventListener('change', () => { readSettings(); updateExportPreview(); maybeAutoRun(); }));
+  ['runsInput','seedInput','tEndInput','gridInput','maxEventsInput','methodInput','tauInput','sdeSigmaInput','plotVariable','meanFieldToggle'].forEach(id => $(id).addEventListener('change', () => { readSettings(); updateExportPreview(); maybeAutoRun(); }));
   $('copySummary').addEventListener('click', () => navigator.clipboard?.writeText(JSON.stringify(lastResult?.metrics || {}, null, 2)));
   $('downloadModel').addEventListener('click', () => downloadText(`${currentPreset.id}-model.json`, JSON.stringify({ engine: currentPreset.engine, model: currentModel, settings: currentSettings }, null, 2), 'application/json'));
   $('downloadCsv').addEventListener('click', () => downloadText(`${currentPreset.id}-trajectories-wide.csv`, resultToCsv(), 'text/csv'));

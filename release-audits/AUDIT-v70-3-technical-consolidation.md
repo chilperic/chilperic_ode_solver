@@ -32,7 +32,7 @@ The browser implementation remains exploratory; export is still required for pub
 - Mobile behavior falls back to one-column controls.
 
 ### 4. Version-token cleanup
-- Local HTML references now use `?v=70.5.0` consistently for release-controlled assets.
+- Local HTML references now use `?v=71.46.0` consistently for release-controlled assets.
 - Legacy tests were updated to match the v70.4 release contract.
 
 ### 5. Developer-facing UI noise

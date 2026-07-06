@@ -1,0 +1,28 @@
+const assert = require('assert');
+const fit = require('../src/core/fitting.js');
+const ml = require('../src/core/ml-lite.js');
+const stats = require('../src/core/statistics.js');
+function close(a,b,eps=1e-4){ assert.ok(Math.abs(a-b)<eps, `${a} != ${b}`); }
+const pairs = fit.parsePairs('0 1\n1 2\n2 4\n3 8\n4 16');
+const exp = fit.fit(pairs,'exponential');
+assert.ok(Number.isFinite(exp.aic));
+assert.ok(Number.isFinite(exp.bic));
+assert.ok(Array.isArray(exp.residuals));
+const enz = fit.fit(fit.parsePairs('0.2 0.18\n0.5 0.34\n1 0.52\n2 0.71\n4 0.86\n8 0.94'),'michaelis');
+assert.ok(enz.Vmax > 0 && enz.Km > 0);
+assert.ok(enz.parameterSummary.length === 2);
+const tbl = ml.parseTable('x1,x2,label\n1,1,0\n1.2,0.9,0\n0.8,1.1,0\n5,5,1\n5.2,4.8,1\n4.7,5.1,1');
+const data = ml.pickFeatures(tbl.rows,[1,2],3);
+const lr = ml.logisticRegression(data.X,data.y,0.2,200);
+assert.ok(lr.lossHistory.length > 4);
+const pr = ml.precisionRecall(data.y,lr.probs);
+assert.strictEqual(pr.length,21);
+const km = ml.kmeans(data.X,2,40);
+const sil = ml.silhouetteScore(data.X,km.labels);
+assert.ok(Number.isFinite(sil.mean));
+assert.strictEqual(sil.values.length,data.X.length);
+const elbow = ml.elbowCurve(data.X,4);
+assert.ok(elbow.length >= 2 && elbow.every(o => Number.isFinite(o.inertia)));
+const table = stats.parseTable('x,y,z\n1,2,4\n2,4,8\n3,6,12', '', 'drop');
+assert.strictEqual(table.cols.length,3);
+console.log('v70.16 numeric depth: ok');

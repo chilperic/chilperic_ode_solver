@@ -1,0 +1,10 @@
+(function(root){'use strict';
+const Kit = root.FokoKit || (typeof require==='function' ? require('../fokokit.js') : null);
+function rng(seed){return (Kit&&Kit.seededRandom)?Kit.seededRandom(seed):Math.random;}
+function poisson(lambda, rand){lambda=Math.max(0,lambda); if(lambda>50){const z=Math.sqrt(-2*Math.log(rand()))*Math.cos(2*Math.PI*rand());return Math.max(0,Math.round(lambda+Math.sqrt(lambda)*z));}let L=Math.exp(-lambda),k=0,p=1;do{k++;p*=rand();}while(p>L);return k-1;}
+function normal(rand){return Math.sqrt(-2*Math.log(Math.max(1e-12,rand())))*Math.cos(2*Math.PI*rand());}
+function tauLeap({state, reactions, t0=0, t1=10, tau=0.1, seed=1234}){let x=state.slice().map(Number), t=t0; const out=[{t,state:x.slice()}], rand=rng(seed); while(t<t1-1e-12){const h=Math.min(tau,t1-t); const dx=Array(x.length).fill(0); for(const r of reactions){const a=Math.max(0,Number(r.propensity(x,t))||0);const fires=poisson(a*h,rand);(r.change||[]).forEach((v,i)=>dx[i]+=v*fires);} x=x.map((v,i)=>Math.max(0,v+dx[i])); t+=h; out.push({t,state:x.slice()});}return out;}
+function eulerMaruyama({state, drift, diffusion, t0=0, t1=10, dt=0.01, seed=1234}){let x=state.slice().map(Number),t=t0;const out=[{t,state:x.slice()}],rand=rng(seed);while(t<t1-1e-12){const h=Math.min(dt,t1-t),mu=drift(x,t),sig=diffusion(x,t);x=x.map((v,i)=>v+(mu[i]||0)*h+(sig[i]||0)*Math.sqrt(h)*normal(rand));t+=h;out.push({t,state:x.slice()});}return out;}
+function quantileBands(paths,qlo=0.05,qhi=0.95){if(!paths.length)return [];const T=paths[0].length;const bands=[];for(let i=0;i<T;i++){const values=paths.map(p=>p[i]).slice().sort((a,b)=>a-b);const pick=q=>values[Math.max(0,Math.min(values.length-1,Math.floor(q*(values.length-1))))];bands.push({low:pick(qlo),median:pick(.5),high:pick(qhi)});}return bands;}
+const api={tauLeap,eulerMaruyama,quantileBands,poisson,rng}; if(typeof module!=='undefined'&&module.exports)module.exports=api; root.FokoStochasticAdvanced=api;
+}(typeof window!=='undefined'?window:globalThis));

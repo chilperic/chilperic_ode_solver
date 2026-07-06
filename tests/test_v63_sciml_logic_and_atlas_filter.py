@@ -31,10 +31,10 @@ def test_sciml_modeling_problems_are_selectable_and_exported():
 
 def test_sciml_has_modeler_grade_diagnostic_plots():
     html = read('sciml.html')
-    for value in ['trajectory','loss','derivative','predicted','error_heatmap','residual_time','residual_hist','cv_residuals','coefficients','library_heatmap','phase2d','phase3d']:
+    for value in ['trajectory','pareto','derivative','predicted','error_heatmap','residual_time','residual_hist','coefficients','library_heatmap','phase2d','phase3d']:
         assert f'value="{value}"' in html
     js = read('src/sciml-lab.js')
-    for token in ['Training / validation / physics loss template', 'Predicted vs reference derivative', 'Spatial / temporal absolute error heatmap', 'Pointwise error distribution', 'Cross-validation residuals', 'Sparse coefficient spectrum', 'Candidate-library heatmap']:
+    for token in ['Predicted vs reference derivative', 'Spatial / temporal absolute error heatmap', 'Pointwise error distribution', 'Cross-validation residuals', 'Sparse coefficient spectrum', 'Candidate-library heatmap']:
         assert token in js
 
 def test_sciml_is_connected_to_model_atlas_and_filter_categories():

@@ -1870,3 +1870,241 @@ body[data-lab='tutorial'] .doc-lede,body[data-lab='tutorial'] .note,body[data-la
 .mw-opt-editor-table td small{display:block;color:var(--muted,#647086);font-size:.72rem;margin-top:2px;}
 .mw-opt-editor-table input{max-width:130px;}
 .mw-card-control.mw-opt-setup-block{border-left:4px solid var(--accent,#0f766e);padding-left:10px;}
+
+/* v71.3 compatibility route warning */
+.compat-route-warning{margin:1rem auto;max-width:1180px;padding:.9rem 1rem;border:1px solid #f59e0b;background:#fffbeb;color:#78350f;border-radius:14px;font-size:.95rem}.descriptor-page #statisticsShellApp{margin:0 auto 2rem;max-width:1280px}.descriptor-page .foko-shell-frame{align-items:stretch}.descriptor-page .foko-shell-output{white-space:normal}.descriptor-page .foko-shell-plot{min-height:420px}.descriptor-page .analysis-panel{margin:0}.descriptor-page .analysis-output{white-space:pre-wrap}
+
+/* v71.7 legacy standalone layout repair
+   The preserved stochastic / optimization / steady-state pages must remain
+   directly usable. They are not redirects and must not collapse into a narrow
+   left rail after execution/export. This layer overrides the drifting 3-column
+   shell only for those legacy pages. */
+body[data-lab="stochastic"] .standalone-route-notice,
+body[data-lab="optimization"] .standalone-route-notice,
+body[data-lab="steady"] .standalone-route-notice{
+  max-width:1540px;
+  margin:22px auto 0;
+  padding:12px 16px;
+  border:1px solid color-mix(in srgb,var(--accent) 32%,var(--line));
+  border-radius:16px;
+  background:color-mix(in srgb,var(--accent) 7%,var(--panel));
+  color:var(--text);
+  box-shadow:var(--shadow-sm,0 8px 24px rgba(15,42,68,.06));
+}
+body[data-lab="stochastic"] .compat-route-warning,
+body[data-lab="optimization"] .compat-route-warning,
+body[data-lab="steady"] .compat-route-warning{
+  display:none!important;
+}
+body[data-lab="stochastic"] main.lab-mirror-layout,
+body[data-lab="optimization"] main.lab-mirror-layout,
+body[data-lab="steady"] main.lab-mirror-layout{
+  display:grid!important;
+  grid-template-columns:minmax(340px,500px) minmax(0,1fr)!important;
+  grid-template-areas:"controls results"!important;
+  gap:20px!important;
+  max-width:1540px!important;
+  width:calc(100% - 44px)!important;
+  margin:0 auto!important;
+  padding:22px 0 44px!important;
+  align-items:start!important;
+}
+body[data-lab="stochastic"] main.lab-mirror-layout > .side-nav,
+body[data-lab="optimization"] main.lab-mirror-layout > .side-nav,
+body[data-lab="steady"] main.lab-mirror-layout > .side-nav{
+  display:none!important;
+}
+body[data-lab="stochastic"] main.lab-mirror-layout > .work-panel.controls,
+body[data-lab="optimization"] main.lab-mirror-layout > .work-panel.controls,
+body[data-lab="steady"] main.lab-mirror-layout > .work-panel.controls{
+  grid-area:controls!important;
+  position:sticky!important;
+  top:132px!important;
+  max-height:calc(100vh - 154px)!important;
+  overflow:auto!important;
+  min-width:0!important;
+  width:100%!important;
+}
+body[data-lab="stochastic"] main.lab-mirror-layout > .workspace,
+body[data-lab="optimization"] main.lab-mirror-layout > .workspace,
+body[data-lab="steady"] main.lab-mirror-layout > .workspace{
+  grid-area:results!important;
+  grid-column:auto!important;
+  min-width:0!important;
+  width:100%!important;
+}
+body[data-lab="stochastic"] .results-card,
+body[data-lab="optimization"] .results-card,
+body[data-lab="steady"] .results-card,
+body[data-lab="stochastic"] .exports-card,
+body[data-lab="optimization"] .exports-card,
+body[data-lab="steady"] .exports-card{
+  width:100%!important;
+  min-width:0!important;
+}
+body[data-lab="stochastic"] .chart-grid,
+body[data-lab="optimization"] .chart-grid,
+body[data-lab="steady"] .chart-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px!important;
+  min-width:0!important;
+}
+body[data-lab="stochastic"] .plot-toolbar-v2,
+body[data-lab="optimization"] .plot-toolbar-v2,
+body[data-lab="steady"] .plot-toolbar-v2{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(180px,1fr)) repeat(2,auto)!important;
+  gap:10px!important;
+  align-items:end!important;
+}
+body[data-lab="stochastic"] .export-row,
+body[data-lab="optimization"] .export-row,
+body[data-lab="steady"] .export-row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:10px!important;
+  align-items:center!important;
+}
+body[data-lab="stochastic"] textarea,
+body[data-lab="optimization"] textarea,
+body[data-lab="steady"] textarea{
+  max-width:100%!important;
+}
+@media(max-width:1180px){
+  body[data-lab="stochastic"] main.lab-mirror-layout,
+  body[data-lab="optimization"] main.lab-mirror-layout,
+  body[data-lab="steady"] main.lab-mirror-layout{
+    grid-template-columns:1fr!important;
+    grid-template-areas:"controls" "results"!important;
+    width:calc(100% - 28px)!important;
+  }
+  body[data-lab="stochastic"] main.lab-mirror-layout > .work-panel.controls,
+  body[data-lab="optimization"] main.lab-mirror-layout > .work-panel.controls,
+  body[data-lab="steady"] main.lab-mirror-layout > .work-panel.controls{
+    position:static!important;
+    max-height:none!important;
+  }
+}
+@media(max-width:760px){
+  body[data-lab="stochastic"] .chart-grid,
+  body[data-lab="optimization"] .chart-grid,
+  body[data-lab="steady"] .chart-grid,
+  body[data-lab="stochastic"] .plot-toolbar-v2,
+  body[data-lab="optimization"] .plot-toolbar-v2,
+  body[data-lab="steady"] .plot-toolbar-v2{
+    grid-template-columns:1fr!important;
+  }
+}
+
+
+/* v71.9 unified identity + standalone lab depth notes */
+.creator-identity-figure{position:relative;display:grid;place-items:center;min-height:220px;}
+.creator-identity-figure .creator-photo{width:min(100%,220px);height:220px;object-fit:cover;border-radius:32px;border:1px solid var(--line);box-shadow:0 22px 54px rgba(15,42,68,.18);}
+.creator-identity-figure .creator-platform-mark{position:absolute;right:18px;bottom:14px;width:64px;height:64px;padding:8px;border-radius:18px;background:var(--panel);border:1px solid var(--line);box-shadow:0 12px 28px rgba(15,42,68,.14);}
+.compact-lead{max-width:88ch;font-size:1rem;}
+.standalone-power-home,.standalone-doc-section{scroll-margin-top:100px;}
+.standalone-power-grid a,.standalone-power-grid .lab-card{border-left:4px solid var(--accent);}
+.standalone-power-brief{width:min(100% - 40px,1240px);margin:22px auto 0;padding:18px 22px;border:1px solid var(--line);border-radius:22px;background:color-mix(in srgb,var(--panel) 88%,transparent);box-shadow:var(--shadow);}
+.standalone-power-brief h2{margin:.2rem 0 .4rem;font-size:clamp(1.35rem,2vw,2rem);}
+.standalone-power-brief p{color:var(--muted);}
+.standalone-power-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+.standalone-power-columns article{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--panel2);}
+.standalone-power-columns h3{margin:0 0 8px;font-size:1rem;color:var(--text);}
+@media(max-width:820px){.creator-identity-figure .creator-photo{width:180px;height:180px}.standalone-power-columns{grid-template-columns:1fr}.standalone-power-brief{width:min(100% - 24px,1240px);}}
+
+/* v71.10 — focused-lab navigation and creator-photo restoration */
+body[data-lab='home'] .creator-photo-card{
+  display:grid!important;
+  grid-template-columns:142px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:22px!important;
+  padding:24px!important;
+}
+body[data-lab='home'] .creator-photo-card > img{
+  width:142px!important;
+  height:142px!important;
+  object-fit:cover!important;
+  border-radius:22px!important;
+  border:1px solid var(--line)!important;
+  box-shadow:0 18px 42px rgba(15,42,68,.16)!important;
+  background:var(--panel)!important;
+}
+body[data-lab='home'] .creator-photo-card h2{font-size:1.45rem!important;line-height:1.08!important;margin:0!important;}
+body[data-lab='home'] .creator-photo-card p:not(.home-v705-profile-kicker){font-size:.94rem!important;line-height:1.5!important;margin:10px 0 14px!important;}
+body[data-lab='home'] .creator-photo-card a{display:inline-flex!important;margin:4px 8px 0 0!important;}
+.focused-labs-home{padding-top:28px!important;padding-bottom:28px!important;}
+.focused-labs-home .compact-grid a small{font-size:.82rem!important;line-height:1.35!important;}
+.foko-main-nav.foko-unified-nav .standalone-menu-panel{width:min(430px,calc(100vw - 32px))!important;}
+@media(max-width:760px){
+  body[data-lab='home'] .creator-photo-card{grid-template-columns:96px minmax(0,1fr)!important;padding:18px!important;gap:14px!important;}
+  body[data-lab='home'] .creator-photo-card > img{width:96px!important;height:96px!important;border-radius:16px!important;}
+}
+
+
+/* v71.12 ODE focused-lab depth and home cleanup.
+   Keep Mathematical Beauty visually consistent with other route cards and keep ODE additions compact. */
+body[data-lab="home"] .home-v705-route-grid a[href="beauty.html"]::after,
+body[data-lab="home"] .home-v705-card-grid a[href="beauty.html"]::after,
+body[data-lab="home"] .home-v705-card-grid a[href="beauty.html"] b::after{content:none!important;display:none!important;}
+body[data-lab="home"] .home-v705-route-grid a[href="beauty.html"],
+body[data-lab="home"] .home-v705-card-grid a[href="beauty.html"]{border:1px solid var(--line)!important;background:var(--panel)!important;}
+body[data-lab="ode"] .ode-data-tools{padding:10px 12px;border-radius:16px;box-shadow:none;}
+body[data-lab="ode"] .ode-data-tools summary{font-weight:900;cursor:pointer;color:var(--text);}
+body[data-lab="ode"] .ode-data-tools textarea{width:100%;min-height:88px;max-height:180px;resize:vertical;margin:.35rem 0 .55rem;border:1px solid var(--line);border-radius:12px;background:var(--panel2);padding:9px 10px;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;}
+body[data-lab="ode"] .ode-data-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;}
+body[data-lab="ode"] .compact-diagnostics{margin-top:8px;min-height:42px;font-size:12px;line-height:1.35;}
+body[data-lab="ode"] .plot-toolbar-v2{grid-template-columns:minmax(150px,1fr) minmax(150px,1fr) auto minmax(110px,150px) auto auto;gap:8px;padding:10px 12px;}
+body[data-lab="ode"] .plot-toolbar-v2 #figureSettings{grid-column:auto;}
+body[data-lab="ode"] .exports-card{padding:10px 12px;}
+body[data-lab="ode"] .export-row{gap:8px;}
+body[data-lab="ode"] .export-row .secondary,body[data-lab="ode"] .plot-toolbar-v2 .ghost{padding:8px 10px;font-size:12px;}
+body[data-lab="ode"] #exportNote{margin:.55rem 0 0;font-size:12px;line-height:1.35;}
+@media(max-width:1180px){body[data-lab="ode"] .ode-data-grid,body[data-lab="ode"] .plot-toolbar-v2{grid-template-columns:1fr 1fr;}body[data-lab="ode"] .ode-data-grid .check-label{grid-column:1/-1;justify-content:flex-start}}
+@media(max-width:720px){body[data-lab="ode"] .ode-data-grid,body[data-lab="ode"] .plot-toolbar-v2{grid-template-columns:1fr}}
+
+/* v71.19 reproducibility layer: compact session controls */
+.v71-session-bar{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:6px;
+  align-items:center;
+  margin:0 0 8px;
+  padding:4px 0;
+  border:0;
+  background:transparent;
+}
+.v71-session-bar .v71-shell-button,
+.v71-upload-row .v71-shell-button{
+  padding:6px 9px;
+  border-radius:10px;
+  font-size:.82rem;
+  line-height:1.15;
+  min-height:30px;
+}
+.v71-upload-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+  margin-top:6px;
+}
+.v71-upload-status{font-size:.82rem;color:#475569;}
+@media (max-width:760px){.v71-session-bar{justify-content:flex-start}.v71-session-bar .v71-shell-button{font-size:.78rem;padding:5px 7px}}
+
+/* v71.30 analysis plot interactivity repair */
+.analysis-plot-toolbar{display:flex!important;align-items:end!important;gap:.75rem!important;flex-wrap:wrap!important;padding:.65rem .75rem!important;border:1px solid var(--border,#cfe0ea)!important;border-radius:18px!important;background:rgba(255,255,255,.78)!important;box-shadow:0 10px 30px rgba(20,70,90,.05)!important;margin-bottom:1rem!important}
+.analysis-plot-picker{display:grid!important;gap:.25rem!important;min-width:220px!important;margin:0!important;font-weight:800!important;color:var(--ink,#122033)!important}
+.analysis-plot-picker span{font-size:.72rem!important;letter-spacing:.08em!important;text-transform:uppercase!important;color:var(--muted,#64748b)!important}
+.analysis-plot-picker select{height:42px!important;border:1px solid var(--border,#cfe0ea)!important;border-radius:14px!important;background:#fff!important;padding:0 .75rem!important;font-weight:800!important;color:var(--ink,#122033)!important}
+.analysis-plot-note{align-self:center!important;color:var(--muted,#64748b)!important;font-weight:700!important;font-size:.86rem!important}
+.analysis-left-plot-hidden{display:none!important}
+.analysis-status-strip[data-state="running"] .status-ok b{color:#b45309!important}
+.analysis-status-strip[data-state="running"] .status-ok span{animation:fokoPulse 1s linear infinite!important}
+.analysis-status-strip[data-state="error"] .status-ok b{color:#b91c1c!important}
+.analysis-status-strip[data-state="computed"] .status-ok b{color:#008b8b!important}
+.analysis-plot-wait{height:360px;display:grid;place-items:center;font-weight:900;color:var(--muted,#64748b);background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(230,247,250,.65));border:1px dashed var(--border,#cfe0ea);border-radius:18px}
+@keyframes fokoPulse{0%{opacity:.35}50%{opacity:1}100%{opacity:.35}}
+
+/* V71.31 analysis shell markers: analysis-plot-picker analysis-left-plot-hidden analysis-plot-wait data-state="running" data-analysis-tertiary-plot analysis-user-input-card analysis-latex-preview */

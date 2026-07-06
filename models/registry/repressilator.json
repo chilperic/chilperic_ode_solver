@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "repressilator",
+  "title": "Repressilator",
+  "vars": [
+    "x",
+    "y",
+    "z"
+  ],
+  "params": {
+    "alpha": 10,
+    "n": 2,
+    "delta": 1
+  },
+  "init": {
+    "x": 1,
+    "y": 0,
+    "z": 0
+  },
+  "eqs": {
+    "x": "alpha/(1+z^n)-delta*x",
+    "y": "alpha/(1+x^n)-delta*y",
+    "z": "alpha/(1+y^n)-delta*z"
+  },
+  "tspan": [
+    0,
+    60
+  ]
+}

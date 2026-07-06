@@ -117,3 +117,43 @@ This release implements the dark scientific IDE header, top-right About avatar, 
 
 This release fixes the v70 navigation regressions: the Workbench dropdown now has stronger contrast, the classic/legacy labs are restored inside the Workbench menu, and Research Hub is a first-class header route. The clickable profile avatar remains the About entry point. Internal audit notes are stored under `release-audits/`, not presented as learner-facing UI.
 
+
+
+## Local validation (v70.15)
+
+```bash
+python3 -m pytest -q tests
+node tests/test_v70_9_numeric_cores_node.js
+node tests/test_v70_11_numeric_cores_node.js
+for f in src/*.js src/stochastic/*.js; do
+  [ -f "$f" ] && node --check "$f"
+done
+python3 -m http.server 8010
+```
+
+
+## Local validation (v70.16)
+
+```bash
+python3 -m pytest -q tests
+node tests/test_v70_9_numeric_cores_node.js
+node tests/test_v70_11_numeric_cores_node.js
+node tests/test_v70_16_numeric_depth_node.js
+for f in src/*.js src/stochastic/*.js; do
+  [ -f "$f" ] && node --check "$f"
+done
+python3 -m http.server 8010
+```
+
+
+## Browser end-to-end deploy gate
+
+V71.22 adds a Playwright smoke gate for the deployed browser experience. After installing Node dependencies and the Chromium browser, run:
+
+```bash
+npm install
+npx playwright install chromium
+npm run test:e2e
+```
+
+The gate checks that the home page, focused labs, descriptor analysis labs, and reproducibility controls load in a real browser.

@@ -1,0 +1,96 @@
+/* v70.11: modeling-platform correction.
+   Fixes invisible dropdown labels, reorganizes analysis/SciML, and gives analysis labs a real product UI. */
+
+:root{
+  --v711-ink:#0e1f33;
+  --v711-muted:#52657c;
+  --v711-line:#d4e2ea;
+  --v711-panel:#ffffff;
+  --v711-soft:#eef8fa;
+  --v711-accent:#007d87;
+  --v711-accent-2:#0f766e;
+  --v711-shadow:0 18px 44px rgba(15,31,51,.08);
+}
+
+/* Dropdown visibility: older v40 CSS hid all nested spans. This release overrides it explicitly. */
+.foko-main-nav .labs-menu-panel,
+.foko-main-nav details[open] > .labs-menu-panel{
+  background:#ffffff!important;
+  color:#0f172a!important;
+  border:1px solid #b8cbd6!important;
+  border-radius:18px!important;
+  box-shadow:0 26px 64px rgba(2,20,30,.34),0 0 0 3px rgba(255,255,255,.65)!important;
+  padding:12px!important;
+  width:min(420px,calc(100vw - 30px))!important;
+  max-height:min(76vh,610px)!important;
+  overflow-y:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:8px!important;
+  z-index:20000!important;
+}
+.foko-main-nav .labs-menu-panel::before{background:#fff!important;border-color:#b8cbd6!important;}
+.foko-main-nav .labs-menu-panel .menu-section{display:flex!important;flex-direction:column!important;gap:5px!important;margin:0!important;padding:0!important;}
+.foko-main-nav .labs-menu-panel .menu-section + .menu-section{border-top:1px solid #dbe5ee!important;margin-top:5px!important;padding-top:10px!important;}
+.foko-main-nav .labs-menu-panel .menu-section-title{display:block!important;margin:0 0 5px!important;padding:7px 10px!important;border-radius:10px!important;border:1px solid #a6dce1!important;background:#e8f8fa!important;color:#063b43!important;font-size:.7rem!important;line-height:1.1!important;font-weight:950!important;letter-spacing:.12em!important;text-transform:uppercase!important;}
+.foko-main-nav .labs-menu-panel a{display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;align-items:center!important;gap:10px!important;min-height:52px!important;padding:9px 10px!important;border-radius:12px!important;text-decoration:none!important;background:#fff!important;border:1px solid transparent!important;color:#0f172a!important;opacity:1!important;visibility:visible!important;}
+.foko-main-nav .labs-menu-panel a > span:not(.menu-icon){display:block!important;visibility:visible!important;opacity:1!important;color:#0f172a!important;min-width:0!important;}
+.foko-main-nav .labs-menu-panel a b{display:block!important;visibility:visible!important;opacity:1!important;color:#0f172a!important;font-size:.93rem!important;line-height:1.12!important;font-weight:950!important;white-space:normal!important;}
+.foko-main-nav .labs-menu-panel a small{display:block!important;visibility:visible!important;opacity:1!important;color:#475569!important;font-size:.74rem!important;line-height:1.22!important;font-weight:700!important;white-space:normal!important;margin-top:2px!important;}
+.foko-main-nav .labs-menu-panel .menu-icon{width:32px!important;height:32px!important;border-radius:10px!important;display:grid!important;place-items:center!important;background:#e6f7f8!important;color:#007d87!important;font-weight:950!important;font-size:1rem!important;}
+.foko-main-nav .labs-menu-panel a:hover,
+.foko-main-nav .labs-menu-panel a:focus-visible{background:#e6f7f8!important;border-color:#8ecfd6!important;outline:2px solid #0f766e!important;outline-offset:1px!important;}
+.foko-main-nav .labs-menu-panel a.active,
+.foko-main-nav .labs-menu-panel a[aria-current='page']{background:#0f766e!important;border-color:#0f766e!important;color:#fff!important;}
+.foko-main-nav .labs-menu-panel a.active b,
+.foko-main-nav .labs-menu-panel a.active small,
+.foko-main-nav .labs-menu-panel a[aria-current='page'] b,
+.foko-main-nav .labs-menu-panel a[aria-current='page'] small{color:#fff!important;}
+.foko-main-nav .labs-menu-panel a.active .menu-icon,
+.foko-main-nav .labs-menu-panel a[aria-current='page'] .menu-icon{background:#ccfbf1!important;color:#064e3b!important;}
+
+/* Utility current-state rule: selected page != hover/open state. */
+.foko-main-nav > a,
+.foko-main-nav > details > summary{border:1px solid transparent!important;box-shadow:none!important;}
+.foko-main-nav > a:hover,
+.foko-main-nav > details > summary:hover,
+.foko-main-nav > details[open] > summary:not(.active):not([aria-current='page']){background:rgba(255,255,255,.09)!important;border-color:rgba(255,255,255,.22)!important;color:#fff!important;box-shadow:none!important;}
+.foko-main-nav > a.active,
+.foko-main-nav > a[aria-current='page'],
+.foko-main-nav > details > summary.active,
+.foko-main-nav > details > summary[aria-current='page']{background:#0f766e!important;border-color:#9ff8ef!important;color:#fff!important;box-shadow:inset 0 -4px 0 #9ff8ef!important;}
+
+/* Keep the theme selector visually separate from selected nav tabs. */
+.foko-theme-picker{height:34px!important;border-radius:10px!important;background:rgba(15,23,42,.34)!important;border:1px solid rgba(255,255,255,.22)!important;box-shadow:none!important;}
+.foko-theme-picker .theme-select{height:28px!important;min-width:100px!important;font-size:.78rem!important;}
+
+/* Beauty is now a first-class route. */
+body[data-lab='home'] a[href='beauty.html']{position:relative;}
+body[data-lab='home'] .home-v705-route-grid a[href='beauty.html'],
+body[data-lab='home'] .home-v705-card-grid a[href='beauty.html']{border:2px solid #76d8df!important;background:linear-gradient(180deg,#fff,#edfafa)!important;}
+/* Analysis labs: product-level structure instead of raw form pages. */
+body[data-lab='analysis']{background:#f6f9fc!important;color:var(--v711-ink)!important;}
+.analysis-page{width:min(1220px,calc(100% - 38px))!important;margin:0 auto!important;padding:28px 0 48px!important;color:var(--v711-ink)!important;}
+.analysis-hero{display:grid!important;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr)!important;gap:18px!important;align-items:center!important;padding:26px 30px!important;margin-bottom:18px!important;border:1px solid var(--v711-line)!important;border-radius:24px!important;background:linear-gradient(135deg,#ffffff,#eef8fa)!important;box-shadow:var(--v711-shadow)!important;}
+.analysis-hero h1{margin:0!important;font-size:clamp(2rem,3.1vw,3rem)!important;line-height:1.03!important;letter-spacing:-.04em!important;color:var(--v711-ink)!important;}
+.analysis-hero p{margin:.35rem 0 0!important;color:var(--v711-muted)!important;font-size:1rem!important;line-height:1.55!important;max-width:760px!important;}
+.analysis-eyebrow{margin:0 0 8px!important;color:var(--v711-accent)!important;font-size:.73rem!important;font-weight:950!important;letter-spacing:.13em!important;text-transform:uppercase!important;}
+.analysis-quick{display:grid;gap:8px;padding:14px;border:1px solid #cce3e8;border-radius:18px;background:#fff;}
+.analysis-quick b{color:#0e1f33;}
+.analysis-grid{display:grid!important;grid-template-columns:minmax(360px,.88fr) minmax(460px,1.12fr)!important;gap:18px!important;align-items:start!important;}
+.analysis-panel{min-width:0!important;padding:20px!important;border:1px solid var(--v711-line)!important;border-radius:22px!important;background:#fff!important;box-shadow:var(--v711-shadow)!important;color:var(--v711-ink)!important;}
+.analysis-panel h2{margin:0 0 14px!important;font-size:1.1rem!important;letter-spacing:.01em!important;color:var(--v711-ink)!important;}
+.analysis-subgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.analysis-panel label{display:grid!important;gap:6px!important;margin:0 0 12px!important;color:var(--v711-muted)!important;font-size:.82rem!important;font-weight:850!important;}
+.analysis-panel textarea,.analysis-panel input,.analysis-panel select{width:100%!important;box-sizing:border-box!important;border:1px solid var(--v711-line)!important;border-radius:12px!important;background:#edf8fc!important;color:var(--v711-ink)!important;padding:10px 12px!important;font:500 .9rem/1.35 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;}
+.analysis-panel select,.analysis-panel input{min-height:42px!important;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial,sans-serif!important;font-weight:750!important;}
+.analysis-panel textarea{min-height:170px!important;resize:vertical!important;}
+.analysis-run,.analysis-secondary{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-height:42px!important;padding:0 16px!important;border-radius:12px!important;border:1px solid #0f766e!important;background:#0f766e!important;color:#fff!important;font-weight:900!important;cursor:pointer!important;}
+.analysis-secondary{background:#fff!important;color:#0f766e!important;}
+.analysis-button-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+.analysis-output{min-height:180px!important;max-height:360px!important;overflow:auto!important;border:1px solid var(--v711-line)!important;border-radius:14px!important;background:#0f172a!important;color:#e5f7fa!important;padding:14px!important;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important;white-space:pre-wrap!important;}
+.analysis-plot{min-height:360px!important;border:1px solid var(--v711-line)!important;border-radius:16px!important;background:#fff!important;margin-top:14px!important;overflow:hidden!important;}
+.analysis-script{min-height:120px!important;}
+.lab-template-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important;}
+.lab-template-card pre{white-space:pre-wrap!important;font-size:.82rem!important;line-height:1.45!important;background:#0f172a!important;color:#e5f7fa!important;border-radius:14px!important;padding:12px!important;overflow:auto!important;}
+@media(max-width:980px){.analysis-hero,.analysis-grid,.analysis-subgrid,.lab-template-grid{grid-template-columns:1fr!important;}.analysis-page{width:min(100% - 20px,1220px)!important;}.foko-main-nav .labs-menu-panel{left:50%!important;}}

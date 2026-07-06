@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "goodwin",
+  "title": "Goodwin oscillator",
+  "vars": [
+    "x",
+    "y",
+    "z"
+  ],
+  "params": {
+    "a": 1,
+    "b": 1,
+    "c": 1,
+    "d": 1,
+    "e": 1,
+    "f": 1,
+    "n": 8
+  },
+  "init": {
+    "x": 1,
+    "y": 0.5,
+    "z": 0.5
+  },
+  "eqs": {
+    "x": "a/(1+z^n)-b*x",
+    "y": "c*x-d*y",
+    "z": "e*y-f*z"
+  },
+  "tspan": [
+    0,
+    80
+  ]
+}

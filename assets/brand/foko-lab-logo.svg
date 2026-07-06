@@ -1,19 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 108" role="img" aria-label="Foko Lab logo">
-  <defs>
-    <linearGradient id="tealBlue" x1="8" y1="18" x2="104" y2="94" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#14B8A6"/>
-      <stop offset="1" stop-color="#155EEF"/>
-    </linearGradient>
-  </defs>
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M54 9 96 32v47L54 102 12 79V32L54 9Z" stroke="#EAFBFF" stroke-width="4"/>
-    <path d="M28 70 C39 36, 70 35, 81 70 C68 88, 41 88, 28 70 Z" stroke="url(#tealBlue)" stroke-width="6"/>
-    <path d="M36 57 C46 46, 63 46, 73 57" stroke="#EAFBFF" stroke-opacity=".72" stroke-width="4"/>
-    <path d="M37 78 L73 42" stroke="#14B8A6" stroke-width="4"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 132" role="img" aria-labelledby="title desc">
+<title id="title">Foko Lab</title><desc id="desc">Scientific modeling platform for dynamics, optimization, equilibria, stochastic systems, data analysis and scientific machine learning.</desc>
+<defs>
+  <linearGradient id="orbit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2DD4BF"/><stop offset="0.45" stop-color="#38BDF8"/><stop offset="1" stop-color="#155EEF"/></linearGradient>
+  <radialGradient id="core" cx="45%" cy="42%" r="70%"><stop offset="0" stop-color="#E8FFFC"/><stop offset="0.55" stop-color="#38BDF8"/><stop offset="1" stop-color="#155EEF"/></radialGradient>
+</defs>
+<g transform="translate(12 12)">
+  <rect x="0" y="0" width="108" height="108" rx="28" fill="#061B2A" stroke="#BFFAF3" stroke-opacity=".75" stroke-width="3"/>
+  <path d="M15 57 C31 19 66 15 88 36 C112 59 84 94 56 61 C29 29 14 56 15 57 Z" fill="none" stroke="url(#orbit)" stroke-linecap="round" stroke-linejoin="round" stroke-width="7.5"/>
+  <path d="M18 77 C35 51 57 48 74 63 C85 73 95 76 100 66" fill="none" stroke="#E8FFFC" stroke-linecap="round" stroke-width="3.2" opacity=".94"/>
+  <path d="M22 55 H96 M54 22 V92" stroke="#BFEFFF" stroke-linecap="round" stroke-width="2" opacity=".42"/>
+  <circle cx="54" cy="55" r="7.5" fill="url(#core)" stroke="#F8FEFF" stroke-width="2.5"/>
+  <circle cx="30" cy="78" r="5" fill="#2DD4BF"/><circle cx="83" cy="35" r="5" fill="#38BDF8"/>
+  <g stroke="#38BDF8" stroke-width="2" opacity=".9">
+    <line x1="76" y1="70" x2="91" y2="61"/><line x1="76" y1="70" x2="93" y2="83"/><line x1="93" y1="83" x2="100" y2="69"/>
   </g>
-  <circle cx="54" cy="62" r="6" fill="#14B8A6"/>
-  <circle cx="37" cy="78" r="4" fill="#155EEF"/>
-  <circle cx="73" cy="42" r="4" fill="#EAFBFF"/>
-  <text x="124" y="48" font-family="Inter, ui-sans-serif, system-ui, Segoe UI, Arial, sans-serif" font-size="35" font-weight="900" fill="#FFFFFF" letter-spacing="-.9">FOKO LAB</text>
-  <text x="126" y="76" font-family="Inter, ui-sans-serif, system-ui, Segoe UI, Arial, sans-serif" font-size="17" font-weight="650" fill="#D7F8FA">Scientific Modeling Platform</text>
+  <circle cx="76" cy="70" r="3.8" fill="#2DD4BF"/><circle cx="91" cy="61" r="3.8" fill="#38BDF8"/><circle cx="93" cy="83" r="3.8" fill="#155EEF"/><circle cx="100" cy="69" r="3.8" fill="#BFFAF3"/>
+</g>
+<g transform="translate(144 36)">
+  <text x="0" y="50" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="54" font-weight="950" letter-spacing="-2.3" fill="#F8FEFF">Foko</text>
+  <text x="143" y="50" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="54" font-weight="950" letter-spacing="-2.3" fill="#7DEFE1">Lab</text>
+  <rect x="2" y="66" width="230" height="3" rx="1.5" fill="url(#orbit)" opacity=".9"/>
+  <text x="2" y="94" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="13" font-weight="850" letter-spacing="2" fill="#BFEFFF">SCIENTIFIC MODELING PLATFORM · MODELING · DATA · SCIML</text>
+</g>
 </svg>

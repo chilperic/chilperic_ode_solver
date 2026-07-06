@@ -743,9 +743,9 @@ class TestNewPagesCompleteness:
         """
         for page in ("contact.html", "acknowledgement.html"):
             html = read(page)
-            assert "styles/style.css?v=2.7.5" in html, (
+            assert "styles/style.css?v=71.46.0" in html, (
                 f"{page}: CSS version token mismatch.  "
-                "Expected 'style.css?v=2.7.5'."
+                "Expected 'style.css?v=71.46.0'."
             )
 
     def test_acknowledgement_credits_all_three_research_projects(self) -> None:

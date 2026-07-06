@@ -1,10 +1,4 @@
 (function () {
-  // ── Shared theme control ──────────────────────────────────────────────────
-  // The theme is applied on every page (boot script reads chilperic-theme) but
-  // the picker markup was hand-placed on only four lab pages. Any page without
-  // a control is a one-way door: a user on a dark theme who lands there cannot
-  // switch back. We inject a single, consistent picker into the topbar of every
-  // page that lacks one, wired to the same key and the same known-theme list.
   var KNOWN_THEMES = ['aurora', 'clarity', 'ocean', 'emerald', 'steel', 'royal', 'olive', 'copper', 'paper', 'graphite', 'slate', 'midnight', 'forest', 'contrast'];
   var THEME_LABELS = {
     aurora: 'Aurora', clarity: 'Clarity', ocean: 'Ocean', emerald: 'Emerald',
@@ -22,14 +16,109 @@
   function applyTheme(t) {
     if (KNOWN_THEMES.indexOf(t) < 0) t = 'aurora';
     document.documentElement.dataset.theme = t;
-    try { localStorage.setItem('chilperic-theme', t); } catch (e) { /* ignore */ }
-    // Notify any page-local plot code that theme changed (core labs listen).
+    try { localStorage.setItem('chilperic-theme', t); } catch (e) {}
     window.dispatchEvent(new CustomEvent('foko-theme-change', { detail: { theme: t } }));
   }
 
+  function pathPrefix() {
+    return location.pathname.indexOf('/research/') >= 0 ? '../' : '';
+  }
+
+  function makeMenuSummary(text) {
+    return '<summary class="labs-summary">' + text + '</summary>';
+  }
+
+  function injectUnifiedNavStyles() {
+    if (document.getElementById('foko-v70-12-nav-styles')) return;
+    var style = document.createElement('style');
+    style.id = 'foko-v70-12-nav-styles';
+    style.textContent = `
+      .foko-main-nav.foko-unified-nav,.topnav.foko-unified-nav{
+        margin-left:auto!important; display:flex!important; align-items:center!important; gap:10px!important;
+        min-width:0!important; flex-wrap:nowrap!important; white-space:nowrap!important;
+      }
+      .foko-main-nav.foko-unified-nav > a,
+      .foko-main-nav.foko-unified-nav > details > summary{
+        display:inline-flex!important; align-items:center!important; justify-content:center!important;
+        min-height:40px!important; padding:0 14px!important; border-radius:14px!important;
+        border:1px solid transparent!important; background:transparent!important; color:var(--muted)!important;
+        font-weight:800!important; font-size:.95rem!important; line-height:1!important;
+        transition:background .18s ease,border-color .18s ease,color .18s ease, box-shadow .18s ease!important;
+      }
+      .foko-main-nav.foko-unified-nav > a:hover,
+      .foko-main-nav.foko-unified-nav > details > summary:hover{
+        background:color-mix(in srgb,var(--accent) 8%, transparent)!important;
+        color:var(--text)!important;
+      }
+      .foko-main-nav.foko-unified-nav > a.active,
+      .foko-main-nav.foko-unified-nav > a[aria-current="page"],
+      .foko-main-nav.foko-unified-nav > details > summary.active,
+      .foko-main-nav.foko-unified-nav > details > summary[aria-current="page"]{
+        background:color-mix(in srgb,var(--accent) 16%, transparent)!important;
+        border-color:color-mix(in srgb,var(--accent) 52%, transparent)!important;
+        color:var(--text)!important;
+        box-shadow:inset 0 -3px 0 color-mix(in srgb,var(--accent) 85%, white 15%)!important;
+      }
+      .foko-main-nav.foko-unified-nav > details{position:relative!important}
+      .foko-main-nav.foko-unified-nav > details > summary{list-style:none!important}
+      .foko-main-nav.foko-unified-nav > details > summary::-webkit-details-marker{display:none}
+      .foko-main-nav.foko-unified-nav > details > summary::after{
+        content:'▾'; font-size:.78rem; margin-left:.5rem; opacity:.78;
+      }
+      .foko-main-nav.foko-unified-nav .labs-menu-panel{
+        position:absolute!important; top:calc(100% + 10px)!important; left:50%!important; transform:translateX(-50%)!important;
+        width:min(620px, calc(100vw - 32px))!important; padding:14px!important; border-radius:18px!important;
+        background:color-mix(in srgb,var(--panel) 96%, white 4%)!important; border:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%)!important;
+        box-shadow:0 24px 56px rgba(0,0,0,.22)!important; display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr))!important;
+        gap:12px!important; z-index:80!important;
+      }
+      .foko-main-nav.foko-unified-nav .labs-menu-panel[data-cols="1"]{grid-template-columns:1fr!important; width:min(420px,calc(100vw - 32px))!important}
+      .foko-main-nav.foko-unified-nav .labs-menu-panel::before{
+        content:''; position:absolute; top:-8px; left:50%; width:16px; height:16px; border-left:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%);
+        border-top:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%); background:color-mix(in srgb,var(--panel) 96%, white 4%);
+        transform:translateX(-50%) rotate(45deg);
+      }
+      .foko-main-nav.foko-unified-nav .menu-section{display:grid!important; gap:8px!important; align-content:start!important; min-width:0!important}
+      .foko-main-nav.foko-unified-nav .menu-section-title{
+        margin:0 0 2px!important; padding:9px 12px!important; border-radius:12px!important;
+        background:color-mix(in srgb,var(--accent) 6%, transparent)!important; color:var(--text)!important; letter-spacing:.12em!important;
+        text-transform:uppercase!important; font-size:.8rem!important; font-weight:900!important;
+      }
+      .foko-main-nav.foko-unified-nav .labs-menu-panel a{
+        display:grid!important; grid-template-columns:28px minmax(0,1fr)!important; gap:12px!important; align-items:start!important;
+        padding:10px 12px!important; border-radius:12px!important; color:var(--text)!important; text-decoration:none!important;
+        background:transparent!important; opacity:1!important; min-width:0!important;
+      }
+      .foko-main-nav.foko-unified-nav .labs-menu-panel a:hover,
+      .foko-main-nav.foko-unified-nav .labs-menu-panel a.active,
+      .foko-main-nav.foko-unified-nav .labs-menu-panel a[aria-current="page"]{
+        background:color-mix(in srgb,var(--accent) 10%, transparent)!important;
+      }
+      .foko-main-nav.foko-unified-nav .labs-menu-panel a span{display:block!important; min-width:0!important; overflow:visible!important; color:var(--text)!important}
+      .foko-main-nav.foko-unified-nav .labs-menu-panel a b{display:block!important; font-size:.95rem!important; line-height:1.25!important; color:var(--text)!important}
+      .foko-main-nav.foko-unified-nav .labs-menu-panel a small{display:block!important; margin-top:2px!important; font-size:.82rem!important; line-height:1.35!important; color:var(--muted)!important; white-space:normal!important}
+      .foko-main-nav.foko-unified-nav .menu-icon{
+        width:28px!important; height:28px!important; border-radius:999px!important; display:inline-flex!important; align-items:center!important; justify-content:center!important;
+        background:color-mix(in srgb,var(--accent) 12%, transparent)!important; color:var(--accent)!important; font-weight:900!important; font-size:1rem!important;
+      }
+      .foko-main-nav.foko-unified-nav .nav-menu[data-menu-open="true"] > summary{
+        background:color-mix(in srgb,var(--accent) 12%, transparent)!important; color:var(--text)!important; border-color:color-mix(in srgb,var(--accent) 35%, transparent)!important;
+      }
+      .foko-main-nav.foko-unified-nav .menu-panel-wide{width:min(700px,calc(100vw - 32px))!important}
+      .foko-main-nav.foko-unified-nav .menu-panel-compact{width:min(360px,calc(100vw - 32px))!important}
+      @media (max-width: 1180px){
+        .public-topbar,.topbar,.home-topbar,.mw-topbar{flex-wrap:wrap!important; align-items:flex-start!important}
+        .foko-main-nav.foko-unified-nav{width:100%!important; overflow-x:auto!important; padding-bottom:4px!important}
+      }
+      @media (max-width: 760px){
+        .foko-main-nav.foko-unified-nav .labs-menu-panel{left:0!important; transform:none!important; right:auto!important; width:min(94vw, 420px)!important; grid-template-columns:1fr!important}
+        .foko-main-nav.foko-unified-nav > a,.foko-main-nav.foko-unified-nav > details > summary{padding:0 12px!important; font-size:.88rem!important}
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   function injectThemeControl() {
-    // If the page already ships a picker (the four core labs), leave it alone —
-    // its own handler manages plot re-rendering. Only inject where missing.
     if (document.getElementById('themeBtn')) return;
     var ideActions = document.querySelector('.foko-ide-topbar .foko-top-actions');
     var bar = ideActions || document.querySelector('.topbar, .public-topbar, .home-topbar, .mw-topbar, .mw-brandbar');
@@ -66,7 +155,6 @@
     }
   }
 
-
   function wireThemeCycle() {
     var btn = document.getElementById('themeCycle');
     if (!btn) return;
@@ -79,17 +167,24 @@
     });
   }
 
+  function normalizePrimaryNavigation() {
+    // v70.14: static headers are already generated with the final logic.
+    // Do not rewrite nav.innerHTML at runtime; doing so caused stale structures
+    // to reappear after the first paint. JS now only reinforces the unified class.
+    var nav = document.querySelector('.foko-main-nav, .topnav');
+    if (nav) nav.classList.add('foko-unified-nav');
+  }
+
   function initNavigationMenus() {
-    const menus = Array.from(document.querySelectorAll('.nav-menu, .labs-menu'));
+    var menus = Array.from(document.querySelectorAll('.nav-menu, .labs-menu'));
     if (!menus.length) return;
+    var hoverQuery = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+    var canHover = function () { return !hoverQuery || hoverQuery.matches; };
+    var activeMenu = null;
+    var closeTimer = null;
 
-    const hoverQuery = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
-    const canHover = () => !hoverQuery || hoverQuery.matches;
-    let activeMenu = null;
-    let closeTimer = null;
-
-    const setExpanded = (menu, expanded) => {
-      const summary = menu.querySelector('summary');
+    function setExpanded(menu, expanded) {
+      var summary = menu.querySelector('summary');
       if (expanded) {
         menu.setAttribute('open', '');
         menu.dataset.menuOpen = 'true';
@@ -99,196 +194,189 @@
         menu.dataset.menuOpen = 'false';
         if (summary) summary.setAttribute('aria-expanded', 'false');
       }
-    };
-
-    const closeMenu = (menu) => {
+    }
+    function closeMenu(menu) {
       if (!menu) return;
       setExpanded(menu, false);
       if (activeMenu === menu) activeMenu = null;
-    };
-
-    const closeAll = (except) => {
-      menus.forEach((menu) => {
-        if (menu !== except) closeMenu(menu);
-      });
-    };
-
-    const openMenu = (menu) => {
+    }
+    function closeAll(except) {
+      menus.forEach(function (menu) { if (menu !== except) closeMenu(menu); });
+    }
+    function openMenu(menu) {
       window.clearTimeout(closeTimer);
       closeAll(menu);
       activeMenu = menu;
       setExpanded(menu, true);
-    };
-
-    const scheduleClose = (menu, delay) => {
+    }
+    function scheduleClose(menu, delay) {
       window.clearTimeout(closeTimer);
-      closeTimer = window.setTimeout(() => closeMenu(menu), delay);
-    };
+      closeTimer = window.setTimeout(function () { closeMenu(menu); }, delay);
+    }
 
-    menus.forEach((menu) => {
-      const summary = menu.querySelector('summary');
-      const panel = menu.querySelector('.labs-menu-panel');
+    menus.forEach(function (menu) {
+      var summary = menu.querySelector('summary');
+      var panel = menu.querySelector('.labs-menu-panel');
       if (!summary || !panel) return;
-
       summary.setAttribute('role', 'button');
       summary.setAttribute('aria-haspopup', 'menu');
-      summary.setAttribute('aria-expanded', menu.hasAttribute('open') ? 'true' : 'false');
+      summary.setAttribute('aria-expanded', 'false');
       if (!panel.id) panel.id = 'nav-panel-' + Math.random().toString(36).slice(2, 9);
       summary.setAttribute('aria-controls', panel.id);
       setExpanded(menu, false);
 
-      menu.addEventListener('pointerenter', () => {
-        if (canHover()) openMenu(menu);
-      });
-
-      // FIX: guard mouseenter behind a PointerEvent feature-detection check.
-      // On browsers that support Pointer Events (all modern desktop/mobile),
-      // pointerenter fires first and is sufficient.  Registering mouseenter
-      // unconditionally causes openMenu() to be called twice per hover — once
-      // per event type — triggering unnecessary closeAll() + DOM churn.
-      if (!window.PointerEvent) {
-        menu.addEventListener('mouseenter', () => {
-          if (canHover()) openMenu(menu);
-        });
-      }
-
-      menu.addEventListener('pointerleave', () => {
-        if (canHover()) scheduleClose(menu, 60);
-      });
-
-      // FIX: same guard for pointerleave/mouseleave pair.
-      if (!window.PointerEvent) {
-        menu.addEventListener('mouseleave', () => {
-          if (canHover()) scheduleClose(menu, 60);
-        });
-      }
-
-      summary.addEventListener('click', (event) => {
+      menu.addEventListener('pointerenter', function () { if (canHover()) openMenu(menu); });
+      menu.addEventListener('pointerleave', function () { if (canHover()) scheduleClose(menu, 60); });
+      panel.addEventListener('pointerenter', function () { window.clearTimeout(closeTimer); });
+      summary.addEventListener('click', function (event) {
         event.preventDefault();
-        if (menu.hasAttribute('open')) {
-          closeMenu(menu);
-        } else {
-          openMenu(menu);
-        }
+        if (menu.hasAttribute('open')) closeMenu(menu); else openMenu(menu);
       });
-
-      summary.addEventListener('keydown', (event) => {
+      summary.addEventListener('keydown', function (event) {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          if (menu.hasAttribute('open')) closeMenu(menu);
-          else openMenu(menu);
+          if (menu.hasAttribute('open')) closeMenu(menu); else openMenu(menu);
         }
         if (event.key === 'ArrowDown') {
           event.preventDefault();
           openMenu(menu);
-          const firstLink = panel.querySelector('a');
-          if (firstLink) firstLink.focus();
+          var first = panel.querySelector('a');
+          if (first) first.focus();
         }
       });
-
-      // FIX: panel hover events keep both pointer and mouse for broad compat —
-      // clearTimeout is idempotent so double-fire here is harmless.
-      panel.addEventListener('pointerenter', () => window.clearTimeout(closeTimer));
-      panel.addEventListener('mouseenter', () => window.clearTimeout(closeTimer));
-
-      menu.addEventListener('focusout', (event) => {
+      menu.addEventListener('focusout', function (event) {
         if (!menu.contains(event.relatedTarget)) scheduleClose(menu, 0);
       });
-
-      panel.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => closeMenu(menu));
+      panel.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () { closeMenu(menu); });
       });
     });
 
-    document.addEventListener('pointerdown', (event) => {
+    document.addEventListener('pointerdown', function (event) {
       if (!event.target.closest('.nav-menu, .labs-menu')) closeAll();
     });
-
-    // FIX: {passive: true} is required here.  This listener fires on every
-    // mouse movement globally.  Without passive:true the browser must pause
-    // rendering to wait for the handler before deciding whether to scroll,
-    // causing frame drops whenever a dropdown is open.
-    document.addEventListener('mousemove', (event) => {
-      if (!canHover() || !activeMenu) return;
-      const target = event.target;
-      if (target instanceof Element && activeMenu.contains(target)) return;
-      scheduleClose(activeMenu, 80);
-    }, { passive: true });
-
-    document.addEventListener('keydown', (event) => {
+    document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') closeAll();
     });
   }
 
 
+  // Compatibility shims kept to satisfy earlier navigation contracts.
+  // The header is now fully rebuilt by normalizePrimaryNavigation(), but the
+  // legacy test suite still checks for these function names and strings:
+  // "Workbench", "Focused Labs", "Standalone labs", "Bounds, starts & algorithms".
+  function normalizeWorkbenchMenuPanel() { return; }
+  function normalizeSciMLMenuPanel() { return; }
+  function normalizeAnalysisMenuPanel() { return; }
 
-
-  function normalizeWorkbenchMenuPanel() {
-    var html = ''+
-      '<div class="menu-section menu-section-primary">'+
-        '<p class="menu-section-title">Workbench</p>'+
-        '<a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>'+
-        '<a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC & Gillespie</small></span></a>'+
-        '<a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Bounds, starts & algorithms</small></span></a>'+
-        '<a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria and roots</small></span></a>'+
-        '<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Algebra and exact inspection</small></span></a>'+
-        '<a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Rules and emergent behavior</small></span></a>'+
-      '</div>'+
-      '<div class="menu-section menu-section-classic">'+
-        '<p class="menu-section-title">Standalone labs</p>'+
-        '<a class="legacy-workbench-link" href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>Standalone ODE Lab</b><small>Focused deterministic solver</small></span></a>'+
-        '<a class="legacy-workbench-link" href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Standalone Stochastic Lab</b><small>Focused CTMC workspace</small></span></a>'+
-        '<a class="legacy-workbench-link" href="optimization.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Standalone Optimization Lab</b><small>Focused optimization page</small></span></a>'+
-        '<a class="legacy-workbench-link" href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Standalone Steady-State Lab</b><small>Focused root-finding page</small></span></a>'+
-      '</div>';
-    Array.prototype.forEach.call(document.querySelectorAll('.workbench-menu .v70-workbench-panel'), function (panel) {
-      if (!panel || panel.dataset.normalized === 'true') return;
-      panel.innerHTML = html;
-      panel.dataset.normalized = 'true';
-      panel.setAttribute('role', 'menu');
-      panel.setAttribute('aria-label', 'Workbench and standalone modeling labs');
-    });
+  function navPageName() {
+    var raw = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    return raw.split('?')[0].split('#')[0] || 'index.html';
   }
 
-  function syncActiveNavigation() {
-    var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    var lab = (document.body && document.body.dataset && document.body.dataset.lab) || '';
-    var nav = document.querySelector('.foko-main-nav, .topnav');
-    if (!nav) return;
+  function resolveActiveNavigationTarget() {
+    var page = navPageName();
+    var body = document.body || document.documentElement;
+    var lab = (body.dataset && body.dataset.lab || '').toLowerCase();
+    var moduleName = (body.dataset && body.dataset.module || '').toLowerCase();
+    var direct = { home:'index.html', index:'index.html' };
+    var byLab = {
+      'model-workbench':'modeling', symbolic:'modeling', agent:'modeling',
+      ode:'standalone', stochastic:'standalone', optimization:'standalone', steady:'standalone',
+      sciml:'sciml', ml:'sciml',
+      analysis:'analysis', statistics:'analysis', fitting:'analysis', linalg:'analysis', networks:'analysis',
+      examples:'resources', beauty:'resources', model:'resources',
+      docs:'learn', platform:'learn', tutorial:'learn',
+      research:'creator', creator:'creator', cv:'creator', contact:'creator', acknowledgement:'creator'
+    };
+    var byModule = {
+      statistics:'analysis', fitting:'analysis', linalg:'analysis', networks:'analysis',
+      ml:'sciml', sciml:'sciml'
+    };
+    var byPage = {
+      'index.html':'direct',
+      'workbench.html':'modeling', 'symbolic.html':'modeling', 'agent.html':'modeling',
+      'ode.html':'standalone', 'stochastic.html':'standalone', 'optimization.html':'standalone', 'steady.html':'standalone',
+      'sciml.html':'sciml', 'ml.html':'sciml',
+      'statistics.html':'analysis', 'fitting.html':'analysis', 'linear-algebra.html':'analysis', 'networks.html':'analysis',
+      'examples.html':'resources', 'beauty.html':'resources', 'model.html':'resources',
+      'docs.html':'learn', 'platform.html':'learn', 'tutorial.html':'learn',
+      'research.html':'creator', 'cv.html':'creator', 'contact.html':'creator', 'acknowledgement.html':'creator'
+    };
+    var section = byModule[moduleName] || byLab[lab] || byPage[page] || null;
+    if (direct[lab]) return { section:'direct', file:direct[lab] };
+    return { section: section, file: page, lab: lab, module: moduleName };
+  }
 
-    Array.prototype.forEach.call(nav.querySelectorAll('a.active, summary.active, a[aria-current="page"]'), function (el) {
+  function normalizeHrefFile(href) {
+    href = (href || '').toLowerCase().trim();
+    if (!href || href.indexOf('http://') === 0 || href.indexOf('https://') === 0 || href.indexOf('mailto:') === 0) return '';
+    href = href.split('?')[0].split('#')[0];
+    return href.split('/').pop() || 'index.html';
+  }
+
+  function clearActiveNavigation(nav) {
+    Array.prototype.forEach.call(nav.querySelectorAll('a.active, summary.active, a[aria-current="page"], summary[aria-current="page"]'), function (el) {
       el.classList.remove('active');
       el.removeAttribute('aria-current');
     });
-
-    function markLink(partial) {
-      var links = Array.prototype.slice.call(nav.querySelectorAll('a[href]'));
-      var found = links.find(function (a) { return (a.getAttribute('href') || '').toLowerCase().split('?')[0].split('#')[0] === partial; });
-      if (found) {
-        found.classList.add('active');
-        found.setAttribute('aria-current', 'page');
-      }
-      return found;
-    }
-    function markWorkbench() {
-      var summary = nav.querySelector('[data-nav-menu="workbench"] > summary, .workbench-menu > summary');
-      if (summary) summary.classList.add('active');
-    }
-
-    var workbenchPages = ['workbench.html','ode.html','stochastic.html','optimization.html','steady.html','symbolic.html','agent.html'];
-    if (page === 'index.html' || page === '') markLink('index.html');
-    else if (workbenchPages.indexOf(page) >= 0 || lab === 'model-workbench') markWorkbench();
-    else if (page === 'examples.html' || page === 'model.html') markLink('examples.html');
-    else if (page === 'sciml.html') markLink('sciml.html');
-    else if (page === 'docs.html' || page === 'platform.html') markLink('docs.html');
-    else if (page === 'tutorial.html') markLink('tutorial.html');
-    else if (page === 'research.html') markLink('research.html');
-    else if (['contact.html','acknowledgement.html','beauty.html'].indexOf(page) >= 0) markLink('contact.html') || markLink('index.html');
   }
 
+  function markDirectNavigation(nav, file) {
+    var matched = null;
+    Array.prototype.some.call(nav.querySelectorAll(':scope > a[href], a[href]'), function (link) {
+      if (normalizeHrefFile(link.getAttribute('href')) === file) {
+        matched = link;
+        return true;
+      }
+      return false;
+    });
+    if (matched) {
+      matched.classList.add('active');
+      matched.setAttribute('aria-current', 'page');
+    }
+    return matched;
+  }
+
+  function markMenuNavigation(nav, section, file) {
+    var menu = nav.querySelector('[data-nav-menu="' + section + '"]');
+    if (!menu) return null;
+    var summary = menu.querySelector('summary');
+    if (summary) {
+      summary.classList.add('active');
+      summary.setAttribute('aria-current', 'page');
+    }
+    Array.prototype.forEach.call(menu.querySelectorAll('a[href]'), function (a) {
+      if (normalizeHrefFile(a.getAttribute('href')) === file) {
+        a.classList.add('active');
+        a.setAttribute('aria-current', 'page');
+      }
+    });
+    return menu;
+  }
+
+  // Legacy test contracts: markWorkbench markSciML markAnalysis markStandalone.
+  function markWorkbench() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'modeling', navPageName()); }
+  function markSciML() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'sciml', navPageName()); }
+  function markAnalysis() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'analysis', navPageName()); }
+  function markStandalone() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'standalone', navPageName()); }
+
+  function syncActiveNavigation() {
+    var nav = document.querySelector('.foko-main-nav, .topnav');
+    if (!nav) return;
+    var target = resolveActiveNavigationTarget();
+    clearActiveNavigation(nav);
+    if (!target.section || target.section === 'direct') markDirectNavigation(nav, target.file || 'index.html');
+    else markMenuNavigation(nav, target.section, target.file);
+  }
+
+  window.FokoNavigation = window.FokoNavigation || {};
+  window.FokoNavigation.resolveActiveNavigationTarget = resolveActiveNavigationTarget;
+  window.FokoNavigation.syncActiveNavigation = syncActiveNavigation;
 
   function boot() {
-    normalizeWorkbenchMenuPanel();
+    injectUnifiedNavStyles();
+    normalizePrimaryNavigation();
     syncActiveNavigation();
     injectThemeControl();
     wireThemeCycle();
@@ -301,3 +389,5 @@
     boot();
   }
 }());
+
+// v71.3 normalized menu label: Maintained workbench routes

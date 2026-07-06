@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0",
+  "models": [
+    {
+      "id": "lorenz",
+      "title": "Lorenz attractor",
+      "file": "models/registry/lorenz.json",
+      "kind": "ode"
+    },
+    {
+      "id": "van_der_pol",
+      "title": "Van der Pol oscillator",
+      "file": "models/registry/van-der-pol.json",
+      "kind": "ode"
+    },
+    {
+      "id": "sir",
+      "title": "SIR epidemic",
+      "file": "models/registry/sir.json",
+      "kind": "ode"
+    },
+    {
+      "id": "lotka_volterra",
+      "title": "Lotka\u2013Volterra predator-prey",
+      "file": "models/registry/lotka-volterra.json",
+      "kind": "ode"
+    },
+    {
+      "id": "fitzhugh_nagumo",
+      "title": "FitzHugh\u2013Nagumo excitable system",
+      "file": "models/registry/fitzhugh-nagumo.json",
+      "kind": "ode"
+    },
+    {
+      "id": "hodgkin_huxley_lite",
+      "title": "Hodgkin\u2013Huxley placeholder",
+      "file": "models/registry/hodgkin-huxley-lite.json",
+      "kind": "ode"
+    },
+    {
+      "id": "goodwin",
+      "title": "Goodwin oscillator",
+      "file": "models/registry/goodwin-oscillator.json",
+      "kind": "ode"
+    },
+    {
+      "id": "repressilator",
+      "title": "Repressilator",
+      "file": "models/registry/repressilator.json",
+      "kind": "ode"
+    },
+    {
+      "id": "chemostat",
+      "title": "Chemostat",
+      "file": "models/registry/chemostat.json",
+      "kind": "ode"
+    },
+    {
+      "id": "mapk_lite",
+      "title": "MAPK cascade lite",
+      "file": "models/registry/mapk-cascade-lite.json",
+      "kind": "ode"
+    }
+  ]
+}

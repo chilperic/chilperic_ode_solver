@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "lotka_volterra",
+  "title": "Lotka\u2013Volterra predator-prey",
+  "vars": [
+    "x",
+    "y"
+  ],
+  "params": {
+    "alpha": 1.1,
+    "beta": 0.4,
+    "delta": 0.1,
+    "gamma": 0.4
+  },
+  "init": {
+    "x": 10,
+    "y": 5
+  },
+  "eqs": {
+    "x": "alpha*x-beta*x*y",
+    "y": "delta*x*y-gamma*y"
+  },
+  "tspan": [
+    0,
+    50
+  ]
+}
