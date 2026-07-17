@@ -8,7 +8,7 @@
   const INPUT = root.FokoNumericalInputs;
   const CORE = root.FokoSensitivityCore;
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '72.46.0';
+  const RELEASE = '72.47.0';
   const STORAGE_KEY = 'fokolab:v72.44:sensitivity-config';
   if (!INPUT || !CORE || !PLOT) throw new Error('Sensitivity Lab requires FokoNumericalInputs, FokoSensitivityCore and FokoPlotLifecycle.');
 
@@ -33,6 +33,7 @@
     convergence: { label: 'Perturbation convergence', title: 'Finite-difference step convergence', evidence: 'Agreement as the perturbation is reduced supports numerical consistency. It does not prove global relevance or differentiability at thresholds.' },
     morris: { label: 'Morris μ*–σ map', title: 'Morris screening diagnostics', evidence: 'Seeded random one-at-a-time trajectories on normalized independent ranges. μ* ranks overall influence; σ combines nonlinearity and interactions.' },
     trajectories: { label: 'Morris path outputs', title: 'Morris path outputs', evidence: 'Scalar output along each one-at-a-time path. Path order, random seed, trajectory count and grid levels affect the result.' },
+    'morris-design': { label: 'Morris parameter trajectories', title: 'Normalized Morris design trajectories', evidence: 'Normalized parameter coordinates for the first bounded subset of computed one-at-a-time trajectories. This is a design-inspection plot, not an influence ranking.' },
     'morris-effects': { label: 'Elementary-effect distributions', title: 'Morris elementary-effect distributions', evidence: 'Box summaries retain sign and spread across computed trajectories. Wide or multimodal effects can reflect nonlinearity, interactions, or both.' },
     'morris-convergence': { label: 'Morris convergence', title: 'Morris trajectory convergence', evidence: 'Prefix μ* estimates show whether the influence ranking stabilizes as trajectories accumulate. They are not independent replications.' },
     'morris-rank': { label: 'Morris rank stability', title: 'Morris bootstrap rank stability', evidence: 'Rank intervals and top-rank probabilities resample the computed trajectories. They quantify internal sampling instability, not model-form uncertainty.' },
@@ -44,6 +45,9 @@
     'sobol-output': { label: 'Output distribution', title: 'Sampled output distribution', evidence: 'Histogram of outputs from the two independent base matrices. It describes the declared independent uniform input domain only.' },
     'sobol-convergence': { label: 'Sampling convergence', title: 'Global-sensitivity sampling convergence', evidence: 'Prefix estimates from the same seeded sample matrices. Stable-looking prefixes are necessary but not sufficient evidence of convergence.' },
     'sobol-time': { label: 'Total effect through time', title: 'Time-resolved total-order sensitivity', evidence: 'Jansen total-order estimates are recomputed at each downsampled time point from the same seeded design. Near-zero output-variance times are left unresolved.' },
+    'sobol-first-time': { label: 'First order through time', title: 'Time-resolved first-order sensitivity', evidence: 'Jansen first-order estimates are recomputed at each downsampled time point from the same seeded design. Near-zero output-variance times are left unresolved.' },
+    'sobol-state-total': { label: 'Total effect across states', title: 'Parameter × state total-order sensitivity', evidence: 'The selected scalar metric is applied to every model state using the same seeded Jansen design. States with near-zero output variance are left unresolved.' },
+    'sobol-state-first': { label: 'First order across states', title: 'Parameter × state first-order sensitivity', evidence: 'The selected scalar metric is applied to every model state using the same seeded Jansen design. This remains conditional on independent uniform parameter ranges.' },
     'variance-contribution': { label: 'Variance contribution summary', title: 'Variance contribution accounting', evidence: 'Raw sums of first-order and pairwise estimates plus the unresolved remainder. Negative or greater-than-one components remain visible as Monte Carlo diagnostics.' },
     'global-scatter': { label: 'Parameter–output scatter matrix', title: 'Sampled parameter–output relationships', evidence: 'A bounded subset of the actual independent-uniform design. Scatter structure can reveal monotonicity, nonlinear response and failed assumptions, but is not itself a sensitivity index.' },
     'dependence-mi': { label: 'Mutual information screening', title: 'Histogram mutual-information screening', evidence: 'Quantile-bin normalized mutual information with a coarse permutation test. It is estimator-dependent and not a variance fraction.' },
@@ -247,14 +251,14 @@
 
   function syncMethodControls() {
     const method = $('sensitivityMethod').value;
-    const local = method === 'local'; const global = method === 'sobol'; const canSurface = Object.keys(state.model && state.model.params || {}).length >= 2;
+    const local = method === 'local'; const global = method === 'sobol'; const enoughSurfaceParameters = Object.keys(state.model && state.model.params || {}).length >= 2; const canSurface = (local || global) && enoughSurfaceParameters;
     if (!canSurface) $('sensitivityResponseSurface').checked = false;
     const enabled = {
       sensitivityRelativeStep: local || method === 'fim', sensitivitySamples: global,
       sensitivitySecondOrder: global, sensitivityBootstrap: method === 'morris' || global,
       sensitivityTrajectories: method === 'morris', sensitivityLevels: method === 'morris', sensitivitySeed: method === 'morris' || global, sensitivitySigma: method === 'fim',
       sensitivityOfatPoints: local, sensitivityDirection: local, sensitivityDirectionalSpan: local, sensitivityDirectionPoints: local,
-      sensitivityResponseSurface: local && canSurface, sensitivitySurfaceFirst: local && canSurface && $('sensitivityResponseSurface').checked, sensitivitySurfaceSecond: local && canSurface && $('sensitivityResponseSurface').checked, sensitivitySurfacePoints: local && canSurface && $('sensitivityResponseSurface').checked,
+      sensitivityResponseSurface: canSurface, sensitivitySurfaceFirst: canSurface && $('sensitivityResponseSurface').checked, sensitivitySurfaceSecond: canSurface && $('sensitivityResponseSurface').checked, sensitivitySurfacePoints: canSurface && $('sensitivityResponseSurface').checked,
       sensitivityDependence: global, sensitivityDependencePermutations: global && $('sensitivityDependence').checked
     };
     Object.entries(enabled).forEach(([id, active]) => { $(id).disabled = !active; $(id).closest('label')?.classList.toggle('control-inactive', !active); });
@@ -266,7 +270,7 @@
       metric.disabled = false; metric.value = state.lastScalarMetric || 'final';
       $('sensitivityMethodNote').textContent = method === 'local' ? 'Local analysis computes trajectory derivatives, vector-field Jacobians, OFAT, tornado, a range-normalized direction profile and an optional bounded two-parameter surface.'
         : method === 'morris' ? 'Morris reports μ, μ*, σ, elementary-effect distributions, trajectory-prefix convergence and bootstrap rank stability.'
-          : 'Global variance analysis reports Jansen first/total indices, bootstrap uncertainty, time-resolved total effects and sampled relationships. Optional second-order mode adds Saltelli pairwise interactions; limited MI/HSIC adds bounded permutation screening.';
+          : 'Global variance analysis reports Jansen first/total indices, first/total effects through time and across states, bootstrap uncertainty and sampled relationships. Optional second-order mode adds Saltelli pairwise interactions; a bounded two-parameter response surface and limited MI/HSIC screening are optional.';
     }
     updateBudget();
   }
@@ -278,7 +282,7 @@
     const analysis = analysisFromInputs(); const checkedAnalysis = INPUT.validateSensitivity(analysis);
     if (checkedAnalysis.capacity && checkedAnalysis.capacity.blocked) throw new Error(checkedAnalysis.capacity.message);
     state.runToken += 1; const token = state.runToken;
-    state.worker = new Worker('src/v72/sensitivity-worker.js?v=72.46.0'); syncRunAvailability();
+    state.worker = new Worker('src/v72/sensitivity-worker.js?v=72.47.0'); syncRunAvailability();
     $('sensitivityProgress').style.width = '4%'; setText('sensitivityStatus', `Starting about ${checkedAnalysis.expectedEvaluations.toLocaleString()} ODE solves in a worker…`);
     setText('sensitivityTopStatus', 'Running'); document.querySelector('.results-card')?.classList.add('stale-results');
     state.worker.onmessage = function (event) {
@@ -308,10 +312,11 @@
   function availablePlots() {
     if (!state.result) return ['ranking']; const method = state.result.method;
     if (method === 'local') { const plots = ['ranking', 'signed', 'heatmap', 'parameter-jacobian', 'state-jacobian', 'influence-map', 'ofat', 'tornado', 'convergence']; if (state.result.analysis.directional && state.result.analysis.directional.available !== false) plots.splice(8, 0, 'directional'); if (state.result.analysis.responseSurface) plots.push('response-surface'); return plots; }
-    if (method === 'morris') return ['ranking', 'morris', 'morris-effects', 'morris-convergence', 'morris-rank', 'trajectories'];
+    if (method === 'morris') return ['ranking', 'morris', 'morris-effects', 'morris-convergence', 'morris-rank', 'morris-design', 'trajectories'];
     if (method === 'sobol') {
-      const plots = ['ranking', 'sobol', 'sobol-gap', 'sobol-time', 'variance-contribution', 'global-scatter', 'sobol-uncertainty', 'sobol-rank', 'sobol-output', 'sobol-convergence'];
+      const plots = ['ranking', 'sobol', 'sobol-gap', 'sobol-time', 'sobol-first-time', 'sobol-state-total', 'sobol-state-first', 'variance-contribution', 'global-scatter', 'sobol-uncertainty', 'sobol-rank', 'sobol-output', 'sobol-convergence'];
       if (state.result.analysis.secondOrderEnabled) plots.splice(2, 0, 'sobol-second');
+      if (state.result.analysis.responseSurface) plots.push('response-surface');
       if (state.result.analysis.dependence) plots.push('dependence-mi', 'dependence-hsic');
       return plots;
     }
@@ -364,6 +369,11 @@
       return { traces: names.map(name => ({ type: 'scatter', mode: 'lines+markers', name, x: analysis.convergence.map(item => item.step), y: analysis.convergence.map(item => Math.abs(item.rows.find(row => row.name === name).derivative)) })), layout: Object.assign(chartLayout('relative perturbation', '|derivative|'), { xaxis: { title: 'relative perturbation', type: 'log', autorange: 'reversed', automargin: true, gridcolor: '#e7ebf1' } }) };
     }
     if (type === 'morris') return { traces: [{ type: 'scatter', mode: 'markers+text', textposition: 'top center', text: analysis.rows.map(row => row.name), x: analysis.rows.map(row => row.muStar), y: analysis.rows.map(row => row.sigma), error_x: { type: 'data', array: analysis.rows.map(row => Number.isFinite(row.muStarSe) ? 1.96 * row.muStarSe : 0), visible: true }, marker: { size: 10 } }], layout: chartLayout('μ* on normalized range', 'σ') };
+    if (type === 'morris-design') {
+      const shown = analysis.traces.slice(0, 8); const names = analysis.rows.map(row => row.name); const traces = [];
+      shown.forEach((trajectory, trajectoryIndex) => names.forEach(name => traces.push({ type: 'scatter', mode: 'lines+markers', x: trajectory.map(point => point.step), y: trajectory.map(point => point.normalized ? point.normalized[name] : NaN), name, legendgroup: name, showlegend: trajectoryIndex === 0, opacity: trajectoryIndex === 0 ? 0.95 : 0.42, line: { width: trajectoryIndex === 0 ? 2 : 1 }, hovertemplate: `trajectory ${trajectoryIndex + 1}<br>step %{x}<br>${name}: %{y:.3f}<extra></extra>` })));
+      return { traces, layout: Object.assign(chartLayout('one-at-a-time step', 'normalized parameter coordinate'), { yaxis: { title: 'normalized parameter coordinate', range: [-0.05, 1.05], automargin: true, gridcolor: '#e7ebf1' } }) };
+    }
     if (type === 'morris-effects') return { traces: analysis.rows.map(row => ({ type: 'box', name: row.name, y: row.effects, boxpoints: analysis.trajectories <= 40 ? 'all' : 'outliers', jitter: 0.25, pointpos: 0 })), layout: chartLayout('parameter', 'elementary effect') };
     if (type === 'morris-convergence') return { traces: analysis.rows.map(row => ({ type: 'scatter', mode: 'lines+markers', name: row.name, x: analysis.convergence.map(item => item.trajectories), y: analysis.convergence.map(item => item.rows.find(candidate => candidate.name === row.name).muStar) })), layout: chartLayout('trajectories used', 'prefix μ*') };
     if (type === 'morris-rank') {
@@ -395,6 +405,9 @@
       return { traces: analysis.rows.map(row => ({ type: 'scatter', mode: 'lines+markers', name: row.name, x: analysis.convergence.map(item => item.samples), y: analysis.convergence.map(item => item.rows.find(candidate => candidate.name === row.name).total) })), layout: Object.assign(chartLayout('base samples', 'total-order estimate'), { xaxis: { title: 'base samples', type: 'log', automargin: true, gridcolor: '#e7ebf1' } }) };
     }
     if (type === 'sobol-time') return { traces: [{ type:'heatmap', x:analysis.timeSensitivity.time, y:analysis.timeSensitivity.names, z:analysis.timeSensitivity.totalMatrix, colorscale:'Viridis', colorbar:{title:'total-order'} }], layout:chartLayout('time','parameter') };
+    if (type === 'sobol-first-time') return { traces: [{ type:'heatmap', x:analysis.timeSensitivity.time, y:analysis.timeSensitivity.names, z:analysis.timeSensitivity.firstMatrix, colorscale:'Viridis', colorbar:{title:'first-order'} }], layout:chartLayout('time','parameter') };
+    if (type === 'sobol-state-total') return { traces: [{ type:'heatmap', x:analysis.stateSensitivity.states, y:analysis.stateSensitivity.names, z:analysis.stateSensitivity.totalMatrix, colorscale:'Viridis', colorbar:{title:'total-order'} }], layout:chartLayout('state / selected metric','parameter') };
+    if (type === 'sobol-state-first') return { traces: [{ type:'heatmap', x:analysis.stateSensitivity.states, y:analysis.stateSensitivity.names, z:analysis.stateSensitivity.firstMatrix, colorscale:'Viridis', colorbar:{title:'first-order'} }], layout:chartLayout('state / selected metric','parameter') };
     if (type === 'variance-contribution') { const v=analysis.varianceContribution; return { traces:[{type:'bar',x:['first-order sum','pairwise sum','unresolved / higher-order + MC remainder'],y:[v.firstOrder,v.pairwise,v.unresolved],text:[number(v.firstOrder,3),number(v.pairwise,3),number(v.unresolved,3)],textposition:'auto'}], layout:chartLayout('contribution category','raw variance-share estimate') }; }
     if (type === 'global-scatter') { const top=analysis.rows.slice().sort((a,b)=>b.total-a.total).slice(0,4).map(row=>row.name); const dimensions=top.map(name=>({label:name,values:analysis.sampleRows.map(row=>row[name])})).concat([{label:'output',values:analysis.sampleRows.map(row=>row.__output)}]); return { traces:[{type:'splom',dimensions,marker:{size:4,opacity:0.55},diagonal:{visible:false},showupperhalf:false}], layout:Object.assign(chartLayout('',''),{dragmode:'select',hovermode:'closest',margin:{t:28,r:18,b:44,l:44}}) }; }
     if (type === 'dependence-mi') return { traces:[{type:'bar',x:analysis.dependence.rows.map(row=>row.name),y:analysis.dependence.rows.map(row=>row.mutualInformation),text:analysis.dependence.rows.map(row=>`p=${number(row.mutualInformationP,3)}`),textposition:'auto'}],layout:chartLayout('parameter','normalized histogram MI') };
@@ -429,7 +442,7 @@
     const combinedWarnings = [analysis.warning, warnings, ...(solver.warnings || [])].filter(Boolean).join(' '); setText('provenanceWarning', combinedWarnings);
     const rows = rankingRows().sort((a, b) => b.value - a.value);
     const special = state.result.method === 'fim' ? `<p><b>Estimated rank:</b> ${analysis.rank}/${analysis.names.length}. <b>Condition:</b> ${Number.isFinite(analysis.condition) ? number(analysis.condition) : 'rank deficient / infinite'}.</p>`
-      : state.result.method === 'sobol' ? `<p><b>Base samples:</b> ${number(analysis.samples, 0)}. <b>Bootstrap replicates:</b> ${number(analysis.bootstrapReplicates, 0)}. <b>Second-order pairs:</b> ${analysis.secondOrderEnabled ? number(analysis.secondOrder.length, 0) : 'disabled'}. <b>Dependence screening:</b> ${analysis.dependence ? `${analysis.dependence.sampleCount} samples / ${analysis.dependence.permutations} permutations` : 'disabled'}.</p>`
+      : state.result.method === 'sobol' ? `<p><b>Base samples:</b> ${number(analysis.samples, 0)}. <b>Bootstrap replicates:</b> ${number(analysis.bootstrapReplicates, 0)}. <b>Second-order pairs:</b> ${analysis.secondOrderEnabled ? number(analysis.secondOrder.length, 0) : 'disabled'}. <b>State summaries:</b> ${analysis.stateSensitivity ? analysis.stateSensitivity.states.length : 0}. <b>Response surface:</b> ${analysis.responseSurface ? `${analysis.responseSurface.points}×${analysis.responseSurface.points}` : 'disabled'}. <b>Dependence screening:</b> ${analysis.dependence ? `${analysis.dependence.sampleCount} samples / ${analysis.dependence.permutations} permutations` : 'disabled'}.</p>`
         : state.result.method === 'morris' ? `<p><b>Trajectories:</b> ${number(analysis.trajectories, 0)}. <b>Grid levels:</b> ${number(analysis.levels, 0)}. <b>Bootstrap replicates:</b> ${number(analysis.bootstrapReplicates, 0)}.</p>`
           : state.result.method === 'local' ? `<p><b>OFAT points:</b> ${number(analysis.ofat && analysis.ofat.points,0)} per parameter. <b>Directional derivative:</b> ${analysis.directional && analysis.directional.available !== false ? number(analysis.directional.derivative) : 'unavailable at current bounds'}. <b>Response surface:</b> ${analysis.responseSurface ? `${analysis.responseSurface.points}×${analysis.responseSurface.points}` : 'disabled'}.</p>` : '';
     $('sensitivityDiagnostics').classList.remove('empty');

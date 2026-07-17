@@ -9,21 +9,21 @@
 <meta content="Browser-computed bounded optimization candidates with honest feasibility gates, seeded search, convergence diagnostics, and reproducible exports." property="og:description"/>
 <meta content="website" property="og:type"/>
 <title>Optimization Lab · Foko Lab</title>
-<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.46.0" rel="stylesheet"/>
-<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.46.0"></script>
-<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.46.0"></script>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.46.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=72.46.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=72.46.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.46.0"></script></head>
-<body data-lab="optimization" data-v72-shell="true" data-version="72.46.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.47.0" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.47.0"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.47.0"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.47.0"></script>
+<link href="assets/brand/foko-lab-mark.svg?v=72.47.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=72.47.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=72.47.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=72.47.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=72.47.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=72.47.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=72.47.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.47.0"></script></head>
+<body data-lab="optimization" data-v72-shell="true" data-version="72.47.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.46.0" width="190"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.47.0" width="190"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
 <a class="nav-home-link" href="index.html">Home</a>
 <details class="labs-menu nav-menu" data-nav-menu="modeling">
@@ -48,7 +48,7 @@
 <div class="menu-section"><p class="menu-section-title">Analyse observations</p>
 <a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
 <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
 <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
 <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
 </div>
@@ -95,7 +95,7 @@
 <aside aria-label="Optimization controls" class="work-panel controls">
 <section class="card intro-card hero-with-mark">
 <div><p class="v72-eyebrow">Bounded nonlinear programs · explicit feasibility · seeded search</p><h2>Optimization Lab</h2><p class="note">Compute and inspect numerical candidates without confusing a low objective value, a stopped algorithm, or a heuristic search with a proof of optimality.</p></div>
-<img alt="Optimization Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/optimization-lab.webp?v=72.46.0"/>
+<img alt="Optimization Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/optimization-lab.webp?v=72.47.0"/>
 </section>
 <section aria-label="Run optimization" class="actionbar card">
 <button class="primary" id="runOptimization" type="button">Run optimizer</button>
@@ -232,11 +232,11 @@
 </aside>
 </main>
 </div>
-<script defer="" src="src/models/analysis-taxonomy.js?v=72.46.0"></script>
-<script defer="" src="src/models/optimization-presets.js?v=72.46.0"></script>
-<script defer="" src="src/core/optimization.js?v=72.46.0"></script>
-<script defer="" src="src/v72/optimization-workspace.js?v=72.46.0"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=72.46.0"></script>
-<script defer="" src="src/navigation.js?v=72.46.0"></script>
+<script defer="" src="src/models/analysis-taxonomy.js?v=72.47.0"></script>
+<script defer="" src="src/models/optimization-presets.js?v=72.47.0"></script>
+<script defer="" src="src/core/optimization.js?v=72.47.0"></script>
+<script defer="" src="src/v72/optimization-workspace.js?v=72.47.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=72.47.0"></script>
+<script defer="" src="src/navigation.js?v=72.47.0"></script>
 </body>
 </html>

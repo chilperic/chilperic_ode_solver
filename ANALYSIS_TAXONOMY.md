@@ -196,3 +196,12 @@ Browser capacity is guarded before computation. Oversized state, parameter, samp
 - Continuation Curve with Sensitivity Bands — `export-only`. Requires a dedicated external numerical workflow; the browser does not present a substitute computation.
 - Bifurcation Diagram Sensitivity Overlay — `export-only`. Requires a dedicated external numerical workflow; the browser does not present a substitute computation.
 - Jacobian Spectrum Sensitivity Plot — `limited-browser`.
+
+
+## v72.47.0 Sensitivity runtime additions
+
+- Morris normalized parameter-design trajectories (`morris-design`) are distinct from Morris output paths.
+- Global variance mode exposes first- and total-order effects through time and across every model state using the selected scalar metric.
+- The bounded two-parameter response surface is available in both Local and Global variance modes and is charged to the browser workload estimate.
+- Plot availability remains conditional on the selected method and enabled options; missing dropdown entries are not implementation failures when their prerequisite is disabled.
+- Adjoint sensitivity, FAST/eFAST, Shapley effects and correlated-input decompositions remain export-only or unavailable.

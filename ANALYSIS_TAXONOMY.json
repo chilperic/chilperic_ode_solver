@@ -1,6 +1,6 @@
 {
   "schema": "fokolab-analysis-taxonomy-v1",
-  "release": "72.46.0",
+  "release": "72.47.0",
   "statusDefinitions": {
     "browser-computed": "Computed directly in the browser by a maintained Foko Lab numerical core.",
     "derived-browser": "Derived in the browser from a computed finite result; interpretation remains conditional on that result.",
@@ -862,6 +862,40 @@
           "label": "Shapley Value Plot",
           "status": "export-only",
           "reason": "A dependent-input conditional-expectation engine is not implemented."
+        },
+        {
+          "id": "morris-normalized-design-trajectories",
+          "label": "Morris Normalized Parameter Trajectories",
+          "status": "limited-browser",
+          "runtimeId": "morris-design",
+          "scope": "Displays a bounded subset of the actual normalized one-at-a-time design paths."
+        },
+        {
+          "id": "first-effect-time-heatmap",
+          "label": "Time-Resolved First-Order Heatmap",
+          "status": "derived-browser",
+          "runtimeId": "sobol-first-time"
+        },
+        {
+          "id": "state-total-effect-heatmap",
+          "label": "Parameter × State Total-Effect Heatmap",
+          "status": "derived-browser",
+          "runtimeId": "sobol-state-total",
+          "scope": "Selected scalar metric applied to each state using the same seeded Jansen design."
+        },
+        {
+          "id": "state-first-effect-heatmap",
+          "label": "Parameter × State First-Order Heatmap",
+          "status": "derived-browser",
+          "runtimeId": "sobol-state-first",
+          "scope": "Selected scalar metric applied to each state using the same seeded Jansen design."
+        },
+        {
+          "id": "global-two-parameter-response-surface",
+          "label": "Global Two-Parameter Response Surface",
+          "status": "limited-browser",
+          "runtimeId": "response-surface",
+          "scope": "Optional bounded grid in Global variance mode; all remaining parameters fixed nominal."
         }
       ]
     },
@@ -995,6 +1029,6 @@
     "runtimeMenus": "Only entries backed by current computed data are selectable in plot dropdowns.",
     "referenceCatalog": "Unavailable and export-only entries remain visible in capability catalogues with an explicit reason.",
     "scientificBoundary": "Taxonomy membership is not evidence that a method is implemented or validated.",
-    "sensitivityLab": "Runtime entries identify the first-class Sensitivity Analysis Lab. Local finite-difference, Jacobian, OFAT, directional, bounded surface, Morris, first/total/second-order variance, time-resolved, and limited dependence diagnostics are browser-guarded. Oversized requests are refused before a worker starts; adjoints, FAST/eFAST, and Shapley effects remain export-only."
+    "sensitivityLab": "Runtime entries identify the first-class Sensitivity Analysis Lab. Local finite-difference, Jacobian, OFAT, directional and bounded surface diagnostics; Morris effects and normalized design trajectories; first/total/second-order variance, time- and state-resolved effects; and limited dependence diagnostics are browser-guarded. Oversized requests are refused before a worker starts; adjoints, FAST/eFAST, and Shapley effects remain export-only."
   }
 }

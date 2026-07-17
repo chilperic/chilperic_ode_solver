@@ -1,5 +1,5 @@
 {
-  "release": "72.46.0",
+  "release": "72.47.0",
   "statusDefinitions": {
     "reference": "Uses the v72 authored shell and active release contracts.",
     "browser-computed": "The visible result is computed locally from the current input in browser code.",
@@ -436,12 +436,16 @@
         "parameter_to_state_trajectory_influence": "limited-browser",
         "one_factor_at_a_time_response_curves_and_tornado": "browser-computed",
         "range_normalized_directional_profiles": "limited-browser",
-        "bounded_two_parameter_response_surfaces": "limited-browser",
         "time_resolved_first_and_total_effect_indices": "limited-browser",
         "variance_contribution_accounting": "derived-browser",
         "parameter_output_relationship_diagnostics": "derived-browser",
         "mutual_information_permutation_screening": "limited-browser",
-        "hsic_permutation_screening": "limited-browser"
+        "hsic_permutation_screening": "limited-browser",
+        "morris_normalized_parameter_design_trajectories": "limited-browser",
+        "state_resolved_first_and_total_effect_indices": "limited-browser",
+        "local_and_global_bounded_two_parameter_response_surfaces": "limited-browser",
+        "runtime_plot_availability_catalogue": "browser-computed",
+        "sensitivity_documentation_tutorial_and_trust_sync": "browser-computed"
       },
       "limitations": [
         "All results are conditional on the selected output, initial conditions, time window, parameter ranges, perturbation or sample count, solver and tolerances.",
@@ -457,7 +461,10 @@
         "Directional profiles depend on the declared parameter-range normalization and chosen direction.",
         "Two-parameter response surfaces fix all remaining parameters nominal and are not variance decompositions.",
         "Time-resolved Jansen estimates reuse the finite seeded global design; low-variance time points may be unresolved.",
-        "Histogram mutual information and RBF-HSIC are bounded-sample permutation screening diagnostics, not variance fractions or causal measures."
+        "Histogram mutual information and RBF-HSIC are bounded-sample permutation screening diagnostics, not variance fractions or causal measures.",
+        "The normalized Morris trajectory view displays only a bounded subset of the computed designs when many trajectories are requested; all trajectories still contribute to the statistics.",
+        "State-resolved first and total indices apply the selected scalar metric to each state using the same finite seeded Jansen design; they are not independent replications.",
+        "The optional two-parameter response surface is available in Local and Global variance modes but remains an OFAT-style bounded grid with all other parameters fixed at nominal values."
       ]
     }
   },

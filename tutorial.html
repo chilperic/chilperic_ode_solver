@@ -3,12 +3,12 @@
 <html data-theme="aurora" lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="Nine guided exercises for running, checking, and reporting scientific results." name="description"/><title>Practical tutorials · Foko Lab</title>
-<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
-<link href="styles/style.css?v=72.46.0" rel="stylesheet"/>
-<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.46.0" rel="stylesheet"/>
+<link href="assets/brand/foko-lab-mark.svg?v=72.47.0" rel="icon" type="image/svg+xml"/>
+<link href="styles/style.css?v=72.47.0" rel="stylesheet"/>
+<link href="styles/v72-tokens.css?v=72.47.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.47.0" rel="stylesheet"/>
 </head><body data-lab="tutorial"><div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.46.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.47.0"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
 <a class="nav-home-link" href="index.html">Home</a>
 <details class="labs-menu nav-menu" data-nav-menu="modeling">
@@ -33,7 +33,7 @@
 <div class="menu-section"><p class="menu-section-title">Analyse observations</p>
 <a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
 <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
 <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
 <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
 </div>
@@ -69,8 +69,8 @@
 </nav>
 <div aria-label="Display controls" class="foko-top-actions"></div></header>
 <main class="guide-page" id="main-content">
-<header class="guide-hero"><p class="guide-eyebrow">Learn by doing</p><h1>Practical tutorials</h1><p>Nine guided exercises for running, checking, and reporting scientific results.</p><nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">User Guide</a><a href="tutorial.html">Tutorials</a><a href="trust.html">Trust and limitations</a></nav></header>
-<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a href="#tutorial-1-read-a-result-before-the-plot">Tutorial 1 — Read a result before the plot</a><a href="#tutorial-2-keep-two-up-under-your-control">Tutorial 2 — Keep Two-up under your control</a><a href="#tutorial-3-detect-a-plausible-stiff-solver-failure">Tutorial 3 — Detect a plausible stiff-solver failure</a><a href="#tutorial-4-build-a-reaction-network-and-test-conservation">Tutorial 4 — Build a reaction network and test conservation</a><a href="#tutorial-5-find-steady-states-without-claiming-completeness">Tutorial 5 — Find steady states without claiming completeness</a><a href="#tutorial-6-compare-stochastic-paths-with-ensemble-evidence">Tutorial 6 — Compare stochastic paths with ensemble evidence</a><a href="#tutorial-7-expose-non-identifiable-fitted-parameters">Tutorial 7 — Expose non-identifiable fitted parameters</a><a href="#tutorial-8-read-a-live-agent-simulation-honestly">Tutorial 8 — Read a live Agent simulation honestly</a><a href="#tutorial-9-produce-a-result-another-scientist-can-inspect">Tutorial 9 — Produce a result another scientist can inspect</a></aside><article class="guide-document"><p>These tutorials show how to run a model, challenge the result, and decide what evidence is still missing. Complete the first tutorial before choosing a topic-specific exercise.</p>
+<header class="guide-hero"><p class="guide-eyebrow">Learn by doing</p><h1>Practical tutorials</h1><p>Ten guided exercises for running, checking, and reporting scientific results.</p><nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">User Guide</a><a href="tutorial.html">Tutorials</a><a href="trust.html">Trust and limitations</a></nav></header>
+<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a href="#tutorial-1-read-a-result-before-the-plot">Tutorial 1 — Read a result before the plot</a><a href="#tutorial-2-keep-two-up-under-your-control">Tutorial 2 — Keep Two-up under your control</a><a href="#tutorial-3-detect-a-plausible-stiff-solver-failure">Tutorial 3 — Detect a plausible stiff-solver failure</a><a href="#tutorial-4-build-a-reaction-network-and-test-conservation">Tutorial 4 — Build a reaction network and test conservation</a><a href="#tutorial-5-find-steady-states-without-claiming-completeness">Tutorial 5 — Find steady states without claiming completeness</a><a href="#tutorial-6-compare-stochastic-paths-with-ensemble-evidence">Tutorial 6 — Compare stochastic paths with ensemble evidence</a><a href="#tutorial-7-expose-non-identifiable-fitted-parameters">Tutorial 7 — Expose non-identifiable fitted parameters</a><a href="#tutorial-8-read-a-live-agent-simulation-honestly">Tutorial 8 — Read a live Agent simulation honestly</a><a href="#tutorial-9-produce-a-result-another-scientist-can-inspect">Tutorial 9 — Produce a result another scientist can inspect</a><a href="#tutorial-10-build-a-defensible-sensitivity-analysis">Tutorial 10 — Build a defensible sensitivity analysis</a></aside><article class="guide-document"><p>These tutorials show how to run a model, challenge the result, and decide what evidence is still missing. Complete the first tutorial before choosing a topic-specific exercise.</p>
 <h2 id="tutorial-1-read-a-result-before-the-plot">Tutorial 1 — Read a result before the plot</h2>
 <p><strong>Goal:</strong> Learn the standard reading order.</p>
 <ol>
@@ -201,11 +201,28 @@ t from 0 to 40
 </ol>
 <p>A useful methods statement includes the model, parameters, method, tolerances, seed where relevant, software version, diagnostics, independent comparison, and the limits of the claim.</p>
 <p><strong>Keep:</strong> A reproducible result contains both the evidence and the non-claims.</p>
+
+<h2 id="tutorial-10-build-a-defensible-sensitivity-analysis">Tutorial 10 — Build a defensible sensitivity analysis</h2>
+<p><strong>Goal:</strong> Distinguish local derivatives, screening, variance decomposition and information diagnostics while keeping the browser workload bounded.</p>
+<ol>
+<li>Open Sensitivity Analysis and load the SIR example.</li>
+<li>Run <strong>Local central finite differences</strong>. Compare signed sensitivity, parameter Jacobian, state Jacobian, trajectory influence, OFAT, tornado and perturbation convergence.</li>
+<li>Enter <code>beta:1,gamma:-1,N:0</code> as the directional vector. Run again and inspect the range-normalized directional profile.</li>
+<li>Enable the two-parameter response surface for <code>beta</code> and <code>gamma</code>. Confirm that the budget increases and all remaining parameters stay nominal.</li>
+<li>Switch to <strong>Morris screening</strong>. Inspect μ*–σ, elementary-effect distributions, normalized parameter trajectories, convergence and rank stability.</li>
+<li>Switch to <strong>Global variance: Jansen + Saltelli</strong>. Start with 128 samples and no second-order interactions. Compare first/total indices, effects through time, effects across states, variance accounting and the sampled relationship matrix.</li>
+<li>Enable second-order interactions only when the parameter count and projected workload remain within the browser guard. Treat low-sample interactions as screening evidence.</li>
+<li>Optionally enable MI/HSIC. Read the estimator and permutation warnings; do not compare them numerically with Sobol fractions.</li>
+<li>Change a parameter range or tolerance. Confirm that the previous plots become <strong>Stale</strong> and exports are disabled.</li>
+<li>Increase the requested workload until the capacity guard refuses the run. Export the configuration rather than bypassing the guard.</li>
+</ol>
+<p><strong>Check:</strong> Morris and Sobol rankings need not agree because they answer different questions. A response surface may reveal geometry but does not become a variance decomposition. State-resolved and time-resolved indices reuse the same finite design rather than creating independent evidence.</p>
+<p><strong>Keep:</strong> Report the selected output metric, parameter ranges, initial conditions, time window, sample budget, seed, solver, tolerances and all unresolved limitations.</p>
 </article></div>
 </main>
 <footer class="v70-footer foko-product-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.46.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.47.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
 <nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="workbench.html">Workbench</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Docs</a><a href="trust.html">Trust</a><a href="research.html">Research</a><a href="beauty.html">Mathematical Beauty</a></nav>
 <div class="foko-footer-meta"><p><a href="mailto:chilpericarmel@gmail.com">Contact</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a> · <a href="https://chilperic.github.io/" rel="noopener" target="_blank">About the author</a></p><p>HHU Düsseldorf · CEPLAS · AIMS Ghana · PoLiMeR ITN</p><p><a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">Source code</a></p></div>
 </footer>
-</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=72.46.0"></script></body></html>
+</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=72.47.0"></script></body></html>

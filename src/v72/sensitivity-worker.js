@@ -2,10 +2,10 @@
  * is implemented by terminating the worker from the workspace controller.
  */
 'use strict';
-importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=72.46.0');
-importScripts('../core/ode.js?v=72.46.0');
-importScripts('../core/sensitivity.js?v=72.46.0');
-importScripts('../core/numerical-inputs.js?v=72.46.0');
+importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=72.47.0');
+importScripts('../core/ode.js?v=72.47.0');
+importScripts('../core/sensitivity.js?v=72.47.0');
+importScripts('../core/numerical-inputs.js?v=72.47.0');
 
 function stableParameterKey(params) {
   return Object.keys(params).sort().map(name => `${name}:${Number(params[name]).toPrecision(17)}`).join('|');
@@ -162,6 +162,23 @@ function computeTimeSobol(samples, names) {
   return { time, names, totalMatrix, firstMatrix, warning: 'Time-resolved indices reuse the same seeded Jansen design and selected-state trajectories. Each time point has its own output variance; near-zero-variance times are left unresolved.' };
 }
 
+function computeStateSobol(samples, parameterNames, stateNames) {
+  if (!stateNames.length) return null;
+  const totalMatrix = parameterNames.map(() => stateNames.map(() => NaN));
+  const firstMatrix = parameterNames.map(() => stateNames.map(() => NaN));
+  stateNames.forEach(function (stateName, stateIndex) {
+    const a = samples.A[stateName] || [], b = samples.B[stateName] || [];
+    const varY = self.FokoSensitivityCore.variance(a.concat(b));
+    if (!(varY > 1e-30)) return;
+    parameterNames.forEach(function (parameterName, parameterIndex) {
+      const ab = samples.AB[parameterName][stateName] || [];
+      totalMatrix[parameterIndex][stateIndex] = 0.5 * self.FokoSensitivityCore.mean(a.map((value, i) => (value - ab[i]) ** 2)) / varY;
+      firstMatrix[parameterIndex][stateIndex] = 1 - 0.5 * self.FokoSensitivityCore.mean(b.map((value, i) => (value - ab[i]) ** 2)) / varY;
+    });
+  });
+  return { states: stateNames, names: parameterNames, totalMatrix, firstMatrix, warning: 'State-summary indices reuse the same seeded Jansen design and apply the selected scalar metric separately to every state. States with near-zero sampled variance are left unresolved.' };
+}
+
 self.onmessage = function (event) {
   const request = event.data || {};
   if (request.type !== 'run') return;
@@ -202,6 +219,12 @@ self.onmessage = function (event) {
       analysis = self.FokoSensitivityCore.morris({ parameters, trajectories: methodConfig.trajectories, levels: methodConfig.levels, seed: methodConfig.seed, bootstrapReplicates: methodConfig.bootstrapReplicates, evaluate: scalar });
     } else if (methodConfig.method === 'sobol') {
       const timeSamples = { A: [], B: [], AB: Object.fromEntries(parameterNames.map(name => [name, []])), time: null };
+      const stateNames = compiled.checked.vars.slice();
+      const stateSamples = {
+        A: Object.fromEntries(stateNames.map(name => [name, []])),
+        B: Object.fromEntries(stateNames.map(name => [name, []])),
+        AB: Object.fromEntries(parameterNames.map(parameter => [parameter, Object.fromEntries(stateNames.map(name => [name, []]))]))
+      };
       const sampleObserver = function (context, params) {
         if (!['A', 'B', 'AB'].includes(context.role)) return;
         const result = compiled.solve(params); const values = series(result, outputVar); const indices = downsampleIndices(values.length, 32); const row = indices.map(index => values[index]);
@@ -209,6 +232,12 @@ self.onmessage = function (event) {
         if (context.role === 'A') timeSamples.A[context.index] = row;
         else if (context.role === 'B') timeSamples.B[context.index] = row;
         else timeSamples.AB[context.name][context.index] = row;
+        stateNames.forEach(function (stateName) {
+          const stateMetric = metric(result, stateName, outputMetric);
+          if (context.role === 'A') stateSamples.A[stateName][context.index] = stateMetric;
+          else if (context.role === 'B') stateSamples.B[stateName][context.index] = stateMetric;
+          else stateSamples.AB[context.name][stateName][context.index] = stateMetric;
+        });
       };
       analysis = self.FokoSensitivityCore.sobolJansen({
         parameters, samples: methodConfig.samples, seed: methodConfig.seed, secondOrder: methodConfig.secondOrder,
@@ -216,7 +245,11 @@ self.onmessage = function (event) {
         dependencePermutations: methodConfig.dependencePermutations, evaluate: scalar, sampleObserver
       });
       analysis.timeSensitivity = computeTimeSobol(timeSamples, parameterNames);
+      analysis.stateSensitivity = computeStateSobol(stateSamples, parameterNames, stateNames);
+      if (methodConfig.responseSurface) analysis.responseSurface = self.FokoSensitivityCore.responseSurface({ parameters, first: request.analysis.surfaceFirst, second: request.analysis.surfaceSecond, points: methodConfig.surfacePoints, evaluate: scalar });
       if (analysis.timeSensitivity) analysis.warning += ` ${analysis.timeSensitivity.warning}`;
+      if (analysis.stateSensitivity) analysis.warning += ` ${analysis.stateSensitivity.warning}`;
+      if (analysis.responseSurface) analysis.warning += ` ${analysis.responseSurface.warning}`;
       if (analysis.dependence) analysis.warning += ` ${analysis.dependence.warning}`;
     } else {
       analysis = self.FokoSensitivityCore.fim({ parameters, relativeStep: methodConfig.relativeStep, sigma: methodConfig.sigma, evaluateVector: params => downsampleVector(compiled.solve(params), outputVar, 48) });
@@ -225,7 +258,7 @@ self.onmessage = function (event) {
     const solverSummary = compiled.summary();
     self.postMessage({ type: 'progress', progress: 0.96, text: 'Preparing diagnostics and plots' });
     self.postMessage({
-      type: 'result', ok: true, release: '72.46.0', method: methodConfig.method, outputVar, outputMetric,
+      type: 'result', ok: true, release: '72.47.0', method: methodConfig.method, outputVar, outputMetric,
       model: compiled.checked, analysis, solverSummary, estimatedOdeSolves: expectedSolves,
       runtime: performance.now() - started, warnings: (compiled.checked.warnings || []).concat(methodConfig.warnings || []),
       configuration: { model: request.model, analysis: request.analysis, outputVar, outputMetric }

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { defineConfig, devices } = require('@playwright/test');
 
-const PORT = Number(process.env.FOKOLAB_PORT || 8100);
+const PORT = Number(process.env.FOKOLAB_PORT || 8101);
 const HOST = process.env.FOKOLAB_HOST || '127.0.0.1';
 const systemChromium = process.env.PLAYWRIGHT_CHROMIUM_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined);
 const chromiumUse = systemChromium ? {

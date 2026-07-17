@@ -11,7 +11,7 @@
   const PLOT = root.FokoPlotLifecycle;
   if (!DATA || !ML || !PCA || !PLOT) throw new Error('ML Toolkit requires FokoDataCore, FokoMLReference, FokoPCA and FokoPlotLifecycle.');
 
-  const RELEASE = '72.46.0';
+  const RELEASE = '72.47.0';
   const STORAGE_KEY = 'fokolab:v72.16:ml-config';
   const $ = function (id) { return document.getElementById(id); };
   const state = {

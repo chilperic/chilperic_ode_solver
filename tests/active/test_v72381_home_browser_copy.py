@@ -16,11 +16,11 @@ def test_home_identifiability_button_and_browser_locator_match():
 
 
 def test_release_script_checks_current_release_and_browser_inventory():
-    script = text("test-v72.46.0-local.sh")
-    assert 'EXPECTED_VERSION="72.46.0"' in script
-    assert 'PREVIOUS_VERSION="72.45.0"' in script
+    script = text("test-v72.47.0-local.sh")
+    assert 'EXPECTED_VERSION="72.47.0"' in script
+    assert 'PREVIOUS_VERSION="72.46.0"' in script
     assert 'Total: 123 tests in 3 files' in script
-    assert 'PORT=8100' in script
+    assert 'PORT=8101' in script
 
 
 def test_home_heading_and_browser_contract_match():

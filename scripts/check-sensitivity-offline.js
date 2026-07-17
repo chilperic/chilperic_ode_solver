@@ -56,6 +56,10 @@ function resources(html, tag, attr) {
               if(methodConfig.method==='sobol'){
                 analysis=window.FokoSensitivityCore.sobolJansen({parameters:checked.paramDefs,samples:methodConfig.samples,seed:methodConfig.seed,secondOrder:methodConfig.secondOrder,bootstrapReplicates:methodConfig.bootstrapReplicates,dependence:methodConfig.dependence,dependencePermutations:methodConfig.dependencePermutations,evaluate:scalar});
                 analysis.timeSensitivity={time:[0,1,2],names:analysis.names,totalMatrix:analysis.rows.map(row=>[row.total*.7,row.total,row.total*.9]),firstMatrix:analysis.rows.map(row=>[row.first*.7,row.first,row.first*.9]),warning:'offline deterministic time-profile fixture'};
+                analysis.stateSensitivity={states:checked.vars,names:analysis.names,totalMatrix:analysis.rows.map(row=>checked.vars.map(()=>row.total)),firstMatrix:analysis.rows.map(row=>checked.vars.map(()=>row.first)),warning:'offline deterministic state-profile fixture'};
+                if(methodConfig.responseSurface) analysis.responseSurface=window.FokoSensitivityCore.responseSurface({parameters:checked.paramDefs,first:request.analysis.surfaceFirst,second:request.analysis.surfaceSecond,points:methodConfig.surfacePoints,evaluate:scalar});
+              }else if(methodConfig.method==='morris'){
+                analysis=window.FokoSensitivityCore.morris({parameters:checked.paramDefs,trajectories:methodConfig.trajectories,levels:methodConfig.levels,seed:methodConfig.seed,bootstrapReplicates:methodConfig.bootstrapReplicates,evaluate:scalar});
               }else{
                 analysis=window.FokoSensitivityCore.localFiniteDifference({parameters:checked.paramDefs,relativeStep:request.analysis.relativeStep,evaluate:scalar});
                 const baseline=solve(Object.fromEntries(Object.entries(checked.paramDefs).map(([k,v])=>[k,Array.isArray(v)?Number(v[0]):Number(v.value)])));
@@ -67,7 +71,7 @@ function resources(html, tag, attr) {
                 analysis.directional=window.FokoSensitivityCore.directionalProfile({parameters:checked.paramDefs,points:methodConfig.directionPoints,span:methodConfig.directionalSpan,direction:Object.fromEntries(names.map(name=>[name,1])),evaluate:scalar}); analysis.directional.available=true;
                 if(methodConfig.responseSurface) analysis.responseSurface=window.FokoSensitivityCore.responseSurface({parameters:checked.paramDefs,first:request.analysis.surfaceFirst,second:request.analysis.surfaceSecond,points:methodConfig.surfacePoints,evaluate:scalar});
               }
-              this.onmessage?.({data:{type:'result',ok:true,release:'72.46.0',method:methodConfig.method,outputVar,outputMetric:metricName,model:checked,analysis,solverSummary:{odeSolves:solves,functionEvaluations:evals,acceptedSteps:accepted,rejectedSteps:rejected,maxRejectionRatio:0,minStep:0,maxTimescaleRatio:1,warnings:[],methods:[checked.method]},estimatedOdeSolves:methodConfig.expectedEvaluations,runtime:12,warnings:(checked.warnings||[]).concat(methodConfig.warnings||[]),configuration:{model:request.model,analysis:request.analysis,outputVar,outputMetric:metricName}}});
+              this.onmessage?.({data:{type:'result',ok:true,release:'72.47.0',method:methodConfig.method,outputVar,outputMetric:metricName,model:checked,analysis,solverSummary:{odeSolves:solves,functionEvaluations:evals,acceptedSteps:accepted,rejectedSteps:rejected,maxRejectionRatio:0,minStep:0,maxTimescaleRatio:1,warnings:[],methods:[checked.method]},estimatedOdeSolves:methodConfig.expectedEvaluations,runtime:12,warnings:(checked.warnings||[]).concat(methodConfig.warnings||[]),configuration:{model:request.model,analysis:request.analysis,outputVar,outputMetric:metricName}}});
             }catch(error){ this.onmessage?.({data:{type:'result',ok:false,error:error.message,runtime:1}}); }
           }, 10);
         }
@@ -116,6 +120,15 @@ function resources(html, tag, attr) {
     await page.waitForFunction(() => document.getElementById('sensitivityTopStatus').textContent.trim() === 'Computed', null, {timeout:20000});
     assert.equal(await page.locator('#leftPlotType option[value="response-surface"]').count(),1);
 
+    await page.locator('#sensitivityMethod').selectOption('morris');
+    await page.locator('#sensitivityTrajectories').fill('6');
+    await page.locator('#runSensitivity').click();
+    await page.waitForFunction(() => document.getElementById('sensitivityTopStatus').textContent.trim() === 'Computed', null, {timeout:20000});
+    assert.equal(await page.locator('#leftPlotType option[value="morris-design"]').count(),1);
+    await page.locator('#leftPlotType').selectOption('morris-design');
+    await page.waitForFunction(() => document.getElementById('leftPlot').getAttribute('data-render-state') === 'rendered');
+    assert.match(await page.locator('#leftPlotEvidence').textContent(),/design-inspection/i);
+
     await page.locator('#sensitivityT1').fill('13');
     assert.equal(await page.locator('#sensitivityTopStatus').textContent(),'Stale');
     assert.equal(await page.locator('#exportSensitivityJson').isDisabled(),true);
@@ -127,6 +140,8 @@ function resources(html, tag, attr) {
     await page.locator('#sensitivityBootstrap').fill('20');
     await page.locator('#sensitivityDependence').check();
     await page.locator('#sensitivityDependencePermutations').fill('19');
+    await page.locator('#sensitivityResponseSurface').check();
+    await page.locator('#sensitivitySurfacePoints').fill('5');
     await page.locator('#runSensitivity').click();
     await page.waitForFunction(() => document.getElementById('sensitivityTopStatus').textContent.trim() === 'Computed', null, {timeout:20000});
     assert.equal(await page.locator('#leftPlotType option[value="sobol-second"]').count(),1);
@@ -134,7 +149,7 @@ function resources(html, tag, attr) {
     await page.waitForFunction(() => document.getElementById('leftPlot').getAttribute('data-render-state') === 'rendered');
     assert.match(await page.locator('#leftPlotEvidence').textContent(),/Saltelli/i);
     assert.match(await page.locator('#sensitivityDiagnostics').textContent(),/Second-order pairs/i);
-    for (const plot of ['sobol-time','variance-contribution','global-scatter','dependence-mi','dependence-hsic']) assert.equal(await page.locator(`#leftPlotType option[value="${plot}"]`).count(),1);
+    for (const plot of ['sobol-time','sobol-first-time','sobol-state-total','sobol-state-first','variance-contribution','global-scatter','response-surface','dependence-mi','dependence-hsic']) assert.equal(await page.locator(`#leftPlotType option[value="${plot}"]`).count(),1);
     await page.locator('#leftPlotType').selectOption('sobol-time');
     await page.waitForFunction(() => document.getElementById('leftPlot').getAttribute('data-render-state') === 'rendered');
     assert.match(await page.locator('#leftPlotEvidence').textContent(),/each downsampled time point/i);
@@ -145,6 +160,6 @@ function resources(html, tag, attr) {
     await page.locator('#sensitivityMethod').selectOption('fim');
     assert.equal(await page.locator('#sensitivityOutputMetric').isDisabled(),true);
     assert.match(await page.locator('#sensitivityMethodNote').textContent(),/trajectory vector/i);
-    console.log('Sensitivity offline Chromium contract passed: browser-capacity refusal, editable scientific inputs, two-up rendering, stale evidence, local Jacobian/OFAT/directional/surface plots, time-resolved Jansen/Saltelli and limited MI/HSIC plots, and FIM boundaries are explicit.');
+    console.log('Sensitivity offline Chromium contract passed: browser-capacity refusal, editable scientific inputs, two-up rendering, stale evidence, local Jacobian/OFAT/directional/surface plots, Morris design trajectories, time- and state-resolved Jansen/Saltelli, global response surfaces and limited MI/HSIC plots, and FIM boundaries are explicit.');
   } finally { await browser.close(); }
 })().catch(error=>{console.error('Sensitivity offline Chromium contract failed.');console.error(error.stack||error);process.exit(1);});

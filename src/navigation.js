@@ -127,7 +127,7 @@
     var link = document.createElement('a');
     link.href = pathPrefix() + 'sensitivity.html';
     link.setAttribute('role', 'menuitem');
-    link.innerHTML = '<span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span>';
+    link.innerHTML = '<span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span>';
     menu.appendChild(link);
   }
 

@@ -28,6 +28,9 @@ throws(()=>N.validateSensitivity({method:'sobol',dependence:true,dependencePermu
 const advanced=N.validateSensitivity({method:'sobol',samples:512,secondOrder:true,bootstrapReplicates:200,parameterCount:4,stateCount:3,outputPoints:200});
 ok(advanced.expectedEvaluations===512*(2*4+2),'second-order sensitivity budget includes both mixed-matrix directions');
 ok(!advanced.capacity.blocked,'moderate second-order model remains inside browser envelope');
+const globalSurface=N.validateSensitivity({method:'sobol',samples:128,secondOrder:false,responseSurface:true,surfacePoints:7,parameterCount:3,stateCount:2,outputPoints:100});
+ok(globalSurface.expectedEvaluations===128*5+49,'global response surface is charged to the guarded ODE budget');
+ok(globalSurface.capacity.responseSurface===true,'global response-surface capacity state is preserved');
 const tooLarge=N.validateSensitivity({method:'sobol',samples:4096,secondOrder:true,bootstrapReplicates:200,parameterCount:12,stateCount:20,outputPoints:2000});
 ok(tooLarge.capacity.blocked,'oversized global sensitivity request is blocked before a worker starts');
 ok(/too large for reliable in-browser/i.test(tooLarge.capacity.message),'blocked capacity returns an explicit browser limitation message');

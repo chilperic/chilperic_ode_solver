@@ -790,7 +790,7 @@
 
   function configuration() {
     readEditorIntoModel();
-    return { version: '72.46.0', example: state.currentName, model: clone(state.model), settings: readSettings(), layout: state.layout, focusSide: state.focusSide, plotTypes: clone(state.plotTypes) };
+    return { version: '72.47.0', example: state.currentName, model: clone(state.model), settings: readSettings(), layout: state.layout, focusSide: state.focusSide, plotTypes: clone(state.plotTypes) };
   }
 
   function restoreConfiguration(config, source) {
@@ -866,7 +866,7 @@
 
   function serialisableResult() {
     const result = resultForExport();
-    return { release: '72.46.0', computedAt: new Date().toISOString(), result, model: state.model, warning: 'Numerical candidate only. Global optimality and KKT sufficiency are not established.' };
+    return { release: '72.47.0', computedAt: new Date().toISOString(), result, model: state.model, warning: 'Numerical candidate only. Global optimality and KKT sufficiency are not established.' };
   }
 
   function exportPython() {
@@ -880,7 +880,7 @@
     const constraints = [];
     state.model.inequalities.forEach(function (expr) { constraints.push(`    {'type': 'ineq', 'fun': lambda x: -(${py(expr)})}`); });
     state.model.equalities.forEach(function (expr) { constraints.push(`    {'type': 'eq', 'fun': lambda x: (${py(expr)})}`); });
-    const text = `"""Validation export from Foko Lab v72.46.0.\nRun with SciPy and inspect termination/constraint evidence independently.\nThe browser result is not a global-optimality certificate.\n"""\nimport numpy as np\nfrom scipy.optimize import minimize, differential_evolution\n\ndef objective(x):\n${unpack}\n    value = ${py(state.model.objective)}\n    return ${state.model.sense === 'maximize' ? '-value' : 'value'}\n\nx0 = np.array([${state.model.variables.map(function (v) { return v.start; }).join(', ')}], dtype=float)\nbounds = [${bounds}]\nconstraints = [\n${constraints.join(',\n')}\n]\n\nlocal = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints, options={'ftol': ${$('optimizationFeasibilityTolerance').value}, 'maxiter': ${$('optimizationIterations').value}, 'disp': True})\nprint(local)\nprint('reported objective:', ${state.model.sense === 'maximize' ? '-local.fun' : 'local.fun'})\n# For non-convex problems, compare multiple starts or a bounded global heuristic.\n`;
+    const text = `"""Validation export from Foko Lab v72.47.0.\nRun with SciPy and inspect termination/constraint evidence independently.\nThe browser result is not a global-optimality certificate.\n"""\nimport numpy as np\nfrom scipy.optimize import minimize, differential_evolution\n\ndef objective(x):\n${unpack}\n    value = ${py(state.model.objective)}\n    return ${state.model.sense === 'maximize' ? '-value' : 'value'}\n\nx0 = np.array([${state.model.variables.map(function (v) { return v.start; }).join(', ')}], dtype=float)\nbounds = [${bounds}]\nconstraints = [\n${constraints.join(',\n')}\n]\n\nlocal = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints, options={'ftol': ${$('optimizationFeasibilityTolerance').value}, 'maxiter': ${$('optimizationIterations').value}, 'disp': True})\nprint(local)\nprint('reported objective:', ${state.model.sense === 'maximize' ? '-local.fun' : 'local.fun'})\n# For non-convex problems, compare multiple starts or a bounded global heuristic.\n`;
     download('foko-lab-optimization-validation.py', text, 'text/x-python');
   }
 

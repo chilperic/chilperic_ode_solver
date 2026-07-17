@@ -7,7 +7,7 @@
   const CORE = root.FokoLinalgReference;
   const PRESETS = root.FokoLinalgPresets || {};
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '72.46.0';
+  const RELEASE = '72.47.0';
   const STORAGE_KEY = 'fokolab:v72.6:linalg-config';
   if (!CORE || !PLOT) throw new Error('Linear Algebra Lab requires FokoLinalgReference and FokoPlotLifecycle.');
 

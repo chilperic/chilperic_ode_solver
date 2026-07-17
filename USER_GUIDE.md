@@ -71,18 +71,29 @@ Use **Verify against SciPy** when you need an independent numerical comparison. 
 
 ### Sensitivity Analysis Lab
 
-Use Sensitivity Analysis Lab to vary parameters of an editable ODE model while retaining direct control over equations, initial conditions, parameter values and ranges, time span, reported points, solver, step controls, `rtol`, and `atol`.
+Use Sensitivity Analysis Lab to vary parameters of an editable ODE model while retaining direct control over equations, initial conditions, parameter values and ranges, time span, reported points, solver, step controls, `rtol`, and `atol`. Any changed model or numerical input marks prior evidence **Stale** and disables result and image exports until recomputation.
 
-Available browser methods are local central finite differences, Morris screening, independent-uniform Jansen first/total indices, and a local range-scaled Fisher-information approximation. Changing any model or numerical input marks the existing evidence **Stale** and disables result and image exports until the analysis is rerun.
+Plot availability is method-dependent. Conditional evidence appears only after the relevant method or option has been selected and a fresh result has been computed.
+
+**Local finite differences** provide influence ranking, signed sensitivity, selected-state trajectory sensitivity, parameter and state right-hand-side Jacobians, parameter × state influence, OFAT, tornado, perturbation convergence, a feasible range-normalized directional profile, and an optional bounded two-parameter response surface.
+
+**Morris screening** provides μ*–σ, elementary-effect distributions, trajectory-prefix convergence, bootstrap rank stability, normalized parameter-design trajectories, and scalar output paths.
+
+**Global variance analysis** provides Jansen first/total indices, optional Saltelli pairwise second-order interactions, first/total effects through time, first/total effects across model states, variance accounting, sampled parameter-output relationships, uncertainty, rank stability, convergence, output distribution, an optional bounded response surface, and optional limited MI/HSIC permutation screening.
+
+**Fisher information** provides a range-scaled local trajectory information matrix, its eigenvalue spectrum, and normalized sensitivity-column alignment under a declared constant independent noise scale.
 
 Interpret the methods within their boundaries:
 
-- local derivatives are local and perturbation-dependent;
+- local derivatives are perturbation-dependent;
+- OFAT, tornado, directional and response-surface views are conditional diagnostics rather than global decompositions;
 - Morris is screening, not variance decomposition;
-- Jansen estimates assume independent uniform ranges and may be negative or exceed one at finite sample sizes;
-- the Fisher-information view is local, scaling-dependent, and based on a declared constant noise scale; it is not posterior uncertainty or structural identifiability.
+- Jansen and Saltelli assume independent uniform ranges and may be negative or greater than one at finite sample sizes;
+- state/time heatmaps reuse one finite seeded design;
+- MI and HSIC are estimator-dependent screening statistics rather than variance fractions;
+- the Fisher-information view is local and is not posterior uncertainty or structural identifiability.
 
-Use several perturbation sizes or sample budgets and independently repeat important analyses with SciPy and SALib.
+The browser workload guard refuses analyses above its state, parameter, ODE-solve, pair-count, or state-time envelope. Reduce the model or export it to Python/SALib rather than bypassing the guard. Use several perturbation sizes, sample budgets and seeds, then independently reproduce important conclusions.
 
 ### Steady-State Lab
 

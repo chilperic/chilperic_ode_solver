@@ -6,9 +6,9 @@ ROOT = Path(__file__).resolve().parents[2]
 def test_ml_uses_authored_v72_workspace():
     page = (ROOT / "ml.html").read_text(encoding="utf-8")
     assert 'data-v72-shell="true"' in page
-    assert 'src/v72/ml-workspace.js?v=72.46.0' in page
-    assert 'src/core/ml-reference.js?v=72.46.0' in page
-    assert 'src/models/ml-presets.js?v=72.46.0' in page
+    assert 'src/v72/ml-workspace.js?v=72.47.0' in page
+    assert 'src/core/ml-reference.js?v=72.47.0' in page
+    assert 'src/models/ml-presets.js?v=72.47.0' in page
     assert 'id="mlPlotGrid"' in page
     assert 'data-layout-mode="two"' in page
     assert 'data-layout-mode="three"' not in page
@@ -49,7 +49,7 @@ def test_sciml_loads_the_pareto_capable_core():
     page = (ROOT / "sciml.html").read_text(encoding="utf-8")
     core = (ROOT / "src/core/sindy.js").read_text(encoding="utf-8")
     compatibility = (ROOT / "src/sindy.js").read_text(encoding="utf-8")
-    assert 'src/core/sindy.js?v=72.46.0' in page
+    assert 'src/core/sindy.js?v=72.47.0' in page
     assert "function paretoSweep" in core
     assert "paretoSweep: paretoSweep" in core
     assert "function paretoSweep" in compatibility
@@ -60,7 +60,7 @@ def test_current_version_and_port_are_consistent():
     package = (ROOT / "package.json").read_text(encoding="utf-8")
     playwright = (ROOT / "playwright.config.js").read_text(encoding="utf-8")
     version = (ROOT / "VERSION.json").read_text(encoding="utf-8")
-    assert '"version": "72.46.0"' in package
-    assert "8100" in package
-    assert "8100" in playwright
-    assert '"version":"72.46.0"' in version.replace(" ", "")
+    assert '"version": "72.47.0"' in package
+    assert "8101" in package
+    assert "8101" in playwright
+    assert '"version":"72.47.0"' in version.replace(" ", "")

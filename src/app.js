@@ -634,7 +634,7 @@ function runOdeFit(){
 function runOpt(){ try{ readOpt(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const samples=+$('optSamples').value, population=+($('optPopulation')?.value||36); const budget=samples*population; const payload={...state.model, samples, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population, temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy(budget>50000?`Optimizing large browser budget (${budget.toLocaleString()} evaluations). Reduce samples/population if the tab slows down.`:'Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
 function worker(){
   if(state.worker) return state.worker;
-  state.worker = window.FokoComputeBus?.createLegacyHandle ? window.FokoComputeBus.createLegacyHandle({workerUrl:'src/worker.js?v=72.46.0'}) : new Worker('src/worker.js?v=72.46.0');
+  state.worker = window.FokoComputeBus?.createLegacyHandle ? window.FokoComputeBus.createLegacyHandle({workerUrl:'src/worker.js?v=72.47.0'}) : new Worker('src/worker.js?v=72.47.0');
   state.worker.onmessage=e=>{ const d=e.data; if(d.progress!==undefined){ $('progressWrap').classList.remove('hidden'); $('progressBar').style.width=Math.round(d.progress*100)+'%'; setStatus(`${d.text||'Running'} ${Math.round(d.progress*100)}%`); return; } finishRun(d); };
   state.worker.onerror=err=>{
     // MUST null the reference first — the keep-alive guard in worker() checks

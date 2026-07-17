@@ -1,6 +1,6 @@
 {
   "name": "foko-lab",
-  "version": "72.46.0",
+  "version": "72.47.0",
   "private": true,
   "description": "Browser-native scientific modeling with user-owned inputs, attached diagnostics, independent verification, reproducible reporting, visual examples, and explicit capability boundaries.",
   "scripts": {
@@ -11,7 +11,7 @@
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
     "test:historical": "python3 -m pytest -q tests/archive/python",
-    "serve": "python3 -m http.server 8100 --bind 127.0.0.1",
+    "serve": "python3 -m http.server 8101 --bind 127.0.0.1",
     "stamp:version": "node scripts/stamp-version.js",
     "build:release": "python3 scripts/build-release.py",
     "install:browser-tests": "npm ci --ignore-scripts --no-audit --no-fund --omit=optional",

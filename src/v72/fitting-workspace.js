@@ -9,7 +9,7 @@
   const FIT = root.FokoFitting;
   const PRESETS = root.FokoFittingPresets || {};
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '72.46.0';
+  const RELEASE = '72.47.0';
   const STORAGE_KEY = 'fokolab:v72.5:fitting-config';
 
   if (!DATA || !FIT || !PLOT) throw new Error('Curve Fitting Lab requires FokoDataCore, FokoFitting and FokoPlotLifecycle.');

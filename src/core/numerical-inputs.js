@@ -156,11 +156,13 @@
     const secondOrder = config.secondOrder === true || config.secondOrder === 'true';
     const ofatPoints = Math.max(5, Number(config.ofatPoints) || 9);
     const directionPoints = Math.max(5, Number(config.directionPoints) || 9);
-    const responseSurface = config.responseSurface === true || config.responseSurface === 'true';
+    const responseSurfaceRequested = config.responseSurface === true || config.responseSurface === 'true';
+    const responseSurface = responseSurfaceRequested && (method === 'local' || method === 'sobol');
     const surfacePoints = Math.max(5, Number(config.surfacePoints) || 7);
-    const expectedEvaluations = method === 'local' ? 1 + 8 * parameterCount + ofatPoints * parameterCount + directionPoints + (responseSurface ? surfacePoints * surfacePoints : 0)
+    const surfaceEvaluations = responseSurface ? surfacePoints * surfacePoints : 0;
+    const expectedEvaluations = method === 'local' ? 1 + 8 * parameterCount + ofatPoints * parameterCount + directionPoints + surfaceEvaluations
       : method === 'morris' ? trajectories * (parameterCount + 1)
-      : method === 'sobol' ? samples * (secondOrder ? (2 * parameterCount + 2) : (parameterCount + 2))
+      : method === 'sobol' ? samples * (secondOrder ? (2 * parameterCount + 2) : (parameterCount + 2)) + surfaceEvaluations
       : 1 + 2 * parameterCount;
     const stateTimeValues = expectedEvaluations * outputPoints * stateCount;
     const pairCount = secondOrder ? parameterCount * (parameterCount - 1) / 2 : 0;
@@ -208,7 +210,7 @@
     if (method === 'sobol' && secondOrder && samples < 512) warnings.push(warning('low-second-order-samples', 'Second-order Sobol interactions below 512 base samples are usually unstable and should be treated as screening evidence only.'));
     if (method === 'morris' && trajectories < 10) warnings.push(warning('low-morris-trajectories', 'Fewer than 10 Morris trajectories gives unstable screening statistics.'));
     if (method === 'sobol' && dependence && samples < 64) warnings.push(warning('low-dependence-samples', 'MI and HSIC screening below 64 base samples is usually unstable.'));
-    if (method === 'local' && responseSurface && surfacePoints > 11) warnings.push(warning('dense-response-surface', 'A dense two-parameter response surface can dominate the local-analysis workload.'));
+    if ((method === 'local' || method === 'sobol') && responseSurface && surfacePoints > 11) warnings.push(warning('dense-response-surface', 'A dense two-parameter response surface can dominate the local-analysis workload.'));
     if (bootstrapReplicates > 0 && bootstrapReplicates < 100) warnings.push(warning('low-bootstrap-replicates', 'Fewer than 100 bootstrap replicates gives coarse uncertainty intervals and rank-stability estimates.'));
     if (capacity.warningLevel) warnings.push(warning('large-sensitivity-budget', capacity.message));
     return { method, relativeStep, samples, trajectories, levels, seed, sigma, parameterCount, stateCount, outputPoints, bootstrapReplicates, secondOrder, ofatPoints, directionPoints, directionalSpan, responseSurface, surfacePoints, dependence, dependencePermutations, expectedEvaluations: capacity.expectedEvaluations, capacity, warnings };

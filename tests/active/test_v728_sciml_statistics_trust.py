@@ -75,7 +75,7 @@ def test_theme_selector_has_an_explicit_high_contrast_contract():
 
 def test_v728_capability_matrix_marks_sciml_as_bounded_reference():
     data = json.loads((ROOT / "CAPABILITIES.json").read_text(encoding="utf-8"))
-    assert data["release"] == "72.46.0"
+    assert data["release"] == "72.47.0"
     sciml = data["labs"]["sciml"]
     assert sciml["interface"] == "reference"
     assert sciml["capabilities"]["sindy_sparse_regression_and_pareto_sweep"] == "browser-computed"

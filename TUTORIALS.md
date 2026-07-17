@@ -168,3 +168,23 @@ Import this model:
 A useful methods statement includes the model, parameters, method, tolerances, seed where relevant, software version, diagnostics, independent comparison, and the limits of the claim.
 
 **Keep:** A reproducible result contains both the evidence and the non-claims.
+
+
+## Tutorial 10 — Build a defensible sensitivity analysis
+
+**Goal:** Distinguish local derivatives, screening, variance decomposition and information diagnostics while keeping the browser workload bounded.
+
+1. Open Sensitivity Analysis and load the SIR example.
+2. Run **Local central finite differences**. Compare the signed sensitivity, parameter Jacobian, state Jacobian, trajectory influence, OFAT, tornado and perturbation-convergence views.
+3. Enter `beta:1,gamma:-1,N:0` as the directional vector. Run again and inspect the range-normalized directional profile.
+4. Enable the two-parameter response surface for `beta` and `gamma`. Confirm that the budget increases and that all other parameters remain nominal.
+5. Switch to **Morris screening**. Inspect μ*–σ, elementary-effect distributions, normalized parameter trajectories, convergence and rank stability.
+6. Switch to **Global variance: Jansen + Saltelli**. Start with 128 samples and no second-order interactions. Compare first/total indices, effects through time, effects across states, variance accounting and the sampled relationship matrix.
+7. Enable second-order interactions only when the parameter count and projected workload remain within the browser guard. Treat low-sample interactions as screening evidence.
+8. Optionally enable MI/HSIC. Read the estimator and permutation warnings; do not compare them numerically with Sobol fractions.
+9. Change a parameter range or tolerance. Confirm that the previous plots become **Stale** and exports are disabled.
+10. Increase the requested workload until the capacity guard refuses the run. Export the configuration rather than bypassing the guard.
+
+**Check:** Morris and Sobol rankings need not agree because they answer different questions. A response surface may reveal geometry but does not become a variance decomposition. State-resolved and time-resolved indices reuse the same finite design rather than creating independent evidence.
+
+**Keep:** Report the selected output metric, parameter ranges, initial conditions, time window, sample budget, seed, solver, tolerances and all unresolved limitations.

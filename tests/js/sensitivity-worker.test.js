@@ -65,8 +65,9 @@ assert.ok(morris.analysis.rows.every((row) => Number.isFinite(row.muStar) && Num
 assert.equal(morris.analysis.traces.length, 4);
 assert.equal(morris.analysis.rankStability.length, 2);
 assert.ok(morris.analysis.convergence.length >= 1);
+assert.ok(morris.analysis.traces.every(trace=>trace.every(point=>point.normalized && Number.isFinite(point.normalized.r) && Number.isFinite(point.normalized.K))));
 
-const sobol = run({ method: 'sobol', samples: 32, seed: 1729, secondOrder: true, bootstrapReplicates: 40, dependence: true, dependencePermutations: 19, parameterCount: 2 });
+const sobol = run({ method: 'sobol', samples: 32, seed: 1729, secondOrder: true, bootstrapReplicates: 40, dependence: true, dependencePermutations: 19, responseSurface: true, surfaceFirst: 'r', surfaceSecond: 'K', surfacePoints: 5, parameterCount: 2 });
 assert.equal(sobol.analysis.rows.length, 2);
 assert.ok(sobol.analysis.rows.every((row) => Number.isFinite(row.first) && Number.isFinite(row.total)));
 assert.ok(sobol.analysis.convergence.length >= 1);
@@ -74,9 +75,14 @@ assert.equal(sobol.analysis.secondOrderEnabled, true);
 assert.equal(sobol.analysis.secondOrder.length, 1);
 assert.equal(sobol.analysis.secondOrderMatrix.length, 2);
 assert.ok(sobol.analysis.rows.every((row) => Number.isFinite(row.medianRank)));
-assert.equal(sobol.estimatedOdeSolves, 32 * 6);
+assert.equal(sobol.estimatedOdeSolves, 32 * 6 + 25);
 assert.equal(sobol.analysis.timeSensitivity.names.length, 2);
 assert.equal(sobol.analysis.timeSensitivity.totalMatrix.length, 2);
+assert.equal(sobol.analysis.timeSensitivity.firstMatrix.length, 2);
+assert.deepEqual(Array.from(sobol.analysis.stateSensitivity.states), ['x']);
+assert.equal(sobol.analysis.stateSensitivity.totalMatrix.length, 2);
+assert.equal(sobol.analysis.stateSensitivity.firstMatrix.length, 2);
+assert.equal(sobol.analysis.responseSurface.z.length, 5);
 assert.equal(sobol.analysis.sampleRows.length, 64);
 assert.equal(sobol.analysis.dependence.rows.length, 2);
 assert.ok(sobol.analysis.dependence.rows.every(row => row.mutualInformationP > 0 && row.hsicP > 0));
@@ -103,4 +109,4 @@ assert.ok(blocked && blocked.ok===false);
 assert.match(blocked.error,/too large for reliable in-browser sensitivity analysis/i);
 assert.match(blocked.error,/No worker should be started/i);
 
-console.log('Sensitivity worker end-to-end contracts passed: local Jacobians/OFAT/direction/surface, advanced Morris, Jansen/Saltelli time/dependence diagnostics and FIM use editable ODE inputs and the canonical ODE core.');
+console.log('Sensitivity worker end-to-end contracts passed: local Jacobians/OFAT/direction/surface, Morris normalized designs, Jansen/Saltelli time/state/dependence diagnostics, global response surfaces and FIM use editable ODE inputs and the canonical ODE core.');

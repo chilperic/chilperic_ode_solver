@@ -41,7 +41,7 @@
 }(typeof window !== 'undefined' ? window : globalThis, function (D) {
   'use strict';
 
-  const VERSION = '72.46.0';
+  const VERSION = '72.47.0';
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function finite(value, label) { const out = Number(value); if (!Number.isFinite(out)) throw new Error(label + ' must be finite.'); return out; }
   function positive(value, label) { const out = finite(value, label); if (!(out > 0)) throw new Error(label + ' must be positive.'); return out; }

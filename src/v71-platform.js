@@ -1,6 +1,6 @@
 (function(root){'use strict';
 const Kit=root.FokoKit;
-const RELEASE='72.46.0';
+const RELEASE='72.47.0';
 const BUNDLE_SCHEMA='foko.lab.bundle.v1';
 function $all(sel){return Array.from(document.querySelectorAll(sel));}
 function pageName(){return location.pathname.split('/').pop()||'index.html';}

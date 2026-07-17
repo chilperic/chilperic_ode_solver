@@ -28,13 +28,13 @@ def text(path: str) -> str:
 
 
 def test_release_identity_and_port():
-    assert '"version": "72.46.0"' in text("package.json")
-    assert '"version": "72.46.0"' in text("VERSION.json")
-    assert "8100" in text("package.json")
-    assert "8100" in text("playwright.config.js")
-    script = text("test-v72.46.0-local.sh")
-    assert 'EXPECTED_VERSION="72.46.0"' in script
-    assert "PORT=8100" in script
+    assert '"version": "72.47.0"' in text("package.json")
+    assert '"version": "72.47.0"' in text("VERSION.json")
+    assert "8101" in text("package.json")
+    assert "8101" in text("playwright.config.js")
+    script = text("test-v72.47.0-local.sh")
+    assert 'EXPECTED_VERSION="72.47.0"' in script
+    assert "PORT=8101" in script
     assert "--repeat-each=3" in script
     assert "Complete 123-test browser suite" in script
 
@@ -103,7 +103,7 @@ def test_homepage_is_task_first_and_links_to_trust():
 
 
 def test_external_benchmark_covers_relevant_scientific_platforms():
-    benchmark = text("BENCHMARK-v72.46.0.md")
+    benchmark = text("BENCHMARK-v72.47.0.md")
     for product in ("VCell", "SimBiology", "COPASI", "Tellurium", "Cell Collective", "BioUML"):
         assert product in benchmark
     for dimension in ("Scientific reliability", "Platform stability", "UX", "Modern GUI"):

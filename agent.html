@@ -9,18 +9,18 @@
 <meta content="Worker-backed lattice agent models with explicit update schedules, initialization, random seeds, finite ensembles, spatial diagnostics and scientific boundaries." property="og:description"/>
 <meta content="website" property="og:type"/>
 <title>Agent Lab · Foko Lab</title>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.46.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=72.46.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=72.46.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.46.0"></script></head>
-<body data-lab="agent" data-v72-shell="true" data-version="72.46.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.47.0"></script>
+<link href="assets/brand/foko-lab-mark.svg?v=72.47.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=72.47.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=72.47.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=72.47.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=72.47.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=72.47.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=72.47.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.47.0"></script></head>
+<body data-lab="agent" data-v72-shell="true" data-version="72.47.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.46.0" width="190"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.47.0" width="190"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
 <a class="nav-home-link" href="index.html">Home</a>
 <details class="labs-menu nav-menu" data-nav-menu="modeling">
@@ -45,7 +45,7 @@
 <div class="menu-section"><p class="menu-section-title">Analyse observations</p>
 <a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
 <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
 <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
 <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
 </div>
@@ -163,10 +163,10 @@
 <section aria-label="Exports" class="exports-card v72-inspector-card" id="agentExportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Configuration and result export</h2></div></div><div class="export-row"><label class="secondary button-link">Import model/config JSON<input accept="application/json,.json" hidden="" id="importAgentConfig" type="file"/></label><button class="secondary" id="saveAgentSession" type="button">Save session</button><button class="secondary" id="restoreAgentSession" type="button">Restore session</button><button class="secondary" id="copyAgentShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportAgentModel" type="button">Model JSON</button><button class="secondary" id="exportAgentCsv" type="button">Population CSV</button><button class="secondary" id="exportAgentJson" type="button">Result JSON</button><button class="secondary" id="exportAgentPython" type="button">Python scaffold</button><a class="secondary button-link" href="AGENT_MODEL_SPEC.md" rel="noopener" target="_blank">Model specification</a></div><p class="note">Saved and shared states preserve model configuration only. Computed evidence is regenerated from the stored master seed.</p></section>
 </aside>
 </main>
-<script defer="" src="src/core/agent-reference.js?v=72.46.0"></script>
-<script defer="" src="src/models/agent-presets.js?v=72.46.0"></script>
-<script defer="" src="src/v72/agent-workspace.js?v=72.46.0"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=72.46.0"></script>
-<script defer="" src="src/navigation.js?v=72.46.0"></script>
+<script defer="" src="src/core/agent-reference.js?v=72.47.0"></script>
+<script defer="" src="src/models/agent-presets.js?v=72.47.0"></script>
+<script defer="" src="src/v72/agent-workspace.js?v=72.47.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=72.47.0"></script>
+<script defer="" src="src/navigation.js?v=72.47.0"></script>
 </div></body>
 </html>

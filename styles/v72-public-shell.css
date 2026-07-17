@@ -3012,3 +3012,8 @@ body[data-lab='home'] .analysis-card-grid a[href='beauty.html']:hover{
 .taxonomy-status[data-status="limited-browser"], .taxonomy-status[data-status="derived-browser"] { color: var(--warn); }
 .taxonomy-note { color: var(--muted); font-size: .8rem; line-height: 1.4; }
 @media (max-width: 720px) { .taxonomy-table th, .taxonomy-table td { display: block; width: auto; } .taxonomy-table tr { display: block; border-top: 1px solid var(--line); } .taxonomy-table th, .taxonomy-table td { border-top: 0; } }
+
+/* v72.47 Trust claim for diagnostics derived from an existing browser result. */
+.trust-claims { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.trust-claim.derived-browser { border-top-color: #6b5bb5; }
+.claim-pill.derived-browser { background: rgba(107,91,181,.14); color: #4d3f91; }

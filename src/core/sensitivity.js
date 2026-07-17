@@ -147,13 +147,13 @@
         return row;
       };
       let current = evaluateChecked(evaluate, toPhysical(), counter);
-      const order = shuffle(spec.names, rng); const points = [{ step: 0, output: current }];
+      const order = shuffle(spec.names, rng); const points = [{ step: 0, output: current, normalized: Object.assign({}, normalized) }];
       order.forEach(function (name, index) {
         normalized[name] += direction[name] * delta;
         const nextOutput = evaluateChecked(evaluate, toPhysical(), counter);
         const effect = (nextOutput - current) / (direction[name] * delta);
         effects[name].push(effect); current = nextOutput;
-        points.push({ step: index + 1, output: current, parameter: name });
+        points.push({ step: index + 1, output: current, parameter: name, normalized: Object.assign({}, normalized) });
       });
       traces.push(points);
     }

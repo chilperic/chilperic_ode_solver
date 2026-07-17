@@ -1,3 +1,14 @@
+# v72.47.0 — Sensitivity discoverability and documentation closure
+
+- Adds genuine normalized Morris parameter-design trajectories, distinct from scalar output paths.
+- Adds state-resolved Jansen first- and total-effect heatmaps using the existing finite seeded design.
+- Makes the bounded two-parameter response surface available in both Local and Global variance modes.
+- Adds an in-lab conditional plot catalogue so option-dependent evidence no longer appears silently missing.
+- Synchronizes Docs, Tutorial 10, Trust, capability metadata, taxonomy and navigation copy with the runtime.
+- Repairs generated Trust static navigation, reader-facing derived-result labels and scientific acronym formatting.
+- Corrects the local runner predecessor preflight and adds release-blocking documentation/runtime consistency checks.
+- Uses isolated validation port 8101.
+
 # v72.46.0 — local and global Sensitivity depth
 
 - Separates parameter Jacobian, state Jacobian and propagated trajectory sensitivity.
@@ -338,7 +349,7 @@
 - Preserved the static header/nav structure; no generated chrome rewrite.
 - Preserved the V71.38 lab color identity baseline.
 - Added regression tests for analysis, focused, SciML and creator/learn/explore active-state mappings.
-- Cache token normalized to `?v=72.46.0`.
+- Cache token normalized to `?v=72.47.0`.
 
 
 ## V71.32 — Functional cockpit boxes and plot palettes
@@ -402,7 +413,7 @@
 - Added Playwright browser smoke tests for home, focused labs, descriptor analysis labs, and reproducibility controls.
 - Added `package.json`, `playwright.config.js`, and `tests/e2e/main-labs-smoke.spec.js`.
 - Added pytest structural checks so the e2e gate itself is protected.
-- Cache token normalized to `?v=72.46.0`.
+- Cache token normalized to `?v=72.47.0`.
 
 # Foko Lab release history
 ## V71.11 — ML Toolkit descriptor shell and focused-lab noise cleanup
@@ -416,7 +427,7 @@
 
 ## v70.20 — Cache-token normalization
 
-- One cache token across the whole tree: `?v=72.46.0`.
+- One cache token across the whole tree: `?v=72.47.0`.
 - Legacy asset tokens removed.
 - Added `tests/test_v70_20_token_normalization.py`.
 - Audit: `release-audits/AUDIT-v70-20-token-normalization.md`.

@@ -1,4 +1,4 @@
-/* Foko Lab v72.46.0 live Agent workspace.
+/* Foko Lab v72.47.0 live Agent workspace.
  * Worker-backed finite ensembles, explicit rendering states, cancellation,
  * deterministic fallback graphics, and model-specific endpoint evidence.
  */
@@ -7,7 +7,7 @@
   const CORE = root.FokoAgentReference;
   const PRESETS = root.FokoAgentPresets || {};
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '72.46.0';
+  const RELEASE = '72.47.0';
   const STORAGE_KEY = 'fokolab:v72.16:agent-config';
   const LAYOUT_STORAGE_KEY = 'fokolab:v72:agent-layout';
   const VALID_LAYOUTS = new Set(['two', 'focus']);
@@ -515,7 +515,7 @@
     if (root.Worker) {
       try {
         const requestId='agent-'+Date.now()+'-'+serial; state.activeRequestId=requestId;
-        const worker=new Worker('src/v72/agent-worker.js?v=72.46.0'); state.worker=worker;
+        const worker=new Worker('src/v72/agent-worker.js?v=72.47.0'); state.worker=worker;
         worker.onmessage=function(event){
           const message=event.data||{}; if(serial!==state.runSerial||message.requestId!==requestId)return;
           if(message.type==='started'){

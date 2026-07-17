@@ -1,6 +1,6 @@
 /* ODE Lab worker: safe parsing via Math.js, no new Function. */
-importScripts('../assets/vendor/mathjs/math-15.2.0.js?v=72.46.0');
-importScripts('core/ode.js?v=72.46.0');
+importScripts('../assets/vendor/mathjs/math-15.2.0.js?v=72.47.0');
+importScripts('core/ode.js?v=72.47.0');
 
 const ALLOWED_FUNCS = new Set(['sin','cos','tan','asin','acos','atan','sinh','cosh','tanh','exp','log','log10','sqrt','abs','min','max','pow','floor','ceil','round']);
 const ALLOWED_CONSTS = new Set(['pi','e','PI','E']);

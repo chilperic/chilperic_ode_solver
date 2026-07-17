@@ -8,7 +8,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "72.46.0"
+VERSION = "72.47.0"
 
 
 def menu_link(prefix: str, href: str, icon: str, title: str, description: str) -> str:

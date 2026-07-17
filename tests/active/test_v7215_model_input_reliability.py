@@ -44,7 +44,7 @@ def test_machine_learning_exposes_repeated_nested_validation_and_audit():
 
 def test_npm_install_is_small_and_browser_only():
     package=json.loads(read('package.json'))
-    assert package['version']=='72.46.0'
+    assert package['version']=='72.47.0'
     assert package.get('dependencies')=={}
     cmd=package['scripts']['install:browser-tests']
     assert 'npm ci' in cmd and '--no-audit' in cmd and '--no-fund' in cmd and '--omit=optional' in cmd

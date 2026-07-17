@@ -10,8 +10,8 @@ def text(path: str) -> str:
 
 def test_release_identity_is_v72340():
     version = json.loads(text('VERSION.json'))
-    assert version == {'version': '72.46.0', 'token': '72.46.0'}
-    assert '"version": "72.46.0"' in text('package.json')
+    assert version == {'version': '72.47.0', 'token': '72.47.0'}
+    assert '"version": "72.47.0"' in text('package.json')
 
 
 def test_layout_arrow_navigation_is_capture_phase_focus_only():
@@ -37,9 +37,9 @@ def test_home_platform_statement_is_semantic_heading():
 
 
 def test_local_script_uses_new_port_and_preflight():
-    script = text('test-v72.46.0-local.sh')
-    assert 'PORT=8100' in script
-    assert 'EXPECTED_VERSION="72.46.0"' in script
+    script = text('test-v72.47.0-local.sh')
+    assert 'PORT=8101' in script
+    assert 'EXPECTED_VERSION="72.47.0"' in script
     assert 'Release identity and manifest preflight' in script
     assert 'test:sensitivity-offline' in script
     assert 'Complete 123-test browser suite' in script
@@ -47,14 +47,14 @@ def test_local_script_uses_new_port_and_preflight():
 
 
 def test_stale_token_preflight_uses_exact_previous_release():
-    script = text('test-v72.46.0-local.sh')
-    assert 'PREVIOUS_VERSION="72.45.0"' in script
+    script = text('test-v72.47.0-local.sh')
+    assert 'PREVIOUS_VERSION="72.46.0"' in script
     assert "assert f'?v={previous}' not in text" in script
     assert 'stale runtime token' in script
 
 
 def test_failed_runner_keeps_terminal_open_and_does_not_start_server():
-    script = text('test-v72.46.0-local.sh')
+    script = text('test-v72.47.0-local.sh')
     assert 'keep_terminal_open()' in script
     assert 'exec "${SHELL:-/bin/bash}" -i' in script
     assert 'No server was started' in script

@@ -32,6 +32,7 @@ near(morris.rows.find(r=>r.name==='a').muStar, 8, 1e-10, 'Morris normalized-doma
 near(morris.rows.find(r=>r.name==='b').muStar, 18, 1e-10, 'Morris normalized-domain mu* for b');
 ok(morris.rows.every(r=>r.sigma<1e-9), 'linear Morris effects have negligible spread');
 ok(morris.evaluations===20*3, 'Morris evaluation budget is trajectories times p+1');
+ok(morris.traces.every(trace=>trace.every(point=>point.normalized && Object.keys(point.normalized).length===2)), 'Morris trajectories retain normalized parameter coordinates for design inspection');
 
 const sobol = S.sobolJansen({parameters, evaluate:linear, samples:4096, seed:11});
 const a = sobol.rows.find(r=>r.name==='a');

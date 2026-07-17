@@ -3,12 +3,12 @@
 <html data-theme="aurora" lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="How to run models, read diagnostics, work with your own inputs, and know when an external tool is required." name="description"/><title>Using Foko Lab · Foko Lab</title>
-<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
-<link href="styles/style.css?v=72.46.0" rel="stylesheet"/>
-<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.46.0" rel="stylesheet"/>
+<link href="assets/brand/foko-lab-mark.svg?v=72.47.0" rel="icon" type="image/svg+xml"/>
+<link href="styles/style.css?v=72.47.0" rel="stylesheet"/>
+<link href="styles/v72-tokens.css?v=72.47.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.47.0" rel="stylesheet"/>
 </head><body data-lab="docs"><div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.46.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.47.0"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
 <a class="nav-home-link" href="index.html">Home</a>
 <details class="labs-menu nav-menu" data-nav-menu="modeling">
@@ -33,7 +33,7 @@
 <div class="menu-section"><p class="menu-section-title">Analyse observations</p>
 <a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
 <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
 <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
 <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
 </div>
@@ -138,16 +138,35 @@
 <p>Use ODE Lab for systems of differential equations and reaction networks. You can inspect trajectories, phase portraits, vector fields, parameter sweeps, conservation, stiffness evidence, and solver diagnostics.</p>
 <p>Use <strong>Verify against SciPy</strong> when you need an independent numerical comparison. Suspected stiff systems should be compared with an implicit method such as Radau or BDF.</p>
 <h3>Sensitivity Analysis Lab</h3>
-<p>Use Sensitivity Analysis Lab to vary parameters of an editable ODE model while retaining direct control over equations, initial conditions, parameter values and ranges, time span, reported points, solver, step controls, <code>rtol</code>, and <code>atol</code>.</p>
-<p>Available browser methods are local central finite differences; Morris screening with elementary-effect distributions, convergence and bootstrap rank stability; independent-uniform Jansen first/total indices with optional symmetrized Saltelli pairwise second-order interactions; and a local range-scaled Fisher-information approximation. Changing any model or numerical input marks the existing evidence <strong>Stale</strong> and disables result and image exports until the analysis is rerun.</p>
-<p>Interpret the methods within their boundaries:</p>
+<p>Use Sensitivity Analysis Lab to vary parameters of an editable ODE model while retaining direct control over equations, initial conditions, parameter values and ranges, time span, reported points, solver, step controls, <code>rtol</code>, and <code>atol</code>. Any changed model or numerical input marks prior evidence <strong>Stale</strong> and disables result and image exports until recomputation.</p>
+<p><strong>Plot availability is method-dependent.</strong> A plot is not removed when it is absent from a dropdown: it may require another method, a valid directional vector, second-order mode, the response-surface option, or MI/HSIC screening. The Analysis definition panel lists which evidence becomes available after each method.</p>
+<h4>Local finite-difference evidence</h4>
 <ul>
-<li>local derivatives are local and perturbation-dependent;</li>
-<li>Morris is screening, not variance decomposition; μ*–σ, effect distributions, convergence and bootstrap ranks remain conditional on the computed trajectories;</li>
-<li>Jansen first/total and Saltelli second-order estimates assume independent uniform ranges and may be negative or exceed one at finite sample sizes; bootstrap intervals resample the same design;</li>
-<li>the Fisher-information view is local, scaling-dependent, and based on a declared constant noise scale; it is not posterior uncertainty or structural identifiability.</li>
+<li>absolute influence ranking and signed local sensitivity;</li>
+<li>selected-state trajectory sensitivity through time;</li>
+<li>parameter and state right-hand-side Jacobian heatmaps;</li>
+<li>parameter × state propagated influence;</li>
+<li>OFAT response curves and tornado endpoints;</li>
+<li>finite-difference perturbation convergence;</li>
+<li>a range-normalized directional response when the requested direction remains inside the declared bounds;</li>
+<li>an optional bounded two-parameter response surface.</li>
 </ul>
-<p>The lab estimates the browser workload before launch. Requests above the guarded state, parameter, ODE-solve, pair-count, or state-time envelope are refused before a worker starts. Reduce the model or export it to Python/SALib. Use several perturbation sizes or sample budgets and independently repeat important analyses.</p>
+<h4>Morris screening evidence</h4>
+<ul><li>μ*–σ screening map;</li><li>elementary-effect distributions;</li><li>trajectory-prefix convergence and bootstrap rank stability;</li><li>normalized Morris parameter-design trajectories;</li><li>scalar output along the computed paths.</li></ul>
+<h4>Global variance evidence</h4>
+<ul>
+<li>Jansen first- and total-order estimates with raw finite-sample values;</li>
+<li>optional symmetrized Saltelli pairwise second-order interactions;</li>
+<li>first- and total-order effects through time for the selected state;</li>
+<li>first- and total-order effects across every model state using the selected scalar metric;</li>
+<li>interaction gap, variance accounting, bootstrap uncertainty, rank stability, convergence, output distribution and a bounded parameter-output relationship matrix;</li>
+<li>an optional bounded two-parameter response surface;</li>
+<li>optional histogram-MI and RBF-HSIC permutation screening.</li>
+</ul>
+<h4>Fisher-information evidence</h4>
+<p>The FIM route provides a range-scaled local trajectory information matrix, its eigenvalue spectrum and normalized sensitivity-column alignment under a declared constant independent noise scale.</p>
+<p>Interpret the methods within their boundaries: local derivatives are perturbation-dependent; OFAT and response surfaces fix nonselected parameters; Morris is screening rather than variance decomposition; Jansen and Saltelli assume independent uniform ranges; state/time heatmaps reuse one finite seeded design; MI and HSIC are estimator-dependent screening statistics; and the FIM is not posterior uncertainty or structural identifiability.</p>
+<p>The lab estimates workload before launch. Requests above the guarded state, parameter, ODE-solve, pair-count, or state-time envelope are refused before a worker starts. Reduce the model or export it to Python/SALib. Use several perturbation sizes, sample budgets and seeds, then independently reproduce important conclusions.</p>
 <h3>Steady-State Lab</h3>
 <p>Use Steady-State Lab to search for roots of <code>f(x)=0</code>, inspect residuals, reject physically inadmissible candidates, and assess local stability where supported.</p>
 <p>A finite multi-start search can find several roots but cannot prove that all roots were found. A parameter scan is not a bifurcation continuation.</p>
@@ -264,8 +283,8 @@
 </article></div>
 </main>
 <footer class="v70-footer foko-product-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.46.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.47.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
 <nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="workbench.html">Workbench</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Docs</a><a href="trust.html">Trust</a><a href="research.html">Research</a><a href="beauty.html">Mathematical Beauty</a></nav>
 <div class="foko-footer-meta"><p><a href="mailto:chilpericarmel@gmail.com">Contact</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a> · <a href="https://chilperic.github.io/" rel="noopener" target="_blank">About the author</a></p><p>HHU Düsseldorf · CEPLAS · AIMS Ghana · PoLiMeR ITN</p><p><a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">Source code</a></p></div>
 </footer>
-</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=72.46.0"></script></body></html>
+</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=72.47.0"></script></body></html>

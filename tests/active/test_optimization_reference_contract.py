@@ -15,25 +15,25 @@ def test_optimization_is_an_authored_v72_reference_shell():
     body = SOUP.body
     assert body["data-v72-shell"] == "true"
     assert body["data-lab"] == "optimization"
-    assert body["data-version"] == "72.46.0"
+    assert body["data-version"] == "72.47.0"
     local_styles = [
         tag.get("href", "")
         for tag in SOUP.find_all("link", rel="stylesheet")
         if not tag.get("href", "").startswith("http")
     ]
     assert local_styles == [
-        "assets/vendor/katex/katex-0.16.47.min.css?v=72.46.0",
-        "styles/v72-tokens.css?v=72.46.0",
-        "styles/v72-lab-shell.css?v=72.46.0",
-        "styles/v72-accessibility-performance.css?v=72.46.0",
+        "assets/vendor/katex/katex-0.16.47.min.css?v=72.47.0",
+        "styles/v72-tokens.css?v=72.47.0",
+        "styles/v72-lab-shell.css?v=72.47.0",
+        "styles/v72-accessibility-performance.css?v=72.47.0",
     ]
     assert SOUP.select_one("main.layout")
     assert SOUP.select_one(".v72-workspace")
     assert SOUP.select_one(".v72-inspector")
     scripts = [tag.get("src", "") for tag in SOUP.find_all("script")]
-    assert "src/core/optimization.js?v=72.46.0" in scripts
-    assert "src/models/optimization-presets.js?v=72.46.0" in scripts
-    assert "src/v72/optimization-workspace.js?v=72.46.0" in scripts
+    assert "src/core/optimization.js?v=72.47.0" in scripts
+    assert "src/models/optimization-presets.js?v=72.47.0" in scripts
+    assert "src/v72/optimization-workspace.js?v=72.47.0" in scripts
     assert not any("src/optimization-lab.js" in src for src in scripts)
 
 

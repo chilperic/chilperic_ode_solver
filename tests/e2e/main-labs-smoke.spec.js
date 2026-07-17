@@ -873,6 +873,8 @@ test.describe('Foko Lab v72 public gate', () => {
     await page.locator('#sensitivityBootstrap').fill('20');
     await page.locator('#sensitivityDependence').check();
     await page.locator('#sensitivityDependencePermutations').fill('19');
+    await page.locator('#sensitivityResponseSurface').check();
+    await page.locator('#sensitivitySurfacePoints').fill('5');
     await page.locator('#runSensitivity').click();
 
     await expect(page.locator('#sensitivityTopStatus')).toHaveText('Computed', { timeout: 75_000 });
@@ -881,8 +883,12 @@ test.describe('Foko Lab v72 public gate', () => {
     await expect(page.locator('#leftPlotType option[value="sobol-rank"]')).toHaveCount(1);
     await expect(page.locator('#leftPlotType option[value="sobol-output"]')).toHaveCount(1);
     await expect(page.locator('#leftPlotType option[value="sobol-time"]')).toHaveCount(1);
+    await expect(page.locator('#leftPlotType option[value="sobol-first-time"]')).toHaveCount(1);
+    await expect(page.locator('#leftPlotType option[value="sobol-state-total"]')).toHaveCount(1);
+    await expect(page.locator('#leftPlotType option[value="sobol-state-first"]')).toHaveCount(1);
     await expect(page.locator('#leftPlotType option[value="variance-contribution"]')).toHaveCount(1);
     await expect(page.locator('#leftPlotType option[value="global-scatter"]')).toHaveCount(1);
+    await expect(page.locator('#leftPlotType option[value="response-surface"]')).toHaveCount(1);
     await expect(page.locator('#leftPlotType option[value="dependence-mi"]')).toHaveCount(1);
     await expect(page.locator('#leftPlotType option[value="dependence-hsic"]')).toHaveCount(1);
     await page.locator('#leftPlotType').selectOption('sobol-second');
@@ -899,6 +905,12 @@ test.describe('Foko Lab v72 public gate', () => {
 
     await page.locator('#sensitivityMethod').selectOption('morris');
     await expect(page.locator('#sensitivityMethodNote')).toContainText('elementary-effect distributions');
+    await page.locator('#sensitivityTrajectories').fill('6');
+    await page.locator('#runSensitivity').click();
+    await expect(page.locator('#sensitivityTopStatus')).toHaveText('Computed', { timeout: 75_000 });
+    await expect(page.locator('#leftPlotType option[value="morris-design"]')).toHaveCount(1);
+    await page.locator('#leftPlotType').selectOption('morris-design');
+    await expect(page.locator('#leftPlotEvidence')).toContainText('design-inspection');
     await expectNoPageOverflow(page);
   });
 

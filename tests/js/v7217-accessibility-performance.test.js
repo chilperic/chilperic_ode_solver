@@ -8,7 +8,7 @@ function read(name) { return fs.readFileSync(path.join(root, name), 'utf8'); }
 
 const runtime = read('src/v72/accessibility-performance.js');
 const css = read('styles/v72-accessibility-performance.css');
-ok(runtime.includes("const RELEASE = '72.46.0'"), 'accessibility runtime has current release');
+ok(runtime.includes("const RELEASE = '72.47.0'"), 'accessibility runtime has current release');
 ok(runtime.includes("['newPlot', 'react']"), 'Plotly newPlot/react are instrumented');
 ok(runtime.includes("aria-busy"), 'plot rendering exposes busy state');
 ok(runtime.includes('foko:plot-rendered'), 'plot rendering dispatches completion evidence');
@@ -27,8 +27,8 @@ ok(pages.length >= 14, 'all authored lab pages are covered');
 for (const name of pages) {
   const text = read(name);
   ok(text.includes('class="skip-link"'), name + ' has skip link');
-  ok(text.includes('v72-accessibility-performance.css?v=72.46.0'), name + ' loads accessibility CSS');
-  ok(text.includes('v72/accessibility-performance.js?v=72.46.0'), name + ' loads accessibility runtime');
+  ok(text.includes('v72-accessibility-performance.css?v=72.47.0'), name + ' loads accessibility CSS');
+  ok(text.includes('v72/accessibility-performance.js?v=72.47.0'), name + ' loads accessibility runtime');
   ok(!/data-layout-mode="three"|data-wb-layout="three"/.test(text), name + ' omits three-panel controls');
   const scripts = [...text.matchAll(/<script\b([^>]*)\bsrc="[^"]+"([^>]*)>/g)];
   scripts.forEach(match => ok(/\bdefer(?:="")?\b|\basync(?:="")?\b/.test(match[0]), name + ' external scripts are deferred'));

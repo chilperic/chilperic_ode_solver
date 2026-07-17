@@ -205,7 +205,7 @@
 
   function currentConfig() {
     return {
-      version: '72.46.0',
+      version: '72.47.0',
       example: state.currentName,
       data: $('statisticsData').value,
       delimiter: $('statisticsDelimiter').value,
@@ -238,7 +238,7 @@
       return Object.assign({ column: column.name, index: column.index, missing: column.missing }, STATS.describe(DATA.numericValues(dataset, column.index)));
     });
     const result = {
-      release: '72.46.0',
+      release: '72.47.0',
       mode: config.mode,
       method: '',
       dataset,
@@ -792,7 +792,7 @@
   function resultForExport() { if (!state.result) throw new Error('Run the analysis before exporting a numerical result.'); return state.result; }
   function exportSummary() {
     const result = resultForExport();
-    const rows = [['field', 'value'], ['release', '72.46.0'], ['method', result.method], ['source_rows', result.dataset.rowCount], ['usable_rows', result.usableRows], ['excluded_rows', result.dropped], ['imputed_cells', result.imputed], ['missing_cells', result.dataset.missingCells], ['primary_label', result.primary.label], ['primary_value', result.primary.value], ['uncertainty_label', result.uncertainty.label], ['uncertainty_value', result.uncertainty.value], ['effect_label', result.effect.label], ['effect_value', result.effect.value], ['assumptions', result.assumptions], ['warnings', result.warnings.join(' | ')]];
+    const rows = [['field', 'value'], ['release', '72.47.0'], ['method', result.method], ['source_rows', result.dataset.rowCount], ['usable_rows', result.usableRows], ['excluded_rows', result.dropped], ['imputed_cells', result.imputed], ['missing_cells', result.dataset.missingCells], ['primary_label', result.primary.label], ['primary_value', result.primary.value], ['uncertainty_label', result.uncertainty.label], ['uncertainty_value', result.uncertainty.value], ['effect_label', result.effect.label], ['effect_value', result.effect.value], ['assumptions', result.assumptions], ['warnings', result.warnings.join(' | ')]];
     download('foko-lab-statistics-summary.csv', rows.map(function (row) { return row.map(csvEscape).join(','); }).join('\n'), 'text/csv');
   }
   function exportCleanData() {
@@ -805,15 +805,15 @@
     const compact = clone(result);
     delete compact.dataset.sourceText;
     if (compact.bootstrapMeans && compact.bootstrapMeans.length > 5000) compact.bootstrapMeans = compact.bootstrapMeans.slice(0, 5000);
-    return { release: '72.46.0', computedAt: new Date().toISOString(), result: compact, warning: 'Inference remains conditional on data quality, sampling and model assumptions.' };
+    return { release: '72.47.0', computedAt: new Date().toISOString(), result: compact, warning: 'Inference remains conditional on data quality, sampling and model assumptions.' };
   }
   function exportValidation(language) {
     const config = currentConfig(); const dataset = state.dataset || parseDatasetFromEditor(false); const x = dataset.names[config.x]; const y = dataset.names[config.y]; const group = dataset.names[config.group]; const event = dataset.names[config.event];
     if (language === 'python') {
-      const text = `"""Validation scaffold exported by Foko Lab v72.46.0.\nInspect assumptions and adapt the method before scientific use.\n"""\nimport pandas as pd\nfrom scipy import stats\n\ndf = pd.read_csv("your_data.csv")\nmode = ${JSON.stringify(config.mode)}\nalpha = ${config.alpha}\n\n# Selected columns\nx = df[${JSON.stringify(x)}]\ny = df[${JSON.stringify(y)}]\ngroup = df[${JSON.stringify(group)}]\nevent = df[${JSON.stringify(event)}]\n\nprint(df.describe(include="all"))\n# Implement and validate the selected mode explicitly; do not rely on the browser result alone.\n`;
+      const text = `"""Validation scaffold exported by Foko Lab v72.47.0.\nInspect assumptions and adapt the method before scientific use.\n"""\nimport pandas as pd\nfrom scipy import stats\n\ndf = pd.read_csv("your_data.csv")\nmode = ${JSON.stringify(config.mode)}\nalpha = ${config.alpha}\n\n# Selected columns\nx = df[${JSON.stringify(x)}]\ny = df[${JSON.stringify(y)}]\ngroup = df[${JSON.stringify(group)}]\nevent = df[${JSON.stringify(event)}]\n\nprint(df.describe(include="all"))\n# Implement and validate the selected mode explicitly; do not rely on the browser result alone.\n`;
       download('foko-lab-statistics-validation.py', text, 'text/x-python');
     } else {
-      const text = `# Validation scaffold exported by Foko Lab v72.46.0.\n# Inspect assumptions and adapt the method before scientific use.\ndf <- read.csv("your_data.csv")\nmode <- ${JSON.stringify(config.mode)}\nalpha <- ${config.alpha}\nsummary(df)\n# Selected columns: X=${x}, Y=${y}, group=${group}, event=${event}\n# Implement and validate the selected analysis explicitly.\n`;
+      const text = `# Validation scaffold exported by Foko Lab v72.47.0.\n# Inspect assumptions and adapt the method before scientific use.\ndf <- read.csv("your_data.csv")\nmode <- ${JSON.stringify(config.mode)}\nalpha <- ${config.alpha}\nsummary(df)\n# Selected columns: X=${x}, Y=${y}, group=${group}, event=${event}\n# Implement and validate the selected analysis explicitly.\n`;
       download('foko-lab-statistics-validation.R', text, 'text/x-r-source');
     }
   }

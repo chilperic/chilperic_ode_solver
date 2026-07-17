@@ -30,10 +30,10 @@ assert 'Requests outside the guarded browser workload envelope are refused befor
 
 workspace = (ROOT / 'src/v72/sensitivity-workspace.js').read_text()
 for plot in [
-    'morris-effects', 'morris-convergence', 'morris-rank',
+    'morris-effects', 'morris-convergence', 'morris-rank', 'morris-design',
     'sobol-second', 'sobol-gap', 'sobol-uncertainty', 'sobol-rank', 'sobol-output',
     'parameter-jacobian', 'state-jacobian', 'influence-map', 'ofat', 'tornado',
-    'directional', 'response-surface', 'sobol-time', 'variance-contribution',
+    'directional', 'response-surface', 'sobol-time', 'sobol-first-time', 'sobol-state-total', 'sobol-state-first', 'variance-contribution',
     'global-scatter', 'dependence-mi', 'dependence-hsic'
 ]:
     assert plot in workspace, f'missing advanced sensitivity plot {plot}'
@@ -55,7 +55,7 @@ assert 'ofatPoints * parameterCount' in inputs
 assert 'surfacePoints * surfacePoints' in inputs
 assert 'dependencePermutations' in inputs
 
-expected_copy = 'Local, Morris, first/total/second-order variance and information diagnostics.'
+expected_copy = 'Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.'
 for page in ROOT.glob('*.html'):
     text = page.read_text(errors='ignore')
     if 'href="sensitivity.html"' in text:
@@ -64,6 +64,26 @@ nav = (ROOT / 'src/navigation.js').read_text()
 assert expected_copy in nav
 assert 'Sobol/Jansen and local information diagnostics' not in ''.join(p.read_text(errors='ignore') for p in ROOT.glob('*.html'))
 
+# Public documentation must describe the actual conditional runtime evidence.
+docs = (ROOT / 'docs.html').read_text()
+tutorial = (ROOT / 'tutorial.html').read_text()
+trust = (ROOT / 'trust.html').read_text()
+for token in ['normalized Morris parameter-design trajectories', 'first- and total-order effects across every model state', 'Plot availability is method-dependent']:
+    assert token in docs, f'docs missing Sensitivity feature: {token}'
+for token in ['Tutorial 10 — Build a defensible sensitivity analysis', 'effects across states', 'capacity guard refuses the run']:
+    assert token in tutorial, f'tutorial missing Sensitivity feature: {token}'
+for token in ['Morris normalized parameter design trajectories', 'State resolved first and total effect indices', 'Sensitivity documentation tutorial and trust sync']:
+    assert token in trust, f'trust matrix missing Sensitivity capability: {token}'
+assert 'Derived in browser' in trust, 'trust is missing the reader-facing derived-result claim label'
+assert '>derived-browser<' not in trust, 'trust leaks an internal capability token'
+for acronym in ('ODE', 'HSIC', 'FIM', 'SSA'):
+    assert acronym in trust, f'trust acronym formatting is missing {acronym}'
+assert 'Adjoint sensitivity' in trust and 'Unavailable' in trust
+
+runner = (ROOT / 'test-v72.47.0-local.sh').read_text()
+assert 'PREVIOUS_VERSION="72.46.0"' in runner, 'runner predecessor variable is stale'
+assert "previous='72.46.0'" in runner, 'runner embedded preflight predecessor is stale'
+
 # Every authored workspace must retain exactly two stable plot hosts.
 workspaces = ['ode','steady','stochastic','optimization','statistics','fitting','linear-algebra','networks','ml','sciml','agent','symbolic','sensitivity','workbench']
 for name in workspaces:
@@ -71,4 +91,4 @@ for name in workspaces:
     count = text.count('data-plot-card="left"') + text.count('data-plot-card="right"')
     assert count == 2, f'{name}.html exposes {count} stable plot hosts'
 
-print(f'Platform consistency audit passed for {version}: local Jacobian/OFAT/directional diagnostics, bounded response surfaces, time-resolved global effects, limited dependence screening, guarded browser capacity, synchronized navigation copy, and 14 two-panel workspaces.')
+print(f'Platform consistency audit passed for {version}: local Jacobian/OFAT/directional diagnostics, Morris design trajectories, local/global bounded response surfaces, time- and state-resolved global effects, limited dependence screening, synchronized public documentation, guarded browser capacity, synchronized navigation copy, and 14 two-panel workspaces.')

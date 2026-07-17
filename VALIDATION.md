@@ -1,4 +1,4 @@
-# Foko Lab v72.46.0 Validation Record
+# Foko Lab v72.47.0 Validation Record
 
 ## Completed release gates
 

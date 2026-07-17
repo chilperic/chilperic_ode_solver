@@ -15,14 +15,14 @@ def test_symbolic_uses_authored_v72_shell():
     assert body is not None
     assert body.get('data-v72-shell') == 'true'
     assert body.get('data-lab') == 'symbolic'
-    assert body.get('data-version') == '72.46.0'
+    assert body.get('data-version') == '72.47.0'
     styles = [tag.get('href', '') for tag in SOUP.find_all('link', rel='stylesheet') if not tag.get('href', '').startswith('http')]
     assert styles == [
-        'assets/vendor/katex/katex-0.16.47.min.css?v=72.46.0',
-        'styles/v72-tokens.css?v=72.46.0',
-        'styles/v72-lab-shell.css?v=72.46.0',
-        'styles/v72-symbolic.css?v=72.46.0',
-        'styles/v72-accessibility-performance.css?v=72.46.0',
+        'assets/vendor/katex/katex-0.16.47.min.css?v=72.47.0',
+        'styles/v72-tokens.css?v=72.47.0',
+        'styles/v72-lab-shell.css?v=72.47.0',
+        'styles/v72-symbolic.css?v=72.47.0',
+        'styles/v72-accessibility-performance.css?v=72.47.0',
     ]
     assert SOUP.select_one('main.layout')
     assert SOUP.select_one('.v72-workspace')
@@ -113,8 +113,8 @@ def test_controller_does_not_restructure_dom_after_load():
 
 def test_page_loads_only_reference_symbolic_runtime():
     scripts = [node.get('src', '') for node in SOUP.find_all('script') if node.get('src')]
-    assert 'src/core/symbolic-reference.js?v=72.46.0' in scripts
-    assert 'src/v72/symbolic-workspace.js?v=72.46.0' in scripts
+    assert 'src/core/symbolic-reference.js?v=72.47.0' in scripts
+    assert 'src/v72/symbolic-workspace.js?v=72.47.0' in scripts
     assert not any('symbolic-lab.js' in src for src in scripts)
     assert not (ROOT / 'src/symbolic-lab.js').exists()
 
