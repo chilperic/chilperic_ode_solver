@@ -3,15 +3,12 @@
   function assertArray(x,name){ if(!Array.isArray(x) || x.length===0) throw new Error(name+' empty'); }
   function cloneVec(x){ return x.map(Number); }
   function isFiniteVec(x){ return Array.isArray(x) && x.every(Number.isFinite); }
-  function add(a,b,s){ return a.map((v,i)=>v+s*b[i]); }
-  function rk4Step(rhs,t,x,dt,theta){
-    const k1=rhs(t,x,theta);
-    const k2=rhs(t+dt/2,add(x,k1,dt/2),theta);
-    const k3=rhs(t+dt/2,add(x,k2,dt/2),theta);
-    const k4=rhs(t+dt,add(x,k3,dt),theta);
-    const y=x.map((v,i)=>v+dt*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6);
-    if(!isFiniteVec(y)) throw new Error('non-finite/diverged state during RK4 integration');
-    return y;
+  const ODE = (typeof window!=='undefined' && window.FokoODECore) || (typeof require==='function' ? require('./ode.js') : null);
+  function coreStep(rhs,t,x,dt,theta){
+    if(!ODE || typeof ODE.fixedStep!=='function') throw new Error('canonical ODE core unavailable');
+    const result=ODE.fixedStep(rhs,'rk4',t,x,dt,theta).y;
+    if(!isFiniteVec(result)) throw new Error('non-finite/diverged state during canonical RK4 integration');
+    return result;
   }
   function simulateModel(cfg){
     if(!cfg || typeof cfg.rhs!=='function') throw new Error('rhs required');
@@ -20,7 +17,7 @@
     if(!isFiniteVec(x) || !isFiniteVec(theta)) throw new Error('non-finite initial state or theta');
     for(let i=0;i<t.length;i++){
       X.push(x.slice());
-      if(i<t.length-1){ const dt=t[i+1]-t[i]; if(!Number.isFinite(dt)) throw new Error('non-finite time step'); x=rk4Step(cfg.rhs,t[i],x,dt,theta); }
+      if(i<t.length-1){ const dt=t[i+1]-t[i]; if(!Number.isFinite(dt)) throw new Error('non-finite time step'); x=coreStep(cfg.rhs,t[i],x,dt,theta); }
     }
     return X;
   }
@@ -57,7 +54,7 @@
         const row=Array.from({length:n},()=>Array(p).fill(0));
         let off=n; for(let j=0;j<p;j++){ for(let i=0;i<n;i++) row[i][j]=y[off+i]; off+=n; }
         J.push(row);
-        if(k<cfg.t.length-1){ const dt=cfg.t[k+1]-cfg.t[k]; y=rk4Step((tt,yy,th)=>sensRhs(tt,yy,th,n,p,cfg.rhs,cfg.dfdx,cfg.dfdth),cfg.t[k],y,dt,cfg.theta); }
+        if(k<cfg.t.length-1){ const dt=cfg.t[k+1]-cfg.t[k]; y=coreStep((tt,yy,th)=>sensRhs(tt,yy,th,n,p,cfg.rhs,cfg.dfdx,cfg.dfdth),cfg.t[k],y,dt,cfg.theta); }
       }
       return J;
     }

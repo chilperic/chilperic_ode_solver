@@ -1,0 +1,110 @@
+/* Foko Lab v72.11 authored adapter Workbench. */
+body[data-lab="workbench"] { min-height: 100vh; }
+.wb-page { width: min(1860px, calc(100vw - 28px)); margin: 14px auto 42px; display: grid; gap: 12px; }
+.wb-context { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 18px; align-items: center; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); }
+.wb-context h1 { margin-bottom: 5px; }
+.wb-context p:not(.eyebrow) { max-width: 900px; color: var(--muted); }
+.eyebrow, .panel-kicker { color: var(--brand-strong); font-size: 10px; font-weight: 900; letter-spacing: .105em; text-transform: uppercase; }
+.wb-context-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.secondary-link { display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 7px 12px; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--brand-strong); text-decoration: none; font-weight: 850; }
+.wb-layout { display: grid; grid-template-columns: minmax(250px, 300px) minmax(680px, 1fr) minmax(245px, 285px); gap: 12px; align-items: start; }
+.wb-left, .wb-right { display: grid; gap: 10px; min-width: 0; position: sticky; top: 88px; max-height: calc(100vh - 100px); overflow: auto; scrollbar-width: thin; padding-bottom: 4px; }
+.wb-panel { min-width: 0; padding: 13px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-soft); }
+.wb-panel h2 { margin-top: 2px; }
+.wb-panel label { margin-top: 9px; font-size: 12px; font-weight: 800; color: var(--muted); }
+.wb-panel-head { display: flex; align-items: start; justify-content: space-between; gap: 8px; }
+.mini-button { min-height: 30px; padding: 4px 8px; font-size: 12px; }
+.wb-adapter-identity { margin-top: 12px; padding: 10px; background: var(--surface-tint); border: 1px solid #bee0e3; border-radius: 11px; color: var(--muted); }
+.wb-adapter-identity strong { display: block; color: var(--ink); margin-bottom: 3px; }
+.wb-adapter-identity span { display: inline-block; margin-top: 7px; padding: 3px 7px; border-radius: 999px; background: #fff; border: 1px solid var(--line); color: var(--brand-strong); font-size: 10px; font-weight: 850; text-transform: uppercase; letter-spacing: .05em; }
+.wb-control-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; margin-top: 10px; }
+.wb-control-grid .wide { grid-column: 1 / -1; }
+.wb-control-grid label { margin: 0; }
+.wb-control-grid input, .wb-control-grid select { padding: 8px; }
+.wb-control-grid .checkbox-row { display: flex; align-items: center; gap: 8px; padding-top: 18px; }
+.wb-control-grid .checkbox-row input { width: auto; }
+.wb-json-details { margin-top: 11px; border-top: 1px solid var(--line); padding-top: 9px; }
+.wb-json-details textarea { margin-top: 9px; min-height: 210px; font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.wb-json-details button { width: 100%; margin-top: 7px; }
+.wb-scope-panel p:last-child { margin-top: 7px; color: var(--muted); }
+.wb-center { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; }
+.wb-workspace-head { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: start; padding: 10px 14px 8px; border-bottom: 1px solid var(--line); }
+.wb-workspace-head h2 { margin: 0; font-size: clamp(17px, 1.6vw, 22px); line-height: 1.12; letter-spacing: -.02em; }
+.wb-workspace-head p:last-child { margin: 3px 0 0; color: var(--muted); font-size: .82rem; line-height: 1.38; }
+.wb-layout-switch { display: flex; align-items: center; padding: 3px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: 12px; }
+.wb-layout-switch button { min-height: 32px; padding: 5px 10px; border: 0; background: transparent; color: var(--muted); }
+.wb-layout-switch button.active { color: #fff; background: var(--brand); box-shadow: var(--shadow-soft); }
+.wb-layout-switch button:disabled { opacity: .4; cursor: not-allowed; }
+.wb-export-row { display: flex; justify-content: flex-end; gap: 8px; padding: 9px 14px 0; }
+.wb-export-row button { min-height: 32px; padding: 5px 9px; }
+.wb-plot-grid { display: grid; gap: 10px; padding: 10px 14px 12px; align-items: stretch; }
+.wb-plot-grid.layout-two { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.wb-plot-grid.layout-focus { grid-template-columns: 1fr; }
+.wb-plot-card { display: grid; grid-template-rows: auto minmax(360px,1fr) auto; min-width: 0; min-height: 470px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.wb-plot-card > header { display: grid; grid-template-rows: auto auto; gap: 8px; padding: 11px 11px 9px; background: linear-gradient(180deg, #fbfdff, var(--surface-soft)); border-bottom: 1px solid var(--line); }
+.wb-plot-card h3 { min-height: 20px; line-height: 1.25; overflow-wrap: normal; word-break: normal; }
+.wb-card-controls { display: grid; grid-template-columns: minmax(120px,1fr) auto auto; gap: 6px; align-items: center; }
+.wb-card-controls select { min-width: 0; padding: 7px 8px; }
+.wb-card-controls button { min-height: 34px; padding: 5px 8px; color: var(--brand-strong); background: var(--brand-soft); }
+.wb-plot { min-width: 0; min-height: 360px; padding: 4px; overflow: hidden; }
+.wb-empty { height: 100%; min-height: 350px; display: grid; place-items: center; padding: 20px; color: var(--muted); text-align: center; background: var(--surface-soft); }
+.wb-plot-card details { border-top: 1px solid var(--line); }
+.wb-plot-card details summary { padding: 8px 10px; color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.wb-plot-card details p { padding: 0 10px 10px; color: var(--muted); }
+.wb-grid-note { margin: 0 14px 14px; padding: 9px 10px; color: var(--muted); background: var(--surface-soft); border-radius: 10px; }
+.wb-plot-grid.layout-focus .wb-plot-card { display: none; }
+.wb-plot-grid.layout-focus .wb-plot-card.focused { display: grid; }
+.wb-status { display: flex; align-items: center; gap: 8px; margin-top: 7px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-soft); }
+.wb-status span { width: 9px; height: 9px; border-radius: 50%; background: var(--faint); }
+.wb-status.running span { background: var(--warning); }
+.wb-status.success span { background: var(--success); }
+.wb-status.warning span { background: var(--warning); }
+.wb-status.error span { background: var(--danger); }
+.wb-metrics { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px; margin-top: 9px; }
+.wb-metric { min-width: 0; padding: 9px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: 10px; }
+.wb-metric small, .wb-metric strong, .wb-metric span { display: block; }
+.wb-metric small { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.wb-metric strong { margin-top: 2px; overflow-wrap: anywhere; }
+.wb-metric span { margin-top: 2px; color: var(--muted); font-size: 11px; }
+.wb-message-list { display: grid; gap: 7px; margin-top: 8px; }
+.wb-message-list p { padding: 8px 9px; color: var(--muted); background: #fffaf0; border: 1px solid #efd7ad; border-radius: 9px; }
+.wb-provenance { margin: 8px 0 0; padding-left: 20px; color: var(--muted); }
+.wb-provenance li + li { margin-top: 5px; }
+.wb-project-actions { display: grid; gap: 7px; margin-top: 8px; }
+.wb-project-actions button { width: 100%; }
+.wb-toast { position: fixed; right: 18px; bottom: 18px; z-index: 1200; max-width: min(420px, calc(100vw - 36px)); padding: 10px 13px; color: #fff; background: var(--nav); border-radius: 10px; box-shadow: var(--shadow); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .18s ease, transform .18s ease; }
+.wb-toast.show { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 1420px) {
+  .wb-layout { grid-template-columns: minmax(240px, 280px) minmax(600px, 1fr); }
+  .wb-right { position: static; max-height: none; grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0,1fr)); overflow: visible; }
+}
+@media (max-width: 1120px) {
+  .wb-layout { grid-template-columns: 260px minmax(0,1fr); }
+  .wb-left { position: static; max-height: none; }
+  .wb-right { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 820px) {
+  .wb-page { width: calc(100vw - 16px); margin-top: 8px; }
+  .wb-context { grid-template-columns: 1fr; }
+  .wb-context-actions { justify-content: stretch; }
+  .wb-context-actions > * { flex: 1; }
+  .wb-layout { grid-template-columns: 1fr; }
+  .wb-left, .wb-right { grid-column: auto; }
+  .wb-workspace-head { grid-template-columns: 1fr; }
+  .wb-layout-switch { justify-self: start; }
+  .wb-plot-grid.layout-two { grid-template-columns: 1fr; }
+  .wb-plot-card { min-height: 430px; }
+  .wb-right { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .wb-control-grid { grid-template-columns: 1fr; }
+  .wb-card-controls { grid-template-columns: minmax(0,1fr) auto auto; }
+  .wb-card-controls button:first-of-type { font-size: 0; }
+  .wb-card-controls button:first-of-type::after { content: '◎'; font-size: 14px; }
+}
+
+
+/* v72.39 benchmark hardening: two-panel workbench only. */
+.wb-plot-card { border-radius: 16px; box-shadow: 0 8px 24px rgba(15, 23, 42, .055); }
+.wb-plot-card:focus-within { border-color: var(--brand); box-shadow: 0 10px 30px rgba(15, 23, 42, .09); }

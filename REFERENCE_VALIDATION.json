@@ -1,0 +1,279 @@
+{
+  "release": "72.46.0",
+  "libraries": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "scikitLearn": "1.8.0",
+    "networkx": "3.6.1",
+    "sympy": "1.14.0",
+    "node": "v22.16.0"
+  },
+  "summary": {
+    "passed": 32,
+    "failed": 0,
+    "total": 32
+  },
+  "checks": [
+    {
+      "name": "ODE exponential endpoint",
+      "status": "pass",
+      "got": 7.389056098929318,
+      "expected": 7.389056098929601,
+      "absoluteError": 2.824407374646398e-13,
+      "tolerance": 2e-08
+    },
+    {
+      "name": "Welch t statistic",
+      "status": "pass",
+      "got": -1.9131811713584344,
+      "expected": -1.9131811713584344,
+      "absoluteError": 0.0,
+      "tolerance": 2e-10
+    },
+    {
+      "name": "Welch two-sided p value",
+      "status": "pass",
+      "got": 0.07831663328059602,
+      "expected": 0.07831663328061118,
+      "absoluteError": 1.51684220739412e-14,
+      "tolerance": 0.0003
+    },
+    {
+      "name": "One-way ANOVA F",
+      "status": "pass",
+      "got": 24.799999999999997,
+      "expected": 24.799999999999997,
+      "absoluteError": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "name": "One-way ANOVA p",
+      "status": "pass",
+      "got": 0.00021804795624114082,
+      "expected": 0.0002180479562411307,
+      "absoluteError": 1.0110185258427329e-17,
+      "tolerance": 0.0004
+    },
+    {
+      "name": "Pearson correlation",
+      "status": "pass",
+      "got": 0.9966991555763887,
+      "expected": 0.9966991555763884,
+      "absoluteError": 2.220446049250313e-16,
+      "tolerance": 1e-12
+    },
+    {
+      "name": "Pearson p value",
+      "status": "pass",
+      "got": 1.6325378566106608e-05,
+      "expected": 1.6325378566141695e-05,
+      "absoluteError": 3.508749280736214e-17,
+      "tolerance": 0.0005
+    },
+    {
+      "name": "Mann-Whitney approximation audit",
+      "status": "pass",
+      "got": 0.14123823928356138,
+      "expected": 0.14123816388881966,
+      "absoluteError": 7.539474172757465e-08,
+      "tolerance": 0.035,
+      "note": "Browser result is labelled asymptotic and is not an exact small-sample p value."
+    },
+    {
+      "name": "Linear solve coefficient 0",
+      "status": "pass",
+      "got": 0.22222222222222224,
+      "expected": 0.22222222222222224,
+      "absoluteError": 0.0,
+      "tolerance": 2e-10
+    },
+    {
+      "name": "Linear solve coefficient 1",
+      "status": "pass",
+      "got": 0.11111111111111104,
+      "expected": 0.11111111111111104,
+      "absoluteError": 0.0,
+      "tolerance": 2e-10
+    },
+    {
+      "name": "Linear solve coefficient 2",
+      "status": "pass",
+      "got": 1.4444444444444446,
+      "expected": 1.4444444444444446,
+      "absoluteError": 0.0,
+      "tolerance": 2e-10
+    },
+    {
+      "name": "Symmetric eigenvalue 0",
+      "status": "pass",
+      "got": 3.0,
+      "expected": 3.0,
+      "absoluteError": 0.0,
+      "tolerance": 2e-09
+    },
+    {
+      "name": "Symmetric eigenvalue 1",
+      "status": "pass",
+      "got": 1.0,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 2e-09
+    },
+    {
+      "name": "Singular value 0",
+      "status": "pass",
+      "got": 3.0,
+      "expected": 3.0,
+      "absoluteError": 0.0,
+      "tolerance": 2e-08
+    },
+    {
+      "name": "Singular value 1",
+      "status": "pass",
+      "got": 1.118033988749895,
+      "expected": 1.118033988749895,
+      "absoluteError": 0.0,
+      "tolerance": 2e-08
+    },
+    {
+      "name": "Weighted shortest-path distance",
+      "status": "pass",
+      "got": 4.0,
+      "expected": 4.0,
+      "absoluteError": 0.0,
+      "tolerance": 1e-12
+    },
+    {
+      "name": "Weighted shortest-path nodes",
+      "status": "pass",
+      "got": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "expected": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "name": "Minimum spanning-tree weight",
+      "status": "pass",
+      "got": 4.0,
+      "expected": 4.0,
+      "absoluteError": 0.0,
+      "tolerance": 1e-12
+    },
+    {
+      "name": "Ridge coefficient 0",
+      "status": "pass",
+      "got": 1.2725903614457852,
+      "expected": 1.272590361445784,
+      "absoluteError": 1.1102230246251565e-15,
+      "tolerance": 2e-09
+    },
+    {
+      "name": "Ridge coefficient 1",
+      "status": "pass",
+      "got": 1.881845564074478,
+      "expected": 1.8818455640744796,
+      "absoluteError": 1.5543122344752192e-15,
+      "tolerance": 2e-09
+    },
+    {
+      "name": "Ridge coefficient 2",
+      "status": "pass",
+      "got": -0.39088170865279187,
+      "expected": -0.390881708652793,
+      "absoluteError": 1.1102230246251565e-15,
+      "tolerance": 2e-09
+    },
+    {
+      "name": "ML PCA explained variance 0",
+      "status": "pass",
+      "got": 0.9995326158675159,
+      "expected": 0.9995326158675156,
+      "absoluteError": 2.220446049250313e-16,
+      "tolerance": 2e-05
+    },
+    {
+      "name": "ML PCA explained variance 1",
+      "status": "pass",
+      "got": 0.0004673841324842416,
+      "expected": 0.00046738413248428694,
+      "absoluteError": 4.5319650809994086e-17,
+      "tolerance": 2e-05
+    },
+    {
+      "name": "Symbolic derivative at 0.2",
+      "status": "pass",
+      "got": 1.5597112899508145,
+      "expected": 1.5597112899508145,
+      "absoluteError": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "name": "Symbolic derivative at 0.7",
+      "status": "pass",
+      "got": 4.307498137307048,
+      "expected": 4.307498137307048,
+      "absoluteError": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "name": "Symbolic derivative at 1.3",
+      "status": "pass",
+      "got": 9.587113399272802,
+      "expected": 9.587113399272802,
+      "absoluteError": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "name": "Birth-death first moment",
+      "status": "pass",
+      "got": 48.79833333333333,
+      "expected": 48.856110326406785,
+      "absoluteError": 0.0577769930734533,
+      "tolerance": 1.0
+    },
+    {
+      "name": "Stochastic event-cap censoring",
+      "status": "pass",
+      "got": 0,
+      "expected": 0
+    },
+    {
+      "name": "Optimization candidate 0",
+      "status": "pass",
+      "got": 2.000000009767116,
+      "expected": 1.999999996046625,
+      "absoluteError": 1.3720490965596355e-08,
+      "tolerance": 2e-05
+    },
+    {
+      "name": "Optimization candidate 1",
+      "status": "pass",
+      "got": -1.0000000083718137,
+      "expected": -1.0000000014257773,
+      "absoluteError": 6.946036412713852e-09,
+      "tolerance": 2e-05
+    },
+    {
+      "name": "Optimization objective",
+      "status": "pass",
+      "got": 1.6548381945793643e-16,
+      "expected": 1.766201441524621e-17,
+      "absoluteError": 1.4782180504269022e-16,
+      "tolerance": 2e-09
+    },
+    {
+      "name": "Optimization feasibility",
+      "status": "pass",
+      "got": true,
+      "expected": true
+    }
+  ]
+}

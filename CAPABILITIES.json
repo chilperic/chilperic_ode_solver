@@ -1,0 +1,565 @@
+{
+  "release": "72.46.0",
+  "statusDefinitions": {
+    "reference": "Uses the v72 authored shell and active release contracts.",
+    "browser-computed": "The visible result is computed locally from the current input in browser code.",
+    "limited-browser": "A bounded or heuristic browser implementation is available; stronger claims require external validation.",
+    "export-only": "The platform generates a reproducible external workflow but does not claim to execute it in the browser.",
+    "legacy-migration": "Retained from the last fully green integration baseline and scheduled for migration to the v72 shell.",
+    "unavailable": "Not presented as a computed capability.",
+    "derived-browser": "Computed from an already completed finite browser result without launching a separate estimator; interpretation remains conditional on that result."
+  },
+  "labs": {
+    "ode": {
+      "interface": "reference",
+      "capabilities": {
+        "explicit_nonstiff_integration": "browser-computed",
+        "adaptive_rk45_diagnostics": "browser-computed",
+        "trajectory_phase_vector_and_poincare_plots": "browser-computed",
+        "parameter_sweeps": "limited-browser",
+        "stiff_methods": "export-only",
+        "direct_ode_model_ir": "browser-computed",
+        "reaction_network_stoichiometric_lowering": "browser-computed",
+        "research_derived_fatty_acid_metabolism": "browser-computed",
+        "research_derived_fadns_reduced_public_model": "browser-computed",
+        "local_jacobian_timescale_stiffness_evidence": "limited-browser",
+        "optional_independent_scipy_verification": "limited-browser",
+        "self_contained_model_report_card": "browser-computed",
+        "editable_initial_conditions_parameters_time_span_and_tolerances": "browser-computed",
+        "numerical_settings_session_share_and_model_json_roundtrip": "browser-computed",
+        "stale_result_export_guard": "browser-computed"
+      },
+      "limitations": [
+        "Requested tolerances constrain the numerical solve; they do not quantify model-form, parameter, measurement or biological uncertainty.",
+        "Changing a scientific or numerical input marks existing evidence stale; stale plots are visible as prior evidence but result/image exports are disabled until rerun.",
+        "Initial conditions, parameter values and ranges, time span, output density, method, step controls, rtol, atol and safety are user-editable and validated before computation.",
+        "Browser methods are intended for moderate explicit systems.",
+        "The local Jacobian timescale ratio and rejection evidence are stiffness heuristics, not a stiffness certificate.",
+        "Verify against SciPy is an optional independent numerical comparison; first use requires network access unless a local Pyodide distribution is configured, and agreement does not validate the model or data.",
+        "The Model Report Card records computation and declared limits; it is not a scientific-validity certificate.",
+        "Publication-grade results require independent convergence and domain validation.",
+        "The foko.model-ir/1 reaction-network route is a limited local schema, not SBML, CellML, Modelica or a DAE/hybrid-system standard.",
+        "Reaction rates and direct equations still use the platform restricted expression evaluator and must be independently checked.",
+        "The fatty-acid and FADNS browser examples are reduced public research models, not the complete calibrated repositories; they require independent reproduction before publication use."
+      ]
+    },
+    "steady_state": {
+      "interface": "reference",
+      "capabilities": {
+        "browser_root_search": "browser-computed",
+        "residual_history_and_termination_evidence": "browser-computed",
+        "finite_difference_jacobian": "browser-computed",
+        "dynamic_stability_1x1_2x2": "limited-browser",
+        "deterministic_multistart": "limited-browser",
+        "sequential_parameter_scans_1d_2d": "limited-browser",
+        "pseudo_arclength_continuation": "export-only",
+        "general_nonsymmetric_eigenspectrum": "export-only",
+        "fatty_acid_branch_exploration": "limited-browser",
+        "fatty_acid_conditional_2x2_local_stability": "limited-browser",
+        "fadns_enzyme_occupancy_operating_point": "browser-computed",
+        "declared_physical_admissibility_filter": "browser-computed",
+        "jacobian_sign_structure": "browser-computed",
+        "local_eigenvalue_stiffness_indicator": "limited-browser",
+        "sequential_scan_sensitivity_slope": "limited-browser",
+        "limit_cycle_and_periodic_orbit_analysis": "unavailable",
+        "adjoint_global_and_bifurcation_sensitivity": "export-only"
+      },
+      "limitations": [
+        "A converged local root does not establish global root completeness.",
+        "Deterministic multi-start samples a finite set of initial guesses and is not exhaustive.",
+        "Parameter scans reuse nearby roots but are not pseudo-arclength continuation and cannot confirm folds or Hopf bifurcations.",
+        "Dynamical stability is reported only for a declared dx/dt=f interpretation and only for 1x1 or 2x2 Jacobians in the browser core.",
+        "Finite-difference Jacobians and local Newton solves require independent validation for publication or safety-critical use.",
+        "The full four-state fatty-acid branch workflow does not certify physical bistability or complete root sets; converged roots that violate declared constraints are excluded from physical interpretation.",
+        "The conditional MalCoA–FA slice has an exact local 2×2 spectrum, but it is not the stability of the full four-state model.",
+        "The FADNS occupancy example is algebraic at fixed substrate pools, so dynamical stability is not applicable."
+      ]
+    },
+    "stochastic": {
+      "interface": "reference",
+      "capabilities": {
+        "time_homogeneous_ctmc_direct_ssa": "browser-computed",
+        "seeded_independent_ensembles": "browser-computed",
+        "empirical_quantile_bands_and_final_distributions": "browser-computed",
+        "monte_carlo_standard_error": "browser-computed",
+        "curated_mean_field_ode_comparison": "limited-browser",
+        "custom_editable_reaction_networks": "limited-browser",
+        "tau_leaping": "export-only",
+        "sde_integration": "export-only",
+        "time_dependent_hazards": "unavailable",
+        "large_ensembles": "export-only"
+      },
+      "limitations": [
+        "The direct browser algorithm assumes time-homogeneous propensities and non-negative integer states.",
+        "Finite ensembles provide Monte Carlo estimates, not exact probability laws or parameter confidence intervals.",
+        "Trajectories reaching the configured event cap are censored and are never presented as complete runs.",
+        "Pointwise empirical quantile bands do not provide simultaneous coverage.",
+        "Mean-field overlays are curated deterministic approximations and need not equal the finite-population ensemble mean.",
+        "Tau-leaping, SDE integration, time-dependent hazards, and large-scale ensembles require an external workflow."
+      ]
+    },
+    "optimization": {
+      "interface": "reference",
+      "capabilities": {
+        "bounded_coordinate_search": "browser-computed",
+        "projected_finite_difference_penalty_descent": "limited-browser",
+        "seeded_differential_evolution": "limited-browser",
+        "seeded_multistart_coordinate_search": "limited-browser",
+        "seeded_uniform_random_search": "limited-browser",
+        "independent_feasibility_gate": "browser-computed",
+        "objective_landscape_2d": "browser-computed",
+        "finite_sample_pareto_set": "limited-browser",
+        "large_scale_or_certified_optimization": "export-only",
+        "kkt_certificate": "unavailable",
+        "global_optimality_certificate": "unavailable",
+        "searchable_curated_problem_library": "browser-computed",
+        "finite_sample_pareto_front": "limited-browser",
+        "finite_sample_dominance_matrix": "limited-browser",
+        "finite_front_crowding_distance": "limited-browser",
+        "two_objective_prefix_hypervolume": "limited-browser",
+        "finite_sample_objective_correlation": "limited-browser",
+        "geometric_knee_candidate": "limited-browser",
+        "local_finite_difference_objective_sensitivity": "limited-browser",
+        "bayesian_optimization": "unavailable",
+        "nonlinear_mpc": "export-only",
+        "topology_and_cfd_optimization": "export-only"
+      },
+      "limitations": [
+        "The browser reports evaluated candidates, not certified local or global optima.",
+        "Inequality and equality constraints are searched through a quadratic penalty and checked independently against a user-declared feasibility tolerance.",
+        "Differential evolution, random search, and multi-start are seeded finite-budget heuristics; repeated runs do not prove global optimality.",
+        "Finite-difference projected descent can fail on nonsmooth, poorly scaled, or ill-conditioned problems.",
+        "The Pareto view is a seeded finite candidate sample, not an exact frontier.",
+        "KKT conditions, convexity, uniqueness, sensitivity, and robustness require independent analysis."
+      ]
+    },
+    "statistics": {
+      "interface": "reference",
+      "capabilities": {
+        "local_csv_tsv_semicolon_ingestion": "browser-computed",
+        "missingness_audit_and_analysis_specific_complete_cases": "browser-computed",
+        "transparent_mean_imputation_sensitivity": "limited-browser",
+        "descriptive_statistics_and_pearson_correlation": "browser-computed",
+        "simple_ols_with_classical_intervals_and_influence": "browser-computed",
+        "welch_anova_kruskal_and_effect_summaries": "browser-computed",
+        "seeded_percentile_bootstrap_mean_interval": "limited-browser",
+        "empirical_roc_precision_recall": "browser-computed",
+        "kaplan_meier_and_two_group_log_rank": "browser-computed",
+        "benjamini_hochberg_fdr": "browser-computed",
+        "sample_estimated_shewhart_limits": "limited-browser",
+        "post_hoc_multiple_comparisons": "unavailable",
+        "causal_inference_and_external_validity": "unavailable",
+        "large_specialized_or_clustered_inference": "export-only",
+        "curated_stress_test_example_library": "browser-computed",
+        "standardized_pca_scores_loadings_and_explained_variance": "limited-browser"
+      },
+      "limitations": [
+        "Inference remains conditional on sampling, measurement quality, model assumptions, multiplicity decisions, and the analysis plan.",
+        "Mean imputation is exposed only as a sensitivity tool and understates uncertainty.",
+        "Classical OLS intervals and tests assume an appropriate linear error model and independent observations.",
+        "ANOVA is omnibus; no post-hoc pairwise procedure is computed in the v72.4 browser reference.",
+        "ROC AUC and average precision are empirical on the supplied sample and do not establish calibration, utility, or transportability.",
+        "Kaplan-Meier and log-rank output do not provide a hazard ratio or causal treatment effect.",
+        "Browser output does not establish causality or external validity.",
+        "The curated examples are synthetic teaching and stress-test datasets; they do not represent empirical evidence or benchmark external validity.",
+        "PCA is a standardized covariance decomposition with finite-sample eigensolver evidence; components are not latent mechanisms or causal factors."
+      ]
+    },
+    "fitting": {
+      "interface": "reference",
+      "capabilities": {
+        "local_csv_tsv_semicolon_ingestion": "browser-computed",
+        "analysis_specific_complete_cases": "browser-computed",
+        "transparent_mean_imputation_sensitivity": "limited-browser",
+        "linear_quadratic_and_cubic_least_squares": "browser-computed",
+        "exponential_logistic_and_michaelis_menten_nonlinear_fitting": "browser-computed",
+        "known_sigma_inverse_variance_weighting": "browser-computed",
+        "local_covariance_parameter_intervals": "limited-browser",
+        "mean_and_prediction_bands": "limited-browser",
+        "residual_qq_leverage_and_cook_style_diagnostics": "browser-computed",
+        "seeded_pairs_bootstrap": "limited-browser",
+        "finite_profile_sse_scans": "limited-browser",
+        "robust_clustered_hierarchical_and_correlated_error_models": "export-only",
+        "global_optimum_or_identifiability_certificate": "unavailable",
+        "local_parameter_correlation_matrix": "limited-browser",
+        "practical_identifiability_verdict": "limited-browser",
+        "local_experimental_design_heuristic": "limited-browser"
+      },
+      "limitations": [
+        "Nonlinear least squares is a local numerical search; convergence does not establish a global optimum or unique parameter vector.",
+        "Local covariance intervals and bands rely on a linearization of the fitted model and an appropriate residual error model.",
+        "Inverse-variance weighting treats the supplied sigma values as known, strictly positive observation standard deviations.",
+        "Pairs bootstrap resamples rows as exchangeable units and is not valid for clustered, serially dependent or hierarchical observations without redesign.",
+        "Profile SSE scans, local correlation matrices and the practical-identifiability verdict are finite local diagnostics; they do not certify structural identifiability or global uniqueness.",
+        "Experimental-design advice is a local covariance-based sensitivity heuristic over a finite candidate grid; it does not guarantee identifiability or an optimal experiment.",
+        "In-sample R-squared, AIC, residual plots and influence measures do not establish out-of-sample validity or mechanistic truth."
+      ]
+    },
+    "linear_algebra": {
+      "interface": "reference",
+      "capabilities": {
+        "strict_small_dense_matrix_ingestion": "browser-computed",
+        "pivoted_lu_solve_and_inverse_residuals": "browser-computed",
+        "qr_least_squares_with_rank_gate": "browser-computed",
+        "symmetric_jacobi_eigensystem_with_residuals": "browser-computed",
+        "singular_value_rank_and_condition_diagnostics": "limited-browser",
+        "rref_and_null_space_basis": "browser-computed",
+        "centered_covariance_pca": "limited-browser",
+        "finite_markov_stationary_candidate": "limited-browser",
+        "large_sparse_or_production_svd": "export-only",
+        "general_nonsymmetric_eigensystem": "unavailable"
+      },
+      "limitations": [
+        "The browser reference is intended for small dense matrices and uses floating-point arithmetic.",
+        "Singular values are estimated from eigenvalues of A-transpose A; very small singular values are sensitive to squaring the condition number.",
+        "Rank and nullity depend on the selected numerical tolerance and matrix scaling.",
+        "The browser eigensolver accepts real symmetric matrices only; general nonsymmetric spectra require an external library.",
+        "A small residual does not imply a well-conditioned or scientifically correct system.",
+        "PCA is centered but not standardized and remains sensitive to scale and outliers.",
+        "A stationary Markov candidate does not certify uniqueness, irreducibility or mixing time."
+      ]
+    },
+    "networks": {
+      "interface": "reference",
+      "capabilities": {
+        "strict_small_edge_list_ingestion": "browser-computed",
+        "directed_and_undirected_adjacency": "browser-computed",
+        "nonnegative_weighted_shortest_paths": "browser-computed",
+        "weak_and_strong_components": "browser-computed",
+        "degree_strength_closeness_betweenness_and_pagerank": "limited-browser",
+        "minimum_spanning_tree_for_undirected_cost_graphs": "browser-computed",
+        "deterministic_label_propagation": "limited-browser",
+        "degree_ordered_node_removal_scenario": "limited-browser",
+        "large_graph_or_probabilistic_network_analysis": "export-only",
+        "causal_network_inference": "unavailable"
+      },
+      "limitations": [
+        "The browser reference is intended for small graphs and deterministic layouts.",
+        "Weights must be declared as additive costs or connection strengths; operations do not silently reinterpret both meanings as equivalent.",
+        "PageRank, closeness and betweenness encode different notions of importance and need not agree.",
+        "Label propagation is a deterministic heuristic in this implementation and does not identify a unique latent community partition.",
+        "The node-removal curve uses descending initial degree without adaptive re-ranking and is not a calibrated failure model.",
+        "Graph metrics do not establish causality, mechanism or measurement validity."
+      ]
+    },
+    "ml": {
+      "interface": "reference",
+      "capabilities": {
+        "local_csv_tsv_text_ingestion": "browser-computed",
+        "fold_safe_standardization": "browser-computed",
+        "seeded_k_fold_cross_validation": "browser-computed",
+        "linear_and_ridge_regression": "browser-computed",
+        "binary_logistic_regression": "browser-computed",
+        "gaussian_naive_bayes": "limited-browser",
+        "k_nearest_neighbours": "limited-browser",
+        "shared_fold_model_comparison": "browser-computed",
+        "out_of_fold_roc_pr_calibration_and_confusion": "browser-computed",
+        "learning_curves_and_permutation_importance": "limited-browser",
+        "seeded_kmeans_and_silhouette": "limited-browser",
+        "standardized_pca": "limited-browser",
+        "multiclass_classification": "unavailable",
+        "deep_learning_boosting_and_gpu_training": "export-only",
+        "pca_diagnostics_alongside_supervised_and_clustering_results": "limited-browser",
+        "repeated_cross_validation": "browser-computed",
+        "nested_cross_validation_for_supported_hyperparameters": "limited-browser",
+        "repeated_permutation_importance_with_dispersion": "limited-browser",
+        "data_leakage_collinearity_duplicate_and_imbalance_audit": "browser-computed",
+        "configuration_import": "browser-computed"
+      },
+      "limitations": [
+        "Nested and repeated cross-validation reduce optimistic selection bias but do not create external validity; small samples can still produce highly variable estimates.",
+        "Cross-validation estimates internal performance for the supplied sample and does not establish external validity or robustness to distribution shift.",
+        "Binary classification requires explicit 0/1 targets; labels are never silently recoded.",
+        "Standardization is fitted inside each training fold to reduce preprocessing leakage.",
+        "Mean imputation is restricted to selected features as a transparent sensitivity option; missing targets are dropped.",
+        "Permutation importance is predictive and conditional on feature correlation, redundancy and the fitted model; it is not causal importance.",
+        "K-means and PCA are exploratory Euclidean summaries and do not identify natural groups or latent mechanisms.",
+        "Large boosted ensembles, deep learning, nested tuning, GPU training and production deployment require external workflows.",
+        "PCA shown beside supervised or clustering results is computed from the same prepared feature matrix and remains descriptive rather than predictive validation."
+      ]
+    },
+    "sciml": {
+      "interface": "reference",
+      "capabilities": {
+        "editable_trajectory_and_model_configuration": "browser-computed",
+        "workflow_compatible_plot_registry": "browser-computed",
+        "sindy_sparse_regression_and_pareto_sweep": "browser-computed",
+        "derivative_fit_residual_and_library_diagnostics": "browser-computed",
+        "small_inverse_and_surrogate_diagnostics": "limited-browser",
+        "configuration_save_restore_and_share": "browser-computed",
+        "pinn_fno_deeponet_and_large_neural_training": "export-only",
+        "trajectory_pca_for_multistate_results": "limited-browser",
+        "dimension_gated_phase_portraits": "browser-computed",
+        "seeded_noise_generation_and_provenance": "browser-computed"
+      },
+      "limitations": [
+        "A browser diagnostic is not evidence that a neural PDE model was trained.",
+        "Only plots compatible with the current computed result are offered; export-only workflows expose the reference trajectory rather than fabricated training evidence.",
+        "Sparse equations are conditional on derivative estimation, sampling, noise, scaling, candidate terms, threshold and regularization and are not automatic mechanistic truth.",
+        "Browser inverse and surrogate adapters are bounded teaching diagnostics and do not establish identifiability, uniqueness, calibration or replacement validity.",
+        "Publication-grade SciML requires independent external training, held-out validation, convergence studies and domain-specific checks.",
+        "One-state results cannot select two- or three-dimensional phase views or trajectory PCA; incompatible plots are removed rather than rendered as errors.",
+        "Nonzero synthetic noise is generated from an explicit seed and exported with the configuration; changing the seed changes the sampled perturbation while preserving the deterministic base trajectory."
+      ]
+    },
+    "symbolic": {
+      "interface": "reference",
+      "capabilities": {
+        "explicit_expression_parser": "browser-computed",
+        "conservative_rule_simplification": "limited-browser",
+        "symbolic_differentiation": "browser-computed",
+        "symbolic_jacobian": "browser-computed",
+        "numeric_scope_evaluation": "browser-computed",
+        "one_dimensional_sign_change_root_search": "limited-browser",
+        "small_system_deterministic_multistart_equilibria": "limited-browser",
+        "local_jacobian_stability_1x1_2x2": "limited-browser",
+        "expression_derivative_jacobian_vector_and_nullcline_plots": "browser-computed",
+        "sympy_validation_script": "export-only",
+        "general_integration_exact_solving_factorization_and_ode_solving": "export-only",
+        "complete_computer_algebra": "unavailable"
+      },
+      "limitations": [
+        "The browser grammar requires explicit multiplication and supports arithmetic, powers, parentheses and the elementary functions sin, cos, tan, exp, log and sqrt.",
+        "The simplifier applies a small transparent rule set and deliberately avoids domain-changing cancellation such as x/x = 1.",
+        "One-dimensional roots are detected over a finite interval by sampled near-zero values and sign-change bisection; repeated tangent roots can be missed.",
+        "Small-system equilibria are candidates found from a deterministic finite start set and are not an exhaustive exact solve.",
+        "Jacobian stability is local numerical evidence and does not establish global dynamics, uniqueness or bifurcation structure.",
+        "General integration, exact equation solving, factorization, complex branch analysis, special functions and general ODE solving require the SymPy export or another external CAS."
+      ]
+    },
+    "agent": {
+      "interface": "reference",
+      "capabilities": {
+        "seeded_random_sequential_lattice_models": "browser-computed",
+        "explicit_topology_boundary_and_initialization": "browser-computed",
+        "finite_ensemble_quantiles": "browser-computed",
+        "transition_event_totals": "browser-computed",
+        "spatial_agreement_and_state_entropy": "limited-browser",
+        "configuration_save_restore_share": "browser-computed",
+        "continuous_space_network_adaptive_and_learning_agents": "export-only",
+        "empirical_calibration": "unavailable",
+        "causal_interpretation": "unavailable",
+        "awaited_plot_rendering_with_canvas_fallback": "browser-computed",
+        "worker_backed_seeded_ensembles": "browser-computed",
+        "cancellable_runs_without_partial_publication": "browser-computed",
+        "random_with_replacement_and_shuffled_sweep_schedules": "browser-computed",
+        "random_split_and_central_patch_initialization": "browser-computed",
+        "connected_cluster_and_largest_cluster_diagnostics": "limited-browser",
+        "finite_horizon_absorption_and_terminal_classification": "limited-browser",
+        "monte_carlo_standard_errors": "browser-computed",
+        "configuration_hash_and_derived_seed_provenance": "browser-computed",
+        "exact_initial_population_counts": "browser-computed",
+        "deterministic_fraction_to_count_allocation": "browser-computed",
+        "declarative_custom_local_transition_models": "limited-browser",
+        "custom_model_and_configuration_import": "browser-computed",
+        "external_categorical_state_legends": "browser-computed",
+        "ensemble_spatial_agreement_diversity_and_occupancy": "browser-computed",
+        "population_phase_and_endpoint_spatial_diagnostics": "limited-browser",
+        "tcell_cell_cycle_fadns_sir_voter_segregation_predator_prey_forest_fire_presets": "browser-computed",
+        "twenty_curated_agent_examples": "browser-computed",
+        "animation_frame_slider_speed_and_reduced_motion": "browser-computed",
+        "current_frame_canvas_export": "browser-computed",
+        "representative_animation_is_not_ensemble_spatial_uncertainty": "limited-browser",
+        "live_representative_lattice_stream": "browser-computed",
+        "live_representative_population_stream": "browser-computed",
+        "manual_non_looping_recorded_frame_replay": "browser-computed",
+        "incremental_paced_numerical_runner": "browser-computed",
+        "live_pause_resume_control": "browser-computed"
+      },
+      "limitations": [
+        "Exact-count mode requires non-negative integer state counts summing exactly to N². Fraction mode uses deterministic largest-remainder allocation and reports the exact counts actually simulated.",
+        "Custom Agent models are restricted to validated declarative local transition rules (spontaneous, neighbour-contact and neighbour-threshold). Arbitrary JavaScript is not executed.",
+        "One algorithmic step is one configured lattice sweep. Random-with-replacement gives one update attempt per site on average; shuffled sweep visits every site once. Neither is automatically biological, social, epidemiological or physical time.",
+        "Finite-ensemble quantiles and Monte Carlo standard errors describe simulation variability under fixed rules and parameters; they do not quantify parameter uncertainty, measurement error or model discrepancy.",
+        "Cluster counts, largest-cluster fractions, spatial agreement and entropy are descriptive lattice diagnostics whose interpretation depends on state coding, occupancy, topology, initialization and boundary conditions.",
+        "Finite-horizon terminal labels and absorption times are conditional on the configured grid, horizon, update schedule and seed. They are not stationary-distribution or asymptotic certificates.",
+        "The curated T-cell, cell-cycle, fatty-acid, SIR, voter, segregation, predator-prey and forest-fire examples are qualitative mechanisms or stress tests rather than calibrated empirical models.",
+        "Continuous-space, network-agent, adaptive, reinforcement-learning and large-scale agent simulations require external workflows.",
+        "Worker cancellation terminates the active ensemble and publishes no partial result. A main-thread fallback is used only when Web Workers are unavailable and is explicitly disclosed.",
+        "When Plotly cannot mount, the interface renders the same computed result through a built-in canvas fallback and labels the rendering path.",
+        "The fatty-acid particle presets are research-inspired lattice abstractions, not the published semi-mechanistic FADNS ODE and not quantitative kinetic models.",
+        "Dynamic lattice snapshots come from the representative derived seed; ensemble bands and endpoint distributions summarize independent runs and must not be conflated.",
+        "State legends are placed below categorical lattice panels to preserve the data region.",
+        "During computation, both visible Agent panels are driven by paced incremental numerical states from the same representative seeded realization. The pacing delay changes only display timing, not the seeded result; stored-frame replay is manual and non-looping."
+      ]
+    },
+    "workbench": {
+      "interface": "reference",
+      "capabilities": {
+        "stable_lab_adapter_contract": "browser-computed",
+        "ode_adapter": "browser-computed",
+        "steady_state_adapter": "browser-computed",
+        "stochastic_ctmc_adapter": "browser-computed",
+        "optimization_adapter": "browser-computed",
+        "agent_adapter": "browser-computed",
+        "statistics_adapter": "browser-computed",
+        "curve_fitting_adapter": "browser-computed",
+        "linear_algebra_adapter": "browser-computed",
+        "network_adapter": "browser-computed",
+        "machine_learning_adapter": "browser-computed",
+        "sindy_adapter": "browser-computed",
+        "configuration_save_share_export": "browser-computed",
+        "advanced_model_editing": "unavailable"
+      },
+      "limitations": [
+        "The Workbench is an orchestration and comparison route; it intentionally exposes a smaller configuration surface than each focused lab.",
+        "Every adapter returns one computed result with compatible plots, diagnostics and provenance. It does not create decorative outputs or a second copy of the numerical engines.",
+        "Configuration URLs do not preserve prior computation evidence. Shared configurations must be recomputed.",
+        "Advanced model authoring, large datasets and production-scale runs remain in focused or external workflows."
+      ]
+    },
+    "sensitivity": {
+      "interface": "reference",
+      "capabilities": {
+        "editable_ode_equations_initial_conditions_and_parameter_ranges": "browser-computed",
+        "editable_time_span_output_density_solver_and_tolerances": "browser-computed",
+        "local_central_finite_difference_sensitivity": "browser-computed",
+        "trajectory_finite_difference_sensitivity": "limited-browser",
+        "morris_elementary_effect_screening": "limited-browser",
+        "jansen_independent_uniform_first_and_total_indices": "limited-browser",
+        "range_scaled_local_fisher_information_approximation": "limited-browser",
+        "perturbation_and_sampling_convergence_diagnostics": "limited-browser",
+        "reproducible_seeded_sampling": "browser-computed",
+        "configuration_session_share_and_model_export": "browser-computed",
+        "stale_result_export_guard": "browser-computed",
+        "adjoint_sensitivity": "unavailable",
+        "efast_and_shapley_effects": "unavailable",
+        "correlated_input_global_sensitivity": "unavailable",
+        "symbolic_identifiability_and_profile_likelihood": "export-only",
+        "certified_bifurcation_and_continuation_sensitivity": "export-only",
+        "pde_pinn_and_neural_operator_adjoints": "export-only",
+        "morris_elementary_effect_distributions_convergence_and_rank_stability": "limited-browser",
+        "saltelli_pairwise_second_order_interactions": "limited-browser",
+        "bootstrap_uncertainty_and_rank_stability": "limited-browser",
+        "browser_workload_capacity_refusal": "browser-computed",
+        "state_and_parameter_vector_field_jacobians": "browser-computed",
+        "parameter_to_state_trajectory_influence": "limited-browser",
+        "one_factor_at_a_time_response_curves_and_tornado": "browser-computed",
+        "range_normalized_directional_profiles": "limited-browser",
+        "bounded_two_parameter_response_surfaces": "limited-browser",
+        "time_resolved_first_and_total_effect_indices": "limited-browser",
+        "variance_contribution_accounting": "derived-browser",
+        "parameter_output_relationship_diagnostics": "derived-browser",
+        "mutual_information_permutation_screening": "limited-browser",
+        "hsic_permutation_screening": "limited-browser"
+      },
+      "limitations": [
+        "All results are conditional on the selected output, initial conditions, time window, parameter ranges, perturbation or sample count, solver and tolerances.",
+        "Local finite differences are local and step-dependent; discontinuities, event thresholds and poor scaling can invalidate derivative interpretations.",
+        "Initial conditions affect trajectories but are not treated as sensitivity factors in this release.",
+        "Morris is a screening method. Its sigma combines interaction and nonlinearity and does not identify either mechanism separately.",
+        "Jansen first/total and Saltelli second-order estimates assume independent uniform input ranges. Raw finite-sample estimates and intervals are intentionally not clipped.",
+        "The Fisher-information view is a local range-scaled trajectory approximation under a constant independent noise scale; normalized column alignment is not posterior parameter correlation.",
+        "The browser refuses projected workloads above its guarded state, parameter, ODE-solve, pair-count, or state-time envelope. Larger studies must use the exported Python/SALib workflow.",
+        "No adjoint, sensitivity-equation, eFAST, Shapley, correlated-input, symbolic-identifiability, profile-likelihood, certified continuation or PDE/PINN sensitivity engine is present.",
+        "State and parameter Jacobians are local right-hand-side derivatives along the nominal trajectory; they are not propagated sensitivities or stability certificates.",
+        "OFAT and tornado plots hold all nonselected parameters nominal and therefore omit interactions.",
+        "Directional profiles depend on the declared parameter-range normalization and chosen direction.",
+        "Two-parameter response surfaces fix all remaining parameters nominal and are not variance decompositions.",
+        "Time-resolved Jansen estimates reuse the finite seeded global design; low-variance time points may be unresolved.",
+        "Histogram mutual information and RBF-HSIC are bounded-sample permutation screening diagnostics, not variance fractions or causal measures."
+      ]
+    }
+  },
+  "platformHardening": {
+    "theme_selector": "single non-wrapping native control",
+    "plot_compatibility": "dimension- and result-gated selectors with distinct visible panels",
+    "rendering_status": "computed status follows successful Plotly or canvas rendering",
+    "shared_pca_core": "pure deterministic Jacobi-based small-dataset implementation",
+    "scope": "browser-scale reference diagnostics; external validation remains required",
+    "canvas_mode": "collapsible input and diagnostic rails for a wider scientific canvas",
+    "central_workspace_breakpoints": "two readable simultaneous plots or one Focus plot; public 3-up controls removed",
+    "agent_execution": "Web Worker ensembles with cancellation, progress and stale-result rejection",
+    "sciml_reproducibility": "explicit deterministic noise seed and exported provenance",
+    "reliability_first_workspace": "two simultaneous computed plots or one focused plot; visible 3-up controls removed",
+    "model_input_contract": "every active scientific lab exposes editable input and/or a local import route",
+    "browser_test_install": "only Playwright is installed through npm; Plotly, math.js and KaTeX remain vendored",
+    "npm_ci_command": "npm ci --ignore-scripts --no-audit --no-fund --omit=optional",
+    "agent_spatial_evidence": "representative temporal snapshots plus ensemble agreement, diversity and occupancy summaries",
+    "example_atlas": "searchable provenance-classified catalog with 121 curated routes",
+    "model_ir": "validated foko.model-ir/1 direct ODE and reaction-network lowering",
+    "external_architecture_review": "mxlweb-core concepts reviewed; no source or binary redistribution"
+  },
+  "modelInputRoutes": {
+    "ode": "editable equations or validated foko.model-ir/1 direct-ODE/reaction-network JSON plus existing model-oriented imports",
+    "steady_state": "editable residual equations and JSON import",
+    "stochastic": "editable CTMC states, propensities and stoichiometry; model/session JSON import",
+    "optimization": "editable variables, bounds, objectives and constraints; configuration JSON import",
+    "statistics": "local tabular data upload and editable table",
+    "fitting": "local tabular data upload and editable data",
+    "linear_algebra": "editable matrix/vector; text, CSV or JSON import",
+    "networks": "editable edge list; text, CSV or JSON import",
+    "ml": "local data upload and ML configuration JSON import",
+    "sciml": "local trajectory/model text upload plus editable workflow configuration",
+    "agent": "exact initial state counts or fractions, 20 curated presets, dynamic spatial evidence, declarative custom model JSON and configuration import",
+    "symbolic": "editable expressions and scope; text or JSON import",
+    "workbench": "adapter configuration JSON editor and file import"
+  },
+  "modelAtlas": {
+    "status": "reference",
+    "exampleCount": 121,
+    "filters": [
+      "lab",
+      "scientific family",
+      "provenance",
+      "computation boundary",
+      "free-text search"
+    ],
+    "provenanceClasses": [
+      "Research-derived",
+      "Research-inspired",
+      "Published reference",
+      "Synthetic teaching",
+      "Synthetic stress test",
+      "Platform template",
+      "User-authored",
+      "Export-only"
+    ],
+    "boundary": "A named domain example is not automatically calibrated or externally validated."
+  },
+  "validationAccessibilityPerformance": {
+    "differentialValidation": "32 representative comparisons against NumPy, SciPy, scikit-learn, NetworkX and SymPy",
+    "accessibility": [
+      "skip links",
+      "one h1 per authored page",
+      "labelled controls",
+      "keyboard focus",
+      "reduced motion",
+      "forced colours",
+      "plot busy/rendered states"
+    ],
+    "performance": [
+      "zero parser-blocking external scripts on authored pages",
+      "no eager Plotly preload",
+      "unused KaTeX/math.js removed from six labs",
+      "page-specific JavaScript budgets",
+      "runtime plot and long-task telemetry"
+    ],
+    "browserBoundary": "Playwright gates are included; a normal local or CI browser must execute them before deployment."
+  },
+  "centralRegistry": {
+    "status": "reference",
+    "capabilities": {
+      "runtime_example_registry": "browser-computed",
+      "runtime_plot_compatibility_registry": "browser-computed",
+      "deterministic_duplicate_plot_reconciliation": "browser-computed",
+      "stable_two_panel_preference": "browser-computed",
+      "automatic_focus_only_for_narrow_or_single_plot_cases": "browser-computed",
+      "automatic_two_panel_restoration": "browser-computed"
+    },
+    "limitations": [
+      "The registry can only expose metadata declared by the lab preset or page selector.",
+      "It prevents incompatible presentation but does not independently validate the scientific meaning of every plot.",
+      "A single compatible plot is shown in Focus mode rather than duplicated."
+    ],
+    "plotSelectionPreservesRequestedLayout": true,
+    "narrowLayoutUsesViewportNotTransientPlotContainer": true,
+    "desktopTwoUpMayStackWithoutBecomingFocus": true
+  },
+  "analysisTaxonomy": {
+    "schema": "fokolab-analysis-taxonomy-v1",
+    "file": "ANALYSIS_TAXONOMY.json",
+    "documentation": "ANALYSIS_TAXONOMY.md",
+    "policy": "Only capabilities backed by current computed data appear in runtime plot menus; export-only and unavailable methods remain explicit reference entries."
+  }
+}

@@ -3,6 +3,9 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const esc = v => String(v ?? '').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+  const PCA = window.FokoPCA;
+  const PLOT = window.FokoPlotLifecycle;
+  if (!PLOT) throw new Error('SciML Lab requires FokoPlotLifecycle.');
   const COLORS = ['#00A7A7','#155EEF','#145374','#0B1D3D','#2F855A','#FF7A1A','#64748B'];
 
   const EXAMPLES = {
@@ -33,13 +36,13 @@
   };
 
   Object.assign(EXAMPLES, {
-    fluid_pinn:{title:'Fluid Dynamics PINN',atlas:'SciML Atlas · PINN Navier–Stokes',native:'examples.html#sciml-atlas',vars:['u','v','p'],params:{nu:0.01,forcing:1.0},x0:[0.25,0.08,0.02],rhs:(x,p)=>[p.forcing*x[1]-p.nu*x[0],-0.4*x[0]*x[1]-p.nu*x[1],0.35*x[0]-0.18*x[2]],truth:['u_t + u u_x = -p_x + nu\Delta u','v_t + u v_x = -p_y + nu\Delta v','\nabla\cdot u = 0'],desc:'Physics-informed Navier–Stokes scaffold for velocity and pressure fields around an obstruction. Browser plots inspect residual fields and loss balance; heavy training exports to Python.',phase:['u','v','p'],defaults:{points:240,dt:0.025,threshold:0.02,ridge:0.0002,noise:0.002}},
+    fluid_pinn:{title:'Fluid dynamics PINN export scaffold',atlas:'SciML Atlas · physics-informed export',native:'examples.html#sciml-atlas',vars:['u','v','p'],params:{nu:0.01,forcing:1.0},x0:[0.25,0.08,0.02],rhs:(x,p)=>[p.forcing*x[1]-p.nu*x[0],-0.4*x[0]*x[1]-p.nu*x[1],0.35*x[0]-0.18*x[2]],truth:['u_t + u u_x = -p_x + nu\Delta u','v_t + u v_x = -p_y + nu\Delta v','\nabla\cdot u = 0'],desc:'Physics-informed Navier–Stokes scaffold. The browser computes reduced residual diagnostics and exports the training workflow; it does not train a PINN locally.',phase:['u','v','p'],defaults:{points:240,dt:0.025,threshold:0.02,ridge:0.0002,noise:0.002}},
     aerospace_sindy:{title:'Aerospace SINDy Discovery',atlas:'SciML Atlas · wing-rock flutter',native:'examples.html#sciml-atlas',vars:['roll','yaw','rate'],params:{a:0.7,b:0.28,c:1.3},x0:[0.3,0.1,0.2],rhs:(x,p)=>[x[2],-p.a*x[0]+p.b*x[0]**3+0.2*x[1],-p.c*x[2]+x[0]*x[1]],truth:['rate','-a*roll+b*roll^3+0.2*yaw','-c*rate+roll*yaw'],desc:'Sparse discovery of nonlinear aircraft wing-rock dynamics from high-frequency telemetry.',phase:['roll','yaw','rate'],defaults:{points:280,dt:0.025,threshold:0.035,ridge:0.0002,noise:0.001}},
-    battery_neural_ode:{title:'Lithium-Ion Battery Surrogate',atlas:'SciML Atlas · Neural ODE surrogate',native:'examples.html#sciml-atlas',vars:['SOC','Temp','Voltage'],params:{k:0.25,heat:0.18,cool:0.08},x0:[1,0.22,0.95],rhs:(x,p)=>[-p.k*(0.5+0.5*x[1])*x[0],p.heat*(1-x[0])-p.cool*x[1],-0.15*(1-x[0])-0.05*x[1]],truth:['Neural ODE surrogate for cell solver','thermal coupling','voltage response'],desc:'Neural ODE surrogate replacing slow cell-level simulation for EV battery management diagnostics.',phase:['SOC','Temp','Voltage'],defaults:{points:240,dt:0.035,threshold:0.02,ridge:0.0002,noise:0.001}},
-    structural_fno:{title:'Structural Operator Learning',atlas:'SciML Atlas · Fourier Neural Operator',native:'examples.html#sciml-atlas',vars:['stress_x','stress_y','strain'],params:{E:2.1,damp:0.12},x0:[0.1,0.08,0.02],rhs:(x,p)=>[p.E*x[2]-p.damp*x[0],0.65*p.E*x[2]-p.damp*x[1],0.18-0.25*x[2]],truth:['FNO maps geometry to 3D stress fields'],desc:'Operator-learning scaffold for predicting structural stress-strain fields across geometry changes.',phase:['stress_x','stress_y','strain'],defaults:{points:220,dt:0.04,threshold:0.02,ridge:0.0002,noise:0.001}},
+    battery_neural_ode:{title:'Lithium-ion battery surrogate scaffold',atlas:'SciML Atlas · Neural ODE export',native:'examples.html#sciml-atlas',vars:['SOC','Temp','Voltage'],params:{k:0.25,heat:0.18,cool:0.08},x0:[1,0.22,0.95],rhs:(x,p)=>[-p.k*(0.5+0.5*x[1])*x[0],p.heat*(1-x[0])-p.cool*x[1],-0.15*(1-x[0])-0.05*x[1]],truth:['exported Neural ODE surrogate for cell solver','thermal coupling','voltage response'],desc:'Battery surrogate scaffold for EV diagnostics. Browser plots inspect synthetic trajectories and residuals; Neural ODE training is exported.',phase:['SOC','Temp','Voltage'],defaults:{points:240,dt:0.035,threshold:0.02,ridge:0.0002,noise:0.001}},
+    structural_fno:{title:'Structural operator-learning export scaffold',atlas:'SciML Atlas · neural-operator export',native:'examples.html#sciml-atlas',vars:['stress_x','stress_y','strain'],params:{E:2.1,damp:0.12},x0:[0.1,0.08,0.02],rhs:(x,p)=>[p.E*x[2]-p.damp*x[0],0.65*p.E*x[2]-p.damp*x[1],0.18-0.25*x[2]],truth:['exported neural operator maps geometry to stress fields'],desc:'Operator-learning scaffold for stress-strain fields. Browser diagnostics are reduced-order checks; FNO-style training is exported.',phase:['stress_x','stress_y','strain'],defaults:{points:220,dt:0.04,threshold:0.02,ridge:0.0002,noise:0.001}},
     seismic_inverse:{title:'Seismic Inverse Imaging',atlas:'SciML Atlas · wave inverse problem',native:'examples.html#sciml-atlas',vars:['wave','reflect','density'],params:{c:1.1,atten:0.18},x0:[0.4,0.15,0.55],rhs:(x,p)=>[p.c*x[1]-p.atten*x[0],-0.4*x[0]+0.2*x[2],0.08*x[1]-0.05*x[2]],truth:['wave-equation inversion for density map'],desc:'Wave-equation inverse scaffold for reconstructing reservoir density from acoustic reflections.',phase:['wave','reflect','density'],defaults:{points:220,dt:0.035,threshold:0.02,ridge:0.0002,noise:0.002}},
     drone_gpr:{title:'Small-Data Drone Failure Baselines',atlas:'SciML Atlas · Gaussian process baseline',native:'examples.html#sciml-atlas',vars:['lift','drag','angle'],params:{stall:0.7,noise:0.12},x0:[0.5,0.12,0.2],rhs:(x,p)=>[0.35*x[2]-p.stall*x[1],0.12*x[2]*x[2]-0.1*x[1],0.02-0.03*x[2]],truth:['GPR uncertainty from 25 wind-tunnel runs'],desc:'Low-data GPR scaffold for drone lift-drag failure boundaries with uncertainty ribbons.',phase:['lift','drag','angle'],defaults:{points:80,dt:0.08,threshold:0.025,ridge:0.0002,noise:0.003}},
-    biomedical_deeponet:{title:'Biomedical Drug Surrogates',atlas:'SciML Atlas · DeepONet surrogate',native:'examples.html#sciml-atlas',vars:['infusion','central','peripheral'],params:{clear:0.22,transfer:0.18},x0:[0.55,0.08,0.02],rhs:(x,p)=>[-0.05*x[0],x[0]-p.clear*x[1]-p.transfer*(x[1]-x[2]),p.transfer*(x[1]-x[2])-0.08*x[2]],truth:['DeepONet maps infusion function to concentration curve'],desc:'DeepONet-style operator scaffold from patient-specific infusion functions to bloodstream concentration.',phase:['infusion','central','peripheral'],defaults:{points:240,dt:0.04,threshold:0.02,ridge:0.0002,noise:0.001}},
+    biomedical_deeponet:{title:'Biomedical DeepONet export scaffold',atlas:'SciML Atlas · DeepONet surrogate',native:'examples.html#sciml-atlas',vars:['infusion','central','peripheral'],params:{clear:0.22,transfer:0.18},x0:[0.55,0.08,0.02],rhs:(x,p)=>[-0.05*x[0],x[0]-p.clear*x[1]-p.transfer*(x[1]-x[2]),p.transfer*(x[1]-x[2])-0.08*x[2]],truth:['exported operator model maps infusion function to concentration curve'],desc:'DeepONet-style pharmacokinetic scaffold. Browser diagnostics use reduced trajectories; operator training is exported.',phase:['infusion','central','peripheral'],defaults:{points:240,dt:0.04,threshold:0.02,ridge:0.0002,noise:0.001}},
     climate_sindy:{title:'Climate System Equation Discovery',atlas:'SciML Atlas · climate SINDy',native:'examples.html#sciml-atlas',vars:['ocean','atmos','flux'],params:{k1:0.18,k2:0.12,forcing:0.45},x0:[0.4,0.32,0.08],rhs:(x,p)=>[p.k1*(x[1]-x[0])+0.05*x[2],p.k2*(x[0]-x[1])+p.forcing-0.1*x[1],0.3*(x[0]-x[1])-0.18*x[2]],truth:['ocean-atmosphere thermal exchange'],desc:'Sparse climate-equation discovery from noisy satellite-like thermal exchange signals.',phase:['ocean','atmos','flux'],defaults:{points:260,dt:0.05,threshold:0.02,ridge:0.0002,noise:0.002}},
     superconductor_inverse:{title:'Superconductor Inverse Design',atlas:'SciML Atlas · inverse materials design',native:'examples.html#sciml-atlas',vars:['doping','spacing','bandgap'],params:{target:1.8,relax:0.2},x0:[0.25,0.45,0.75],rhs:(x,p)=>[0.12*(p.target-x[2])-p.relax*x[0],0.08*x[0]-0.05*x[1],0.55*x[0]+0.35*x[1]-0.22*x[2]],truth:['inverse design for target bandgap'],desc:'Inverse design scaffold for doping ratios and crystal spacing that target electronic bandgap.',phase:['doping','spacing','bandgap'],defaults:{points:220,dt:0.04,threshold:0.02,ridge:0.0002,noise:0.001}},
     acoustic_metamaterials:{title:'Acoustic Wave Metamaterials',atlas:'SciML Atlas · physics-guided encoder-decoder',native:'examples.html#sciml-atlas',vars:['porosity','resonance','attenuation'],params:{drive:0.6,damp:0.16},x0:[0.35,0.22,0.12],rhs:(x,p)=>[0.08*(1-x[0])-0.03*x[1],p.drive*x[0]-p.damp*x[1],0.52*x[1]-0.12*x[2]],truth:['physics-guided geometry-to-attenuation surrogate'],desc:'Physics-guided surrogate for optimizing sub-wavelength acoustic insulation geometries.',phase:['porosity','resonance','attenuation'],defaults:{points:220,dt:0.04,threshold:0.02,ridge:0.0002,noise:0.001}}
@@ -50,12 +53,54 @@
     surrogate:'Surrogate modeling: validate a fast emulator against a reference simulation with predicted-vs-reference, error and cross-validation diagnostics.',
     inverse:'Inverse problem: identify hidden parameters in a known differential-equation structure using sparse observations and residual analysis.',
     assimilation:'Data assimilation: blend model forecast and noisy observations, then inspect innovations, residuals and correction behavior.',
-    pinn:'PINN: configure physics-loss training outside the browser and inspect the validation plots required for neural differential models.',
-    operator:'Neural operator: export a field-to-field surrogate scaffold and validation protocol for expensive simulation families.',
+    pinn:'PINN export: configure physics-loss training outside the browser and inspect only the diagnostics computed from the current reduced model.',
+    operator:'Neural operator export: generate a field-to-field surrogate scaffold and validation protocol; no browser-side neural-operator training is claimed.',
     network:'Biological network ML: export graph/omics scaffolds while keeping links to mechanistic pathway interpretation.'
   };
 
+  const PLOT_META = {
+    reference_trajectory:{label:'Reference trajectory only',evidence:'The selected atlas trajectory or uploaded data. For export-only workflows this is input evidence, not a trained neural-model output.'},
+    trajectory:{label:'Trajectory / observations',evidence:'The trajectory used by the browser computation. Synthetic examples are generated from the displayed reduced model; uploaded CSV remains user-provided evidence.'},
+    derivative:{label:'SINDy derivative fit',evidence:'Finite-difference derivative estimates compared with derivatives reconstructed from the sparse coefficient matrix.'},
+    predicted:{label:'SINDy predicted vs derivative',evidence:'A pointwise comparison between estimated derivatives and the sparse model prediction. Agreement is conditional on derivative estimation and the candidate library.'},
+    residual_time:{label:'SINDy residuals over time',evidence:'Signed derivative residuals through time. Structure indicates model, library, noise or derivative-estimation mismatch.'},
+    residual_hist:{label:'SINDy residual distribution',evidence:'Empirical derivative residuals. A narrow histogram is not proof of mechanistic correctness.'},
+    error_heatmap:{label:'SINDy residual heatmap',evidence:'Absolute computed residual by time and state. This is not a PDE residual unless the supplied model and computation actually define one.'},
+    pareto:{label:'SINDy sparsity–error sweep',evidence:'A real STLSQ refit across thresholds, reporting active terms and fit RMSE. The highlighted knee is a heuristic model-selection aid.'},
+    coefficients:{label:'Sparse coefficient spectrum',evidence:'Nonzero coefficients from the current SINDy fit. Coefficient magnitude depends on scaling and does not by itself establish causal importance.'},
+    library_heatmap:{label:'Candidate-library correlation',evidence:'Pairwise correlations among evaluated candidate terms. Strong correlation warns of coefficient non-identifiability.'},
+    phase2d:{label:'2D state-space trajectory',evidence:'A projection of the observed trajectory onto two selected states. Projection geometry can hide higher-dimensional structure.'},
+    phase3d:{label:'3D state-space trajectory',evidence:'A three-state projection of the observed trajectory. It is descriptive, not a reconstructed attractor proof.'},
+    inverse_fit:{label:'Inverse fitted vs observed',evidence:'Observed trajectories compared with the known model structure simulated at the recovered positive parameters.'},
+    inverse_cost:{label:'Inverse optimization history',evidence:'Accepted and rejected Levenberg–Marquardt-style iterations and their residual cost. Convergence does not prove uniqueness or identifiability.'},
+    inverse_residual:{label:'Inverse residuals over time',evidence:'Signed fitted-minus-observed residuals from the recovered parameter vector.'},
+    surrogate_fit:{label:'Surrogate predicted vs reference',evidence:'A polynomial ridge surrogate fitted on the first 70% of the trajectory and evaluated on all points; the held-out region is marked.'},
+    surrogate_residual_time:{label:'Surrogate residuals over time',evidence:'Prediction minus reference for the modeled output. The train/test split is temporal and is not a universal validation design.'},
+    surrogate_residual_hist:{label:'Surrogate residual distribution',evidence:'Empirical surrogate errors, with training and held-out errors distinguishable through the reported split metrics.'},
+    pca_scores:{label:'Trajectory PCA scores',evidence:'Time points are projected onto the first two standardized principal components of the current state trajectory. This is descriptive input/result geometry, not neural training evidence.'},
+    pca_explained:{label:'Trajectory PCA explained variance',evidence:'Variance fractions summarize the standardized state trajectory. They are sample- and scaling-dependent and do not identify mechanisms.'},
+    pca_loadings:{label:'Trajectory PCA loadings',evidence:'Loadings show linear directions across state variables. Sign is arbitrary and magnitude is not causal importance.'}
+  };
+  window.FokoSciMLExamples = EXAMPLES;
+  window.FokoSciMLPlotMeta = PLOT_META;
+
+  const WORKFLOW_PLOTS = {
+    sindy:['trajectory','pareto','coefficients','derivative','predicted','residual_time','residual_hist','error_heatmap','library_heatmap','phase2d','phase3d'],
+    inverse:['inverse_fit','inverse_cost','inverse_residual'],
+    surrogate:['surrogate_fit','surrogate_residual_time','surrogate_residual_hist'],
+    assimilation:['reference_trajectory'],
+    pinn:['reference_trajectory'],
+    operator:['reference_trajectory'],
+    network:['reference_trajectory']
+  };
+  const STORAGE_KEY='fokolab:v72:sciml-session';
+  const LAYOUT_KEY='fokolab:v72:sciml-layout';
+  const PLOT_SIDES=['left','right'];
+  const SIDE_IDS={left:['sciPlot','sciPlotType','sciPlotLabel','sciPlotEvidence'],right:['sciPlot2','sciPlotType2','sciPlotLabel2','sciPlotEvidence2']};
+  const LAYOUTS=new Set(['two','focus']);
+
   let DATA=null, MODEL=null, ANALYSIS=null;
+  const VIEW={layout:'two',focusSide:'left',plotTypes:{left:'',right:''}};
 
   function n(id,fb){ const v=Number($(id)?.value); return Number.isFinite(v)?v:fb; }
   function set(id,val){ const el=$(id); if(el)el.value=String(val); }
@@ -84,10 +129,14 @@
   function layout3d(title,x,y,z){
     return {title:{text:title,font:{size:15}},margin:{l:0,r:0,t:50,b:0},paper_bgcolor:'rgba(0,0,0,0)',font:{family:'Inter, system-ui, sans-serif',size:12},scene:{xaxis:{title:x},yaxis:{title:y},zaxis:{title:z},bgcolor:'rgba(0,0,0,0)'}};
   }
-  function status(msg,bad=false){ const el=$('sciStatus'); if(el){el.textContent=msg;el.classList.toggle('bad',bad);} }
+  function status(msg,bad=false){ const el=$('sciStatus'); if(el){el.textContent=msg;el.classList.toggle('bad',bad);} if($('sciTopStatus')){$('sciTopStatus').textContent=bad?'Failed':msg.startsWith('Ready')?'Ready':msg.includes('export')?'Export only':'Computed';} }
   function hasMath(){ return !!(window.math && math.lusolve); }
-  function randn(){ let u=0,v=0; while(!u)u=Math.random(); while(!v)v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
-  function rk4(x,dt,f,p){ const add=(a,b,s)=>a.map((v,i)=>v+s*b[i]); const k1=f(x,p),k2=f(add(x,k1,dt/2),p),k3=f(add(x,k2,dt/2),p),k4=f(add(x,k3,dt),p); return x.map((v,i)=>v+dt*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6); }
+  function seededRandom(seed){ let a=(Number(seed)>>>0)||1; return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+  function randn(random){ let u=0,v=0; while(!u)u=random(); while(!v)v=random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+  function coreOdeStep(x,t,dt,f,p){
+    if(!window.FokoODECore || typeof window.FokoODECore.fixedStep!=='function') throw new Error('Canonical ODE core is unavailable.');
+    return window.FokoODECore.fixedStep(function(time,state,params){ return f(state,params,time); },'rk4',t,x,dt,p).y;
+  }
 
   function numberAttr(v){ return Number.isFinite(Number(v)) ? String(Number(v)) : '0'; }
   function paramRangeDefault(value){
@@ -127,9 +176,10 @@
   function buildDataFromCurrentInputs(){
     const e=ex(), d=e.defaults||{}, edited=readModelInputs();
     const m=Math.max(30,Math.min(800,Math.round(n('sciPoints',d.points||180)))), dt=Math.max(1e-4,n('sciDt',d.dt||.05)), noise=Math.max(0,n('sciNoise',0));
+    const seed=Math.max(0,Math.floor(n('sciSeed',202614)))>>>0, random=seededRandom(seed);
     const t=[], X=[]; let x=edited.x0.slice();
-    for(let i=0;i<m;i++){ t.push(i*dt); X.push(x.map(v=>v+noise*randn())); x=rk4(x,dt,e.rhs,edited.params).map(v=>Number.isFinite(v)?v:0); }
-    DATA={t,vars:e.vars.slice(),X,source:e.title,native:e.native,truth:e.truth.slice(),params:edited.params,paramRanges:edited.ranges,x0:edited.x0};
+    for(let i=0;i<m;i++){ t.push(i*dt); X.push(x.map(v=>v+noise*randn(random))); x=coreOdeStep(x,i*dt,dt,e.rhs,edited.params).map(v=>Number.isFinite(v)?v:0); }
+    DATA={t,vars:e.vars.slice(),X,source:e.title,native:e.native,truth:e.truth.slice(),params:edited.params,paramRanges:edited.ranges,x0:edited.x0,noiseSeed:seed,noiseAmplitude:noise};
     refreshPhaseSelectors();
     $('sciCsv').value=toCsv(DATA);
     MODEL=null; ANALYSIS=null;
@@ -144,20 +194,32 @@
     const controls=$('sciPhaseControls');
     if(controls) controls.hidden = !(k==='phase2d' || k==='phase3d');
   }
+  function exampleFormula(e){
+    const truth=Array.isArray(e.truth)?e.truth:[];
+    if(truth.length===e.vars.length){
+      return e.vars.map((v,i)=>v+"' = "+truth[i]).join('\n');
+    }
+    return (e.title||'SciML model')+'\n'+truth.join('\n');
+  }
 
   function loadExampleData(){
     const e=ex(), d=e.defaults||{};
-    set('sciPoints',d.points||180); set('sciDt',d.dt||.05); set('sciThreshold',d.threshold||.05); set('sciRidge',d.ridge||.0001); set('sciNoise',d.noise||0);
+    set('sciPoints',d.points||180); set('sciDt',d.dt||.05); set('sciThreshold',d.threshold||.05); set('sciRidge',d.ridge||.0001); set('sciNoise',d.noise||0); set('sciSeed',d.seed||202614);
     $('sciExampleTitle').textContent=e.title; $('sciAtlasKicker').textContent=e.atlas; describe();
+    if($('sciUserModel')){ $('sciUserModel').value=exampleFormula(e); renderUserLatex(); }
     populateModelInputs();
     const data=buildDataFromCurrentInputs();
-    renderMath([`\text{Loaded atlas data: } ${e.vars.join(', ')}`]);
+    renderMath([`\\text{Loaded atlas data: } ${e.vars.join(', ')}`]);
     $('sciDiagnostics').innerHTML='<p>'+esc(e.desc)+'</p>';
     status('Defaults restored. Edit initial conditions or parameters, then apply inputs.');
     updatePhaseControlVisibility();
-    drawPlot();
+    configurePlotSelectors();
+    updateRunSummary();
   }
-  function describe(){ $('sciExampleDescription').textContent = ex().desc + ' ' + (APPROACH[approach()]||''); }
+  function describe(){
+    if($('sciExampleDescription')) $('sciExampleDescription').textContent = ex().desc + ' ' + (APPROACH[approach()]||'');
+    configurePlotSelectors();
+  }
   function toCsv(data){ return [['t',...data.vars].join(',')].concat(data.t.map((tt,i)=>[tt,...data.X[i]].map(v=>Number(v).toPrecision(9)).join(','))).join('\n'); }
   function parseCsv(){
     const raw=String($('sciCsv')?.value||'').trim(); if(!raw)throw new Error('No CSV data.');
@@ -209,7 +271,7 @@
   function expr(c,T){ const p=[]; c.forEach((v,i)=>{ if(Math.abs(v)>1e-12){ const sign=v<0?'-':(p.length?'+':''); const mag=Math.abs(v); p.push(sign+(Math.abs(mag-1)<1e-12?'':mag.toPrecision(5)+'*')+T[i].name); }}); return p.join(' ')||'0'; }
   function predictDerivative(model){ return model.theta.map(row=>model.coeff.map(c=>row.reduce((s,v,k)=>s+v*c[k],0))); }
   function residuals(model){ const pred=predictDerivative(model); return model.xdot.map((row,i)=>row.map((v,j)=>v-pred[i][j])); }
-  function renderMath(lines){ const box=$('sciEquations'); box.innerHTML=''; lines.forEach(line=>{ const d=document.createElement('div'); d.className='sciml-math-line'; const latex=String(line).replace(/([A-Za-z]\w*)'/g,"$1^{\\prime}").replace(/\*/g,'\\cdot ').replace(/\^2/g,'^{2}').replace(/\^3/g,'^{3}'); if(window.katex){try{katex.render(latex,d,{displayMode:true,throwOnError:false});}catch(_){d.textContent=line;}} else d.textContent=line; box.appendChild(d); }); }
+  function renderMath(lines){ const box=$('sciEquations'); if(!box) throw new Error('SciML equation output host is unavailable.'); box.innerHTML=''; lines.forEach(line=>{ const d=document.createElement('div'); d.className='sciml-math-line'; const latex=String(line).replace(/([A-Za-z]\w*)'/g,"$1^{\\prime}").replace(/\*/g,'\\cdot ').replace(/\^2/g,'^{2}').replace(/\^3/g,'^{3}'); window.FokoMathRender.render(d,latex,{displayMode:true}); box.appendChild(d); }); }
   function table(html){ $('sciDiagnostics').innerHTML=html; }
 
   function thetaObjectToArray(obj,names){ return names.map(k=>Number(obj[k])); }
@@ -229,7 +291,8 @@
     const key=$('sciExample')?.value||'sir'; const spec=inverseSpec(key);
     if(!spec) return {exportOnly:true, message:'Inverse calibration for this example is export-only. Choose SIR, SEIR, logistic, Allee or Michaelis–Menten for browser calibration.'};
     const res=window.FokoInverse.calibrate({rhs:spec.rhs,x0:data.X[0],t:data.t,data:data.X,theta0:spec.theta0,mode:'fd',maxIter:80});
-    return {spec,res,thetaObject:arrayToObject(spec.names,res.theta),exportOnly:false};
+    const fitX=window.FokoInverse.simulateModel({rhs:spec.rhs,x0:data.X[0],t:data.t,theta:res.theta});
+    return {spec,res,fitX,thetaObject:arrayToObject(spec.names,res.theta),exportOnly:false};
   }
   function runSurrogateEngine(data){
     if(!window.FokoSurrogate) throw new Error('FokoSurrogate engine missing');
@@ -242,120 +305,319 @@
     return {model,pred,cvError:model.cvError,r2:ssTot?1-ssRes/ssTot:1,split,exportOnly:false};
   }
 
+  function title(a){ return {sindy:'Equation discovery / SINDy',surrogate:'Surrogate modeling / acceleration',inverse:'Inverse problem / parameter identification',assimilation:'Data assimilation',pinn:'PINN export scaffold',operator:'Neural-operator export scaffold',network:'Biological network ML scaffold'}[a]||'SciML analysis'; }
+  function compatiblePlots(){
+    const vars=activeVars();
+    let plots=(WORKFLOW_PLOTS[approach()]||['reference_trajectory']).slice();
+    plots=plots.filter(kind=>kind!=='phase2d'||vars.length>=2).filter(kind=>kind!=='phase3d'||vars.length>=3);
+    if(vars.length>=2 && ANALYSIS && ANALYSIS.pca) plots=plots.concat(['pca_scores','pca_explained','pca_loadings']);
+    return Array.from(new Set(plots));
+  }
+  function plotMeta(kind){ return PLOT_META[kind]||{label:kind,evidence:'Computed output from the current workflow.'}; }
+  function visibleSciSides(){
+    const grid=$('plotGrid');
+    if(!grid||grid.dataset.layout!=='focus')return ['left','right'];
+    return [VIEW.focusSide==='right'?'right':'left'];
+  }
+  function scheduleSciPlots(){
+    if(!DATA)return;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>visibleSciSides().forEach(drawPlotTo)));
+  }
+  function applyLayout(){
+    const grid=$('plotGrid'); if(!grid)return null;
+    if(!LAYOUTS.has(VIEW.layout)) VIEW.layout='two';
+    const count=Number(grid.dataset.compatibleCount||2);
+    const report=window.FokoLayoutStability.apply({
+      grid:grid,
+      preferred:VIEW.layout,
+      focus:VIEW.focusSide,
+      breakpoint: 1024,
+      compatibleCount:count
+    });
+    try{localStorage.setItem(LAYOUT_KEY,JSON.stringify({layout:VIEW.layout,focusSide:VIEW.focusSide}));}catch(_){}
+    scheduleSciPlots();
+    if(window.FokoScientificRegistry) window.FokoScientificRegistry.notifyRendered('sciml');
+    return report;
+  }
+  function configurePlotSelectors(){
+    const allowed=compatiblePlots();
+    const grid=$('plotGrid'); if(grid)grid.dataset.compatibleCount=String(Math.min(2,allowed.length));
+    const used=new Set();
+    PLOT_SIDES.forEach((side,index)=>{
+      const ids=SIDE_IDS[side], sel=$(ids[1]), card=document.querySelector(`[data-plot-card="${side}"]`);
+      const available=index<Math.min(2,allowed.length);
+      if(card)card.dataset.unavailable=available?'false':'true';
+      if(!sel)return;
+      sel.innerHTML=allowed.map(kind=>`<option value="${esc(kind)}">${esc(plotMeta(kind).label)}</option>`).join('');
+      let desired=VIEW.plotTypes[side];
+      if(!allowed.includes(desired) || used.has(desired)) desired=allowed.find(kind=>!used.has(kind))||allowed[0];
+      sel.value=desired||''; VIEW.plotTypes[side]=desired||''; if(desired)used.add(desired);
+    });
+    if($('sciAvailablePlots'))$('sciAvailablePlots').textContent=String(allowed.length);
+    if($('sciPlotHint'))$('sciPlotHint').textContent=allowed.length===1?'This workflow is export-only in the browser. The single visible plot is the reference input trajectory, not a trained-model result.':'Only plots supported by the current computed result are selectable.';
+    updatePhaseControlVisibility();
+    applyLayout();
+  
+  if(window.FokoScientificRegistry) window.FokoScientificRegistry.notifyOptionsChanged('sciml');
+}
   function runAnalysis(){
+    const started=(window.performance&&performance.now)?performance.now():Date.now();
     try{
-      const data=parseCsv(), a=approach(); MODEL=runSindy(data); ANALYSIS={approach:a, exportOnly:EXPORT_ONLY.has(a)};
-      if(a==='inverse') ANALYSIS.inverse=runInverseEngine(data);
-      if(a==='surrogate') ANALYSIS.surrogate=runSurrogateEngine(data);
-      const eqs=MODEL.vars.map((v,j)=>`${v}' = ${expr(MODEL.coeff[j],MODEL.terms)}`);
-      if(a==='sindy') renderMath(eqs);
-      else if(a==='inverse' && ANALYSIS.inverse && !ANALYSIS.inverse.exportOnly) renderMath([`\\text{Inverse calibration recovered parameters}`, ...Object.entries(ANALYSIS.inverse.thetaObject).map(([k,v])=>`${k} = ${Number(v).toPrecision(5)}`)]);
-      else if(a==='surrogate' && ANALYSIS.surrogate) renderMath([`\\text{Surrogate emulator fitted}`, `R^2_{heldout} = ${Number(ANALYSIS.surrogate.r2).toPrecision(4)}`, `CV\\ RMSE = ${Number(ANALYSIS.surrogate.cvError).toPrecision(4)}`]);
-      else renderMath([`\\text{${title(a)}}`, `\\text{Export-only: generated script, no fake browser training.}`]);
-      renderDiagnostics(MODEL,a); $('sciExport').value=exportScript(a); status(title(a)+(ANALYSIS.exportOnly?' export generated.':' completed.')); drawPlot();
+      const data=parseCsv(), a=approach(); MODEL=null; ANALYSIS={approach:a,exportOnly:EXPORT_ONLY.has(a)};
+      if(a==='sindy') MODEL=runSindy(data);
+      else if(a==='inverse'){ ANALYSIS.inverse=runInverseEngine(data); ANALYSIS.exportOnly=!!ANALYSIS.inverse.exportOnly; }
+      else if(a==='surrogate') ANALYSIS.surrogate=runSurrogateEngine(data);
+      if(PCA && data.vars.length>=2){
+        try{ ANALYSIS.pca=PCA.compute(data.X,{standardize:true,featureNames:data.vars}); }
+        catch(error){ ANALYSIS.pcaError=String(error.message||error); }
+      }
+      if(a==='sindy') renderMath(MODEL.vars.map((v,j)=>`${v}' = ${expr(MODEL.coeff[j],MODEL.terms)}`));
+      else if(a==='inverse' && ANALYSIS.inverse && !ANALYSIS.inverse.exportOnly) renderMath([`\\text{Recovered positive parameters}`, ...Object.entries(ANALYSIS.inverse.thetaObject).map(([k,v])=>`${k} = ${Number(v).toPrecision(5)}`)]);
+      else if(a==='surrogate' && ANALYSIS.surrogate) renderMath([`\\text{Polynomial ridge surrogate}`, `R^2_{heldout} = ${Number(ANALYSIS.surrogate.r2).toPrecision(4)}`, `CV\\ RMSE = ${Number(ANALYSIS.surrogate.cvError).toPrecision(4)}`]);
+      else renderMath([`\\text{${title(a)}}`, `\\text{Export-only: no browser neural training is claimed.}`]);
+      ANALYSIS.runtimeMs=((window.performance&&performance.now)?performance.now():Date.now())-started;
+      renderDiagnostics();
+      $('sciExport').value=exportScript(a);
+      configurePlotSelectors();
+      drawPlot();
+      updateRunSummary();
+      status(title(a)+(ANALYSIS.exportOnly?' export prepared.':' computed.'));
     }catch(e){showError(e);}
   }
-  function title(a){ return {sindy:'Equation discovery / SINDy',surrogate:'Surrogate modeling / acceleration',inverse:'Inverse problem / parameter identification',assimilation:'Data assimilation',pinn:'PINN / physics-constrained neural model',operator:'Neural operator surrogate',network:'Biological network ML scaffold'}[a]||'SciML analysis'; }
-  function renderDiagnostics(model,a){
-    const res=residuals(model), rows=model.vars.map((v,j)=>{ const r=res.map(x=>x[j]), mse=r.reduce((s,x)=>s+x*x,0)/r.length, max=Math.max(...r.map(Math.abs)), active=model.coeff[j].filter(c=>Math.abs(c)>1e-12).length; return `<tr><td>${esc(v)}</td><td>${active}</td><td>${mse.toExponential(3)}</td><td>${max.toExponential(3)}</td></tr>`; }).join('');
-    let extra='';
-    if(DATA?.x0){ extra += `<p><b>Initial conditions:</b> ${DATA.vars.map((v,i)=>`${esc(v)}₀=${Number(DATA.x0[i]).toPrecision(5)}`).join(', ')}</p>`; }
-    if(DATA?.params){ extra += `<p><b>Parameter values:</b> ${Object.entries(DATA.params).map(([k,v])=>`${esc(k)}=${Number(v).toPrecision(5)}`).join(', ')}</p>`; }
-    if(a==='inverse' && ANALYSIS?.inverse && !ANALYSIS.inverse.exportOnly){ extra=`<p><b>Recovered parameters:</b> ${Object.entries(ANALYSIS.inverse.thetaObject).map(([k,v])=>`${esc(k)}=${Number(v).toPrecision(5)}`).join(', ')} · final cost ${Number(ANALYSIS.inverse.res.finalCost).toExponential(3)}</p>`; }
-    if(a==='surrogate' && ANALYSIS?.surrogate){ extra=`<p><b>Surrogate:</b> held-out R² ${Number(ANALYSIS.surrogate.r2).toPrecision(4)} · CV RMSE ${Number(ANALYSIS.surrogate.cvError).toExponential(3)}</p>`; }
-    if(EXPORT_ONLY.has(a)) extra=`<p><b>Export-only.</b> This approach generates a rigorous Python scaffold instead of pretending to train a neural model in the browser.</p>`;
-    table(`${extra}<p>${esc(APPROACH[a]||'')}</p><table><thead><tr><th>state</th><th>active terms</th><th>residual MSE</th><th>max |residual|</th></tr></thead><tbody>${rows}</tbody></table>`);
+  function renderDiagnostics(){
+    const a=approach(); const box=$('sciDiagnostics'); if(!box)return;
+    box.classList.remove('empty');
+    if(a==='sindy' && MODEL){
+      const res=residuals(MODEL);
+      const rows=MODEL.vars.map((v,j)=>{const r=res.map(x=>x[j]),mse=r.reduce((q,x)=>q+x*x,0)/r.length,max=Math.max(...r.map(Math.abs)),active=MODEL.coeff[j].filter(c=>Math.abs(c)>1e-12).length;return `<tr><td>${esc(v)}</td><td>${active}</td><td>${mse.toExponential(3)}</td><td>${max.toExponential(3)}</td></tr>`;}).join('');
+      box.innerHTML=`<p><b>Derivative source:</b> centered finite differences · <b>threshold:</b> ${Number(MODEL.threshold).toPrecision(4)} · <b>ridge:</b> ${Number(MODEL.ridge).toExponential(2)}</p><table><thead><tr><th>state</th><th>active terms</th><th>residual MSE</th><th>max |residual|</th></tr></thead><tbody>${rows}</tbody></table><p>${esc(APPROACH[a])}</p>`;
+      return;
+    }
+    if(a==='inverse'){
+      const inv=ANALYSIS&&ANALYSIS.inverse;
+      if(!inv||inv.exportOnly){box.innerHTML=`<p><b>Export-only for this example.</b> ${esc(inv&&inv.message||'The selected inverse problem is not implemented in the bounded browser adapter.')}</p>`;return;}
+      const residual=flatten(inv.fitX.map((row,i)=>row.map((v,j)=>v-DATA.X[i][j]))); const rmse=Math.sqrt(residual.reduce((q,v)=>q+v*v,0)/Math.max(1,residual.length));
+      box.innerHTML=`<p><b>Recovered:</b> ${Object.entries(inv.thetaObject).map(([k,v])=>`${esc(k)}=${Number(v).toPrecision(5)}`).join(', ')}</p><p><b>Converged:</b> ${inv.res.converged?'yes':'no'} · <b>iterations:</b> ${inv.res.iterations} · <b>final cost:</b> ${Number(inv.res.finalCost).toExponential(3)} · <b>RMSE:</b> ${rmse.toExponential(3)}</p><p>Positive parameters are enforced by rejecting invalid trials. Convergence does not establish uniqueness, practical identifiability or structural identifiability.</p>`;
+      return;
+    }
+    if(a==='surrogate'){
+      const sur=ANALYSIS&&ANALYSIS.surrogate;
+      box.innerHTML=`<p><b>Model:</b> polynomial ridge surrogate of the first state as a function of time.</p><p><b>Temporal split:</b> ${sur.split} training points / ${DATA.t.length-sur.split} held-out points · <b>held-out R²:</b> ${Number(sur.r2).toPrecision(4)} · <b>5-fold CV RMSE:</b> ${Number(sur.cvError).toExponential(3)}</p><p>This reduced emulator is a browser diagnostic, not a validated replacement for a high-fidelity simulator.</p>`;
+      return;
+    }
+    box.innerHTML=`<p><b>Export-only workflow.</b> The browser preserves the input trajectory and generates a validation scaffold. No training loss, physics residual, operator error or speedup is fabricated.</p><p>${esc(APPROACH[a]||'')}</p>`;
   }
-  function modelJson(){ if(!MODEL)return {status:'No analysis yet'}; return {id:'sciml-discovered-model',name:'SciML discovered model',type:'ODE',family:'SciML',variables:MODEL.vars,parameters:(DATA?.params||{}), initialConditions:(DATA?.x0||[]), parameterRanges:(DATA?.paramRanges||{}), equations:MODEL.vars.map((v,j)=>expr(MODEL.coeff[j],MODEL.terms)),source:'Foko SciML Lab'}; }
-  function layout(title,x,y){ return {title:{text:title,font:{size:15}},xaxis:{title:x,zeroline:true,automargin:true},yaxis:{title:y,zeroline:true,automargin:true},margin:{l:64,r:34,t:50,b:76},legend:{orientation:'h',y:-.25},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'Inter, system-ui, sans-serif',size:12}}; }
+  function updateRunSummary(){
+    const a=approach(), exportOnly=!!(ANALYSIS&&ANALYSIS.exportOnly);
+    if($('sciRuntime'))$('sciRuntime').textContent=ANALYSIS?`${ANALYSIS.runtimeMs.toFixed(1)} ms`:'—';
+    if($('sciResultWorkflow'))$('sciResultWorkflow').textContent=title(a);
+    if($('sciResultExample'))$('sciResultExample').textContent=ex().title;
+    if($('sciResultStates'))$('sciResultStates').textContent=`${(DATA&&DATA.vars||ex().vars).length} states`;
+    if($('sciComputation'))$('sciComputation').textContent=exportOnly?'Export only':a==='sindy'?'Browser STLSQ':a==='inverse'?'Browser calibration':'Browser surrogate';
+    if($('sciResultKind'))$('sciResultKind').textContent=exportOnly?'Configuration and reference input only':`${title(a)} · browser-computed`;
+    if($('sciBoundaryStatus'))$('sciBoundaryStatus').textContent=exportOnly?'Export-only':'Browser-computed';
+    if($('sciBoundaryMethod'))$('sciBoundaryMethod').textContent=a==='sindy'?'STLSQ sparse regression':a==='inverse'?'Finite-difference calibration':a==='surrogate'?'Polynomial ridge + temporal hold-out':title(a);
+    if($('sciBoundaryData'))$('sciBoundaryData').textContent=`${DATA&&DATA.source||ex().title} · ${DATA&&DATA.t.length||0} rows · seed ${DATA&&DATA.noiseSeed!=null?DATA.noiseSeed:'uploaded'}`;
+    if($('sciBoundaryClaim'))$('sciBoundaryClaim').textContent=exportOnly?'No neural model was trained':a==='sindy'?'Sparse equation fit to estimated derivatives':a==='inverse'?'Parameter fit in a known model structure':'Reduced emulator validation';
+    if($('sciBoundaryText'))$('sciBoundaryText').textContent=exportOnly?'No training loss, residual field, operator accuracy or speedup is shown because no neural training occurred in the browser.':'Interpretation remains conditional on sampling, scaling, model structure, numerical settings and held-out validation.';
+    if($('sciWorkflowBoundary'))$('sciWorkflowBoundary').textContent=exportOnly?'This workflow is export-only. The browser shows only the reference trajectory and the generated external workflow.':APPROACH[a];
+  }
+  function modelJson(){
+    const data=DATA||buildDataFromCurrentInputs();
+    const out={id:'sciml-model',name:ex().title,type:'ODE/SciML',family:'SciML',workflow:approach(),variables:data.vars,parameters:data.params||{},initialConditions:data.x0||[],parameterRanges:data.paramRanges||{},source:'Foko SciML Lab v72.46.0',noiseSeed:data.noiseSeed,noiseAmplitude:data.noiseAmplitude};
+    if(MODEL)out.equations=MODEL.vars.map((v,j)=>expr(MODEL.coeff[j],MODEL.terms));
+    if(ANALYSIS&&ANALYSIS.inverse&&!ANALYSIS.inverse.exportOnly)out.recoveredParameters=ANALYSIS.inverse.thetaObject;
+    if(ANALYSIS&&ANALYSIS.surrogate)out.surrogate={degree:ANALYSIS.surrogate.model.degree,heldoutR2:ANALYSIS.surrogate.r2,cvRmse:ANALYSIS.surrogate.cvError};
+    return out;
+  }
+  function layout(titleText,x,y){ return {xaxis:{title:x,zeroline:true,automargin:true},yaxis:{title:y,zeroline:true,automargin:true},margin:{l:60,r:25,t:22,b:66},legend:{orientation:'h',y:-.22},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'Inter, system-ui, sans-serif',size:11},meta:{title:titleText}}; }
   function config(){ return {responsive:true,displaylogo:false,displayModeBar:'hover'}; }
-  function ensure(){ if(!MODEL)MODEL=runSindy(parseCsv()); return MODEL; }
   function flatten(a){ return a.reduce((x,y)=>x.concat(y),[]); }
-  function corr(a,b){ const ma=a.reduce((s,v)=>s+v,0)/a.length, mb=b.reduce((s,v)=>s+v,0)/b.length; let n=0,da=0,db=0; for(let i=0;i<a.length;i++){const x=a[i]-ma,y=b[i]-mb;n+=x*y;da+=x*x;db+=y*y;} return da&&db?n/Math.sqrt(da*db):0; }
-  function sciStats(){
-    const data=DATA||parseCsv();
-    const model=MODEL||runSindy(data);
-    return {data,model,pred:predictDerivative(model),res:residuals(model)};
-  }
-  function plotTitleFor(kind){
-    const sel=[...document.querySelectorAll('select')].find(s=>s.value===kind && s.selectedOptions[0]);
-    return sel?.selectedOptions[0]?.textContent || kind;
-  }
-  function drawPlotTo(targetId, selectId, labelId){
-    const box=$(targetId); if(!box||!window.Plotly)return;
+  function corr(a,b){ const ma=a.reduce((q,v)=>q+v,0)/a.length,mb=b.reduce((q,v)=>q+v,0)/b.length;let num=0,da=0,db=0;for(let i=0;i<a.length;i++){const x=a[i]-ma,y=b[i]-mb;num+=x*y;da+=x*x;db+=y*y;}return da&&db?num/Math.sqrt(da*db):0; }
+  function sciStats(){ if(!MODEL)throw new Error('Run SINDy before requesting a SINDy plot.'); return {data:DATA,model:MODEL,pred:predictDerivative(MODEL),res:residuals(MODEL)}; }
+  function drawPlotTo(side){
+    const ids=SIDE_IDS[side],box=$(ids[0]),sel=$(ids[1]),label=$(ids[2]),evidence=$(ids[3]); if(!box||!sel||!window.Plotly||box.offsetParent===null)return;
+    const kind=sel.value,meta=plotMeta(kind); if(label)label.textContent=meta.label; if(evidence)evidence.textContent=meta.evidence;
+    if(box.querySelector('.diagnostics.empty') || box.querySelector('.sciml-error')) box.innerHTML='';
     try{
-      if(selectId==='sciPlotType') updatePhaseControlVisibility();
-      const kind=$(selectId)?.value||'trajectory';
-      const {data,model:m,pred,res}=sciStats(); let traces=[], lay=layout(plotTitleFor(kind),'time','value');
-      const absRes=res.map(r=>r.map(v=>Math.abs(v)));
-      if(kind==='trajectory'||!MODEL){ traces=data.vars.map((v,j)=>({x:data.t,y:data.X.map(r=>r[j]),mode:'lines',name:v,line:{color:COLORS[j%COLORS.length]}})); lay=layout('Trajectory / observations','time','state'); }
-      else if(kind==='derivative'){ m.vars.forEach((v,j)=>{traces.push({x:m.data.t,y:m.xdot.map(r=>r[j]),mode:'lines',name:`${v}' finite diff`,line:{color:COLORS[j%COLORS.length]}});traces.push({x:m.data.t,y:pred.map(r=>r[j]),mode:'lines',name:`${v}' model`,line:{color:COLORS[(j+3)%COLORS.length],dash:'dash'}});}); lay=layout('Derivative fit','time','derivative'); }
-      else if(kind==='predicted'){ m.vars.forEach((v,j)=>traces.push({x:m.xdot.map(r=>r[j]),y:pred.map(r=>r[j]),mode:'markers',name:v,marker:{color:COLORS[j%COLORS.length],size:6,opacity:.72}})); const vals=flatten(traces.map(t=>t.x.concat(t.y))).filter(Number.isFinite), lo=Math.min(...vals), hi=Math.max(...vals); traces.push({x:[lo,hi],y:[lo,hi],mode:'lines',name:'ideal y=x',line:{dash:'dot',color:'#334155'}}); lay=layout('Predicted vs reference derivative','reference','prediction'); }
-      else if(kind==='pde_residual'||kind==='error_heatmap'){ traces=[{z:absRes,x:m.vars,y:m.data.t,type:'heatmap',colorscale:'Viridis',colorbar:{title:'|physics residual|'}}]; lay=layout('PDE residual field heatmap','state / space','time'); }
-      else if(kind==='pareto'){ const spec=librarySpec(); const grid=[0.001,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2]; const sweep=window.FokoSINDy.paretoSweep({X:m.data.X,t:m.data.t,varNames:m.vars,library:spec,ridge:m.ridge,lambdas:grid}); const pts=sweep.points, knee=pts[sweep.bestIndex]; traces=[{x:pts.map(p=>p.activeTerms),y:pts.map(p=>p.rmse),text:pts.map(p=>'λ='+p.lambda),mode:'lines+markers',name:'STLSQ refit sweep',line:{color:'#7e22ce',width:3}},{x:[knee.activeTerms],y:[knee.rmse],mode:'markers',name:'knee (λ='+knee.lambda+')',marker:{size:13,color:'#b45309'}}]; lay=layout('SINDy sparsity–accuracy trade-off (real STLSQ sweep)','active terms','fit RMSE'); lay.yaxis.type='log'; }
-      else if(kind==='phase_reconstruction'||kind==='phase2d'){ const ph=phaseIndices(); if(ph.vars.length<2) throw new Error('Need at least two state variables.'); traces=[{x:m.data.X.map(r=>r[ph.ix]),y:m.xdot.map(r=>r[ph.ix]),mode:'lines',name:'reference trajectory',line:{color:'#0e7c86'}},{x:m.data.X.map(r=>r[ph.ix]),y:pred.map(r=>r[ph.ix]),mode:'lines',name:'SciML prediction',line:{color:'#c2410c',dash:'dash'}}]; lay=layout('Observable space phase-portrait reconstruction',ph.vars[ph.ix],`d${ph.vars[ph.ix]}/dt`); }
-      else if(kind==='phase3d'){ const ph=phaseIndices(); if(ph.vars.length<3) throw new Error('Need at least three state variables.'); traces=[{x:m.data.X.map(r=>r[ph.ix]),y:m.data.X.map(r=>r[ph.iy]),z:m.data.X.map(r=>r[ph.iz]),type:'scatter3d',mode:'lines',name:'trajectory',line:{color:'#00AEEF',width:5}}]; lay=layout3d('3D phase portrait',ph.vars[ph.ix],ph.vars[ph.iy],ph.vars[ph.iz]); }
-      else if(kind==='residual_time'){ m.vars.forEach((v,j)=>traces.push({x:m.data.t,y:res.map(r=>r[j]),mode:'lines',name:v,line:{color:COLORS[j%COLORS.length]}})); lay=layout('Residuals over time','time','residual'); }
-      else if(kind==='residual_hist'){ m.vars.forEach((v,j)=>traces.push({x:res.map(r=>r[j]),type:'histogram',name:v,opacity:.65,marker:{color:COLORS[j%COLORS.length]}})); lay=layout('Pointwise error distribution','residual','count'); lay.barmode='overlay'; }
-      else if(kind==='coefficients'){ const y=[],x=[]; m.vars.forEach((v,j)=>m.terms.forEach((t,k)=>{if(Math.abs(m.coeff[j][k])>1e-12){y.push(`${v}: ${t.name}`);x.push(m.coeff[j][k]);}})); traces=[{x,y,type:'bar',orientation:'h',name:'coefficient',marker:{color:'#00B4A6'}}]; lay=layout('Sparse coefficient spectrum','coefficient','term'); lay.margin.l=175; }
-      else if(kind==='library_heatmap'){ const cols=m.terms.map((_,j)=>m.theta.map(r=>r[j])); traces=[{z:cols.map(a=>cols.map(b=>corr(a,b))),x:m.terms.map(t=>t.name),y:m.terms.map(t=>t.name),type:'heatmap',colorscale:'Cividis',colorbar:{title:'corr'}}]; lay=layout('Candidate-library heatmap','term','term'); lay.margin.b=120; }
-      if(labelId&&$(labelId)) $(labelId).textContent=plotTitleFor(kind);
-      Plotly.react(box,traces,lay,config());
-    }catch(e){ if(box)box.innerHTML=`<div class="sciml-error">${esc(e.message||e)}</div>`; }
+      const data=DATA||buildDataFromCurrentInputs(); let traces=[],lay=layout(meta.label,'time','value');
+      if(kind==='reference_trajectory'||kind==='trajectory'){
+        traces=data.vars.map((v,j)=>({x:data.t,y:data.X.map(r=>r[j]),mode:'lines',name:v,line:{color:COLORS[j%COLORS.length]}})); lay=layout(meta.label,'time','state');
+      } else if(kind.startsWith('pca_')){
+        const p=ANALYSIS&&ANALYSIS.pca; if(!p)throw new Error(ANALYSIS&&ANALYSIS.pcaError||'PCA requires at least two state variables.');
+        if(kind==='pca_scores'){
+          traces=[{x:p.scores.map(r=>r[0]),y:p.scores.map(r=>r[1]),mode:'markers+lines',name:'time-ordered scores',marker:{color:data.t,colorscale:'Viridis',showscale:true,colorbar:{title:'time'},size:6},line:{color:'rgba(15,118,110,.35)',width:1}}];
+          lay=layout(`${meta.label} · ${(100*p.explainedVarianceRatio[0]).toFixed(1)}% + ${(100*p.explainedVarianceRatio[1]).toFixed(1)}%`,'PC1 score','PC2 score');
+        } else if(kind==='pca_explained'){
+          const labels=p.explainedVarianceRatio.map((_,i)=>`PC${i+1}`);traces=[{x:labels,y:p.explainedVarianceRatio,type:'bar',name:'individual'},{x:labels,y:p.cumulativeExplained,mode:'lines+markers',name:'cumulative',yaxis:'y2'}];lay=layout(meta.label,'component','variance fraction');lay.yaxis.range=[0,1];lay.yaxis2={title:'cumulative',overlaying:'y',side:'right',range:[0,1]};
+        } else {
+          const count=Math.min(5,p.components.length);traces=[{z:p.components.slice(0,count),x:p.featureNames,y:Array.from({length:count},(_,i)=>`PC${i+1}`),type:'heatmap',colorscale:'RdBu',zmid:0,colorbar:{title:'loading'}}];lay=layout(meta.label,'state variable','component');
+        }
+      } else if(kind.startsWith('inverse_')){
+        const inv=ANALYSIS&&ANALYSIS.inverse; if(!inv||inv.exportOnly)throw new Error('No browser-computed inverse result is available for this example.');
+        if(kind==='inverse_fit'){
+          data.vars.forEach((v,j)=>{traces.push({x:data.t,y:data.X.map(r=>r[j]),mode:'markers',name:`${v} observed`,marker:{size:4,color:COLORS[j%COLORS.length],opacity:.55}});traces.push({x:data.t,y:inv.fitX.map(r=>r[j]),mode:'lines',name:`${v} fitted`,line:{width:2,color:COLORS[j%COLORS.length]}});}); lay=layout(meta.label,'time','state');
+        } else if(kind==='inverse_cost'){
+          const h=inv.res.history; traces=[{x:h.map((_,i)=>i+1),y:h.map(r=>Math.max(r.cost,1e-16)),mode:'lines+markers',name:'residual cost',marker:{color:h.map(r=>r.accepted?'#0f766e':'#b45309')}}]; lay=layout(meta.label,'iteration','cost'); lay.yaxis.type='log';
+        } else {
+          data.vars.forEach((v,j)=>traces.push({x:data.t,y:inv.fitX.map((r,i)=>r[j]-data.X[i][j]),mode:'lines',name:v,line:{color:COLORS[j%COLORS.length]}})); lay=layout(meta.label,'time','fitted − observed');
+        }
+      } else if(kind.startsWith('surrogate_')){
+        const sur=ANALYSIS&&ANALYSIS.surrogate; if(!sur)throw new Error('No browser-computed surrogate result is available.');
+        const ref=data.X.map(r=>r[0]),resid=sur.pred.map((v,i)=>v-ref[i]),splitTime=data.t[Math.min(sur.split,data.t.length-1)];
+        if(kind==='surrogate_fit'){
+          traces=[{x:data.t,y:ref,mode:'lines',name:`${data.vars[0]} reference`,line:{color:'#0f766e',width:3}},{x:data.t,y:sur.pred,mode:'lines',name:'surrogate',line:{color:'#1d4ed8',dash:'dash',width:2}}]; lay=layout(meta.label,'time',data.vars[0]); lay.shapes=[{type:'line',x0:splitTime,x1:splitTime,yref:'paper',y0:0,y1:1,line:{dash:'dot',color:'#b45309'}}]; lay.annotations=[{x:splitTime,y:1,yref:'paper',text:'held-out starts',showarrow:false,yanchor:'bottom'}];
+        } else if(kind==='surrogate_residual_time'){
+          traces=[{x:data.t,y:resid,mode:'lines',name:'prediction − reference',line:{color:'#b45309'}}]; lay=layout(meta.label,'time','residual'); lay.shapes=[{type:'line',x0:splitTime,x1:splitTime,yref:'paper',y0:0,y1:1,line:{dash:'dot',color:'#334155'}}];
+        } else {traces=[{x:resid.slice(0,sur.split),type:'histogram',name:'training',opacity:.65},{x:resid.slice(sur.split),type:'histogram',name:'held-out',opacity:.65}];lay=layout(meta.label,'residual','count');lay.barmode='overlay';}
+      } else {
+        const {model:m,pred,res}=sciStats(),absRes=res.map(r=>r.map(v=>Math.abs(v)));
+        if(kind==='derivative'){m.vars.forEach((v,j)=>{traces.push({x:m.data.t,y:m.xdot.map(r=>r[j]),mode:'lines',name:`${v}' estimate`,line:{color:COLORS[j%COLORS.length]}});traces.push({x:m.data.t,y:pred.map(r=>r[j]),mode:'lines',name:`${v}' sparse model`,line:{color:COLORS[(j+3)%COLORS.length],dash:'dash'}});});lay=layout(meta.label,'time','derivative');}
+        else if(kind==='predicted'){m.vars.forEach((v,j)=>traces.push({x:m.xdot.map(r=>r[j]),y:pred.map(r=>r[j]),mode:'markers',name:v,marker:{color:COLORS[j%COLORS.length],size:5,opacity:.65}}));const vals=flatten(traces.map(t=>t.x.concat(t.y))).filter(Number.isFinite),lo=Math.min(...vals),hi=Math.max(...vals);traces.push({x:[lo,hi],y:[lo,hi],mode:'lines',name:'ideal y=x',line:{dash:'dot',color:'#334155'}});lay=layout(meta.label,'estimated derivative','sparse-model derivative');}
+        else if(kind==='error_heatmap'){traces=[{z:absRes,x:m.vars,y:m.data.t,type:'heatmap',colorscale:'Cividis',colorbar:{title:'|residual|'}}];lay=layout(meta.label,'state','time');}
+        else if(kind==='pareto'){const grid=[0.001,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1,2],sweep=window.FokoSINDy.paretoSweep({X:m.data.X,t:m.data.t,varNames:m.vars,library:librarySpec(),ridge:m.ridge,lambdas:grid}),pts=sweep.points,knee=pts[sweep.bestIndex];traces=[{x:pts.map(p=>p.activeTerms),y:pts.map(p=>p.rmse),text:pts.map(p=>'λ='+p.lambda),mode:'lines+markers',name:'STLSQ refit sweep',line:{color:'#155eef',width:3}},{x:[knee.activeTerms],y:[knee.rmse],mode:'markers',name:'heuristic knee',marker:{size:12,color:'#b45309'}}];lay=layout(meta.label,'active terms','fit RMSE');lay.yaxis.type='log';}
+        else if(kind==='phase2d'){const ph=phaseIndices();if(ph.vars.length<2)throw new Error('Need at least two state variables.');traces=[{x:data.X.map(r=>r[ph.ix]),y:data.X.map(r=>r[ph.iy]),mode:'lines',name:`${ph.vars[ph.ix]} vs ${ph.vars[ph.iy]}`,line:{color:'#0f766e'}}];lay=layout(meta.label,ph.vars[ph.ix],ph.vars[ph.iy]);}
+        else if(kind==='phase3d'){const ph=phaseIndices();if(ph.vars.length<3)throw new Error('Need at least three state variables.');traces=[{x:data.X.map(r=>r[ph.ix]),y:data.X.map(r=>r[ph.iy]),z:data.X.map(r=>r[ph.iz]),type:'scatter3d',mode:'lines',name:'trajectory',line:{color:'#155eef',width:5}}];lay=layout3d(meta.label,ph.vars[ph.ix],ph.vars[ph.iy],ph.vars[ph.iz]);}
+        else if(kind==='residual_time'){m.vars.forEach((v,j)=>traces.push({x:m.data.t,y:res.map(r=>r[j]),mode:'lines',name:v,line:{color:COLORS[j%COLORS.length]}}));lay=layout(meta.label,'time','residual');}
+        else if(kind==='residual_hist'){m.vars.forEach((v,j)=>traces.push({x:res.map(r=>r[j]),type:'histogram',name:v,opacity:.65,marker:{color:COLORS[j%COLORS.length]}}));lay=layout(meta.label,'residual','count');lay.barmode='overlay';}
+        else if(kind==='coefficients'){const y=[],x=[];m.vars.forEach((v,j)=>m.terms.forEach((t,k)=>{if(Math.abs(m.coeff[j][k])>1e-12){y.push(`${v}: ${t.name}`);x.push(m.coeff[j][k]);}}));traces=[{x,y,type:'bar',orientation:'h',name:'coefficient',marker:{color:'#0f766e'}}];lay=layout(meta.label,'coefficient','term');lay.margin.l=155;}
+        else if(kind==='library_heatmap'){const cols=m.terms.map((_,j)=>m.theta.map(r=>r[j]));traces=[{z:cols.map(a=>cols.map(b=>corr(a,b))),x:m.terms.map(t=>t.name),y:m.terms.map(t=>t.name),type:'heatmap',colorscale:'Cividis',zmin:-1,zmax:1,colorbar:{title:'corr'}}];lay=layout(meta.label,'term','term');lay.margin.b=105;}
+      }
+      return PLOT.render(box,traces,lay,config()).then(outcome=>{
+        if(outcome&&outcome.error){const message=outcome.error.message||outcome.error;box.innerHTML=`<div class="sciml-error">${esc(message)}</div>`;PLOT.setState(box,'failed',false);}
+        return outcome;
+      });
+    }catch(e){box.innerHTML=`<div class="sciml-error">${esc(e.message||e)}</div>`;PLOT.setState(box,'failed',false);return Promise.resolve({error:e});}
   }
-  function drawPlot(){
-    drawPlotTo('sciPlot','sciPlotType','sciPlotLabel');
-    drawPlotTo('sciPlot2','sciPlotType2','sciPlotLabel2');
-    drawPlotTo('sciPlot3','sciPlotType3','sciPlotLabel3');
-    if($('sciResultWorkflow')) $('sciResultWorkflow').textContent=title(approach());
-    if($('sciResultExample')) $('sciResultExample').textContent=ex().title;
-    if($('sciResultStates')) $('sciResultStates').textContent=(DATA?.vars||ex().vars).length+' states';
-  }
-  function exportScript(a=approach()){ const vars=(DATA?.vars)||ex().vars, csv=$('sciCsv')?.value||''; const common=`# Generated by Foko SciML Lab v68\n# Selected modeling problem: ${title(a)}\n`; if(a==='sindy')return common+`# pip install pysindy pandas numpy matplotlib scikit-learn\nimport io, pandas as pd, numpy as np, pysindy as ps\ncsv_data=${JSON.stringify(csv)}\ndf=pd.read_csv(io.StringIO(csv_data)); t=df.iloc[:,0].to_numpy(); X=df[${JSON.stringify(vars)}].to_numpy()\ndt=float(np.median(np.diff(t)))\nmodel=ps.SINDy(feature_library=ps.PolynomialLibrary(degree=3,include_interaction=True), optimizer=ps.STLSQ(threshold=${n('sciThreshold',.05)}, alpha=${n('sciRidge',1e-4)}), feature_names=${JSON.stringify(vars)})\nmodel.fit(X,t=dt); model.print()\n`; if(a==='surrogate')return common+`# scikit-learn surrogate validation: train/test split, predicted-vs-reference, residuals, error histogram.\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import Ridge\nfrom sklearn.gaussian_process import GaussianProcessRegressor\n# Fit emulator to expensive solver outputs, then plot y_pred vs y_ref and residuals.\n`; if(a==='inverse')return common+`# scipy least_squares inverse problem scaffold: infer hidden ODE parameters from sparse observations.\nfrom scipy.integrate import solve_ivp\nfrom scipy.optimize import least_squares\n# Define rhs(t,y,theta), residual(theta), then inspect fitted trajectory and residual plots.\n`; if(a==='assimilation')return common+`# Data assimilation scaffold: forecast + observation update.\n# Replace with EnKF/UKF/particle filter. Plot innovation sequence and analysis residuals.\n`; if(a==='pinn')return common+`# PyTorch PINN scaffold. Train outside browser. Plot train/validation loss, physics residual, predicted-vs-reference and error heatmap.\nimport torch, torch.nn as nn\nclass MLP(nn.Module):\n    def __init__(self,width=64,depth=4,out_dim=1):\n        super().__init__(); layers=[nn.Linear(1,width),nn.Tanh()]\n        for _ in range(depth-1): layers += [nn.Linear(width,width),nn.Tanh()]\n        layers += [nn.Linear(width,out_dim)]; self.net=nn.Sequential(*layers)\n    def forward(self,t): return self.net(t)\n`; if(a==='operator')return common+`# Neural-operator scaffold: train field-to-field surrogate outside the browser.\n# Suggested stack: PyTorch + neuraloperator / JAX. Validate with x-t error heatmaps and cross-validation residuals.\n`; return common+`# Biological network ML scaffold: graph/omics features, GNN templates, pathway-level interpretation and SBML/BioNetGen export hooks.\n`; }
+  function drawPlot(){ configurePlotSelectors(); scheduleSciPlots(); }
+  function exportScript(a=approach()){ const vars=(DATA?.vars)||ex().vars, csv=$('sciCsv')?.value||''; const common=`# Generated by Foko SciML Lab\n# Selected modeling problem: ${title(a)}\n`; if(a==='sindy')return common+`# pip install pysindy pandas numpy matplotlib scikit-learn\nimport io, pandas as pd, numpy as np, pysindy as ps\ncsv_data=${JSON.stringify(csv)}\ndf=pd.read_csv(io.StringIO(csv_data)); t=df.iloc[:,0].to_numpy(); X=df[${JSON.stringify(vars)}].to_numpy()\ndt=float(np.median(np.diff(t)))\nmodel=ps.SINDy(feature_library=ps.PolynomialLibrary(degree=3,include_interaction=True), optimizer=ps.STLSQ(threshold=${n('sciThreshold',.05)}, alpha=${n('sciRidge',1e-4)}), feature_names=${JSON.stringify(vars)})\nmodel.fit(X,t=dt); model.print()\n`; if(a==='surrogate')return common+`# scikit-learn surrogate validation: train/test split, predicted-vs-reference, residuals, error histogram.\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import Ridge\nfrom sklearn.gaussian_process import GaussianProcessRegressor\n# Fit emulator to expensive solver outputs, then plot y_pred vs y_ref and residuals.\n`; if(a==='inverse')return common+`# scipy least_squares inverse problem scaffold: infer hidden ODE parameters from sparse observations.\nfrom scipy.integrate import solve_ivp\nfrom scipy.optimize import least_squares\n# Define rhs(t,y,theta), residual(theta), then inspect fitted trajectory and residual plots.\n`; if(a==='assimilation')return common+`# Data assimilation scaffold: forecast + observation update.\n# Replace with EnKF/UKF/particle filter. Plot innovation sequence and analysis residuals.\n`; if(a==='pinn')return common+`# PyTorch PINN scaffold. Train outside browser. Plot train/validation loss, physics residual, predicted-vs-reference and error heatmap.\nimport torch, torch.nn as nn\nclass MLP(nn.Module):\n    def __init__(self,width=64,depth=4,out_dim=1):\n        super().__init__(); layers=[nn.Linear(1,width),nn.Tanh()]\n        for _ in range(depth-1): layers += [nn.Linear(width,width),nn.Tanh()]\n        layers += [nn.Linear(width,out_dim)]; self.net=nn.Sequential(*layers)\n    def forward(self,t): return self.net(t)\n`; if(a==='operator')return common+`# Neural-operator scaffold: train field-to-field surrogate outside the browser.\n# Suggested stack: PyTorch + neuraloperator / JAX. Validate with x-t error heatmaps and cross-validation residuals.\n`; return common+`# Biological network ML scaffold: graph/omics features, GNN templates, pathway-level interpretation and SBML/BioNetGen export hooks.\n`; }
   async function copy(text,msg){ try{await navigator.clipboard.writeText(text);status(msg);}catch(_){$('sciExport').value=text;$('sciExport').focus();$('sciExport').select();status('Select/copy from export box.');} }
   function showError(e){ status(String(e.message||e),true); $('sciEquations').innerHTML=`<div class="sciml-error">${esc(e.message||e)}</div>`; }
 
   function renderUserLatex(){
-    const src=String($('sciUserModel')?.value||'').trim() || 'y = f(x, \theta)';
+    const src=String($('sciUserModel')?.value||'').trim() || 'y = f(x, \\theta)';
     const latex=src.split(/\n+/).slice(0,4).map(line=>line.replace(/~/g,'\\sim').replace(/\*/g,'\\cdot ').replace(/_/g,'\\_')).join('\\\\');
     const box=$('sciLatexPreview'); if(!box)return;
-    if(window.katex){ try{katex.render('\\begin{aligned}'+latex+'\\end{aligned}',box,{displayMode:true,throwOnError:false}); return;}catch(_){}}
+    if(window.FokoMathRender.render(box,'\\begin{aligned}'+latex+'\\end{aligned}',{displayMode:true})) return;
     box.textContent=src;
   }
   function wireSciUpload(){
     const input=$('sciUploadDataFile'); if(!input)return;
     input.addEventListener('change',()=>{ const file=input.files&&input.files[0]; if(!file)return; const r=new FileReader(); r.onload=()=>{ const txt=String(r.result||''); if(/\.(json|yaml|yml|txt|dat|matrix|edges)$/i.test(file.name) && $('sciUserModel')) $('sciUserModel').value=txt.slice(0,4000); if($('sciCsv')) $('sciCsv').value=txt; renderUserLatex(); try{parseCsv(); MODEL=null; runAnalysis(); status('Uploaded '+file.name+' and recomputed diagnostics.');}catch(e){ status('Uploaded '+file.name+'. Paste/format as CSV for browser diagnostics, or export the scaffold.', false); drawPlot(); } }; r.readAsText(file); });
   }
-  function wireSciTabs(){ document.querySelectorAll('[data-sci-focus]').forEach(btn=>btn.addEventListener('click',()=>{ document.querySelectorAll('.sciml-cockpit-tabs button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const el=$(btn.dataset.sciFocus); if(el){ el.scrollIntoView({block:'center',behavior:'smooth'}); setTimeout(()=>{try{el.focus();}catch(_){}} ,180); }})); }
+  function encodeState(value){
+    const bytes=new TextEncoder().encode(JSON.stringify(value));
+    let binary=''; bytes.forEach(b=>binary+=String.fromCharCode(b));
+    return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  function decodeState(value){
+    const raw=String(value||'').replace(/-/g,'+').replace(/_/g,'/');
+    const binary=atob(raw+'==='.slice((raw.length+3)%4));
+    return JSON.parse(new TextDecoder().decode(Uint8Array.from(binary,c=>c.charCodeAt(0))));
+  }
+  function currentConfig(){
+    return {
+      schema:'fokolab-sciml-config-v1', version:'72.46.0',
+      example:$('sciExample')?.value||'logistic', approach:approach(),
+      settings:{points:n('sciPoints',180),dt:n('sciDt',.05),noise:n('sciNoise',0),seed:Math.max(0,Math.floor(n('sciSeed',202614)))>>>0,threshold:n('sciThreshold',.05),ridge:n('sciRidge',1e-4),iterations:n('sciIterations',8)},
+      modelText:$('sciUserModel')?.value||'', csv:$('sciCsv')?.value||'',
+      modelInputs:readModelInputs(), library:librarySpec(),
+      view:{layout:VIEW.layout,focusSide:VIEW.focusSide,plotTypes:Object.assign({},VIEW.plotTypes)}
+    };
+  }
+  function applyModelInputConfig(config){
+    const mi=config&&config.modelInputs; if(!mi)return;
+    document.querySelectorAll('.sci-x0').forEach((el,i)=>{if(Number.isFinite(Number(mi.x0?.[i])))el.value=String(mi.x0[i]);});
+    document.querySelectorAll('.sci-param-row').forEach(row=>{
+      const key=row.dataset.param, value=mi.params&&mi.params[key], range=mi.ranges&&mi.ranges[key];
+      if(Number.isFinite(Number(value)))row.querySelector('.sci-param-value').value=String(value);
+      if(range&&Number.isFinite(Number(range.min)))row.querySelector('.sci-param-min').value=String(range.min);
+      if(range&&Number.isFinite(Number(range.max)))row.querySelector('.sci-param-max').value=String(range.max);
+    });
+  }
+  function applyConfig(config,{compute=true}={}){
+    if(!config||typeof config!=='object')throw new Error('Invalid SciML configuration.');
+    if(config.example&&EXAMPLES[config.example])$('sciExample').value=config.example;
+    if(config.approach&&APPROACH[config.approach])$('sciApproach').value=config.approach;
+    loadExampleData();
+    const st=config.settings||{};
+    [['sciPoints','points'],['sciDt','dt'],['sciNoise','noise'],['sciSeed','seed'],['sciThreshold','threshold'],['sciRidge','ridge'],['sciIterations','iterations']].forEach(([id,key])=>{if(Number.isFinite(Number(st[key])))set(id,st[key]);});
+    if(typeof config.modelText==='string')$('sciUserModel').value=config.modelText;
+    applyModelInputConfig(config);
+    if(typeof config.csv==='string'&&config.csv.trim())$('sciCsv').value=config.csv;
+    const lib=config.library||{};
+    [['libConstant','constant'],['libLinear','linear'],['libQuadratic','quadratic'],['libInteractions','interactions'],['libCubic','cubic'],['libTrig','trig']].forEach(([id,key])=>{if(typeof lib[key]==='boolean')$(id).checked=lib[key];});
+    const v=config.view||{};
+    if(LAYOUTS.has(v.layout))VIEW.layout=v.layout;
+    if(PLOT_SIDES.includes(v.focusSide))VIEW.focusSide=v.focusSide;
+    if(v.plotTypes&&typeof v.plotTypes==='object')PLOT_SIDES.forEach(side=>{if(typeof v.plotTypes[side]==='string')VIEW.plotTypes[side]=v.plotTypes[side];});
+    renderUserLatex(); describe();
+    if(compute)runAnalysis(); else configurePlotSelectors();
+  }
+  function saveSession(){
+    try{localStorage.setItem(STORAGE_KEY,JSON.stringify(currentConfig()));status('SciML configuration saved locally.');}
+    catch(e){showError(new Error('Could not save the local SciML configuration.'));}
+  }
+  function restoreSession(){
+    try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)throw new Error('No saved SciML configuration was found.');applyConfig(JSON.parse(raw));status('Saved SciML configuration restored and recomputed.');}
+    catch(e){showError(e);}
+  }
+  async function copyShareUrl(){
+    try{const url=new URL(location.href);url.search='';url.searchParams.set('state',encodeState(currentConfig()));await copy(url.toString(),'Share URL copied. Configuration only; results recompute on load.');}
+    catch(e){showError(e);}
+  }
+  function exportPlot(side,format){
+    const ids=SIDE_IDS[side]||SIDE_IDS.left, box=$(ids[0]);
+    if(!box||!box.data||!box.data.length){showError(new Error('No computed plot is available for export.'));return;}
+    const kind=$(ids[1])?.value||'sciml';
+    Plotly.downloadImage(box,{format,filename:`fokolab-sciml-${kind}`,width:1400,height:900,scale:1});
+  }
+  function plotSelectionChanged(side){
+    const ids=SIDE_IDS[side],sel=$(ids[1]); if(!sel)return;
+    const requested=sel.value,old=VIEW.plotTypes[side];
+    const other=PLOT_SIDES.find(candidate=>candidate!==side&&VIEW.plotTypes[candidate]===requested);
+    if(other&&old&&old!==requested){const otherIds=SIDE_IDS[other];VIEW.plotTypes[other]=old;const otherSelect=$(otherIds[1]);if(otherSelect)otherSelect.value=old;}
+    VIEW.plotTypes[side]=requested;sel.value=requested;
+    updatePhaseControlVisibility(); scheduleSciPlots();
+  }
   function bind(){
-    $('sciExample')?.addEventListener('change',()=>{loadExampleData(); runAnalysis();});
-    $('sciApproach')?.addEventListener('change',()=>{describe(); if(DATA)runAnalysis(); else $('sciExport').value=exportScript();});
-    $('sciPlotType')?.addEventListener('change',drawPlot);
-    $('sciPlotType2')?.addEventListener('change',drawPlot);
-    $('sciPlotType3')?.addEventListener('change',drawPlot);
+    $('sciExample')?.addEventListener('change',()=>{loadExampleData();runAnalysis();});
+    $('sciApproach')?.addEventListener('change',()=>{describe();runAnalysis();});
+    PLOT_SIDES.forEach(side=>{const ids=SIDE_IDS[side];$(ids[1])?.addEventListener('change',()=>plotSelectionChanged(side));});
+    document.querySelectorAll('[data-layout-mode]').forEach(btn=>btn.addEventListener('click',()=>{VIEW.layout=btn.dataset.layoutMode;applyLayout();}));
+    document.querySelectorAll('.focus-card[data-focus-side]').forEach(btn=>btn.addEventListener('click',()=>{VIEW.focusSide=btn.dataset.focusSide;VIEW.layout='focus';applyLayout();}));
+    document.querySelectorAll('[data-export-side]').forEach(btn=>btn.addEventListener('click',()=>exportPlot(btn.dataset.exportSide,'svg')));
+    document.querySelectorAll('[data-jump]').forEach(btn=>btn.addEventListener('click',()=>document.querySelector(btn.dataset.jump)?.scrollIntoView({behavior:'smooth',block:'start'})));
     $('sciUserModel')?.addEventListener('input',renderUserLatex);
     wireSciUpload();
-    wireSciTabs();
-    ['sciPhaseX','sciPhaseY','sciPhaseZ'].forEach(id=>$(id)?.addEventListener('change',drawPlot));
-    $('sciResetExample')?.addEventListener('click',()=>{loadExampleData(); runAnalysis();});
+    ['sciPhaseX','sciPhaseY','sciPhaseZ'].forEach(id=>$(id)?.addEventListener('change',scheduleSciPlots));
+    ['libConstant','libLinear','libQuadratic','libInteractions','libCubic','libTrig'].forEach(id=>$(id)?.addEventListener('change',()=>{MODEL=null;status('Candidate library changed. Run analysis to recompute SINDy.');}));
+    $('sciResetExample')?.addEventListener('click',()=>{loadExampleData();runAnalysis();});
     $('sciRunAnalysis')?.addEventListener('click',applyInputsAndAnalyze);
-        $('sciReadCsv')?.addEventListener('click',()=>{try{parseCsv();MODEL=null;status('CSV read. Run analysis next.');drawPlot();}catch(e){showError(e);}});
+    $('sciReadCsv')?.addEventListener('click',()=>{try{parseCsv();MODEL=null;ANALYSIS=null;status('CSV read. Run analysis to compute new evidence.');configurePlotSelectors();}catch(e){showError(e);}});
     $('sciCopyCsv')?.addEventListener('click',()=>copy($('sciCsv').value,'CSV copied.'));
     $('sciCopyJson')?.addEventListener('click',()=>copy(JSON.stringify(modelJson(),null,2),'Model JSON copied.'));
-    $('sciGenerateExport')?.addEventListener('click',()=>{$('sciExport').value=exportScript();status('Export generated for selected modeling problem.');});
+    $('sciGenerateExport')?.addEventListener('click',()=>{$('sciExport').value=exportScript();status('External validation export generated.');});
     $('sciCopyExport')?.addEventListener('click',()=>copy($('sciExport').value,'Export copied.'));
     $('sciOpenNativeModel')?.addEventListener('click',()=>{location.href=ex().native;});
+    window.addEventListener('resize',applyLayout);
+    $('saveSciSession')?.addEventListener('click',saveSession);
+    $('restoreSciSession')?.addEventListener('click',restoreSession);
+    $('copySciShareUrl')?.addEventListener('click',copyShareUrl);
+    $('exportSciPng')?.addEventListener('click',()=>exportPlot(VIEW.focusSide||'left','png'));
+    $('exportSciSvg')?.addEventListener('click',()=>exportPlot(VIEW.focusSide||'left','svg'));
   }
-  function fromUrl(){ const p=new URLSearchParams(location.search), e=p.get('example'), a=p.get('approach')||p.get('workflow'); if(e&&EXAMPLES[e])$('sciExample').value=e; if(a&&APPROACH[a])$('sciApproach').value=a; }
-  function init(){ bind(); fromUrl(); loadExampleData(); renderUserLatex(); runAnalysis(); }
+  function fromUrl(){
+    const p=new URLSearchParams(location.search),state=p.get('state');
+    if(state){try{return decodeState(state);}catch(e){status('Shared configuration could not be decoded.',true);}}
+    const e=p.get('example'),a=p.get('approach')||p.get('workflow');
+    return {example:e&&EXAMPLES[e]?e:'logistic',approach:a&&APPROACH[a]?a:'sindy'};
+  }
+  function init(){
+    try{const saved=JSON.parse(localStorage.getItem(LAYOUT_KEY)||'null');if(saved&&LAYOUTS.has(saved.layout))VIEW.layout=saved.layout;if(saved&&PLOT_SIDES.includes(saved.focusSide))VIEW.focusSide=saved.focusSide;}catch(_){}
+    bind();
+    const config=fromUrl();
+    applyConfig(config);
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init();
 })();
-/* v71.45 legacy diagnostic labels retained for tests:
-Training / validation / physics loss template
-Predicted vs reference derivative
-Spatial / temporal absolute error heatmap
-Pointwise error distribution
-Cross-validation residuals
-Sparse coefficient spectrum
-Candidate-library heatmap
-*/

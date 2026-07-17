@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab Sensitivity Analysis Lab computes local finite-difference, Morris, Sobol/Jansen and Fisher-information diagnostics for editable browser-scale ODE models." name="description"/>
+<meta content="Foko Lab Sensitivity Analysis Lab" property="og:title"/>
+<meta content="Browser-computed sensitivity diagnostics with editable equations, initial conditions, parameter ranges, time span and solver tolerances." property="og:description"/>
+<meta content="website" property="og:type"/>
+<title>Sensitivity Analysis Lab · Foko Lab</title>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.46.0" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.46.0"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.46.0"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.46.0"></script>
+<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=72.46.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.46.0"></script></head>
+<body data-lab="sensitivity" data-v72-shell="true" data-version="72.46.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<div class="app-shell">
+<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.46.0" width="190"/></a>
+<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
+<a class="nav-home-link" href="index.html">Home</a>
+<details class="labs-menu nav-menu" data-nav-menu="modeling">
+<summary class="labs-summary">Modeling</summary>
+<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
+<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
+<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
+<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
+<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
+<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Rules and search</p>
+<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
+<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
+<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="analysis">
+<summary class="labs-summary">Data / Analysis</summary>
+<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
+<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
+<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
+<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="sciml">
+<summary class="labs-summary">SciML</summary>
+<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
+<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
+<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
+<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="explore">
+<summary class="labs-summary">Explore</summary>
+<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
+<div class="menu-section"><p class="menu-section-title">Find and learn</p>
+<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
+<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
+<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
+<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
+<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
+<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
+<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
+</div>
+</div>
+</details>
+<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
+</nav>
+<div aria-label="Display controls" class="foko-top-actions"></div>
+</header>
+<main class="layout" id="workbench" tabindex="-1">
+<aside aria-label="Sensitivity workflow" class="side-nav">
+<button class="nav-item active" data-jump="modelBlock" type="button"><span>∂</span><b>Model</b></button>
+<button class="nav-item" data-jump="numericsBlock" type="button"><span>Δ</span><b>Inputs</b></button>
+<button class="nav-item" data-jump="methodBlock" type="button"><span>S</span><b>Method</b></button>
+<button class="nav-item" data-jump="scopeBlock" type="button"><span>!</span><b>Limits</b></button>
+<button class="nav-item" data-jump="exportsBlock" type="button"><span>⇩</span><b>Export</b></button>
+</aside>
+<aside aria-label="Sensitivity controls" class="work-panel controls">
+<section class="intro-card hero-with-mark">
+<div><p class="v72-eyebrow">Local Jacobians · OFAT · Morris · Sobol/Jansen · dependence screening · Fisher information</p><h2>Sensitivity Analysis Lab</h2><p class="note">Change equations, initial conditions, parameter values and ranges, time span, output metric, solver and tolerances before running.</p></div><div aria-hidden="true" class="lab-mark data-lab-mark">∂S</div>
+</section>
+<section aria-label="Run controls" class="actionbar">
+<button class="primary run-button" id="runSensitivity" type="button">Run analysis</button>
+<button class="secondary" disabled="" id="cancelSensitivity" type="button">Cancel</button>
+<button class="ghost" id="resetSensitivity" type="button">Reset example</button>
+<label class="ghost file-label"><input accept="application/json,.json" hidden="" id="sensitivityImport" type="file"/>Import JSON</label>
+<div aria-hidden="true" class="progress"><div id="sensitivityProgress"></div></div>
+<div class="status" id="sensitivityStatus" role="status">Ready. No sensitivity result has been computed.</div>
+</section>
+<section class="examples-section" id="examplesBlock">
+<div class="section-title"><h2>Curated model</h2><button class="secondary subtle" id="loadSensitivity" type="button">Load selected</button></div>
+<select aria-label="Sensitivity example" id="sensitivitySelect"></select>
+<div class="model-deck" id="sensitivityDeck"></div>
+<p class="note" id="sensitivityNarrative"></p>
+</section>
+<section class="control-section" id="modelBlock">
+<div class="section-title"><h2>Editable ODE model</h2><button class="secondary subtle" id="addSensitivityState" type="button">＋ state</button></div>
+<div class="clean-table compact-table" id="sensitivityEquationRows"></div>
+<h3>Initial conditions</h3><div class="clean-table compact-table" id="sensitivityInitialRows"></div>
+<div class="section-title"><h3>Parameters and exploration ranges</h3><button class="secondary subtle" id="addSensitivityParameter" type="button">＋ parameter</button></div>
+<div class="clean-table compact-table" id="sensitivityParameterRows"></div>
+<p class="field-help">Parameter ranges define the uncertainty domain for Morris and Sobol calculations. A local derivative is evaluated at the current parameter value.</p>
+</section>
+<section class="control-section" id="numericsBlock">
+<h2>Time and solver controls</h2>
+<div class="field-grid cols-2">
+<label><span>t start</span><input id="sensitivityT0" step="any" type="number"/></label>
+<label><span>t end</span><input id="sensitivityT1" step="any" type="number"/></label>
+<label><span>Reported points</span><input id="sensitivityPoints" min="2" step="1" type="number"/></label>
+<label><span>Browser solver</span><select id="sensitivitySolver"><option value="rk45">RK45 adaptive</option><option value="rk4">RK4 fixed</option><option value="heun_adaptive">Heun adaptive</option></select></label>
+<label><span>Relative tolerance</span><input id="sensitivityRtol" step="any" type="number"/></label>
+<label><span>Absolute tolerance</span><input id="sensitivityAtol" step="any" type="number"/></label>
+<label><span>Fixed step</span><input id="sensitivityStepSize" placeholder="auto or 0.01" type="text"/></label>
+<label><span>Initial adaptive step</span><input id="sensitivityInitialStep" placeholder="auto" type="text"/></label>
+<label><span>Maximum step</span><input id="sensitivityMaxStep" placeholder="auto" type="text"/></label>
+<label><span>Adaptive safety factor</span><input id="sensitivitySafety" max="0.99" min="0.05" step="any" type="number" value="0.9"/></label>
+</div>
+<p class="field-help">Reported points control plot/export density, not adaptive-solver accuracy. Tolerances control local error only for adaptive methods.</p>
+</section>
+<section class="control-section" id="methodBlock">
+<h2>Analysis definition</h2>
+<div class="field-grid cols-2">
+<label><span>Method</span><select id="sensitivityMethod"><option value="local">Local central finite differences</option><option value="morris">Morris screening</option><option value="sobol">Global variance: Jansen + Saltelli</option><option value="fim">Fisher information approximation</option></select></label>
+<label><span>Output variable</span><select id="sensitivityOutputVar"></select></label>
+<label><span>Output metric</span><select id="sensitivityOutputMetric"><option value="final">Final value</option><option value="max">Maximum</option><option value="min">Minimum</option><option value="mean">Time mean</option><option value="range">Range</option><option value="integral">Time integral</option></select></label>
+<label><span>Relative perturbation</span><input id="sensitivityRelativeStep" max="0.25" min="1e-8" step="any" type="number" value="0.001"/></label>
+<label><span>Global base samples</span><input id="sensitivitySamples" max="4096" min="16" step="1" type="number" value="128"/></label>
+<label class="checkbox-field"><span>Second-order interactions</span><input id="sensitivitySecondOrder" type="checkbox"/></label>
+<label><span>Bootstrap replicates</span><input id="sensitivityBootstrap" max="1000" min="0" step="1" type="number" value="200"/></label>
+<label><span>Morris trajectories</span><input id="sensitivityTrajectories" max="512" min="2" step="1" type="number" value="12"/></label>
+<label><span>Morris grid levels</span><input id="sensitivityLevels" max="50" min="4" step="1" type="number" value="6"/></label>
+<label><span>Seed</span><input id="sensitivitySeed" min="0" step="1" type="number" value="1729"/></label>
+<label><span>FIM noise scale σ</span><input id="sensitivitySigma" min="1e-12" step="any" type="number" value="1"/></label>
+<label><span>OFAT points per parameter</span><input id="sensitivityOfatPoints" max="21" min="5" step="2" type="number" value="9"/></label>
+<label><span>Directional vector</span><input id="sensitivityDirection" placeholder="beta:1, gamma:-1" type="text"/></label>
+<label><span>Directional span</span><input id="sensitivityDirectionalSpan" max="1" min="1e-6" step="any" type="number" value="0.25"/></label>
+<label><span>Directional profile points</span><input id="sensitivityDirectionPoints" max="21" min="5" step="2" type="number" value="9"/></label>
+<label class="checkbox-field"><span>Compute 2-parameter response surface</span><input id="sensitivityResponseSurface" type="checkbox"/></label>
+<label><span>Surface parameter x</span><select id="sensitivitySurfaceFirst"></select></label>
+<label><span>Surface parameter y</span><select id="sensitivitySurfaceSecond"></select></label>
+<label><span>Surface grid points</span><input id="sensitivitySurfacePoints" max="15" min="5" step="2" type="number" value="7"/></label>
+<label class="checkbox-field"><span>Limited MI / HSIC diagnostics</span><input id="sensitivityDependence" type="checkbox"/></label>
+<label><span>Dependence permutations</span><input id="sensitivityDependencePermutations" max="49" min="19" step="10" type="number" value="29"/></label>
+</div>
+<p class="field-help" id="sensitivityMethodNote">Method-specific settings that are not used are disabled. The estimated ODE-solve budget appears below.</p>
+<output aria-live="polite" class="scientific-boundary" id="sensitivityBudget">Estimated computation: —</output>
+</section>
+<section class="control-section" id="scopeBlock">
+<h2>Scientific limits</h2>
+<p class="scientific-boundary"><b>Computed here:</b> central finite differences; parameter and state Jacobians along the nominal trajectory; trajectory influence maps; OFAT, tornado and range-normalized directional profiles; optional bounded two-parameter response surfaces; Morris elementary effects; independent-input Jansen first/total indices; optional Saltelli second-order interactions; time-resolved total effects; bootstrap uncertainty; limited histogram-MI and RBF-HSIC permutation screening; and a local finite-difference Fisher-information approximation.</p>
+<p class="scientific-boundary"><b>Not computed:</b> adjoint sensitivities, FAST/eFAST, Shapley effects, correlated-input Sobol indices or dependent-input variance decomposition, symbolic identifiability, profile likelihood, certified bifurcation sensitivity, PDE/PINN adjoints or posterior uncertainty. MI and HSIC are limited screening diagnostics; each is not a variance fraction. Requests outside the guarded browser workload envelope are refused before a worker starts.</p>
+<p class="scientific-boundary">Rankings are conditional on the chosen output, time window, initial conditions, parameter ranges, perturbation, sample count, solver and tolerances. Initial conditions affect every trajectory but are not varied as sensitivity factors in this release. Close rankings should be treated as unresolved until a larger external analysis confirms them.</p>
+</section>
+</aside>
+<section aria-label="Sensitivity plots" class="workspace-area results-card">
+<section class="workspace-card v72-results-workspace">
+<header class="v72-workspace-head"><div><p class="v72-eyebrow">Computed workspace</p><h1>Parameter influence and numerical stability</h1><p>Both panels derive from the same validated model and analysis request. Changing any scientific input marks the current result stale.</p></div><div><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div><div class="export-row"><button class="secondary" disabled="" id="exportSensitivityPng" type="button">Current PNG</button><button class="secondary" disabled="" id="exportSensitivitySvg" type="button">Current SVG</button></div></div></header>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
+<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="leftPlotTitle">Sensitivity ranking</h3><select aria-label="Primary sensitivity plot" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button></div><div class="plot" id="leftPlot"></div><details class="plot-evidence"><summary>Analysis info</summary><p id="leftPlotEvidence">Run an analysis to generate evidence.</p></details></article>
+<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="rightPlotTitle">Numerical diagnostic</h3><select aria-label="Secondary sensitivity plot" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button></div><div class="plot" id="rightPlot"></div><details class="plot-evidence"><summary>Analysis info</summary><p id="rightPlotEvidence">Run an analysis to generate evidence.</p></details></article>
+</div><p class="info-strip" id="plotHint">No ranking is reliable until the requested perturbation or sample count is adequate for the model response.</p>
+</section></section>
+<aside aria-label="Sensitivity diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card"><p class="v72-eyebrow">Run status</p><div class="status-strip"><div class="status-ok"><span>●</span><b id="sensitivityTopStatus">Ready</b></div><div><span>Runtime</span><b id="sensitivityRuntime">—</b></div><div><span>Method</span><b id="sensitivityMethodMetric">—</b></div><div><span>Evaluations</span><b id="sensitivityEvaluations">—</b></div></div><div class="metrics-grid"><article class="metric-card"><small>Parameters</small><b id="sensitivityParameterCount">—</b><em>varied</em></article><article class="metric-card"><small>Output</small><b id="sensitivityOutputMetricCard">—</b><em>declared metric</em></article><article class="metric-card"><small>rtol</small><b id="sensitivityRtolMetric">—</b><em>requested</em></article><article class="metric-card"><small>atol</small><b id="sensitivityAtolMetric">—</b><em>requested</em></article></div></section>
+<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Numerical evidence</p><h2>Diagnostics and warnings</h2></div></div><div class="diagnostics empty" id="sensitivityDiagnostics">Run an analysis to see estimator settings, warnings and ranking evidence.</div></section>
+<section class="v72-inspector-card" id="provenanceCard"><div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Computation boundary</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div><div><dt>Engine</dt><dd id="provenanceEngine">FokoSensitivityCore + FokoODECore</dd></div><div><dt>Method</dt><dd id="provenanceMethod">Not run</dd></div><div><dt>Scope</dt><dd id="provenanceScope">Browser-scale deterministic ODE sensitivity</dd></div><div><dt>Reliability</dt><dd id="provenanceReliability">Not assessed</dd></div></dl><p class="v72-warning" id="provenanceWarning">No result exists yet.</p></section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div><div class="export-row"><button class="secondary" id="saveSensitivitySession" type="button">Save session</button><button class="secondary" id="restoreSensitivitySession" type="button">Restore session</button><button class="secondary" id="copySensitivityShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportSensitivityCsv" type="button">Summary CSV</button><button class="secondary" id="exportSensitivityJson" type="button">Result JSON</button><button class="secondary" id="exportSensitivityModel" type="button">Model JSON</button><button class="secondary" id="exportSensitivityPython" type="button">Python validation</button></div><p class="note">Sessions store model and numerical settings, not cached evidence. Restored configurations must be rerun.</p></section>
+</aside>
+</main></div>
+<script defer="" src="src/core/numerical-inputs.js?v=72.46.0"></script>
+<script defer="" src="src/models/sensitivity-presets.js?v=72.46.0"></script>
+<script defer="" src="src/core/sensitivity.js?v=72.46.0"></script>
+<script defer="" src="src/v72/sensitivity-workspace.js?v=72.46.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=72.46.0"></script>
+<script defer="" src="src/navigation.js?v=72.46.0"></script>
+</body></html>

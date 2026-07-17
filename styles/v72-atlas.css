@@ -1,0 +1,33 @@
+body[data-lab="examples"] { overflow-x: hidden; }
+.v72-atlas { width: min(1420px, calc(100% - 32px)); margin: 0 auto; padding: 24px 0 54px; }
+.v72-atlas-hero { display:flex; justify-content:space-between; gap:20px; align-items:center; padding:14px 18px; border:1px solid var(--line,#cbdde7); border-radius:18px; background:linear-gradient(145deg,#f7fcfd,#eaf6f7); }
+.v72-atlas-hero h1 { margin:.1rem 0 .3rem; font-size:clamp(1.55rem,2.5vw,2.2rem); letter-spacing:-.035em; }
+.v72-atlas-hero p { margin:.2rem 0; max-width:68ch; color:var(--muted,#64748b); line-height:1.5; }
+.v72-atlas-hero .lab-mark { width:84px; height:84px; object-fit:contain; }
+.v72-atlas-toolbar { position:sticky; top:86px; z-index:3; display:grid; grid-template-columns:minmax(220px,1.2fr) repeat(3,minmax(150px,.6fr)); gap:8px; margin:14px 0; padding:10px; border:1px solid var(--line,#cbdde7); border-radius:14px; background:rgba(255,255,255,.97); box-shadow:0 10px 28px rgba(15,23,42,.08); }
+.v72-atlas-toolbar input,.v72-atlas-toolbar select { width:100%; min-height:40px; box-sizing:border-box; border:1px solid var(--line,#cbdde7); border-radius:9px; padding:8px 10px; background:#fff; color:#172033; font:inherit; }
+.v72-atlas-summary { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:12px 0; color:var(--muted,#64748b); }
+.v72-atlas-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(285px,1fr)); gap:14px; }
+.v72-atlas-card { min-width:0; overflow:hidden; display:grid; grid-template-rows:auto auto 1fr auto; border:1px solid var(--line,#cbdde7); border-radius:16px; background:#fff; box-shadow:0 9px 26px rgba(15,23,42,.055); transition:transform .16s ease, box-shadow .16s ease; }
+.v72-atlas-card:hover { transform:translateY(-2px); box-shadow:0 15px 34px rgba(15,23,42,.10); }
+.v72-atlas-media { position:relative; aspect-ratio:16/8.8; overflow:hidden; background:linear-gradient(145deg,#eaf6f7,#edf3fb); }
+.v72-atlas-media img { width:100%; height:100%; display:block; object-fit:cover; }
+.v72-atlas-media::after { content:""; position:absolute; inset:auto 0 0; height:42%; background:linear-gradient(transparent,rgba(6,27,42,.18)); pointer-events:none; }
+.v72-atlas-card-body { display:grid; gap:8px; padding:14px 15px 4px; }
+.v72-atlas-card h2 { margin:0; font-size:1.05rem; line-height:1.25; }
+.v72-atlas-card p { margin:0; color:var(--muted,#64748b); font-size:.86rem; line-height:1.45; }
+.v72-atlas-meta { display:flex; flex-wrap:wrap; gap:5px; padding:12px 15px 0; }
+.v72-atlas-badge { display:inline-flex; align-items:center; padding:4px 7px; border-radius:999px; background:#eef7f8; color:#075e63; font-size:.68rem; font-weight:850; }
+.v72-atlas-badge.provenance { background:#f3efff; color:#5b21b6; }
+.v72-atlas-badge.status { background:#edf3fb; color:#315f9f; }
+.v72-atlas-card > a { justify-self:start; display:inline-flex; margin:12px 15px 15px; padding:8px 11px; border-radius:9px; background:#008b92; color:white; text-decoration:none; font-weight:850; font-size:.82rem; }
+.v72-atlas-boundary { margin-top:16px; padding:13px 15px; border:1px solid #fdba74; border-radius:13px; background:#fff7ed; color:#7c2d12; line-height:1.5; }
+@media(max-width:900px){.v72-atlas-toolbar{position:static;grid-template-columns:1fr 1fr}.v72-atlas-toolbar input{grid-column:1/-1}}
+@media(max-width:600px){.v72-atlas{width:min(100% - 18px,1420px)}.v72-atlas-toolbar{grid-template-columns:1fr}.v72-atlas-toolbar input{grid-column:auto}.v72-atlas-hero{display:block}.v72-atlas-hero .lab-mark{display:none}.v72-atlas-grid{grid-template-columns:1fr}}
+
+/* Scientific catalog images should remain legible rather than fill-cropped. */
+.v72-atlas-grid { grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); }
+.v72-atlas-card { border-radius:12px; box-shadow:0 5px 18px rgba(15,23,42,.045); }
+.v72-atlas-media { aspect-ratio:16/10.5; padding:10px; box-sizing:border-box; background:#fff; }
+.v72-atlas-media img { object-fit:contain; object-position:center; }
+.v72-atlas-media::after { display:none; }

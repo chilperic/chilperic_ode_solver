@@ -1,3 +1,305 @@
+# v72.46.0 — local and global Sensitivity depth
+
+- Separates parameter Jacobian, state Jacobian and propagated trajectory sensitivity.
+- Adds OFAT curves, tornado summaries, directional profiles and bounded two-parameter response surfaces.
+- Adds time-resolved Jansen effects, raw variance accounting, sampled relationship views and limited MI/HSIC permutation screening.
+- Reuses existing global sample designs and cached trajectories rather than adding hidden simulations for derived plots.
+- Extends browser-capacity accounting to every new local and global computation.
+- Corrects the capability taxonomy so generic residual-component sensitivity is no longer falsely marked computed.
+- Retains adjoints, FAST/eFAST and Shapley effects as export-only.
+- Uses isolated validation port 8100.
+
+## v72.45.0 — advanced Global Sensitivity and capacity guard
+
+- Extends Morris screening with elementary-effect distributions, convergence and bootstrap rank stability.
+- Adds Jansen first/total indices, optional symmetrized Saltelli pairwise second-order interactions, bootstrap intervals, rank stability, output distributions and total-minus-first diagnostics.
+- Refuses oversized browser workloads before worker launch and provides a Python/SALib or server-workflow boundary.
+- Fixes the missing shared field-grid layout contract and synchronizes Sensitivity navigation copy across static and runtime menus.
+- Adds a platform-wide consistency gate and uses isolated validation port 8099.
+
+## v72.44.0 — numerical-input reliability and Sensitivity Analysis Lab
+
+- Added a first-class Sensitivity Analysis Lab with editable ODE definitions, initial conditions, parameter values/ranges, time span, solver, step controls, tolerances, local finite differences, Morris screening, independent-uniform Jansen indices, and a local FIM approximation.
+- Preserved all ODE numerical controls in sessions, share URLs, and model JSON.
+- Added stale-result ownership and export guards after scientific input changes.
+- Added professional limitations and audit records.
+- Changed the local runner so a failed validation leaves a readable terminal instead of disappearing.
+
+# v72.43.0 — Optimization, multi-objective, Steady-State and sensitivity taxonomy
+
+- Integrates six exact 15-item catalogues for Optimization, multi-objective optimization, and Steady-State/algebraic plots and problems.
+- Adds local, global, structural, multi-objective, and steady-state sensitivity method/plot catalogues.
+- Publishes one machine-readable taxonomy with browser-computed, derived-browser, limited-browser, export-only, and unavailable boundaries.
+- Expands Optimization to 17 runnable presets and adds finite dominance, crowding, hypervolume, correlation, knee-point, and local-sensitivity diagnostics.
+- Adds Jacobian-sign, local stiffness, and sequential-scan sensitivity views to the 26-system Steady-State library.
+- Renders the same taxonomy in Docs and validates it in offline Chromium.
+- Uses isolated validation port 8093.
+
+# v72.42.1 — shared plot geometry and Steady/Symbolic depth
+
+- Centralizes Plotly title, legend, axis-margin and annotation geometry across all 13 authored workspaces. Card headings own titles; Plotly owns axes, traces and legends.
+- Prevents the Optimization, Stochastic and ODE stiffness legend/title/axis collisions shown in the visual audit.
+- Standardizes action controls with a 46 px minimum height, multiline centering and no vertical clipping.
+- Expands Steady-State to 26 searchable, family-filtered systems. Every default is solver-validated; selecting a system loads and solves it immediately.
+- Expands Symbolic to 20 searchable systems. Selecting a system automatically parses, differentiates, evaluates and renders its evidence.
+- Adds a named platform audit, an offline Chromium visual/computation gate and three maintained Playwright regressions.
+- Uses isolated validation port 8092.
+
+# v72.41.7 — navigation hitbox and Symbolic selector closure
+
+- Removes hover-activated primary navigation; menus now open only through explicit click or keyboard actions.
+- Makes every closed dropdown panel inert, aria-hidden, invisible, and unable to receive pointer events even if native `details` state and runtime state temporarily diverge.
+- Restricts shared chart grid-area rules to direct `.chart-title` children, preventing Symbolic's nested Focus and export controls from covering its plot selector.
+- Strengthens the canonical two-panel browser contract with pointer-travel and direct-hitbox assertions before plot changes.
+- Adds an offline Chromium regression that verifies closed navigation panels, explicit menu opening/closing, and unobstructed Symbolic selectors.
+- Retains the v72.41.6 Agent layout and render-root behavior unchanged.
+- Uses isolated validation port 8090.
+
+# v72.41.7 — validation contract coherence
+
+- Keeps the validated v72.41.4 canonical ODE layout implementation unchanged.
+- Replaces the runner’s regex-based Focus scan with a semantic JavaScript binding scan that ignores unrelated selectors and rejects only generic `[data-focus-side]` click bindings.
+- Uses fixed-string stale-token detection for the immediately previous release.
+- Updates the active packaging contracts to verify behavior rather than demand obsolete runner source text.
+- Adds a negative contract proving the discarded broad grep implementation cannot return.
+- Uses isolated validation port 8088.
+
+# v72.41.4 — canonical two-panel ownership
+
+- Uses ODE as the behavioral reference: preferred Two-up/Focus state is changed only by explicit layout controls.
+- Removes the unsafe broad Focus click binding from every authored workspace; plot-grid state attributes are no longer treated as controls.
+- Agent delegates effective layout projection to the shared `FokoLayoutStability` controller while keeping its preferred mode in an independent persisted record.
+- Agent plot-selector handlers no longer call, restore, or mutate layout state. They update only panel selections and render the affected evidence.
+- Retains selectable live spatial simulation, population time curves, deterministic panel swapping, render-token rejection, and the single-active-render-root invariant.
+- Extends the browser contract to click both selectors before value changes on every authored route, catching event-bubbling regressions that `selectOption` alone misses.
+- Uses isolated validation port 8088.
+
+# v72.41.2 — Agent single-render-root closure
+
+- Fixes the Agent panel contamination visible when the live canvas preview was followed by a Plotly population or lattice view.
+- Every Agent transition now invalidates the previous render, purges Plotly, removes all children, mounts exactly one active render root, and verifies the invariant before publishing rendered state.
+- Live preview, static canvas fallback, replay animation, Plotly population plots, and Plotly lattice heatmaps all use the same ownership contract.
+- Adds a browser regression that cycles live preview → population → final lattice → population → replay animation → population and rejects surviving canvases, traces, or duplicate roots.
+- Runs Agent plot-switch tests before the repeated platform layout gate and the complete browser suite.
+- Uses isolated validation port 8084.
+
+# v72.41.1 — stable two-panel contract, equal research gallery, rendered Mathematical Beauty
+
+- Uses the stable ODE behavior as the reference contract and moves every other authored workspace to one declarative `FokoLayoutStability` state transition.
+- Separates preferred layout from effective responsive layout: plot changes and delayed renders cannot silently replace an explicit Two-up or Focus choice.
+- Removes non-ODE workspace-width heuristics and the CSS rule that visually collapsed a requested Two-up grid at intermediate desktop widths.
+- Rebuilds “Research behind Foko Lab” as four equal-size visual cards for fatty-acid metabolism, FADNS, T-cell proliferation, and Thermoplants.
+- Uses the supplied full FADNS reaction scheme, coarse-grained lipid network, T-cell generation diagram, and Thermoplants graphical abstract as scientific visual anchors.
+- Moves the creator profile out of the crowded hero rail and places it beside the research grid with the professional title “Multiscale Modeller | Applied Mathematician | Computational Biology | Scientific Software”.
+- Replaces the lower Mathematical Beauty catalogue prose with 34 rendered preview canvases. Selecting a preview opens the actual interactive object in the main canvas.
+- Repairs theme switching at the canonical token layer, reapplies persisted themes on every page, and recolors already-rendered Plotly evidence without recomputation.
+- Routes ODE, Steady-State, Stochastic, Optimization, SciML, and Symbolic mathematical output through one strict KaTeX boundary with MathML, readable fallback, semantic Greek/subscript identifiers, and bounded horizontal scrolling.
+- Retains the Workbench atomic panel-swap rule, one Plotly lifecycle owner, unchanged numerical engines, and explicit scientific claim boundaries.
+- Uses isolated validation port 8088.
+
+# v72.40.0 — layout stability, research hero and manifold audit
+
+- Added one shared layout-stability controller across all 13 authored two-panel workspaces. Plot selectors and delayed rerenders preserve explicit 2-up or Focus intent; responsive focus remains allowed only on genuinely narrow workspaces.
+- Rebuilt the homepage right rail with the creator profile and the professional title “Multiscale Modeller | Applied Mathematician | Computational Biology | Scientific Software”.
+- Rebuilt Thermoplants as a visual hero research card using the supplied graphical abstract, three research-analysis previews, and an explicit protected-research boundary.
+- Added Mathematical Beauty to every Explore dropdown.
+- Expanded Mathematical Beauty with interactive Möbius strip, torus, Klein-bottle immersion, projective-plane cross-cap, helicoid, catenoid, Enneper surface, sphere and saddle surface visualizations.
+- Expanded Workbench curation with Lorenz, FitzHugh–Nagumo, Brusselator, a stiffness stress test, two-stage gene expression and Rastrigin; added derivative, dispersion, landscape and finite-window evidence views.
+- Advanced the isolated local validation port from 8076 to 8078.
+
+# v72.39.2 — complete homepage browser-contract correction
+
+- Corrected the remaining stale Playwright assertion at `main-labs-smoke.spec.js:658`.
+- The public-UX gate now targets the authored `#homePlatformAnswerTitle` heading and its current copy, “From model to evidence.”
+- Added static and Python regression contracts that reject the removed “toy tool” heading from the browser suite.
+- Advanced the isolated local validation port from 8075 to 8076.
+- No public UI, numerical engine, model, tolerance, plot lifecycle, or scientific claim changed.
+
+# v72.39.1 — homepage contract correction
+
+- Corrected the two obsolete Playwright assertions that still expected the removed slogan “Thirteen scientific engines.”
+- The browser gate now verifies the audited model-first heading through the stable `#homeTitle` contract.
+- Added a release preflight that rejects reintroduction of the obsolete slogan into the test suite.
+- Changed the local validation port from 8074 to 8075 to isolate this release from the previous run.
+- No public UI, numerical engine, model, tolerance, lifecycle, accessibility behavior, or scientific claim changed.
+
+# v72.32.3 — accessibility and live-demo contract hotfix
+
+- Restored ArrowLeft/ArrowRight/Home/End focus navigation for layout controls without restoring central layout-state ownership.
+- Compiled bundled stochastic propensity expressions inside the home worker before calling `FokoStochasticCore`.
+- Kept the stochastic demonstration bounded, seeded, and executed with Gillespie direct SSA.
+- Promoted “What makes this a modeling platform rather than a toy tool?” to a compact semantic heading for accessibility and stable public-UX testing.
+- Added regression contracts for the worker compilation path and focus-only keyboard navigation.
+- No numerical solver, tolerance, model parameter, claim class, or Two-up/Focus state transition changed.
+
+# v72.29.0 — User-facing UX consolidation
+
+- Rewrote Docs and Tutorials for scientists using the platform; maintainer roadmaps, source filenames, release commentary, and developer instructions are no longer public help.
+- Consolidated each help page into one continuous reading surface with a restrained table of contents.
+- Reduced the home-page headline and repeated proof blocks while retaining the real core-computed fatty-acid demonstration.
+- Added concise creator and research-provenance information to the home page.
+- Added a direct explanation of why Foko Lab is a modeling platform rather than a toy: user-defined input, attached diagnostics, independent checks, and reproducible hand-off.
+- Restored visual previews throughout the searchable Model Atlas using existing scientific assets.
+- Preserved the 72.28.1 Two-up/Focus invariant and numerical/scientific contracts.
+- Passed 94 Chromium browser contracts in fresh processes, 187 active Python contracts, 2,244 JavaScript assertions, 14 page-quality budgets, and 32 differential references.
+
+# v72.28.1 — Workbench Two-up ownership and diagnostic browser contracts
+
+- Confirmed the sole v72.28.0 browser failure was Workbench-specific: the grid remained Two-up, but the shared test could not find its legacy `data-card` elements.
+- Standardized Workbench evidence cards as `data-plot-card="left"` and `data-plot-card="right"`.
+- Removed Workbench from generic plot-selector reconciliation; its adapter state machine is now the single owner of Workbench selections.
+- Added the shared `data-layout`, `data-preferred-layout`, `data-layout-mode`, and focus-side contract to Workbench.
+- Kept the preferred layout separate from the narrow-viewport effective layout, so changing plot selectors cannot choose Focus.
+- Split the former all-routes Two-up loop into separately named per-lab Playwright tests; future failures identify the exact route.
+- No numerical engine, tolerance, model, diagnostic threshold, or scientific claim changed.
+
+# v72.28.0 — Persistent Two-up invariant and live research proof
+
+- Replaced finite delayed Two-up restoration with a scoped attribute invariant on `data-layout` and `data-preferred-layout`.
+- Captures plot-selector changes before lab-specific handlers and rejects later unauthorized Focus mutations while Two-up is explicitly selected.
+- Keeps explicit Focus, genuinely narrow viewports and single-compatible-output cases valid.
+- Corrected the browser contract to target the current `Labs` menu instead of the deleted `analysis` menu.
+- Raised the dropdown panel to the intended navigation layer and retained an opaque background and pointer ownership.
+- Added per-route Playwright steps so future cross-lab layout failures identify the exact page.
+- Rebuilt the home hero around a four-state fatty-acid metabolism reduction solved on page load by `FokoODECore`.
+- Generates the hero SVG and all displayed diagnostics from the returned numerical result; no cached trajectory is shipped.
+- Adds explicit non-claims beside the hero result and three research-model routes with provenance classes.
+- Adds a deliberately low-substrate Michaelis–Menten identifiability example for the “bad fit” route.
+- Keeps the protected photosynthesis project out of public runnable demos.
+- Uses port 8048.
+
+# v72.26.1 — ODE trust-surface browser hotfix
+
+- Corrected the final Playwright contract to assert the authored ODE provenance status rather than the nonexistent `#statusText` locator.
+- Reset the independent-verification panel after every successful browser solve so it no longer remains stuck on “run in progress.”
+- Added a static regression contract tying the browser locator, authored DOM and post-run verification state together.
+- No numerical engine, tolerance, capability class or scientific verdict changed.
+- Uses port 8048.
+
+# v72.26.0 — Scientific trust pipeline
+
+- Accepted genuine-live Agent execution and corrected the local acceptance script to install differential-validation dependencies before the reference gate.
+- Deleted the dormant legacy model-workbench numerical implementation and kept `model.html` as a redirect to the core-backed Workbench.
+- Enforced one deterministic ODE engine with a release-blocking source scanner.
+- Routed SciML, inverse workflows and workers through `FokoODECore`.
+- Added local Jacobian timescale evidence at multiple trajectory locations and explicit fixed-step warnings for severe scale separation.
+- Added optional independent SciPy verification using Radau when stiffness evidence is present and DOP853 otherwise, with same-grid deviation localization and provenance.
+- Added a self-contained Model Report Card with equations, parameters, diagnostics, model/run hashes, optional verifier evidence and explicit non-claims.
+- Added identifiability-first nonlinear fitting: local parameter correlations, finite profile-based practical verdicts, and conditional experimental-design advice.
+- Kept optional verifier/report modules off the initial-page critical path through local lazy loading.
+- Uses port 8048.
+
+# v72.20.0 — Genuine live Agent simulation
+
+- Replaced burst-style representative streaming with a stateful incremental numerical runner shared with the synchronous Agent core.
+- Advanced the representative lattice in paced chunks so each displayed frame is computed before the browser paints it.
+- Added a visible LIVE badge, live-speed control, and pause/resume during computation.
+- Kept cancellation atomic: no partial ensemble is published.
+- Added a paced-worker regression test proving that live frames span multiple event-loop turns and remain bit-identical to the direct seeded simulation.
+- Added a chunk-equivalence contract for the incremental runner.
+- Added a paced main-thread fallback for browsers where Web Workers fail or are unavailable.
+- Integrated `USER_GUIDE.md`, `TUTORIALS.md`, and `PLATFORM_TODO.md` into the release and linked them from Documentation.
+- Preserved the scientific boundary: the moving lattice is one representative realization; ensemble uncertainty remains in independent-run summaries.
+- Uses port 8042.
+
+# v72.19.1 — Browser runtime stabilization
+
+- Fixed temporal-dead-zone initialization failures in six authored scientific workspaces.
+- Fixed SciML registry notification and Workbench central-registry recursion.
+- Preserved two-up layout during selector initialization and plot changes.
+- Added accessible names to generated ODE controls and enforced 36 px mobile control targets.
+- Repaired navigation click/hover/keyboard state ownership.
+- Made Stochastic explicit-time rejection state the time-homogeneous direct-SSA boundary.
+- Kept Agent result publication atomic and cancellation-safe.
+- Updated browser contracts for the 22-example Statistics library, 124-entry Model Atlas and mathematically valid supplementary PCA.
+- Passed all 76 Chromium contracts in isolated browser processes plus the complete core, contract, quality and reference gates.
+
+# v72.19.0 — Live Agent and fatty-acid research models
+
+- Rebased on the v72.18 central compatibility registry and its stable two-panel workspace contract.
+- Streamed actual representative worker states to the Agent lattice and synchronized population trajectory during computation.
+- Kept post-run replay manual and one-pass; removed decorative timer-driven repetition.
+- Added reduced fatty-acid metabolism and semi-mechanistic FADNS ODE examples with finite parameter sweeps.
+- Added full four-state fatty-acid root exploration with residual and physical-admissibility evidence.
+- Added a conditional MalCoA–FA two-state slice with exact local 2×2 spectrum only; no full-model stability claim.
+- Added algebraic FADNS occupancy and CoA-sequestration operating points without dynamical-stability claims.
+- Retained explicit distinctions between representative realization, ensemble evidence, local finite scans, and calibrated research repositories.
+- Uses port 8039.
+
+# v72.18.0 — Central registry and Agent animation
+
+- Added one runtime registry for examples, compatible plots and stable left/right selections across all authored labs.
+- Preserved the requested 2-up layout across plot changes and temporary narrow-width collapse.
+- Removed public 3-up controls and blocked duplicate plot selections.
+- Replaced Agent's four static lattice snapshots with one deterministic animated representative trajectory.
+- Added play/pause, frame slider, playback speed, reduced-motion support and a state legend below the Agent lattice.
+- Increased Agent representative recording to 24 validated frames by default.
+- Added regression tests for cross-lab 2-up stability, Agent animation controls and deterministic frame generation.
+- Uses port 8037.
+
+# v72.8.0 — SciML and Statistics trust release
+
+- Rebuilt SciML on the authored v72 shell.
+- Restricted plot choices to workflow-compatible computed evidence.
+- Removed decorative/blank neural diagnostics from browser workflows.
+- Added configuration-only save, restore and share controls for SciML.
+- Expanded Statistics to 20 curated examples with family filters and metadata.
+- Repaired the theme selector contrast and selected-option visibility.
+- Uses port 8027.
+
+# v72.7.0 — Curve Fitting reference migration
+
+- Reused the v72 data-ingestion contract for local fitting datasets.
+- Added pure weighted linear and damped nonlinear least-squares computation.
+- Added explicit convergence, termination, local covariance, residual, influence, bootstrap, sensitivity and profile evidence.
+- Rebuilt Curve Fitting on the authored 2-up, 3-up and focus shell.
+- Added explicit non-certification of global optimality, identifiability, mechanistic validity and out-of-sample performance.
+
+# v72.4.0 — Statistics reference migration
+
+- Added pure `FokoDataCore` parsing and preparation for quoted CSV, TSV, semicolon and whitespace-delimited input.
+- Added explicit data shape, inferred types, missingness, row exclusion and mean-imputation evidence.
+- Rebuilt `statistics.html` on the authored v72 shell with 2-up, 3-up and focus layouts.
+- Added tested OLS, Pearson, Welch, ANOVA/Kruskal, bootstrap, ROC/PR, Kaplan–Meier/log-rank, Benjamini–Hochberg and sample-estimated Shewhart workflows.
+- Added effect/fit summaries, assumptions, warnings and per-plot scientific meaning.
+- Added local-file ingestion and configuration/input-text session/share controls.
+- Removed the Statistics route from the retained legacy-shell gate.
+- Added pure data-core and Statistics workspace computation tests.
+- Core tests now use vendored math.js, so `npm test` does not require `npm ci`.
+
+# v72.2.0 — Stochastic CTMC reference migration
+
+- Added the pure, DOM-free `FokoStochasticCore` for Gillespie direct SSA.
+- Restricted the reference browser scope to time-homogeneous CTMCs with non-negative integer states and integer stoichiometry.
+- Added deterministic master-seed and per-trajectory seed provenance.
+- Added explicit event-cap censoring, absorbing-state, event-count and propensity-range diagnostics.
+- Added empirical means, unbiased variances, 5th/50th/95th percentiles, final distributions and Monte Carlo standard errors.
+- Added five curated reaction-network presets with expression-compilation, SSA and mean-field smoke tests.
+- Added separately computed, explicitly labeled deterministic mean-field overlays through `FokoODECore`.
+- Rebuilt `stochastic.html` on the authored v72 shell with 2-up, 3-up and focus modes.
+- Added independent selectors for ensemble paths, empirical bands, single paths, mean-field comparison, final histograms, variance and event-count diagnostics.
+- Added configuration-only save, restore and share controls that invalidate stale trajectory evidence.
+- Marked tau-leaping and SDE workflows export-only and rejected explicit time-dependent hazards in the reference editor.
+- Added active numerical, structural and browser-test contracts for the Stochastic reference lab.
+
+# v72.1.0 — scientific foundation
+
+- Rebased implementation work on v71.46, the last supplied advanced integration with a fully green historical Python suite before migration.
+- Added a pure ODE numerical core and routed worker computations through it.
+- Rebuilt the ODE route as the authored reference shell with 2-up, 3-up and focus layouts.
+- Added computed third-plot support with explicit availability; removed the requirement for decorative third panels.
+- Added solver diagnostics, provenance and browser/export boundaries.
+- Retained verified symmetric-eigenvalue, power-iteration and SINDy Pareto diagnostics from later supplied releases.
+- Normalized release metadata and cache tokens to 72.1.0.
+- Added active numerical and integrity gates, deterministic packaging, capability metadata and a scientific contract.
+- Classified all non-ODE interfaces as retained migration work rather than falsely presenting them as completed v72 migrations.
+
+## 72.43.3 — Optimization mobile containment
+
+- Contains the mobile side-navigation strip as an internal horizontal scroller.
+- Prevents the 390 px Optimization workspace from widening to 428 px.
+- Adds an offline Chromium regression for document width, Focus projection, and side-navigation containment.
+- Retains the v72.43.0 Optimization, multi-objective, Steady-State, Symbolic, and sensitivity taxonomy integration.
 
 ## V71.46 — SciML spotlight layout
 
@@ -36,7 +338,7 @@
 - Preserved the static header/nav structure; no generated chrome rewrite.
 - Preserved the V71.38 lab color identity baseline.
 - Added regression tests for analysis, focused, SciML and creator/learn/explore active-state mappings.
-- Cache token normalized to `?v=71.46.0`.
+- Cache token normalized to `?v=72.46.0`.
 
 
 ## V71.32 — Functional cockpit boxes and plot palettes
@@ -100,7 +402,7 @@
 - Added Playwright browser smoke tests for home, focused labs, descriptor analysis labs, and reproducibility controls.
 - Added `package.json`, `playwright.config.js`, and `tests/e2e/main-labs-smoke.spec.js`.
 - Added pytest structural checks so the e2e gate itself is protected.
-- Cache token normalized to `?v=71.46.0`.
+- Cache token normalized to `?v=72.46.0`.
 
 # Foko Lab release history
 ## V71.11 — ML Toolkit descriptor shell and focused-lab noise cleanup
@@ -114,7 +416,7 @@
 
 ## v70.20 — Cache-token normalization
 
-- One cache token across the whole tree: `?v=71.46.0`.
+- One cache token across the whole tree: `?v=72.46.0`.
 - Legacy asset tokens removed.
 - Added `tests/test_v70_20_token_normalization.py`.
 - Audit: `release-audits/AUDIT-v70-20-token-normalization.md`.
@@ -190,3 +492,210 @@ Restores the V71.35 stable interface after the aggressive chrome/token cleanup p
 
 ## V71.44 — Curve Fitting scientific honesty
 - Upgraded Curve Fitting Lab numerical diagnostics: nonlinear least squares, covariance, confidence/prediction bands, bootstrap, profile scans and influence diagnostics.
+
+## v72.0.0 — Authored scientific foundation
+
+- Rebased the active platform gate on the last fully green advanced integration.
+- Added a pure ODE numerical core and an authored ODE reference interface.
+- Separated browser-computed explicit solvers from export-only stiff solvers.
+- Added deterministic release packaging, capability metadata and active scientific contracts.
+
+## v72.1.0 — Steady-State reference migration
+
+- Added the pure, DOM-free `FokoSteadyCore`.
+- Added damped Newton root solving with central finite-difference Jacobians, partial-pivot elimination, backtracking, residual histories and explicit termination reasons.
+- Added deterministic multi-start while explicitly rejecting exhaustive-root claims.
+- Rebuilt `steady.html` on the authored v72 shell with 2-up, 3-up and focus plot modes.
+- Separated algebraic root convergence from dynamical stability.
+- Limited browser stability claims to declared dynamical systems with 1×1 or 2×2 Jacobians.
+- Renamed legacy continuation claims as sequential 1D and 2D parameter scans.
+- Marked all sampled crossing and turning diagnostics as unconfirmed, grid-dependent candidates.
+- Added configuration-only session, restore and share controls that invalidate stale numerical evidence.
+- Added core, structural and browser-test contracts for the Steady-State reference lab.
+
+## v72.2.0 — Stochastic CTMC reference migration
+
+- Added a pure Gillespie direct-SSA core for time-homogeneous CTMCs.
+- Added seeded ensembles, empirical uncertainty, event-cap censoring and absorbing-state evidence.
+- Rebuilt the Stochastic page on the authored v72 shell.
+- Kept mean-field overlays distinct from stochastic ensemble results.
+
+## v72.3.0 — Optimization reference migration
+
+- Added a pure bounded continuous-optimization core.
+- Added coordinate, projected penalty descent, differential evolution, multi-start and random-search methods.
+- Separated penalized search from the independent feasibility-tolerance gate.
+- Added objective, candidate, convergence, violation and finite-sample Pareto views.
+- Rebuilt the Optimization page on the authored v72 shell with 2-up, 3-up and focus modes.
+- Added explicit non-certification of KKT conditions, local optimality and global optimality.
+- Added numerical, preset, structural and browser contracts.
+
+
+## v72.4.0 — Statistics reference migration
+
+- Added the pure data-ingestion core and authored Statistics workspace.
+- Added explicit missingness, assumptions, uncertainty and provenance evidence.
+
+
+## v72.10.0 — Machine Learning reference migration
+
+- Rebuilt the ML Toolkit on the authored v72 shell.
+- Added fold-safe standardization, seeded cross-validation and out-of-fold diagnostics.
+- Added linear/ridge regression, logistic regression, Gaussian naive Bayes, k-NN, k-means and PCA reference computations.
+- Added model comparison, calibration, learning curves and permutation-importance evidence.
+- Added 14 synthetic teaching and stress-test datasets with explicit scientific limitations.
+- Corrected SciML to load the SINDy core that implements the real Pareto refit sweep.
+- Local validation port: 8028.
+
+## v72.11.0 — Workbench adapter integration
+
+- Replaced the legacy v3 Workbench and historical DOM/CSS stack with an authored v72 interface.
+- Added `src/workbench/adapters.js`, a stable adapter registry over the migrated pure numerical cores.
+- Integrated ODE, steady-state, stochastic, optimization, agent, statistics, fitting, linear algebra, networks, machine learning and SINDy routes.
+- Added one-result contracts with metrics, warnings, provenance and distinct plot registries.
+- Blocked duplicate plot selections and empty symmetry panels.
+- Preserved legacy `?model=` links through explicit compatibility mappings.
+- Added Workbench numerical, structural and scientific-honesty tests.
+
+
+## v72.12.0 — Symbolic reference and scope decision
+
+- Replaced the legacy Symbolic Lab with an authored v72 reference interface.
+- Added a pure explicit expression parser, conservative simplifier, rule differentiator and symbolic Jacobian core.
+- Added numerical scope evaluation, finite one-dimensional root scans and finite multi-start equilibrium candidates for small square systems.
+- Added compatible expression, derivative, Jacobian, vector-field, nullcline, equilibrium and local-spectrum plots.
+- Removed the historical symbolic runtime from the active release.
+- Marked general integration, exact solving, factorization, complex branch analysis, broad special functions and general ODE solving as SymPy export-only.
+- Added numerical, structural and scientific-honesty contracts.
+- Local validation port: 8031.
+
+## v72.13.0 — Platform hardening
+
+- Added the shared pure `FokoPCA` core for deterministic small-dataset principal-component diagnostics.
+- Added standardized PCA to Statistics/Data Analysis and expanded the curated Statistics library to 22 examples.
+- Added PCA scores, variance and loading diagnostics beside Machine Learning regression, classification and clustering results.
+- Added multistate trajectory PCA to SciML and removed state-dimension-incompatible phase/PCA selectors.
+- Repaired Agent blank-output failures by awaiting Plotly, rejecting stale runs and providing a deterministic Canvas rendering fallback.
+- Replaced the malformed theme icon and selector assembly with one accessible non-wrapping native control.
+- Added distinct-plot and 3-up availability gates across the hardened analysis workspaces.
+- Added active Python, JavaScript and Playwright regression contracts for the reported failures.
+- Local validation port: 8032.
+
+## v72.14.0 — Trust and Agent hardening
+
+- Moved Agent ensembles into a dedicated Web Worker with progress, cancellation and stale-result rejection.
+- Added strict integer and categorical validation and rejected incomplete or internally inconsistent Agent configurations.
+- Added random-with-replacement and shuffled site sweeps plus random, split and central-patch initialization.
+- Replaced approximate segregation relocation search with uniform sampling from the current empty-site pool.
+- Added exact initial occupancy, normalization provenance, model-specific endpoints, connected-cluster summaries, terminal classifications, Monte Carlo standard errors and Wilson intervals.
+- Added presentation-state protection: no concurrent duplicate plot render, visible-evidence checks, deterministic Canvas fallback, and retained numerical exports after render failure.
+- Made synthetic SciML noise deterministic through an explicit exported seed.
+- Added a cross-lab Canvas mode and central-workspace container breakpoints.
+- Removed obsolete backup application code from the active release.
+- Local validation port: 8033.
+
+## v72.16.0 — Model input and reliability
+
+- Added exact Agent initial-population counts and deterministic fraction allocation evidence.
+- Added restricted declarative custom Agent models and configuration import.
+- Added repeated/nested ML validation, repeated permutation importance and data leakage/quality audits.
+- Added local model/configuration import routes to Stochastic, Optimization, Linear Algebra, Networks, Symbolic and Workbench, completing the active lab input contract.
+- Removed visible 3-up layouts in favor of readable 2-up/Focus workspaces.
+- Removed vendored scientific libraries from npm dependencies; npm installs only Playwright browser-test tooling.
+
+## v72.19.0 — Validation, accessibility and performance
+
+- Added 32 deterministic differential comparisons against NumPy, SciPy, scikit-learn, NetworkX and SymPy.
+- Added a module-level validation matrix separating unit, invariant, differential, browser and visual evidence.
+- Added skip links, stable main landmarks, one-H1 enforcement, labelled controls, visible keyboard focus, reduced-motion and forced-colour support across 14 authored scientific pages.
+- Added explicit Plotly busy/rendered states and accessible plot labels.
+- Deferred all external scripts, removed Plotly preload and removed unused math.js/KaTeX from six labs.
+- Added page-specific JavaScript/script-count budgets, central-workspace container breakpoints and session-local performance telemetry.
+- Added Chromium/Firefox/WebKit/mobile Playwright projects; no browser pass is claimed from the restricted development environment.
+- Local validation port: 8037.
+
+## 72.19.0 — Live Agent and fatty-acid research models
+
+- retains the v72.18.1 browser-gate repair after the reported 29-failure local run;
+- streams actual representative Agent lattice and population evidence to both visible panels;
+- keeps post-run frame navigation manual and non-looping;
+- promotes the reduced fatty-acid metabolism and FADNS models into the ODE core library;
+- adds full-model residual/branch exploration, a conditional 2×2 stability slice and algebraic FADNS enzyme occupancy to Steady-State;
+- filters roots that violate declared physical constraints from physical interpretation;
+- uses port 8039.
+
+## 72.32.0 — Scientific-canvas density and layout ownership
+
+- Removed layout writes and layout-button listeners from the central scientific registry.
+- Restored one layout owner per focused lab.
+- Added per-lab Two-up and Focus persistence browser tests.
+- Made the home ODE demo lazy-load and validate the canonical core.
+- Routed the home ODE link to a concrete Lorenz autorun example.
+- Reduced oversized public and workspace titles.
+- Narrowed the controls and evidence rails to return width to scientific plots.
+- Increased desktop plot height and reduced plot-card header overhead.
+- Added a critical hardening audit covering 1,981 `!important` declarations, duplicated layout implementations, and timing-based rendering glue.
+- Local validation port: 8056.
+
+## 72.34.0 — Scientific depth restoration
+
+- Restored broad, core-derived plot palettes after the density pass removed too much analysis.
+- Added real adaptive-step and local-error traces to the ODE core and expanded the curated ODE model library.
+- Expanded Stochastic, Optimization, Steady-State and Symbolic examples and diagnostics.
+- Audited 189 Atlas entries for required metadata, unique titles, valid target pages and protected-research boundaries.
+- Standardized maintained workspaces on layout-first, visible-plot-only rendering after browser geometry settles.
+- Removed synthetic selector changes from the central registry.
+- Retained compact headings, explicit Home, split task navigation, themes, and the full research identity including protected Thermoplants context.
+- Local validation port: 8060.
+
+## 72.36.0 — Home demo section trigger
+
+- Starts the four bounded Act 1 demonstrations when the act enters view, rather than waiting for each full-width row independently.
+- Prevents the lower Stochastic and Agent demonstrations from remaining uncomputed when the visitor scrolls to the section heading.
+- Keeps all four demonstrations routed through the canonical ODE, steady-state, stochastic and Agent cores.
+- Local validation port: 8064.
+
+## 72.38.2 — computed defaults and Two-up stability
+- Fixed missing helper functions that prevented the home demo reel from leaving `Ready`.
+- Made curated ODE, Steady-State, Stochastic, Optimization, and Statistics examples compute on initial load.
+- Preserved `autorun=0` and kept shared/imported configurations non-executing.
+- Removed stale standalone plot-lifecycle references and normalized the release token.
+
+## 72.38.2 — homepage browser-contract alignment
+- Updated the final homepage Playwright locator to the current `Run identifiability check` button label.
+- Added active and preflight checks preventing public copy and browser assertions from drifting apart.
+- Kept all runtime, numerical, Two-up, catalog, and research behavior unchanged.
+- Local validation port: 8072.
+
+## 72.38.2 — Browser truth alignment
+
+- Preserved successful Two-up and Focus stabilization.
+- Corrected successful plot state from `ready` to `rendered`.
+- Replaced a stale public-provenance assertion with a direct adapter-registry contract.
+
+## v72.38.3 — ODE sibling-render race correction
+
+- Replaced the global ODE plot-schedule cancellation token with a coalescing per-side queue.
+- A left-selector update no longer cancels an already pending right-panel render.
+- Kept the existing repeated Two-up and Focus browser stress contracts unchanged.
+- No numerical or scientific surface changes.
+- Local validation port: 8073.
+
+## v72.39.1 — platform benchmark hardening
+
+- Applied one render lifecycle to all 13 authored scientific workspaces.
+- Enforced exactly two stable plot hosts per workspace and removed all remaining third-panel branches.
+- Made visual render state and accessibility state atomic, including explicit `aria-busy="false"` after completion.
+- Consolidated the public stylesheet request stack and reduced the CSS inventory from 21 files to 13 without relaxing page budgets.
+- Reframed public language around scientific tasks, diagnostics and limits rather than implementation details.
+- Added measurable platform, lifecycle and external-comparator benchmark gates covering scientific reliability, stability, UX and GUI structure.
+- Preserved all numerical cores, 189 Atlas entries and explicit non-claim boundaries.
+- Local validation port: 8074.
+## v72.42.1 — ODE Load/Run browser-contract correction
+
+- Retains the v72.42.0 application implementation.
+- Corrects the shared-geometry browser test to press Run after loading Van der Pol.
+- Explicitly verifies that Load leaves the ODE workspace at Ready.
+- Adds an offline Chromium ODE Load/Run and stiffness-geometry regression.
+- Local validation port: 8092.
+

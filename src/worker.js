@@ -1,5 +1,6 @@
 /* ODE Lab worker: safe parsing via Math.js, no new Function. */
-importScripts('https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js');
+importScripts('../assets/vendor/mathjs/math-15.2.0.js?v=72.46.0');
+importScripts('core/ode.js?v=72.46.0');
 
 const ALLOWED_FUNCS = new Set(['sin','cos','tan','asin','acos','atan','sinh','cosh','tanh','exp','log','log10','sqrt','abs','min','max','pow','floor','ceil','round']);
 const ALLOWED_CONSTS = new Set(['pi','e','PI','E']);
@@ -48,126 +49,15 @@ function makeRhs(cfg){
     return comps.map(c => evalCompiled(c, scope));
   };
 }
-function norm(v){ return Math.sqrt(v.reduce((a,b)=>a+b*b,0)); }
-function add(y,k,h){ return y.map((v,i)=>v+h*k[i]); }
-function lincomb(y, ks, coefs, h){
-  return y.map((v,i)=> v + h * coefs.reduce((s,c,j)=>s + c * ks[j][i], 0));
-}
-function fixedStep(rhs, method, t, y, h, params){
-  const f = rhs;
-  if (method === 'euler') return add(y, f(t,y,params), h);
-  if (method === 'heun' || method === 'heun_fixed') {
-    const k1=f(t,y,params), k2=f(t+h,add(y,k1,h),params);
-    return y.map((v,i)=>v+h*(k1[i]+k2[i])/2);
-  }
-  if (method === 'rk5' || method === 'rk5_fixed') {
-    return rk45Step(rhs,t,y,h,params,1,1).y; // Fehlberg fifth-order estimate used with a fixed step.
-  }
-  // Default fixed method: classical RK4.
-  const k1=f(t,y,params);
-  const k2=f(t+h/2,add(y,k1,h/2),params);
-  const k3=f(t+h/2,add(y,k2,h/2),params);
-  const k4=f(t+h,add(y,k3,h),params);
-  return y.map((v,i)=>v+h*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6);
-}
-function heunAdaptiveStep(rhs,t,y,h,params,rtol,atol){
-  const yBig = fixedStep(rhs,'heun',t,y,h,params);
-  const yHalf = fixedStep(rhs,'heun',t,y,h/2,params);
-  const ySmall = fixedStep(rhs,'heun',t+h/2,yHalf,h/2,params);
-  let err=0;
-  for(let i=0;i<y.length;i++){
-    const scale = atol + rtol*Math.max(Math.abs(y[i]),Math.abs(ySmall[i]));
-    err = Math.max(err, Math.abs(ySmall[i]-yBig[i])/scale);
-  }
-  return {y:ySmall, err};
-}
-function rk45Step(rhs,t,y,h,params,rtol,atol){
-  const k1 = rhs(t,y,params);
-  const k2 = rhs(t+h/4, lincomb(y,[k1],[1/4],h), params);
-  const k3 = rhs(t+3*h/8, lincomb(y,[k1,k2],[3/32,9/32],h), params);
-  const k4 = rhs(t+12*h/13, lincomb(y,[k1,k2,k3],[1932/2197,-7200/2197,7296/2197],h), params);
-  const k5 = rhs(t+h, lincomb(y,[k1,k2,k3,k4],[439/216,-8,3680/513,-845/4104],h), params);
-  const k6 = rhs(t+h/2, lincomb(y,[k1,k2,k3,k4,k5],[-8/27,2,-3544/2565,1859/4104,-11/40],h), params);
-  const y4 = y.map((v,i)=> v + h*(25/216*k1[i] + 1408/2565*k3[i] + 2197/4104*k4[i] - 1/5*k5[i]));
-  const y5 = y.map((v,i)=> v + h*(16/135*k1[i] + 6656/12825*k3[i] + 28561/56430*k4[i] - 9/50*k5[i] + 2/55*k6[i]));
-  let err = 0;
-  for (let i=0;i<y.length;i++) {
-    const scale = atol + rtol * Math.max(Math.abs(y[i]), Math.abs(y5[i]));
-    err = Math.max(err, Math.abs(y5[i]-y4[i]) / scale);
-  }
-  return { y:y5, err };
-}
-function rhsEvalCount(method, adaptive=false){
-  if (adaptive) return method === 'heun_adaptive' ? 6 : 6;
-  if (method === 'euler') return 1;
-  if (method === 'heun' || method === 'heun_fixed') return 2;
-  if (method === 'rk5' || method === 'rk5_fixed') return 6;
-  return 4;
-}
 function solveJob(cfg){
   const rhs = makeRhs(cfg);
-  const t0=Number(cfg.t0), t1=Number(cfg.t1);
-  let points=Math.max(2, Math.min(20000, Number(cfg.points)||800));
-  const params = cfg.params || {};
-  const method = cfg.method || 'rk45';
-  if (['radau','bdf','lsoda','dop853'].includes(method)) throw new Error(`${method.toUpperCase()} is a Python/export solver, not a browser solver. Use Export Python for this method or choose RK45/RK5/RK4/Heun/Euler in the browser.`);
-  const rtol = Number(cfg.rtol)||1e-6, atol=Number(cfg.atol)||1e-9;
-  const rawMax = String(cfg.maxStep ?? 'auto').trim();
-  const maxStep = rawMax === 'auto' || rawMax === '' ? Math.abs(t1-t0)/60 : Math.abs(Number(rawMax));
-  const rawInit = String(cfg.initialStep ?? 'auto').trim();
-  const initialStep = rawInit === 'auto' || rawInit === '' ? null : Math.abs(Number(rawInit));
-  const rawFixed = String(cfg.stepSize ?? 'auto').trim();
-  const fixedStepSize = rawFixed === 'auto' || rawFixed === '' ? null : Math.abs(Number(rawFixed));
-  const safety = Math.min(.98, Math.max(.2, Number(cfg.safety)||.9));
-  if (fixedStepSize && !['rk45','rk45_adaptive','heun_adaptive'].includes(method)) points = Math.max(2, Math.min(20000, Math.ceil(Math.abs(t1-t0)/fixedStepSize)+1));
-  const targetTs = Array.from({length:points},(_,i)=> t0 + (t1-t0)*i/(points-1));
-  let y = cfg.y0.map(Number), t=t0;
-  const Y = Array.from({length:cfg.vars.length},()=>[]), T=[];
-  let accepted=0,rejected=0,minStep=Infinity,maxUsed=0, stiffScore=0, functionEvaluations=0;
-  const start=performance.now();
-  function pushSample(tt, yy){ T.push(tt); for(let j=0;j<yy.length;j++) Y[j].push(yy[j]); }
-  pushSample(t,y);
-  if (method === 'rk45' || method === 'rk45_adaptive' || method === 'heun_adaptive') {
-    let h = Math.min(maxStep || Math.abs(t1-t0)/60, initialStep || Math.abs(t1-t0)/100 || 1e-3) * Math.sign(t1-t0 || 1);
-    for (let idx=1; idx<targetTs.length; idx++) {
-      const target = targetTs[idx];
-      let guard=0;
-      while ((t1>=t0 && t < target) || (t1<t0 && t > target)) {
-        if (cancelled) return {ok:false,cancelled:true,error:'Cancelled'};
-        if (++guard > 200000) throw new Error('Step limit reached. Problem may be stiff or unstable. Export Python and use Radau/BDF/LSODA.');
-        if (Math.abs(h) > Math.abs(target-t)) h = target-t;
-        const st = method === 'heun_adaptive' ? heunAdaptiveStep(rhs,t,y,h,params,rtol,atol) : rk45Step(rhs,t,y,h,params,rtol,atol);
-        functionEvaluations += rhsEvalCount(method, true);
-        const err = st.err;
-        if (err <= 1 || Math.abs(h) < 1e-14) {
-          t += h; y = st.y; accepted++; minStep=Math.min(minStep,Math.abs(h)); maxUsed=Math.max(maxUsed,Math.abs(h));
-          if (!y.every(Number.isFinite) || norm(y)>1e12) throw new Error('Solution diverged. Try shorter time horizon, looser model, or export Python for stiff solvers.');
-          const fac = Math.min(4, Math.max(0.15, safety*Math.pow(1/Math.max(err,1e-12),0.2)));
-          h *= fac;
-          if (maxStep) h = Math.sign(h)*Math.min(Math.abs(h), maxStep);
-        } else {
-          rejected++; stiffScore++; h *= Math.max(0.1, 0.85*Math.pow(1/err,0.25));
-        }
-      }
-      pushSample(target,y);
-      if (idx % 50 === 0) progress(idx/(targetTs.length-1), 'Solving');
-    }
-  } else {
-    for (let i=1;i<targetTs.length;i++) {
-      if (cancelled) return {ok:false,cancelled:true,error:'Cancelled'};
-      const h = targetTs[i]-targetTs[i-1];
-      y = fixedStep(rhs, method, targetTs[i-1], y, h, params);
-      functionEvaluations += rhsEvalCount(method, false);
-      if (!y.every(Number.isFinite) || norm(y)>1e12) throw new Error('Solution diverged. Increase points, reduce t end, or export Python for stiff solvers.');
-      accepted++; minStep=Math.min(minStep,Math.abs(h)); maxUsed=Math.max(maxUsed,Math.abs(h));
-      pushSample(targetTs[i],y);
-      if (i % 100 === 0) progress(i/(targetTs.length-1), 'Solving');
-    }
-  }
-  const runtime = performance.now()-start;
-  const warning = stiffScore>20 || rejected>accepted*.2 || minStep < Math.abs(t1-t0)*1e-8 ? 'Possible stiffness or instability detected. For reliable stiff integration, export Python with Radau, BDF, or LSODA.' : '';
-  return {ok:true, kind:'ode', T, Y, vars:cfg.vars, diagnostics:{method,accepted,rejected,functionEvaluations,runtime,minStep,maxStep:maxUsed,warning}};
+  return self.FokoODECore.solveWithRhs(cfg, rhs, {
+    cancelled: () => cancelled,
+    progress: (fraction, label) => progress(fraction, label),
+    now: () => performance.now()
+  });
 }
+
 function metric(vals,m){ if(!vals.length)return NaN; if(m==='max')return Math.max(...vals); if(m==='min')return Math.min(...vals); if(m==='final')return vals[vals.length-1]; return vals.reduce((a,b)=>a+b,0)/vals.length; }
 function sweepJob(cfg){
   if (cfg.sweepA === cfg.sweepB) throw new Error('Sweep parameters A and B must be different.');

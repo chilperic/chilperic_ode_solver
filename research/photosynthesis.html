@@ -2,120 +2,84 @@
 
 <html data-theme="aurora" lang="en">
 <head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="Protected unpublished plant research page for C3-C4 continuum modeling." name="description"/><title>Photosynthesis climate adaptation · Research Hub</title>
-<link href="../assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
-<link href="../assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="../favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
-<link href="../assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
-<link href="../styles/style.css?v=71.46.0" rel="stylesheet"/><meta content="assets/homepage-preview.webp" property="og:image"/>
-<link href="../styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
-<link href="../styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/>
-<link href="../styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/></head>
+<link href="../assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
+<link href="../assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
+<link href="../assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
+<link href="../styles/style.css?v=72.46.0" rel="stylesheet"/><link href="../styles/v72-public-shell.css?v=72.46.0" rel="stylesheet"/><meta content="assets/homepage-preview.webp" property="og:image"/></head>
 <body><div class="app-shell"><header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="../index.html"><img alt="Foko Lab" class="logo" src="../assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="../index.html"><img alt="Foko Lab" class="logo" src="../assets/brand/foko-lab-logo.svg?v=72.46.0"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-  <a class="active" aria-current="page" href="../index.html">Home</a>
-  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
-    <summary class="modeling-summary labs-summary">Modeling</summary>
-    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
-      <div class="menu-section menu-section-primary">
-        <p class="menu-section-title">Modeling workspaces</p>
-        <a href="../workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
-        <a href="../workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
-        <a href="../workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
-        <a href="../workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
-        <a href="../symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
-        <a href="../agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
-      </div></div>
-  </details>
-  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
-    <summary class="standalone-summary labs-summary">Focused Labs</summary>
-    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Standalone scientific labs</p>
-        <a href="../ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
-        <a href="../stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
-        <a href="../optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
-        <a href="../steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
-    <summary class="sciml-summary labs-summary">SciML</summary>
-    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Scientific machine learning</p>
-        <a href="../sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
-        <a href="../ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
-        <a href="../docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
-    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
-    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Model output analysis</p>
-        <a href="../statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
-        <a href="../fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-subtitle">Structure and geometry</p>
-        <a href="../linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
-        <a href="../networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
-    <summary class="resources-summary labs-summary">Explore</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Examples and mathematical culture</p>
-        <a href="../examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
-        <a href="../beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
-    <summary class="guide-summary labs-summary">Learn</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Guides and templates</p>
-        <a href="../docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
-        <a href="../tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
-    <summary class="creator-summary labs-summary">Creator</summary>
-    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Profile and research</p>
-        <a href="../cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
-        <a href="../research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-title">Contact and context</p>
-        <a href="../contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
-        <a href="../acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
-      </div>
-    </div>
-  </details>
+<a class="nav-home-link" href="../index.html">Home</a>
+<details class="labs-menu nav-menu" data-nav-menu="modeling">
+<summary class="labs-summary">Modeling</summary>
+<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
+<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
+<a href="../workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
+<a href="../ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
+<a href="../steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
+<a href="../stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Rules and search</p>
+<a href="../agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
+<a href="../optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
+<a href="../symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="analysis">
+<summary class="labs-summary">Data / Analysis</summary>
+<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
+<a href="../fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
+<a href="../statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
+<a href="../sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, Sobol/Jansen and local information diagnostics.</small></span></a>
+<a href="../linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
+<a href="../networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="sciml">
+<summary class="labs-summary">SciML</summary>
+<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
+<a href="../sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
+<a href="../ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
+<a href="../docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="explore">
+<summary class="labs-summary">Explore</summary>
+<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
+<div class="menu-section"><p class="menu-section-title">Find and learn</p>
+<a href="../examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
+<a href="../beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
+<a href="../docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
+<a href="../tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
+<a href="../trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
+<a href="../research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
+<a href="../cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
+</div>
+</div>
+</details>
+<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
 </nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="Contact" class="github-pill" href="../contact.html">Contact</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="../research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="../assets/profile-chilperic.webp?v=71.46.0"/></a></div>
+<div aria-label="Display controls" class="foko-top-actions"></div>
 </header><main class="doc-page model-atlas research-project-page"><div id="top"></div><nav aria-label="Research project navigation" class="project-nav-bar"><a href="../research.html">← Back to Research Hub</a><a href="tcell-proliferation.html">Previous project</a><a href="fatty-acid-metabolism.html">Next project</a></nav>
 <section class="card hero-doc atlas-hero project-launch-hero">
 <div class="project-launch-copy"><p class="eyebrow">Flagship research · unpublished plant project</p><h1>Plant thermo-hydraulic adaptation</h1><p class="project-subtitle">First-principles modeling across the C3–C4 continuum</p><p class="research-lead">A portfolio-level view of a First-principles thermo-hydraulic unpublished plant model coupling climate forcing, leaf heat transfer, hydraulics, compartmental photosynthesis, trait optimization, sensitivity analysis and evolutionary interpretation.</p><div class="research-pill-row"><span>C3–C4 continuum</span><span>mesophyll / bundle sheath</span><span>heat transfer</span><span>hydraulics</span><span>Rubisco / PEPC</span><span>CMA-ES</span><span>Sobol</span></div></div>
 <figure class="source-derived project-launch-figure"><img alt="Graphical abstract of plant thermo-hydraulic C3-C4 model" decoding="async" loading="eager" src="../assets/research/photosynthesis/plant_abstract_figure.png"/><figcaption>Protected graphical abstract: field-to-leaf compartments, heat flux, hydraulics and temperature-dependent PEPC/Rubisco logic.</figcaption></figure></section>
 <section class="card project-ownership"><h2>Project ownership / Leadership and contributors</h2><table class="research-matrix"><tbody><tr><td>Chilperic Armel Foko Kuate</td><td>Project leader: research design, model architecture, core code, major implementation, visual analysis and scientific integration.</td></tr><tr><td>Yvonne Danisch</td><td>Bachelor thesis contribution: implementation work, execution, validation and analysis within the project framework.</td></tr><tr><td>Jérémie Muller-Prokob</td><td>Scientific supervision, technical discussion and guidance.</td></tr><tr><td>Prof. Dr. Martin Lercher</td><td>PI supervision, research environment and funding.</td></tr><tr><td>Antonio Rigueiro</td><td>Additional paper-level contribution.</td></tr></tbody></table></section>
-<!-- legacy asset marker for audit continuity: plant_project_hero.webp -->
-<section class="card simulation-callout protected-callout"><div><h2>Protected unpublished project</h2><p><b>This plant project is unpublished.</b> This page is a portfolio-level presentation. It does not distribute source code and does not expose source code, notebooks, parameter files, calibration data, raw result files, Python/SALib exports, JSON/CSV reports, ZIPs, or full-model downloads. In short: no source code, no parameter files, and no full-model downloads are provided.</p><p><b>Simulation access:</b> only reduced explanatory surrogates are available.</p></div><div class="callout-actions"><a class="open-link workbench-link" href="../workbench.html?model=leaf-thermal-steady">Open heat-balance surrogate</a><a class="open-link workbench-link" href="../workbench.html?model=hydraulic-carbon-opt">Open hydraulic-carbon surrogate</a><a class="open-link workbench-link" href="../workbench.html?model=c3c4-trait-opt">Open C3–C4 trait surrogate</a><a class="open-link workbench-link" href="../workbench.html?model=thermal-controller-opt">Bundle-sheath controller</a><a class="open-link workbench-link" href="../workbench.html?model=crop-phenotype-robust-opt">Robust C3-C4 phenotype</a></div></section>
+<section class="card simulation-callout protected-callout"><div><h2>Protected unpublished project</h2><p><b>This plant project is unpublished.</b> This page is a portfolio-level presentation. It does not distribute source code and does not expose source code, notebooks, parameter files, calibration data, raw result files, Python/SALib exports, JSON/CSV reports, ZIPs, or full-model downloads. In short: no source code, no parameter files, and no full-model downloads are provided.</p><p><b>Simulation access:</b>no public runnable implementation is distributed in this release.</p></div><div class="callout-actions"><p class="protected-access-note">No public runnable model is linked from this page. The full Thermoplants implementation and parameterization remain protected; the figures and methods overview are public.</p></div></section>
 <section class="card"><h2>Research question / Scientific problem</h2><p class="research-quote">Which environmental and physiological constraints make C3-like, C4-like, or intermediate photosynthetic phenotypes favorable?</p><p>Classical photosynthesis models often isolate gas exchange or enzyme kinetics. This project instead treats adaptation as an integrated physical-biochemical problem. Solar radiation changes compartment temperature; temperature changes enzyme performance; hydraulic capacity constrains cooling and stomatal conductance; and the resulting assimilation landscape shapes the trait combinations selected by an evolutionary optimizer.</p></section>
 <section class="card"><h2>What I built</h2><p>I designed a first-principles modeling framework where environmental forcing acts through physical leaf temperature, hydraulic cooling and compartment-specific biochemical kinetics. The public browser layer uses reduced surrogates only; the full unpublished model remains protected.</p></section><section class="card"><h2>Model architecture</h2>
-<p class="figure-policy"><b>Scientific figure first.</b> The graphical abstract below is the primary architecture figure; the text explains its modeling layers without replacing it by an invented schematic.</p>
-<div class="research-split source-figure-split">
-<div><p>The model treats the leaf as a structured system, not a single homogeneous photosynthetic surface. The central compartments are mesophyll, bundle sheath and soil/environmental boundary conditions. The public story is therefore the coupling of:</p><ul><li>radiative and convective heat exchange,</li><li>transpirative and hydraulic cooling,</li><li>mesophyll and bundle-sheath temperature gradients,</li><li>PEPC and Rubisco temperature-dependent kinetics,</li><li>CO₂ transport and C3/C4 allocation,</li><li>evolutionary optimization over physiological traits.</li></ul></div>
-<figure class="source-derived research-figure"><img alt="Plant project graphical abstract showing field-to-leaf compartments, heat flux, hydraulics and C3-C4 biochemistry" decoding="async" loading="lazy" src="../assets/research/photosynthesis/plant_project_hero.webp"/><figcaption>Source graphical abstract: field context, compartmental heat/hydraulic balance, and temperature-dependent PEPC/Rubisco biochemistry.</figcaption></figure>
+<p>The model treats the leaf as a structured system rather than a single homogeneous photosynthetic surface. Its architecture couples radiative and convective heat exchange, transpirative and hydraulic cooling, mesophyll and bundle-sheath temperature gradients, temperature-dependent PEPC and Rubisco kinetics, CO₂ transport, C3/C4 allocation, and evolutionary optimization over physiological traits.</p>
+<div aria-label="Thermo-hydraulic and environment-plant model architecture figures" class="model-architecture-grid">
+<figure class="source-derived research-figure model-architecture-figure"><img alt="Thermo-hydraulic transport architecture linking mesophyll, bundle sheath, soil surface, root and sink compartments" decoding="async" loading="lazy" src="../assets/research/photosynthesis/thermo-hydraulic-transport-architecture.png"/><figcaption>Thermo-hydraulic transport architecture.</figcaption></figure>
+<figure class="source-derived research-figure model-architecture-figure"><img alt="Environment-plant-physiology integration linking environmental forcing, anatomical and physiological parameters, and net carbon dioxide assimilation" decoding="async" loading="lazy" src="../assets/research/photosynthesis/environment-plant-physiology-integration.png"/><figcaption>Environment–plant–physiology integration.</figcaption></figure>
 </div></section>
 <section class="card"><h2>Methods and computational layer</h2><table class="research-matrix"><tbody><tr><td>Biochemistry</td><td>Farquhar–von Caemmerer-style C3 core extended toward C4/intermediate states with PEPC and Rubisco activity in relevant compartments.</td></tr><tr><td>Physics</td><td>Energy-balance formulation for compartment temperatures with radiative, convective, conductive and transpirative cooling terms.</td></tr><tr><td>Hydraulics</td><td>Water transport and cooling limits used to connect carbon gain to water availability and environmental stress.</td></tr><tr><td>Optimization</td><td>Evolutionary trait search over climate-specific objective landscapes rather than a single hand-tuned parameter set.</td></tr><tr><td>Interrogation</td><td>Local sensitivity, Sobol first/total-order indices, second-order interactions, Pareto fronts and 3D evolutionary trajectories.</td></tr></tbody></table></section>
 <section class="card"><h2>Most sellable outputs</h2><p>The most persuasive outputs are the 3D evolutionary trajectories, local sensitivity analysis, Sobol first/total-order indices, second-order Sobol interactions, and Pareto fronts.</p></section><section class="card"><h2>Results narrative</h2><p>The sellable result is not one final optimum. The result is a set of alternative adaptive routes. Hot and water-limited climates can push the system toward C4-like allocation, while cooler or less constraining climates can stabilize intermediate regimes. The 3D trajectories show how trait space is traversed; sensitivity analysis shows which traits deserve biological attention; Pareto fronts expose the trade-off between mesophyll and bundle-sheath assimilation.</p></section>
@@ -131,4 +95,4 @@
 </section>
 <section class="card"><h2>What this project demonstrates about my profile</h2><table class="research-matrix"><tbody><tr><td>Multiscale modeling</td><td>Processes are linked across climate, tissue compartment, enzyme kinetics, water transport and trait evolution.</td></tr><tr><td>Environmental modeling</td><td>Climate and soil-water constraints are part of the model, not after-the-fact annotations.</td></tr><tr><td>Mathematical maturity</td><td>Optimization, sensitivity analysis, Pareto trade-offs and mechanistic equations are used together.</td></tr><tr><td>Scientific restraint</td><td>The public page exposes the logic and selected results without distributing unpublished source material.</td></tr></tbody></table></section>
 <section class="card"><h2>Limitations and public boundary</h2><ul><li>The displayed simulations are reduced explanatory surrogates, not the full unpublished Python/CasADi/CMA-ES/SALib workflow.</li><li>The leaf is simplified compared with full anatomical detail; the public page should state this rather than oversell predictive precision.</li><li>Selected plots are shown as portfolio evidence. Raw parameters, calibration files and source code are withheld until the publication strategy is settled.</li></ul></section>
-<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="tcell-proliferation.html">Previous</a><a href="fatty-acid-metabolism.html">Next</a><a href="#top">Back to top ↑</a></section></main></div><script defer="" src="../src/navigation.js?v=71.46.0"></script></body></html>
+<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="tcell-proliferation.html">Previous</a><a href="fatty-acid-metabolism.html">Next</a><a href="#top">Back to top ↑</a></section></main></div><script defer="" src="../src/navigation.js?v=72.46.0"></script></body></html>

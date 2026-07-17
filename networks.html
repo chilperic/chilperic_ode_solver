@@ -4,141 +4,107 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Browser-native graph theory and network diagnostics." name="description"/>
+<meta content="Foko Lab Network Lab provides small graph analysis with explicit direction, edge-weight and heuristic boundaries." name="description"/>
+<meta content="Foko Lab Network Lab" property="og:title"/>
+<meta content="Browser-computed small graph summaries, weighted shortest paths, centrality, components, minimum spanning trees, community heuristics and node-removal scenarios." property="og:description"/>
+<meta content="website" property="og:type"/>
 <title>Network Lab · Foko Lab</title>
-<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
-<script crossorigin="anonymous" defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script src="src/plot-fallback.js?v=71.46.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-10-modeling-logic.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-15-analysis-suite.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-19-platform-system.css?v=71.46.0" rel="stylesheet"/>
-<link href="src/platform/shell.css?v=71.46.0" rel="stylesheet"/>
-
-<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/lab-identity.css?v=71.46.0" rel="stylesheet"/>
-</head>
-<body data-lab="analysis" data-module="networks">
-<div class="app-shell analysis-shell">
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.46.0"></script>
+<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=72.46.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.46.0"></script></head>
+<body data-lab="networks" data-v72-shell="true" data-version="72.46.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.46.0" width="190"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-  <a href="index.html">Home</a>
-  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
-    <summary class="modeling-summary labs-summary">Modeling</summary>
-    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
-      <div class="menu-section menu-section-primary">
-        <p class="menu-section-title">Modeling workspaces</p>
-        <a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
-        <a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
-        <a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
-        <a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
-        <a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
-        <a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
-      </div></div>
-  </details>
-  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
-    <summary class="standalone-summary labs-summary">Focused Labs</summary>
-    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Standalone scientific labs</p>
-        <a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
-        <a href="stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
-        <a href="optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
-        <a href="steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
-    <summary class="sciml-summary labs-summary">SciML</summary>
-    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Scientific machine learning</p>
-        <a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
-        <a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
-        <a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
-    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
-    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Model output analysis</p>
-        <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
-        <a href="fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-subtitle">Structure and geometry</p>
-        <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
-        <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
-    <summary class="resources-summary labs-summary">Explore</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Examples and mathematical culture</p>
-        <a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
-        <a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
-    <summary class="guide-summary labs-summary">Learn</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Guides and templates</p>
-        <a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
-        <a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
-    <summary class="creator-summary labs-summary">Creator</summary>
-    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Profile and research</p>
-        <a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
-        <a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
-        <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener" role="menuitem"><span class="menu-icon">↗</span><span><b>Personal website</b><small>Portfolio homepage and broader profile.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-title">Contact and context</p>
-        <a href="contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
-        <a href="acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
-      </div>
-    </div>
-  </details>
-</nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/></a></div>
-</header>
-<main class="analysis-page descriptor-page analysis-cockpit-page" data-v7110-networks-port="true">
-<section class="analysis-hero compact"><p class="eyebrow">Data / Analysis</p><h1>Network Lab — concrete examples and plots</h1></section>
-
-<section id="networkShellApp" data-lab="networks"></section>
-</main>
-<footer class="v70-footer"><div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=71.46.0"/><p><b>Foko Lab</b><br/>© 2025 Dr. Chilperic Armel Foko Kuate</p></div><nav><a href="research.html">Research</a><a href="beauty.html">Mathematical Beauty</a><a href="docs.html">Documentation</a><a href="tutorial.html">Tutorial</a><a href="acknowledgement.html">Acknowledgement</a><a href="contact.html">Contact</a></nav><div class="v70-institutions"><span>HHU Düsseldorf</span><span>CEPLAS</span><span>AIMS Ghana</span><span>PoLiMeR ITN</span></div></footer>
+<a class="nav-home-link" href="index.html">Home</a>
+<details class="labs-menu nav-menu" data-nav-menu="modeling">
+<summary class="labs-summary">Modeling</summary>
+<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
+<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
+<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
+<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
+<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
+<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
 </div>
-<script src="src/fokokit.js?v=71.46.0"></script>
-<script src="src/core/networks.js?v=71.46.0"></script>
-<script src="src/platform/shell.js?v=71.46.0"></script>
-<script src="src/analysis-plot-registry.js?v=71.46.0"></script>
-<script src="src/labs/networks.js?v=71.46.0"></script>
-<script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=71.46.0"></script>
-<!-- src/navigation.js?v=71.46.0 legacy-token-for-contract --><script defer src="src/platform-data-engine.js?v=71.46.0"></script>
-<script defer src="src/platform-shell.js?v=71.46.0"></script>
-<script defer src="src/v71-platform.js?v=71.46.0"></script>
-<script src="src/platform/compute-bus.js?v=71.46.0"></script>
+<div class="menu-section"><p class="menu-section-title">Rules and search</p>
+<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
+<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
+<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="analysis">
+<summary class="labs-summary">Data / Analysis</summary>
+<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
+<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
+<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
+<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="sciml">
+<summary class="labs-summary">SciML</summary>
+<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
+<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
+<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
+<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="explore">
+<summary class="labs-summary">Explore</summary>
+<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
+<div class="menu-section"><p class="menu-section-title">Find and learn</p>
+<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
+<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
+<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
+<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
+<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
+<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
+<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
+</div>
+</div>
+</details>
+<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
+</nav>
+<div aria-label="Display controls" class="foko-top-actions"></div>
+</header>
+<main class="layout" id="workbench" tabindex="-1">
+<aside aria-label="Network workflow" class="side-nav">
+<button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
+<button class="nav-item" data-jump="#graphBlock" type="button">Graph</button>
+<button class="nav-item" data-jump="#analysisBlock" type="button">Analysis</button>
+<button class="nav-item" data-jump="#exportsBlock" type="button">Export</button>
+</aside>
+<aside aria-label="Network controls" class="work-panel controls">
+<section class="card intro-card hero-with-mark"><div><p class="v72-eyebrow">Small graphs · explicit direction · bounded heuristics</p><h2>Network Lab</h2><p class="note">Analyze graph structure while keeping path costs, edge direction, disconnected components and heuristic community claims explicit.</p></div><div aria-hidden="true" class="lab-mark data-lab-mark">⟠</div></section>
+<section aria-label="Run network analysis" class="actionbar card"><button class="primary" id="runNetworks" type="button">Analyze graph</button><button class="secondary" id="resetNetworks" type="button">Reset example</button><div class="status" id="networksStatus">Ready. No graph result exists yet.</div><div class="progress"><div id="networksProgress"></div></div></section>
+<section class="card" id="examplesBlock"><div class="card-head"><div><p class="v72-eyebrow">Curated graphs</p><h2>Examples</h2></div><button class="secondary small" id="loadNetworks" type="button">Load selected</button></div><label><span>Example</span><select id="networksSelect"></select></label><div class="model-deck" id="networksDeck"></div><p class="narrative" id="networksNarrative">Select a graph example.</p><p class="field-help" id="networksScientificNote"></p></section>
+<section class="card" id="graphBlock"><div class="card-head"><div><p class="v72-eyebrow">Graph contract</p><h2>Edge list</h2></div></div><label class="upload-drop"><span>Import edge list, CSV, or network configuration JSON</span><input accept=".json,.csv,.tsv,.txt,.edges,application/json,text/csv,text/plain" id="networksImport" type="file"/></label><label><span>Edges · source, target, optional non-negative weight</span><textarea id="networksEdges" rows="15" spellcheck="false"></textarea></label><div class="two-col small-gap"><label><span>Graph direction</span><select id="networksDirected"><option value="false">Undirected</option><option value="true">Directed</option></select></label><label><span>Weight interpretation</span><select id="networksWeightMeaning"><option value="cost">Cost / distance</option><option value="strength">Connection strength</option></select></label></div><div class="data-summary-strip" id="networksInputSummary">Graph has not been parsed.</div><p class="scientific-boundary">The same numerical weight cannot simultaneously mean path cost and interaction strength without a transformation. Shortest paths treat weights as additive costs; PageRank and label propagation treat them as relative strengths.</p></section>
+<section class="card" id="analysisBlock"><div class="card-head"><div><p class="v72-eyebrow">Structural question</p><h2>Analysis settings</h2></div></div><label><span>Analysis</span><select id="networksOperation"><option value="summary">Graph summary</option><option value="shortest">Weighted shortest path</option><option value="centrality">Centrality comparison</option><option value="mst">Minimum spanning tree</option><option value="communities">Label-propagation communities</option><option value="resilience">Degree-ordered node removal</option></select></label><div class="two-col small-gap"><label><span>Source node</span><input id="networksSource" type="text"/></label><label><span>Target node</span><input id="networksTarget" type="text"/></label><label><span>PageRank damping</span><input id="networksDamping" max="0.99" min="0.05" step="0.01" type="number" value="0.85"/></label><label><span>Maximum iterations</span><input id="networksMaxIterations" max="5000" min="10" step="10" type="number" value="500"/></label></div><p class="field-help" id="networksMethodHelp">Centrality measures encode different definitions of importance and need not agree.</p><p class="scientific-boundary">Community labels and node-removal curves are algorithm-dependent scenarios. They are not unique latent truth, causal evidence or calibrated failure probabilities.</p></section>
+</aside>
+<section aria-label="Network results" class="workspace v72-workspace"><section aria-label="Computed network results" class="results-card" role="region"><header class="v72-workspace-head"><div><p class="v72-eyebrow">Computed workspace</p><h1>Topology, paths and structural diagnostics</h1><p>Compare graph geometry with quantitative summaries computed from the same edge list. The circular layout is deterministic and carries no optimization claim.</p></div><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div></header><div class="plot-toolbar-v2"><span class="result-kind" id="networksResultKind">No computed graph result</span><button class="ghost" id="exportNetworksPng" type="button">Current PNG</button><button class="ghost" id="exportNetworksSvg" type="button">Current SVG</button></div><div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
+<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="leftPlotTitle">Graph</h3><select aria-label="Primary network plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div><div class="plot" id="leftPlot"><div class="diagnostics empty">Analyze to create a plot.</div></div><details class="plot-evidence"><summary>Scientific meaning</summary><p id="leftPlotEvidence">No plot has been computed.</p></details></article>
+<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="rightPlotTitle">Adjacency</h3><select aria-label="Secondary network plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div><div class="plot" id="rightPlot"><div class="diagnostics empty">Analyze to create a plot.</div></div><details class="plot-evidence"><summary>Scientific meaning</summary><p id="rightPlotEvidence">No plot has been computed.</p></details></article>
+</div><p class="info-strip" id="plotHint">A layout, a centrality score and a shortest path answer different questions. None identifies causality by itself.</p></section></section>
+<aside aria-label="Network diagnostics and exports" class="v72-inspector"><section class="v72-inspector-card"><p class="v72-eyebrow">Run status</p><div class="status-strip"><div class="status-ok"><span>●</span><b id="networksTopStatus">Ready</b></div><div><span>Runtime</span><b id="networksRuntime">—</b></div><div><span>Nodes / edges</span><b id="networksSize">—</b></div><div><span>Direction</span><b id="networksDirection">—</b></div><div><span>Operation</span><b id="networksOperationMetric">—</b></div></div><div class="metrics-grid"><article class="metric-card"><small>Density</small><b id="networksDensity">—</b><em>simple-graph denominator</em></article><article class="metric-card"><small>Weak components</small><b id="networksComponents">—</b><em>connectivity</em></article><article class="metric-card"><small>Largest degree</small><b id="networksMaxDegree">—</b><em>count-based</em></article><article class="metric-card"><small>Path / tree weight</small><b id="networksWeightMetric">—</b><em>operation dependent</em></article></div></section><section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Structural evidence</p><h2>Result and warnings</h2></div></div><div class="diagnostics empty" id="networksDiagnostics">Analyze to see metrics, paths, components and limitations.</div></section><section class="v72-inspector-card" id="provenanceCard"><div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Computation boundary</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div><div><dt>Engine</dt><dd id="provenanceEngine">FokoNetworksReference</dd></div><div><dt>Method</dt><dd id="provenanceMethod">Not run</dd></div><div><dt>Data</dt><dd id="provenanceData">Not parsed</dd></div><div><dt>Assumptions</dt><dd id="provenanceAssumptions">Not assessed</dd></div><div><dt>Reproducibility</dt><dd id="provenanceReproducibility">Configuration only</dd></div></dl><p class="v72-warning" id="provenanceWarning">No numerical result exists yet.</p></section><section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div><div class="export-row"><button class="secondary" id="saveNetworksSession" type="button">Save session</button><button class="secondary" id="restoreNetworksSession" type="button">Restore session</button><button class="secondary" id="copyNetworksShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportNetworksCsv" type="button">Metrics CSV</button><button class="secondary" id="exportNetworksJson" type="button">Result JSON</button><button class="secondary" id="exportNetworksPython" type="button">Python validation script</button></div><p class="note">Session and share controls preserve the edge list and settings only. Computed evidence must be regenerated after restore.</p></section></aside>
+</main></div>
+<script defer="" src="src/models/networks-presets.js?v=72.46.0"></script>
+<script defer="" src="src/core/networks-reference.js?v=72.46.0"></script>
+<script defer="" src="src/v72/networks-workspace.js?v=72.46.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=72.46.0"></script>
+<script defer="" src="src/navigation.js?v=72.46.0"></script>
 </body>
 </html>

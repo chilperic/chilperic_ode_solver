@@ -2108,3 +2108,29 @@ body[data-lab="ode"] #exportNote{margin:.55rem 0 0;font-size:12px;line-height:1.
 @keyframes fokoPulse{0%{opacity:.35}50%{opacity:1}100%{opacity:.35}}
 
 /* V71.31 analysis shell markers: analysis-plot-picker analysis-left-plot-hidden analysis-plot-wait data-state="running" data-analysis-tertiary-plot analysis-user-input-card analysis-latex-preview */
+
+/* v72.44.0 — research model architecture figures */
+.model-architecture-grid{
+  display:grid;
+  grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  gap:1rem;
+  align-items:stretch;
+  margin-top:1rem;
+}
+.model-architecture-figure{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-width:0;
+}
+.model-architecture-figure img{
+  width:100%;
+  height:100%;
+  max-height:540px;
+  object-fit:contain;
+  background:#fff;
+}
+@media(max-width:900px){
+  .model-architecture-grid{grid-template-columns:1fr;}
+  .model-architecture-figure img{height:auto;max-height:none;}
+}

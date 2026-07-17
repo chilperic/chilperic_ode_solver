@@ -1,48 +1,952 @@
-(function(root){'use strict';
-const FokoKit = root.FokoKit || (typeof require==='function' ? require('../fokokit.js') : null);
-function requirePairs(pairs,name){if(!Array.isArray(pairs)||pairs.length===0||!pairs.every(p=>Array.isArray(p)&&p.length>=2&&Number.isFinite(p[0])&&Number.isFinite(p[1])))throw new Error(name+': expected a non-empty list of [x,y] pairs');}
-function requireSameLength(x,y,name){return FokoKit?FokoKit.requireSameLength(x,y,name):[x,y];}
-function parsePairs(text){return String(text||'').trim().split(/\n+/).map(r=>r.trim().split(/[\s,;]+/).map(Number)).filter(r=>r.length>=2&&Number.isFinite(r[0])&&Number.isFinite(r[1])).map(r=>[r[0],r[1]]);} 
-function mean(a){return a.reduce((s,x)=>s+x,0)/(a.length||1);} 
-function variance(a){const m=mean(a);return a.reduce((s,x)=>s+(x-m)*(x-m),0)/Math.max(1,a.length-1);} 
-function sd(a){return Math.sqrt(variance(a));}
-function quantile(a,p){const s=a.slice().sort((x,y)=>x-y);if(!s.length)return NaN;const i=(s.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i),h=i-lo;return s[lo]*(1-h)+s[hi]*h;}
-function normalInv(p){const a=[-39.69683028665376,220.9460984245205,-275.9285104469687,138.357751867269,-30.66479806614716,2.506628277459239],b=[-54.47609879822406,161.5858368580409,-155.6989798598866,66.80131188771972,-13.28068155288572],c=[-0.007784894002430293,-0.3223964580411365,-2.400758277161838,-2.549732539343734,4.374664141464968,2.938163982698783],d=[0.007784695709041462,0.3224671290700398,2.445134137142996,3.754408661907416];const pl=0.02425,ph=1-pl;let q,r;if(p<=0)return -Infinity;if(p>=1)return Infinity;if(p<pl){q=Math.sqrt(-2*Math.log(p));return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}if(p<=ph){q=p-0.5;r=q*q;return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}q=Math.sqrt(-2*Math.log(1-p));return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}
-function solve(A,b){const n=A.length,M=A.map((r,i)=>r.slice().concat([b[i]]));for(let k=0;k<n;k++){let p=k;for(let i=k+1;i<n;i++) if(Math.abs(M[i][k])>Math.abs(M[p][k])) p=i; [M[k],M[p]]=[M[p],M[k]]; let piv=M[k][k]; if(Math.abs(piv)<1e-12)piv=piv<0?-1e-12:1e-12; for(let j=k;j<=n;j++) M[k][j]/=piv; for(let i=0;i<n;i++) if(i!==k){const f=M[i][k];for(let j=k;j<=n;j++) M[i][j]-=f*M[k][j];}} return M.map(r=>r[n]);}
-function inverse(A){const n=A.length, I=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?1:0));const cols=I.map(e=>solve(A,e));return Array.from({length:n},(_,i)=>cols.map(c=>c[i]));}
-function transpose(A){return A[0].map((_,j)=>A.map(r=>r[j]));}
-function matmul(A,B){const Bt=transpose(B);return A.map(r=>Bt.map(c=>r.reduce((s,x,i)=>s+x*(c[i]||0),0)));}
-function matvec(A,v){return A.map(r=>r.reduce((s,x,i)=>s+x*(v[i]||0),0));}
-function dot(a,b){return a.reduce((s,x,i)=>s+x*(b[i]||0),0);}
-function design(x,degree){return x.map(v=>Array.from({length:degree+1},(_,k)=>v**k));}
-function modelInfo(model){if(model==='quadratic')return {names:['intercept','x','x^2'],predict:(x,p)=>p[0]+p[1]*x+p[2]*x*x};if(model==='cubic')return {names:['intercept','x','x^2','x^3'],predict:(x,p)=>p[0]+p[1]*x+p[2]*x*x+p[3]*x*x*x};if(model==='exponential')return {names:['a','b'],predict:(x,p)=>p[0]*Math.exp(p[1]*x)};if(model==='logistic')return {names:['K','r','x0'],predict:(x,p)=>p[0]/(1+Math.exp(-p[1]*(x-p[2])))};if(model==='michaelis'||model==='michaelis-menten')return {names:['Vmax','Km'],predict:(x,p)=>p[0]*x/(p[1]+x)};return {names:['intercept','slope'],predict:(x,p)=>p[0]+p[1]*x};}
-function predictModel(model,x,p){return modelInfo(model).predict(x,p);}
-function initialParams(model,x,y){if(model==='quadratic'||model==='cubic')return polyFitCore(x,y,model==='cubic'?3:2).coef;if(model==='exponential'){const clean=x.map((v,i)=>[v,y[i]]).filter(p=>p[1]>0);if(clean.length>=2){const lin=polyFitCore(clean.map(p=>p[0]),clean.map(p=>Math.log(p[1])),1).coef;return [Math.exp(lin[0]),lin[1]];}return [Math.max(1,mean(y)),0.1];}if(model==='logistic')return [Math.max(...y)*1.1,0.6,x[Math.floor(x.length/2)]||mean(x)];if(model==='michaelis')return [Math.max(...y)*1.25,Math.max(1,mean(x))];return polyFitCore(x,y,1).coef;}
-function sseFor(model,x,y,p){return x.reduce((s,v,i)=>{const r=y[i]-predictModel(model,v,p);return s+r*r;},0);}
-function numericJacobian(model,x,p){const info=modelInfo(model);return x.map(v=>p.map((pj,j)=>{const h=1e-6*(Math.abs(pj)+1);const pp=p.slice(),pm=p.slice();pp[j]+=h;pm[j]-=h;return (info.predict(v,pp)-info.predict(v,pm))/(2*h);}));}
-function lmOptimize(model,x,y,start,opts){opts=opts||{};let p=start.slice(),lambda=opts.lambda||1e-3,mask=opts.mask||p.map(()=>true);let cur=sseFor(model,x,y,p);for(let it=0;it<(opts.steps||120);it++){const J=numericJacobian(model,x,p),r=x.map((v,i)=>y[i]-predictModel(model,v,p));const active=p.map((_,i)=>i).filter(i=>mask[i]);if(!active.length)break;const Ja=J.map(row=>active.map(i=>row[i]));const JT=transpose(Ja),JTJ=matmul(JT,Ja),JTr=JT.map(row=>dot(row,r));for(let i=0;i<JTJ.length;i++)JTJ[i][i]+=lambda*(JTJ[i][i]||1);let d;try{d=solve(JTJ,JTr);}catch(e){lambda*=10;continue;}const trial=p.slice();active.forEach((idx,k)=>{trial[idx]+=d[k];});if((model==='michaelis'||model==='logistic'||model==='exponential')&&trial[0]<=0)trial[0]=Math.abs(trial[0])+1e-6;if(model==='michaelis'&&trial[1]<=0)trial[1]=Math.abs(trial[1])+1e-6;const ss=sseFor(model,x,y,trial);if(Number.isFinite(ss)&&ss<cur){const prev=cur;p=trial;cur=ss;lambda=Math.max(lambda/4,1e-9);if(Math.abs(prev-ss)<1e-14)break;}else lambda=Math.min(lambda*4,1e9);}return p;}
-function polyFitCore(x,y,deg){requireSameLength(x,y,'polyFit');if(x.length<=deg)throw new Error('polyFit: need more points than the polynomial degree');const X=design(x,deg),Xt=transpose(X),coef=solve(matmul(Xt,X),Xt.map(row=>dot(row,y)));return {coef,X,pred:x.map(v=>coef.reduce((s,c,k)=>s+c*v**k,0))};}
-function score(x,y,pred,extra,k){const n=y.length,ybar=mean(y),residuals=y.map((v,i)=>v-pred[i]),sse=residuals.reduce((s,r)=>s+r*r,0),tss=y.reduce((s,v)=>s+(v-ybar)**2,0),df=Math.max(1,n-(k||1)),sigma2=sse/df,rmse=Math.sqrt(sse/Math.max(1,n)),aic=n*Math.log(Math.max(1e-12,sse/n))+2*(k||1),bic=n*Math.log(Math.max(1e-12,sse/n))+Math.log(Math.max(1,n))*(k||1);return Object.assign({n,df,sigma2,sse,rmse,r2:tss?1-sse/tss:1,aic,bic,pred,residuals},extra);}
-function covarianceFromJacobian(J,sigma2){try{const Xt=transpose(J),XtX=matmul(Xt,J),inv=inverse(XtX);return inv.map(r=>r.map(v=>v*sigma2));}catch(e){return null;}}
-function parameterSummary(names,coef,cov){return coef.map((c,i)=>{const se=cov&&cov[i]?Math.sqrt(Math.max(0,cov[i][i])):NaN;return {name:names[i]||('p'+i),value:c,se,t:Number.isFinite(se)&&se>0?c/se:NaN,ci95:Number.isFinite(se)?[c-1.96*se,c+1.96*se]:[NaN,NaN]};});}
-function influenceDiagnostics(J,residuals,k,sigma2){let H=[],cooks=[],standardized=[];try{const inv=inverse(matmul(transpose(J),J));H=J.map(row=>dot(row,matvec(inv,row)));}catch(e){H=residuals.map(()=>NaN);}const mse=sigma2||variance(residuals)||1;for(let i=0;i<residuals.length;i++){const h=Math.max(0,Math.min(0.999999,H[i]||0));const sr=residuals[i]/Math.sqrt(Math.max(1e-12,mse*(1-h)));standardized.push(sr);cooks.push((sr*sr*h)/Math.max(1,k*(1-h)));}return {leverage:H,standardizedResiduals:standardized,cooksDistance:cooks};}
-function enrich(model,x,y,coef,pred,extra){const info=modelInfo(model),J=numericJacobian(model,x,coef),base=score(x,y,pred,Object.assign({model,coef},extra||{}),coef.length),cov=covarianceFromJacobian(J,base.sigma2);base.covariance=cov;base.parameterSummary=parameterSummary(info.names,coef,cov);base.parameterSE=base.parameterSummary.map(p=>p.se);base.influence=influenceDiagnostics(J,base.residuals,coef.length,base.sigma2);base.predictionBands=predictionBands(model,x,coef,cov,base.sigma2);base.confidenceEllipse=confidenceEllipse(coef,cov,info.names);base.sensitivity=sensitivityCoefficients(model,x,coef);base.profileLikelihood=profileLikelihood(model,x,y,coef);base.bootstrap=bootstrapFit(x.map((v,i)=>[v,y[i]]),model,120);base.warnings=[];if(!cov)base.warnings.push('Covariance could not be estimated; check parameter identifiability or data volume.');if(base.n<=coef.length+1)base.warnings.push('Few observations relative to parameters; uncertainty diagnostics are unstable.');return base;}
-function polyFit(x,y,deg){const pf=polyFitCore(x,y,deg),model=deg===1?'linear':deg===2?'quadratic':'cubic';return enrich(model,x,y,pf.coef,pf.pred,{degree:deg});}
-function linearFit(pairs){requirePairs(pairs,'linearFit');return polyFit(pairs.map(p=>p[0]),pairs.map(p=>p[1]),1);} 
-function expFit(pairs){requirePairs(pairs,'expFit');const x=pairs.map(p=>p[0]),y=pairs.map(p=>p[1]);const p=lmOptimize('exponential',x,y,initialParams('exponential',x,y),{steps:160});return enrich('exponential',x,y,p,x.map(v=>predictModel('exponential',v,p)),{});} 
-function logisticFit(pairs){requirePairs(pairs,'logisticFit');const x=pairs.map(p=>p[0]),y=pairs.map(p=>p[1]);const p=lmOptimize('logistic',x,y,initialParams('logistic',x,y),{steps:220});return enrich('logistic',x,y,p,x.map(v=>predictModel('logistic',v,p)),{});} 
-function michaelisFit(pairs){requirePairs(pairs,'michaelisFit');const x=pairs.map(p=>p[0]),y=pairs.map(p=>p[1]);const p=lmOptimize('michaelis',x,y,initialParams('michaelis',x,y),{steps:220});const res=enrich('michaelis',x,y,p,x.map(v=>predictModel('michaelis',v,p)),{});res.model='michaelis-menten';res.Vmax=p[0];res.Km=p[1];return res;}
-function fit(pairs,model='linear'){requirePairs(pairs,'fit');const x=pairs.map(p=>p[0]),y=pairs.map(p=>p[1]); if(model==='exponential')return expFit(pairs); if(model==='logistic')return logisticFit(pairs); if(model==='michaelis')return michaelisFit(pairs); if(model==='quadratic')return polyFit(x,y,2); if(model==='cubic')return polyFit(x,y,3); return linearFit(pairs);}
-function predictionBands(model,x,coef,cov,sigma2){const xs=x.slice().sort((a,b)=>a-b);const lo=xs[0],hi=xs[xs.length-1],grid=Array.from({length:80},(_,i)=>lo+(hi-lo)*i/79);return grid.map(v=>{const row=numericJacobian(model,[v],coef)[0],fit=predictModel(model,v,coef);let seMean=NaN;if(cov){const cv=matvec(cov,row);seMean=Math.sqrt(Math.max(0,dot(row,cv)));}const sePred=Number.isFinite(seMean)?Math.sqrt(seMean*seMean+(sigma2||0)):NaN;return {x:v,fit,meanLo:fit-1.96*seMean,meanHi:fit+1.96*seMean,predLo:fit-1.96*sePred,predHi:fit+1.96*sePred};});}
-function confidenceEllipse(coef,cov,names){if(!cov||coef.length<2)return null;const a=cov[0][0],b=cov[0][1],d=cov[1][1],tr=a+d,det=a*d-b*b,disc=Math.sqrt(Math.max(0,tr*tr/4-det)),l1=Math.max(0,tr/2+disc),l2=Math.max(0,tr/2-disc),ang=0.5*Math.atan2(2*b,a-d),scale=Math.sqrt(5.991);const pts=Array.from({length:121},(_,i)=>{const t=2*Math.PI*i/120,c=Math.cos(t),s=Math.sin(t);const X=scale*Math.sqrt(l1)*c,Y=scale*Math.sqrt(l2)*s;return {x:coef[0]+X*Math.cos(ang)-Y*Math.sin(ang),y:coef[1]+X*Math.sin(ang)+Y*Math.cos(ang)};});return {xName:names&&names[0],yName:names&&names[1],points:pts};}
-function sensitivityCoefficients(model,x,coef){const J=numericJacobian(model,x,coef),names=modelInfo(model).names;return names.map((name,j)=>({name,x:x.slice(),values:J.map(r=>r[j])}));}
-function profileLikelihood(model,x,y,coef){const names=modelInfo(model).names;return names.map((name,j)=>{const se=Math.abs(coef[j])*0.25+1e-3;const values=Array.from({length:41},(_,i)=>coef[j]+(i-20)*se/5);const scan=values.map(v=>{const start=coef.slice();start[j]=v;const mask=coef.map((_,k)=>k!==j);const p=lmOptimize(model,x,y,start,{steps:50,mask});p[j]=v;return {value:v,sse:sseFor(model,x,y,p)};});return {name,values:scan};});}
-function lcg(seed){let s=seed>>>0;return ()=>((s=(1664525*s+1013904223)>>>0)/4294967296);}
-function bootstrapFit(pairs,model,B){const rand=lcg(9144+pairs.length),n=pairs.length,names=modelInfo(model).names,rows=[];for(let b=0;b<B;b++){const sample=Array.from({length:n},()=>pairs[Math.floor(rand()*n)]);try{const r=fitNoBootstrap(sample,model);if(r.coef&&r.coef.every(Number.isFinite))rows.push(r.coef);}catch(e){/* skip singular resample */}}const summary=names.map((name,j)=>{const vals=rows.map(r=>r[j]).filter(Number.isFinite);return {name,values:vals,mean:mean(vals),lo:quantile(vals,0.025),hi:quantile(vals,0.975)};});return {replicates:rows.length,summary};}
-function fitNoBootstrap(pairs,model){const x=pairs.map(p=>p[0]),y=pairs.map(p=>p[1]);if(model==='linear')return polyFitCore(x,y,1);if(model==='quadratic')return polyFitCore(x,y,2);if(model==='cubic')return polyFitCore(x,y,3);const p=lmOptimize(model,x,y,initialParams(model,x,y),{steps:90});return {coef:p,pred:x.map(v=>predictModel(model,v,p))};}
-function qqData(residuals){const sorted=residuals.slice().sort((a,b)=>a-b),m=mean(sorted),s=sd(sorted)||1,n=sorted.length;return {theory:sorted.map((_,i)=>m+s*normalInv((i+0.5)/n)),sample:sorted};}
-function format(res){return Object.entries(res).filter(([k])=>!['pred','residuals','predictionBands','bootstrap','profileLikelihood','sensitivity','confidenceEllipse'].includes(k)).map(([k,v])=>k+' = '+(Array.isArray(v)?JSON.stringify(v.map(z=>Number.isFinite(z)?Number(z.toFixed(5)):z)):(typeof v==='object'?JSON.stringify(v,null,2):(Number.isFinite(v)?v.toFixed(5):v)))).join('\n');}
-function plot(plotEl,x,y,res,mode){if(!root.Plotly||!plotEl)return;let data=[],layout={margin:{t:28,r:20,b:48,l:54},paper_bgcolor:'#fff',plot_bgcolor:'#fff'};if(mode==='residual'){data=[{x:res.pred,y:res.residuals,mode:'markers',type:'scatter',name:'residuals'}];layout.xaxis={title:'fitted'};layout.yaxis={title:'residual'};}else if(mode==='qq'){const q=qqData(res.residuals);data=[{x:q.theory,y:q.sample,mode:'markers',type:'scatter',name:'residual Q-Q'},{x:[Math.min(...q.theory),Math.max(...q.theory)],y:[Math.min(...q.theory),Math.max(...q.theory)],mode:'lines',name:'normal line'}];layout.xaxis={title:'normal quantile'};layout.yaxis={title:'residual quantile'};}else{const ord=res.predictionBands||x.map((v,i)=>({x:v,fit:res.pred[i]})).sort((a,b)=>a.x-b.x);data=[{x,y,mode:'markers',name:'data',type:'scatter'},{x:ord.map(p=>p.x),y:ord.map(p=>p.fit),mode:'lines',name:'fit'}];layout.xaxis={title:'x'};layout.yaxis={title:'y'};}root.Plotly.newPlot(plotEl,data,layout,{responsive:true,displaylogo:false});}
-function boot(){const el=document.querySelector('[data-fitting-lab]'); if(!el) return; const $=id=>document.getElementById(id); const presets={growth:'0 1.1\n1 1.8\n2 3.2\n3 5.1\n4 8.4\n5 13.7',enzyme:'0.2 0.18\n0.5 0.34\n1 0.52\n2 0.71\n4 0.86\n8 0.94',logistic:'0 1.2\n1 1.7\n2 3.1\n3 5.8\n4 8.4\n5 9.6\n6 10.1',residual:'0 1.0\n1 2.1\n2 2.9\n3 5.2\n4 7.7\n5 11.8'}; const run=()=>{try{const pairs=parsePairs($('fitData').value), res=fit(pairs,$('fitModel').value), x=pairs.map(p=>p[0]), y=pairs.map(p=>p[1]);$('fitOutput').textContent=format(res);plot($('fitPlot'),x,y,res,$('fitPlotMode').value);}catch(e){$('fitOutput').textContent='Error: '+e.message;}}; if($('fitPreset'))$('fitPreset').addEventListener('change',()=>{const v=$('fitPreset').value;$('fitData').value=presets[v]||presets.growth;if(v==='enzyme')$('fitModel').value='michaelis';if(v==='logistic')$('fitModel').value='logistic';run();}); if($('fitRun'))$('fitRun').addEventListener('click',run); if($('fitPlotMode'))$('fitPlotMode').addEventListener('change',run); run();}
-const api={parsePairs,solve,inverse,polyFit,linearFit,expFit,logisticFit,michaelisFit,fit,fitNoBootstrap,qqData,score,predictModel,numericJacobian,covarianceFromJacobian,confidenceEllipse,profileLikelihood,bootstrapFit,predictionBands,influenceDiagnostics,sensitivityCoefficients}; if(typeof module!=='undefined'&&module.exports) module.exports=api; root.FokoFitting=api; if(typeof document!=='undefined') (document.readyState==='loading'?document.addEventListener('DOMContentLoaded',boot):boot());
-}(typeof window!=='undefined'?window:globalThis));
+/* Foko Lab v72.5 curve-fitting numerical core.
+ * Pure numerical functions: no DOM, storage, or plotting dependencies.
+ */
+(function (root) {
+  'use strict';
+
+  const FokoKit = root.FokoKit || (typeof require === 'function' ? require('../fokokit.js') : null);
+
+  function mean(values) {
+    return values.reduce(function (sum, value) { return sum + value; }, 0) / (values.length || 1);
+  }
+
+  function variance(values) {
+    if (values.length < 2) return NaN;
+    const center = mean(values);
+    return values.reduce(function (sum, value) { return sum + (value - center) ** 2; }, 0) / (values.length - 1);
+  }
+
+  function sd(values) {
+    return Math.sqrt(variance(values));
+  }
+
+  function quantile(values, probability) {
+    const sorted = values.slice().filter(Number.isFinite).sort(function (a, b) { return a - b; });
+    if (!sorted.length) return NaN;
+    const position = (sorted.length - 1) * probability;
+    const lower = Math.floor(position);
+    const upper = Math.ceil(position);
+    const fraction = position - lower;
+    return sorted[lower] * (1 - fraction) + sorted[upper] * fraction;
+  }
+
+  function normalInv(probability) {
+    const a = [-39.69683028665376, 220.9460984245205, -275.9285104469687, 138.357751867269, -30.66479806614716, 2.506628277459239];
+    const b = [-54.47609879822406, 161.5858368580409, -155.6989798598866, 66.80131188771972, -13.28073155288572];
+    const c = [-0.007784894002430293, -0.3223964580411365, -2.400758277161838, -2.549732539343734, 4.374664141464968, 2.938163982698783];
+    const d = [0.007784695709041462, 0.3224671290700398, 2.445134137142996, 3.754408661907416];
+    const low = 0.02425;
+    const high = 1 - low;
+    let q;
+    let r;
+    if (probability <= 0) return -Infinity;
+    if (probability >= 1) return Infinity;
+    if (probability < low) {
+      q = Math.sqrt(-2 * Math.log(probability));
+      return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+        ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+    }
+    if (probability <= high) {
+      q = probability - 0.5;
+      r = q * q;
+      return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q /
+        (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+    }
+    q = Math.sqrt(-2 * Math.log(1 - probability));
+    return -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+      ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+  }
+
+  function requireSameLength(left, right, name) {
+    if (FokoKit && typeof FokoKit.requireSameLength === 'function') return FokoKit.requireSameLength(left, right, name);
+    if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) {
+      throw new Error(`${name}: arrays must have the same length.`);
+    }
+    return [left, right];
+  }
+
+  function requirePairs(pairs, name) {
+    if (!Array.isArray(pairs) || !pairs.length || !pairs.every(function (pair) {
+      return Array.isArray(pair) && pair.length >= 2 && Number.isFinite(pair[0]) && Number.isFinite(pair[1]);
+    })) {
+      throw new Error(`${name}: expected a non-empty list of finite [x, y] pairs.`);
+    }
+  }
+
+  function parsePairs(text) {
+    return String(text || '')
+      .trim()
+      .split(/\r?\n+/)
+      .map(function (row) { return row.trim().split(/[\s,;]+/).map(Number); })
+      .filter(function (row) { return row.length >= 2 && Number.isFinite(row[0]) && Number.isFinite(row[1]); })
+      .map(function (row) { return [row[0], row[1]]; });
+  }
+
+  function transpose(matrix) {
+    if (!matrix.length) return [];
+    return matrix[0].map(function (_, column) { return matrix.map(function (row) { return row[column]; }); });
+  }
+
+  function dot(left, right) {
+    return left.reduce(function (sum, value, index) { return sum + value * (right[index] || 0); }, 0);
+  }
+
+  function matmul(left, right) {
+    const rightTranspose = transpose(right);
+    return left.map(function (row) {
+      return rightTranspose.map(function (column) { return dot(row, column); });
+    });
+  }
+
+  function matvec(matrix, vector) {
+    return matrix.map(function (row) { return dot(row, vector); });
+  }
+
+  function solve(matrix, vector) {
+    const size = matrix.length;
+    if (!size || vector.length !== size || matrix.some(function (row) { return row.length !== size; })) {
+      throw new Error('solve: expected a square matrix and matching vector.');
+    }
+    const augmented = matrix.map(function (row, index) { return row.slice().concat([vector[index]]); });
+    for (let column = 0; column < size; column += 1) {
+      let pivotRow = column;
+      for (let row = column + 1; row < size; row += 1) {
+        if (Math.abs(augmented[row][column]) > Math.abs(augmented[pivotRow][column])) pivotRow = row;
+      }
+      if (Math.abs(augmented[pivotRow][column]) < 1e-14) throw new Error('Linear system is singular or numerically rank deficient.');
+      [augmented[column], augmented[pivotRow]] = [augmented[pivotRow], augmented[column]];
+      const pivot = augmented[column][column];
+      for (let j = column; j <= size; j += 1) augmented[column][j] /= pivot;
+      for (let row = 0; row < size; row += 1) {
+        if (row === column) continue;
+        const factor = augmented[row][column];
+        for (let j = column; j <= size; j += 1) augmented[row][j] -= factor * augmented[column][j];
+      }
+    }
+    return augmented.map(function (row) { return row[size]; });
+  }
+
+  function inverse(matrix) {
+    const size = matrix.length;
+    const columns = Array.from({ length: size }, function (_, index) {
+      return solve(matrix, Array.from({ length: size }, function (__, row) { return row === index ? 1 : 0; }));
+    });
+    return Array.from({ length: size }, function (_, row) { return columns.map(function (column) { return column[row]; }); });
+  }
+
+  function modelInfo(model) {
+    const key = model === 'michaelis-menten' ? 'michaelis' : model;
+    const models = {
+      linear: {
+        id: 'linear', names: ['intercept', 'slope'], equation: 'y = b0 + b1 x', linear: true,
+        predict: function (x, p) { return p[0] + p[1] * x; },
+      },
+      quadratic: {
+        id: 'quadratic', names: ['intercept', 'x', 'x^2'], equation: 'y = b0 + b1 x + b2 x²', linear: true,
+        predict: function (x, p) { return p[0] + p[1] * x + p[2] * x * x; },
+      },
+      cubic: {
+        id: 'cubic', names: ['intercept', 'x', 'x^2', 'x^3'], equation: 'y = b0 + b1 x + b2 x² + b3 x³', linear: true,
+        predict: function (x, p) { return p[0] + p[1] * x + p[2] * x * x + p[3] * x * x * x; },
+      },
+      exponential: {
+        id: 'exponential', names: ['a', 'b'], equation: 'y = a exp(bx)', linear: false,
+        predict: function (x, p) { return p[0] * Math.exp(p[1] * x); },
+      },
+      logistic: {
+        id: 'logistic', names: ['K', 'r', 'x0'], equation: 'y = K / (1 + exp(-r(x-x0)))', linear: false,
+        predict: function (x, p) { return p[0] / (1 + Math.exp(-p[1] * (x - p[2]))); },
+      },
+      michaelis: {
+        id: 'michaelis', names: ['Vmax', 'Km'], equation: 'y = Vmax x / (Km + x)', linear: false,
+        predict: function (x, p) { return p[0] * x / (p[1] + x); },
+      },
+    };
+    if (!models[key]) throw new Error(`Unknown fitting model: ${model}.`);
+    return models[key];
+  }
+
+  function predictModel(model, x, parameters) {
+    return modelInfo(model).predict(x, parameters);
+  }
+
+  function design(x, degree) {
+    return x.map(function (value) {
+      return Array.from({ length: degree + 1 }, function (_, power) { return value ** power; });
+    });
+  }
+
+  function normaliseWeights(length, options) {
+    const opts = options || {};
+    if (opts.sigmas != null) {
+      if (!Array.isArray(opts.sigmas) || opts.sigmas.length !== length) throw new Error('Sigma values must match the number of observations.');
+      const sigmas = opts.sigmas.map(Number);
+      if (!sigmas.every(function (value) { return Number.isFinite(value) && value > 0; })) throw new Error('Every sigma value must be finite and strictly positive.');
+      return {
+        weights: sigmas.map(function (value) { return 1 / (value * value); }),
+        sigmas,
+        mode: 'known-sigma',
+        absoluteSigma: true,
+      };
+    }
+    if (opts.weights != null) {
+      if (!Array.isArray(opts.weights) || opts.weights.length !== length) throw new Error('Weights must match the number of observations.');
+      const weights = opts.weights.map(Number);
+      if (!weights.every(function (value) { return Number.isFinite(value) && value > 0; })) throw new Error('Every weight must be finite and strictly positive.');
+      return { weights, sigmas: null, mode: 'relative-weight', absoluteSigma: false };
+    }
+    return { weights: Array.from({ length }, function () { return 1; }), sigmas: null, mode: 'ordinary', absoluteSigma: false };
+  }
+
+  function weightedNormalMatrix(jacobian, weights) {
+    const weighted = jacobian.map(function (row, index) {
+      const scale = Math.sqrt(weights[index]);
+      return row.map(function (value) { return value * scale; });
+    });
+    return matmul(transpose(weighted), weighted);
+  }
+
+  function weightedRightHand(jacobian, residuals, weights) {
+    return transpose(jacobian).map(function (column) {
+      return column.reduce(function (sum, value, index) { return sum + value * weights[index] * residuals[index]; }, 0);
+    });
+  }
+
+  function conditionIndicator(matrix) {
+    const diagonal = matrix.map(function (row, index) { return Math.abs(row[index]); }).filter(function (value) { return value > 1e-18; });
+    if (!diagonal.length) return Infinity;
+    return Math.max.apply(null, diagonal) / Math.min.apply(null, diagonal);
+  }
+
+  function polynomialDegree(model) {
+    if (model === 'linear') return 1;
+    if (model === 'quadratic') return 2;
+    if (model === 'cubic') return 3;
+    return null;
+  }
+
+  function weightedPolynomialFit(x, y, degree, weights) {
+    requireSameLength(x, y, 'polyFit');
+    if (x.length <= degree) throw new Error('polyFit: need more points than the polynomial degree.');
+    const X = design(x, degree);
+    const normal = weightedNormalMatrix(X, weights);
+    const rhs = weightedRightHand(X, y, weights);
+    const coef = solve(normal, rhs);
+    return {
+      coef,
+      jacobian: X,
+      pred: x.map(function (value) {
+        return coef.reduce(function (sum, coefficient, power) { return sum + coefficient * value ** power; }, 0);
+      }),
+      normalMatrix: normal,
+      converged: true,
+      terminationReason: 'closed-form weighted normal equations solved',
+      iterations: 1,
+      acceptedSteps: 1,
+      rejectedSteps: 0,
+      evaluations: x.length,
+    };
+  }
+
+  function initialParams(model, x, y) {
+    const info = modelInfo(model);
+    if (info.linear) return weightedPolynomialFit(x, y, info.names.length - 1, Array.from({ length: x.length }, function () { return 1; })).coef;
+    if (info.id === 'exponential') {
+      const positive = x.map(function (value, index) { return [value, y[index]]; }).filter(function (pair) { return pair[1] > 0; });
+      if (positive.length >= 2) {
+        const linear = weightedPolynomialFit(
+          positive.map(function (pair) { return pair[0]; }),
+          positive.map(function (pair) { return Math.log(pair[1]); }),
+          1,
+          Array.from({ length: positive.length }, function () { return 1; })
+        ).coef;
+        return [Math.exp(linear[0]), linear[1]];
+      }
+      return [Math.max(1e-6, mean(y)), 0.1];
+    }
+    if (info.id === 'logistic') {
+      const sortedX = x.slice().sort(function (a, b) { return a - b; });
+      const range = Math.max(1e-9, sortedX[sortedX.length - 1] - sortedX[0]);
+      const trend = y[y.length - 1] >= y[0] ? 1 : -1;
+      return [Math.max(1e-6, Math.max.apply(null, y) * 1.05), trend * 4 / range, sortedX[Math.floor(sortedX.length / 2)]];
+    }
+    if (info.id === 'michaelis') {
+      const positiveX = x.filter(function (value) { return value > 0; }).sort(function (a, b) { return a - b; });
+      return [Math.max(1e-6, Math.max.apply(null, y) * 1.1), positiveX[Math.floor(positiveX.length / 2)] || Math.max(1e-6, mean(x))];
+    }
+    throw new Error(`No initialisation is defined for ${model}.`);
+  }
+
+  function applyParameterDomain(model, parameters) {
+    const next = parameters.slice();
+    if (model === 'exponential') next[0] = Math.max(1e-12, next[0]);
+    if (model === 'logistic') next[0] = Math.max(1e-12, next[0]);
+    if (model === 'michaelis' || model === 'michaelis-menten') {
+      next[0] = Math.max(1e-12, next[0]);
+      next[1] = Math.max(1e-12, next[1]);
+    }
+    return next;
+  }
+
+  function numericJacobian(model, x, parameters) {
+    const info = modelInfo(model);
+    return x.map(function (value) {
+      return parameters.map(function (parameter, index) {
+        const step = 1e-6 * (Math.abs(parameter) + 1);
+        const plus = parameters.slice();
+        const minus = parameters.slice();
+        plus[index] += step;
+        minus[index] -= step;
+        const numerator = info.predict(value, applyParameterDomain(info.id, plus)) - info.predict(value, applyParameterDomain(info.id, minus));
+        return numerator / (2 * step);
+      });
+    });
+  }
+
+  function weightedSSE(model, x, y, parameters, weights) {
+    return x.reduce(function (sum, value, index) {
+      const residual = y[index] - predictModel(model, value, parameters);
+      return sum + weights[index] * residual * residual;
+    }, 0);
+  }
+
+  function lmOptimize(model, x, y, start, options) {
+    const opts = Object.assign({ maxIterations: 250, ftol: 1e-10, xtol: 1e-9, lambda: 1e-3 }, options || {});
+    const weights = opts.weights || Array.from({ length: x.length }, function () { return 1; });
+    let parameters = applyParameterDomain(model, start.map(Number));
+    if (!parameters.every(Number.isFinite)) throw new Error('Initial parameter guesses must be finite.');
+    let lambda = opts.lambda;
+    let objective = weightedSSE(model, x, y, parameters, weights);
+    let evaluations = x.length;
+    let acceptedSteps = 0;
+    let rejectedSteps = 0;
+    let converged = false;
+    let terminationReason = 'maximum iterations reached';
+    let iterations = 0;
+    let lastNormal = null;
+    const history = [{ iteration: 0, objective, lambda, accepted: true }];
+
+    for (let iteration = 1; iteration <= opts.maxIterations; iteration += 1) {
+      iterations = iteration;
+      const prediction = x.map(function (value) { return predictModel(model, value, parameters); });
+      evaluations += x.length;
+      const residuals = y.map(function (value, index) { return value - prediction[index]; });
+      const jacobian = numericJacobian(model, x, parameters);
+      evaluations += x.length * parameters.length * 2;
+      const normal = weightedNormalMatrix(jacobian, weights);
+      const rhs = weightedRightHand(jacobian, residuals, weights);
+      lastNormal = normal;
+      const damped = normal.map(function (row, rowIndex) {
+        return row.map(function (value, columnIndex) {
+          if (rowIndex !== columnIndex) return value;
+          return value + lambda * Math.max(1, Math.abs(normal[rowIndex][rowIndex]));
+        });
+      });
+      let delta;
+      try {
+        delta = solve(damped, rhs);
+      } catch (error) {
+        lambda *= 10;
+        rejectedSteps += 1;
+        history.push({ iteration, objective, lambda, accepted: false, reason: 'singular damped system' });
+        if (lambda > 1e16) {
+          terminationReason = 'normal equations remained singular under damping';
+          break;
+        }
+        continue;
+      }
+      const stepNorm = Math.sqrt(dot(delta, delta));
+      const parameterNorm = Math.sqrt(dot(parameters, parameters));
+      if (stepNorm <= opts.xtol * (parameterNorm + opts.xtol)) {
+        converged = true;
+        terminationReason = 'parameter-step tolerance reached';
+        break;
+      }
+      const trial = applyParameterDomain(model, parameters.map(function (value, index) { return value + delta[index]; }));
+      const trialObjective = weightedSSE(model, x, y, trial, weights);
+      evaluations += x.length;
+      if (Number.isFinite(trialObjective) && trialObjective < objective) {
+        const improvement = objective - trialObjective;
+        parameters = trial;
+        objective = trialObjective;
+        lambda = Math.max(1e-12, lambda / 3);
+        acceptedSteps += 1;
+        history.push({ iteration, objective, lambda, accepted: true });
+        if (improvement <= opts.ftol * (1 + objective)) {
+          converged = true;
+          terminationReason = 'objective-improvement tolerance reached';
+          break;
+        }
+      } else {
+        lambda = Math.min(1e18, lambda * 5);
+        rejectedSteps += 1;
+        history.push({ iteration, objective, lambda, accepted: false });
+        if (lambda >= 1e18) {
+          terminationReason = 'damping overflow after rejected steps';
+          break;
+        }
+      }
+    }
+
+    return {
+      coef: parameters,
+      pred: x.map(function (value) { return predictModel(model, value, parameters); }),
+      jacobian: numericJacobian(model, x, parameters),
+      normalMatrix: lastNormal || weightedNormalMatrix(numericJacobian(model, x, parameters), weights),
+      converged,
+      terminationReason,
+      iterations,
+      acceptedSteps,
+      rejectedSteps,
+      evaluations,
+      objective,
+      history,
+    };
+  }
+
+  function covarianceFromJacobian(jacobian, weightsOrSigma2, scaleMaybe) {
+    try {
+      let weights;
+      let scale;
+      if (Array.isArray(weightsOrSigma2)) {
+        weights = weightsOrSigma2;
+        scale = Number.isFinite(scaleMaybe) ? scaleMaybe : 1;
+      } else {
+        weights = Array.from({ length: jacobian.length }, function () { return 1; });
+        scale = Number.isFinite(weightsOrSigma2) ? weightsOrSigma2 : 1;
+      }
+      const information = weightedNormalMatrix(jacobian, weights);
+      return inverse(information).map(function (row) { return row.map(function (value) { return value * scale; }); });
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function parameterSummary(names, coef, covariance, alpha) {
+    const critical = normalInv(1 - (alpha || 0.05) / 2);
+    return coef.map(function (value, index) {
+      const standardError = covariance && covariance[index] ? Math.sqrt(Math.max(0, covariance[index][index])) : NaN;
+      return {
+        name: names[index] || `p${index}`,
+        value,
+        se: standardError,
+        z: Number.isFinite(standardError) && standardError > 0 ? value / standardError : NaN,
+        ci: Number.isFinite(standardError) ? [value - critical * standardError, value + critical * standardError] : [NaN, NaN],
+        ci95: Number.isFinite(standardError) ? [value - 1.959963984540054 * standardError, value + 1.959963984540054 * standardError] : [NaN, NaN],
+      };
+    });
+  }
+
+  function influenceDiagnostics(jacobian, residuals, parameterCount, residualVariance, weights, sigmas) {
+    const sqrtWeighted = jacobian.map(function (row, index) {
+      const scale = Math.sqrt(weights[index]);
+      return row.map(function (value) { return value * scale; });
+    });
+    let informationInverse;
+    try {
+      informationInverse = inverse(matmul(transpose(sqrtWeighted), sqrtWeighted));
+    } catch (error) {
+      informationInverse = null;
+    }
+    const leverage = jacobian.map(function (row, index) {
+      if (!informationInverse) return NaN;
+      const weightedRow = row.map(function (value) { return value * Math.sqrt(weights[index]); });
+      return Math.max(0, Math.min(0.999999, dot(weightedRow, matvec(informationInverse, weightedRow))));
+    });
+    const scale = Math.max(1e-15, residualVariance);
+    const standardizedResiduals = residuals.map(function (residual, index) {
+      const observationScale = sigmas && Number.isFinite(sigmas[index]) ? sigmas[index] : Math.sqrt(scale);
+      const denominator = observationScale * Math.sqrt(Math.max(1e-12, 1 - (leverage[index] || 0)));
+      return residual / denominator;
+    });
+    const cooksDistance = standardizedResiduals.map(function (standardized, index) {
+      const h = leverage[index] || 0;
+      return standardized * standardized * h / Math.max(1e-12, parameterCount * (1 - h));
+    });
+    return { leverage, standardizedResiduals, cooksDistance };
+  }
+
+  function predictionBands(model, x, coef, covariance, residualVariance, alpha, predictionAvailable) {
+    const sorted = x.slice().sort(function (a, b) { return a - b; });
+    const minimum = sorted[0];
+    const maximum = sorted[sorted.length - 1];
+    const critical = normalInv(1 - (alpha || 0.05) / 2);
+    const count = 120;
+    return Array.from({ length: count }, function (_, index) {
+      const value = minimum === maximum ? minimum : minimum + (maximum - minimum) * index / (count - 1);
+      const fit = predictModel(model, value, coef);
+      const gradient = numericJacobian(model, [value], coef)[0];
+      let meanVariance = NaN;
+      if (covariance) meanVariance = Math.max(0, dot(gradient, matvec(covariance, gradient)));
+      const meanSe = Number.isFinite(meanVariance) ? Math.sqrt(meanVariance) : NaN;
+      const predictionSe = predictionAvailable && Number.isFinite(meanVariance)
+        ? Math.sqrt(meanVariance + Math.max(0, residualVariance))
+        : NaN;
+      return {
+        x: value,
+        fit,
+        meanLo: fit - critical * meanSe,
+        meanHi: fit + critical * meanSe,
+        predLo: Number.isFinite(predictionSe) ? fit - critical * predictionSe : NaN,
+        predHi: Number.isFinite(predictionSe) ? fit + critical * predictionSe : NaN,
+      };
+    });
+  }
+
+  function confidenceEllipse(coef, covariance, names, alpha) {
+    if (!covariance || coef.length < 2) return null;
+    const a = covariance[0][0];
+    const b = covariance[0][1];
+    const d = covariance[1][1];
+    if (![a, b, d].every(Number.isFinite)) return null;
+    const trace = a + d;
+    const determinant = a * d - b * b;
+    const discriminant = Math.sqrt(Math.max(0, trace * trace / 4 - determinant));
+    const eigen1 = Math.max(0, trace / 2 + discriminant);
+    const eigen2 = Math.max(0, trace / 2 - discriminant);
+    const angle = 0.5 * Math.atan2(2 * b, a - d);
+    const probability = 1 - (alpha || 0.05);
+    const chiSquare2 = -2 * Math.log(Math.max(1e-12, 1 - probability));
+    const scale = Math.sqrt(chiSquare2);
+    const points = Array.from({ length: 121 }, function (_, index) {
+      const theta = 2 * Math.PI * index / 120;
+      const localX = scale * Math.sqrt(eigen1) * Math.cos(theta);
+      const localY = scale * Math.sqrt(eigen2) * Math.sin(theta);
+      return {
+        x: coef[0] + localX * Math.cos(angle) - localY * Math.sin(angle),
+        y: coef[1] + localX * Math.sin(angle) + localY * Math.cos(angle),
+      };
+    });
+    return { xName: names[0], yName: names[1], points, level: probability };
+  }
+
+  function sensitivityCoefficients(model, x, coef) {
+    const jacobian = numericJacobian(model, x, coef);
+    return modelInfo(model).names.map(function (name, parameterIndex) {
+      return { name, x: x.slice(), values: jacobian.map(function (row) { return row[parameterIndex]; }) };
+    });
+  }
+
+
+  function parameterCorrelationMatrix(covariance, names) {
+    if (!covariance) return { names: names.slice(), matrix: [], pairs: [] };
+    const matrix = covariance.map(function (row, i) {
+      return row.map(function (value, j) {
+        const denominator = Math.sqrt(Math.max(0, covariance[i][i]) * Math.max(0, covariance[j][j]));
+        return denominator > 0 && Number.isFinite(value) ? Math.max(-1, Math.min(1, value / denominator)) : NaN;
+      });
+    });
+    const pairs = [];
+    for (let i = 0; i < matrix.length; i += 1) {
+      for (let j = i + 1; j < matrix.length; j += 1) {
+        if (Number.isFinite(matrix[i][j])) pairs.push({ left: names[i], right: names[j], correlation: matrix[i][j], absolute: Math.abs(matrix[i][j]) });
+      }
+    }
+    pairs.sort(function (a, b) { return b.absolute - a.absolute; });
+    return { names: names.slice(), matrix, pairs };
+  }
+
+  function profileIdentifiability(profileLikelihood, coef, residualVariance, absoluteSigma) {
+    if (!Array.isArray(profileLikelihood) || !profileLikelihood.length) return [];
+    const delta95 = absoluteSigma ? 3.841458820694124 : Math.max(1e-12, 3.841458820694124 * Math.max(1e-12, residualVariance));
+    return profileLikelihood.map(function (profile, parameterIndex) {
+      const values = profile.values || [];
+      const minimum = values.length ? Math.min.apply(null, values.map(function (point) { return point.sse; })) : NaN;
+      const estimate = coef[parameterIndex];
+      const left = values.filter(function (point) { return point.value < estimate; });
+      const right = values.filter(function (point) { return point.value > estimate; });
+      const leftCrosses = left.some(function (point) { return point.sse - minimum >= delta95; });
+      const rightCrosses = right.some(function (point) { return point.sse - minimum >= delta95; });
+      const rise = values.length ? Math.max.apply(null, values.map(function (point) { return point.sse - minimum; })) : NaN;
+      return {
+        name: profile.name,
+        estimate,
+        delta95,
+        leftCrosses,
+        rightCrosses,
+        boundedBothSides: leftCrosses && rightCrosses,
+        maximumObservedRise: rise,
+        verdict: leftCrosses && rightCrosses ? 'locally bounded in the finite profile scan' : 'practical non-identifiability likely in the finite profile scan',
+        limitation: 'This is a finite local profile-SSE diagnostic. It is not a structural-identifiability certificate or a global profile likelihood.'
+      };
+    });
+  }
+
+  function experimentalDesignAdvice(model, x, coef, covariance) {
+    if (!covariance || !x.length) return { available: false, candidates: [], sentence: 'Local experimental-design advice is unavailable because the covariance estimate is unavailable.', limitation: 'No design guarantee is provided.' };
+    const minimum = Math.min.apply(null, x);
+    const maximum = Math.max.apply(null, x);
+    const span = Math.max(1e-9, maximum - minimum || Math.max(1, Math.abs(maximum)));
+    const lower = model === 'michaelis' || model === 'michaelis-menten' ? Math.max(0, minimum - 0.25 * span) : minimum - 0.5 * span;
+    const upper = maximum + (model === 'michaelis' || model === 'michaelis-menten' ? 2 * span : span);
+    const candidates = Array.from({ length: 121 }, function (_, index) {
+      const value = lower + (upper - lower) * index / 120;
+      const gradient = numericJacobian(model, [value], coef)[0];
+      const score = Math.max(0, dot(gradient, matvec(covariance, gradient)));
+      return { x: value, score };
+    }).filter(function (item) { return Number.isFinite(item.score); }).sort(function (a, b) { return b.score - a.score; });
+    const chosen = [];
+    for (const candidate of candidates) {
+      if (chosen.every(function (existing) { return Math.abs(existing.x - candidate.x) >= 0.12 * span; })) chosen.push(candidate);
+      if (chosen.length === 3) break;
+    }
+    const text = chosen.map(function (item) { return Number(item.x.toPrecision(5)); }).join(', ');
+    return {
+      available: chosen.length > 0,
+      candidates: chosen,
+      sentence: chosen.length ? `Under the fitted local covariance geometry, new measurements near x = ${text} are the highest-ranked one-point uncertainty probes in the scanned range.` : 'No finite candidate location could be ranked.',
+      method: 'local predictive-variance score g(x)^T Cov(theta) g(x) over a finite candidate grid',
+      limitation: 'This is a local heuristic conditional on the fitted model, covariance approximation, current parameter estimate and candidate range. It does not guarantee identifiability or optimal experimental design.'
+    };
+  }
+
+  function identifiabilityAssessment(result, names) {
+    const correlation = parameterCorrelationMatrix(result.covariance, names);
+    const profile = profileIdentifiability(result.profileLikelihood, result.coef, result.residualVariance, result.absoluteSigma);
+    const highCorrelation = correlation.pairs.filter(function (pair) { return pair.absolute >= 0.95; });
+    const weakProfiles = profile.filter(function (item) { return !item.boundedBothSides; });
+    const weakNames = Array.from(new Set(highCorrelation.flatMap(function (pair) { return [pair.left, pair.right]; }).concat(weakProfiles.map(function (item) { return item.name; }))));
+    const rankWarning = !Number.isFinite(result.conditionIndicator) || result.conditionIndicator > 1e8;
+    const likely = weakNames.length > 0 || rankWarning;
+    const sentence = likely
+      ? `${weakNames.length || names.length} of ${names.length} parameters show evidence of practical weak identification under the current data and local diagnostics. Structural identifiability was not assessed.`
+      : `No strong practical-identifiability warning was triggered by the local covariance, correlation and finite profile diagnostics. Structural identifiability was not assessed.`;
+    return {
+      practicalVerdict: likely ? 'practical non-identifiability likely' : 'no strong practical warning triggered',
+      structuralVerdict: 'not assessed',
+      flaggedParameters: weakNames,
+      highCorrelationPairs: highCorrelation,
+      profile,
+      rankWarning,
+      sentence,
+      limitation: 'This verdict is diagnostic and local. It does not establish structural identifiability, uniqueness of the optimum, or global parameter recoverability.'
+    };
+  }
+
+  function fitNoBootstrap(pairs, model, options) {
+    requirePairs(pairs, 'fitNoBootstrap');
+    const info = modelInfo(model);
+    const x = pairs.map(function (pair) { return pair[0]; });
+    const y = pairs.map(function (pair) { return pair[1]; });
+    if (x.length <= info.names.length) throw new Error(`Model ${info.id} requires more observations than parameters (${info.names.length}).`);
+    const weightInfo = normaliseWeights(x.length, options || {});
+    const degree = polynomialDegree(info.id);
+    if (degree != null) return weightedPolynomialFit(x, y, degree, weightInfo.weights);
+    const start = options && Array.isArray(options.initialParams) && options.initialParams.length === info.names.length
+      ? options.initialParams
+      : initialParams(info.id, x, y);
+    return lmOptimize(info.id, x, y, start, Object.assign({}, options || {}, { weights: weightInfo.weights }));
+  }
+
+  function parameterLowerBound(model, index) {
+    if (model === 'exponential' && index === 0) return 1e-12;
+    if (model === 'logistic' && index === 0) return 1e-12;
+    if ((model === 'michaelis' || model === 'michaelis-menten') && (index === 0 || index === 1)) return 1e-12;
+    return -Infinity;
+  }
+
+  function profileLikelihood(model, x, y, coef, options) {
+    const opts = Object.assign({ points: 31, spanSE: 3, maxIterations: 80 }, options || {});
+    const info = modelInfo(model);
+    const weights = opts.weights || Array.from({ length: x.length }, function () { return 1; });
+    const covariance = opts.covariance || null;
+    return info.names.map(function (name, parameterIndex) {
+      const estimatedSE = covariance && covariance[parameterIndex] ? Math.sqrt(Math.max(0, covariance[parameterIndex][parameterIndex])) : NaN;
+      const span = Number.isFinite(estimatedSE) && estimatedSE > 0 ? estimatedSE * opts.spanSE : Math.abs(coef[parameterIndex]) * 0.5 + 0.1;
+      const lowerBound = parameterLowerBound(info.id, parameterIndex);
+      const values = Array.from({ length: opts.points }, function (_, index) {
+        const value = coef[parameterIndex] - span + 2 * span * index / (opts.points - 1);
+        return Math.max(lowerBound, value);
+      }).filter(function (value, index, array) { return index === 0 || value > array[index - 1] + 1e-14; });
+      const scan = values.map(function (fixedValue) {
+        const start = coef.slice();
+        start[parameterIndex] = fixedValue;
+        const active = coef.map(function (_, index) { return index !== parameterIndex; });
+        let parameters = start.slice();
+        let objective = weightedSSE(info.id, x, y, parameters, weights);
+        let lambda = 1e-3;
+        for (let iteration = 0; iteration < opts.maxIterations; iteration += 1) {
+          const prediction = x.map(function (value) { return info.predict(value, parameters); });
+          const residuals = y.map(function (value, index) { return value - prediction[index]; });
+          const fullJacobian = numericJacobian(info.id, x, parameters);
+          const activeIndices = active.map(function (flag, index) { return flag ? index : -1; }).filter(function (index) { return index >= 0; });
+          if (!activeIndices.length) break;
+          const jacobian = fullJacobian.map(function (row) { return activeIndices.map(function (index) { return row[index]; }); });
+          const normal = weightedNormalMatrix(jacobian, weights);
+          const rhs = weightedRightHand(jacobian, residuals, weights);
+          const damped = normal.map(function (row, rowIndex) {
+            return row.map(function (value, columnIndex) { return rowIndex === columnIndex ? value + lambda * Math.max(1, Math.abs(value)) : value; });
+          });
+          let delta;
+          try { delta = solve(damped, rhs); } catch (error) { lambda *= 10; continue; }
+          const trial = parameters.slice();
+          activeIndices.forEach(function (index, deltaIndex) { trial[index] += delta[deltaIndex]; });
+          trial[parameterIndex] = fixedValue;
+          const bounded = applyParameterDomain(info.id, trial);
+          bounded[parameterIndex] = fixedValue;
+          const trialObjective = weightedSSE(info.id, x, y, bounded, weights);
+          if (trialObjective < objective) {
+            parameters = bounded;
+            objective = trialObjective;
+            lambda /= 3;
+          } else lambda *= 5;
+        }
+        return { value: fixedValue, sse: objective };
+      });
+      return { name, values: scan };
+    });
+  }
+
+  function seededRandom(seed) {
+    let state = Number(seed) >>> 0;
+    return function () {
+      state = (1664525 * state + 1013904223) >>> 0;
+      return state / 4294967296;
+    };
+  }
+
+  function bootstrapFit(pairs, model, replicates, options) {
+    requirePairs(pairs, 'bootstrapFit');
+    const opts = Object.assign({ seed: 9144, initialParams: null, maxIterations: 160 }, options || {});
+    const count = Math.max(0, Math.floor(Number(replicates) || 0));
+    const random = seededRandom(opts.seed);
+    const names = modelInfo(model).names;
+    const rows = [];
+    let failed = 0;
+    const sourceSigmas = Array.isArray(opts.sigmas) ? opts.sigmas : null;
+    const sourceWeights = Array.isArray(opts.weights) ? opts.weights : null;
+    for (let replicate = 0; replicate < count; replicate += 1) {
+      const samplePairs = [];
+      const sampleSigmas = [];
+      const sampleWeights = [];
+      for (let index = 0; index < pairs.length; index += 1) {
+        const selected = Math.floor(random() * pairs.length);
+        samplePairs.push(pairs[selected]);
+        if (sourceSigmas) sampleSigmas.push(sourceSigmas[selected]);
+        if (sourceWeights) sampleWeights.push(sourceWeights[selected]);
+      }
+      try {
+        const result = fitNoBootstrap(samplePairs, model, {
+          sigmas: sourceSigmas ? sampleSigmas : undefined,
+          weights: sourceWeights ? sampleWeights : undefined,
+          initialParams: opts.initialParams,
+          maxIterations: opts.maxIterations,
+        });
+        if (result.coef && result.coef.every(Number.isFinite)) rows.push(result.coef);
+        else failed += 1;
+      } catch (error) {
+        failed += 1;
+      }
+    }
+    const summary = names.map(function (name, parameterIndex) {
+      const values = rows.map(function (row) { return row[parameterIndex]; }).filter(Number.isFinite);
+      return {
+        name,
+        values,
+        mean: mean(values),
+        median: quantile(values, 0.5),
+        lo: quantile(values, 0.025),
+        hi: quantile(values, 0.975),
+      };
+    });
+    return { requested: count, replicates: rows.length, failed, seed: opts.seed, method: 'pairs bootstrap', summary };
+  }
+
+  function qqData(residuals) {
+    const sample = residuals.slice().filter(Number.isFinite).sort(function (a, b) { return a - b; });
+    const center = mean(sample);
+    const spread = sd(sample) || 1;
+    return {
+      theory: sample.map(function (_, index) { return center + spread * normalInv((index + 0.5) / sample.length); }),
+      sample,
+    };
+  }
+
+  function score(x, y, pred, extra, parameterCount, weights, absoluteSigma, sigmas) {
+    const residuals = y.map(function (value, index) { return value - pred[index]; });
+    const sse = residuals.reduce(function (sum, residual) { return sum + residual * residual; }, 0);
+    const weightedObjective = residuals.reduce(function (sum, residual, index) { return sum + weights[index] * residual * residual; }, 0);
+    const centered = mean(y);
+    const total = y.reduce(function (sum, value) { return sum + (value - centered) ** 2; }, 0);
+    const degreesOfFreedom = y.length - parameterCount;
+    const residualVariance = sse / Math.max(1, degreesOfFreedom);
+    const covarianceScale = absoluteSigma ? 1 : weightedObjective / Math.max(1, degreesOfFreedom);
+    let minus2LogLikelihood;
+    let informationCriterionBasis;
+    if (absoluteSigma && Array.isArray(sigmas)) {
+      minus2LogLikelihood = residuals.reduce(function (sum, residual, index) {
+        const sigma = sigmas[index];
+        return sum + Math.log(2 * Math.PI * sigma * sigma) + residual * residual / (sigma * sigma);
+      }, 0);
+      informationCriterionBasis = 'Gaussian likelihood with supplied sigma';
+    } else {
+      const mleVariance = Math.max(1e-300, sse / y.length);
+      minus2LogLikelihood = y.length * (Math.log(2 * Math.PI * mleVariance) + 1);
+      informationCriterionBasis = 'Gaussian likelihood with fitted common variance';
+    }
+    return Object.assign({
+      n: y.length,
+      parameterCount,
+      df: degreesOfFreedom,
+      sse,
+      weightedObjective,
+      residualVariance,
+      covarianceScale,
+      rmse: Math.sqrt(sse / y.length),
+      r2: total > 0 ? 1 - sse / total : (sse < 1e-14 ? 1 : NaN),
+      adjustedR2: total > 0 && degreesOfFreedom > 0 ? 1 - (sse / degreesOfFreedom) / (total / Math.max(1, y.length - 1)) : NaN,
+      aic: minus2LogLikelihood + 2 * parameterCount,
+      bic: minus2LogLikelihood + Math.log(y.length) * parameterCount,
+      informationCriterionBasis,
+      pred,
+      residuals,
+    }, extra || {});
+  }
+
+  function enrich(model, x, y, optimisation, options, weightInfo) {
+    const opts = Object.assign({ alpha: 0.05, bootstrapReplicates: 0, bootstrapSeed: 9144, computeProfile: false }, options || {});
+    const info = modelInfo(model);
+    const base = score(x, y, optimisation.pred, {
+      model: info.id,
+      equation: info.equation,
+      coef: optimisation.coef.slice(),
+      converged: optimisation.converged,
+      terminationReason: optimisation.terminationReason,
+      iterations: optimisation.iterations,
+      acceptedSteps: optimisation.acceptedSteps,
+      rejectedSteps: optimisation.rejectedSteps,
+      evaluations: optimisation.evaluations,
+      objectiveHistory: optimisation.history || [],
+      weighting: weightInfo.mode,
+      absoluteSigma: weightInfo.absoluteSigma,
+      conditionIndicator: conditionIndicator(optimisation.normalMatrix),
+    }, info.names.length, weightInfo.weights, weightInfo.absoluteSigma, weightInfo.sigmas);
+
+    const covariance = covarianceFromJacobian(optimisation.jacobian, weightInfo.weights, base.covarianceScale);
+    base.covariance = covariance;
+    base.parameterSummary = parameterSummary(info.names, base.coef, covariance, opts.alpha);
+    base.parameterSE = base.parameterSummary.map(function (parameter) { return parameter.se; });
+    base.influence = influenceDiagnostics(optimisation.jacobian, base.residuals, info.names.length, base.residualVariance, weightInfo.weights, weightInfo.sigmas);
+    base.predictionBandAvailable = weightInfo.mode !== 'known-sigma';
+    base.predictionBands = predictionBands(info.id, x, base.coef, covariance, base.residualVariance, opts.alpha, base.predictionBandAvailable);
+    base.confidenceEllipse = confidenceEllipse(base.coef, covariance, info.names, opts.alpha);
+    base.sensitivity = sensitivityCoefficients(info.id, x.slice().sort(function (a, b) { return a - b; }), base.coef);
+    base.profileLikelihood = opts.computeProfile ? profileLikelihood(info.id, x, y, base.coef, {
+      weights: weightInfo.weights,
+      covariance,
+      points: opts.profilePoints || 31,
+      maxIterations: opts.profileIterations || 70,
+    }) : [];
+    base.bootstrap = opts.bootstrapReplicates > 0 ? bootstrapFit(x.map(function (value, index) { return [value, y[index]]; }), info.id, opts.bootstrapReplicates, {
+      seed: opts.bootstrapSeed,
+      sigmas: weightInfo.sigmas,
+      weights: weightInfo.mode === 'relative-weight' ? weightInfo.weights : undefined,
+      initialParams: base.coef,
+      maxIterations: Math.min(180, opts.maxIterations || 180),
+    }) : { requested: 0, replicates: 0, failed: 0, seed: opts.bootstrapSeed, method: 'pairs bootstrap', summary: [] };
+    base.parameterCorrelation = parameterCorrelationMatrix(covariance, info.names);
+    base.identifiability = identifiabilityAssessment(base, info.names);
+    base.experimentalDesignAdvice = experimentalDesignAdvice(info.id, x, base.coef, covariance);
+    base.warnings = [];
+    if (base.identifiability.practicalVerdict === 'practical non-identifiability likely') base.warnings.push(base.identifiability.sentence);
+    if (!base.converged && !info.linear) base.warnings.push(`Nonlinear least-squares search did not satisfy a convergence tolerance: ${base.terminationReason}.`);
+    if (!covariance) base.warnings.push('The local covariance matrix could not be estimated; parameters may be weakly identified or the Jacobian may be rank deficient.');
+    if (base.n <= 2 * info.names.length) base.warnings.push('The sample is small relative to the number of parameters; uncertainty and influence diagnostics are unstable.');
+    if (base.conditionIndicator > 1e8) base.warnings.push('The normal-matrix diagonal condition indicator is large; parameter scaling or identifiability may be poor.');
+    if (weightInfo.mode === 'ordinary') base.warnings.push('Classical intervals assume independent, approximately homoscedastic residuals and a locally adequate model.');
+    if (weightInfo.mode === 'known-sigma') {
+      base.warnings.push('Inverse-variance weighting treats the supplied sigma values as known observation standard deviations.');
+      base.warnings.push('A prediction band is not shown because no model for sigma at unobserved x values was supplied.');
+    }
+    if (opts.bootstrapReplicates > 0 && base.bootstrap.replicates < Math.max(50, 0.8 * opts.bootstrapReplicates)) base.warnings.push('Many bootstrap resamples failed to fit; percentile intervals are unreliable.');
+    base.maxCook = Math.max.apply(null, base.influence.cooksDistance.filter(Number.isFinite).concat([0]));
+    base.maxAbsStandardizedResidual = Math.max.apply(null, base.influence.standardizedResiduals.map(Math.abs).filter(Number.isFinite).concat([0]));
+    if (info.id === 'exponential') { base.a = base.coef[0]; base.b = base.coef[1]; }
+    if (info.id === 'logistic') { base.K = base.coef[0]; base.r = base.coef[1]; base.x0 = base.coef[2]; }
+    if (info.id === 'michaelis') { base.model = 'michaelis-menten'; base.Vmax = base.coef[0]; base.Km = base.coef[1]; }
+    return base;
+  }
+
+  function fit(pairs, model, options) {
+    requirePairs(pairs, 'fit');
+    const info = modelInfo(model || 'linear');
+    const x = pairs.map(function (pair) { return pair[0]; });
+    const y = pairs.map(function (pair) { return pair[1]; });
+    if (x.length <= info.names.length) throw new Error(`Model ${info.id} has ${info.names.length} parameters and needs at least ${info.names.length + 1} usable observations.`);
+    if (Math.max.apply(null, x) === Math.min.apply(null, x)) throw new Error('The x values must vary to identify a curve.');
+    const opts = Object.assign({}, options || {});
+    const weightInfo = normaliseWeights(x.length, opts);
+    const degree = polynomialDegree(info.id);
+    let optimisation;
+    if (degree != null) optimisation = weightedPolynomialFit(x, y, degree, weightInfo.weights);
+    else {
+      const start = Array.isArray(opts.initialParams) && opts.initialParams.length === info.names.length ? opts.initialParams : initialParams(info.id, x, y);
+      optimisation = lmOptimize(info.id, x, y, start, Object.assign({}, opts, { weights: weightInfo.weights }));
+    }
+    return enrich(info.id, x, y, optimisation, opts, weightInfo);
+  }
+
+  function polyFit(x, y, degree, options) {
+    requireSameLength(x, y, 'polyFit');
+    const model = degree === 1 ? 'linear' : degree === 2 ? 'quadratic' : degree === 3 ? 'cubic' : null;
+    if (!model) {
+      if (x.length <= degree) throw new Error('polyFit: need more points than the polynomial degree.');
+      throw new Error('polyFit: the browser reference supports polynomial degrees 1, 2 and 3.');
+    }
+    return fit(x.map(function (value, index) { return [value, y[index]]; }), model, options);
+  }
+
+  function linearFit(pairs, options) { return fit(pairs, 'linear', options); }
+  function expFit(pairs, options) { return fit(pairs, 'exponential', options); }
+  function logisticFit(pairs, options) { return fit(pairs, 'logistic', options); }
+  function michaelisFit(pairs, options) { return fit(pairs, 'michaelis', options); }
+
+  function format(result) {
+    return [
+      `model = ${result.model}`,
+      `n = ${result.n}`,
+      `converged = ${result.converged}`,
+      `termination = ${result.terminationReason}`,
+      `RMSE = ${Number(result.rmse).toPrecision(6)}`,
+      `R² = ${Number(result.r2).toPrecision(6)}`,
+      `parameters = ${JSON.stringify(result.parameterSummary.map(function (parameter) {
+        return { name: parameter.name, value: parameter.value, se: parameter.se, ci: parameter.ci };
+      }))}`,
+    ].join('\n');
+  }
+
+  const api = {
+    parsePairs,
+    solve,
+    inverse,
+    modelInfo,
+    polyFit,
+    linearFit,
+    expFit,
+    logisticFit,
+    michaelisFit,
+    fit,
+    fitNoBootstrap,
+    qqData,
+    score,
+    predictModel,
+    numericJacobian,
+    covarianceFromJacobian,
+    confidenceEllipse,
+    profileLikelihood,
+    bootstrapFit,
+    predictionBands,
+    influenceDiagnostics,
+    sensitivityCoefficients,
+    parameterCorrelationMatrix,
+    profileIdentifiability,
+    identifiabilityAssessment,
+    experimentalDesignAdvice,
+    seededRandom,
+    normaliseWeights,
+    lmOptimize,
+  };
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  root.FokoFitting = api;
+}(typeof window !== 'undefined' ? window : globalThis));

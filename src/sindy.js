@@ -264,13 +264,62 @@
     };
   }
 
+  /* -------------------------------------------------------------------
+   * paretoSweep(cfg) -> { points: [{lambda, activeTerms, rmse}], bestIndex }
+   *
+   * The honest SINDy model-selection diagnostic. For each sparsity
+   * threshold lambda in cfg.lambdas we refit STLSQ on the SAME data and
+   * record how many terms survive (activeTerms) and the resulting fit RMSE.
+   * Higher lambda => a more aggressive threshold => fewer active terms and
+   * (usually) higher RMSE. Plotting activeTerms/RMSE vs lambda exposes the
+   * sparsity/accuracy trade-off and the "knee" where a compact model still
+   * fits well. This replaces the previously hardcoded exp(-k/2) curve.
+   *
+   * cfg: { X, t, [Xdot], [varNames], [library], [lambdas], [ridge], [iterations] }
+   * PRECONDITIONS: cfg is an object; lambdas (if given) is a non-empty array
+   * of positive, finite numbers. X/t validity is enforced by discover().
+   * ----------------------------------------------------------------- */
+  function paretoSweep(cfg) {
+    assert(cfg && typeof cfg === 'object', 'paretoSweep() needs a config object.');
+    const lambdas = cfg.lambdas == null
+      ? [0.001, 0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.0]
+      : cfg.lambdas;
+    assert(Array.isArray(lambdas) && lambdas.length > 0, 'paretoSweep needs a non-empty lambda grid.');
+    lambdas.forEach(function (l) {
+      assert(Number.isFinite(l) && l > 0, 'paretoSweep: every lambda must be finite and > 0 (got ' + l + ').');
+    });
+
+    // Sort ascending so plotted points are stable and monotonicity is visible.
+    const grid = lambdas.slice().sort(function (a, b) { return a - b; });
+    const points = grid.map(function (lambda) {
+      const model = discover({
+        X: cfg.X, t: cfg.t, Xdot: cfg.Xdot, varNames: cfg.varNames,
+        library: cfg.library, ridge: cfg.ridge, iterations: cfg.iterations,
+        lambda: lambda
+      });
+      return { lambda: lambda, activeTerms: model.sparsity, rmse: model.rmse };
+    });
+
+    // Knee heuristic: the point minimising a normalised (complexity + error)
+    // cost, i.e. the most compact model that still fits well.
+    let maxT = 1, maxE = 1e-30;
+    points.forEach(function (p) { if (p.activeTerms > maxT) maxT = p.activeTerms; if (p.rmse > maxE) maxE = p.rmse; });
+    let bestIndex = 0, bestCost = Infinity;
+    points.forEach(function (p, i) {
+      const cost = p.activeTerms / maxT + p.rmse / maxE;
+      if (cost < bestCost) { bestCost = cost; bestIndex = i; }
+    });
+    return { points: points, bestIndex: bestIndex };
+  }
+
   const api = {
     buildLibrary: buildLibrary,
     estimateDerivatives: estimateDerivatives,
     stlsq: stlsq,
     formatEquations: formatEquations,
     fitRmse: fitRmse,
-    discover: discover
+    discover: discover,
+    paretoSweep: paretoSweep
   };
   if (typeof window !== 'undefined') window.FokoSINDy = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

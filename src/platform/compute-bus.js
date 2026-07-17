@@ -7,8 +7,8 @@
  * ===================================================================== */
 (function(root){
   'use strict';
-  const DEFAULT_WORKER = 'src/worker.js?v=71.46.0';
-  const PLATFORM_WORKER = 'src/v71-worker.js?v=71.46.0';
+  const DEFAULT_WORKER = 'src/worker.js?v=72.46.0';
+  const PLATFORM_WORKER = 'src/v71-worker.js?v=72.46.0';
   let seq = 0;
   const active = new Map();
 
@@ -159,7 +159,7 @@
   }
 
   root.FokoComputeBus = {
-    RELEASE: '71.46.0',
+    RELEASE: '72.46.0',
     DEFAULT_WORKER,
     PLATFORM_WORKER,
     supportsWorkers,

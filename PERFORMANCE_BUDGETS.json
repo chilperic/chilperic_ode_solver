@@ -1,0 +1,32 @@
+{
+  "release": "72.46.0",
+  "scope": "Authored v72 scientific pages",
+  "budgets": {
+    "parserBlockingExternalScripts": 0,
+    "plotlyPreloads": 0,
+    "pageSpecificJavaScriptBytes": {
+      "default": 900000,
+      "mathEnabledPage": 1200000,
+      "workbench": 1250000
+    },
+    "externalScriptCount": {
+      "default": 12,
+      "workbench": 20
+    },
+    "publicThreePanelControls": 0,
+    "duplicateIds": 0,
+    "unlabelledFormControls": 0,
+    "imagesWithoutAlt": 0
+  },
+  "runtimeTelemetry": {
+    "api": "window.FokoPerformance.getReport()",
+    "records": [
+      "DOMContentLoaded time",
+      "load time",
+      "resource bytes",
+      "plot render durations",
+      "long tasks when supported"
+    ],
+    "claimBoundary": "Telemetry describes the current browser session and is not a cross-device benchmark."
+  }
+}

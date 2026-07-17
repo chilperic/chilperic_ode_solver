@@ -5,10 +5,10 @@ type: software
 authors:
   - family-names: "Foko Kuate"
     given-names: "Chilperic Armel"
-repository-code: "https://github.com/chilperic/chilperic_ode_solver"
+repository-code: "https://github.com/chilperic/FokoLab"
 url: "https://chilperic.github.io/FokoLab/"
-version: "71.0.0"
-date-released: "2026-07-05"
+version: "72.29.0"
+date-released: "2026-07-13"
 keywords:
   - mechanistic modeling
   - computational biology

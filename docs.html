@@ -1,196 +1,271 @@
 <!DOCTYPE html>
 
-<html data-theme="aurora" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="Foko Lab documentation." name="description"/><meta content="Foko Lab docs" property="og:title"/><meta content="Documentation for Foko Lab labs, custom models and exports." property="og:description"/><meta content="website" property="og:type"/><meta content="assets/homepage-preview.webp" property="og:image"/><title>Documentation · Foko Lab</title>
-<link href="assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-10-modeling-logic.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-15-analysis-suite.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-19-platform-system.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/><link href="styles/lab-identity.css?v=71.46.0" rel="stylesheet"/>
-</head>
-<body data-lab="docs"><div class="app-shell quiet-shell v36-clean"><header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<html data-theme="aurora" lang="en"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="How to run models, read diagnostics, work with your own inputs, and know when an external tool is required." name="description"/><title>Using Foko Lab · Foko Lab</title>
+<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
+<link href="styles/style.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.46.0" rel="stylesheet"/>
+</head><body data-lab="docs"><div class="app-shell">
+<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.46.0"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-  <a href="index.html">Home</a>
-  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
-    <summary class="modeling-summary labs-summary">Modeling</summary>
-    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
-      <div class="menu-section menu-section-primary">
-        <p class="menu-section-title">Modeling workspaces</p>
-        <a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
-        <a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
-        <a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
-        <a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
-        <a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
-        <a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
-      </div></div>
-  </details>
-  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
-    <summary class="standalone-summary labs-summary">Focused Labs</summary>
-    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Standalone scientific labs</p>
-        <a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
-        <a href="stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
-        <a href="optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
-        <a href="steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
-    <summary class="sciml-summary labs-summary">SciML</summary>
-    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Scientific machine learning</p>
-        <a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
-        <a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
-        <a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
-    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
-    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Model output analysis</p>
-        <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
-        <a href="fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-subtitle">Structure and geometry</p>
-        <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
-        <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
-    <summary class="resources-summary labs-summary">Explore</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Examples and mathematical culture</p>
-        <a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
-        <a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
-    <summary class="guide-summary labs-summary">Learn</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Guides and templates</p>
-        <a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
-        <a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
-    <summary class="creator-summary labs-summary">Creator</summary>
-    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Profile and research</p>
-        <a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
-        <a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
-        <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener" role="menuitem"><span class="menu-icon">↗</span><span><b>Personal website</b><small>Portfolio homepage and broader profile.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-title">Contact and context</p>
-        <a href="contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
-        <a href="acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
-      </div>
-    </div>
-  </details>
+<a class="nav-home-link" href="index.html">Home</a>
+<details class="labs-menu nav-menu" data-nav-menu="modeling">
+<summary class="labs-summary">Modeling</summary>
+<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
+<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
+<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
+<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
+<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
+<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Rules and search</p>
+<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
+<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
+<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="analysis">
+<summary class="labs-summary">Data / Analysis</summary>
+<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
+<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
+<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
+<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="sciml">
+<summary class="labs-summary">SciML</summary>
+<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
+<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
+<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
+<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="explore">
+<summary class="labs-summary">Explore</summary>
+<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
+<div class="menu-section"><p class="menu-section-title">Find and learn</p>
+<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
+<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
+<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
+<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
+<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
+<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
+<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
+</div>
+</div>
+</details>
+<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
 </nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/></a></div>
-</header>
-<main class="doc-standard clean-doc-page v70-3-docs">
-<section class="doc-hero clean-doc-hero"><p class="doc-eyebrow">Documentation</p><h1>Documentation</h1><p class="doc-lede">A practical reference for choosing a model type, editing setup values, running diagnostics and exporting reproducible results.</p><div class="doc-actions"><a class="primary" href="workbench.html">Open Workbench</a><a href="examples.html">Model Atlas</a><a href="tutorial.html">Tutorial</a></div></section><section class="clean-doc-section" id="analysis-toolkit"><h2>Analysis toolkit</h2><p>Use these tools after a model has produced data: statistics for uncertainty and residuals, curve fitting for calibration, linear algebra for matrix structure, networks for interaction graphs, and the ML Toolkit for small-data diagnostics such as k-means, PCA and train/test baselines. Heavy deep learning, large sparse linear algebra and production-scale uncertainty workflows should be exported to Python or HPC workflows.</p><div class="doc-actions"><a href="statistics.html">Statistics</a><a href="fitting.html">Curve fitting</a><a href="linear-algebra.html">Linear algebra</a><a href="networks.html">Networks</a><a href="ml.html">ML Toolkit</a></div></section>
-<section class="clean-doc-section standalone-doc-section" id="standalone-lab-standard" data-v719-standalone-docs="true"><h2>Focused Labs: scope and depth roadmap</h2><p>The integrated Workbench is the broad route. Focused Labs are the direct single-paradigm workspaces: ODE + Parametric ODE, Stochastic CTMC, Optimization, and Steady-State. They expose direct single-paradigm controls that would overload a general workbench: deterministic sweeps, CTMC event editing, optimization setup and algebraic continuation.</p><div class="lab-card-grid standalone-power-grid"><article class="lab-card"><h3>ODE Lab</h3><ul><li>Current strength: deterministic solver, parametric ODE workflow, phase/trajectory diagnostics and exports.</li><li>Required depth: events/discontinuities, time-varying inputs, experimental-data overlay, fitting bridge, IC sweeps and uncertainty bands.</li></ul></article><article class="lab-card"><h3>Stochastic Lab</h3><ul><li>Current strength: CTMC/Gillespie event model with editable states, propensities and ensemble exports.</li><li>Required depth: seeded reproducibility, tau-leaping, Euler-Maruyama SDEs, quantile ribbons, extinction probabilities and deterministic comparison.</li></ul></article><article class="lab-card"><h3>Optimization Lab</h3><ul><li>Current strength: direct objective setup, starts, bounds, samples and convergence diagnostics.</li><li>Required depth: gradient, Newton, simplex/interior-point, genetic algorithm, simulated annealing, particle swarm, constraints and Pareto front diagnostics.</li></ul></article><article class="lab-card"><h3>Steady-State Lab</h3><ul><li>Current strength: algebraic equations, Newton solve, residual check, Jacobian stability and continuation.</li><li>Required depth: two-parameter continuation, Hopf/fold classification, root basins, nullclines and profile-based validation.</li></ul></article></div></section><section class="doc-grid no-sidebar">
-<article class="doc-card"><h2>Core workflow</h2><ol><li>Choose ODE, stochastic CTMC, optimization, steady-state, symbolic, agent or SciML.</li><li>Load a curated model or import your own JSON.</li><li>Edit initial conditions, parameter values, ranges, solver/setup values and the diagnostic target.</li><li>Run one baseline case.</li><li>Add only plots that answer a modeling question.</li><li>Export JSON, CSV, Python, SymPy/SciPy or figures for validation outside the browser.</li></ol></article>
-<article class="doc-card"><h2>ODE Lab</h2><p>Use ODE models for continuous deterministic dynamics. A strong workflow includes solver choice, stiffness awareness, event handling, phase portraits, vector fields, parameter sweeps, sensitivity analysis and calibration against data.</p></article>
-<article class="doc-card"><h2>Optimization Lab</h2><p>Use optimization models for objectives, constraints and trade-offs. The Workbench exposes initial guesses, bounds, parameter values, method families, population/starts, tolerance and seed. Use gradient-based methods for smooth problems and metaheuristics for rugged or multimodal landscapes.</p></article>
-<article class="doc-card"><h2>Steady-State Lab</h2><p>Use steady-state models for algebraic balances, roots, equilibria, residual checks, local Jacobian stability, continuation and sensitivity. A converged residual is not automatically a scientific validation.</p></article>
-<article class="doc-card"><h2>Stochastic Lab</h2><p>Use CTMC and Gillespie-style models when event timing and random trajectories matter. Always inspect ensemble paths, final distributions, extinction probabilities, run count, seed and deterministic comparison.</p></article>
-<article class="doc-card"><h2>Symbolic Lab</h2><p>Use symbolic computation for exact differentiation, simplification under assumptions, Jacobians, Taylor expansions, equation inspection and code generation. Rendered mathematics is the primary output; raw LaTeX should not be the user-facing result.</p></article>
-<article class="doc-card"><h2>Agent Lab</h2><p>Use ABM for decentralized systems with heterogeneous local rules, spatial grids, contact networks and emergent behavior. Validate through repeated runs, summary statistics, calibration and ODD-style documentation.</p></article>
-<article class="doc-card"><h2>SciML Lab</h2><p>SciML bridges mechanistic models and data-driven learning: inverse problems, surrogate modeling, SINDy, PINN/UDE export scaffolds, residual plots, loss curves, train/validation splits and uncertainty-aware diagnostics.</p></article>
-<article class="doc-card"><h2>Scientific limits</h2><p>Browser execution is for exploration and teaching. Use exported local scripts for stiff systems, large ABMs, large CTMC ensembles, publication-quality inference, uncertainty quantification and HPC workflows.</p></article>
-<article class="doc-card"><h2>Custom models</h2><p>Custom models can be imported through JSON in the Workbench. Current browser authoring is strongest for ODE and 2D optimization; CTMC, steady-state, symbolic and agent models have dedicated pages and export routes while the full Workbench authoring contract is consolidated.</p></article>
-<article class="doc-card"><h2>Agent execution limits</h2><p>Custom Agent Lab rules run in <code>agent-rule-worker.js</code> with a worker timeout. Multilayer spatial/social/transport contacts are supported for browser-scale tests, but large ABM studies should be exported or reproduced externally.</p></article>
-<article class="doc-card"><h2>Plot standard</h2><p>Put plot controls directly above the graph, keep variables selectable, and do not treat a decorative plot as evidence. Use the simplest diagnostic that can reject the current model assumption.</p></article>
-</section>
-<section class="card"><h2>What every model should expose</h2><div class="example-catalog"><article><h3>Inputs</h3><p>State variables, population size, initial conditions, parameter values, bounds, solver/setup, seed and time horizon.</p></article><article><h3>Diagnostics</h3><p>Trajectory, phase portrait, residual, convergence, sensitivity, sweep, uncertainty, feasibility and validation plots.</p></article><article><h3>Export</h3><p>JSON for reproducibility, CSV for results, Python/SciPy/SymPy/PyTorch scaffolds for serious local computation.</p></article></div></section>
-<section class="clean-doc-section" id="sciml-export"><h2>SciML export boundary</h2><p>Browser SciML is for inverse-problem, SINDy, surrogate and small-data ML diagnostics. Heavy PINNs, UDEs, GPU training, probabilistic UQ and large neural networks should be exported to Python/PyTorch/JAX workflows.</p></section><section class="analysis-page" id="v70-15-browser-scope"><div class="analysis-hero-card"><p class="analysis-eyebrow">Audit · What is possible</p><h1>Browser-native scope for the unified analysis stack</h1><div class="lab-card-grid"><article class="lab-card"><h3>Possible now</h3><ul><li>Statistics, regression, hypothesis tests and moderate plotting.</li><li>Linear algebra for small/medium dense matrices and geometric intuition.</li><li>ML baselines: clustering, PCA, binary/linear models, anomaly screening.</li><li>Networks: connectivity, shortest paths, PageRank and adjacency views.</li></ul></article><article class="lab-card"><h3>Possible with a heavier browser engine</h3><ul><li>Pyodide/Wasm-backed scientific Python for expanded stats and scikit-learn.</li><li>ONNX Runtime Web or TensorFlow.js for lightweight inference.</li><li>Web Workers and IndexedDB for asynchronous compute and local persistence.</li></ul></article><article class="lab-card"><h3>Not realistic without external compute</h3><ul><li>Deep learning training, LLM fine-tuning, large graph analytics and GPU orchestration.</li><li>Huge datasets, enterprise lineage, graph databases and model registries.</li><li>Anything requiring stable server-side storage or collaboration backends.</li></ul></article></div></div></section>
-<section class="analysis-page" id="v70-19-platform-standard"><div class="analysis-hero-card"><p class="analysis-eyebrow">v70.19 standard</p><h1>What makes this a modeling platform rather than a toy tool</h1><div class="lab-card-grid"><article class="lab-card"><h3>Shared workflow</h3><ul><li>Question → model/data → compute → diagnose → export.</li><li>Every page now receives a platform workflow ribbon.</li><li>Analysis pages receive local import/export project controls.</li></ul></article><article class="lab-card"><h3>Shared data layer</h3><ul><li>`FokoDataEngine.parseTable()` parses pasted or imported tables.</li><li>`inferSchema()` reports numeric/category fields and missingness.</li><li>`projectSnapshot()` exports local page state to JSON.</li></ul></article><article class="lab-card"><h3>Remaining engineering gap</h3><ul><li>Full standard still requires Web Workers, IndexedDB persistence, Pyodide/ONNX runtime and a single generated header/template source.</li><li>Large data, deep learning and large graph analytics remain external-compute tasks.</li></ul></article></div></div></section>
-
-<section class="analysis-page v71-17-analysis-plot-example-standard" id="analysis-plot-example-standard">
-  <div class="analysis-hero-card">
-    <p class="analysis-eyebrow">Data / Analysis standard</p>
-    <h1>Examples and plot coverage for analysis labs</h1>
-    <p>Each analysis lab exposes plottable examples: choosing an example loads real input data and renders an immediate diagnostic plot. The plot menu then lets the user inspect the same example through alternative views.</p>
-    <div class="lab-card-grid">
-      <article class="lab-card"><h3>Statistics</h3><p><b>Examples:</b> growth regression, A/B proportions, ANOVA groups, SPC signal, correlation matrix, bootstrap CI, outlier screen, multiple regression.</p><p><b>Plots:</b> scatter, line, bar, histogram/KDE, box, violin, heatmap, bubble, SPLOM, Pareto, residual, Q-Q and ECDF.</p></article>
-      <article class="lab-card"><h3>Curve fitting</h3><p><b>Examples:</b> exponential growth, enzyme saturation, logistic saturation, residual stress, exact linear, dose response, decay-like data, cubic calibration.</p><p><b>Plots:</b> fit overlay, fit band, residual, Q-Q, predicted-vs-observed, residual histogram, parameter bars, cumulative residual and influence proxy.</p></article>
-      <article class="lab-card"><h3>Linear algebra</h3><p><b>Examples:</b> solve Ax=b, eigenpair, least squares, Markov transition, projection, linear transform, PCA data cloud, null-space case.</p><p><b>Plots:</b> matrix heatmap, vector arrows, transformation grid, eigenvector lines, projection vector, least-squares line, Markov diagram, PCA score plot and condition/spectrum bars.</p></article>
-      <article class="lab-card"><h3>Networks</h3><p><b>Examples:</b> social graph, weighted transport, Sankey flow, community graph, centrality hub, resilience, bipartite interaction, directed PageRank matrix.</p><p><b>Plots:</b> circular graph, force-style graph, adjacency heatmap, Sankey, degree distribution, centrality bars, shortest-path highlight, community layout and resilience curve.</p></article>
-    </div>
-  </div>
-</section>
-
-<section class="analysis-page"><div class="analysis-hero-card"><p class="analysis-eyebrow">Export boundary</p><h2>Exported scripts</h2><p>When browser execution is no longer appropriate, Foko Lab workflows should move into exported scripts, JSON project states, Python notebooks or larger external compute environments.</p></div></section>
-<section class="analysis-page" id="v71-platform-foundation">
-<div class="analysis-hero-card">
-<p class="analysis-eyebrow">V71 platform foundation</p>
-<h1>What V71 changes structurally</h1>
-<div class="lab-card-grid">
-<article class="lab-card"><h3>Reproducibility</h3><ul><li>Local session save/load.</li><li>Shareable URL state.</li><li>Run-bundle JSON export.</li><li>Seeded randomness through FokoKit.</li></ul></article>
-<article class="lab-card"><h3>Scientific substrate</h3><ul><li>Curated JSON model registry.</li><li>Nonlinear fitting helper with confidence intervals.</li><li>Tau-leaping and Euler-Maruyama helper cores.</li><li>Basin map and continuation helper cores.</li></ul></article>
-<article class="lab-card"><h3>Platform UX</h3><ul><li>Command palette: press /.</li><li>Plot export buttons.</li><li>Upload/schema validation helpers.</li><li>Shared guard and result-formatting vocabulary.</li></ul></article>
-</div>
-</div>
-</section>
-
-<section class="analysis-page v71-18-steady-upgrade-docs" id="steady-continuation-upgrade"><div class="analysis-hero-card"><p class="analysis-eyebrow">Steady-State scientific upgrade</p><h2>2-parameter continuation and bifurcation classification</h2><p>The Steady-State Lab now supports one-parameter continuation with branch-level stability classification and a two-parameter continuation map. Use it to inspect equilibrium branches, residual reliability, candidate fold points, Hopf-like crossings in 2D Jacobian systems, and regions where Newton solves do not converge.</p><div class="lab-card-grid"><article class="lab-card"><h3>Recommended plots</h3><p>Continuation branch, continuation residual, Jacobian heatmap, Hopf/fold markers, bifurcation class counts and 2D continuation heatmap.</p></article><article class="lab-card"><h3>Scientific caution</h3><p>Hopf/fold labels are numerical candidates from finite-difference Jacobians and continuation sign changes. Treat them as screening diagnostics, then validate in exported Python or a dedicated bifurcation package.</p></article></div></div></section>
-
-<section class="analysis-page v71-19-reproducibility-layer" id="reproducibility-layer">
-  <div class="analysis-hero-card">
-    <p class="analysis-eyebrow">V71.19 reproducibility</p>
-    <h2>Session, share URL and bundle export/import</h2>
-    <p>Every lab now receives compact reproducibility controls: save the current session, restore it, copy a shareable URL, export a full JSON bundle and import that bundle later. The bundle stores the page, release, form state, visible outputs and timestamp so a model run can be archived with a project or paper draft.</p>
-    <div class="lab-card-grid">
-      <article class="lab-card"><h3>Use it during exploration</h3><p>Save session after a working setup, copy the share URL before sharing a configuration, and export a bundle when the result should be preserved outside the browser.</p></article>
-      <article class="lab-card"><h3>What is included</h3><p>Input fields, selected modes, pasted datasets, parameter values, output text, page identity, release version and browser URL state.</p></article>
-      <article class="lab-card"><h3>What is not included</h3><p>Large binary files, external Python results, server-side collaboration history and publication-grade provenance beyond the browser session.</p></article>
-    </div>
-  </div>
-</section>
-
-<section class="analysis-page v71-20-compute-bus" id="compute-bus">
-  <div class="analysis-hero-card">
-    <p class="analysis-eyebrow">V71.21 compute bus</p>
-    <h2>Shared worker execution</h2>
-    <p>Long browser computations now have one platform execution path for progress, cancellation and crash cleanup. ODE, Parametric ODE and Optimization use the bus-compatible worker handle first; other labs can be migrated without changing their scientific engines.</p>
-  </div>
-</section>
-
-
-<section id="analysis-scientific-examples" class="doc-section">
-<h2>Analysis labs: plottable examples and diagnostics</h2>
-<p>The Statistics, Curve Fitting, Linear Algebra and Network labs now start from concrete scientific examples. Each example loads data or a matrix/edge list, runs immediately and renders two plots: a primary result plot and a secondary diagnostic.</p>
+<div aria-label="Display controls" class="foko-top-actions"></div></header>
+<main class="guide-page" id="main-content">
+<header class="guide-hero"><p class="guide-eyebrow">User guide</p><h1>Using Foko Lab</h1><p>How to run models, read diagnostics, work with your own inputs, and know when an external tool is required.</p><nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">User Guide</a><a href="tutorial.html">Tutorials</a><a href="trust.html">Trust and limitations</a></nav></header>
+<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a href="#start-in-one-minute">Start in one minute</a><a href="#read-every-result-in-this-order">Read every result in this order</a><a href="#understand-the-four-capability-labels">Understand the four capability labels</a><a href="#use-the-workspace">Use the workspace</a><a href="#core-modelling-workflows">Core modelling workflows</a><a href="#additional-analysis-tools">Additional analysis tools</a><a href="#bring-your-own-model-or-data">Bring your own model or data</a><a href="#verify-save-share-and-report">Verify, save, share, and report</a><a href="#analysis-taxonomy-and-capability-catalogue">Analysis taxonomy and capability catalogue</a><a href="#when-to-leave-the-browser">When to leave the browser</a><a href="#troubleshooting">Troubleshooting</a><a href="#research-provenance">Research provenance</a></aside><article class="guide-document"><p>Foko Lab is a browser-based scientific modelling workspace. It lets you build and run models, inspect numerical evidence, fit data, compare alternatives, and export work for independent reproduction.</p>
+<p>The platform is designed for exploration and communication. It helps you see what was computed, how it was computed, and where the browser result stops being enough.</p>
+<h2 id="start-in-one-minute">Start in one minute</h2>
+<ol>
+<li>Choose a lab from the <strong>Labs</strong> menu.</li>
+<li>Begin with the example already loaded.</li>
+<li>Press <strong>Run</strong>.</li>
+<li>Read the status and diagnostics before interpreting the plot.</li>
+<li>Change one parameter, method, or plot and run again.</li>
+</ol>
+<p>You can replace every example with your own equations, reactions, parameters, matrix, graph, or data table.</p>
+<h2 id="read-every-result-in-this-order">Read every result in this order</h2>
+<h3>1. Status</h3>
 <ul>
-<li><b>Statistics:</b> A/B testing, housing regression, sensor noise, survival, credit risk, RSM yield, churn, air quality, quality control and gene-expression FDR.</li>
-<li><b>Curve fitting:</b> enzyme kinetics, logistic growth, decay, rheology, PK/PD, spectral peaks, thermal calibration, adsorption, battery discharge and wave packets.</li>
-<li><b>Linear algebra:</b> PageRank, SVD compression, least squares, quantum eigenstates, truss systems, Markov chains, stoichiometric null spaces, PCA, graphics transforms and diffusion matrices.</li>
-<li><b>Networks:</b> electrical grids, supply chains, epidemic transmission, call graphs, financial contagion, telecom routing, corporate flows, citation trees, metabolic pathways and traffic networks.</li>
+<li><strong>Computed</strong> means the current input produced a numerical result and the evidence panel rendered.</li>
+<li><strong>Computed with warning</strong> means a result exists, but a diagnostic needs attention.</li>
+<li><strong>Not computed</strong> means the visible configuration has not produced a current result.</li>
 </ul>
+<h3>2. Diagnostics</h3>
+<p>Check the method, tolerances or step size, accepted and rejected steps, seed, sample size, convergence reason, feasibility, censoring, missingness, or other lab-specific evidence.</p>
+<p>For an ODE result, repeat the run with tighter tolerances. If the trajectory or quantity of interest changes materially, the first result was not numerically converged.</p>
+<h3>3. Plot</h3>
+<p>Use the plot to understand the computed result only after checking how it was produced. A smooth curve can still come from an unsuitable method.</p>
+<h3>4. Provenance</h3>
+<p>Record the model, parameters, method, tolerances, seed, version, and any independent verification. These are the details needed to reproduce the run.</p>
+<h2 id="understand-the-four-capability-labels">Understand the four capability labels</h2>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Browser-computed</strong></td>
+<td>The visible result was computed locally from the current input.</td>
+</tr>
+<tr>
+<td><strong>Limited</strong></td>
+<td>A genuine but bounded, heuristic, or small-scale browser method was used.</td>
+</tr>
+<tr>
+<td><strong>Export-only</strong></td>
+<td>Foko Lab prepares a reproducible external workflow but does not claim to run it in the browser.</td>
+</tr>
+<tr>
+<td><strong>Unavailable</strong></td>
+<td>The capability is not offered and no substitute result is shown.</td>
+</tr>
+</tbody>
+</table>
+<p>A capability label describes the computation boundary. It does not certify the scientific model, data, assumptions, or interpretation.</p>
+<h2 id="use-the-workspace">Use the workspace</h2>
+<p>Most labs have three areas:</p>
+<ul>
+<li><strong>Inputs</strong> — model, data, parameters, method, tolerances, seed, and options.</li>
+<li><strong>Evidence</strong> — one large plot or two plots shown together.</li>
+<li><strong>Diagnostics</strong> — status, warnings, numerical checks, uncertainty, and provenance.</li>
+</ul>
+<h3>Two-up and Focus</h3>
+<p><strong>Two-up</strong> keeps two evidence panels visible. Changing either plot changes only the content of that panel; it does not change the layout. On a narrow screen the panels may stack vertically while Two-up remains selected.</p>
+<p><strong>Focus</strong> shows one evidence panel at a time. Focus changes only when you choose it.</p>
+<h2 id="core-modelling-workflows">Core modelling workflows</h2>
+<h3>ODE Lab</h3>
+<p>Use ODE Lab for systems of differential equations and reaction networks. You can inspect trajectories, phase portraits, vector fields, parameter sweeps, conservation, stiffness evidence, and solver diagnostics.</p>
+<p>Use <strong>Verify against SciPy</strong> when you need an independent numerical comparison. Suspected stiff systems should be compared with an implicit method such as Radau or BDF.</p>
+<h3>Sensitivity Analysis Lab</h3>
+<p>Use Sensitivity Analysis Lab to vary parameters of an editable ODE model while retaining direct control over equations, initial conditions, parameter values and ranges, time span, reported points, solver, step controls, <code>rtol</code>, and <code>atol</code>.</p>
+<p>Available browser methods are local central finite differences; Morris screening with elementary-effect distributions, convergence and bootstrap rank stability; independent-uniform Jansen first/total indices with optional symmetrized Saltelli pairwise second-order interactions; and a local range-scaled Fisher-information approximation. Changing any model or numerical input marks the existing evidence <strong>Stale</strong> and disables result and image exports until the analysis is rerun.</p>
+<p>Interpret the methods within their boundaries:</p>
+<ul>
+<li>local derivatives are local and perturbation-dependent;</li>
+<li>Morris is screening, not variance decomposition; μ*–σ, effect distributions, convergence and bootstrap ranks remain conditional on the computed trajectories;</li>
+<li>Jansen first/total and Saltelli second-order estimates assume independent uniform ranges and may be negative or exceed one at finite sample sizes; bootstrap intervals resample the same design;</li>
+<li>the Fisher-information view is local, scaling-dependent, and based on a declared constant noise scale; it is not posterior uncertainty or structural identifiability.</li>
+</ul>
+<p>The lab estimates the browser workload before launch. Requests above the guarded state, parameter, ODE-solve, pair-count, or state-time envelope are refused before a worker starts. Reduce the model or export it to Python/SALib. Use several perturbation sizes or sample budgets and independently repeat important analyses.</p>
+<h3>Steady-State Lab</h3>
+<p>Use Steady-State Lab to search for roots of <code>f(x)=0</code>, inspect residuals, reject physically inadmissible candidates, and assess local stability where supported.</p>
+<p>A finite multi-start search can find several roots but cannot prove that all roots were found. A parameter scan is not a bifurcation continuation.</p>
+<h3>Stochastic Lab</h3>
+<p>Use Stochastic Lab for time-homogeneous continuous-time Markov chains simulated with Gillespie’s direct method. Results include seeded trajectories, empirical bands, Monte Carlo error, and censoring counts.</p>
+<p>Record the seed, number of runs, and censoring count. The deterministic mean-field trajectory is not guaranteed to equal the stochastic mean.</p>
+<h3>Curve Fitting</h3>
+<p>Use Curve Fitting for linear and nonlinear regression, residual analysis, uncertainty bands, bootstrap checks, parameter correlations, and finite profile scans.</p>
+<p>A high R² does not establish parameter identifiability. Check profile shape and parameter correlation before reporting nonlinear parameters.</p>
+<h3>Agent Lab</h3>
+<p>Use Agent Lab for seeded lattice-based, individual-level dynamics. The live animation is one representative computed realization. Population bands and endpoint summaries describe the finite ensemble.</p>
+<p>A simulation step is not automatically a biological unit of time, and simulation intervals do not include parameter, measurement, or model uncertainty.</p>
+<h3>SciML Lab</h3>
+<p>Use SciML for bounded scientific machine-learning workflows such as SINDy equation discovery, inverse diagnostics, surrogate checks, and trajectory PCA where the dimensions permit it.</p>
+<p>A recovered equation is conditional on sampling, noise, derivative estimation, scaling, candidate terms, and the sparsity threshold. Treat it as a data-supported representation, not a discovered mechanism.</p>
+<h2 id="additional-analysis-tools">Additional analysis tools</h2>
+<ul>
+<li><strong>Statistics</strong> — missingness audit, descriptive statistics, regression, tests, survival analysis, ROC/PR, FDR, and PCA.</li>
+<li><strong>Machine Learning</strong> — fold-safe preprocessing, cross-validation, regression, binary classification, calibration, clustering, PCA, and leakage checks.</li>
+<li><strong>Optimization</strong> — bounded and heuristic search with a separate feasibility check.</li>
+<li><strong>Linear Algebra</strong> — small dense systems, least squares, eigensystems where supported, rank, null space, and conditioning evidence.</li>
+<li><strong>Networks</strong> — small directed and undirected graphs, paths, components, spanning trees, and exploratory centrality.</li>
+<li><strong>Symbolic</strong> — restricted parsing, exact differentiation, Jacobians, numerical evaluation, and SymPy export.</li>
+<li><strong>Workbench</strong> — several labs applied to one shared configuration without introducing a second numerical engine.</li>
+</ul>
+<h2 id="bring-your-own-model-or-data">Bring your own model or data</h2>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Input</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ODE</td>
+<td>Equations or reaction-network Model IR</td>
+</tr>
+<tr>
+<td>Steady state</td>
+<td>Residual equations and initial guesses</td>
+</tr>
+<tr>
+<td>Stochastic</td>
+<td>States, reactions, propensities, and stoichiometry</td>
+</tr>
+<tr>
+<td>Fitting, Statistics, ML</td>
+<td>CSV, TSV, semicolon-separated data, or editable tables</td>
+</tr>
+<tr>
+<td>Optimization</td>
+<td>Variables, bounds, objective, and constraints</td>
+</tr>
+<tr>
+<td>Linear algebra</td>
+<td>Matrix and vector input</td>
+</tr>
+<tr>
+<td>Networks</td>
+<td>Edge list</td>
+</tr>
+<tr>
+<td>SciML</td>
+<td>Trajectory data and workflow configuration</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>Preset or custom lattice rules and initial populations</td>
+</tr>
+</tbody>
+</table>
+<p>Malformed input is rejected rather than silently repaired. Use explicit multiplication such as <code>beta*S*I</code>; implicit multiplication is not guessed.</p>
+<h2 id="verify-save-share-and-report">Verify, save, share, and report</h2>
+<ul>
+<li><strong>Verification</strong> compares a browser ODE result with an independent SciPy method on the same output grid.</li>
+<li><strong>Report Card</strong> creates a self-contained evidence report containing equations, parameters, diagnostics, hashes, verification status, and explicit non-claims.</li>
+<li><strong>Share links</strong> preserve configuration. Re-run after opening a shared link so the evidence matches the current environment.</li>
+<li><strong>Export</strong> provides a route to external tools when the browser method is limited or unsuitable.</li>
+</ul>
+<p>For publication or regulatory use, reproduce the result independently and document where the two implementations agree or disagree.</p>
+<section id="analysisTaxonomyDocs">
+<h2 id="analysis-taxonomy-and-capability-catalogue">Analysis taxonomy and capability catalogue</h2>
+<p>The full machine-readable catalogue is available in <a href="ANALYSIS_TAXONOMY.json">ANALYSIS_TAXONOMY.json</a>. It includes implemented, limited, export-only, and unavailable Optimization, Multi-Objective, Steady-State, and Sensitivity methods and plots. A catalogue entry is not an implementation claim; runtime menus show only methods supported by the current computed result.</p>
 </section>
-</main></div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=71.46.0"></script><span class="anchor-target sr-only" id="agent-lab">agent-lab</span><!-- src/navigation.js?v=71.46.0 legacy-token-for-contract --><script defer src="src/platform-data-engine.js?v=71.46.0"></script>
-<script defer src="src/platform-shell.js?v=71.46.0"></script>
-<script defer src="src/fokokit.js?v=71.46.0"></script>
-<script defer src="src/v71-platform.js?v=71.46.0"></script>
-<script src="src/platform/compute-bus.js?v=71.46.0"></script>
-</body></html>
+<h2 id="when-to-leave-the-browser">When to leave the browser</h2>
+<p>Use an external tool when you need:</p>
+<ul>
+<li>robust stiff integration beyond browser exploration;</li>
+<li>certified continuation or bifurcation analysis;</li>
+<li>large sparse linear algebra or graph computation;</li>
+<li>structural-identifiability analysis;</li>
+<li>deep neural training or GPU computation;</li>
+<li>causal inference;</li>
+<li>calibrated empirical agent models;</li>
+<li>formal optimality certificates.</li>
+</ul>
+<p>Foko Lab should make that transition explicit rather than replacing it with a decorative approximation.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3>A plot is blank</h3>
+<p>Confirm that the status is current, the selected plot is compatible with the result dimensions, and no input error is shown. Re-run after changing the configuration.</p>
+<h3>Two-up changed unexpectedly</h3>
+<p>At desktop width, changing a plot should not change Two-up. Reload the page and repeat the action. If it happens again, record the lab, selected plots, viewport width, and browser.</p>
+<h3>Verification cannot start</h3>
+<p>The SciPy comparison is loaded only when requested and may require network access on first use. The browser result remains available even when the independent runtime cannot load.</p>
+<h3>A stochastic or Agent run is slow</h3>
+<p>Reduce the lattice size, run count, steps, or event cap. Larger ensembles improve Monte Carlo precision but increase computation time.</p>
+<h3>The result looks convincing but diagnostics warn</h3>
+<p>Treat the warning as part of the result. Change the method, tighten tolerances, increase the sample, inspect assumptions, or export for independent validation before interpreting the figure.</p>
+<h2 id="research-provenance">Research provenance</h2>
+<p>Some examples are reduced public versions of models from fatty-acid metabolism, de novo fatty-acid synthesis, and T-cell proliferation research. They are provided for transparent exploration and teaching. A successful run does not make them calibrated reproductions of the complete research repositories.</p>
+<p>See <strong>Model provenance</strong> for the scientific background and <strong>Trust</strong> for the exact computation boundary of each capability.</p>
+<p>The Symbolic Lab is deliberately restricted and is <strong>not a complete computer algebra system</strong>. Use the generated SymPy workflow when you need broader algebraic manipulation.</p>
+</article></div>
+</main>
+<footer class="v70-footer foko-product-footer">
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.46.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
+<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="workbench.html">Workbench</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Docs</a><a href="trust.html">Trust</a><a href="research.html">Research</a><a href="beauty.html">Mathematical Beauty</a></nav>
+<div class="foko-footer-meta"><p><a href="mailto:chilpericarmel@gmail.com">Contact</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a> · <a href="https://chilperic.github.io/" rel="noopener" target="_blank">About the author</a></p><p>HHU Düsseldorf · CEPLAS · AIMS Ghana · PoLiMeR ITN</p><p><a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">Source code</a></p></div>
+</footer>
+</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=72.46.0"></script></body></html>

@@ -6,540 +6,87 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Model Atlas for Foko Lab: schematics, authors, variables, and guided exploration paths." name="description"/>
 <title>Foko Lab Model Atlas</title>
-<link href="assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=71.46.0" rel="stylesheet"/>
-<style>.workbench-link{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff!important;border-color:transparent}.workbench-link:hover{filter:brightness(1.04)}</style>
-<meta content="assets/homepage-preview.webp" property="og:image"/>
-<link href="styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-10-modeling-logic.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-19-platform-system.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/><link href="styles/lab-identity.css?v=71.46.0" rel="stylesheet"/>
-</head>
-<body data-lab="examples">
+<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-atlas.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=72.46.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.46.0"></script></head>
+<body data-lab="examples" data-v72-shell="true" data-version="72.30.0"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
 <div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.46.0" width="190"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-  <a href="index.html">Home</a>
-  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
-    <summary class="modeling-summary labs-summary">Modeling</summary>
-    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
-      <div class="menu-section menu-section-primary">
-        <p class="menu-section-title">Modeling workspaces</p>
-        <a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
-        <a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
-        <a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
-        <a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
-        <a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
-        <a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
-      </div></div>
-  </details>
-  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
-    <summary class="standalone-summary labs-summary">Focused Labs</summary>
-    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Standalone scientific labs</p>
-        <a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
-        <a href="stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
-        <a href="optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
-        <a href="steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
-    <summary class="sciml-summary labs-summary">SciML</summary>
-    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Scientific machine learning</p>
-        <a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
-        <a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
-        <a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
-    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
-    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Model output analysis</p>
-        <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
-        <a href="fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-subtitle">Structure and geometry</p>
-        <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
-        <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
-    <summary class="resources-summary labs-summary">Explore</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Examples and mathematical culture</p>
-        <a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
-        <a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
-    <summary class="guide-summary labs-summary">Learn</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Guides and templates</p>
-        <a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
-        <a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
-    <summary class="creator-summary labs-summary">Creator</summary>
-    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Profile and research</p>
-        <a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
-        <a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
-        <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener" role="menuitem"><span class="menu-icon">↗</span><span><b>Personal website</b><small>Portfolio homepage and broader profile.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-title">Contact and context</p>
-        <a href="contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
-        <a href="acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
-      </div>
-    </div>
-  </details>
+<a class="nav-home-link" href="index.html">Home</a>
+<details class="labs-menu nav-menu" data-nav-menu="modeling">
+<summary class="labs-summary">Modeling</summary>
+<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
+<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
+<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
+<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
+<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
+<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Rules and search</p>
+<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
+<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
+<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="analysis">
+<summary class="labs-summary">Data / Analysis</summary>
+<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
+<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
+<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
+<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="sciml">
+<summary class="labs-summary">SciML</summary>
+<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
+<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
+<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
+<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="explore">
+<summary class="labs-summary">Explore</summary>
+<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
+<div class="menu-section"><p class="menu-section-title">Find and learn</p>
+<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
+<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
+<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
+<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
+<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
+<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
+<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
+</div>
+</div>
+</details>
+<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
 </nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/></a></div>
+<div aria-label="Display controls" class="foko-top-actions"></div>
 </header>
-<main class="doc-page model-atlas">
-<section class="card hero-doc atlas-hero hero-with-mark">
-<div><p class="eyebrow">Visual guide</p>
-<h1>Model Atlas</h1>
-<p>Curated model examples for opening directly in the labs.</p></div>
-<img alt="Model Atlas mark" class="lab-mark" src="assets/lab-logos/model-atlas.webp"/>
-</section>
-<section aria-label="Model filters" class="atlas-filters card">
-<button class="filter active" data-filter="all">All</button>
-<button class="filter" data-filter="ode">ODE</button>
-<button class="filter" data-filter="optimization">Optimization</button>
-<button class="filter" data-filter="steady">Steady State</button>
-<button class="filter" data-filter="stochastic">Stochastic</button>
-<button class="filter" data-filter="agent">Agent / ABM</button>
-<button class="filter" data-filter="sciml">SciML</button>
-<span aria-hidden="true" class="filter-separator"></span>
-<button class="filter" data-filter="biology">Biology</button>
-<button class="filter" data-filter="physics">Physics</button>
-<button class="filter" data-filter="chemistry">Chemistry</button>
-<button class="filter" data-filter="paradox">Paradoxes</button>
-<button class="filter" data-filter="teaching">Teaching</button>
-<button class="filter" data-filter="simulation">Simulation</button>
-<button class="filter" data-filter="genetics">Genetics</button>
-<button class="filter" data-filter="finance">Finance</button>
-<button class="filter" data-filter="control">Control</button>
-<button class="filter" data-filter="environment">Environment</button>
-<button class="filter" data-filter="engineering">Engineering</button>
-</section>
-<section class="card"><h2>Research projects</h2><p>For thesis, postdoc and software projects, open the Research Hub.</p><p><a class="open-link workbench-link" href="research.html">Open Research Hub</a></p></section>
-<section class="card agent-atlas-section" id="agent-atlas">
-<div class="atlas-section-head"><p class="eyebrow">Agent-based modeling</p><h2>Agent Model Atlas</h2><p>Detailed scenario descriptions live here, not on the Agent Lab execution page. Open a model in Agent Lab to run it, then change approach, topology, update scheme, parameters or custom rule code.</p></div>
-<div class="agent-atlas-grid">
-<article data-category="agent biology"><figure class="agent-atlas-thumb"><img alt="Generation-structured cell proliferation agents illustration" decoding="async" loading="lazy" src="assets/agent-atlas/tcell.svg"/></figure><h3>Generation-structured cell proliferation agents</h3><p>Statechart ABM: quiescent cells activate, divide into local space and die. Useful for linking cell-proliferation research concepts to individual-based dynamics.</p><a class="open-link workbench-link" href="agent.html?example=tcell">Open in Agent Lab</a></article>
-<article data-category="agent biology chemistry"><figure class="agent-atlas-thumb"><img alt="FADNS particle-agent tracker illustration" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>FADNS particle-agent tracker</h3><p>Tracks Acetyl-CoA, Malonyl-CoA, chain intermediates, C14/C16/C18 products and CoA release as a toy ABM analogy. A teaching bridge between reaction events and agent-state transitions.</p><p><b>States:</b> empty, Acetyl-CoA, Malonyl-CoA, chain intermediate, C14, C16, C18, CoA.</p><a class="open-link workbench-link" href="agent.html?example=fadns_particle">Open in Agent Lab</a></article>
-<article data-category="agent biology stochastic"><figure class="agent-atlas-thumb"><img alt="Outbreak + vaccine hesitancy illustration" decoding="async" loading="lazy" src="assets/agent-atlas/vax_hesitancy.svg"/></figure><h3>Outbreak + vaccine hesitancy</h3><p>Rumors spread on contact networks and reduce effective herd immunity during an outbreak. Separates infection pressure from misinformation pressure.</p><a class="open-link workbench-link" href="agent.html?example=vax_hesitancy">Open in Agent Lab</a></article>
-<article data-category="agent environment crisis"><figure class="agent-atlas-thumb"><img alt="Wildfire evacuation + panic misinformation illustration" decoding="async" loading="lazy" src="assets/agent-atlas/evacuation_panic.svg"/></figure><h3>Wildfire evacuation + panic misinformation</h3><p>Fake route information spreads through local groups and redirects agents into congested paths. Useful for crisis communication and transport behavior prototypes.</p><a class="open-link workbench-link" href="agent.html?example=evacuation_panic">Open in Agent Lab</a></article>
-<article data-category="agent finance"><figure class="agent-atlas-thumb"><img alt="Meme-stock cascade illustration" decoding="async" loading="lazy" src="assets/agent-atlas/meme_stock.svg"/></figure><h3>Meme-stock cascade</h3><p>Viral hype and clustered investor influence create waves of buying and selling. A compact graph-contagion model for financial social dynamics.</p><a class="open-link workbench-link" href="agent.html?example=meme_stock">Open in Agent Lab</a></article>
-<article data-category="agent biology social"><figure class="agent-atlas-thumb"><img alt="Cancer-care myth adoption illustration" decoding="async" loading="lazy" src="assets/agent-atlas/cancer_myth.svg"/></figure><h3>Cancer-care myth adoption</h3><p>Health misinformation diffuses through support networks and can pull agents away from evidence-aligned care. Clinical correction is modeled as a competing process.</p><a class="open-link workbench-link" href="agent.html?example=cancer_myth">Open in Agent Lab</a></article>
-<article data-category="agent urban social"><figure class="agent-atlas-thumb"><img alt="Urban gentrification + neighborhood hype illustration" decoding="async" loading="lazy" src="assets/agent-atlas/gentrification_hype.svg"/></figure><h3>Urban gentrification + neighborhood hype</h3><p>Geo-tagged influence raises desirability and displacement pressure. A spatial/social ABM for hype-driven neighborhood transitions.</p><a class="open-link workbench-link" href="agent.html?example=gentrification_hype">Open in Agent Lab</a></article>
-<article data-category="agent social"><figure class="agent-atlas-thumb"><img alt="Political polarization + deepfakes illustration" decoding="async" loading="lazy" src="assets/agent-atlas/deepfake_polarization.svg"/></figure><h3>Political polarization + deepfakes</h3><p>Polarizing synthetic content propagates through algorithmic feeds. Debunking and echo retention compete with polarization pressure.</p><a class="open-link workbench-link" href="agent.html?example=deepfake_polarization">Open in Agent Lab</a></article>
-<article data-category="agent environment social"><figure class="agent-atlas-thumb"><img alt="Wildlife poaching + black-market networks illustration" decoding="async" loading="lazy" src="assets/agent-atlas/poaching_market.svg"/></figure><h3>Wildlife poaching + black-market networks</h3><p>Poachers, smugglers and buyers coordinate through trust networks while enforcement removes active links or agents.</p><a class="open-link workbench-link" href="agent.html?example=poaching_market">Open in Agent Lab</a></article>
-<article data-category="agent urban social"><figure class="agent-atlas-thumb"><img alt="Autonomous vehicles + anti-tech backlash illustration" decoding="async" loading="lazy" src="assets/agent-atlas/av_backlash.svg"/></figure><h3>Autonomous vehicles + anti-tech backlash</h3><p>Rumors about AV incidents trigger local backlash and trust repair dynamics. Useful for urban technology adoption prototypes.</p><a class="open-link workbench-link" href="agent.html?example=av_backlash">Open in Agent Lab</a></article>
-<article data-category="agent environment engineering"><figure class="agent-atlas-thumb"><img alt="Smart-grid boycott rumors illustration" decoding="async" loading="lazy" src="assets/agent-atlas/smart_grid_boycott.svg"/></figure><h3>Smart-grid boycott rumors</h3><p>Privacy or health rumors reduce automation compliance. Technical correction and trust persistence control system-level resilience.</p><a class="open-link workbench-link" href="agent.html?example=smart_grid_boycott">Open in Agent Lab</a></article>
-<article data-category="agent social history"><figure class="agent-atlas-thumb"><img alt="Ancient cities + cult movement rumors illustration" decoding="async" loading="lazy" src="assets/agent-atlas/ancient_cult.svg"/></figure><h3>Ancient cities + cult movement rumors</h3><p>Trade-route networks carry cultural or apocalyptic rumors that can trigger migration and settlement abandonment ahead of climate stress.</p><a class="open-link workbench-link" href="agent.html?example=ancient_cult">Open in Agent Lab</a></article>
-<article data-category="agent biology"><figure class="agent-atlas-thumb"><img alt="Predator–prey agents illustration" decoding="async" loading="lazy" src="assets/agent-atlas/predprey.svg"/></figure><h3>Predator–prey agents</h3><p>Spatial Lotka–Volterra intuition: prey reproduce locally, predators consume nearby prey and die without food.</p><a class="open-link workbench-link" href="agent.html?example=predprey">Open in Agent Lab</a></article>
-<article data-category="agent cellular teaching"><figure class="agent-atlas-thumb"><img alt="Conway's Game of Life illustration" decoding="async" loading="lazy" src="assets/agent-atlas/life.svg"/></figure><h3>Conway's Game of Life</h3><p>Classic local-rule cellular automaton. A minimal demonstration that simple rules can produce gliders, oscillators and complex-looking patterns.</p><a class="open-link workbench-link" href="agent.html?example=life">Open in Agent Lab</a></article>
-<article data-category="agent cellular environment"><figure class="agent-atlas-thumb"><img alt="Forest-fire cellular automaton illustration" decoding="async" loading="lazy" src="assets/agent-atlas/forest.svg"/></figure><h3>Forest-fire cellular automaton</h3><p>Local ignition, spread, ash and regrowth. A compact model for spatial threshold behavior and cascading events.</p><a class="open-link workbench-link" href="agent.html?example=forest">Open in Agent Lab</a></article>
-<article data-category="agent biology environment"><figure class="agent-atlas-thumb"><img alt="Plant competition toy model illustration" decoding="async" loading="lazy" src="assets/agent-atlas/plant.svg"/></figure><h3>Plant competition toy model</h3><p>Individual plants compete for local space and carry a mutable trait. Useful for connecting ecological ABM to plant modeling ideas.</p><a class="open-link workbench-link" href="agent.html?example=plant">Open in Agent Lab</a></article>
-</div>
-</section>
-<section class="card sciml-atlas-section" id="sciml-atlas">
-<div class="atlas-section-head"><p class="eyebrow">Scientific machine learning</p><h2>Foko SciML Atlas</h2><p>Atlas-linked machine-learning tasks for modelers. Each card opens SciML Lab with a specific data/modeling problem, not a decorative AI label.</p></div>
-<div class="agent-atlas-grid sciml-atlas-grid">
-<article data-category="sciml ode biology teaching simulation"><figure class="agent-atlas-thumb"><img alt="SINDy logistic equation discovery" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></figure><h3>SINDy logistic discovery</h3><p>Recover a sparse growth law from trajectory data. Use derivative-fit, residual and coefficient plots to validate the discovered equation.</p><a class="open-link workbench-link" href="sciml.html?example=logistic&amp;approach=sindy">Open in SciML Lab</a></article>
-<article data-category="sciml ode biology core simulation"><figure class="agent-atlas-thumb"><img alt="Lotka Volterra SINDy discovery" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></figure><h3>Lotka–Volterra from data</h3><p>Discover predator–prey interaction terms and inspect phase-space and sparse coefficient diagnostics.</p><a class="open-link workbench-link" href="sciml.html?example=lotka&amp;approach=sindy">Open in SciML Lab</a></article>
-<article data-category="sciml ode physics teaching simulation"><figure class="agent-atlas-thumb"><img alt="Van der Pol SciML oscillator" decoding="async" loading="lazy" src="assets/model-atlas/vanderpol.webp"/></figure><h3>Van der Pol sparse dynamics</h3><p>Use nonlinear libraries to recover oscillator terms and detect residual failure regions.</p><a class="open-link workbench-link" href="sciml.html?example=vanderpol&amp;approach=sindy">Open in SciML Lab</a></article>
-<article data-category="sciml biology inverse environment teaching"><figure class="agent-atlas-thumb"><img alt="SIR inverse parameter identification" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></figure><h3>SIR inverse parameter identification</h3><p>Frame unknown β and γ as an inverse problem with residual plots and calibration export.</p><a class="open-link workbench-link" href="sciml.html?example=sir&amp;approach=inverse">Open in SciML Lab</a></article>
-<article data-category="sciml engineering surrogate control simulation"><figure class="agent-atlas-thumb"><img alt="Surrogate modeling diagnostics" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></figure><h3>Surrogate emulator diagnostics</h3><p>Build the validation view modelers need: loss curves, predicted-vs-reference, error heatmaps and cross-validation residuals.</p><a class="open-link workbench-link" href="sciml.html?example=lotka&amp;approach=surrogate">Open in SciML Lab</a></article>
-<article data-category="sciml physics neural engineering simulation"><figure class="agent-atlas-thumb"><img alt="PINN PyTorch export scaffold" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></figure><h3>PINN / PyTorch diagnostic scaffold</h3><p>Configure physics-loss export and inspect the diagnostic plots expected for PDE/ODE neural models.</p><a class="open-link workbench-link" href="sciml.html?example=vanderpol&amp;approach=pinn">Open in SciML Lab</a></article>
-<article data-category="sciml biology genetics surrogate teaching"><figure class="agent-atlas-thumb"><img alt="GNN biological network export scaffold" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>Biological network ML scaffold</h3><p>Export graph/scikit-learn templates for pathways, omics features and network-structured biological processes.</p><a class="open-link workbench-link" href="sciml.html?example=sir&amp;approach=network">Open in SciML Lab</a></article>
-<article data-category="sciml environment assimilation control"><figure class="agent-atlas-thumb"><img alt="Data assimilation scaffold" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></figure><h3>Data assimilation scaffold</h3><p>Blend forecasts and observations with an export-ready filtering workflow for dynamical systems.</p><a class="open-link workbench-link" href="sciml.html?example=logistic&amp;approach=assimilation">Open in SciML Lab</a></article>
-<article data-category="sciml biology chemistry inverse teaching"><figure class="agent-atlas-thumb"><img alt="Michaelis Menten inverse kinetics" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></figure><h3>Michaelis–Menten inverse kinetics</h3><p>Estimate kinetic parameters from substrate/product observations and export a calibration scaffold.</p><a class="open-link workbench-link" href="sciml.html?example=michaelis&amp;approach=inverse">Open in SciML Lab</a></article>
-<article data-category="sciml biology genetics control network"><figure class="agent-atlas-thumb"><img alt="Genetic toggle switch SciML" decoding="async" loading="lazy" src="assets/agent-atlas/fadns_particle.svg"/></figure><h3>Genetic toggle switch</h3><p>Inspect regulatory dynamics, graph/network export scaffolds and residual diagnostics for gene-circuit models.</p><a class="open-link workbench-link" href="sciml.html?example=toggle&amp;approach=network">Open in SciML Lab</a></article>
-<article data-category="sciml physics surrogate simulation"><figure class="agent-atlas-thumb"><img alt="Lorenz surrogate stress test" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></figure><h3>Lorenz surrogate stress test</h3><p>Stress-test surrogate validation on a chaotic ODE: short-horizon prediction, residuals and bias plots matter.</p><a class="open-link workbench-link" href="sciml.html?example=lorenz&amp;approach=surrogate">Open in SciML Lab</a></article>
-<article data-category="sciml physics engineering surrogate simulation"><figure class="agent-atlas-thumb"><img alt="1D heat equation surrogate" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></figure><h3>1D heat-equation surrogate</h3><p>Use a discretized PDE example for error heatmaps, neural-operator export and spatial/temporal diagnostics.</p><a class="open-link workbench-link" href="sciml.html?example=heat1d&amp;approach=operator">Open in SciML Lab</a></article>
-<article data-category="sciml biology engineering inverse environment"><figure class="agent-atlas-thumb"><img alt="Chemostat growth calibration" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></figure><h3>Chemostat growth calibration</h3><p>Connect biological process modeling to inverse calibration, surrogate acceleration and residual validation.</p><a class="open-link workbench-link" href="sciml.html?example=chemostat&amp;approach=inverse">Open in SciML Lab</a></article>
-<article data-category="sciml biology environment teaching simulation"><figure class="agent-atlas-thumb"><img alt="Allee effect population model" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></figure><h3>Allee-effect population model</h3><p>Test whether equation discovery distinguishes logistic growth from threshold-dependent ecological dynamics.</p><a class="open-link workbench-link" href="sciml.html?example=allee&amp;approach=sindy">Open in SciML Lab</a></article>
-<article data-category="sciml biology engineering surrogate genetics"><figure class="agent-atlas-thumb"><img alt="De novo protein structure and function" decoding="async" loading="lazy" src="assets/sciml-atlas/protein-design.svg"/></figure><h3>De novo protein structure and function</h3><p>Latent folding, binding and stability scaffold for interpretable surrogate design rather than black-box sequence magic.</p><a class="open-link workbench-link" href="sciml.html?example=protein_design&amp;approach=surrogate">Open in SciML Lab</a></article>
-<article data-category="sciml biology control simulation"><figure class="agent-atlas-thumb"><img alt="Dynamic cell signaling networks" decoding="async" loading="lazy" src="assets/sciml-atlas/signaling-network.svg"/></figure><h3>Dynamic cell signaling network</h3><p>MAPK/NF-κB-style feedback scaffold for inverse kinetic identification, residual analysis and multi-state phase portraits.</p><a class="open-link workbench-link" href="sciml.html?example=signaling&amp;approach=inverse">Open in SciML Lab</a></article>
-<article data-category="sciml biology chemistry environment"><figure class="agent-atlas-thumb"><img alt="Metabolic shifts under stress" decoding="async" loading="lazy" src="assets/sciml-atlas/metabolic-stress.svg"/></figure><h3>Metabolic shifts under stress</h3><p>Oxygen, ATP and lactate rewiring under deprivation with interpretable state dynamics and calibration export.</p><a class="open-link workbench-link" href="sciml.html?example=metabolic_stress&amp;approach=inverse">Open in SciML Lab</a></article>
-<article data-category="sciml biology genetics teaching"><figure class="agent-atlas-thumb"><img alt="In silico gene knockout screening" decoding="async" loading="lazy" src="assets/sciml-atlas/gene-knockout.svg"/></figure><h3>In silico gene knockout screening</h3><p>Compensation and fitness-loss scaffold for CRISPR-style dependency studies and synthetic-lethality reasoning.</p><a class="open-link workbench-link" href="sciml.html?example=gene_knockout&amp;approach=inverse">Open in SciML Lab</a></article>
-<article data-category="sciml biology simulation engineering"><figure class="agent-atlas-thumb"><img alt="Spatial tumor microenvironment" decoding="async" loading="lazy" src="assets/sciml-atlas/tumor-microenv.svg"/></figure><h3>Spatial tumor microenvironment</h3><p>Reduced tumor–immune–nutrient dynamics with surrogate and residual diagnostics for localized behavior.</p><a class="open-link workbench-link" href="sciml.html?example=tumor_microenv&amp;approach=surrogate">Open in SciML Lab</a></article>
-<article data-category="sciml biology physics engineering"><figure class="agent-atlas-thumb"><img alt="Tissue-scale drug penetration" decoding="async" loading="lazy" src="assets/sciml-atlas/drug-penetration.svg"/></figure><h3>Tissue-scale drug penetration</h3><p>Diffusion-style tissue transport scaffold for PINN and operator diagnostics, heatmaps and field residuals.</p><a class="open-link workbench-link" href="sciml.html?example=drug_penetration&amp;approach=pinn">Open in SciML Lab</a></article>
-<article data-category="sciml optimization biology control"><figure class="agent-atlas-thumb"><img alt="Optimizing multi-drug combination schedules" decoding="async" loading="lazy" src="assets/sciml-atlas/drug-schedule.svg"/></figure><h3>Optimizing multi-drug combination schedules</h3><p>Sensitive/resistant population scaffold for schedule optimization, resistance prevention and interpretable policy export.</p><a class="open-link workbench-link" href="sciml.html?example=drug_schedule&amp;approach=surrogate">Open in SciML Lab</a></article>
-<article data-category="sciml biology simulation teaching"><figure class="agent-atlas-thumb"><img alt="Virtual patient stratification" decoding="async" loading="lazy" src="assets/sciml-atlas/virtual-patients.svg"/></figure><h3>Virtual patient stratification</h3><p>Digital-twin style latent-state scaffold for responder vs non-responder cohorts and biomarker-driven predictions.</p><a class="open-link workbench-link" href="sciml.html?example=virtual_patients&amp;approach=surrogate">Open in SciML Lab</a></article>
-<article data-category="sciml biology chemistry physics"><figure class="agent-atlas-thumb"><img alt="Allosteric regulation mechanisms" decoding="async" loading="lazy" src="assets/sciml-atlas/allosteric.svg"/></figure><h3>Allosteric regulation mechanisms</h3><p>Open/closed/bound conformational scaffold for interpretable switching, inference and structural-biology workflows.</p><a class="open-link workbench-link" href="sciml.html?example=allosteric&amp;approach=inverse">Open in SciML Lab</a></article>
-<article data-category="sciml biology environment simulation"><figure class="agent-atlas-thumb"><img alt="Microbial community dynamics" decoding="async" loading="lazy" src="assets/sciml-atlas/microbiome.svg"/></figure><h3>Microbial community dynamics</h3><p>Generalized Lotka–Volterra microbiome scaffold for coexistence, stability, surrogate diagnostics and 3D phase structure.</p><a class="open-link workbench-link" href="sciml.html?example=microbiome&amp;approach=sindy">Open in SciML Lab</a></article>
-<article data-category="sciml biology teaching simulation"><figure class="agent-atlas-thumb"><img alt="SEIR outbreak dynamics" decoding="async" loading="lazy" src="assets/sciml-atlas/seir.svg"/></figure><h3>SEIR outbreak structure and calibration</h3><p>Four-state epidemic example with selectable 2D and 3D phase portraits, inverse fitting and interpretable outbreak dynamics.</p><a class="open-link workbench-link" href="sciml.html?example=seir&amp;approach=inverse">Open in SciML Lab</a></article>
-</div>
-</section>
-<section class="atlas-grid" id="atlasGrid">
-<article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="Lotka–Volterra predator-prey schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/lotka.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Core ODE</p>
-<h3>Lotka–Volterra</h3>
-<p class="authors"><b>Authors / inspiration:</b> Alfred J. Lotka; Vito Volterra</p>
-<p>Predator–prey oscillator. The key lesson is how interaction terms create cycles in a phase portrait.</p>
-<p class="vars"><b>Variables:</b> prey x; predator y</p>
-<p class="try"><b>Try:</b> increase predation β or predator death γ</p>
-<a class="open-link workbench-link" href="workbench.html?model=lotka">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Lotka%E2%80%93Volterra">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode physics core">
-<div class="scheme atlas-figure"><img alt="Lorenz attractor variable coupling schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/lorenz.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Core ODE</p>
-<h3>Lorenz attractor</h3>
-<p class="authors"><b>Authors / inspiration:</b> Edward N. Lorenz</p>
-<p>A canonical three-state chaotic system. Small changes in parameters or initial conditions can reshape long-term trajectories.</p>
-<p class="vars"><b>Variables:</b> x, y, z convection/temperature modes</p>
-<p class="try"><b>Try:</b> change ρ near 24–30 and inspect 3D view</p>
-<a class="open-link workbench-link" href="workbench.html?model=lorenz">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Lorenz">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Core ODE</p>
-<h3>SIR epidemic</h3>
-<p class="authors"><b>Authors / inspiration:</b> W. O. Kermack; A. G. McKendrick tradition</p>
-<p>Compartmental epidemic model with susceptible, infected, and recovered states.</p>
-<p class="vars"><b>Variables:</b> S, I, R</p>
-<p class="try"><b>Try:</b> increase β or γ and watch the infection peak</p>
-<a class="open-link workbench-link" href="workbench.html?model=sir">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=SIR">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="SIR and SEIR compartment model schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/sir-seir.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Core ODE</p>
-<h3>SEIR epidemic</h3>
-<p class="authors"><b>Authors / inspiration:</b> Kermack–McKendrick tradition</p>
-<p>Adds an exposed compartment before infectiousness, making incubation explicit.</p>
-<p class="vars"><b>Variables:</b> S, E, I, R</p>
-<p class="try"><b>Try:</b> change σ to shorten or lengthen incubation</p>
-<a class="open-link workbench-link" href="workbench.html?model=seir">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=SEIR">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode chemistry core">
-<div class="scheme chem"><svg viewbox="0 0 320 150"><circle cx="64" cy="72" r="24"></circle><text x="64" y="77">A</text><circle cx="160" cy="72" r="24"></circle><text x="160" y="77">B</text><circle cx="256" cy="72" r="24"></circle><text x="256" y="77">C</text><path d="M88 72 H136"></path><path d="M126 64 L138 72 L126 80"></path><path d="M184 72 H232"></path><path d="M222 64 L234 72 L222 80"></path><path class="ghost" d="M251 96 C215 136 107 132 72 96"></path><text x="112" y="132">stiff feedback</text></svg></div>
-<div class="atlas-body">
-<p class="atlas-type">Stiff ODE benchmark</p>
-<h3>Robertson chemistry</h3>
-<p class="authors"><b>Authors / inspiration:</b> H. H. Robertson</p>
-<p>Classic stiff reaction system. It is included to show why explicit browser solvers have limits.</p>
-<p class="vars"><b>Variables:</b> A, B, C</p>
-<p class="try"><b>Try:</b> export Python and compare Radau/BDF for reliability</p>
-<a class="open-link workbench-link" href="workbench.html?model=robertson">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Robertson">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode biology core">
-<div class="scheme atlas-figure"><img alt="Michaelis-Menten enzyme kinetics schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/michaelis.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Core ODE</p>
-<h3>Michaelis–Menten enzyme kinetics</h3>
-<p class="authors"><b>Authors / inspiration:</b> Leonor Michaelis; Maud Menten</p>
-<p>Minimal saturating conversion from substrate to product.</p>
-<p class="vars"><b>Variables:</b> S, P</p>
-<p class="try"><b>Try:</b> change Km and vmax to see saturation</p>
-<a class="open-link workbench-link" href="workbench.html?model=michaelis">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Enzyme%20kinetics">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode physics core">
-<div class="scheme atlas-figure"><img alt="Van der Pol oscillator schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/vanderpol.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Core ODE</p>
-<h3>Van der Pol oscillator</h3>
-<p class="authors"><b>Authors / inspiration:</b> Balthasar van der Pol</p>
-<p>Self-sustained nonlinear oscillator with a limit cycle. Large μ creates stiffness.</p>
-<p class="vars"><b>Variables:</b> x position; v velocity</p>
-<p class="try"><b>Try:</b> increase μ and compare phase portrait shapes</p>
-<a class="open-link workbench-link" href="workbench.html?model=vanderpol">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Van%20der%20Pol">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode teaching">
-<div class="scheme atlas-figure"><img alt="Romeo-Juliet love-hate oscillator schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/romeo-juliet.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Teaching ODE</p>
-<h3>Love–hate oscillator</h3>
-<p class="authors"><b>Authors / inspiration:</b> Steven Strogatz / Romeo–Juliet teaching model</p>
-<p>Two-person social oscillator. It is mathematically simple but intuitively memorable.</p>
-<p class="vars"><b>Variables:</b> R Romeo; J Juliet</p>
-<p class="try"><b>Try:</b> change a and b to alter oscillation speed</p>
-<a class="open-link workbench-link" href="workbench.html?model=love-hate">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Love%E2%80%93hate%20oscillator">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode paradox">
-<div class="scheme atlas-figure"><img alt="Braess paradox network-routing schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/braess.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Paradox / network dynamics</p>
-<h3>Braess routing dynamics</h3>
-<p class="authors"><b>Authors / inspiration:</b> Dietrich Braess</p>
-<p>Route-choice dynamics inspired by the paradox that extra capacity can worsen collective outcomes under selfish routing.</p>
-<p class="vars"><b>Variables:</b> x fraction using a route</p>
-<p class="try"><b>Try:</b> compare route equilibrium with and without shortcut incentive</p>
-<a class="open-link workbench-link" href="workbench.html?model=braess">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Braess%20routing%20dynamics">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode paradox physics">
-<div class="scheme ziegler"><svg viewbox="0 0 320 150"><path d="M104 126 L144 78 L182 38"></path><circle cx="144" cy="78" r="7"></circle><circle cx="182" cy="38" r="7"></circle><path d="M182 38 H244"></path><path d="M232 30 L246 38 L232 46"></path><text x="250" y="43">P</text><path class="spring" d="M96 126 c10 -10 20 10 30 0 c10 -10 20 10 30 0"></path><text x="44" y="138">stiffness</text></svg></div>
-<div class="atlas-body">
-<p class="atlas-type">Paradox / structural dynamics</p>
-<h3>Ziegler destabilization</h3>
-<p class="authors"><b>Authors / inspiration:</b> Hans Ziegler</p>
-<p>Non-conservative follower-force model where added stiffness or load can destabilize instead of stabilizing.</p>
-<p class="vars"><b>Variables:</b> q1, q2, v1, v2</p>
-<p class="try"><b>Try:</b> increase follower load P and inspect oscillation growth</p>
-<a class="open-link workbench-link" href="workbench.html?model=ziegler">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Ziegler%20destabilization">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="ode biology">
-<div class="scheme atlas-figure"><img alt="Calvin cycle mini-model schematic" class="atlas-schematic-img" decoding="async" loading="lazy" src="assets/model-atlas/calvin.webp"/></div>
-<div class="atlas-body">
-<p class="atlas-type">Photosynthesis ODE</p>
-<h3>Calvin cycle mini-model</h3>
-<p class="authors"><b>Authors / inspiration:</b> Calvin–Benson–Bassham tradition</p>
-<p>Reduced two-pool photosynthesis model tracking PGA and RuBP with carboxylation, oxygenation, and regeneration.</p>
-<p class="vars"><b>Variables:</b> PGA, RuBP</p>
-<p class="try"><b>Try:</b> increase regeneration Vregen or oxygenation Vo</p>
-<a class="open-link workbench-link" href="workbench.html?model=calvin">Open in Workbench</a> <a class="open-link" href="ode.html?module=ode&amp;example=Calvin%20cycle%20mini-model">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="optimization teaching">
-<div class="scheme lasso"><svg viewbox="0 0 320 150"><path class="axis" d="M160 20 V130M60 75 H260"></path><path class="diamond" d="M160 35 L225 75 L160 115 L95 75 Z"></path><ellipse cx="200" cy="55" rx="72" ry="36" transform="rotate(-25 200 55)"></ellipse><ellipse cx="200" cy="55" rx="42" ry="21" transform="rotate(-25 200 55)"></ellipse><circle cx="160" cy="35" r="5"></circle><text x="176" y="34">zero coefficient</text></svg></div>
-<div class="atlas-body">
-<p class="atlas-type">Optimization example</p>
-<h3>Lasso regression geometry</h3>
-<p class="authors"><b>Authors / inspiration:</b> Robert Tibshirani</p>
-<p>L1 regularization creates diamond-shaped constraints, so the optimum often lands exactly on an axis and sets coefficients to zero.</p>
-<p class="vars"><b>Variables:</b> w1, w2 coefficients</p>
-<p class="try"><b>Try:</b> compare L1 sparsity geometry to smooth shrinkage</p>
-<a class="open-link workbench-link" href="workbench.html?model=quadratic">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Lasso%20regression%20geometry">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="optimization teaching">
-<div class="scheme runge"><svg viewbox="0 0 320 150"><path class="axis" d="M30 118 H292M52 22 V128"></path><path class="ghost" d="M38 110 C84 112 112 32 160 33 C208 32 238 112 284 110"></path><path class="osc" d="M38 122 C52 8 75 130 96 62 C120 10 138 76 160 34 C184 76 202 10 224 62 C246 130 268 8 284 122"></path><text x="58" y="24">high degree oscillates</text></svg></div>
-<div class="atlas-body">
-<p class="atlas-type">Optimization / fitting example</p>
-<h3>Runge fitting caution</h3>
-<p class="authors"><b>Authors / inspiration:</b> Carl Runge</p>
-<p>More polynomial flexibility can make edge oscillations worse, not better.</p>
-<p class="vars"><b>Variables:</b> polynomial coefficients</p>
-<p class="try"><b>Try:</b> inspect how high-degree fitting overreacts near boundaries</p>
-<a class="open-link workbench-link" href="workbench.html?model=rosenbrock">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Runge%20fitting%20caution">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="optimization teaching">
-<div class="scheme secretary"><svg viewbox="0 0 340 150"><path class="axis" d="M34 92 H306"></path><line class="threshold" x1="140" x2="140" y1="38" y2="112"></line><text x="113" y="30">≈37%</text><g><circle cx="56" cy="92" r="13"></circle><circle cx="96" cy="92" r="13"></circle><circle cx="136" cy="92" r="13"></circle><circle cx="176" cy="92" r="13"></circle><circle cx="216" cy="92" r="13"></circle><circle cx="256" cy="92" r="13"></circle></g><text x="42" y="126">reject benchmark</text><text x="174" y="126">then select first best-so-far</text></svg></div>
-<div class="atlas-body">
-<p class="atlas-type">Decision example</p>
-<h3>Secretary stopping rule</h3>
-<p class="authors"><b>Authors / inspiration:</b> Classical optimal stopping tradition</p>
-<p>Reject the first 1/e of candidates as a benchmark, then choose the first candidate better than all previous.</p>
-<p class="vars"><b>Variables:</b> candidate rank sequence</p>
-<p class="try"><b>Try:</b> compare the 37% rule with naive early selection</p>
-<a class="open-link workbench-link" href="workbench.html?model=secretary">Open in Workbench</a> <a class="open-link" href="stochastic.html#secretary">Open stochastic lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="optimization teaching">
-<div class="scheme pareto"><svg viewbox="0 0 340 150"><path class="axis" d="M42 118 H304M58 26 V128"></path><circle cx="92" cy="102" r="5"></circle><circle cx="122" cy="86" r="5"></circle><circle cx="156" cy="68" r="5"></circle><circle cx="202" cy="54" r="5"></circle><circle cx="250" cy="42" r="5"></circle><path class="front" d="M92 102 C122 84 156 68 202 54 C226 48 240 44 250 42"></path><circle class="ghost-point" cx="128" cy="110" r="4"></circle><circle class="ghost-point" cx="190" cy="92" r="4"></circle><circle class="ghost-point" cx="238" cy="76" r="4"></circle><text x="230" y="132">f1</text><text x="25" y="36">f2</text><text x="100" y="28">non-dominated frontier</text></svg></div>
-<div class="atlas-body">
-<p class="atlas-type">Optimization example</p>
-<h3>Pareto design trade-off</h3>
-<p class="authors"><b>Authors / inspiration:</b> Multi-objective optimization teaching example</p>
-<p>Two competing objectives. The useful output is the non-dominated frontier, not a single best point.</p>
-<p class="vars"><b>Variables:</b> x, y design coordinates</p>
-<p class="try"><b>Try:</b> run optimization, then select Pareto frontier or feasibility map</p>
-<a class="open-link workbench-link" href="workbench.html?model=constrained">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Pareto%20design%20trade-off">Open in lab</a>
-</div>
-</article>
-<article class="atlas-card" data-category="optimization control engineering teaching">
-<div class="scheme traffic"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M40 75 H300M170 22 V130"></path><rect height="48" rx="8" width="48" x="146" y="51"></rect><circle cx="170" cy="64" r="6"></circle><circle cx="170" cy="86" r="6"></circle><path d="M66 74 H132M208 74 H276M170 34 V18M170 116 V136"></path><text x="58" y="42">queue</text><text x="218" y="42">delay</text><text x="196" y="126">cycle budget</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Real-world optimization / control</p><h3>Traffic signal timing</h3><p class="authors"><b>Authors / inspiration:</b> constrained traffic-control optimization</p><p>Allocate green times and offset under a finite cycle budget. The point is not traffic realism; it is to show constrained operational decision-making.</p><p class="vars"><b>Variables:</b> gNS, gEW, offset</p><p class="try"><b>Try:</b> compare convergence, feasibility, and the objective landscape.</p><a class="open-link workbench-link" href="workbench.html?model=traffic-signal">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Traffic%20signal%20timing">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="optimization environment biology">
-<div class="scheme risk"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 118 H306M54 28 V128"></path><path d="M62 96 C104 70 134 54 168 48 C216 40 258 38 300 38"></path><path class="ghost" d="M60 44 C104 52 138 68 172 90 C208 112 254 118 300 120"></path><line class="threshold" x1="68" x2="300" y1="76" y2="76"></line><circle cx="198" cy="62" r="7"></circle><text x="76" y="32">efficacy</text><text x="226" y="132">exposure ↓ with buffer</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Real-world optimization / environmental risk</p><h3>Crop dose-buffer risk trade-off</h3><p class="authors"><b>Authors / inspiration:</b> environmental risk-assessment decision problems</p><p>Choose dose and buffer distance while trading efficacy against simplified aquatic and terrestrial exposure thresholds.</p><p class="vars"><b>Variables:</b> dose; buffer distance</p><p class="try"><b>Try:</b> view the Pareto plot, then inspect which exposure constraint binds.</p><a class="open-link workbench-link" href="workbench.html?model=crop-risk-opt">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Crop%20dose-buffer%20risk%20trade-off">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="optimization engineering control">
-<div class="scheme reservoir"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M42 120 H302M58 26 V130"></path><path d="M74 96 C116 84 142 62 176 58 C218 54 252 66 292 94"></path><path class="ghost" d="M74 112 C120 106 148 88 178 72 C220 50 252 40 292 34"></path><circle cx="96" cy="106" r="7"></circle><circle cx="250" cy="45" r="7"></circle><text x="72" y="132">inject</text><text x="236" y="28">produce</text><text x="158" y="116">water-cut limit</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Real-world optimization / operations</p><h3>Reservoir pumping NPV surrogate</h3><p class="authors"><b>Authors / inspiration:</b> optimal production strategy examples</p><p>Select injection and production rates under capacity and water-cut constraints. Aggressive production improves revenue but increases the penalty surface.</p><p class="vars"><b>Variables:</b> qin; qprod</p><p class="try"><b>Try:</b> switch between particle swarm and differential evolution.</p><a class="open-link workbench-link" href="workbench.html?model=reservoir-npv">Open in Workbench</a> <a class="open-link" href="optimization.html?example=Reservoir%20pumping%20NPV%20surrogate">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="steady biology teaching">
-<div class="scheme atlas-figure steady-logo"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M42 118 H304M58 26 V128"></path><path d="M58 110 C92 58 136 42 178 42 C224 42 258 50 300 54"></path><path class="ghost" d="M58 75 H300"></path><line class="threshold" x1="150" x2="150" y1="42" y2="118"></line><circle cx="150" cy="75" r="8"></circle><text x="162" y="72">Kₘ</text><text x="258" y="47">Vmax</text><text x="66" y="34">v</text><text x="292" y="132">[S]</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Steady-State / algebraic biology</p><h3>Michaelis–Menten steady state</h3><p class="authors"><b>Authors / inspiration:</b> Leonor Michaelis; Maud Menten</p><p>Algebraic enzyme-balance form of saturating conversion. Use it to read off a steady reaction rate without integrating a time trajectory.</p><p class="vars"><b>Variables:</b> substrate concentration S; reaction rate v</p><p class="try"><b>Try:</b> change Vmax and Km, solve, then export tidy CSV and Plotly JSON.</p><a class="open-link workbench-link" href="workbench.html?model=enzyme-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Michaelis-Menten%20steady%20state">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="steady biology">
-<div class="scheme atlas-figure steady-logo"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M44 120 H306M58 28 V130"></path><path d="M64 110 C102 104 124 42 170 42 C216 42 238 104 294 110"></path><path class="ghost" d="M64 44 C102 50 124 112 170 112 C216 112 238 50 294 44"></path><circle cx="104" cy="88" r="7"></circle><circle cx="170" cy="76" r="7"></circle><circle cx="236" cy="88" r="7"></circle><text x="86" y="128">stable</text><text x="146" y="28">unstable</text><text x="220" y="128">stable</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Steady-State / bistability</p><h3>Toggle switch equilibrium</h3><p class="authors"><b>Authors / inspiration:</b> genetic toggle-switch tradition</p><p>Two mutually repressing variables can create three fixed points: two stable expression states separated by an unstable symmetric state.</p><p class="vars"><b>Variables:</b> x and y regulatory species; α production; n Hill coefficient</p><p class="try"><b>Try:</b> start from different initial guesses and inspect the stability label and alternative equilibria.</p><a class="open-link workbench-link" href="workbench.html?model=toggle-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Toggle%20switch%20bistability">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="steady ode teaching biology">
-<div class="scheme atlas-figure steady-logo"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="84" cy="72" r="22"></circle><text x="84" y="77">S*</text><circle cx="170" cy="72" r="22"></circle><text x="170" y="77">I*</text><circle cx="256" cy="72" r="22"></circle><text x="256" y="77">R*</text><path d="M106 72 H146"></path><path d="M136 64 L148 72 L136 80"></path><path d="M192 72 H232"></path><path d="M222 64 L234 72 L222 80"></path><path class="ghost" d="M84 110 C126 132 214 132 256 110"></path><text x="112" y="130">f(S,I,R)=0</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Steady-State / epidemic equilibrium</p><h3>SIR endemic equilibrium</h3><p class="authors"><b>Authors / inspiration:</b> Kermack–McKendrick epidemic modeling</p><p>Find the non-transient equilibrium equations associated with an epidemic system and compare the algebraic solution with long-time ODE behavior.</p><p class="vars"><b>Variables:</b> S*, I*, R* equilibrium compartments</p><p class="try"><b>Try:</b> change β and γ and check whether the endemic infected state remains feasible.</p><a class="open-link workbench-link" href="workbench.html?model=cubic-bistable">Open in Workbench</a> <a class="open-link" href="steady.html?example=SIR%20endemic%20equilibrium">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="steady environment chemistry">
-<div class="scheme exposure"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="96" cy="76" r="23"></circle><text x="96" y="80">P</text><circle cx="226" cy="76" r="23"></circle><text x="226" y="80">M</text><path d="M119 76 H202"></path><path d="M192 68 L204 76 L192 84"></path><path class="ghost" d="M96 100 C90 126 62 126 58 100"></path><path class="ghost" d="M226 100 C220 126 192 126 188 100"></path><text x="78" y="38">input</text><text x="132" y="62">degradation</text><text x="58" y="132">runoff/leaching</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Real-world steady state / environmental exposure</p><h3>Soil pesticide exposure balance</h3><p class="authors"><b>Authors / inspiration:</b> parent-metabolite exposure balance</p><p>Steady parent and metabolite concentrations under repeated input, degradation, runoff, and leaching.</p><p class="vars"><b>Variables:</b> C_parent; C_met</p><p class="try"><b>Try:</b> continue over dose or interval and check exposure sensitivity.</p><a class="open-link workbench-link" href="workbench.html?model=soil-exposure-steady">Open in Workbench</a> <a class="open-link" href="steady.html?example=Soil%20pesticide%20exposure%20balance">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="steady environment engineering chemistry">
-<div class="scheme wastewater"><svg aria-hidden="true" viewbox="0 0 340 150"><rect height="72" rx="16" width="196" x="72" y="48"></rect><path d="M24 84 H72M268 84 H316"></path><path d="M306 76 L318 84 L306 92"></path><circle cx="124" cy="84" r="13"></circle><circle cx="186" cy="84" r="13"></circle><text x="124" y="88">NH₄</text><text x="186" y="88">Xn</text><text x="94" y="34">Monod growth + dilution</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Real-world steady state / environmental engineering</p><h3>Wastewater nitrification balance</h3><p class="authors"><b>Authors / inspiration:</b> activated-sludge process modeling</p><p>Ammonium and nitrifier biomass balances with dilution, Monod uptake, yield, and decay.</p><p class="vars"><b>Variables:</b> NH4; Xn</p><p class="try"><b>Try:</b> continue over dilution rate D and watch washout risk.</p><a class="open-link workbench-link" href="workbench.html?model=wastewater-nitrification">Open in Workbench</a> <a class="open-link" href="steady.html?example=Wastewater%20nitrification%20balance">Open in lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic simulation chemistry biology teaching">
-<div class="scheme stochastic"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="58" cy="74" r="19"></circle><text x="58" y="74">S</text><circle cx="150" cy="74" r="19"></circle><text x="150" y="74">I</text><circle cx="242" cy="74" r="19"></circle><text x="242" y="74">R</text><path d="M78 74 H130"></path><path d="M120 66 L132 74 L120 82"></path><path d="M170 74 H222"></path><path d="M212 66 L224 74 L212 82"></path><path class="ghost" d="M96 38 C122 18 182 18 210 38"></path><text x="153" y="30">random next event</text><text x="170" y="122">Gillespie SSA</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Event simulation engine</p><h3>Gillespie algorithm</h3><p class="authors"><b>Authors / inspiration:</b> Daniel T. Gillespie</p><p>Simulates reaction networks one event at a time: draw the waiting time, choose the next reaction, update the state.</p><p class="vars"><b>Variables:</b> integer molecule, cell, or compartment counts</p><p class="try"><b>Try:</b> compare one stochastic path against the deterministic ODE mean field</p><a class="open-link workbench-link" href="workbench.html?model=birth-death">Open in Workbench</a> <a class="open-link" href="stochastic.html#gillespie">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic biology teaching">
-<div class="scheme branching"><svg aria-hidden="true" viewbox="0 0 340 150"><circle cx="170" cy="24" r="10"></circle><path d="M170 34 L116 72M170 34 L224 72"></path><circle cx="116" cy="78" r="10"></circle><circle cx="224" cy="78" r="10"></circle><path d="M116 88 L84 122M116 88 L148 122M224 88 L206 122M224 88 L258 122"></path><circle cx="84" cy="128" r="9"></circle><circle cx="148" cy="128" r="9"></circle><circle cx="206" cy="128" r="9"></circle><circle cx="258" cy="128" r="9"></circle><text x="170" y="112">extinction can still occur</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Branching process</p><h3>Galton–Watson process</h3><p class="authors"><b>Authors / inspiration:</b> Francis Galton; Henry W. Watson</p><p>Each individual independently produces a random number of descendants. Mean growth above one does not guarantee survival.</p><p class="vars"><b>Variables:</b> population size Zₙ by generation</p><p class="try"><b>Try:</b> vary offspring variance while keeping the same mean</p><a class="open-link workbench-link" href="workbench.html?model=galton">Open in Workbench</a> <a class="open-link" href="stochastic.html#galton">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic teaching finance">
-<div class="scheme gambler"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M36 120 H306M52 24 V130"></path><path class="osc" d="M52 92 L74 80 L96 88 L118 72 L140 84 L162 68 L184 76 L206 58 L228 70 L250 48 L272 62"></path><line class="threshold" x1="52" x2="306" y1="120" y2="120"></line><line class="ghost" x1="52" x2="306" y1="40" y2="40"></line><text x="286" y="38">target</text><text x="286" y="122">ruin</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Random walk</p><h3>Gambler’s ruin</h3><p class="authors"><b>Authors / inspiration:</b> Classical probability</p><p>A finite player repeatedly wins or loses one unit. In a fair game against an infinite bankroll, eventual ruin is almost sure.</p><p class="vars"><b>Variables:</b> capital Xₜ; win probability p</p><p class="try"><b>Try:</b> increase initial capital and observe that risk is delayed, not removed</p><a class="open-link workbench-link" href="workbench.html?model=gambler-ruin">Open in Workbench</a> <a class="open-link" href="stochastic.html#ruin">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic biology simulation">
-<div class="scheme epidemic"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M36 120 H306M52 26 V130"></path><path d="M54 112 C96 98 126 40 168 50 C214 62 244 96 298 108"></path><path class="ghost" d="M54 118 C92 110 130 88 150 118 C170 132 220 130 298 128"></path><text x="130" y="34">ODE peak</text><text x="218" y="128">stochastic fade-out</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Stochastic epidemic</p><h3>Stochastic SIR / SIS</h3><p class="authors"><b>Authors / inspiration:</b> Epidemic CTMC tradition</p><p>Transmission and recovery are random events. Even when R₀ is above one, early random extinction remains possible.</p><p class="vars"><b>Variables:</b> S, I, R integer counts</p><p class="try"><b>Try:</b> run many paths and inspect final-size distribution</p><a class="open-link workbench-link" href="workbench.html?model=stoch-sir">Open in Workbench</a> <a class="open-link" href="stochastic.html#sir">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic physics teaching">
-<div class="scheme urn"><svg aria-hidden="true" viewbox="0 0 340 150"><rect height="70" rx="14" width="86" x="58" y="46"></rect><rect height="70" rx="14" width="86" x="196" y="46"></rect><circle cx="82" cy="70" r="5"></circle><circle cx="104" cy="76" r="5"></circle><circle cx="126" cy="92" r="5"></circle><circle cx="220" cy="86" r="5"></circle><circle cx="244" cy="70" r="5"></circle><path d="M148 78 C166 58 178 58 194 78"></path><path d="M184 70 L196 78 L182 84"></path><path class="ghost" d="M194 96 C176 116 164 116 148 96"></path><text x="170" y="132">recurrence after equilibrium</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Statistical physics</p><h3>Ehrenfest urn model</h3><p class="authors"><b>Authors / inspiration:</b> Paul and Tatiana Ehrenfest</p><p>Balls randomly switch urns. The system approaches equilibrium yet can eventually return to an extreme initial state.</p><p class="vars"><b>Variables:</b> number of balls in urn A</p><p class="try"><b>Try:</b> compare short-time relaxation with long-time recurrence</p><a class="open-link workbench-link" href="workbench.html?model=ehrenfest">Open in Workbench</a> <a class="open-link" href="stochastic.html#ehrenfest">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic genetics biology">
-<div class="scheme genetics"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 120 H304M54 26 V130"></path><path d="M54 80 C82 74 100 96 128 90 C158 84 176 60 206 54 C238 48 260 30 296 28"></path><path class="ghost" d="M54 80 C84 92 106 110 138 116 C178 124 232 122 296 120"></path><text x="296" y="26">fixation</text><text x="294" y="122">loss</text><text x="170" y="140">neutral drift</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Population genetics</p><h3>Wright–Fisher model</h3><p class="authors"><b>Authors / inspiration:</b> Sewall Wright; Ronald A. Fisher</p><p>Allele frequencies change by random sampling. Neutral variants eventually fix or disappear without selection.</p><p class="vars"><b>Variables:</b> allele frequency pₙ; population size N</p><p class="try"><b>Try:</b> reduce N and watch drift dominate faster</p><a class="open-link workbench-link" href="workbench.html?model=wright-fisher">Open in Workbench</a> <a class="open-link" href="stochastic.html#wright">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic finance teaching">
-<div class="scheme finance"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 120 H306M54 24 V130"></path><path d="M54 104 C94 88 122 70 154 62 C190 52 234 28 296 18"></path><path class="ghost" d="M54 104 C86 112 120 118 154 116 C206 112 244 100 296 92"></path><text x="234" y="24">mean grows</text><text x="234" y="104">typical path lags</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">SDE / finance</p><h3>Geometric Brownian motion</h3><p class="authors"><b>Authors / inspiration:</b> Bachelier; Black–Scholes tradition</p><p>Multiplicative noise separates ensemble average from typical trajectory. High volatility can make most paths disappointing while the mean rises.</p><p class="vars"><b>Variables:</b> asset or population size Xₜ</p><p class="try"><b>Try:</b> increase volatility and compare median vs mean</p><a class="open-link workbench-link" href="workbench.html?model=gbm">Open in Workbench</a> <a class="open-link" href="stochastic.html#gbm">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic paradox teaching finance">
-<div class="scheme parrondo"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M38 120 H306M54 24 V130"></path><path class="osc" d="M54 62 C88 70 116 74 146 82 C184 92 234 104 296 112"></path><path class="ghost" d="M54 66 C96 52 126 84 162 70 C206 54 248 44 296 30"></path><text x="102" y="50">A loses</text><text x="238" y="114">B loses</text><text x="228" y="28">mix wins</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Paradox / random walks</p><h3>Parrondo’s paradox</h3><p class="authors"><b>Authors / inspiration:</b> Juan M. R. Parrondo</p><p>Two losing games can combine into a winning process when switching changes the state distribution.</p><p class="vars"><b>Variables:</b> capital; modulo state</p><p class="try"><b>Try:</b> alternate games instead of playing either one alone</p><a class="open-link workbench-link" href="workbench.html?model=parrondo">Open in Workbench</a> <a class="open-link" href="stochastic.html#parrondo">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic physics simulation teaching">
-<div class="scheme resonance"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M34 116 H306M54 24 V126"></path><path class="ghost" d="M54 92 C78 68 102 68 126 92 C150 116 174 116 198 92 C222 68 246 68 270 92"></path><line class="threshold" x1="54" x2="302" y1="62" y2="62"></line><path class="osc" d="M54 94 L70 88 L86 66 L102 74 L118 58 L134 88 L150 96 L166 62 L182 72 L198 58 L214 92 L230 96 L246 66 L262 74 L278 60"></path><text x="248" y="48">noise crosses threshold</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Noise-assisted signal</p><h3>Stochastic resonance</h3><p class="authors"><b>Authors / inspiration:</b> Benzi–Sutera–Vulpiani tradition</p><p>Adding noise can improve detection of a weak periodic signal when a threshold system is tuned correctly.</p><p class="vars"><b>Variables:</b> signal, noise amplitude, threshold</p><p class="try"><b>Try:</b> scan noise level and find the best signal response</p><a class="open-link workbench-link" href="workbench.html?model=resonance">Open in Workbench</a> <a class="open-link" href="stochastic.html#resonance">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic physics control simulation">
-<div class="scheme motor"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M34 112 H306"></path><path d="M46 104 L94 52 L126 104 L174 52 L206 104 L254 52 L286 104"></path><circle cx="100" cy="44" r="9"></circle><path class="ghost" d="M106 42 C154 18 198 18 246 42"></path><path class="shortcut" d="M218 36 H268"></path><text x="244" y="24">net drift</text><text x="166" y="132">flashing ratchet</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Brownian motor</p><h3>Flashing ratchet</h3><p class="authors"><b>Authors / inspiration:</b> Brownian ratchet literature</p><p>Thermal noise plus asymmetric switching can produce directed transport without a constant macroscopic force.</p><p class="vars"><b>Variables:</b> particle position; potential state</p><p class="try"><b>Try:</b> switch the potential on/off and measure net velocity</p><a class="open-link workbench-link" href="workbench.html?model=ratchet">Open in Workbench</a> <a class="open-link" href="stochastic.html#ratchet">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic control teaching optimization">
-<div class="scheme bandit"><svg aria-hidden="true" viewbox="0 0 340 150"><rect height="70" rx="12" width="54" x="52" y="52"></rect><rect height="86" rx="12" width="54" x="143" y="36"></rect><rect height="60" rx="12" width="54" x="234" y="62"></rect><text x="79" y="88">A</text><text x="170" y="80">B</text><text x="261" y="92">C</text><path class="ghost" d="M170 26 V14"></path><text x="170" y="14">uncertainty has value</text></svg></div>
-<div class="atlas-body"><p class="atlas-type">Learning / control</p><h3>Multi-armed bandit</h3><p class="authors"><b>Authors / inspiration:</b> Robbins; Gittins-index tradition</p><p>Optimal decisions may favor an uncertain option over the current best-looking option because information has future value.</p><p class="vars"><b>Variables:</b> arm beliefs; reward history</p><p class="try"><b>Try:</b> compare greedy choice against exploration-aware policies</p><a class="open-link workbench-link" href="workbench.html?model=bandit">Open in Workbench</a> <a class="open-link" href="stochastic.html#bandit">Open stochastic lab</a></div>
-</article>
-<article class="atlas-card" data-category="stochastic control teaching optimization">
-<div class="scheme secretary"><svg aria-hidden="true" viewbox="0 0 340 150"><path class="axis" d="M34 92 H306"></path><line class="threshold" x1="140" x2="140" y1="38" y2="112"></line><text x="113" y="30">learn</text><text x="187" y="30">accept zone</text><g><circle cx="56" cy="92" r="13"></circle><circle cx="96" cy="92" r="13"></circle><circle cx="136" cy="92" r="13"></circle><circle cx="176" cy="92" r="13"></circle><circle cx="216" cy="92" r="13"></circle><circle cx="256" cy="92" r="13"></circle></g></svg></div>
-<div class="atlas-body"><p class="atlas-type">Optimal stopping</p><h3>Search / secretary problem</h3><p class="authors"><b>Authors / inspiration:</b> Classical optimal stopping</p><p>Rejecting good early offers can be rational when waiting preserves the option of rare high-quality future draws.</p><p class="vars"><b>Variables:</b> offer sequence; stopping threshold</p><p class="try"><b>Try:</b> change search cost and market variance</p><a class="open-link workbench-link" href="workbench.html?model=secretary">Open in Workbench</a> <a class="open-link" href="stochastic.html#secretary">Open stochastic lab</a></div>
-</article>
-</section>
-<section class="card atlas-note">
-<h2>How to use this atlas</h2>
-<p>Use the atlas to choose a model, then open it in the matching lab. The labs are where you edit equations or objectives, run simulations or optimizations, configure figures, and export reproducible code.</p>
-<p><b>Boundary:</b> stochastic and paradox examples now open in the separate Stochastic Lab. It is a browser-scale teaching simulator; for calibrated fitting, stiff systems, large Monte Carlo, stochastic control, or publication analysis, export Python.</p>
-</section>
+<main class="v72-atlas" id="main-content" tabindex="-1">
+<section class="v72-atlas-hero"><div><p class="eyebrow">Runnable examples</p><h1>Model Atlas</h1><p>Search by lab, scientific field, and provenance. Each card opens the model on its scientific workspace.</p></div><img alt="Model Atlas mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/model-atlas.webp"/></section>
+<section aria-label="Example filters" class="v72-atlas-toolbar"><input aria-label="Search examples" id="atlasSearch" placeholder="Search models, methods or scientific fields" type="search"/><select aria-label="Filter by lab" id="atlasLab"></select><select aria-label="Filter by provenance" id="atlasProvenance"></select><select aria-label="Filter by scientific family" id="atlasFamily"></select></section>
+<div class="v72-atlas-summary"><b id="atlasCount">Loading examples…</b><a href="research.html">Research provenance</a></div>
+<section aria-live="polite" class="v72-atlas-grid" id="atlasGridV72"></section>
+<p class="v72-atlas-boundary"><b>Before interpreting an example:</b> check its provenance, parameters, diagnostics, and capability label. A named model is not automatically calibrated or validated.</p>
 </main>
-</div>
-<script>
-(function(){
-  const alias = {
-    all:['all'],
-    steady:['steady','steady-state','steadystate'],
-    stochastic:['stochastic','ctmc'],
-    agent:['agent','abm'],
-    sciml:['sciml','scientific-machine-learning'],
-    biology:['biology','genetics'],
-    physics:['physics'],
-    chemistry:['chemistry'],
-    paradox:['paradox','paradoxes'],
-    teaching:['teaching'],
-    simulation:['simulation','simulator'],
-    genetics:['genetics','biology'],
-    finance:['finance'],
-    control:['control'],
-    environment:['environment'],
-    engineering:['engineering']
-  };
-  function tokens(card){
-    return String(card.dataset.category || '')
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g,' ')
-      .split(/\s+/)
-      .filter(Boolean);
-  }
-  function matches(card, key){
-    if(key === 'all') return true;
-    const t = tokens(card);
-    const keys = alias[key] || [key];
-    return keys.some(k => t.includes(k));
-  }
-  function applyFilter(key){
-    const cards = Array.from(document.querySelectorAll('.atlas-card, .agent-atlas-grid article'));
-    cards.forEach(card => { card.hidden = !matches(card, key); });
-    document.querySelectorAll('.agent-atlas-section, .sciml-atlas-section, #atlasGrid').forEach(section => {
-      const contained = Array.from(section.querySelectorAll('.atlas-card, article'));
-      section.hidden = contained.length ? contained.every(card => card.hidden) : false;
-    });
-  }
-  document.querySelectorAll('.filter').forEach(btn => btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    applyFilter(btn.dataset.filter || 'all');
-  }));
-  applyFilter('all');
-})();
-</script>
-<script defer="" src="src/navigation.js?v=71.46.0"></script><span class="anchor-target sr-only" id="secretary">secretary</span><span class="anchor-target sr-only" id="gillespie">gillespie</span><span class="anchor-target sr-only" id="galton">galton</span><span class="anchor-target sr-only" id="ruin">ruin</span><span class="anchor-target sr-only" id="sir">sir</span><span class="anchor-target sr-only" id="ehrenfest">ehrenfest</span><span class="anchor-target sr-only" id="wright">wright</span><span class="anchor-target sr-only" id="gbm">gbm</span><span class="anchor-target sr-only" id="parrondo">parrondo</span><span class="anchor-target sr-only" id="resonance">resonance</span><span class="anchor-target sr-only" id="ratchet">ratchet</span><span class="anchor-target sr-only" id="bandit">bandit</span><div hidden="" id="v70-11-sciml-contract-links"><a href="sciml.html?example=lotka&amp;approach=sindy">sciml.html?example=lotka&amp;approach=sindy</a><a href="sciml.html?example=michaelis&amp;approach=inverse">sciml.html?example=michaelis&amp;approach=inverse</a><a href="sciml.html?example=toggle&amp;approach=network">sciml.html?example=toggle&amp;approach=network</a><a href="sciml.html?example=lorenz&amp;approach=surrogate">sciml.html?example=lorenz&amp;approach=surrogate</a><a href="sciml.html?example=heat1d&amp;approach=operator">sciml.html?example=heat1d&amp;approach=operator</a><a href="sciml.html?example=chemostat&amp;approach=inverse">sciml.html?example=chemostat&amp;approach=inverse</a><a href="sciml.html?example=allee&amp;approach=sindy">sciml.html?example=allee&amp;approach=sindy</a><a href="sciml.html?example=protein_design&amp;approach=surrogate">sciml.html?example=protein_design&amp;approach=surrogate</a><a href="sciml.html?example=signaling&amp;approach=inverse">sciml.html?example=signaling&amp;approach=inverse</a><a href="sciml.html?example=metabolic_stress&amp;approach=inverse">sciml.html?example=metabolic_stress&amp;approach=inverse</a><a href="sciml.html?example=gene_knockout&amp;approach=inverse">sciml.html?example=gene_knockout&amp;approach=inverse</a><a href="sciml.html?example=tumor_microenv&amp;approach=surrogate">sciml.html?example=tumor_microenv&amp;approach=surrogate</a><a href="sciml.html?example=drug_penetration&amp;approach=pinn">sciml.html?example=drug_penetration&amp;approach=pinn</a><a href="sciml.html?example=drug_schedule&amp;approach=surrogate">sciml.html?example=drug_schedule&amp;approach=surrogate</a><a href="sciml.html?example=virtual_patients&amp;approach=surrogate">sciml.html?example=virtual_patients&amp;approach=surrogate</a><a href="sciml.html?example=allosteric&amp;approach=inverse">sciml.html?example=allosteric&amp;approach=inverse</a><a href="sciml.html?example=microbiome&amp;approach=sindy">sciml.html?example=microbiome&amp;approach=sindy</a><a href="sciml.html?example=seir&amp;approach=inverse">sciml.html?example=seir&amp;approach=inverse</a></div>
-<!-- v70.11 sciml atlas compatibility links
-sciml.html?example=lotka&approach=sindy
-sciml.html?example=sir&approach=inverse
-sciml.html?example=michaelis&approach=inverse
-sciml.html?example=toggle&approach=network
-sciml.html?example=lorenz&approach=surrogate
-sciml.html?example=heat1d&approach=operator
-sciml.html?example=chemostat&approach=inverse
-sciml.html?example=allee&approach=sindy
-sciml.html?example=protein_design&approach=surrogate
-sciml.html?example=signaling&approach=inverse
-sciml.html?example=metabolic_stress&approach=inverse
-sciml.html?example=gene_knockout&approach=inverse
-sciml.html?example=tumor_microenv&approach=surrogate
-sciml.html?example=drug_penetration&approach=pinn
-sciml.html?example=drug_schedule&approach=surrogate
-sciml.html?example=virtual_patients&approach=surrogate
-sciml.html?example=allosteric&approach=inverse
-sciml.html?example=microbiome&approach=sindy
-sciml.html?example=seir&approach=inverse
--->
-<!-- src/navigation.js?v=71.46.0 legacy-token-for-contract --><script defer src="src/platform-data-engine.js?v=71.46.0"></script>
-<script defer src="src/platform-shell.js?v=71.46.0"></script>
-<script defer src="src/fokokit.js?v=71.46.0"></script>
-<script defer src="src/v71-platform.js?v=71.46.0"></script>
-<script src="src/platform/compute-bus.js?v=71.46.0"></script>
-</body>
+<script defer="" src="src/models/scientific-example-catalog.js?v=72.46.0"></script>
+<script defer="" src="src/v72/example-atlas.js?v=72.46.0"></script>
+<script defer="" src="src/navigation.js?v=72.46.0"></script>
+</div></body>
 </html>

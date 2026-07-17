@@ -2,246 +2,171 @@
 
 <html data-theme="aurora" lang="en">
 <head>
-<link as="script" crossorigin="" href="https://cdn.plot.ly/plotly-2.35.2.min.js" rel="preload"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Agent Lab runs individual-based models with compact selectors, visible parameters, custom rules and Atlas-based documentation." name="description"/>
+<meta content="Foko Lab Agent Lab provides worker-backed seeded browser-scale individual-based simulations, ensemble summaries, spatial diagnostics, cancellation and reproducible exports." name="description"/>
+<meta content="Foko Lab Agent Lab" property="og:title"/>
+<meta content="Worker-backed lattice agent models with explicit update schedules, initialization, random seeds, finite ensembles, spatial diagnostics and scientific boundaries." property="og:description"/>
+<meta content="website" property="og:type"/>
 <title>Agent Lab · Foko Lab</title>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script><script src="src/plot-fallback.js?v=71.46.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/agent-lab.css?v=71.46.0" rel="stylesheet"/>
-<!-- Adaptive & Learning Agents -->
-<meta content="assets/homepage-preview.webp" property="og:image"/>
-<link href="styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-10-modeling-logic.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-19-platform-system.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/><link href="styles/lab-identity.css?v=71.46.0" rel="stylesheet"/>
-</head>
-<body data-lab="agent">
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.46.0"></script>
+<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=72.46.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.46.0"></script></head>
+<body data-lab="agent" data-v72-shell="true" data-version="72.46.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.46.0" width="190"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-  <a href="index.html">Home</a>
-  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
-    <summary class="modeling-summary labs-summary">Modeling</summary>
-    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
-      <div class="menu-section menu-section-primary">
-        <p class="menu-section-title">Modeling workspaces</p>
-        <a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
-        <a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
-        <a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
-        <a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
-        <a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
-        <a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
-      </div></div>
-  </details>
-  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
-    <summary class="standalone-summary labs-summary">Focused Labs</summary>
-    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Standalone scientific labs</p>
-        <a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
-        <a href="stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
-        <a href="optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
-        <a href="steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
-    <summary class="sciml-summary labs-summary">SciML</summary>
-    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Scientific machine learning</p>
-        <a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
-        <a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
-        <a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
-    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
-    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Model output analysis</p>
-        <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
-        <a href="fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-subtitle">Structure and geometry</p>
-        <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
-        <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
-    <summary class="resources-summary labs-summary">Explore</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Examples and mathematical culture</p>
-        <a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
-        <a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
-    <summary class="guide-summary labs-summary">Learn</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Guides and templates</p>
-        <a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
-        <a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
-    <summary class="creator-summary labs-summary">Creator</summary>
-    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Profile and research</p>
-        <a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
-        <a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
-        <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener" role="menuitem"><span class="menu-icon">↗</span><span><b>Personal website</b><small>Portfolio homepage and broader profile.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-title">Contact and context</p>
-        <a href="contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
-        <a href="acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
-      </div>
-    </div>
-  </details>
+<a class="nav-home-link" href="index.html">Home</a>
+<details class="labs-menu nav-menu" data-nav-menu="modeling">
+<summary class="labs-summary">Modeling</summary>
+<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
+<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
+<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
+<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
+<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
+<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Rules and search</p>
+<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
+<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
+<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="analysis">
+<summary class="labs-summary">Data / Analysis</summary>
+<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
+<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
+<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
+<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="sciml">
+<summary class="labs-summary">SciML</summary>
+<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
+<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
+<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
+<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="explore">
+<summary class="labs-summary">Explore</summary>
+<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
+<div class="menu-section"><p class="menu-section-title">Find and learn</p>
+<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
+<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
+<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
+<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
+<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
+<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
+<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
+</div>
+</div>
+</details>
+<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
 </nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/></a></div>
+<div aria-label="Display controls" class="foko-top-actions"></div>
 </header>
-<main class="agent-page agent-page-compact"><nav aria-label="Workbench suite" class="mw-suite-tabs workbench-suite-tabs"><a href="workbench.html?model=sir">ODE</a><a href="workbench.html?model=stoch-sir">Stochastic CTMC</a><a href="workbench.html?model=enzyme-steady">Steady-State</a><a href="workbench.html?model=quadratic">Optimization</a><a href="symbolic.html">Symbolic</a><a aria-current="page" class="active" href="agent.html">Agent</a><a href="sciml.html">SciML</a><a href="examples.html">Model Atlas</a></nav>
-<section class="agent-hero compact-hero">
-<div>
-<p class="agent-eyebrow">INDIVIDUAL RULES → EMERGENT DYNAMICS</p>
-<h1>Agent Lab</h1>
-<p class="agent-lede">Select a model, tune parameters, run the simulation and inspect diagnostics.</p><p class="agent-hidden-index">T-cell proliferation · SIR agents · Game of Life · fatty-acid de novo · Adaptive &amp; Learning Agents · vaccine hesitancy · meme-stock cascade</p>
-</div>
-<aside class="agent-boundary agent-shortcuts"><b>Reference</b><div class="agent-reference-links"><a class="open-link" href="examples.html#agent-atlas">Agent Model Atlas</a><a class="open-link" href="docs.html#agent-lab">Agent docs</a></div></aside>
+<main class="layout" id="workbench" tabindex="-1">
+<aside aria-label="Agent workflow" class="side-nav">
+<button class="nav-item active" data-jump="#agentExamplesBlock" type="button">Examples</button>
+<button class="nav-item" data-jump="#agentModelBlock" type="button">Model</button>
+<button class="nav-item" data-jump="#agentSimulationBlock" type="button">Simulation</button>
+<button class="nav-item" data-jump="#agentExportsBlock" type="button">Export</button>
+</aside>
+<aside aria-label="Agent model controls" class="work-panel controls">
+<section class="intro-card hero-with-mark">
+<div><p class="v72-eyebrow">Individual-based models · spatial rules · finite ensembles</p><h1>Agent Lab</h1><p>Run seeded lattice models, inspect population and spatial evidence, and retain the exact rules, topology and initialization used.</p></div>
+<div aria-hidden="true" class="lab-mark agent-lab-mark">♙</div>
 </section>
-<section class="agent-dashboard">
-<div class="agent-card agent-runbar">
-<div class="agent-selector-grid agent-primary-selectors">
-<label>Family<select id="agentModelFamily">
-<option value="all">All examples</option>
-<option value="biology">Biology / cells</option>
-<option value="social">Social contagion</option>
-<option value="crisis">Crisis / evacuation</option>
-<option value="finance">Finance / markets</option>
-<option value="urban">Urban systems</option>
-<option value="environment">Environment / enforcement</option>
-<option value="cellular">Cellular automata</option>
-<option value="custom">Custom / imported</option>
-</select></label>
-<label>Model<select id="agentExample"></select></label>
-</div>
-<details class="agent-model-details"><summary>Model details</summary>
-<div class="agent-selector-grid agent-secondary-selectors">
-<label>Approach<select id="agentApproach">
-<option value="rule_based">Rule-Based Decision Making</option>
-<option value="statechart">State-Driven Agents / Statecharts</option>
-<option value="adaptive">Adaptive &amp; Learning Agents</option>
-<option value="graph">Graph / Network-Based Approach</option>
-</select></label>
-<label>Time update<select id="agentTimeMode">
-<option value="discrete_sync">Discrete time · synchronous</option>
-<option value="discrete_async">Discrete time · asynchronous</option>
-<option value="continuous_rate">Continuous time · rate approximation</option>
-</select></label>
-<label>Topology<select id="agentTopology">
-<option value="moore">Moore grid · 8 neighbors</option>
-<option value="von_neumann">Von Neumann grid · 4 neighbors</option>
-<option value="random_graph">Random graph overlay</option>
-<option value="small_world">Small-world graph overlay</option>
-<option value="multilayer_social">Multilayer · spatial + social</option>
-<option value="multilayer_transport">Multilayer · spatial + social + transport</option>
-</select></label>
-</div>
-<div class="agent-approach-info compact" id="agentApproachInfo">Model details.</div>
+<section class="examples-section" id="agentExamplesBlock">
+<div class="section-title"><div><p class="v72-eyebrow">Curated models</p><h2>Scientific stress tests</h2></div><button class="subtle" id="loadAgentPreset" type="button">Load</button></div>
+<label><span>Example</span><select id="agentPresetSelect"></select></label>
+<div class="model-deck agent-preset-deck" id="agentPresetDeck"></div>
+<div class="narrative" id="agentPresetQuestion"></div>
+<p class="scientific-boundary" id="agentPresetNote">Examples are qualitative mechanisms, not calibrated empirical evidence.</p>
+</section>
+<section class="card" id="agentModelBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Model definition</p><h2>Rules and initialization</h2></div></div>
+<label><span>Agent model</span><select id="agentModel"></select></label>
+<div class="data-summary-strip" id="agentModelSummary">Select a model.</div>
+<div class="small-title">Transition probabilities per selected-site update attempt</div>
+<div class="agent-parameter-grid" id="agentParamGrid"></div>
+<div class="small-title">Initial population</div>
+<div class="two-col small-gap"><label><span>Population input</span><select id="agentInitialMode"><option value="counts">Exact state counts</option><option value="fractions">Fractions</option></select></label><div class="data-summary-strip" id="agentPopulationSummary">Initial population has not been validated.</div></div>
+<div class="agent-fraction-grid" id="agentCountGrid"></div>
+<div class="agent-fraction-grid" hidden="" id="agentFractionGrid"></div>
+<p class="field-help">Count mode requires integer state counts that sum exactly to grid size². Fraction mode uses deterministic largest-remainder allocation and records the resulting exact counts.</p>
+<details hidden="" id="agentCustomModelBlock"><summary>Custom local transition model</summary>
+<label class="upload-drop"><span>Import custom Agent JSON</span><input accept="application/json,.json" id="agentCustomModelFile" type="file"/></label>
+<label><span>Custom model JSON</span><textarea id="agentCustomModelJson" rows="15" spellcheck="false"></textarea></label>
+<div class="export-row"><button class="secondary" id="validateAgentCustomModel" type="button">Validate model</button><button class="secondary" id="downloadAgentModelTemplate" type="button">Download template</button></div>
+<p class="scientific-boundary">Custom models use ordered first-success local transitions. Supported rule kinds are spontaneous, neighbour-contact and neighbour-threshold. Arbitrary JavaScript is not executed.</p>
 </details>
-</div>
-<div class="agent-card agent-parameter-strip">
-<div class="agent-param-grid" id="agentParamGrid">
-<label><span id="agentALabel">A</span> <output id="agentAOut">0.35</output><input id="agentA" max="100" min="0" type="range" value="35"/></label>
-<label><span id="agentBLabel">B</span> <output id="agentBOut">0.20</output><input id="agentB" max="100" min="0" type="range" value="20"/></label>
-<label><span id="agentCLabel">C</span> <output id="agentCOut">0.05</output><input id="agentC" max="100" min="0" type="range" value="5"/></label>
-<label><span id="agentDLabel">D</span> <output id="agentDOut">0.02</output><input id="agentD" max="100" min="0" type="range" value="2"/></label>
-</div>
-<details class="agent-run-settings"><summary>Run settings</summary><div class="agent-mini-controls">
-<label>grid <output id="agentSizeOut">46</output><input id="agentSize" max="100" min="20" type="range" value="46"/></label>
-<label>initial population<input id="agentInitialCount" min="0" step="1" type="number" value="889"/></label>
-<label class="agent-density-compat">density seed <output id="agentDensityOut">42%</output><input id="agentDensity" max="95" min="1" type="range" value="42"/></label>
-<label>dt <output id="agentDtOut">1.00</output><input id="agentDt" max="200" min="1" type="range" value="100"/></label>
-<label>graph degree <output id="agentDegreeOut">6</output><input id="agentDegree" max="18" min="2" type="range" value="6"/></label>
-<label>seed<input id="agentSeed" type="number" value="2026"/></label>
-<label>steps<input id="agentSteps" max="5000" min="1" type="number" value="100"/></label>
-<label>delay ms<input id="agentDelay" max="1000" min="0" type="number" value="40"/></label>
-</div></details>
-<details class="agent-run-settings agent-initial-settings" open=""><summary>Initial conditions</summary><div class="agent-initial-grid" id="agentInitialGrid"></div></details>
-<div class="agent-buttons"><button class="primary run-button" id="agentRun" type="button">Run</button><button class="secondary" id="agentStep" type="button">Step</button><button class="ghost" id="agentReset" type="button">Reset</button><button class="ghost" id="agentExport" type="button">Export JSON</button></div>
-<p class="agent-status" id="agentStatus">Ready.</p>
-</div>
-<section class="agent-accordion-grid agent-rule-strip">
-<details class="agent-card"><summary>Rule definition</summary><div class="agent-rule-summary" id="agentRuleSummary"></div></details>
+<p class="field-help">Probabilities are per selected-site update attempt under the chosen schedule, not calibrated physical rates.</p>
 </section>
-<section class="agent-main-grid">
-<article class="agent-card agent-sim-card"><h2 id="agentTitle">Agent model</h2><canvas aria-label="Agent-based simulation grid" height="520" id="agentCanvas" width="760"></canvas><div class="agent-legend agent-legend-inline" id="agentLegend"></div><p class="agent-caption" id="agentCaption"></p></article>
-<article class="agent-card agent-plot-card"><div class="agent-card-header agent-plot-header">
-<div>
-<h2>Diagnostic plots</h2>
-<p id="agentPlotContext">Population metrics for the selected agent model.</p>
+<section class="card" id="agentSimulationBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Numerical experiment</p><h2>Grid, topology and ensemble</h2></div></div>
+<div class="advanced-grid">
+<label><span>Grid size</span><input id="agentSize" max="80" min="8" type="number" value="34"/></label>
+<label><span>Steps</span><input id="agentSteps" max="1200" min="1" type="number" value="120"/></label>
+<label><span>Independent runs</span><input id="agentRuns" max="200" min="1" type="number" value="24"/></label>
+<label><span>Master seed</span><input id="agentSeed" max="4294967295" min="0" type="number" value="202610"/></label>
+<label><span>Record every</span><input id="agentRecordEvery" max="100" min="1" type="number" value="2"/></label>
+<label><span>Live updates / replay frames</span><input id="agentSnapshotCount" max="80" min="4" step="1" type="number" value="24"/></label>
+<label><span>Live simulation speed</span><select id="agentLiveSpeed"><option value="180">Slow</option><option selected="" value="90">Normal</option><option value="45">Fast</option><option value="24">Maximum visible</option></select></label>
+<label><span>Neighbourhood</span><select id="agentNeighborhood"><option value="von-neumann">von Neumann (4)</option><option value="moore">Moore (8)</option></select></label>
+<label><span>Boundary</span><select id="agentBoundary"><option value="toroidal">Toroidal</option><option value="fixed">Fixed</option></select></label>
+<label><span>Update schedule</span><select id="agentUpdateSchedule"><option value="random-with-replacement">Random attempts with replacement</option><option value="shuffled-sweep">Shuffled one-attempt-per-site sweep</option></select></label>
+<label><span>Initialization</span><select id="agentInitialization"><option value="random">Random spatial assignment</option><option value="split">Spatially split state blocks</option><option value="central-patch">Rare states in a central patch</option></select></label>
 </div>
-<div class="agent-plot-controls">
-<label>Plot<select id="agentPlotMode"></select></label>
-<label>Palette<select id="agentPalette">
-<option value="model">Model colors</option>
-<option value="scientific">Scientific</option>
-<option value="aurora">Aurora</option>
-<option value="viridis">Viridis</option>
-<option value="magma">Magma</option>
-<option value="mono">Mono</option>
-</select></label>
-</div>
-</div><div class="agent-kpis" id="agentKpis"></div><div class="agent-metrics" id="agentMetrics"></div></article>
+<p class="scientific-boundary"><b>Random-sequential lattice updates.</b> One simulation step is one lattice sweep: grid-size² update attempts under the selected schedule. It is an algorithmic clock, not automatically biological, social or physical time.</p>
 </section>
-<section class="agent-accordion-grid">
-<details class="agent-card"><summary>Custom rule editor</summary>
-<label>Rule mode<select id="agentRuleMode"><option value="builtin">Use selected built-in rules</option><option value="custom">Use custom local rule</option></select></label>
-<p class="agent-code-help"><b>Sandboxed function body.</b> Custom code runs in <code>agent-rule-worker.js</code> with a timeout. Return a valid state index or <code>{state, trait, event}</code>. Available names: <code>cell</code>, <code>neighbors</code>, <code>counts</code>, <code>params</code>, <code>rand</code>, <code>x</code>, <code>y</code>, <code>t</code>, <code>trait</code>, <code>memory</code>, <code>dt</code>.</p>
-<textarea aria-label="Agent Custom Code" id="agentCustomCode" spellcheck="false">// Game-of-Life style rule
-if (cell === 1 &amp;&amp; (counts.alive === 2 || counts.alive === 3)) return 1;
-if (cell === 0 &amp;&amp; counts.alive === 3) return 1;
-return 0;</textarea>
-<div class="agent-buttons compact"><button class="secondary" id="agentApplyRule" type="button">Apply custom rule</button><button class="ghost" id="agentLoadRuleTemplate" type="button">Load example rule</button><button class="ghost" id="agentLoadApproachTemplate" type="button">Load approach template</button></div>
-</details>
-<details class="agent-card"><summary>Custom model JSON import</summary>
-<p class="agent-code-help">Define states, colors, parameter labels, default values, approach, topology and rule code. This is the correct route for your own Agent Lab model.</p>
-<div class="agent-buttons compact"><button class="secondary" id="agentApplyCustomModel" type="button">Apply custom model</button><button class="ghost" id="agentLoadCustomModel" type="button">Load custom model skeleton</button></div>
-<label>Custom model specification JSON<textarea id="agentCustomModelJson" placeholder="Define label, states, colors, parameter labels, initial distribution, approach and ruleCode." spellcheck="false"></textarea></label>
-<label>Import / export JSON<textarea id="agentJsonBox" placeholder="Paste exported Agent Lab JSON here, then click Import JSON." spellcheck="false"></textarea></label>
-<div class="agent-buttons compact"><button class="secondary" id="agentImport" type="button">Import JSON</button><button class="ghost" id="agentCopyJson" type="button">Copy JSON</button></div>
-</details>
-<details class="agent-card"><summary>Approach comparison</summary><div class="agent-approach-compare" id="agentApproachCompare"></div></details>
+<section class="actionbar agent-actionbar">
+<button class="secondary" id="resetAgent" type="button">Reset example</button>
+<button class="primary" id="runAgent" type="button">Run live ensemble</button>
+<button class="secondary agent-pause" hidden="" id="pauseAgent" type="button">Pause live run</button>
+<button class="danger agent-cancel" hidden="" id="cancelAgent" type="button">Cancel run</button>
+<div class="progress"><div id="agentProgress"></div></div>
+<p class="status" id="agentStatus">Ready.</p>
+</section>
+</aside>
+<section aria-label="Agent results" class="workspace v72-workspace">
+<section aria-label="Computed agent results" class="results-card" role="region">
+<header class="v72-workspace-head"><div><p class="v72-eyebrow">Computed workspace</p><h2>Spatial state, population dynamics and stochastic evidence</h2><p>Each visible panel is derived from the same seeded ensemble. Use two readable views or focus one panel without discarding provenance.</p></div><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div></header>
+<div class="plot-toolbar-v2"><span class="result-kind" id="agentResultKind">No computed agent result</span><button class="ghost" id="exportAgentPng" type="button">Current PNG</button><button class="ghost" id="exportAgentSvg" type="button">Current SVG</button></div>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="agentPlotGrid">
+<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="leftAgentPlotTitle">Spatial dynamics</h3><select aria-label="Primary Agent plot" id="leftAgentPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div><div class="plot" id="leftAgentPlot"><div class="diagnostics empty">Run the ensemble to create spatial evidence.</div></div><div aria-label="Agent state legend" class="agent-state-legend" id="leftAgentPlotLegend"></div><details class="plot-evidence"><summary>Scientific meaning</summary><p id="leftAgentPlotEvidence">No plot has been computed.</p></details></article>
+<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="rightAgentPlotTitle">Population dynamics</h3><select aria-label="Secondary Agent plot" id="rightAgentPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div><div class="plot" id="rightAgentPlot"><div class="diagnostics empty">Run the ensemble to create temporal evidence.</div></div><div aria-label="Agent state legend" class="agent-state-legend" id="rightAgentPlotLegend"></div><details class="plot-evidence"><summary>Scientific meaning</summary><p id="rightAgentPlotEvidence">No plot has been computed.</p></details></article>
+</div>
+<p class="info-strip">During computation, the worker advances the representative seeded run in paced numerical chunks. Each visible lattice is the state just computed at that step—not a post-hoc replay. Pause or cancel without publishing a partial ensemble. After completion, replay is manual and runs once.</p>
 </section>
 </section>
+<aside aria-label="Agent diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card"><p class="v72-eyebrow">Run status</p><div class="status-strip"><div class="status-ok"><span>●</span><b id="agentTopStatus">Ready</b></div><div><span>Runtime</span><b id="agentRuntime">—</b></div><div><span>Model</span><b id="agentResultModel">—</b></div><div><span>Runs</span><b id="agentResultRuns">—</b></div><div><span>Grid</span><b id="agentResultGrid">—</b></div></div><div class="metrics-grid"><article class="metric-card"><small>Final occupied</small><b id="agentOccupied">—</b><em>representative run</em></article><article class="metric-card"><small>Spatial agreement</small><b id="agentAgreement">—</b><em>neighbour-pair fraction</em></article><article class="metric-card"><small>Spatial autocorrelation</small><b id="agentAutocorrelation">—</b><em>composition-adjusted categorical index</em></article><article class="metric-card"><small>Diversity</small><b id="agentDiversity">—</b><em>normalized entropy</em></article><article class="metric-card"><small>Update attempts</small><b id="agentAttempts">—</b><em>per run</em></article><article class="metric-card"><small>Terminal runs</small><b id="agentAbsorbed">—</b><em>irreversible condition by horizon</em></article><article class="metric-card"><small>Largest cluster</small><b id="agentLargestCluster">—</b><em>fraction of occupied sites</em></article></div></section>
+<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Numerical evidence</p><h2>Diagnostics</h2></div></div><div class="diagnostics empty" id="agentDiagnostics">Run an ensemble to inspect state totals, event counts, variability and limitations.</div></section>
+<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Simulation contract</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="agentBoundaryStatus">Not computed</dd></div><div><dt>Algorithm</dt><dd id="agentBoundaryAlgorithm">Random-sequential lattice updates</dd></div><div><dt>Topology</dt><dd id="agentBoundaryTopology">Not configured</dd></div><div><dt>Seeds</dt><dd id="agentBoundarySeeds">Not generated</dd></div><div><dt>Claim</dt><dd id="agentBoundaryClaim">No scientific result yet</dd></div></dl><p class="v72-warning" id="agentBoundaryText">A finite stochastic ensemble is conditional on the stated rules, topology, initialization and random seeds.</p></section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="agentExportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Configuration and result export</h2></div></div><div class="export-row"><label class="secondary button-link">Import model/config JSON<input accept="application/json,.json" hidden="" id="importAgentConfig" type="file"/></label><button class="secondary" id="saveAgentSession" type="button">Save session</button><button class="secondary" id="restoreAgentSession" type="button">Restore session</button><button class="secondary" id="copyAgentShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportAgentModel" type="button">Model JSON</button><button class="secondary" id="exportAgentCsv" type="button">Population CSV</button><button class="secondary" id="exportAgentJson" type="button">Result JSON</button><button class="secondary" id="exportAgentPython" type="button">Python scaffold</button><a class="secondary button-link" href="AGENT_MODEL_SPEC.md" rel="noopener" target="_blank">Model specification</a></div><p class="note">Saved and shared states preserve model configuration only. Computed evidence is regenerated from the stored master seed.</p></section>
+</aside>
 </main>
-</div>
-<script src="src/agent-lab.js?v=71.46.0"></script>
-<script src="src/model-validator.js?v=71.46.0"></script>
-<script src="src/model-session.js?v=71.46.0"></script>
-<script defer="" src="src/navigation.js?v=71.46.0"></script><!-- src/navigation.js?v=71.46.0 legacy-token-for-contract --><script defer src="src/platform-data-engine.js?v=71.46.0"></script>
-<script defer src="src/platform-shell.js?v=71.46.0"></script>
-<script defer src="src/fokokit.js?v=71.46.0"></script>
-<script defer src="src/v71-platform.js?v=71.46.0"></script>
-<script src="src/platform/compute-bus.js?v=71.46.0"></script>
-</body>
+<script defer="" src="src/core/agent-reference.js?v=72.46.0"></script>
+<script defer="" src="src/models/agent-presets.js?v=72.46.0"></script>
+<script defer="" src="src/v72/agent-workspace.js?v=72.46.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=72.46.0"></script>
+<script defer="" src="src/navigation.js?v=72.46.0"></script>
+</div></body>
 </html>

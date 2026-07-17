@@ -1,0 +1,226 @@
+{
+  "release": "72.46.0",
+  "levels": {
+    "unit": "Deterministic algorithm and contract tests executed in Node or Python.",
+    "differential": "Representative outputs compared with independent scientific Python libraries.",
+    "invariant": "Conservation, determinism, feasibility, residual or dimensional constraints.",
+    "browser": "Interaction, rendering, responsive and keyboard checks executed through Playwright.",
+    "visual": "Screenshot comparison requiring a normal local browser or CI runner."
+  },
+  "modules": [
+    {
+      "module": "ODE",
+      "unit": true,
+      "differential": [
+        "SciPy solve_ivp endpoint comparison"
+      ],
+      "invariants": [
+        "finite output",
+        "adaptive-step evidence",
+        "conservation diagnostics"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "browser reference methods are explicit Runge-Kutta methods",
+        "implicit stiff integration remains export-only"
+      ]
+    },
+    {
+      "module": "Steady-State",
+      "unit": true,
+      "differential": [
+        "analytic normal-form and residual references"
+      ],
+      "invariants": [
+        "residual tolerance",
+        "Jacobian evidence",
+        "explicit termination"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "finite multi-start is not root completeness",
+        "no certified continuation"
+      ]
+    },
+    {
+      "module": "Stochastic CTMC",
+      "unit": true,
+      "differential": [
+        "birth-death analytical first moment"
+      ],
+      "invariants": [
+        "integer states",
+        "seed determinism",
+        "conservation where defined",
+        "event-cap disclosure"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "time-homogeneous direct SSA only",
+        "finite ensembles estimate Monte Carlo variability"
+      ]
+    },
+    {
+      "module": "Optimization",
+      "unit": true,
+      "differential": [
+        "SciPy bounded minimization reference"
+      ],
+      "invariants": [
+        "bounds",
+        "constraint violation",
+        "objective sense",
+        "seed determinism"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "no global-optimality certificate",
+        "local optimality is not certified"
+      ]
+    },
+    {
+      "module": "Statistics",
+      "unit": true,
+      "differential": [
+        "SciPy Welch test",
+        "SciPy ANOVA",
+        "SciPy Pearson test",
+        "Mann-Whitney asymptotic audit"
+      ],
+      "invariants": [
+        "sample-size preconditions",
+        "missing-data disclosure",
+        "finite p values"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "small-sample nonparametric results are labelled approximate",
+        "no causal interpretation"
+      ]
+    },
+    {
+      "module": "Curve Fitting",
+      "unit": true,
+      "differential": [
+        "closed-form polynomial references",
+        "synthetic nonlinear parameter recovery"
+      ],
+      "invariants": [
+        "residual alignment",
+        "termination evidence",
+        "seeded bootstrap"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "nonlinear fits are local",
+        "asymptotic uncertainty does not establish identifiability"
+      ]
+    },
+    {
+      "module": "Linear Algebra",
+      "unit": true,
+      "differential": [
+        "NumPy linear solve",
+        "NumPy symmetric eigenvalues",
+        "NumPy singular values"
+      ],
+      "invariants": [
+        "residual norms",
+        "orthogonality",
+        "rank checks"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "small dense matrices",
+        "not a sparse or LAPACK replacement"
+      ]
+    },
+    {
+      "module": "Networks",
+      "unit": true,
+      "differential": [
+        "NetworkX shortest path",
+        "NetworkX minimum spanning tree"
+      ],
+      "invariants": [
+        "PageRank normalization",
+        "component partition",
+        "weight semantics"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "community and resilience outputs are exploratory heuristics"
+      ]
+    },
+    {
+      "module": "Machine Learning",
+      "unit": true,
+      "differential": [
+        "scikit-learn ridge coefficients",
+        "scikit-learn standardized PCA variance"
+      ],
+      "invariants": [
+        "seeded folds",
+        "training-fold preprocessing",
+        "binary-label validation"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "cross-validation is internal validation",
+        "feature importance is not causal"
+      ]
+    },
+    {
+      "module": "SciML",
+      "unit": true,
+      "differential": [
+        "synthetic sparse-system recovery references"
+      ],
+      "invariants": [
+        "seeded noise",
+        "dimension-compatible plots",
+        "computed/export-only separation"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "browser computation focuses on SINDy and small inverse/surrogate workflows",
+        "neural PDE training remains export-only"
+      ]
+    },
+    {
+      "module": "Agent",
+      "unit": true,
+      "differential": [
+        "deterministic seeded replay and analytical population invariants"
+      ],
+      "invariants": [
+        "exact population totals",
+        "event reconciliation",
+        "seed provenance",
+        "worker cancellation"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "rules are conditional abstractions unless independently calibrated",
+        "finite ensemble intervals are Monte Carlo summaries"
+      ]
+    },
+    {
+      "module": "Symbolic",
+      "unit": true,
+      "differential": [
+        "SymPy derivative evaluation"
+      ],
+      "invariants": [
+        "explicit grammar",
+        "domain errors",
+        "conservative simplification"
+      ],
+      "browser": "included; local execution required",
+      "limitations": [
+        "narrow browser algebra",
+        "general exact solving and integration remain external"
+      ]
+    }
+  ]
+}

@@ -4,189 +4,239 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Foko Lab Optimization Lab: browser-side nonlinear optimization with algorithms, constraints, Pareto analysis, convergence plots, and reproducible exports." name="description"/>
-<meta content="Optimization Lab · Foko Lab" property="og:title"/>
-<meta content="Browser-only Optimization Lab for nonlinear programs, constraints, multi-objective trade-offs, and optimization export." property="og:description"/>
+<meta content="Foko Lab Optimization Lab computes bounded continuous nonlinear-program candidates with explicit constraint violation, search-budget, termination, and reproducibility evidence." name="description"/>
+<meta content="Foko Lab Optimization Lab" property="og:title"/>
+<meta content="Browser-computed bounded optimization candidates with honest feasibility gates, seeded search, convergence diagnostics, and reproducible exports." property="og:description"/>
+<meta content="website" property="og:type"/>
 <title>Optimization Lab · Foko Lab</title>
-<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
-<link as="script" crossorigin="" href="https://cdn.plot.ly/plotly-2.35.2.min.js" rel="preload"/>
-<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
-<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=71.46.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=71.46.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=71.46.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=71.46.0" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=71.46.0" rel="stylesheet"/>
-<meta content="assets/homepage-preview.webp" property="og:image"/>
-<link href="styles/v70-4-consistency.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-5-home-nav.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-6-polish.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-10-modeling-logic.css?v=71.46.0" rel="stylesheet"/><link href="styles/v70-11-modeling-platform.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-19-platform-system.css?v=71.46.0" rel="stylesheet"/>
-<link href="styles/v70-7-unified.css?v=71.46.0" rel="stylesheet"/><link href="styles/lab-identity.css?v=71.46.0" rel="stylesheet"/>
-</head>
-<body data-lab="optimization">
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.46.0" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.46.0"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.46.0"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.46.0"></script>
+<link href="assets/brand/foko-lab-mark.svg?v=72.46.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=72.46.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=72.46.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=72.46.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=72.46.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=72.46.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.46.0"></script></head>
+<body data-lab="optimization" data-v72-shell="true" data-version="72.46.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=71.46.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.46.0" width="190"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-  <a href="index.html">Home</a>
-  <details class="labs-menu nav-menu workbench-menu" data-nav-menu="modeling">
-    <summary class="modeling-summary labs-summary">Modeling</summary>
-    <div class="labs-menu-panel v70-workbench-panel menu-panel-wide" aria-label="Modeling tools" role="menu">
-      <div class="menu-section menu-section-primary">
-        <p class="menu-section-title">Modeling workspaces</p>
-        <a href="workbench.html?model=sir" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Deterministic ODEs</small></span></a>
-        <a href="workbench.html?model=stoch-sir" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic Lab</b><small>CTMC &amp; Gillespie</small></span></a>
-        <a href="workbench.html?model=quadratic" role="menuitem"><span class="menu-icon">◎</span><span><b>Optimization Lab</b><small>Objectives, bounds, starts and algorithm diagnostics.</small></span></a>
-        <a href="workbench.html?model=enzyme-steady" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State Lab</b><small>Equilibria, roots and parameter-dependent solutions.</small></span></a>
-        <a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic Lab</b><small>Exact algebra, Jacobians and expression inspection.</small></span></a>
-        <a href="agent.html" role="menuitem"><span class="menu-icon">♙</span><span><b>Agent Lab</b><small>Agent-based models</small></span></a>
-      </div></div>
-  </details>
-  <details class="labs-menu nav-menu standalone-menu" data-nav-menu="standalone">
-    <summary class="standalone-summary labs-summary">Focused Labs</summary>
-    <div class="labs-menu-panel standalone-menu-panel menu-panel-compact" data-cols="1" aria-label="Focused standalone modeling labs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Standalone scientific labs</p>
-        <a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">◧</span><span><b>ODE + Parametric ODE</b><small>Direct deterministic solving and parameter sweeps.</small></span></a>
-        <a href="stochastic.html" role="menuitem"><span class="menu-icon">◨</span><span><b>Stochastic CTMC</b><small>Editable events, Gillespie ensembles and uncertainty workflows.</small></span></a>
-        <a href="optimization.html" role="menuitem"><span class="menu-icon">◩</span><span><b>Optimization</b><small>Objectives, bounds, starts and convergence diagnostics.</small></span></a>
-        <a href="steady.html" role="menuitem"><span class="menu-icon">◪</span><span><b>Steady-State</b><small>Root finding, residuals, stability and continuation.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu sciml-menu" data-nav-menu="sciml">
-    <summary class="sciml-summary labs-summary">SciML</summary>
-    <div class="labs-menu-panel sciml-menu-panel menu-panel-compact" data-cols="1" aria-label="Scientific machine learning tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Scientific machine learning</p>
-        <a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>Inverse problems, SINDy, surrogates and operators.</small></span></a>
-        <a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>ML Toolkit</b><small>Small-data diagnostics and baselines.</small></span></a>
-        <a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>Export boundary</b><small>When to move to Python, PyTorch, JAX or GPU workflows.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu analysis-menu" data-nav-menu="analysis">
-    <summary class="analysis-summary labs-summary">Data / Analysis</summary>
-    <div class="labs-menu-panel analysis-menu-panel" aria-label="Analysis tools" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Model output analysis</p>
-        <a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Statistics Lab: cleaning, tests, regression, uncertainty and plots.</small></span></a>
-        <a href="fitting.html" role="menuitem"><span class="menu-icon">∿</span><span><b>Curve fitting</b><small>Curve Fitting Lab: parameter estimation and residual diagnostics.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-subtitle">Structure and geometry</p>
-        <a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear algebra</b><small>Linear Algebra Lab: matrices, eigensystems, least squares and projections.</small></span></a>
-        <a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Network Lab: graphs, centrality, shortest paths and connectivity.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu resources-menu" data-nav-menu="resources">
-    <summary class="resources-summary labs-summary">Explore</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Discovery resources" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Examples and mathematical culture</p>
-        <a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Curated systems and examples.</small></span></a>
-        <a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Visual mathematics and conceptual structures.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu guide-menu" data-nav-menu="learn">
-    <summary class="guide-summary labs-summary">Learn</summary>
-    <div class="labs-menu-panel menu-panel-compact" data-cols="1" aria-label="Guides and tutorials" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Guides and templates</p>
-        <a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Capabilities, controls, exports and platform scope.</small></span></a>
-        <a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorial</b><small>Lab-by-lab examples and starter templates.</small></span></a>
-      </div>
-    </div>
-  </details>
-  <details class="labs-menu nav-menu creator-menu" data-nav-menu="creator">
-    <summary class="creator-summary labs-summary">Creator</summary>
-    <div class="labs-menu-panel creator-menu-panel" aria-label="Creator profile and CVs" role="menu">
-      <div class="menu-section">
-        <p class="menu-section-title">Profile and research</p>
-        <a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>CVs and profile</b><small>Academic, scientific developer and German industry CVs.</small></span></a>
-        <a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research Hub</b><small>Projects, provenance and scientific directions.</small></span></a>
-        <a href="https://chilperic.github.io/index.html" target="_blank" rel="noopener" role="menuitem"><span class="menu-icon">↗</span><span><b>Personal website</b><small>Portfolio homepage and broader profile.</small></span></a>
-      </div>
-      <div class="menu-section">
-        <p class="menu-section-title">Contact and context</p>
-        <a href="contact.html" role="menuitem"><span class="menu-icon">✉</span><span><b>Contact</b><small>Email, GitHub, LinkedIn and ORCID.</small></span></a>
-        <a href="acknowledgement.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Acknowledgement</b><small>Institutions, collaborators and project context.</small></span></a>
-      </div>
-    </div>
-  </details>
+<a class="nav-home-link" href="index.html">Home</a>
+<details class="labs-menu nav-menu" data-nav-menu="modeling">
+<summary class="labs-summary">Modeling</summary>
+<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
+<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
+<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
+<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
+<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
+<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Rules and search</p>
+<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
+<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
+<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="analysis">
+<summary class="labs-summary">Data / Analysis</summary>
+<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
+<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
+<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
+<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span></a>
+<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
+<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="sciml">
+<summary class="labs-summary">SciML</summary>
+<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
+<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
+<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
+<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
+<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
+</div>
+</div>
+</details>
+<details class="labs-menu nav-menu" data-nav-menu="explore">
+<summary class="labs-summary">Explore</summary>
+<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
+<div class="menu-section"><p class="menu-section-title">Find and learn</p>
+<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
+<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
+<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
+<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
+</div>
+<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
+<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
+<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
+<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
+</div>
+</div>
+</details>
+<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
 </nav>
-<div class="foko-top-actions"><button aria-label="Toggle theme" class="top-icon-button" id="themeCycle" type="button">☼</button><a aria-label="GitHub profile" class="github-pill" href="https://github.com/chilperic" rel="noopener" target="_blank">GitHub</a><a aria-label="About Dr. Chilperic Armel Foko Kuate" class="profile-avatar-link" href="research.html"><img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=71.46.0"/></a></div>
+<div aria-label="Display controls" class="foko-top-actions"></div>
 </header>
-<main class="layout lab-mirror-layout" id="workbench">
+<main class="layout" id="workbench" tabindex="-1">
 <aside aria-label="Optimization workflow" class="side-nav">
-<button class="nav-item active" data-jump="optTemplates" type="button"><span>◇</span><b>Templates</b></button>
-<button class="nav-item" data-jump="optEditor" type="button"><span>ƒ</span><b>Objective</b></button>
-<button class="nav-item" data-jump="optResults" type="button"><span>▣</span><b>Results</b></button>
-<button class="nav-item" data-jump="exportsBlock" type="button"><span>⇩</span><b>Export</b></button>
-<button class="collapse" id="collapseSidebar" type="button">‹</button>
+<button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
+<button class="nav-item" data-jump="#modelBlock" type="button">Model</button>
+<button class="nav-item" data-jump="#methodBlock" type="button">Method</button>
+<button class="nav-item" data-jump="#capabilityBlock" type="button">Scope</button>
+<button class="nav-item" data-jump="#exportsBlock" type="button">Export</button>
 </aside>
 <aside aria-label="Optimization controls" class="work-panel controls">
-<section class="intro-card hero-with-mark"><div><p class="eyebrow mini">Optimization · constraints · search</p><b>Optimization Lab</b><p class="note compact-note">Choose a template, edit variables and constraints, then optimize while plots stay visible on the right.</p></div><img alt="Optimization Lab mark" class="lab-mark" src="assets/lab-logos/optimization-lab.webp"/></section>
-<section aria-label="Run optimization" class="actionbar">
-<button class="primary run-button" id="runOpt" type="button">▶ Optimize</button>
-<button class="ghost cancel-button hidden" id="cancelOpt" type="button">× Cancel</button>
-<button class="ghost" id="exportOptPython" type="button">🐍 Python</button>
-<button class="ghost" id="exportOptWide" type="button">Wide CSV</button>
-<button class="ghost" id="exportOptLong" type="button">Long CSV</button>
-<div class="progress" id="optProgressWrap"><div id="optProgressBar"></div></div>
-<div class="status" id="optDiagnostics">Ready.</div>
+<section class="card intro-card hero-with-mark">
+<div><p class="v72-eyebrow">Bounded nonlinear programs · explicit feasibility · seeded search</p><h2>Optimization Lab</h2><p class="note">Compute and inspect numerical candidates without confusing a low objective value, a stopped algorithm, or a heuristic search with a proof of optimality.</p></div>
+<img alt="Optimization Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/optimization-lab.webp?v=72.46.0"/>
 </section>
-<section class="examples-section" id="optTemplates">
-<div class="section-title flat"><h2>Templates</h2><button class="secondary subtle" id="loadOpt" type="button">Load</button></div>
-<select aria-label="Optimization template" id="optSelect"></select>
-<div class="model-deck" id="optDeck"></div>
-<p class="narrative" id="optNarrative">Select a template.</p>
+<section aria-label="Run optimization" class="actionbar card">
+<button class="primary" id="runOptimization" type="button">Run optimizer</button>
+<button class="secondary" id="resetOptimization" type="button">Reset example</button>
+<div class="status" id="optimizationStatus">Ready. No optimization result exists yet.</div>
+<div class="progress"><div id="optimizationProgress"></div></div>
 </section>
-<section class="additional-examples card"><details><summary>Additional examples</summary><div class="additional-example-grid" id="optAdditional"></div></details></section>
-<section class="editor-stack module-block" id="optEditor">
-<article class="card"><div class="card-head"><h2 id="optTitle">Optimization model</h2><button class="icon-btn" id="addVar" type="button">＋ variable</button></div>
-<p class="eyebrow mini" id="optFamily">Optimization</p>
-<div class="two-col small-gap"><label><span>Problem class</span><select id="optClass"><option value="convex">Convex / smooth</option><option value="nonconvex">Non-convex</option><option value="metaheuristic">Metaheuristic / rugged</option><option value="multiobjective">Multi-objective</option><option value="optimal_stopping">Optimal stopping</option></select></label><label><span>Algorithm</span><select id="optAlgorithm"><option value="random_coord">Random + coordinate descent</option><option value="coordinate">Coordinate descent</option><option value="projected_gradient">Projected gradient penalty</option><option value="simulated_annealing">Simulated annealing</option><option value="differential_evolution">Differential evolution</option><option value="particle_swarm">Particle swarm</option><option value="genetic">Genetic algorithm</option><option value="multi_start">Multi-start local search</option></select></label><label><span>Sense</span><select id="optSense"><option value="minimize">Minimize</option><option value="maximize">Maximize</option></select></label></div>
-<label><span>Objective f1</span><textarea id="objective" rows="2"></textarea></label>
-<label><span>Secondary objective f2</span><textarea id="objective2" rows="2"></textarea></label>
-<div class="math-preview opt-preview" id="optPreview"></div>
-<div class="small-title">Decision variables</div><div class="clean-table" id="variableRows"></div>
-<label><span>Inequality constraints g(x) ≤ 0</span><textarea id="ineq" rows="3"></textarea></label>
-<label><span>Equality constraints h(x) = 0</span><textarea id="eqcon" rows="2"></textarea></label>
-</article>
-<article class="card advanced-card"><details open=""><summary>Advanced optimization settings</summary><div class="advanced-grid"><label><span>iterations / samples</span><input id="optSamples" max="100000" min="100" type="number" value="3500"/></label><label><span>penalty</span><input id="penalty" type="text" value="1000"/></label><label><span>refine steps</span><input id="refineSteps" type="number" value="80"/></label><label><span>population</span><input id="optPopulation" type="number" value="36"/></label><label><span>temperature</span><input id="optTemperature" type="text" value="1"/></label><label><span>tolerance</span><input id="optTolerance" type="text" value="1e-8"/></label></div></details></article>
+<section class="card" id="examplesBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Curated problems</p><h2>Examples</h2></div><button class="secondary small" id="loadOptimization" type="button">Load selected</button></div>
+<label><span>Example</span><select id="optimizationSelect"></select></label>
+<div class="steady-example-filters">
+<label><span>Search examples</span><input id="optimizationExampleSearch" placeholder="benchmark, application or method" type="search"/></label>
+<label><span>Family</span><select id="optimizationFamilyFilter"><option value="all">All families</option></select></label>
+</div>
+<p class="example-count" id="optimizationExampleCount">0 examples</p>
+<div class="model-deck steady-example-deck" id="optimizationDeck"></div>
+<p class="narrative" id="optimizationNarrative">Select an optimization problem.</p>
+<p class="field-help" id="optimizationScientificNote"></p>
 </section>
-<section class="card model-authoring-standard" id="modelAuthoringStandard">
-<div class="card-head"><h2>Custom optimization model and method choice</h2></div>
-<p class="note">This lab accepts user-defined models. The selected method controls how the browser interprets the model; exports remain the route for heavy or validated computation.</p>
-<table class="clean-table compact-table"><tbody><tr><td><b>Own model</b></td><td>Edit variables, bounds, objective, constraints and secondary objective directly.</td></tr><tr><td><b>Methods</b></td><td>Coordinate descent, projected-gradient penalty, simulated annealing, differential evolution, particle swarm, genetic and multi-start strategies.</td></tr><tr><td><b>Approach</b></td><td>Convex/smooth, non-convex, metaheuristic, multi-objective and optimal-stopping style problems.</td></tr></tbody></table>
+<section class="card" id="modelBlock">
+<div class="card-head"><div><p class="v72-eyebrow" id="optimizationFamily">Model</p><h2 id="optimizationTitle">Bounded optimization problem</h2></div><button class="icon-btn" id="addOptimizationVariable" type="button">＋ variable</button></div>
+<label class="upload-drop"><span>Import optimization model or configuration JSON</span><input accept="application/json,.json" id="optimizationImport" type="file"/></label>
+<p class="field-help">Expressions may use declared variable symbols, constants, and a restricted set of elementary functions. Every decision variable requires finite lower and upper bounds.</p>
+<div class="variable-grid" id="optimizationVariables"></div>
+<div class="two-col small-gap">
+<label><span>Sense</span><select id="optimizationSense"><option value="minimize">Minimize</option><option value="maximize">Maximize</option></select></label>
+<label><span>Primary objective f(x)</span><textarea id="optimizationObjective" rows="3"></textarea></label>
+</div>
+<label><span>Secondary objective (optional; minimized in Pareto view)</span><textarea id="optimizationObjective2" rows="2"></textarea></label>
+<label><span>Inequalities g(x) ≤ 0 · one expression per line</span><textarea id="optimizationInequalities" rows="3"></textarea></label>
+<label><span>Equalities h(x) = 0 · one expression per line</span><textarea id="optimizationEqualities" rows="3"></textarea></label>
+<div class="math-preview inline-math" id="optimizationPreview">Optimization preview.</div>
+</section>
+<section class="card" id="methodBlock">
+<details open=""><summary>Search method and evidence settings</summary>
+<div class="advanced-grid">
+<label><span>Algorithm</span><select id="optimizationAlgorithm"><option value="coordinate">Bounded coordinate search</option><option value="projected_gradient">Projected finite-difference penalty descent</option><option value="differential_evolution">Seeded differential evolution</option><option value="multi_start">Seeded multi-start coordinate search</option><option value="random_search">Seeded uniform random search</option></select></label>
+<label><span>Iterations / generations</span><input id="optimizationIterations" max="20000" min="1" type="number" value="180"/></label>
+<label><span>Population size</span><input id="optimizationPopulation" max="2000" min="4" type="number" value="36"/></label>
+<label><span>Multi-start count</span><input id="optimizationStarts" max="500" min="1" type="number" value="16"/></label>
+<label><span>Seed</span><input id="optimizationSeed" step="1" type="number" value="1729"/></label>
+<label><span>Quadratic penalty</span><input id="optimizationPenalty" min="0.000001" step="any" type="number" value="1000"/></label>
+<label><span>Feasibility tolerance</span><input id="optimizationFeasibilityTolerance" min="0" step="any" type="number" value="1e-6"/></label>
+<label><span>Step tolerance</span><input id="optimizationStepTolerance" min="1e-14" step="any" type="number" value="1e-7"/></label>
+<label><span>Pareto sample budget</span><input id="optimizationParetoSamples" max="20000" min="10" type="number" value="1200"/></label>
+</div>
+<p class="scientific-boundary">The browser reports the best evaluated candidate under a quadratic-penalty search and then checks constraints independently. A <b>feasible candidate</b> is not a certified local optimum; a heuristic or multi-start result is not a proof of global optimality. KKT conditions, convexity, uniqueness, and robustness are not inferred unless separately established outside this reference lab.</p>
+</details>
+</section>
+<section class="card" id="capabilityBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Capability taxonomy</p><h2>Computed, limited and external methods</h2></div></div>
+<p class="field-help" id="optimizationTaxonomySummary">Loading the analysis taxonomy…</p>
+<div class="capability-catalog" id="optimizationTaxonomyCatalog"></div>
+<p class="scientific-boundary">Only views backed by the current computed result appear in plot dropdowns. Reference-only, export-only and unavailable methods remain visible here so taxonomy coverage is never confused with implementation.</p>
+<p class="field-help"><a href="ANALYSIS_TAXONOMY.json">Machine-readable JSON</a> · <a href="ANALYSIS_TAXONOMY.md">hierarchical reference</a></p>
 </section>
 </aside>
-<section aria-label="Optimization results" class="workspace" id="optResults">
-<section class="results-card">
-<div class="status-strip"><div class="status-ok"><span>●</span><b id="optTopStatus">Ready</b></div><div><span>Algorithm</span><b id="optAlgoStatus">—</b></div><div><span>Samples</span><b id="optSamplesStatus">—</b></div><div><span>Best f</span><b id="optBestStatus">—</b></div></div>
-<div class="result-head"><div class="tabs" id="resultTabs"><button class="tab active" data-panel="plotsPanel" type="button">Plots</button><button class="tab" data-panel="diagnosticsPanel" type="button">Diagnostics</button></div></div>
-<div class="plot-toolbar-v2"><label><span>Left plot</span><select id="optPlotA"><option value="landscape">Contour / heatmap plot</option><option value="constraint_overlay">Feasible-region overlay</option><option value="search_path">Optimizer search path</option><option value="convergence">Optimization history</option><option value="importance">Hyperparameter importance</option><option value="parallel">Parallel coordinate plot</option><option value="pareto">Pareto front</option><option value="slice">Slice / partial dependence</option><option value="ecdf">ECDF</option><option value="radar">Multi-objective radar</option><option value="step_response">Step-response / simulation trajectory</option><option value="constraint_history">Constraint violation history</option><option value="active_constraints">Active constraints</option><option value="samples">Samples + best</option><option value="variables">Variable traces</option><option value="feasibility">Feasibility scatter</option></select></label><label><span>Right plot</span><select id="optPlotB"><option value="convergence">Optimization history</option><option value="constraint_history">Constraint violation history</option><option value="pareto">Pareto front</option><option value="importance">Hyperparameter importance</option><option value="parallel">Parallel coordinates</option><option value="slice">Slice plot</option><option value="ecdf">ECDF</option><option value="radar">Multi-objective radar</option><option value="step_response">Step-response</option><option value="active_constraints">Active constraints</option><option value="constraint_overlay">Feasible-region overlay</option><option value="search_path">Search path</option><option value="samples">Samples + best</option><option value="variables">Variable traces</option><option value="feasibility">Feasibility scatter</option></select></label><button class="secondary" id="optExportPng" type="button">PNG</button><button class="secondary" id="optExportSvg" type="button">SVG</button></div>
-<div class="tab-panel active" id="plotsPanel"><div class="chart-grid"><article class="chart-card"><div class="chart-title"><h3>Primary plot</h3></div><div class="plot" id="optPlotLeft"></div></article><article class="chart-card"><div class="chart-title"><h3>Secondary plot</h3></div><div class="plot" id="optPlotRight"></div></article></div><div class="metrics-grid"><div class="metric-card"><small>Algorithm</small><b id="metricAlgo">—</b><em>worker method</em></div><div class="metric-card"><small>Samples</small><b id="metricSamples">—</b><em>evaluated candidates</em></div><div class="metric-card"><small>Best f</small><b id="metricBest">—</b><em>objective</em></div><div class="metric-card"><small>Feasible</small><b id="metricFeasible">—</b><em>constraints</em></div></div></div>
-<div class="tab-panel" id="diagnosticsPanel"><div class="diagnostics" id="optDiagPanel">Run the optimizer to see candidates, convergence, feasibility, and the best solution.</div></div>
+<section aria-label="Optimization results" class="workspace v72-workspace">
+<section aria-label="Numerical results" class="results-card" role="region">
+<header class="v72-workspace-head">
+<div><p class="v72-eyebrow">Computed workspace</p><h1>Candidates, feasibility and search diagnostics</h1><p>Compare two computed views from the same run. Every visible panel is tied to evaluated candidates; unsupported optimality claims are omitted.</p></div>
+<div aria-label="Plot layout" class="v72-layout-switch" role="group">
+<button class="active" data-layout-mode="two" type="button">2-up</button>
+<button data-layout-mode="focus" type="button">Focus</button>
+</div>
+</header>
+<div class="plot-toolbar-v2">
+<span class="result-kind" id="optimizationResultKind">No computed result</span>
+<button class="ghost" id="exportOptimizationPng" type="button">Current PNG</button>
+<button class="ghost" id="exportOptimizationSvg" type="button">Current SVG</button>
+</div>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
+<article class="chart-card" data-plot-card="left">
+<div class="chart-title"><h3 id="leftPlotTitle">Objective landscape</h3><select aria-label="Primary optimization plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="leftPlot"><div class="diagnostics empty">Run the optimizer to create a plot.</div></div>
+<details class="plot-evidence"><summary>Scientific meaning</summary><p id="leftPlotEvidence">No plot has been computed.</p></details>
+</article>
+<article class="chart-card" data-plot-card="right">
+<div class="chart-title"><h3 id="rightPlotTitle">Search history</h3><select aria-label="Secondary optimization plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="rightPlot"><div class="diagnostics empty">Run the optimizer to create a plot.</div></div>
+<details class="plot-evidence"><summary>Scientific meaning</summary><p id="rightPlotEvidence">No plot has been computed.</p></details>
+</article>
+</div>
+<p class="info-strip" id="plotHint">The objective, penalty score, feasibility tolerance, search budget, seed, and termination state answer different questions. Do not collapse them into a single “optimal” label.</p>
 </section>
-<section class="exports-card" id="exportsBlock"><div class="export-row"><button class="secondary" id="exportOptJson" type="button">Data JSON</button><button class="secondary" id="exportOptPlotJson" type="button">Plotly JSON</button><button class="secondary" id="exportOptModel" type="button">Model JSON</button></div><p class="note">Exports mirror the ODE Lab pattern: CSV for tables, JSON for reproducibility, Python for external computation.</p></section>
 </section>
+<aside aria-label="Run diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card">
+<p class="v72-eyebrow">Run status</p>
+<div class="status-strip">
+<div class="status-ok"><span>●</span><b id="optimizationTopStatus">Ready</b></div>
+<div><span>Runtime</span><b id="optimizationRuntime">—</b></div>
+<div><span>Evaluations</span><b id="optimizationEvaluations">—</b></div>
+<div><span>Algorithm</span><b id="optimizationAlgorithmMetric">—</b></div>
+<div><span>Termination</span><b id="optimizationTermination">—</b></div>
+</div>
+<div class="metrics-grid">
+<article class="metric-card"><small>Primary objective</small><b id="optimizationBestObjective">—</b><em>reported candidate</em></article>
+<article class="metric-card"><small>Maximum violation</small><b id="optimizationMaxViolation">—</b><em>constraint gate</em></article>
+<article class="metric-card"><small>Feasible evaluations</small><b id="optimizationFeasibleRate">—</b><em>recorded sample rate</em></article>
+<article class="metric-card"><small>Candidate status</small><b id="optimizationCandidateStatus">—</b><em>against tolerance</em></article>
+</div>
+</section>
+<section class="v72-inspector-card">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Numerical diagnostics</p><h2>Evidence</h2></div></div>
+<div class="diagnostics empty" id="optimizationDiagnostics">Run the optimizer to see candidate, feasibility, termination, and search-budget evidence.</div>
+</section>
+<section class="v72-inspector-card" id="provenanceCard">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Computation boundary</h2></div></div>
+<dl class="v72-provenance">
+<div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div>
+<div><dt>Engine</dt><dd id="provenanceEngine">FokoOptimizationCore</dd></div>
+<div><dt>Method</dt><dd id="provenanceMethod">Not run</dd></div>
+<div><dt>Constraints</dt><dd id="provenanceConstraints">Not evaluated</dd></div>
+<div><dt>Optimality</dt><dd id="provenanceOptimality">No claim</dd></div>
+<div><dt>Reproducibility</dt><dd id="provenanceReproducibility">Configuration only</dd></div>
+</dl>
+<p class="v72-warning" id="provenanceWarning">No numerical result exists yet.</p>
+</section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div>
+<div class="export-row">
+<button class="secondary" id="saveOptimizationSession" type="button">Save session</button>
+<button class="secondary" id="restoreOptimizationSession" type="button">Restore session</button>
+<button class="secondary" id="copyOptimizationShareUrl" type="button">Copy share URL</button>
+<button class="secondary" id="exportOptimizationSummary" type="button">Summary CSV</button>
+<button class="secondary" id="exportOptimizationHistory" type="button">History CSV</button>
+<button class="secondary" id="exportOptimizationJson" type="button">Result JSON</button>
+<button class="secondary" id="exportOptimizationModel" type="button">Model JSON</button>
+<button class="secondary" id="exportOptimizationPython" type="button">Python validation</button>
+</div>
+<p class="note">Session and share controls preserve configuration only. Computed candidates, feasibility evidence, and plots must be regenerated after restore.</p>
+</section>
+</aside>
 </main>
 </div>
-<script src="src/platform/compute-bus.js?v=71.46.0"></script>
-<script src="src/optimization-lab.js?v=71.46.0"></script>
-<script src="src/model-validator.js?v=71.46.0"></script>
-<script src="src/model-session.js?v=71.46.0"></script>
-<script defer="" src="src/navigation.js?v=71.46.0"></script><!-- src/navigation.js?v=71.46.0 legacy-token-for-contract --><script defer src="src/platform-data-engine.js?v=71.46.0"></script>
-<script defer src="src/platform-shell.js?v=71.46.0"></script>
-<script defer src="src/fokokit.js?v=71.46.0"></script>
-<script defer src="src/v71-platform.js?v=71.46.0"></script>
+<script defer="" src="src/models/analysis-taxonomy.js?v=72.46.0"></script>
+<script defer="" src="src/models/optimization-presets.js?v=72.46.0"></script>
+<script defer="" src="src/core/optimization.js?v=72.46.0"></script>
+<script defer="" src="src/v72/optimization-workspace.js?v=72.46.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=72.46.0"></script>
+<script defer="" src="src/navigation.js?v=72.46.0"></script>
 </body>
 </html>

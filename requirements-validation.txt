@@ -1,0 +1,6 @@
+# Optional differential-validation environment. Not required to open Foko Lab.
+numpy>=2.0,<3
+scipy>=1.14,<2
+scikit-learn>=1.5,<2
+networkx>=3.3,<4
+sympy>=1.13,<2

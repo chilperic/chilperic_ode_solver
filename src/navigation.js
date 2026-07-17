@@ -18,6 +18,7 @@
     document.documentElement.dataset.theme = t;
     try { localStorage.setItem('chilperic-theme', t); } catch (e) {}
     window.dispatchEvent(new CustomEvent('foko-theme-change', { detail: { theme: t } }));
+    syncThemeControl();
   }
 
   function pathPrefix() {
@@ -29,218 +30,184 @@
   }
 
   function injectUnifiedNavStyles() {
-    if (document.getElementById('foko-v70-12-nav-styles')) return;
-    var style = document.createElement('style');
-    style.id = 'foko-v70-12-nav-styles';
-    style.textContent = `
-      .foko-main-nav.foko-unified-nav,.topnav.foko-unified-nav{
-        margin-left:auto!important; display:flex!important; align-items:center!important; gap:10px!important;
-        min-width:0!important; flex-wrap:nowrap!important; white-space:nowrap!important;
-      }
-      .foko-main-nav.foko-unified-nav > a,
-      .foko-main-nav.foko-unified-nav > details > summary{
-        display:inline-flex!important; align-items:center!important; justify-content:center!important;
-        min-height:40px!important; padding:0 14px!important; border-radius:14px!important;
-        border:1px solid transparent!important; background:transparent!important; color:var(--muted)!important;
-        font-weight:800!important; font-size:.95rem!important; line-height:1!important;
-        transition:background .18s ease,border-color .18s ease,color .18s ease, box-shadow .18s ease!important;
-      }
-      .foko-main-nav.foko-unified-nav > a:hover,
-      .foko-main-nav.foko-unified-nav > details > summary:hover{
-        background:color-mix(in srgb,var(--accent) 8%, transparent)!important;
-        color:var(--text)!important;
-      }
-      .foko-main-nav.foko-unified-nav > a.active,
-      .foko-main-nav.foko-unified-nav > a[aria-current="page"],
-      .foko-main-nav.foko-unified-nav > details > summary.active,
-      .foko-main-nav.foko-unified-nav > details > summary[aria-current="page"]{
-        background:color-mix(in srgb,var(--accent) 16%, transparent)!important;
-        border-color:color-mix(in srgb,var(--accent) 52%, transparent)!important;
-        color:var(--text)!important;
-        box-shadow:inset 0 -3px 0 color-mix(in srgb,var(--accent) 85%, white 15%)!important;
-      }
-      .foko-main-nav.foko-unified-nav > details{position:relative!important}
-      .foko-main-nav.foko-unified-nav > details > summary{list-style:none!important}
-      .foko-main-nav.foko-unified-nav > details > summary::-webkit-details-marker{display:none}
-      .foko-main-nav.foko-unified-nav > details > summary::after{
-        content:'▾'; font-size:.78rem; margin-left:.5rem; opacity:.78;
-      }
-      .foko-main-nav.foko-unified-nav .labs-menu-panel{
-        position:absolute!important; top:calc(100% + 10px)!important; left:50%!important; transform:translateX(-50%)!important;
-        width:min(620px, calc(100vw - 32px))!important; padding:14px!important; border-radius:18px!important;
-        background:color-mix(in srgb,var(--panel) 96%, white 4%)!important; border:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%)!important;
-        box-shadow:0 24px 56px rgba(0,0,0,.22)!important; display:grid!important; grid-template-columns:repeat(2,minmax(0,1fr))!important;
-        gap:12px!important; z-index:80!important;
-      }
-      .foko-main-nav.foko-unified-nav .labs-menu-panel[data-cols="1"]{grid-template-columns:1fr!important; width:min(420px,calc(100vw - 32px))!important}
-      .foko-main-nav.foko-unified-nav .labs-menu-panel::before{
-        content:''; position:absolute; top:-8px; left:50%; width:16px; height:16px; border-left:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%);
-        border-top:1px solid color-mix(in srgb,var(--line) 88%, var(--accent) 12%); background:color-mix(in srgb,var(--panel) 96%, white 4%);
-        transform:translateX(-50%) rotate(45deg);
-      }
-      .foko-main-nav.foko-unified-nav .menu-section{display:grid!important; gap:8px!important; align-content:start!important; min-width:0!important}
-      .foko-main-nav.foko-unified-nav .menu-section-title{
-        margin:0 0 2px!important; padding:9px 12px!important; border-radius:12px!important;
-        background:color-mix(in srgb,var(--accent) 6%, transparent)!important; color:var(--text)!important; letter-spacing:.12em!important;
-        text-transform:uppercase!important; font-size:.8rem!important; font-weight:900!important;
-      }
-      .foko-main-nav.foko-unified-nav .labs-menu-panel a{
-        display:grid!important; grid-template-columns:28px minmax(0,1fr)!important; gap:12px!important; align-items:start!important;
-        padding:10px 12px!important; border-radius:12px!important; color:var(--text)!important; text-decoration:none!important;
-        background:transparent!important; opacity:1!important; min-width:0!important;
-      }
-      .foko-main-nav.foko-unified-nav .labs-menu-panel a:hover,
-      .foko-main-nav.foko-unified-nav .labs-menu-panel a.active,
-      .foko-main-nav.foko-unified-nav .labs-menu-panel a[aria-current="page"]{
-        background:color-mix(in srgb,var(--accent) 10%, transparent)!important;
-      }
-      .foko-main-nav.foko-unified-nav .labs-menu-panel a span{display:block!important; min-width:0!important; overflow:visible!important; color:var(--text)!important}
-      .foko-main-nav.foko-unified-nav .labs-menu-panel a b{display:block!important; font-size:.95rem!important; line-height:1.25!important; color:var(--text)!important}
-      .foko-main-nav.foko-unified-nav .labs-menu-panel a small{display:block!important; margin-top:2px!important; font-size:.82rem!important; line-height:1.35!important; color:var(--muted)!important; white-space:normal!important}
-      .foko-main-nav.foko-unified-nav .menu-icon{
-        width:28px!important; height:28px!important; border-radius:999px!important; display:inline-flex!important; align-items:center!important; justify-content:center!important;
-        background:color-mix(in srgb,var(--accent) 12%, transparent)!important; color:var(--accent)!important; font-weight:900!important; font-size:1rem!important;
-      }
-      .foko-main-nav.foko-unified-nav .nav-menu[data-menu-open="true"] > summary{
-        background:color-mix(in srgb,var(--accent) 12%, transparent)!important; color:var(--text)!important; border-color:color-mix(in srgb,var(--accent) 35%, transparent)!important;
-      }
-      .foko-main-nav.foko-unified-nav .menu-panel-wide{width:min(700px,calc(100vw - 32px))!important}
-      .foko-main-nav.foko-unified-nav .menu-panel-compact{width:min(360px,calc(100vw - 32px))!important}
-      @media (max-width: 1180px){
-        .public-topbar,.topbar,.home-topbar,.mw-topbar{flex-wrap:wrap!important; align-items:flex-start!important}
-        .foko-main-nav.foko-unified-nav{width:100%!important; overflow-x:auto!important; padding-bottom:4px!important}
-      }
-      @media (max-width: 760px){
-        .foko-main-nav.foko-unified-nav .labs-menu-panel{left:0!important; transform:none!important; right:auto!important; width:min(94vw, 420px)!important; grid-template-columns:1fr!important}
-        .foko-main-nav.foko-unified-nav > a,.foko-main-nav.foko-unified-nav > details > summary{padding:0 12px!important; font-size:.88rem!important}
-      }
-    `;
-    document.head.appendChild(style);
+    // All maintained pages ship the authored navigation rules in v72-tokens.css.
+    // Runtime style injection previously created another override layer and made
+    // multi-panel navigation and themes depend on page-specific CSS order.
+    return;
   }
 
   function injectThemeControl() {
-    if (document.getElementById('themeBtn')) return;
-    var ideActions = document.querySelector('.foko-ide-topbar .foko-top-actions');
-    var bar = ideActions || document.querySelector('.topbar, .public-topbar, .home-topbar, .mw-topbar, .mw-brandbar');
-    if (!bar) return;
+    var actions = document.querySelector('.foko-top-actions');
+    if (!actions || document.getElementById('themeControl')) return;
+    Array.prototype.forEach.call(actions.querySelectorAll('#themeCycle, .nav-injected-theme, .foko-theme-picker'), function (node) { node.remove(); });
 
-    var wrap = document.createElement('div');
-    wrap.className = ideActions ? 'theme-picker foko-theme-picker nav-injected-theme' : 'theme-picker nav-injected-theme';
-    if (!ideActions) wrap.style.marginLeft = 'auto';
+    var menu = document.createElement('details');
+    menu.id = 'themeControl';
+    menu.className = 'theme-menu nav-menu';
+    menu.dataset.navMenu = 'theme';
 
-    var label = document.createElement('span');
-    label.className = 'theme-icon';
-    label.setAttribute('aria-hidden', 'true');
-    label.textContent = '◑';
+    var summary = document.createElement('summary');
+    summary.id = 'themeBtn';
+    summary.className = 'theme-summary';
+    summary.setAttribute('aria-label', 'Choose interface theme');
+    summary.innerHTML = '<span class="theme-summary-swatch" aria-hidden="true"></span><span class="theme-summary-label">Theme</span>';
 
-    var select = document.createElement('select');
-    select.className = 'theme-select';
-    select.id = 'themeBtn';
-    select.setAttribute('aria-label', 'Theme');
-    KNOWN_THEMES.forEach(function (key) {
-      var opt = document.createElement('option');
-      opt.value = key;
-      opt.textContent = THEME_LABELS[key] || key;
-      select.appendChild(opt);
+    var panel = document.createElement('div');
+    panel.className = 'labs-menu-panel theme-menu-panel menu-panel-compact';
+    panel.setAttribute('role', 'menu');
+    panel.setAttribute('aria-label', 'Interface themes');
+    var groups = [
+      { label: 'Light', themes: ['aurora', 'clarity', 'ocean', 'emerald', 'paper'] },
+      { label: 'Dark', themes: ['graphite', 'slate', 'midnight', 'forest'] },
+      { label: 'Distinct', themes: ['steel', 'royal', 'olive', 'copper', 'contrast'] }
+    ];
+    groups.forEach(function (group) {
+      var section = document.createElement('section');
+      section.className = 'theme-choice-group';
+      var title = document.createElement('p');
+      title.className = 'menu-section-title';
+      title.textContent = group.label;
+      section.appendChild(title);
+      var grid = document.createElement('div');
+      grid.className = 'theme-choice-grid';
+      group.themes.forEach(function (key) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'theme-choice';
+        button.dataset.themeChoice = key;
+        button.setAttribute('role', 'menuitemradio');
+        button.innerHTML = '<span class="theme-choice-swatch" data-theme-swatch="' + key + '" aria-hidden="true"></span><span>' + (THEME_LABELS[key] || key) + '</span>';
+        button.addEventListener('click', function () {
+          applyTheme(key);
+          menu.removeAttribute('open');
+          menu.dataset.menuOpen = 'false';
+          summary.setAttribute('aria-expanded', 'false');
+          summary.focus();
+        });
+        grid.appendChild(button);
+      });
+      section.appendChild(grid);
+      panel.appendChild(section);
     });
-    select.value = currentTheme();
-    select.addEventListener('change', function () { applyTheme(select.value); });
+    menu.appendChild(summary);
+    menu.appendChild(panel);
+    actions.appendChild(menu);
+    syncThemeControl();
+  }
 
-    wrap.appendChild(label);
-    wrap.appendChild(select);
-    if (ideActions) {
-      bar.insertBefore(wrap, bar.querySelector('.profile-avatar-link') || null);
-    } else {
-      bar.appendChild(wrap);
-    }
+  function syncThemeControl() {
+    var theme = currentTheme();
+    var label = document.querySelector('#themeBtn .theme-summary-label');
+    var swatch = document.querySelector('#themeBtn .theme-summary-swatch');
+    if (label) label.textContent = THEME_LABELS[theme] || 'Theme';
+    if (swatch) swatch.setAttribute('data-theme-swatch', theme);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-theme-choice]'), function (button) {
+      var selected = button.dataset.themeChoice === theme;
+      button.setAttribute('aria-checked', selected ? 'true' : 'false');
+      button.classList.toggle('active', selected);
+    });
   }
 
   function wireThemeCycle() {
-    var btn = document.getElementById('themeCycle');
-    if (!btn) return;
-    btn.addEventListener('click', function () {
-      var now = currentTheme();
-      var idx = KNOWN_THEMES.indexOf(now);
-      applyTheme(KNOWN_THEMES[(idx + 1) % KNOWN_THEMES.length] || 'aurora');
-      var sel = document.getElementById('themeBtn');
-      if (sel) sel.value = currentTheme();
-    });
+    // Legacy single-button cycling is retired. The authored theme panel is
+    // explicit, keyboard accessible, and shows the current choice.
+    syncThemeControl();
   }
 
   function normalizePrimaryNavigation() {
-    // v70.14: static headers are already generated with the final logic.
-    // Do not rewrite nav.innerHTML at runtime; doing so caused stale structures
-    // to reappear after the first paint. JS now only reinforces the unified class.
+    // Static headers are generated by scripts/rebuild-site-shell.py.
+    // Runtime code only reinforces behavior and active state.
     var nav = document.querySelector('.foko-main-nav, .topnav');
     if (nav) nav.classList.add('foko-unified-nav');
+  }
+
+  function ensureSensitivityNavigationLink() {
+    var menu = document.querySelector('[data-nav-menu="analysis"] .menu-section');
+    if (!menu || menu.querySelector('a[href$="sensitivity.html"]')) return;
+    var link = document.createElement('a');
+    link.href = pathPrefix() + 'sensitivity.html';
+    link.setAttribute('role', 'menuitem');
+    link.innerHTML = '<span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, first/total/second-order variance and information diagnostics.</small></span>';
+    menu.appendChild(link);
   }
 
   function initNavigationMenus() {
     var menus = Array.from(document.querySelectorAll('.nav-menu, .labs-menu'));
     if (!menus.length) return;
-    var hoverQuery = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
-    var canHover = function () { return !hoverQuery || hoverQuery.matches; };
     var activeMenu = null;
     var closeTimer = null;
 
     function setExpanded(menu, expanded) {
       var summary = menu.querySelector('summary');
+      var panel = menu.querySelector('.labs-menu-panel');
       if (expanded) {
         menu.setAttribute('open', '');
         menu.dataset.menuOpen = 'true';
         if (summary) summary.setAttribute('aria-expanded', 'true');
+        if (panel) {
+          panel.hidden = false;
+          panel.removeAttribute('inert');
+          panel.setAttribute('aria-hidden', 'false');
+        }
       } else {
         menu.removeAttribute('open');
         menu.dataset.menuOpen = 'false';
         if (summary) summary.setAttribute('aria-expanded', 'false');
+        if (panel) {
+          panel.hidden = true;
+          panel.setAttribute('inert', '');
+          panel.setAttribute('aria-hidden', 'true');
+        }
       }
     }
     function closeMenu(menu) {
       if (!menu) return;
       setExpanded(menu, false);
+      delete menu.dataset.openedBy;
       if (activeMenu === menu) activeMenu = null;
     }
     function closeAll(except) {
       menus.forEach(function (menu) { if (menu !== except) closeMenu(menu); });
     }
-    function openMenu(menu) {
+    function openMenu(menu, source) {
       window.clearTimeout(closeTimer);
       closeAll(menu);
       activeMenu = menu;
+      menu.dataset.openedBy = source || 'programmatic';
       setExpanded(menu, true);
     }
     function scheduleClose(menu, delay) {
       window.clearTimeout(closeTimer);
+      if (menu.dataset.openedBy === 'click') return;
       closeTimer = window.setTimeout(function () { closeMenu(menu); }, delay);
     }
 
-    menus.forEach(function (menu) {
+    menus.forEach(function (menu, menuIndex) {
       var summary = menu.querySelector('summary');
       var panel = menu.querySelector('.labs-menu-panel');
       if (!summary || !panel) return;
       summary.setAttribute('role', 'button');
       summary.setAttribute('aria-haspopup', 'menu');
       summary.setAttribute('aria-expanded', 'false');
-      if (!panel.id) panel.id = 'nav-panel-' + Math.random().toString(36).slice(2, 9);
+      if (!panel.id) panel.id = 'nav-panel-' + (menu.dataset.navMenu || menuIndex);
       summary.setAttribute('aria-controls', panel.id);
       setExpanded(menu, false);
 
-      menu.addEventListener('pointerenter', function () { if (canHover()) openMenu(menu); });
-      menu.addEventListener('pointerleave', function () { if (canHover()) scheduleClose(menu, 60); });
-      panel.addEventListener('pointerenter', function () { window.clearTimeout(closeTimer); });
       summary.addEventListener('click', function (event) {
         event.preventDefault();
-        if (menu.hasAttribute('open')) closeMenu(menu); else openMenu(menu);
+        if (menu.hasAttribute('open') && menu.dataset.openedBy === 'click') closeMenu(menu);
+        else openMenu(menu, 'click');
       });
       summary.addEventListener('keydown', function (event) {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          if (menu.hasAttribute('open')) closeMenu(menu); else openMenu(menu);
+          if (menu.hasAttribute('open') && menu.dataset.openedBy === 'keyboard') closeMenu(menu);
+          else openMenu(menu, 'keyboard');
         }
         if (event.key === 'ArrowDown') {
           event.preventDefault();
-          openMenu(menu);
-          var first = panel.querySelector('a');
+          openMenu(menu, 'keyboard');
+          var first = panel.querySelector('a, button');
           if (first) first.focus();
         }
       });
@@ -276,36 +243,16 @@
 
   function resolveActiveNavigationTarget() {
     var page = navPageName();
-    var body = document.body || document.documentElement;
-    var lab = (body.dataset && body.dataset.lab || '').toLowerCase();
-    var moduleName = (body.dataset && body.dataset.module || '').toLowerCase();
-    var direct = { home:'index.html', index:'index.html' };
-    var byLab = {
-      'model-workbench':'modeling', symbolic:'modeling', agent:'modeling',
-      ode:'standalone', stochastic:'standalone', optimization:'standalone', steady:'standalone',
-      sciml:'sciml', ml:'sciml',
-      analysis:'analysis', statistics:'analysis', fitting:'analysis', linalg:'analysis', networks:'analysis',
-      examples:'resources', beauty:'resources', model:'resources',
-      docs:'learn', platform:'learn', tutorial:'learn',
-      research:'creator', creator:'creator', cv:'creator', contact:'creator', acknowledgement:'creator'
-    };
-    var byModule = {
-      statistics:'analysis', fitting:'analysis', linalg:'analysis', networks:'analysis',
-      ml:'sciml', sciml:'sciml'
-    };
-    var byPage = {
-      'index.html':'direct',
-      'workbench.html':'modeling', 'symbolic.html':'modeling', 'agent.html':'modeling',
-      'ode.html':'standalone', 'stochastic.html':'standalone', 'optimization.html':'standalone', 'steady.html':'standalone',
-      'sciml.html':'sciml', 'ml.html':'sciml',
-      'statistics.html':'analysis', 'fitting.html':'analysis', 'linear-algebra.html':'analysis', 'networks.html':'analysis',
-      'examples.html':'resources', 'beauty.html':'resources', 'model.html':'resources',
-      'docs.html':'learn', 'platform.html':'learn', 'tutorial.html':'learn',
-      'research.html':'creator', 'cv.html':'creator', 'contact.html':'creator', 'acknowledgement.html':'creator'
-    };
-    var section = byModule[moduleName] || byLab[lab] || byPage[page] || null;
-    if (direct[lab]) return { section:'direct', file:direct[lab] };
-    return { section: section, file: page, lab: lab, module: moduleName };
+    var modeling = new Set(['ode.html','steady.html','stochastic.html','agent.html','optimization.html','symbolic.html','workbench.html']);
+    var analysis = new Set(['fitting.html','statistics.html','linear-algebra.html','networks.html','sensitivity.html']);
+    var sciml = new Set(['sciml.html','ml.html']);
+    var explore = new Set(['examples.html','docs.html','tutorial.html','trust.html','platform.html','research.html','cv.html','contact.html','acknowledgement.html','beauty.html']);
+    if (modeling.has(page)) return { section: 'modeling', file: page };
+    if (analysis.has(page)) return { section: 'analysis', file: page };
+    if (sciml.has(page)) return { section: 'sciml', file: page };
+    if (explore.has(page)) return { section: 'explore', file: page };
+    if (page === 'index.html') return { section: 'direct', file: page };
+    return { section: null, file: page };
   }
 
   function normalizeHrefFile(href) {
@@ -374,12 +321,42 @@
   window.FokoNavigation.resolveActiveNavigationTarget = resolveActiveNavigationTarget;
   window.FokoNavigation.syncActiveNavigation = syncActiveNavigation;
 
+  function wireCanvasMode() {
+    if (document.body.getAttribute('data-v72-shell') !== 'true') return;
+    var actions = document.querySelector('.foko-top-actions');
+    if (!actions || document.getElementById('canvasModeToggle')) return;
+    var button = document.createElement('button');
+    button.id = 'canvasModeToggle';
+    button.className = 'canvas-mode-toggle';
+    button.type = 'button';
+    button.setAttribute('aria-pressed', 'false');
+    button.title = 'Expand or restore the scientific canvas';
+    function apply(enabled) {
+      document.body.classList.toggle('v72-canvas-mode', enabled);
+      button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+      button.textContent = enabled ? 'Restore panels' : 'Canvas';
+      try { sessionStorage.setItem('fokolab:v72:canvas-mode', enabled ? '1' : '0'); } catch (_) {}
+      window.dispatchEvent(new CustomEvent('fokolab:layout-change', { detail: { canvasMode: enabled } }));
+      window.dispatchEvent(new Event('resize'));
+    }
+    button.addEventListener('click', function () { apply(!document.body.classList.contains('v72-canvas-mode')); });
+    actions.insertBefore(button, actions.querySelector('.profile-avatar-link') || null);
+    var stored = false;
+    try { stored = sessionStorage.getItem('fokolab:v72:canvas-mode') === '1'; } catch (_) {}
+    apply(stored);
+  }
+
   function boot() {
+    // Apply the persisted palette before controls and page-specific runtimes
+    // read computed styles. Merely updating the picker state is insufficient.
+    applyTheme(currentTheme());
     injectUnifiedNavStyles();
     normalizePrimaryNavigation();
+    ensureSensitivityNavigationLink();
     syncActiveNavigation();
     injectThemeControl();
     wireThemeCycle();
+    wireCanvasMode();
     initNavigationMenus();
   }
 
