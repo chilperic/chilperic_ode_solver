@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# Foko Lab v72.47.0 local validation runner.
+# Foko Lab v72.48.0 local validation runner.
 # This runner never starts the server after a failed gate and keeps an interactive
 # terminal open on failure when a TTY is available.
 set +e
 
-EXPECTED_VERSION="72.47.0"
-PREVIOUS_VERSION="72.46.0"
-PORT=8101
+EXPECTED_VERSION="72.48.0"
+PREVIOUS_VERSION="72.47.0"
+PORT=8102
 BASE_DIR="${FOKOLAB_RELEASE_DIR:-$HOME/Downloads}"
-ZIP_FILE="foko-lab-v72.47.0-platform-benchmark-hardening.zip"
-TEST_DIR="foko-lab-v72-47-0-test"
-PROJECT_DIR="$BASE_DIR/$TEST_DIR/foko-lab-v72.47.0-platform-benchmark-hardening"
-ENV_DIR="$HOME/.venvs/fokolab-v72-47-0"
+ZIP_FILE="foko-lab-v72.48.0-platform-benchmark-hardening.zip"
+TEST_DIR="foko-lab-v72-48-0-test"
+PROJECT_DIR="$BASE_DIR/$TEST_DIR/foko-lab-v72.48.0-platform-benchmark-hardening"
+ENV_DIR="$HOME/.venvs/fokolab-v72-48-0"
 FAILED_GATE=""
 
 keep_terminal_open() {
@@ -48,7 +48,7 @@ trap 'code=$?; if [[ $code -ne 0 ]]; then FAILED_GATE=${FAILED_GATE:-unexpected-
 cd "$BASE_DIR" || { FAILED_GATE="open downloads directory"; keep_terminal_open 1; }
 
 echo "=================================================="
-echo "Foko Lab v${EXPECTED_VERSION} — local/global Sensitivity depth and platform stability"
+echo "Foko Lab v${EXPECTED_VERSION} — modelling handbook, Sensitivity depth and platform stability"
 echo "Port: $PORT"
 echo "=================================================="
 
@@ -67,8 +67,8 @@ cd "$PROJECT_DIR" || { FAILED_GATE="enter project"; keep_terminal_open 1; }
 run_gate "Release identity and manifest preflight" python3 - <<'PY'
 import hashlib, json
 from pathlib import Path
-expected='72.47.0'
-previous='72.46.0'
+expected='72.48.0'
+previous='72.47.0'
 root=Path('.')
 version=json.loads((root/'VERSION.json').read_text())['version']
 assert version == expected, (version, expected)
@@ -88,10 +88,11 @@ for control in (
     'sensitivitySecondOrder','sensitivityBootstrap','sensitivityBudget',
     'sensitivityOfatPoints','sensitivityDirection','sensitivityResponseSurface',
     'sensitivitySurfaceFirst','sensitivitySurfaceSecond','sensitivitySurfacePoints',
-    'sensitivityDependence','sensitivityDependencePermutations'
+    'sensitivityDependence','sensitivityDependencePermutations',
+    'sensitivityExampleSearch','sensitivityFamilyFilter','sensitivityViewScale','sensitivityTopN'
 ):
     assert f'id="{control}"' in sensitivity, f'missing {control}'
-print(f"Preflight passed: {len(manifest['files'])} manifest-controlled files; local/global Sensitivity diagnostics and browser-capacity controls present.")
+print(f"Preflight passed: {len(manifest['files'])} manifest-controlled files; 17-model Sensitivity library, advanced diagnostics, browser-capacity controls and learning surfaces present.")
 PY
 
 rm -rf .venv venv .pytest_cache node_modules test-results playwright-report
@@ -120,6 +121,7 @@ run_gate "Shared plot, ODE, Steady-State and Symbolic Chromium gate" npm run tes
 run_gate "Optimization and Steady-State taxonomy Chromium gate" npm run test:analysis-taxonomy-offline
 run_gate "Homepage T-cell rerun Chromium gate" npm run test:home-research-rerun-offline
 run_gate "Sensitivity Analysis Chromium gate" npm run test:sensitivity-offline
+run_gate "Modelling handbook and tutorial Chromium gate" npm run test:guides-offline
 run_gate "Sensitivity input and capacity regression repeated three times" npx playwright test tests/e2e/main-labs-smoke.spec.js -g "Sensitivity Analysis accepts editable scientific inputs" --repeat-each=3
 run_gate "Advanced Global Sensitivity regression repeated three times" npx playwright test tests/e2e/main-labs-smoke.spec.js -g "Sensitivity Analysis exposes advanced Morris and second-order global diagnostics" --repeat-each=3
 run_gate "Complete 123-test browser suite" npm run test:e2e

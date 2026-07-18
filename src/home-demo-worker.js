@@ -3,7 +3,7 @@
  */
 'use strict';
 importScripts(
-  '../assets/vendor/mathjs/math-15.2.0.js?v=72.47.0',
+  '../assets/vendor/mathjs/math-15.2.0.js?v=72.48.0',
   'core/stochastic.js',
   'models/stochastic-presets.js',
   'core/agent-reference.js',

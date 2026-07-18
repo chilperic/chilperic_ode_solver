@@ -34,7 +34,7 @@ def test_shared_layout_contract_is_declarative_and_loaded_everywhere():
     assert 'grid.dataset.layout = effective' in shared
     for page in AUTHORED:
         html = text(page)
-        assert 'src/v72/accessibility-performance.js?v=72.47.0' in html
+        assert 'src/v72/accessibility-performance.js?v=72.48.0' in html
         assert 'layout-stability.js' not in html
     for controller in NON_ODE_CONTROLLERS:
         source = text(controller)

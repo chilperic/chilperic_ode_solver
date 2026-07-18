@@ -1,17 +1,17 @@
 {
   "name": "foko-lab",
-  "version": "72.47.0",
+  "version": "72.48.0",
   "private": true,
   "description": "Browser-native scientific modeling with user-owned inputs, attached diagnostics, independent verification, reproducible reporting, visual examples, and explicit capability boundaries.",
   "scripts": {
     "test": "npm run test:syntax && npm run test:core && npm run test:contracts && npm run test:inputs && npm run test:consistency && npm run test:plot-contract && npm run test:quality && npm run test:lifecycle && npm run test:benchmark",
     "test:syntax": "node scripts/check-js-syntax.js && python3 scripts/check-engine-boundaries.py",
-    "test:core": "node tests/js/sensitivity-worker.test.js && node tests/js/sensitivity-core.test.js && node tests/js/numerical-inputs.test.js && node tests/js/ode-core.test.js && node tests/js/home-research-model.test.js && node tests/js/home-demo-reel.test.js && node tests/js/stiffness-evidence.test.js && node tests/js/scipy-verification.test.js && node tests/js/model-report-card.test.js && node tests/js/identifiability-first.test.js && node tests/js/steady-core.test.js && node tests/js/steady-presets.test.js && node tests/js/stochastic-core.test.js && node tests/js/stochastic-presets.test.js && node tests/js/optimization-core.test.js && node tests/js/optimization-presets.test.js && node tests/js/analysis-taxonomy.test.js && node tests/js/data-core.test.js && node tests/js/pca-core.test.js && node tests/js/statistics-core.test.js && node tests/js/statistics-workspace-core.test.js && node tests/js/fitting-core.test.js && node tests/js/fitting-reference.test.js && node tests/js/linalg-core.test.js && node tests/js/linalg-reference.test.js && node tests/js/networks-core.test.js && node tests/js/networks-reference.test.js && node tests/js/ml-core.test.js && node tests/js/ml-reference.test.js && node tests/js/honest-diagnostics.test.js && node tests/js/v728-trust.test.js && node tests/js/agent-reference.test.js && node tests/js/agent-live-worker.test.js && node tests/js/workbench-adapters.test.js && node tests/js/v72400-workbench-depth.test.js && node tests/js/symbolic-reference.test.js && node tests/js/symbolic-presets.test.js && node tests/js/v7213-hardening.test.js && node tests/js/v7214-trust-agent.test.js && node tests/js/v7215-model-input-reliability.test.js && node tests/js/v7216-scientific-atlas-agent-dynamics.test.js && node tests/js/v7217-accessibility-performance.test.js && node tests/js/v7218-central-registry-agent-animation.test.js && node tests/js/v7219-live-agent-fadns.test.js && node tests/js/scientific-depth-restoration.test.js && node tests/js/example-catalog-integrity.test.js",
+    "test:core": "node tests/js/sensitivity-worker.test.js && node tests/js/sensitivity-presets.test.js && node tests/js/platform-library-audit.test.js && node tests/js/sensitivity-core.test.js && node tests/js/numerical-inputs.test.js && node tests/js/ode-core.test.js && node tests/js/home-research-model.test.js && node tests/js/home-demo-reel.test.js && node tests/js/stiffness-evidence.test.js && node tests/js/scipy-verification.test.js && node tests/js/model-report-card.test.js && node tests/js/identifiability-first.test.js && node tests/js/steady-core.test.js && node tests/js/steady-presets.test.js && node tests/js/stochastic-core.test.js && node tests/js/stochastic-presets.test.js && node tests/js/optimization-core.test.js && node tests/js/optimization-presets.test.js && node tests/js/analysis-taxonomy.test.js && node tests/js/data-core.test.js && node tests/js/pca-core.test.js && node tests/js/statistics-core.test.js && node tests/js/statistics-workspace-core.test.js && node tests/js/fitting-core.test.js && node tests/js/fitting-reference.test.js && node tests/js/linalg-core.test.js && node tests/js/linalg-reference.test.js && node tests/js/networks-core.test.js && node tests/js/networks-reference.test.js && node tests/js/ml-core.test.js && node tests/js/ml-reference.test.js && node tests/js/honest-diagnostics.test.js && node tests/js/v728-trust.test.js && node tests/js/agent-reference.test.js && node tests/js/agent-live-worker.test.js && node tests/js/workbench-adapters.test.js && node tests/js/v72400-workbench-depth.test.js && node tests/js/symbolic-reference.test.js && node tests/js/symbolic-presets.test.js && node tests/js/v7213-hardening.test.js && node tests/js/v7214-trust-agent.test.js && node tests/js/v7215-model-input-reliability.test.js && node tests/js/v7216-scientific-atlas-agent-dynamics.test.js && node tests/js/v7217-accessibility-performance.test.js && node tests/js/v7218-central-registry-agent-animation.test.js && node tests/js/v7219-live-agent-fadns.test.js && node tests/js/scientific-depth-restoration.test.js && node tests/js/example-catalog-integrity.test.js",
     "test:contracts": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider tests/active",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
     "test:historical": "python3 -m pytest -q tests/archive/python",
-    "serve": "python3 -m http.server 8101 --bind 127.0.0.1",
+    "serve": "python3 -m http.server 8102 --bind 127.0.0.1",
     "stamp:version": "node scripts/stamp-version.js",
     "build:release": "python3 scripts/build-release.py",
     "install:browser-tests": "npm ci --ignore-scripts --no-audit --no-fund --omit=optional",
@@ -29,7 +29,9 @@
     "test:home-research-rerun-offline": "node scripts/check-home-research-rerun-offline.js",
     "test:inputs": "python3 scripts/audit-user-input-reliability.py",
     "test:sensitivity-offline": "node scripts/check-sensitivity-offline.js",
-    "test:consistency": "python3 scripts/audit-platform-consistency.py"
+    "test:consistency": "python3 scripts/audit-platform-consistency.py && python3 scripts/audit-teaching-depth.py",
+    "test:teaching": "python3 scripts/audit-teaching-depth.py",
+    "test:guides-offline": "node scripts/check-guides-offline.js"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1"

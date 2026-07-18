@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-
 <html data-theme="aurora" lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Nine guided exercises for running, checking, and reporting scientific results." name="description"/><title>Practical tutorials · Foko Lab</title>
-<link href="assets/brand/foko-lab-mark.svg?v=72.47.0" rel="icon" type="image/svg+xml"/>
-<link href="styles/style.css?v=72.47.0" rel="stylesheet"/>
-<link href="styles/v72-tokens.css?v=72.47.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.47.0" rel="stylesheet"/>
+<meta content="Twenty guided investigations that teach model construction, numerical verification, sensitivity, inference, optimization and reproducible reporting." name="description"/><title>Practical modelling curriculum · Foko Lab</title>
+<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
+<link href="styles/style.css?v=72.48.0" rel="stylesheet"/>
+<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.48.0" rel="stylesheet"/>
 </head><body data-lab="tutorial"><div class="app-shell">
+<progress aria-label="Reading progress" class="guide-reading-progress" id="guideReadingProgress" max="100" value="0"></progress>
 <header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.47.0"/></a>
+<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.48.0"/></a>
 <nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
 <a class="nav-home-link" href="index.html">Home</a>
 <details class="labs-menu nav-menu" data-nav-menu="modeling">
@@ -67,162 +67,625 @@
 </details>
 <a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
 </nav>
-<div aria-label="Display controls" class="foko-top-actions"></div></header>
+</header>
 <main class="guide-page" id="main-content">
-<header class="guide-hero"><p class="guide-eyebrow">Learn by doing</p><h1>Practical tutorials</h1><p>Ten guided exercises for running, checking, and reporting scientific results.</p><nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">User Guide</a><a href="tutorial.html">Tutorials</a><a href="trust.html">Trust and limitations</a></nav></header>
-<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a href="#tutorial-1-read-a-result-before-the-plot">Tutorial 1 — Read a result before the plot</a><a href="#tutorial-2-keep-two-up-under-your-control">Tutorial 2 — Keep Two-up under your control</a><a href="#tutorial-3-detect-a-plausible-stiff-solver-failure">Tutorial 3 — Detect a plausible stiff-solver failure</a><a href="#tutorial-4-build-a-reaction-network-and-test-conservation">Tutorial 4 — Build a reaction network and test conservation</a><a href="#tutorial-5-find-steady-states-without-claiming-completeness">Tutorial 5 — Find steady states without claiming completeness</a><a href="#tutorial-6-compare-stochastic-paths-with-ensemble-evidence">Tutorial 6 — Compare stochastic paths with ensemble evidence</a><a href="#tutorial-7-expose-non-identifiable-fitted-parameters">Tutorial 7 — Expose non-identifiable fitted parameters</a><a href="#tutorial-8-read-a-live-agent-simulation-honestly">Tutorial 8 — Read a live Agent simulation honestly</a><a href="#tutorial-9-produce-a-result-another-scientist-can-inspect">Tutorial 9 — Produce a result another scientist can inspect</a><a href="#tutorial-10-build-a-defensible-sensitivity-analysis">Tutorial 10 — Build a defensible sensitivity analysis</a></aside><article class="guide-document"><p>These tutorials show how to run a model, challenge the result, and decide what evidence is still missing. Complete the first tutorial before choosing a topic-specific exercise.</p>
-<h2 id="tutorial-1-read-a-result-before-the-plot">Tutorial 1 — Read a result before the plot</h2>
-<p><strong>Goal:</strong> Learn the standard reading order.</p>
+<header class="guide-hero"><p class="guide-eyebrow">Learn by building and challenging models</p><h1>Practical modelling curriculum</h1><p>Twenty guided investigations that teach model construction, numerical verification, sensitivity, inference, optimization and reproducible reporting.</p>
+<nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">Modelling handbook</a><a href="tutorial.html">Practical curriculum</a><a href="trust.html">Trust and limitations</a></nav>
+<nav class="guide-lab-links" aria-label="Open a scientific workspace">
+<a href="ode.html">ODE</a><a href="sensitivity.html">Sensitivity</a><a href="optimization.html">Optimization</a>
+<a href="steady.html">Steady-State</a><a href="stochastic.html">Stochastic</a><a href="fitting.html">Fitting</a>
+<a href="statistics.html">Statistics</a><a href="linear-algebra.html">Linear Algebra</a><a href="ml.html">ML</a><a href="sciml.html">SciML</a>
+</nav><div class="tutorial-progress-card"><label id="tutorialProgressLabel" for="tutorialProgressMeter">0 of 20 tutorials completed</label><progress id="tutorialProgressMeter" max="20" value="0"></progress><small>Progress is stored only in this browser.</small></div></header>
+<div class="guide-tools"><label for="guideSearch">Search this page</label><input id="guideSearch" type="search" placeholder="solver tolerance, Sobol, identifiability, PCA…"/><span aria-live="polite" id="guideSearchCount">20 sections</span></div>
+<p class="guide-search-empty" id="guideSearchEmpty" hidden>No section matches this search. Try a method, lab, diagnostic or modelling term.</p>
+<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a class="guide-toc-level-2" href="#tutorial-1-turn-a-question-into-a-model">Tutorial 1 — Turn a question into a model</a><a class="guide-toc-level-2" href="#tutorial-2-build-equations-from-mechanisms">Tutorial 2 — Build equations from mechanisms</a><a class="guide-toc-level-2" href="#tutorial-3-separate-output-grid-density-from-numerical-accuracy">Tutorial 3 — Separate output-grid density from numerical accuracy</a><a class="guide-toc-level-2" href="#tutorial-4-diagnose-stiffness-with-an-independent-method">Tutorial 4 — Diagnose stiffness with an independent method</a><a class="guide-toc-level-2" href="#tutorial-5-local-sensitivity-with-scale-discipline">Tutorial 5 — Local sensitivity with scale discipline</a><a class="guide-toc-level-2" href="#tutorial-6-local-influence-through-states-and-time">Tutorial 6 — Local influence through states and time</a><a class="guide-toc-level-2" href="#tutorial-7-ofat-tornado-and-directional-analysis">Tutorial 7 — OFAT, tornado and directional analysis</a><a class="guide-toc-level-2" href="#tutorial-8-morris-screening-for-a-larger-parameter-set">Tutorial 8 — Morris screening for a larger parameter set</a><a class="guide-toc-level-2" href="#tutorial-9-sobol-jansen-first-and-total-effects">Tutorial 9 — Sobol/Jansen first and total effects</a><a class="guide-toc-level-2" href="#tutorial-10-pairwise-interactions-time-and-state-resolution">Tutorial 10 — Pairwise interactions, time and state resolution</a><a class="guide-toc-level-2" href="#tutorial-11-limited-mi-and-hsic-dependence-screening">Tutorial 11 — Limited MI and HSIC dependence screening</a><a class="guide-toc-level-2" href="#tutorial-12-optimization-with-feasibility-separated-from-objective">Tutorial 12 — Optimization with feasibility separated from objective</a><a class="guide-toc-level-2" href="#tutorial-13-finite-multi-objective-trade-offs">Tutorial 13 — Finite multi-objective trade-offs</a><a class="guide-toc-level-2" href="#tutorial-14-find-equilibria-without-claiming-all-roots">Tutorial 14 — Find equilibria without claiming all roots</a><a class="guide-toc-level-2" href="#tutorial-15-stochastic-paths-ensembles-and-censoring">Tutorial 15 — Stochastic paths, ensembles and censoring</a><a class="guide-toc-level-2" href="#tutorial-16-parameter-fitting-and-practical-identifiability">Tutorial 16 — Parameter fitting and practical identifiability</a><a class="guide-toc-level-2" href="#tutorial-17-statistics-before-machine-learning">Tutorial 17 — Statistics before machine learning</a><a class="guide-toc-level-2" href="#tutorial-18-conditioning-in-linear-algebra">Tutorial 18 — Conditioning in linear algebra</a><a class="guide-toc-level-2" href="#tutorial-19-use-sciml-without-fabricating-neural-evidence">Tutorial 19 — Use SciML without fabricating neural evidence</a><a class="guide-toc-level-2" href="#tutorial-20-produce-a-reproducible-report">Tutorial 20 — Produce a reproducible report</a></aside><article class="guide-document"><p>These tutorials teach modelling rather than button pressing. Each exercise contains a scientific goal, an implementation task, a deliberate challenge, an interpretation checkpoint, and a reporting outcome.</p>
+<p>Complete Tutorials 1–4 before using the advanced labs.</p>
+<section class="guide-module" data-guide-section data-guide-search="tutorial 1 — turn a question into a model
+goal: build a minimal model whose output directly answers a scientific question.
+question: how do growth rate and carrying capacity affect population after 15 time units?
+
+open ode lab and load logistic growth.
+identify the state x, parameters r and k, initial condition x(0), and time interval.
+write the units you would assign to each quantity.
+confirm the equation:
+
+dx/dt = r*x*(1-x/k)
+
+
+run the nominal model.
+change only r; run again.
+restore r, change only k; run again.
+extend the final time and inspect whether the conclusion changes.
+
+challenge: set x(0) above k. predict the direction of motion before running.
+checkpoint: r primarily controls approach speed while k controls the asymptotic level, but a short observation window can make their effects difficult to separate.
+report: state the question, output time, initial condition, parameter values, solver and one limitation of logistic growth." data-guide-id="tutorial-1-turn-a-question-into-a-model"><div class="guide-module-heading"><h2 id="tutorial-1-turn-a-question-into-a-model">Tutorial 1 — Turn a question into a model</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-1-turn-a-question-into-a-model" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Build a minimal model whose output directly answers a scientific question.</p>
+<p><strong>Question:</strong> How do growth rate and carrying capacity affect population after 15 time units?</p>
 <ol>
-<li>Open ODE Lab and run the loaded example.</li>
-<li>Ignore the plot for a moment.</li>
-<li>Read the status, method, tolerances, accepted and rejected steps, minimum step, warnings, and provenance.</li>
-<li>Change the method to Euler and run again.</li>
+<li>Open <strong>ODE Lab</strong> and load Logistic Growth.</li>
+<li>Identify the state <code>x</code>, parameters <code>r</code> and <code>K</code>, initial condition <code>x(0)</code>, and time interval.</li>
+<li>Write the units you would assign to each quantity.</li>
+<li>Confirm the equation:</li>
 </ol>
-<p><strong>Check:</strong> Euler reports no rejected steps because it has no local error estimate. A quiet diagnostic panel is not evidence that the method is accurate.</p>
-<p><strong>Keep:</strong> Read status and diagnostics before interpreting the figure.</p>
-<h2 id="tutorial-2-keep-two-up-under-your-control">Tutorial 2 — Keep Two-up under your control</h2>
-<p><strong>Goal:</strong> Confirm that plot choice and layout choice are independent.</p>
+<pre><code class="language-text">dx/dt = r*x*(1-x/K)
+</code></pre>
+<ol start="5">
+<li>Run the nominal model.</li>
+<li>Change only <code>r</code>; run again.</li>
+<li>Restore <code>r</code>, change only <code>K</code>; run again.</li>
+<li>Extend the final time and inspect whether the conclusion changes.</li>
+</ol>
+<p><strong>Challenge:</strong> Set <code>x(0)</code> above <code>K</code>. Predict the direction of motion before running.</p>
+<p><strong>Checkpoint:</strong> <code>r</code> primarily controls approach speed while <code>K</code> controls the asymptotic level, but a short observation window can make their effects difficult to separate.</p>
+<p><strong>Report:</strong> State the question, output time, initial condition, parameter values, solver and one limitation of logistic growth.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 2 — build equations from mechanisms
+goal: derive balances from a reaction network rather than copying equations blindly.
+consider:
+s --k1--&gt; m --k2--&gt; p
+
+
+write rates v1=k1*s and v2=k2*m.
+derive:
+
+ds/dt = -v1
+dm/dt =  v1-v2
+dp/dt =  v2
+
+
+enter the model in ode lab or import the reaction-network model ir.
+use s(0)=10, m(0)=0, p(0)=0, k1=0.4, k2=0.2.
+plot all states and the total s+m+p if the conservation view is available.
+
+challenge: change the stoichiometric coefficient producing m from 1 to 2. explain why total material is no longer conserved under the original counting convention.
+failure test: refer to an undeclared state x. the model should be rejected before computation.
+checkpoint: mechanism-to-balance construction makes signs, units and conservation inspectable." data-guide-id="tutorial-2-build-equations-from-mechanisms"><div class="guide-module-heading"><h2 id="tutorial-2-build-equations-from-mechanisms">Tutorial 2 — Build equations from mechanisms</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-2-build-equations-from-mechanisms" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Derive balances from a reaction network rather than copying equations blindly.</p>
+<p>Consider:</p>
+<pre><code class="language-text">S --k1--&gt; M --k2--&gt; P
+</code></pre>
 <ol>
-<li>Open ODE Lab with the SIR example.</li>
-<li>Select <strong>Two-up</strong>.</li>
-<li>Choose a trajectory on the left and another compatible plot on the right.</li>
-<li>Change the left plot, wait, then change the right plot.</li>
-<li>Repeat the same steps in another lab such as Statistics or Agent.</li>
+<li>Write rates <code>v1=k1*S</code> and <code>v2=k2*M</code>.</li>
+<li>Derive:</li>
 </ol>
-<p><strong>Check:</strong> Both evidence panels remain visible. On a narrow screen they may stack vertically, but Two-up remains selected.</p>
-<p>Select <strong>Focus</strong> and change a plot again. Focus should remain selected because you chose it explicitly.</p>
-<p><strong>Keep:</strong> Plot selectors choose evidence. They do not choose the workspace layout.</p>
-<h2 id="tutorial-3-detect-a-plausible-stiff-solver-failure">Tutorial 3 — Detect a plausible stiff-solver failure</h2>
-<p><strong>Goal:</strong> See why a smooth trajectory may still be unreliable.</p>
+<pre><code class="language-text">dS/dt = -v1
+dM/dt =  v1-v2
+dP/dt =  v2
+</code></pre>
+<ol start="3">
+<li>Enter the model in ODE Lab or import the reaction-network Model IR.</li>
+<li>Use <code>S(0)=10</code>, <code>M(0)=0</code>, <code>P(0)=0</code>, <code>k1=0.4</code>, <code>k2=0.2</code>.</li>
+<li>Plot all states and the total <code>S+M+P</code> if the conservation view is available.</li>
+</ol>
+<p><strong>Challenge:</strong> Change the stoichiometric coefficient producing <code>M</code> from <code>1</code> to <code>2</code>. Explain why total material is no longer conserved under the original counting convention.</p>
+<p><strong>Failure test:</strong> Refer to an undeclared state <code>X</code>. The model should be rejected before computation.</p>
+<p><strong>Checkpoint:</strong> Mechanism-to-balance construction makes signs, units and conservation inspectable.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 3 — separate output-grid density from numerical accuracy
+goal: learn why a smooth plot can be numerically weak.
+
+open ode lab with a nonlinear oscillator.
+run adaptive rk45 with the default reported points.
+double the reported points without changing tolerances.
+compare the diagnostic work and the plotted smoothness.
+restore the point count and tighten rtol/atol by two orders of magnitude.
+compare a scalar quantity such as maximum amplitude or final state.
+
+challenge: run a fixed-step method with a coarse step and then halve the step repeatedly.
+checkpoint: more reported points change the output grid. tighter tolerances or smaller fixed steps change the numerical approximation.
+report: include the convergence table, not only the final plot." data-guide-id="tutorial-3-separate-output-grid-density-from-numerical-accuracy"><div class="guide-module-heading"><h2 id="tutorial-3-separate-output-grid-density-from-numerical-accuracy">Tutorial 3 — Separate output-grid density from numerical accuracy</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-3-separate-output-grid-density-from-numerical-accuracy" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Learn why a smooth plot can be numerically weak.</p>
+<ol>
+<li>Open ODE Lab with a nonlinear oscillator.</li>
+<li>Run adaptive RK45 with the default reported points.</li>
+<li>Double the reported points without changing tolerances.</li>
+<li>Compare the diagnostic work and the plotted smoothness.</li>
+<li>Restore the point count and tighten <code>rtol</code>/<code>atol</code> by two orders of magnitude.</li>
+<li>Compare a scalar quantity such as maximum amplitude or final state.</li>
+</ol>
+<p><strong>Challenge:</strong> Run a fixed-step method with a coarse step and then halve the step repeatedly.</p>
+<p><strong>Checkpoint:</strong> More reported points change the output grid. Tighter tolerances or smaller fixed steps change the numerical approximation.</p>
+<p><strong>Report:</strong> Include the convergence table, not only the final plot.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 4 — diagnose stiffness with an independent method
+goal: recognize when explicit browser integration is not sufficient.
+use the robertson system:
+da/dt = -k1*a + k3*b*c
+db/dt =  k1*a - k2*b^2 - k3*b*c
+dc/dt =  k2*b^2
+
+with:
+a(0)=1, b(0)=0, c(0)=0
+k1=0.04, k2=3e7, k3=1e4
+t = 0 ... 40
+
+
+run adaptive rk45.
+record rejected steps, minimum step, function evaluations and conservation drift.
+attempt a coarse fixed-step run.
+export or run verify against scipy with radau or bdf.
+compare on the same output grid.
+
+checkpoint: a stiff problem can produce a smooth but wrong fixed-step curve. independent implicit verification addresses numerical integration, not model validity." data-guide-id="tutorial-4-diagnose-stiffness-with-an-independent-method"><div class="guide-module-heading"><h2 id="tutorial-4-diagnose-stiffness-with-an-independent-method">Tutorial 4 — Diagnose stiffness with an independent method</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-4-diagnose-stiffness-with-an-independent-method" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Recognize when explicit browser integration is not sufficient.</p>
 <p>Use the Robertson system:</p>
 <pre><code class="language-text">dA/dt = -k1*A + k3*B*C
-dB/dt =  k1*A - k2*B*B - k3*B*C
-dC/dt =  k2*B*B
+dB/dt =  k1*A - k2*B^2 - k3*B*C
+dC/dt =  k2*B^2
 </code></pre>
 <p>with:</p>
 <pre><code class="language-text">A(0)=1, B(0)=0, C(0)=0
 k1=0.04, k2=3e7, k3=1e4
-t from 0 to 40
+t = 0 ... 40
 </code></pre>
 <ol>
-<li>Run adaptive RKF45.</li>
-<li>Inspect rejected steps, minimum step, function evaluations, conservation, and the estimated timescale ratio.</li>
-<li>Switch to a coarse fixed-step RK4 and run again.</li>
-<li>Use <strong>Verify against SciPy</strong> to compare with Radau on the same output grid.</li>
+<li>Run adaptive RK45.</li>
+<li>Record rejected steps, minimum step, function evaluations and conservation drift.</li>
+<li>Attempt a coarse fixed-step run.</li>
+<li>Export or run <strong>Verify against SciPy</strong> with Radau or BDF.</li>
+<li>Compare on the same output grid.</li>
 </ol>
-<p><strong>Check:</strong> Fixed-step RK4 may produce a smooth curve while losing the rejection evidence that warned you about stiffness.</p>
-<p><strong>Keep:</strong> For suspected stiffness, compare with an independent implicit method. Agreement supports the numerics, not the biological model.</p>
-<h2 id="tutorial-4-build-a-reaction-network-and-test-conservation">Tutorial 4 — Build a reaction network and test conservation</h2>
-<p><strong>Goal:</strong> Let stoichiometry generate the differential equations.</p>
-<p>Import this model:</p>
-<pre><code class="language-json">{
-  "schema": "foko.model-ir/1",
-  "kind": "reaction-network",
-  "name": "Two-step pathway",
-  "states": [
-    {"id": "S", "initial": 10},
-    {"id": "M", "initial": 0},
-    {"id": "P", "initial": 0}
-  ],
-  "parameters": {
-    "k1": {"value": 0.4, "min": 0, "max": 2},
-    "k2": {"value": 0.2, "min": 0, "max": 2}
-  },
-  "reactions": [
-    {"id": "r1", "rate": "k1*S", "stoichiometry": {"S": -1, "M": 1}},
-    {"id": "r2", "rate": "k2*M", "stoichiometry": {"M": -1, "P": 1}}
-  ],
-  "time": {"start": 0, "end": 30, "points": 500},
-  "method": "rk45"
-}
-</code></pre>
-<ol>
-<li>Run the model and inspect <code>S + M + P</code>.</li>
-<li>Change the coefficient of <code>M</code> in <code>r1</code> from <code>1</code> to <code>2</code>.</li>
-<li>Replace one valid state name with <code>X</code>.</li>
-</ol>
-<p><strong>Check:</strong> The first change creates material and breaks conservation. The second is malformed structure and should be rejected before computation.</p>
-<p><strong>Keep:</strong> Declarative reaction structure is easier to inspect than hand-copied signs in several equations.</p>
-<h2 id="tutorial-5-find-steady-states-without-claiming-completeness">Tutorial 5 — Find steady states without claiming completeness</h2>
-<p><strong>Goal:</strong> Separate roots you found from all roots that may exist.</p>
-<ol>
-<li>Open Steady-State Lab and load a nonlinear example with multiple candidates.</li>
-<li>Run deterministic multi-start search.</li>
-<li>Inspect the residual norm, termination reason, physical admissibility, and local stability evidence for each candidate.</li>
-<li>Change the initial-guess range and repeat.</li>
-<li>Run a one-parameter scan near a suspected branch transition.</li>
-</ol>
-<p><strong>Check:</strong> Different starting sets may find different candidates. A sequential scan can jump branches or fail near a fold without identifying a bifurcation.</p>
-<p><strong>Keep:</strong> Say “the search found these roots,” not “these are all the roots.” Use continuation software when the existence and structure of branches matter.</p>
-<h2 id="tutorial-6-compare-stochastic-paths-with-ensemble-evidence">Tutorial 6 — Compare stochastic paths with ensemble evidence</h2>
-<p><strong>Goal:</strong> Understand extinction, seeds, and Monte Carlo uncertainty.</p>
-<ol>
-<li>Open Stochastic Lab and choose a birth–death or stochastic SIR example.</li>
-<li>Use a small initial population, seed <code>42</code>, and 100 runs.</li>
-<li>Inspect individual paths, empirical bands, endpoint distribution, Monte Carlo error, and censoring.</li>
-<li>Repeat with seed <code>42</code>, then seed <code>43</code>.</li>
-<li>Increase the run count.</li>
-</ol>
-<p><strong>Check:</strong> The same seed reproduces the same finite ensemble. A different seed changes the realization. More runs reduce Monte Carlo error but do not remove the process variability.</p>
-<p><strong>Keep:</strong> Record the seed, run count, and censoring count with every stochastic result.</p>
-<h2 id="tutorial-7-expose-non-identifiable-fitted-parameters">Tutorial 7 — Expose non-identifiable fitted parameters</h2>
-<p><strong>Goal:</strong> Show that an excellent fit can contain poorly determined parameters.</p>
-<ol>
-<li>Open Curve Fitting and load the low-substrate Michaelis–Menten example.</li>
-<li>Fit <code>v = Vmax*S/(Km+S)</code>.</li>
-<li>Inspect R², residuals, the parameter-correlation matrix, and the profile scan.</li>
-<li>Refit from different starting values.</li>
-<li>Add measurements in the saturation region and repeat.</li>
-</ol>
-<p><strong>Check:</strong> Low-substrate data can constrain <code>Vmax/Km</code> while leaving <code>Vmax</code> and <code>Km</code> individually uncertain. The curve may fit extremely well even when the profile is flat and the parameters are strongly correlated.</p>
-<p><strong>Keep:</strong> Check profiles and correlations before reporting nonlinear parameters. Better data can solve a problem that a different optimiser cannot.</p>
-<h2 id="tutorial-8-read-a-live-agent-simulation-honestly">Tutorial 8 — Read a live Agent simulation honestly</h2>
-<p><strong>Goal:</strong> Separate one animated realization from finite-ensemble evidence.</p>
-<ol>
-<li>Open Agent Lab and select a biological or ecological preset.</li>
-<li>Choose <strong>Slow</strong> or <strong>Normal</strong> and start the live ensemble.</li>
-<li>Confirm that the step counter and lattice advance together.</li>
-<li>Pause, wait, and resume.</li>
-<li>Repeat with the same seed and then a different seed.</li>
-<li>Compare the animation with the population bands and endpoint summaries.</li>
-</ol>
-<p><strong>Check:</strong> Each visible frame is computed before it is displayed, but the animation is still one run. The uncertainty is represented by the ensemble summaries, not by the movie itself.</p>
-<p><strong>Keep:</strong> Do not interpret a lattice animation as a calibrated biological movie or an ensemble average.</p>
-<h2 id="tutorial-9-produce-a-result-another-scientist-can-inspect">Tutorial 9 — Produce a result another scientist can inspect</h2>
-<p><strong>Goal:</strong> Move from exploration to defensible reporting.</p>
-<ol>
-<li>Run an ODE model with recorded tolerances and diagnostics.</li>
-<li>Tighten the tolerances and confirm that the quantity of interest is stable.</li>
-<li>Run independent SciPy verification when appropriate.</li>
-<li>Generate the Model Report Card.</li>
-<li>Export the model and reproduce it in an external tool.</li>
-<li>Write down what was not established.</li>
-</ol>
-<p>A useful methods statement includes the model, parameters, method, tolerances, seed where relevant, software version, diagnostics, independent comparison, and the limits of the claim.</p>
-<p><strong>Keep:</strong> A reproducible result contains both the evidence and the non-claims.</p>
+<p><strong>Checkpoint:</strong> A stiff problem can produce a smooth but wrong fixed-step curve. Independent implicit verification addresses numerical integration, not model validity.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 5 — local sensitivity with scale discipline
+goal: distinguish raw derivatives, range-scaled effects and elasticities.
 
-<h2 id="tutorial-10-build-a-defensible-sensitivity-analysis">Tutorial 10 — Build a defensible sensitivity analysis</h2>
-<p><strong>Goal:</strong> Distinguish local derivatives, screening, variance decomposition and information diagnostics while keeping the browser workload bounded.</p>
+open sensitivity analysis and load exponential decay verification.
+select local central finite differences.
+run with the default perturbation.
+switch the plot scale between raw derivative, range-scaled derivative and elasticity.
+inspect the perturbation-convergence plot.
+compare the numerical derivative with the analytic result for x(t)=x0*exp(-k*t).
+
+challenge: make the perturbation too large and then very small. observe truncation versus floating-point sensitivity.
+checkpoint: a ranking can change solely because the scaling convention changed. always report the convention." data-guide-id="tutorial-5-local-sensitivity-with-scale-discipline"><div class="guide-module-heading"><h2 id="tutorial-5-local-sensitivity-with-scale-discipline">Tutorial 5 — Local sensitivity with scale discipline</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-5-local-sensitivity-with-scale-discipline" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Distinguish raw derivatives, range-scaled effects and elasticities.</p>
 <ol>
-<li>Open Sensitivity Analysis and load the SIR example.</li>
-<li>Run <strong>Local central finite differences</strong>. Compare signed sensitivity, parameter Jacobian, state Jacobian, trajectory influence, OFAT, tornado and perturbation convergence.</li>
-<li>Enter <code>beta:1,gamma:-1,N:0</code> as the directional vector. Run again and inspect the range-normalized directional profile.</li>
-<li>Enable the two-parameter response surface for <code>beta</code> and <code>gamma</code>. Confirm that the budget increases and all remaining parameters stay nominal.</li>
-<li>Switch to <strong>Morris screening</strong>. Inspect μ*–σ, elementary-effect distributions, normalized parameter trajectories, convergence and rank stability.</li>
-<li>Switch to <strong>Global variance: Jansen + Saltelli</strong>. Start with 128 samples and no second-order interactions. Compare first/total indices, effects through time, effects across states, variance accounting and the sampled relationship matrix.</li>
-<li>Enable second-order interactions only when the parameter count and projected workload remain within the browser guard. Treat low-sample interactions as screening evidence.</li>
-<li>Optionally enable MI/HSIC. Read the estimator and permutation warnings; do not compare them numerically with Sobol fractions.</li>
-<li>Change a parameter range or tolerance. Confirm that the previous plots become <strong>Stale</strong> and exports are disabled.</li>
-<li>Increase the requested workload until the capacity guard refuses the run. Export the configuration rather than bypassing the guard.</li>
+<li>Open <strong>Sensitivity Analysis</strong> and load Exponential Decay Verification.</li>
+<li>Select <strong>Local central finite differences</strong>.</li>
+<li>Run with the default perturbation.</li>
+<li>Switch the plot scale between raw derivative, range-scaled derivative and elasticity.</li>
+<li>Inspect the perturbation-convergence plot.</li>
+<li>Compare the numerical derivative with the analytic result for <code>x(T)=x0*exp(-k*T)</code>.</li>
 </ol>
-<p><strong>Check:</strong> Morris and Sobol rankings need not agree because they answer different questions. A response surface may reveal geometry but does not become a variance decomposition. State-resolved and time-resolved indices reuse the same finite design rather than creating independent evidence.</p>
-<p><strong>Keep:</strong> Report the selected output metric, parameter ranges, initial conditions, time window, sample budget, seed, solver, tolerances and all unresolved limitations.</p>
-</article></div>
+<p><strong>Challenge:</strong> Make the perturbation too large and then very small. Observe truncation versus floating-point sensitivity.</p>
+<p><strong>Checkpoint:</strong> A ranking can change solely because the scaling convention changed. Always report the convention.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 6 — local influence through states and time
+goal: separate vector-field jacobians from propagated trajectory sensitivity.
+
+load the three-tier activation cascade.
+run local sensitivity for final x3.
+compare:
+parameter jacobian ∂f/∂p;
+state jacobian ∂f/∂x;
+selected-state sensitivity through time;
+parameter-by-state influence map.
+
+
+select a different output state and rerun.
+
+challenge: increase the final time. determine whether early upstream influence persists in the final downstream state.
+checkpoint: a large right-hand-side derivative at one time does not automatically imply a large propagated effect on the final output." data-guide-id="tutorial-6-local-influence-through-states-and-time"><div class="guide-module-heading"><h2 id="tutorial-6-local-influence-through-states-and-time">Tutorial 6 — Local influence through states and time</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-6-local-influence-through-states-and-time" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Separate vector-field Jacobians from propagated trajectory sensitivity.</p>
+<ol>
+<li>Load the Three-tier Activation Cascade.</li>
+<li>Run Local sensitivity for final <code>x3</code>.</li>
+<li>Compare:<ul>
+<li>parameter Jacobian <code>∂f/∂p</code>;</li>
+<li>state Jacobian <code>∂f/∂x</code>;</li>
+<li>selected-state sensitivity through time;</li>
+<li>parameter-by-state influence map.</li>
+</ul>
+</li>
+<li>Select a different output state and rerun.</li>
+</ol>
+<p><strong>Challenge:</strong> Increase the final time. Determine whether early upstream influence persists in the final downstream state.</p>
+<p><strong>Checkpoint:</strong> A large right-hand-side derivative at one time does not automatically imply a large propagated effect on the final output.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 7 — ofat, tornado and directional analysis
+goal: understand conditional slices through parameter space.
+
+load the chemostat example.
+run local sensitivity.
+inspect ofat curves and the tornado plot.
+define a direction such as:
+
+d:1, mumax:-1, ks:0.5
+
+
+run the directional profile.
+enable a response surface for d and mumax.
+use contour view first; switch to 3d only when it helps inspect geometry.
+
+challenge: move the nominal point near washout and repeat.
+checkpoint: ofat and response surfaces condition on all unvaried parameters. they reveal geometry but do not partition global variance." data-guide-id="tutorial-7-ofat-tornado-and-directional-analysis"><div class="guide-module-heading"><h2 id="tutorial-7-ofat-tornado-and-directional-analysis">Tutorial 7 — OFAT, tornado and directional analysis</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-7-ofat-tornado-and-directional-analysis" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Understand conditional slices through parameter space.</p>
+<ol>
+<li>Load the Chemostat example.</li>
+<li>Run Local sensitivity.</li>
+<li>Inspect OFAT curves and the tornado plot.</li>
+<li>Define a direction such as:</li>
+</ol>
+<pre><code class="language-text">D:1, mumax:-1, Ks:0.5
+</code></pre>
+<ol start="5">
+<li>Run the directional profile.</li>
+<li>Enable a response surface for <code>D</code> and <code>mumax</code>.</li>
+<li>Use contour view first; switch to 3D only when it helps inspect geometry.</li>
+</ol>
+<p><strong>Challenge:</strong> Move the nominal point near washout and repeat.</p>
+<p><strong>Checkpoint:</strong> OFAT and response surfaces condition on all unvaried parameters. They reveal geometry but do not partition global variance.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 8 — morris screening for a larger parameter set
+goal: screen parameters while retaining evidence of nonlinearity and interaction.
+
+load the goodwin oscillator.
+select morris screening.
+start with 12 trajectories and six grid levels.
+inspect μ*–σ, signed elementary-effect distributions and the normalized design paths.
+increase the trajectory count.
+compare prefix convergence and bootstrap rank intervals.
+repeat with a different seed.
+
+challenge: change the output metric from range to mean and rerun.
+checkpoint: μ* ranks overall effect, while large σ may reflect nonlinearity, interaction, or both. rank overlap means the finite design does not resolve the ordering." data-guide-id="tutorial-8-morris-screening-for-a-larger-parameter-set"><div class="guide-module-heading"><h2 id="tutorial-8-morris-screening-for-a-larger-parameter-set">Tutorial 8 — Morris screening for a larger parameter set</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-8-morris-screening-for-a-larger-parameter-set" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Screen parameters while retaining evidence of nonlinearity and interaction.</p>
+<ol>
+<li>Load the Goodwin oscillator.</li>
+<li>Select <strong>Morris screening</strong>.</li>
+<li>Start with 12 trajectories and six grid levels.</li>
+<li>Inspect <code>μ*–σ</code>, signed elementary-effect distributions and the normalized design paths.</li>
+<li>Increase the trajectory count.</li>
+<li>Compare prefix convergence and bootstrap rank intervals.</li>
+<li>Repeat with a different seed.</li>
+</ol>
+<p><strong>Challenge:</strong> Change the output metric from range to mean and rerun.</p>
+<p><strong>Checkpoint:</strong> <code>μ*</code> ranks overall effect, while large <code>σ</code> may reflect nonlinearity, interaction, or both. Rank overlap means the finite design does not resolve the ordering.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 9 — sobol/jansen first and total effects
+goal: interpret variance-based indices over declared independent ranges.
+
+load seir outbreak peak.
+select global variance: jansen + saltelli.
+use 128 base samples without second-order interactions.
+inspect first and total indices with uncertainty.
+inspect the total-minus-first gap.
+increase the sample count and compare convergence.
+inspect the sampled output distribution and parameter-output relationships.
+
+challenge: narrow the beta range while keeping its nominal value. explain why the index can fall even though the underlying mechanism did not change.
+checkpoint: global importance belongs to the declared joint input domain. it is not an intrinsic constant of the equation." data-guide-id="tutorial-9-sobol-jansen-first-and-total-effects"><div class="guide-module-heading"><h2 id="tutorial-9-sobol-jansen-first-and-total-effects">Tutorial 9 — Sobol/Jansen first and total effects</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-9-sobol-jansen-first-and-total-effects" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Interpret variance-based indices over declared independent ranges.</p>
+<ol>
+<li>Load SEIR Outbreak Peak.</li>
+<li>Select <strong>Global variance: Jansen + Saltelli</strong>.</li>
+<li>Use 128 base samples without second-order interactions.</li>
+<li>Inspect first and total indices with uncertainty.</li>
+<li>Inspect the total-minus-first gap.</li>
+<li>Increase the sample count and compare convergence.</li>
+<li>Inspect the sampled output distribution and parameter-output relationships.</li>
+</ol>
+<p><strong>Challenge:</strong> Narrow the <code>beta</code> range while keeping its nominal value. Explain why the index can fall even though the underlying mechanism did not change.</p>
+<p><strong>Checkpoint:</strong> Global importance belongs to the declared joint input domain. It is not an intrinsic constant of the equation.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 10 — pairwise interactions, time and state resolution
+goal: add second-order and structured output evidence without overclaiming.
+
+use a model with no more than five varied parameters.
+enable pairwise second-order interactions.
+read the projected ode-solve budget before running.
+inspect the second-order heatmap and bootstrap uncertainty.
+compare first/total effects through time.
+compare first/total effects across states.
+identify periods or states with near-zero output variance.
+
+challenge: increase the sample count until the browser guard refuses the request.
+checkpoint: pairwise second-order terms do not recover arbitrary higher-order interactions. time/state heatmaps reuse the same finite design." data-guide-id="tutorial-10-pairwise-interactions-time-and-state-resolution"><div class="guide-module-heading"><h2 id="tutorial-10-pairwise-interactions-time-and-state-resolution">Tutorial 10 — Pairwise interactions, time and state resolution</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-10-pairwise-interactions-time-and-state-resolution" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Add second-order and structured output evidence without overclaiming.</p>
+<ol>
+<li>Use a model with no more than five varied parameters.</li>
+<li>Enable pairwise second-order interactions.</li>
+<li>Read the projected ODE-solve budget before running.</li>
+<li>Inspect the second-order heatmap and bootstrap uncertainty.</li>
+<li>Compare first/total effects through time.</li>
+<li>Compare first/total effects across states.</li>
+<li>Identify periods or states with near-zero output variance.</li>
+</ol>
+<p><strong>Challenge:</strong> Increase the sample count until the browser guard refuses the request.</p>
+<p><strong>Checkpoint:</strong> Pairwise second-order terms do not recover arbitrary higher-order interactions. Time/state heatmaps reuse the same finite design.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 11 — limited mi and hsic dependence screening
+goal: use nonlinear dependence diagnostics without confusing them with variance shares.
+
+run a bounded global variance analysis with at least 64–128 samples.
+enable mi/hsic diagnostics.
+inspect normalized histogram mi, rbf-hsic and permutation p-values.
+compare their rankings with sobol total effects.
+repeat with a different seed and larger sample budget.
+
+challenge: use an output with a threshold-like response.
+checkpoint: mi and hsic can detect dependence that is not monotonic, but their values depend on estimator choices. they are not causal measures or sobol indices." data-guide-id="tutorial-11-limited-mi-and-hsic-dependence-screening"><div class="guide-module-heading"><h2 id="tutorial-11-limited-mi-and-hsic-dependence-screening">Tutorial 11 — Limited MI and HSIC dependence screening</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-11-limited-mi-and-hsic-dependence-screening" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Use nonlinear dependence diagnostics without confusing them with variance shares.</p>
+<ol>
+<li>Run a bounded Global variance analysis with at least 64–128 samples.</li>
+<li>Enable MI/HSIC diagnostics.</li>
+<li>Inspect normalized histogram MI, RBF-HSIC and permutation p-values.</li>
+<li>Compare their rankings with Sobol total effects.</li>
+<li>Repeat with a different seed and larger sample budget.</li>
+</ol>
+<p><strong>Challenge:</strong> Use an output with a threshold-like response.</p>
+<p><strong>Checkpoint:</strong> MI and HSIC can detect dependence that is not monotonic, but their values depend on estimator choices. They are not causal measures or Sobol indices.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 12 — optimization with feasibility separated from objective
+goal: avoid calling an infeasible low-objective point an optimum.
+
+open optimization lab and load constrained quadratic.
+run bounded coordinate search.
+inspect objective history and constraint history separately.
+compare raw and penalized landscapes.
+run projected penalty descent and seeded differential evolution.
+compare candidates, feasibility and sensitivity to starting points.
+
+challenge: reduce the penalty or constraint tolerance until an apparently attractive but infeasible candidate appears.
+checkpoint: feasibility is a separate scientific and numerical requirement." data-guide-id="tutorial-12-optimization-with-feasibility-separated-from-objective"><div class="guide-module-heading"><h2 id="tutorial-12-optimization-with-feasibility-separated-from-objective">Tutorial 12 — Optimization with feasibility separated from objective</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-12-optimization-with-feasibility-separated-from-objective" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Avoid calling an infeasible low-objective point an optimum.</p>
+<ol>
+<li>Open <strong>Optimization Lab</strong> and load Constrained Quadratic.</li>
+<li>Run bounded coordinate search.</li>
+<li>Inspect objective history and constraint history separately.</li>
+<li>Compare raw and penalized landscapes.</li>
+<li>Run projected penalty descent and seeded differential evolution.</li>
+<li>Compare candidates, feasibility and sensitivity to starting points.</li>
+</ol>
+<p><strong>Challenge:</strong> Reduce the penalty or constraint tolerance until an apparently attractive but infeasible candidate appears.</p>
+<p><strong>Checkpoint:</strong> Feasibility is a separate scientific and numerical requirement.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 13 — finite multi-objective trade-offs
+goal: read a sampled pareto front without claiming completeness.
+
+load bi-objective rosenbrock–rastrigin or tracking vs control effort.
+run the finite multi-objective workflow.
+inspect the pareto front, dominance heatmap, crowding distance, objective correlation and hypervolume progression.
+locate the geometric knee candidate.
+repeat with a larger candidate budget and another seed.
+
+challenge: change the reference point used for hypervolume interpretation outside the platform export workflow and observe its effect.
+checkpoint: nondominated sampled candidates are not proof of the complete pareto set. a knee is preference-dependent, even when identified geometrically." data-guide-id="tutorial-13-finite-multi-objective-trade-offs"><div class="guide-module-heading"><h2 id="tutorial-13-finite-multi-objective-trade-offs">Tutorial 13 — Finite multi-objective trade-offs</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-13-finite-multi-objective-trade-offs" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Read a sampled Pareto front without claiming completeness.</p>
+<ol>
+<li>Load Bi-objective Rosenbrock–Rastrigin or Tracking vs Control Effort.</li>
+<li>Run the finite multi-objective workflow.</li>
+<li>Inspect the Pareto front, dominance heatmap, crowding distance, objective correlation and hypervolume progression.</li>
+<li>Locate the geometric knee candidate.</li>
+<li>Repeat with a larger candidate budget and another seed.</li>
+</ol>
+<p><strong>Challenge:</strong> Change the reference point used for hypervolume interpretation outside the platform export workflow and observe its effect.</p>
+<p><strong>Checkpoint:</strong> Nondominated sampled candidates are not proof of the complete Pareto set. A knee is preference-dependent, even when identified geometrically.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 14 — find equilibria without claiming all roots
+goal: distinguish a converged root from root completeness and bifurcation evidence.
+
+open steady-state lab and load cstr thermal runaway or a normal-form example.
+run from the default initial guess.
+inspect residual history and the final tolerance gate.
+run deterministic multi-start search.
+inspect nullclines or residual surface where available.
+run a parameter branch scan and stability-margin view.
+
+challenge: change the initial-guess domain and scan resolution.
+checkpoint: say “the search found these roots.” a sequential branch is not pseudo-arclength continuation, and a grid sign change is only a candidate bifurcation." data-guide-id="tutorial-14-find-equilibria-without-claiming-all-roots"><div class="guide-module-heading"><h2 id="tutorial-14-find-equilibria-without-claiming-all-roots">Tutorial 14 — Find equilibria without claiming all roots</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-14-find-equilibria-without-claiming-all-roots" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Distinguish a converged root from root completeness and bifurcation evidence.</p>
+<ol>
+<li>Open <strong>Steady-State Lab</strong> and load CSTR Thermal Runaway or a normal-form example.</li>
+<li>Run from the default initial guess.</li>
+<li>inspect residual history and the final tolerance gate.</li>
+<li>Run deterministic multi-start search.</li>
+<li>Inspect nullclines or residual surface where available.</li>
+<li>Run a parameter branch scan and stability-margin view.</li>
+</ol>
+<p><strong>Challenge:</strong> Change the initial-guess domain and scan resolution.</p>
+<p><strong>Checkpoint:</strong> Say “the search found these roots.” A sequential branch is not pseudo-arclength continuation, and a grid sign change is only a candidate bifurcation.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 15 — stochastic paths, ensembles and censoring
+goal: separate one realization from finite-ensemble evidence.
+
+open stochastic lab and load birth–death or stochastic sir.
+set seed 42 and 100 trajectories.
+inspect sample paths, mean/band, endpoint histogram, variance, fano factor and event counts.
+repeat with the same seed and then seed 43.
+increase the trajectory count.
+inspect censored runs and first-passage or zero-state evidence where relevant.
+
+challenge: lower the event cap until censoring occurs.
+checkpoint: more trajectories reduce monte carlo error but do not remove process variability or parameter uncertainty." data-guide-id="tutorial-15-stochastic-paths-ensembles-and-censoring"><div class="guide-module-heading"><h2 id="tutorial-15-stochastic-paths-ensembles-and-censoring">Tutorial 15 — Stochastic paths, ensembles and censoring</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-15-stochastic-paths-ensembles-and-censoring" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Separate one realization from finite-ensemble evidence.</p>
+<ol>
+<li>Open <strong>Stochastic Lab</strong> and load Birth–Death or Stochastic SIR.</li>
+<li>Set seed <code>42</code> and 100 trajectories.</li>
+<li>Inspect sample paths, mean/band, endpoint histogram, variance, Fano factor and event counts.</li>
+<li>Repeat with the same seed and then seed <code>43</code>.</li>
+<li>Increase the trajectory count.</li>
+<li>Inspect censored runs and first-passage or zero-state evidence where relevant.</li>
+</ol>
+<p><strong>Challenge:</strong> Lower the event cap until censoring occurs.</p>
+<p><strong>Checkpoint:</strong> More trajectories reduce Monte Carlo error but do not remove process variability or parameter uncertainty.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 16 — parameter fitting and practical identifiability
+goal: show that an excellent fit can still contain poorly estimated parameters.
+
+open curve fitting and load low-substrate michaelis–menten data.
+fit v=vmax*s/(km+s).
+inspect residuals, parameter correlation, bootstrap and profile scans.
+refit from several starting values.
+add or choose data that extend into saturation and repeat.
+
+checkpoint: low-substrate data may constrain vmax/km without separately identifying vmax and km." data-guide-id="tutorial-16-parameter-fitting-and-practical-identifiability"><div class="guide-module-heading"><h2 id="tutorial-16-parameter-fitting-and-practical-identifiability">Tutorial 16 — Parameter fitting and practical identifiability</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-16-parameter-fitting-and-practical-identifiability" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Show that an excellent fit can still contain poorly estimated parameters.</p>
+<ol>
+<li>Open <strong>Curve Fitting</strong> and load low-substrate Michaelis–Menten data.</li>
+<li>Fit <code>v=Vmax*S/(Km+S)</code>.</li>
+<li>Inspect residuals, parameter correlation, bootstrap and profile scans.</li>
+<li>Refit from several starting values.</li>
+<li>Add or choose data that extend into saturation and repeat.</li>
+</ol>
+<p><strong>Checkpoint:</strong> Low-substrate data may constrain <code>Vmax/Km</code> without separately identifying <code>Vmax</code> and <code>Km</code>.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 17 — statistics before machine learning
+goal: audit data before building a predictive baseline.
+
+open statistics with a dataset containing missingness and correlated features.
+inspect missing-data policy, distributions, correlations and pca.
+move to machine learning with a compatible preset.
+select features and target explicitly.
+run fold-safe cross-validation.
+inspect out-of-fold predictions, residuals or classification curves, calibration and permutation importance.
+
+challenge: include a target-derived feature and confirm the leakage guard rejects it.
+checkpoint: cross-validation cannot rescue leakage, inappropriate labels, nonrepresentative data or an invalid scientific target." data-guide-id="tutorial-17-statistics-before-machine-learning"><div class="guide-module-heading"><h2 id="tutorial-17-statistics-before-machine-learning">Tutorial 17 — Statistics before machine learning</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-17-statistics-before-machine-learning" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Audit data before building a predictive baseline.</p>
+<ol>
+<li>Open <strong>Statistics</strong> with a dataset containing missingness and correlated features.</li>
+<li>Inspect missing-data policy, distributions, correlations and PCA.</li>
+<li>Move to <strong>Machine Learning</strong> with a compatible preset.</li>
+<li>Select features and target explicitly.</li>
+<li>Run fold-safe cross-validation.</li>
+<li>Inspect out-of-fold predictions, residuals or classification curves, calibration and permutation importance.</li>
+</ol>
+<p><strong>Challenge:</strong> Include a target-derived feature and confirm the leakage guard rejects it.</p>
+<p><strong>Checkpoint:</strong> Cross-validation cannot rescue leakage, inappropriate labels, nonrepresentative data or an invalid scientific target.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 18 — conditioning in linear algebra
+goal: understand why a small residual may coexist with an unstable solution.
+
+open linear algebra and load the well-conditioned solve.
+solve ax=b; inspect residual and singular values.
+load the hilbert example and repeat.
+perturb one entry of b slightly.
+compare the change in the solution.
+
+checkpoint: residual measures equation satisfaction. conditioning governs amplification of input and rounding errors." data-guide-id="tutorial-18-conditioning-in-linear-algebra"><div class="guide-module-heading"><h2 id="tutorial-18-conditioning-in-linear-algebra">Tutorial 18 — Conditioning in linear algebra</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-18-conditioning-in-linear-algebra" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Understand why a small residual may coexist with an unstable solution.</p>
+<ol>
+<li>Open <strong>Linear Algebra</strong> and load the well-conditioned solve.</li>
+<li>Solve <code>Ax=b</code>; inspect residual and singular values.</li>
+<li>Load the Hilbert example and repeat.</li>
+<li>Perturb one entry of <code>b</code> slightly.</li>
+<li>Compare the change in the solution.</li>
+</ol>
+<p><strong>Checkpoint:</strong> Residual measures equation satisfaction. Conditioning governs amplification of input and rounding errors.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 19 — use sciml without fabricating neural evidence
+goal: distinguish computed sindy/surrogate evidence from export-only pinn and neural-operator templates.
+
+open sciml and run a compatible sindy example.
+inspect coefficient paths, active library terms, error versus sparsity and trajectory evidence.
+change the sparsity threshold and noise assumptions.
+select a pinn or operator-learning example.
+confirm that the platform presents an export boundary rather than invented loss curves or residual maps.
+
+checkpoint: a scientific problem card is not a trained model. only interpret evidence generated by an actual maintained computation." data-guide-id="tutorial-19-use-sciml-without-fabricating-neural-evidence"><div class="guide-module-heading"><h2 id="tutorial-19-use-sciml-without-fabricating-neural-evidence">Tutorial 19 — Use SciML without fabricating neural evidence</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-19-use-sciml-without-fabricating-neural-evidence" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Distinguish computed SINDy/surrogate evidence from export-only PINN and neural-operator templates.</p>
+<ol>
+<li>Open <strong>SciML</strong> and run a compatible SINDy example.</li>
+<li>Inspect coefficient paths, active library terms, error versus sparsity and trajectory evidence.</li>
+<li>Change the sparsity threshold and noise assumptions.</li>
+<li>Select a PINN or operator-learning example.</li>
+<li>Confirm that the platform presents an export boundary rather than invented loss curves or residual maps.</li>
+</ol>
+<p><strong>Checkpoint:</strong> A scientific problem card is not a trained model. Only interpret evidence generated by an actual maintained computation.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 20 — produce a reproducible report
+before the final reporting exercise, inspect one agent lab run. each visible frame is computed before it is displayed, but the animation is still one run and must not be interpreted as an ensemble or calibrated biological movie.
+goal: create a result another scientist can inspect and challenge.
+
+choose one completed model from an earlier tutorial.
+repeat the run with tighter numerical controls or a larger sampling budget.
+perform an independent comparison where available.
+save the configuration and export model/result json.
+export a plot only while the evidence is current.
+record version, solver, tolerances, seed, sample count, parameter ranges and warnings.
+write at least three explicit non-claims.
+
+a defensible methods statement contains:
+
+model equations or rules;
+state, parameter and unit definitions;
+initial/boundary conditions;
+numerical method and controls;
+verification and diagnostics;
+sensitivity/uncertainty design;
+software version and export;
+limitations.
+
+final checkpoint: reproducibility requires enough information to recompute the result, not merely a screenshot of the result." data-guide-id="tutorial-20-produce-a-reproducible-report"><div class="guide-module-heading"><h2 id="tutorial-20-produce-a-reproducible-report">Tutorial 20 — Produce a reproducible report</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-20-produce-a-reproducible-report" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p>Before the final reporting exercise, inspect one Agent Lab run. Each visible frame is computed before it is displayed, but the animation is still one run and must not be interpreted as an ensemble or calibrated biological movie.</p>
+<p><strong>Goal:</strong> Create a result another scientist can inspect and challenge.</p>
+<ol>
+<li>Choose one completed model from an earlier tutorial.</li>
+<li>Repeat the run with tighter numerical controls or a larger sampling budget.</li>
+<li>Perform an independent comparison where available.</li>
+<li>Save the configuration and export model/result JSON.</li>
+<li>Export a plot only while the evidence is current.</li>
+<li>Record version, solver, tolerances, seed, sample count, parameter ranges and warnings.</li>
+<li>Write at least three explicit non-claims.</li>
+</ol>
+<p>A defensible methods statement contains:</p>
+<ul>
+<li>model equations or rules;</li>
+<li>state, parameter and unit definitions;</li>
+<li>initial/boundary conditions;</li>
+<li>numerical method and controls;</li>
+<li>verification and diagnostics;</li>
+<li>sensitivity/uncertainty design;</li>
+<li>software version and export;</li>
+<li>limitations.</li>
+</ul>
+<p><strong>Final checkpoint:</strong> Reproducibility requires enough information to recompute the result, not merely a screenshot of the result.</p>
+</section></article></div>
 </main>
-<footer class="v70-footer foko-product-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.47.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
-<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="workbench.html">Workbench</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Docs</a><a href="trust.html">Trust</a><a href="research.html">Research</a><a href="beauty.html">Mathematical Beauty</a></nav>
-<div class="foko-footer-meta"><p><a href="mailto:chilpericarmel@gmail.com">Contact</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a> · <a href="https://chilperic.github.io/" rel="noopener" target="_blank">About the author</a></p><p>HHU Düsseldorf · CEPLAS · AIMS Ghana · PoLiMeR ITN</p><p><a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">Source code</a></p></div>
+<footer class="v70-footer foko-product-footer compact-public-footer">
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.48.0"/><p><b>Foko Lab</b><br/>Scientific modelling with visible evidence boundaries.</p></div>
+<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Modelling handbook</a><a href="trust.html">Trust</a><a href="research.html">Research</a></nav>
+<div class="foko-footer-meta"><p><a href="https://chilperic.github.io/" rel="noopener" target="_blank">Dr. Chilperic Armel Foko Kuate</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a></p></div>
 </footer>
-</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script defer="" src="src/navigation.js?v=72.47.0"></script></body></html>
+</div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script>
+(function(){
+  'use strict';
+  const page=document.querySelector('.guide-page');
+  const input=document.getElementById('guideSearch');
+  const sections=Array.from(document.querySelectorAll('[data-guide-section]'));
+  const count=document.getElementById('guideSearchCount');
+  const empty=document.getElementById('guideSearchEmpty');
+  const progress=document.getElementById('guideReadingProgress');
+  const key='fokolab:guide-completion:'+(document.body.dataset.lab||'guide');
+  let completed={};
+  try{completed=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(_){completed={};}
+
+  function updateCompletion(){
+    const buttons=Array.from(document.querySelectorAll('.tutorial-complete'));
+    buttons.forEach(button=>{
+      const done=Boolean(completed[button.dataset.tutorialId]);
+      button.setAttribute('aria-pressed',String(done));
+      button.classList.toggle('is-complete',done);
+      button.lastChild.textContent=done?' Completed':' Mark complete';
+    });
+    const meter=document.getElementById('tutorialProgressMeter');
+    const label=document.getElementById('tutorialProgressLabel');
+    if(meter&&label){
+      const done=buttons.filter(button=>completed[button.dataset.tutorialId]).length;
+      meter.max=Math.max(buttons.length,1);meter.value=done;
+      label.textContent=done+' of '+buttons.length+' tutorials completed';
+    }
+  }
+  document.addEventListener('click',event=>{
+    const button=event.target.closest('.tutorial-complete');
+    if(button){
+      const id=button.dataset.tutorialId;completed[id]=!completed[id];
+      localStorage.setItem(key,JSON.stringify(completed));updateCompletion();
+    }
+    const deep=event.target.closest('.guide-deep-link');
+    if(deep&&navigator.clipboard){
+      navigator.clipboard.writeText(location.href.split('#')[0]+deep.getAttribute('href')).catch(()=>{});
+    }
+  });
+  function filter(){
+    const query=(input?.value||'').trim().toLowerCase();let visible=0;
+    sections.forEach(section=>{
+      const show=!query||section.dataset.guideSearch.includes(query);
+      section.hidden=!show;if(show)visible++;
+    });
+    if(count)count.textContent=query?visible+' matching sections':sections.length+' sections';
+    if(empty)empty.hidden=visible!==0;
+  }
+  input?.addEventListener('input',filter);filter();updateCompletion();
+  function updateReading(){
+    if(!progress||!page)return;
+    const max=Math.max(document.documentElement.scrollHeight-innerHeight,1);
+    progress.value=Math.min(100,Math.max(0,scrollY/max*100));
+  }
+  addEventListener('scroll',updateReading,{passive:true});updateReading();
+})();
+</script><script defer src="src/navigation.js?v=72.48.0"></script></body></html>

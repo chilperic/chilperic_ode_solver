@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPECTED = "72.47.0"
+EXPECTED = "72.48.0"
 
 
 def iter_release_sources():
@@ -115,7 +115,7 @@ def test_scientific_runtime_dependencies_are_vendored():
     assert "cdn.jsdelivr.net/npm/mathjs" not in html
     worker = (ROOT / "src/worker.js").read_text()
     assert "cdn.jsdelivr.net" not in worker
-    assert "../assets/vendor/mathjs/math-15.2.0.js?v=72.47.0" in worker
+    assert "../assets/vendor/mathjs/math-15.2.0.js?v=72.48.0" in worker
 
 
 def test_v72_dropdown_is_opaque_and_not_overridden_by_legacy_runtime_css():

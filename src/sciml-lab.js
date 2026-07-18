@@ -424,7 +424,7 @@
   }
   function modelJson(){
     const data=DATA||buildDataFromCurrentInputs();
-    const out={id:'sciml-model',name:ex().title,type:'ODE/SciML',family:'SciML',workflow:approach(),variables:data.vars,parameters:data.params||{},initialConditions:data.x0||[],parameterRanges:data.paramRanges||{},source:'Foko SciML Lab v72.47.0',noiseSeed:data.noiseSeed,noiseAmplitude:data.noiseAmplitude};
+    const out={id:'sciml-model',name:ex().title,type:'ODE/SciML',family:'SciML',workflow:approach(),variables:data.vars,parameters:data.params||{},initialConditions:data.x0||[],parameterRanges:data.paramRanges||{},source:'Foko SciML Lab v72.48.0',noiseSeed:data.noiseSeed,noiseAmplitude:data.noiseAmplitude};
     if(MODEL)out.equations=MODEL.vars.map((v,j)=>expr(MODEL.coeff[j],MODEL.terms));
     if(ANALYSIS&&ANALYSIS.inverse&&!ANALYSIS.inverse.exportOnly)out.recoveredParameters=ANALYSIS.inverse.thetaObject;
     if(ANALYSIS&&ANALYSIS.surrogate)out.surrogate={degree:ANALYSIS.surrogate.model.degree,heldoutR2:ANALYSIS.surrogate.r2,cvRmse:ANALYSIS.surrogate.cvError};
@@ -517,7 +517,7 @@
   }
   function currentConfig(){
     return {
-      schema:'fokolab-sciml-config-v1', version:'72.47.0',
+      schema:'fokolab-sciml-config-v1', version:'72.48.0',
       example:$('sciExample')?.value||'logistic', approach:approach(),
       settings:{points:n('sciPoints',180),dt:n('sciDt',.05),noise:n('sciNoise',0),seed:Math.max(0,Math.floor(n('sciSeed',202614)))>>>0,threshold:n('sciThreshold',.05),ridge:n('sciRidge',1e-4),iterations:n('sciIterations',8)},
       modelText:$('sciUserModel')?.value||'', csv:$('sciCsv')?.value||'',

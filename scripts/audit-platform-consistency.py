@@ -68,9 +68,9 @@ assert 'Sobol/Jansen and local information diagnostics' not in ''.join(p.read_te
 docs = (ROOT / 'docs.html').read_text()
 tutorial = (ROOT / 'tutorial.html').read_text()
 trust = (ROOT / 'trust.html').read_text()
-for token in ['normalized Morris parameter-design trajectories', 'first- and total-order effects across every model state', 'Plot availability is method-dependent']:
+for token in ['normalized parameter domain', 'parameter-by-state first and total effects', 'Plot availability is method-dependent']:
     assert token in docs, f'docs missing Sensitivity feature: {token}'
-for token in ['Tutorial 10 — Build a defensible sensitivity analysis', 'effects across states', 'capacity guard refuses the run']:
+for token in ['Tutorial 10 — Pairwise interactions, time and state resolution', 'effects across states', 'browser guard refuses the request']:
     assert token in tutorial, f'tutorial missing Sensitivity feature: {token}'
 for token in ['Morris normalized parameter design trajectories', 'State resolved first and total effect indices', 'Sensitivity documentation tutorial and trust sync']:
     assert token in trust, f'trust matrix missing Sensitivity capability: {token}'
@@ -80,9 +80,9 @@ for acronym in ('ODE', 'HSIC', 'FIM', 'SSA'):
     assert acronym in trust, f'trust acronym formatting is missing {acronym}'
 assert 'Adjoint sensitivity' in trust and 'Unavailable' in trust
 
-runner = (ROOT / 'test-v72.47.0-local.sh').read_text()
-assert 'PREVIOUS_VERSION="72.46.0"' in runner, 'runner predecessor variable is stale'
-assert "previous='72.46.0'" in runner, 'runner embedded preflight predecessor is stale'
+runner = (ROOT / 'test-v72.48.0-local.sh').read_text()
+assert 'PREVIOUS_VERSION="72.47.0"' in runner, 'runner predecessor variable is stale'
+assert "previous='72.47.0'" in runner, 'runner embedded preflight predecessor is stale'
 
 # Every authored workspace must retain exactly two stable plot hosts.
 workspaces = ['ode','steady','stochastic','optimization','statistics','fitting','linear-algebra','networks','ml','sciml','agent','symbolic','sensitivity','workbench']

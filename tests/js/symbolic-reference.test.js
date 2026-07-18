@@ -94,7 +94,7 @@ truthy(script.includes('import sympy as sp'), 'SymPy import');
 truthy(script.includes('F.jacobian(variables)'), 'SymPy Jacobian export');
 truthy(script.includes('sp.solve'), 'exact solving clearly left as optional external route');
 truthy(script.includes('sp.integrate'), 'integration clearly left as optional external route');
-truthy(script.includes('v72.47.0'), 'export release identity');
+truthy(script.includes('v72.48.0'), 'export release identity');
 
 console.log((checks - fails) + '/' + checks + ' symbolic reference checks passed');
 if (fails) process.exit(1);

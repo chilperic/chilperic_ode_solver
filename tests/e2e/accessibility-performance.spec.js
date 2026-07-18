@@ -100,7 +100,7 @@ test.describe('v72.17 accessibility and performance gate', () => {
     await page.locator('#runLinalg').click();
     await expect(page.locator('#linalgTopStatus')).toContainText(/Computed/i, { timeout: 20_000 });
     const report = await page.evaluate(() => window.FokoPerformance.getReport());
-    expect(report.release).toBe('72.47.0');
+    expect(report.release).toBe('72.48.0');
     expect(report.resources.count).toBeGreaterThan(0);
     expect(report.plots.some(item => item.status === 'rendered')).toBeTruthy();
     expect(await page.getByText('DOMContentLoaded time', { exact: false }).count()).toBe(0);

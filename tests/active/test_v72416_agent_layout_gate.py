@@ -41,7 +41,7 @@ def test_offline_chromium_gate_exercises_the_reported_agent_path():
 
 
 def test_release_runner_executes_offline_browser_gate_before_complete_localhost_suite():
-    runner = text("test-v72.47.0-local.sh")
+    runner = text("test-v72.48.0-local.sh")
     offline = runner.index("npm run test:agent-layout-offline")
     complete = runner.index("Complete 123-test browser suite")
     assert offline < complete

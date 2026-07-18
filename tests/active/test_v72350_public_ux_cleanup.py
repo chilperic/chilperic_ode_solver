@@ -36,6 +36,6 @@ def test_workbench_public_copy_avoids_implementation_architecture():
     assert 'Compare analyses in one workspace.' in page
 
 def test_new_release_and_port():
-    assert '72.47.0' in text('VERSION.json')
-    assert '8101' in text('package.json')
-    assert 'PORT=8101' in text('test-v72.47.0-local.sh')
+    assert '72.48.0' in text('VERSION.json')
+    assert '8102' in text('package.json')
+    assert 'PORT=8102' in text('test-v72.48.0-local.sh')

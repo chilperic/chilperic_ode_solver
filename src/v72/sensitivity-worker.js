@@ -2,10 +2,10 @@
  * is implemented by terminating the worker from the workspace controller.
  */
 'use strict';
-importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=72.47.0');
-importScripts('../core/ode.js?v=72.47.0');
-importScripts('../core/sensitivity.js?v=72.47.0');
-importScripts('../core/numerical-inputs.js?v=72.47.0');
+importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=72.48.0');
+importScripts('../core/ode.js?v=72.48.0');
+importScripts('../core/sensitivity.js?v=72.48.0');
+importScripts('../core/numerical-inputs.js?v=72.48.0');
 
 function stableParameterKey(params) {
   return Object.keys(params).sort().map(name => `${name}:${Number(params[name]).toPrecision(17)}`).join('|');
@@ -65,6 +65,9 @@ function metricFromSeries(values, time, kind) {
   if (kind === 'range') return Math.max.apply(null, values) - Math.min.apply(null, values);
   if (kind === 'integral') {
     let area = 0; for (let i = 1; i < values.length; i += 1) area += (time[i] - time[i - 1]) * (values[i] + values[i - 1]) / 2; return area;
+  }
+  if (kind === 'time_of_max') {
+    let index = 0; for (let i = 1; i < values.length; i += 1) if (values[i] > values[index]) index = i; return time[index];
   }
   throw new Error(`Unsupported output metric: ${kind}.`);
 }
@@ -258,7 +261,7 @@ self.onmessage = function (event) {
     const solverSummary = compiled.summary();
     self.postMessage({ type: 'progress', progress: 0.96, text: 'Preparing diagnostics and plots' });
     self.postMessage({
-      type: 'result', ok: true, release: '72.47.0', method: methodConfig.method, outputVar, outputMetric,
+      type: 'result', ok: true, release: '72.48.0', method: methodConfig.method, outputVar, outputMetric,
       model: compiled.checked, analysis, solverSummary, estimatedOdeSolves: expectedSolves,
       runtime: performance.now() - started, warnings: (compiled.checked.warnings || []).concat(methodConfig.warnings || []),
       configuration: { model: request.model, analysis: request.analysis, outputVar, outputMetric }

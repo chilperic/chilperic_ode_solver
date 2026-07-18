@@ -8,7 +8,7 @@
   const INPUT = root.FokoNumericalInputs;
   const CORE = root.FokoSensitivityCore;
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '72.47.0';
+  const RELEASE = '72.48.0';
   const STORAGE_KEY = 'fokolab:v72.44:sensitivity-config';
   if (!INPUT || !CORE || !PLOT) throw new Error('Sensitivity Lab requires FokoNumericalInputs, FokoSensitivityCore and FokoPlotLifecycle.');
 
@@ -156,13 +156,19 @@
       parameterCount: Object.keys(state.model && state.model.params || {}).length, stateCount: state.model && state.model.vars ? state.model.vars.length : 1, outputPoints: Number($('sensitivityPoints').value || state.model && state.model.points || 100)
     };
   }
-  function configFromInputs() { return { release: RELEASE, model: modelFromInputs(), analysis: analysisFromInputs(), plots: clone(state.plotTypes), layout: state.layout, focusSide: state.focusSide }; }
+  function configFromInputs() { return { release: RELEASE, model: modelFromInputs(), analysis: analysisFromInputs(), plots: clone(state.plotTypes), layout: state.layout, focusSide: state.focusSide, view: { scale: $('sensitivityViewScale').value, topN: Number($('sensitivityTopN').value), surfaceStyle: $('sensitivitySurfaceStyle').value, uncertainty: $('sensitivityShowUncertainty').checked } }; }
 
   function applyConfig(config, label) {
     if (config && config.configuration) config = config.configuration;
     if (!config || !config.model) throw new Error('Sensitivity configuration is missing a model.');
     cancelRun(false); state.model = clone(config.model); state.plotTypes = Object.assign({ left: 'ranking', right: 'signed' }, config.plots || {});
     state.layout = config.layout || 'two'; state.focusSide = config.focusSide || 'left';
+    if (config.view) {
+      if (config.view.scale != null) $('sensitivityViewScale').value = config.view.scale;
+      if (config.view.topN != null) $('sensitivityTopN').value = String(config.view.topN);
+      if (config.view.surfaceStyle != null) $('sensitivitySurfaceStyle').value = config.view.surfaceStyle;
+      if (config.view.uncertainty != null) $('sensitivityShowUncertainty').checked = Boolean(config.view.uncertainty);
+    }
     if (config.analysis) {
       Object.entries({ sensitivityMethod: 'method', sensitivityRelativeStep: 'relativeStep', sensitivitySamples: 'samples', sensitivityTrajectories: 'trajectories', sensitivityLevels: 'levels', sensitivitySeed: 'seed', sensitivitySigma: 'sigma', sensitivityBootstrap: 'bootstrapReplicates', sensitivityOfatPoints: 'ofatPoints', sensitivityDirection: 'direction', sensitivityDirectionalSpan: 'directionalSpan', sensitivityDirectionPoints: 'directionPoints', sensitivitySurfaceFirst: 'surfaceFirst', sensitivitySurfaceSecond: 'surfaceSecond', sensitivitySurfacePoints: 'surfacePoints', sensitivityDependencePermutations: 'dependencePermutations' }).forEach(([id, key]) => {
         if (config.analysis[key] != null) $(id).value = config.analysis[key];
@@ -181,13 +187,32 @@
   }
 
   function renderPresetLibrary() {
-    const names = Object.keys(PRESETS); $('sensitivitySelect').innerHTML = names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(PRESETS[name].title)}</option>`).join('');
-    $('sensitivityDeck').innerHTML = names.map(name => `<button type="button" data-preset="${escapeHtml(name)}" class="${name === state.current ? 'active' : ''}"><b>${escapeHtml(PRESETS[name].title)}</b><small>${escapeHtml(PRESETS[name].family)}</small></button>`).join('');
-    $('sensitivitySelect').value = state.current;
+    const names = Object.keys(PRESETS);
+    const select = $('sensitivitySelect');
+    select.innerHTML = names.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(PRESETS[name].title)}</option>`).join('');
+    select.value = state.current;
+    const familySelect = $('sensitivityFamilyFilter');
+    if (familySelect) {
+      const families = Array.from(new Set(names.map(name => PRESETS[name].family || 'Other'))).sort();
+      const previous = familySelect.value || 'all';
+      familySelect.innerHTML = '<option value="all">All families</option>' + families.map(family => `<option value="${escapeHtml(family)}">${escapeHtml(family)}</option>`).join('');
+      familySelect.value = families.includes(previous) ? previous : 'all';
+    }
+    const query = String($('sensitivityExampleSearch')?.value || '').trim().toLowerCase();
+    const family = familySelect ? familySelect.value : 'all';
+    const filtered = names.filter(name => {
+      const preset = PRESETS[name];
+      const searchable = [preset.title, preset.family, preset.difficulty, preset.question, preset.note].join(' ').toLowerCase();
+      return (family === 'all' || preset.family === family) && (!query || searchable.includes(query));
+    });
+    $('sensitivityDeck').innerHTML = filtered.length ? filtered.map(name => {
+      const preset = PRESETS[name];
+      return `<button type="button" data-preset="${escapeHtml(name)}" class="${name === state.current ? 'active' : ''}"><b>${escapeHtml(preset.title)}</b><small>${escapeHtml(preset.family)} · ${escapeHtml(preset.difficulty || 'reference')}</small><span>${escapeHtml(preset.question || preset.note || '')}</span></button>`;
+    }).join('') : '<p class="empty-library">No sensitivity model matches the current filters.</p>';
   }
   function loadPreset(name) {
     const preset = PRESETS[name]; if (!preset) return; cancelRun(false); state.current = name; state.model = clone(preset);
-    $('sensitivitySelect').value = name; $('sensitivityNarrative').textContent = preset.note;
+    $('sensitivitySelect').value = name; $('sensitivityQuestion').textContent = preset.question || 'What parameter influence question does this model answer?'; $('sensitivityNarrative').textContent = preset.note;
     document.querySelectorAll('#sensitivityDeck [data-preset]').forEach(button => button.classList.toggle('active', button.dataset.preset === name));
     populateControls(); clearResult('Example loaded. Review inputs, then run sensitivity analysis.');
   }
@@ -282,7 +307,7 @@
     const analysis = analysisFromInputs(); const checkedAnalysis = INPUT.validateSensitivity(analysis);
     if (checkedAnalysis.capacity && checkedAnalysis.capacity.blocked) throw new Error(checkedAnalysis.capacity.message);
     state.runToken += 1; const token = state.runToken;
-    state.worker = new Worker('src/v72/sensitivity-worker.js?v=72.47.0'); syncRunAvailability();
+    state.worker = new Worker('src/v72/sensitivity-worker.js?v=72.48.0'); syncRunAvailability();
     $('sensitivityProgress').style.width = '4%'; setText('sensitivityStatus', `Starting about ${checkedAnalysis.expectedEvaluations.toLocaleString()} ODE solves in a worker…`);
     setText('sensitivityTopStatus', 'Running'); document.querySelector('.results-card')?.classList.add('stale-results');
     state.worker.onmessage = function (event) {
@@ -337,33 +362,72 @@
     state.plotTypes[side] = value; state.lastPlotSide = side; renderPlot(side);
   }
   function chartLayout(xTitle, yTitle) {
-    return { margin: { t: 28, r: 18, b: 58, l: 64 }, paper_bgcolor: '#fff', plot_bgcolor: '#fff', font: { family: 'Inter, system-ui, sans-serif', color: '#172033', size: 11 }, xaxis: { title: xTitle, automargin: true, gridcolor: '#e7ebf1' }, yaxis: { title: yTitle, automargin: true, gridcolor: '#e7ebf1' }, legend: { orientation: 'h', y: 1.08 } };
+    return { margin: { t: 28, r: 18, b: 58, l: 78 }, paper_bgcolor: '#fff', plot_bgcolor: '#fff', font: { family: 'Inter, system-ui, sans-serif', color: '#172033', size: 11 }, xaxis: { title: xTitle, automargin: true, gridcolor: '#e7ebf1', zerolinecolor: '#9aa8b8' }, yaxis: { title: yTitle, automargin: true, gridcolor: '#e7ebf1' }, legend: { orientation: 'h', y: 1.12, x: 0 } };
   }
+  function viewScale() { return $('sensitivityViewScale') ? $('sensitivityViewScale').value : 'auto'; }
+  function topLimit() { const value = Number($('sensitivityTopN') ? $('sensitivityTopN').value : 0); return Number.isFinite(value) && value > 0 ? value : Infinity; }
+  function showUncertainty() { return !$('sensitivityShowUncertainty') || $('sensitivityShowUncertainty').checked; }
+  function parameterDefinition(name) {
+    const raw = state.result && state.result.model && state.result.model.paramDefs ? state.result.model.paramDefs[name] : null;
+    if (Array.isArray(raw)) return { value: Number(raw[0]), min: Number(raw[1]), max: Number(raw[2]) };
+    if (raw && typeof raw === 'object') return { value: Number(raw.value), min: Number(raw.min), max: Number(raw.max) };
+    return { value: NaN, min: NaN, max: NaN };
+  }
+  function localValue(row, signed) {
+    const scale = viewScale();
+    let value; let label;
+    if (scale === 'raw') { value = row.derivative; label = 'raw derivative'; }
+    else if (scale === 'range') { value = row.rangeScaled; label = 'range-scaled derivative'; }
+    else if (scale === 'elasticity') { value = row.elasticity; label = 'elasticity'; }
+    else if (Number.isFinite(row.elasticity)) { value = row.elasticity; label = 'elasticity'; }
+    else { value = row.rangeScaled; label = 'range-scaled derivative'; }
+    if (!Number.isFinite(value)) value = row.rangeScaled;
+    return { value: signed ? value : Math.abs(value), label };
+  }
+  function limitRows(rows) { return rows.slice(0, Math.min(rows.length, topLimit())); }
   function rankingRows() {
     const analysis = state.result.analysis;
-    if (state.result.method === 'local') return analysis.rows.map(row => ({ name: row.name, value: Number.isFinite(row.elasticity) ? Math.abs(row.elasticity) : Math.abs(row.rangeScaled), secondary: row.derivative, label: Number.isFinite(row.elasticity) ? '|elasticity|' : '|range-scaled derivative|' }));
-    if (state.result.method === 'morris') return analysis.rows.map(row => ({ name: row.name, value: row.muStar, secondary: row.sigma, label: 'μ*' }));
-    if (state.result.method === 'sobol') return analysis.rows.map(row => ({ name: row.name, value: row.total, secondary: row.first, label: 'total-order estimate' }));
-    return analysis.names.map((name, i) => ({ name, value: analysis.matrix[i][i], secondary: analysis.eigenvalues[i], label: 'scaled information diagonal' }));
+    if (state.result.method === 'local') return analysis.rows.map(row => { const chosen = localValue(row, false); return { name: row.name, value: chosen.value, secondary: row.derivative, label: `|${chosen.label}|`, uncertainty: 0 }; });
+    if (state.result.method === 'morris') return analysis.rows.map(row => ({ name: row.name, value: row.muStar, secondary: row.sigma, label: 'μ*', uncertainty: Number.isFinite(row.muStarSe) ? 1.96 * row.muStarSe : 0 }));
+    if (state.result.method === 'sobol') return analysis.rows.map(row => ({ name: row.name, value: row.total, secondary: row.first, label: 'total-order estimate', uncertainty: Number.isFinite(row.totalHigh) && Number.isFinite(row.totalLow) ? Math.max(row.totalHigh - row.total, row.total - row.totalLow) : 0 }));
+    return analysis.names.map((name, i) => ({ name, value: analysis.matrix[i][i], secondary: analysis.eigenvalues[i], label: 'scaled information diagonal', uncertainty: 0 }));
   }
   function plotSpec(type) {
     const result = state.result; const analysis = result && result.analysis; if (!result) return { traces: [], layout: chartLayout('', '') };
     if (type === 'ranking') {
-      const rows = rankingRows().sort((a, b) => b.value - a.value);
-      return { traces: [{ type: 'bar', orientation: 'h', y: rows.map(row => row.name).reverse(), x: rows.map(row => row.value).reverse(), name: rows[0]?.label || 'influence' }], layout: chartLayout('influence magnitude', 'parameter') };
+      const rows = limitRows(rankingRows().sort((a, b) => b.value - a.value));
+      const reversed = rows.slice().reverse();
+      return { traces: [{ type: 'bar', orientation: 'h', y: reversed.map(row => row.name), x: reversed.map(row => row.value), name: rows[0]?.label || 'influence', error_x: showUncertainty() ? { type: 'data', array: reversed.map(row => row.uncertainty || 0), visible: true } : undefined, text: reversed.map(row => number(row.value, 4)), textposition: 'auto', hovertemplate: '%{y}<br>influence=%{x:.5g}<extra></extra>' }], layout: Object.assign(chartLayout('influence magnitude', 'parameter'), { showlegend: false }) };
     }
     if (type === 'signed') {
-      const useElasticity = analysis.rows.some(row => Number.isFinite(row.elasticity));
-      return { traces: [{ type: 'bar', x: analysis.rows.map(row => row.name), y: analysis.rows.map(row => Number.isFinite(row.elasticity) ? row.elasticity : row.rangeScaled), name: useElasticity ? 'elasticity' : 'range-scaled derivative' }], layout: chartLayout('parameter', useElasticity ? 'signed elasticity' : 'signed range-scaled derivative') };
+      const rows = limitRows(analysis.rows.map(row => { const chosen = localValue(row, true); return { name: row.name, value: chosen.value, label: chosen.label }; }).sort((a,b) => Math.abs(b.value) - Math.abs(a.value))).reverse();
+      return { traces: [{ type: 'bar', orientation: 'h', y: rows.map(row => row.name), x: rows.map(row => row.value), name: rows[0]?.label || 'signed sensitivity', text: rows.map(row => number(row.value,4)), textposition: 'auto', marker: { color: rows.map(row => row.value >= 0 ? '#087f86' : '#b64b5a') } }], layout: Object.assign(chartLayout(rows[0]?.label || 'signed sensitivity', 'parameter'), { showlegend: false, xaxis: { title: rows[0]?.label || 'signed sensitivity', automargin: true, gridcolor: '#e7ebf1', zeroline: true, zerolinewidth: 2, zerolinecolor: '#6b7788' } }) };
     }
-    if (type === 'heatmap') return { traces: [{ type: 'heatmap', x: analysis.trajectory.time, y: analysis.trajectory.rows.map(row => row.name), z: analysis.trajectory.rows.map(row => row.values), colorscale: 'RdBu', zmid: 0, colorbar: { title: '∂state/∂p' } }], layout: chartLayout('time', 'parameter') };
+    if (type === 'heatmap') {
+      const scale = viewScale(); const base = analysis.trajectory.base || [];
+      const rows = limitRows(analysis.trajectory.rows.map(row => {
+        const def = parameterDefinition(row.name); const span = def.max - def.min;
+        const values = row.values.map((value, index) => {
+          if (scale === 'raw') return value;
+          if (scale === 'elasticity' || scale === 'auto') {
+            const denominator = Number(base[index]);
+            if (Number.isFinite(def.value) && Math.abs(denominator) > 1e-12) return value * def.value / denominator;
+            if (scale === 'elasticity') return null;
+          }
+          return Number.isFinite(span) ? value * span : value;
+        });
+        return { name: row.name, values };
+      }));
+      const title = scale === 'raw' ? '∂state/∂p' : scale === 'elasticity' || scale === 'auto' ? 'trajectory elasticity / range scale' : 'range-scaled ∂state/∂p';
+      return { traces: [{ type: 'heatmap', x: analysis.trajectory.time, y: rows.map(row => row.name), z: rows.map(row => row.values), colorscale: 'RdBu', zmid: 0, colorbar: { title } }], layout: chartLayout('time', 'parameter') };
+    }
     if (type === 'parameter-jacobian') return { traces: [{ type: 'heatmap', x: analysis.jacobians.parameters, y: analysis.jacobians.states, z: analysis.jacobians.parameterMeanAbsolute, colorscale: 'Viridis', colorbar: { title: 'mean |∂f/∂p|' }, text: analysis.jacobians.parameterMeanAbsolute.map(row => row.map(value => number(value, 3))), texttemplate: '%{text}' }], layout: chartLayout('parameter', 'equation / state derivative') };
     if (type === 'state-jacobian') return { traces: [{ type: 'heatmap', x: analysis.jacobians.states, y: analysis.jacobians.states, z: analysis.jacobians.stateMeanAbsolute, colorscale: 'Viridis', colorbar: { title: 'mean |∂f/∂x|' }, text: analysis.jacobians.stateMeanAbsolute.map(row => row.map(value => number(value, 3))), texttemplate: '%{text}' }], layout: chartLayout('state variable', 'equation / state derivative') };
     if (type === 'influence-map') return { traces: [{ type: 'heatmap', x: analysis.trajectory.parameterNames, y: analysis.trajectory.stateNames, z: analysis.trajectory.influenceMatrix, colorscale: 'Viridis', colorbar: { title: 'time-mean |∂x/∂p|' } }], layout: chartLayout('parameter', 'state') };
-    if (type === 'ofat') return { traces: analysis.ofat.rows.map(row => ({ type: 'scatter', mode: 'lines+markers', name: row.name, x: row.normalized.map(value => 100 * value), y: row.outputs, customdata: row.values, hovertemplate: `${row.name}: %{customdata}<br>relative range displacement: %{x:.1f}%<br>output: %{y}<extra></extra>` })), layout: chartLayout('displacement from nominal (% of declared range)', 'scalar output') };
+    if (type === 'ofat') { const scale=Math.max(Math.abs(analysis.ofat.base),1e-12); const chosen=limitRows(analysis.ofat.rows.slice().sort((a,b)=>Math.max(Math.abs(b.lowChange),Math.abs(b.highChange))-Math.max(Math.abs(a.lowChange),Math.abs(a.highChange)))); return { traces: chosen.map(row => ({ type: 'scatter', mode: 'lines+markers', name: row.name, x: row.normalized.map(value => 100 * value), y: row.outputs.map(value => 100*(value-analysis.ofat.base)/scale), customdata: row.values.map((value,index)=>[value,row.outputs[index]]), hovertemplate: `${row.name}: %{customdata[0]}<br>range displacement: %{x:.1f}%<br>output change: %{y:.2f}%<br>raw output: %{customdata[1]:.5g}<extra></extra>` })), layout: Object.assign(chartLayout('displacement from nominal (% of declared range)', 'output change from nominal (%)'), { shapes:[{type:'line',x0:-100,x1:100,y0:0,y1:0,line:{dash:'dot',width:1}}] }) }; }
     if (type === 'tornado') { const rows = analysis.ofat.rows.slice().sort((a,b) => Math.max(Math.abs(b.lowChange), Math.abs(b.highChange)) - Math.max(Math.abs(a.lowChange), Math.abs(a.highChange))); return { traces: [{ type:'bar', orientation:'h', name:'at minimum', y:rows.map(row=>row.name), x:rows.map(row=>row.lowChange) }, { type:'bar', orientation:'h', name:'at maximum', y:rows.map(row=>row.name), x:rows.map(row=>row.highChange) }], layout:Object.assign(chartLayout('change from nominal output','parameter'),{barmode:'group'}) }; }
     if (type === 'directional') return { traces: [{ type:'scatter', mode:'lines+markers', x:analysis.directional.steps, y:analysis.directional.outputs, name:'directional profile' }, { type:'scatter', mode:'markers', x:[0], y:[analysis.directional.outputs[Math.floor(analysis.directional.outputs.length/2)]], name:'nominal', marker:{size:11} }], layout:chartLayout('range-normalized direction coordinate','scalar output') };
-    if (type === 'response-surface') return { traces: [{ type:'surface', x:analysis.responseSurface.x, y:analysis.responseSurface.y, z:analysis.responseSurface.z, colorscale:'Viridis', colorbar:{title:'output'} }], layout:Object.assign(chartLayout(analysis.responseSurface.first,analysis.responseSurface.second),{scene:{xaxis:{title:analysis.responseSurface.first},yaxis:{title:analysis.responseSurface.second},zaxis:{title:'output'}},margin:{t:24,r:18,b:28,l:28}}) };
+    if (type === 'response-surface') { const style=$('sensitivitySurfaceStyle') ? $('sensitivitySurfaceStyle').value : 'contour'; if(style==='surface') return { traces: [{ type:'surface', x:analysis.responseSurface.x, y:analysis.responseSurface.y, z:analysis.responseSurface.z, colorscale:'Viridis', colorbar:{title:'output'}, contours:{z:{show:true,usecolormap:true,project:{z:true}}} }], layout:Object.assign(chartLayout(analysis.responseSurface.first,analysis.responseSurface.second),{scene:{xaxis:{title:analysis.responseSurface.first},yaxis:{title:analysis.responseSurface.second},zaxis:{title:'output'}},margin:{t:24,r:18,b:28,l:28}}) }; return { traces:[{type:'contour',x:analysis.responseSurface.x,y:analysis.responseSurface.y,z:analysis.responseSurface.z,colorscale:'Viridis',contours:{coloring:'heatmap',showlabels:true},colorbar:{title:'output'},hovertemplate:`${analysis.responseSurface.first}=%{x:.5g}<br>${analysis.responseSurface.second}=%{y:.5g}<br>output=%{z:.5g}<extra></extra>`}],layout:chartLayout(analysis.responseSurface.first,analysis.responseSurface.second) }; }
     if (type === 'convergence') {
       const names = analysis.rows.map(row => row.name);
       return { traces: names.map(name => ({ type: 'scatter', mode: 'lines+markers', name, x: analysis.convergence.map(item => item.step), y: analysis.convergence.map(item => Math.abs(item.rows.find(row => row.name === name).derivative)) })), layout: Object.assign(chartLayout('relative perturbation', '|derivative|'), { xaxis: { title: 'relative perturbation', type: 'log', autorange: 'reversed', automargin: true, gridcolor: '#e7ebf1' } }) };
@@ -410,8 +474,8 @@
     if (type === 'sobol-state-first') return { traces: [{ type:'heatmap', x:analysis.stateSensitivity.states, y:analysis.stateSensitivity.names, z:analysis.stateSensitivity.firstMatrix, colorscale:'Viridis', colorbar:{title:'first-order'} }], layout:chartLayout('state / selected metric','parameter') };
     if (type === 'variance-contribution') { const v=analysis.varianceContribution; return { traces:[{type:'bar',x:['first-order sum','pairwise sum','unresolved / higher-order + MC remainder'],y:[v.firstOrder,v.pairwise,v.unresolved],text:[number(v.firstOrder,3),number(v.pairwise,3),number(v.unresolved,3)],textposition:'auto'}], layout:chartLayout('contribution category','raw variance-share estimate') }; }
     if (type === 'global-scatter') { const top=analysis.rows.slice().sort((a,b)=>b.total-a.total).slice(0,4).map(row=>row.name); const dimensions=top.map(name=>({label:name,values:analysis.sampleRows.map(row=>row[name])})).concat([{label:'output',values:analysis.sampleRows.map(row=>row.__output)}]); return { traces:[{type:'splom',dimensions,marker:{size:4,opacity:0.55},diagonal:{visible:false},showupperhalf:false}], layout:Object.assign(chartLayout('',''),{dragmode:'select',hovermode:'closest',margin:{t:28,r:18,b:44,l:44}}) }; }
-    if (type === 'dependence-mi') return { traces:[{type:'bar',x:analysis.dependence.rows.map(row=>row.name),y:analysis.dependence.rows.map(row=>row.mutualInformation),text:analysis.dependence.rows.map(row=>`p=${number(row.mutualInformationP,3)}`),textposition:'auto'}],layout:chartLayout('parameter','normalized histogram MI') };
-    if (type === 'dependence-hsic') return { traces:[{type:'bar',x:analysis.dependence.rows.map(row=>row.name),y:analysis.dependence.rows.map(row=>row.hsic),text:analysis.dependence.rows.map(row=>`p=${number(row.hsicP,3)}`),textposition:'auto'}],layout:chartLayout('parameter','normalized RBF-HSIC') };
+    if (type === 'dependence-mi') { const rows=limitRows(analysis.dependence.rows.slice().sort((a,b)=>b.mutualInformation-a.mutualInformation)).reverse(); return { traces:[{type:'bar',orientation:'h',y:rows.map(row=>row.name),x:rows.map(row=>row.mutualInformation),text:rows.map(row=>`p=${number(row.mutualInformationP,3)}`),textposition:'auto',hovertemplate:'%{y}<br>NMI=%{x:.4f}<br>%{text}<extra></extra>'}],layout:Object.assign(chartLayout('normalized histogram MI','parameter'),{showlegend:false}) }; }
+    if (type === 'dependence-hsic') { const rows=limitRows(analysis.dependence.rows.slice().sort((a,b)=>b.hsic-a.hsic)).reverse(); return { traces:[{type:'bar',orientation:'h',y:rows.map(row=>row.name),x:rows.map(row=>row.hsic),text:rows.map(row=>`p=${number(row.hsicP,3)}`),textposition:'auto',hovertemplate:'%{y}<br>normalized HSIC=%{x:.4f}<br>%{text}<extra></extra>'}],layout:Object.assign(chartLayout('normalized RBF-HSIC','parameter'),{showlegend:false}) }; }
     if (type === 'fim') return { traces: [{ type: 'heatmap', x: analysis.names, y: analysis.names, z: analysis.matrix, colorscale: 'Viridis', colorbar: { title: 'scaled information' } }], layout: chartLayout('parameter', 'parameter') };
     if (type === 'alignment') return { traces: [{ type: 'heatmap', x: analysis.names, y: analysis.names, z: analysis.alignment, zmin: -1, zmax: 1, zmid: 0, colorscale: 'RdBu', colorbar: { title: 'alignment' } }], layout: chartLayout('parameter', 'parameter') };
     if (type === 'spectrum') return { traces: [{ type: 'scatter', mode: 'lines+markers', x: analysis.eigenvalues.map((_, i) => i + 1), y: analysis.eigenvalues.map(value => Math.max(value, 1e-30)), name: 'scaled information eigenvalue' }], layout: Object.assign(chartLayout('ordered direction', 'eigenvalue'), { yaxis: { title: 'eigenvalue', type: 'log', automargin: true, gridcolor: '#e7ebf1' } }) };
@@ -472,8 +536,10 @@
     $('runSensitivity').addEventListener('click', () => { try { startRun(); } catch (error) { setText('sensitivityStatus', error.message); setText('sensitivityTopStatus', 'Invalid input'); setText('provenanceWarning', error.message); } });
     $('cancelSensitivity').addEventListener('click', () => cancelRun(true)); $('resetSensitivity').addEventListener('click', () => loadPreset(state.current));
     $('loadSensitivity').addEventListener('click', () => loadPreset($('sensitivitySelect').value));
-    $('sensitivitySelect').addEventListener('change', function () { state.current = this.value; setText('sensitivityNarrative', PRESETS[this.value]?.note || ''); });
+    $('sensitivitySelect').addEventListener('change', function () { state.current = this.value; setText('sensitivityQuestion', PRESETS[this.value]?.question || ''); setText('sensitivityNarrative', PRESETS[this.value]?.note || ''); renderPresetLibrary(); });
     $('sensitivityDeck').addEventListener('click', event => { const button = event.target.closest('[data-preset]'); if (button) loadPreset(button.dataset.preset); });
+    $('sensitivityExampleSearch').addEventListener('input', renderPresetLibrary);
+    $('sensitivityFamilyFilter').addEventListener('change', renderPresetLibrary);
     $('addSensitivityState').addEventListener('click', () => { const index = state.model.vars.length + 1; state.model.vars.push('u' + index); state.model.eqs.push('0'); state.model.y0.push(0); renderEditors(); refreshOutputVariables(); markDirty('State added.'); });
     $('addSensitivityParameter').addEventListener('click', () => { let index = 1; while (state.model.params['p' + index]) index += 1; state.model.params['p' + index] = [1, 0.5, 1.5]; renderEditors(); markDirty('Parameter added.'); });
     ['sensitivityT0', 'sensitivityT1', 'sensitivityPoints', 'sensitivitySolver', 'sensitivityRtol', 'sensitivityAtol', 'sensitivityStepSize', 'sensitivityInitialStep', 'sensitivityMaxStep', 'sensitivitySafety', 'sensitivityOutputVar', 'sensitivityOutputMetric', 'sensitivityRelativeStep', 'sensitivitySamples', 'sensitivitySecondOrder', 'sensitivityBootstrap', 'sensitivityTrajectories', 'sensitivityLevels', 'sensitivitySeed', 'sensitivitySigma', 'sensitivityOfatPoints', 'sensitivityDirection', 'sensitivityDirectionalSpan', 'sensitivityDirectionPoints', 'sensitivityResponseSurface', 'sensitivitySurfaceFirst', 'sensitivitySurfaceSecond', 'sensitivitySurfacePoints', 'sensitivityDependence', 'sensitivityDependencePermutations'].forEach(id => $(id).addEventListener('input', () => markDirty('Numerical or analysis settings changed. Run to recompute.')));
@@ -484,6 +550,7 @@
     document.querySelectorAll('[data-layout-mode]').forEach(button => button.addEventListener('click', () => applyLayout(button.dataset.layoutMode)));
     document.querySelectorAll('.focus-card[data-focus-side]').forEach(button => button.addEventListener('click', () => { state.focusSide = button.dataset.focusSide; state.lastPlotSide = state.focusSide; applyLayout('focus'); }));
     ['left', 'right'].forEach(side => $(side + 'PlotType').addEventListener('change', function () { selectPlot(side, this.value); }));
+    ['sensitivityViewScale','sensitivityTopN','sensitivitySurfaceStyle','sensitivityShowUncertainty'].forEach(id => $(id).addEventListener('change', () => { if (state.result) renderPlots(); }));
     $('sensitivityImport').addEventListener('change', function () {
       const file = this.files && this.files[0]; if (!file) return; const reader = new FileReader();
       reader.onload = () => { try { applyConfig(JSON.parse(reader.result), `Imported ${file.name}`); } catch (error) { setText('sensitivityStatus', 'Import failed: ' + error.message); } this.value = ''; };
@@ -511,5 +578,6 @@
   function boot() {
     renderPresetLibrary(); bind(); if (!restoreFromUrl()) loadPreset(state.current); updatePlotOptions(); applyLayout('two'); syncMethodControls(); syncExportState();
   }
+  root.FokoSensitivityWorkspaceDiagnostics = Object.freeze({ plotMeta: PLOTS, availablePlots, plotSpec, rankingRows, presetCount: Object.keys(PRESETS).length });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 }(typeof window !== 'undefined' ? window : globalThis));

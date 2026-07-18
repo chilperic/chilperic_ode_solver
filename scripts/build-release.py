@@ -66,6 +66,7 @@ def run_tests() -> None:
     subprocess.run(["npm", "run", "test:analysis-taxonomy-offline"], cwd=ROOT, check=True)
     subprocess.run(["npm", "run", "test:home-research-rerun-offline"], cwd=ROOT, check=True)
     subprocess.run(["npm", "run", "test:sensitivity-offline"], cwd=ROOT, check=True)
+    subprocess.run(["npm", "run", "test:guides-offline"], cwd=ROOT, check=True)
 
 
 def write_manifest(files: list[Path]) -> None:

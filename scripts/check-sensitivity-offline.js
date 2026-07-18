@@ -49,7 +49,7 @@ function resources(html, tag, attr) {
                 solves++; evals+=result.diagnostics.functionEvaluations; accepted+=result.diagnostics.accepted; rejected+=result.diagnostics.rejected; return result;
               };
               const outputVar=request.outputVar||checked.vars[0]; const metricName=request.outputMetric||'final';
-              const scalar=(params)=>{const r=solve(params);const row=r.Y[r.vars.indexOf(outputVar)];if(metricName==='max')return Math.max(...row);if(metricName==='mean')return row.reduce((a,b)=>a+b,0)/row.length;return row.at(-1);};
+              const scalar=(params)=>{const r=solve(params);const row=r.Y[r.vars.indexOf(outputVar)];if(metricName==='max')return Math.max(...row);if(metricName==='min')return Math.min(...row);if(metricName==='mean')return row.reduce((a,b)=>a+b,0)/row.length;if(metricName==='range')return Math.max(...row)-Math.min(...row);if(metricName==='integral'){let area=0;for(let i=1;i<row.length;i++)area+=(r.T[i]-r.T[i-1])*(row[i]+row[i-1])/2;return area;}if(metricName==='time_of_max'){let index=0;for(let i=1;i<row.length;i++)if(row[i]>row[index])index=i;return r.T[index];}return row.at(-1);};
               const methodConfig=window.FokoNumericalInputs.validateSensitivity(Object.assign({},request.analysis,{parameterCount:Object.keys(checked.paramDefs).length,stateCount:checked.vars.length,outputPoints:checked.points}));
               if(methodConfig.capacity.blocked) throw new Error(methodConfig.capacity.message);
               let analysis;
@@ -71,7 +71,7 @@ function resources(html, tag, attr) {
                 analysis.directional=window.FokoSensitivityCore.directionalProfile({parameters:checked.paramDefs,points:methodConfig.directionPoints,span:methodConfig.directionalSpan,direction:Object.fromEntries(names.map(name=>[name,1])),evaluate:scalar}); analysis.directional.available=true;
                 if(methodConfig.responseSurface) analysis.responseSurface=window.FokoSensitivityCore.responseSurface({parameters:checked.paramDefs,first:request.analysis.surfaceFirst,second:request.analysis.surfaceSecond,points:methodConfig.surfacePoints,evaluate:scalar});
               }
-              this.onmessage?.({data:{type:'result',ok:true,release:'72.47.0',method:methodConfig.method,outputVar,outputMetric:metricName,model:checked,analysis,solverSummary:{odeSolves:solves,functionEvaluations:evals,acceptedSteps:accepted,rejectedSteps:rejected,maxRejectionRatio:0,minStep:0,maxTimescaleRatio:1,warnings:[],methods:[checked.method]},estimatedOdeSolves:methodConfig.expectedEvaluations,runtime:12,warnings:(checked.warnings||[]).concat(methodConfig.warnings||[]),configuration:{model:request.model,analysis:request.analysis,outputVar,outputMetric:metricName}}});
+              this.onmessage?.({data:{type:'result',ok:true,release:'72.48.0',method:methodConfig.method,outputVar,outputMetric:metricName,model:checked,analysis,solverSummary:{odeSolves:solves,functionEvaluations:evals,acceptedSteps:accepted,rejectedSteps:rejected,maxRejectionRatio:0,minStep:0,maxTimescaleRatio:1,warnings:[],methods:[checked.method]},estimatedOdeSolves:methodConfig.expectedEvaluations,runtime:12,warnings:(checked.warnings||[]).concat(methodConfig.warnings||[]),configuration:{model:request.model,analysis:request.analysis,outputVar,outputMetric:metricName}}});
             }catch(error){ this.onmessage?.({data:{type:'result',ok:false,error:error.message,runtime:1}}); }
           }, 10);
         }
@@ -80,9 +80,17 @@ function resources(html, tag, attr) {
     });
     for (const script of ['src/v72/sensitivity-workspace.js','src/v72/scientific-registry.js','src/navigation.js']) await page.addScriptTag({ path:path.join(ROOT,script) });
     await page.evaluate(() => document.dispatchEvent(new Event('DOMContentLoaded',{bubbles:true})));
-    await page.waitForFunction(() => document.querySelectorAll('#sensitivitySelect option').length >= 8 && document.querySelectorAll('#sensitivityParameterRows .table-row').length >= 3);
+    await page.waitForFunction(() => document.querySelectorAll('#sensitivitySelect option').length >= 17 && document.querySelectorAll('#sensitivityParameterRows .table-row').length >= 3);
     assert.equal(await page.locator('#sensitivitySelect').inputValue(), 'sir');
     assert.equal(await page.locator('#sensitivityParameterRows .table-row').count(), 3);
+    await page.locator('#sensitivityExampleSearch').fill('gene regulation');
+    assert.equal(await page.locator('#sensitivityDeck [data-preset]').count(), 3);
+    await page.locator('#sensitivityExampleSearch').fill('');
+    assert.equal(await page.locator('#sensitivitySelect option').count(), 17);
+    await page.locator('#sensitivityFamilyFilter').selectOption({ label: 'Epidemiology' });
+    assert.equal(await page.locator('#sensitivityDeck [data-preset]').count(), 2);
+    await page.locator('#sensitivityFamilyFilter').selectOption('all');
+    assert.equal(await page.locator('#sensitivitySelect option').count(), 17);
     await page.locator('#sensitivityMethod').selectOption('sobol');
     await page.locator('#sensitivitySecondOrder').check();
     await page.locator('#sensitivitySamples').fill('4096');

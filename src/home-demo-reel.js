@@ -5,7 +5,7 @@
 (function (root) {
   'use strict';
 
-  const RELEASE = '72.47.0';
+  const RELEASE = '72.48.0';
   const scriptPromises = new Map();
   const demoRuns = new Map();
   const demoAttempts = new Map();

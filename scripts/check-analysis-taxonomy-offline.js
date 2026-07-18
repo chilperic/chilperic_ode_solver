@@ -57,7 +57,10 @@ async function documentationContract(browser) {
   await loadAuthoredPage(page, 'docs.html');
   await page.waitForFunction(() => document.querySelector('#analysisTaxonomyDocs') && document.querySelector('a[href="ANALYSIS_TAXONOMY.json"]'), null, { timeout: 10000 });
   assert.equal(await page.locator('#analysisTaxonomyDocs').count(), 1, 'Documentation taxonomy section is absent.');
-  assert.match(await page.locator('#analysisTaxonomyDocs').textContent(), /implemented, limited, export-only, and unavailable/i, 'Documentation does not explain capability boundaries.');
+  const taxonomyCopy = (await page.locator('#analysisTaxonomyDocs').textContent()).toLowerCase();
+  for (const label of ['browser-computed', 'derived', 'limited', 'export-only', 'unavailable']) {
+    assert.ok(taxonomyCopy.includes(label), `Documentation taxonomy card omits the ${label} capability boundary.`);
+  }
   assert.match(await page.locator('main').textContent(), /Sensitivity Analysis Lab/i, 'Documentation does not explain the first-class Sensitivity workspace.');
   assert.equal(await page.locator('a[href="ANALYSIS_TAXONOMY.json"]').count(), 1, 'Documentation JSON download link is absent.');
   await page.close();

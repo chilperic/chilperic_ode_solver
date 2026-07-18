@@ -1,4 +1,4 @@
-# v72.47.0 — Sensitivity discoverability and documentation closure
+# v72.48.0 — Sensitivity discoverability and documentation closure
 
 - Adds genuine normalized Morris parameter-design trajectories, distinct from scalar output paths.
 - Adds state-resolved Jansen first- and total-effect heatmaps using the existing finite seeded design.
@@ -7,7 +7,7 @@
 - Synchronizes Docs, Tutorial 10, Trust, capability metadata, taxonomy and navigation copy with the runtime.
 - Repairs generated Trust static navigation, reader-facing derived-result labels and scientific acronym formatting.
 - Corrects the local runner predecessor preflight and adds release-blocking documentation/runtime consistency checks.
-- Uses isolated validation port 8101.
+- Uses isolated validation port 8102.
 
 # v72.46.0 — local and global Sensitivity depth
 
@@ -349,7 +349,7 @@
 - Preserved the static header/nav structure; no generated chrome rewrite.
 - Preserved the V71.38 lab color identity baseline.
 - Added regression tests for analysis, focused, SciML and creator/learn/explore active-state mappings.
-- Cache token normalized to `?v=72.47.0`.
+- Cache token normalized to `?v=72.48.0`.
 
 
 ## V71.32 — Functional cockpit boxes and plot palettes
@@ -413,7 +413,7 @@
 - Added Playwright browser smoke tests for home, focused labs, descriptor analysis labs, and reproducibility controls.
 - Added `package.json`, `playwright.config.js`, and `tests/e2e/main-labs-smoke.spec.js`.
 - Added pytest structural checks so the e2e gate itself is protected.
-- Cache token normalized to `?v=72.47.0`.
+- Cache token normalized to `?v=72.48.0`.
 
 # Foko Lab release history
 ## V71.11 — ML Toolkit descriptor shell and focused-lab noise cleanup
@@ -427,7 +427,7 @@
 
 ## v70.20 — Cache-token normalization
 
-- One cache token across the whole tree: `?v=72.47.0`.
+- One cache token across the whole tree: `?v=72.48.0`.
 - Legacy asset tokens removed.
 - Added `tests/test_v70_20_token_normalization.py`.
 - Audit: `release-audits/AUDIT-v70-20-token-normalization.md`.
@@ -710,3 +710,14 @@ Restores the V71.35 stable interface after the aggressive chrome/token cleanup p
 - Adds an offline Chromium ODE Load/Run and stiffness-geometry regression.
 - Local validation port: 8092.
 
+
+## v72.48.0 — modelling handbook, Sensitivity library and platform stability
+
+- Rebuilt Docs as a searchable modelling handbook covering question formulation, boundaries, equations, units, solver choice, verification, validation, uncertainty and reporting.
+- Rebuilt Tutorials as twenty practical investigations with persistent local progress.
+- Expanded the Sensitivity library to 17 editable ODE models across 13 scientific families.
+- Added raw/range/elasticity presentation, top-parameter filtering, uncertainty controls and contour/3D response-surface selection to the existing 35-plot Sensitivity registry.
+- Added release-blocking tests that run every Sensitivity preset and audit maintained plot registries and curated-library counts across the platform.
+- Preserved all stable numerical cores, explicit two-panel layout ownership and browser-capacity refusal.
+- Kept unsupported roadmap methods explicitly limited, export-only or unavailable.
+- Local validation port: 8102.

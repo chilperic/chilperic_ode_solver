@@ -9,11 +9,11 @@ def text(relative: str) -> str:
 
 
 def test_release_identity_and_port():
-    assert json.loads(text("VERSION.json")) == {"version": "72.47.0", "token": "72.47.0"}
+    assert json.loads(text("VERSION.json")) == {"version": "72.48.0", "token": "72.48.0"}
     package = json.loads(text("package.json"))
-    assert package["version"] == "72.47.0"
-    assert "8101" in package["scripts"]["serve"]
-    assert "8101" in text("playwright.config.js")
+    assert package["version"] == "72.48.0"
+    assert "8102" in package["scripts"]["serve"]
+    assert "8102" in text("playwright.config.js")
 
 
 def test_agent_streams_actual_numerical_evidence_to_both_panels():

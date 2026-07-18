@@ -801,13 +801,21 @@ test.describe('Foko Lab v72 public gate', () => {
   test('Sensitivity Analysis accepts editable scientific inputs and invalidates stale evidence', async ({ page }) => {
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.goto('/sensitivity.html', { waitUntil: 'networkidle' });
-    await expect(page.locator('#sensitivitySelect option')).toHaveCount(8);
+    await expect(page.locator('#sensitivitySelect option')).toHaveCount(17);
 
     // The initial preset is SIR and exposes beta, gamma and N. The test must
     // validate the currently loaded preset instead of assuming Logistic is
     // already active.
     await expect(page.locator('#sensitivitySelect')).toHaveValue('sir');
     await expect(page.locator('#sensitivityParameterRows .table-row')).toHaveCount(3);
+    await page.locator('#sensitivityExampleSearch').fill('gene regulation');
+    await expect(page.locator('#sensitivityDeck [data-preset]')).toHaveCount(3);
+    await page.locator('#sensitivityExampleSearch').fill('');
+    await expect(page.locator('#sensitivitySelect option')).toHaveCount(17);
+    await page.locator('#sensitivityFamilyFilter').selectOption({ label: 'Epidemiology' });
+    await expect(page.locator('#sensitivityDeck [data-preset]')).toHaveCount(2);
+    await page.locator('#sensitivityFamilyFilter').selectOption('all');
+    await expect(page.locator('#sensitivitySelect option')).toHaveCount(17);
 
     // A request outside the guarded browser envelope must be refused before a
     // worker starts rather than freezing the tab or publishing a partial run.

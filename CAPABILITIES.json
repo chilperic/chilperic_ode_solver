@@ -1,5 +1,5 @@
 {
-  "release": "72.47.0",
+  "release": "72.48.0",
   "statusDefinitions": {
     "reference": "Uses the v72 authored shell and active release contracts.",
     "browser-computed": "The visible result is computed locally from the current input in browser code.",
@@ -71,7 +71,7 @@
         "Dynamical stability is reported only for a declared dx/dt=f interpretation and only for 1x1 or 2x2 Jacobians in the browser core.",
         "Finite-difference Jacobians and local Newton solves require independent validation for publication or safety-critical use.",
         "The full four-state fatty-acid branch workflow does not certify physical bistability or complete root sets; converged roots that violate declared constraints are excluded from physical interpretation.",
-        "The conditional MalCoA–FA slice has an exact local 2×2 spectrum, but it is not the stability of the full four-state model.",
+        "The conditional MalCoA\u2013FA slice has an exact local 2\u00d72 spectrum, but it is not the stability of the full four-state model.",
         "The FADNS occupancy example is algebraic at fixed substrate pools, so dynamical stability is not applicable."
       ]
     },
@@ -367,7 +367,7 @@
         "live_pause_resume_control": "browser-computed"
       },
       "limitations": [
-        "Exact-count mode requires non-negative integer state counts summing exactly to N². Fraction mode uses deterministic largest-remainder allocation and reports the exact counts actually simulated.",
+        "Exact-count mode requires non-negative integer state counts summing exactly to N\u00b2. Fraction mode uses deterministic largest-remainder allocation and reports the exact counts actually simulated.",
         "Custom Agent models are restricted to validated declarative local transition rules (spontaneous, neighbour-contact and neighbour-threshold). Arbitrary JavaScript is not executed.",
         "One algorithmic step is one configured lattice sweep. Random-with-replacement gives one update attempt per site on average; shuffled sweep visits every site once. Neither is automatically biological, social, epidemiological or physical time.",
         "Finite-ensemble quantiles and Monte Carlo standard errors describe simulation variability under fixed rules and parameters; they do not quantify parameter uncertainty, measurement error or model discrepancy.",
@@ -445,7 +445,10 @@
         "state_resolved_first_and_total_effect_indices": "limited-browser",
         "local_and_global_bounded_two_parameter_response_surfaces": "limited-browser",
         "runtime_plot_availability_catalogue": "browser-computed",
-        "sensitivity_documentation_tutorial_and_trust_sync": "browser-computed"
+        "sensitivity_documentation_tutorial_and_trust_sync": "browser-computed",
+        "curated_17_model_library_across_13_scientific_families": "browser-computed",
+        "searchable_model_library_and_method_dependent_plot_catalogue": "browser-computed",
+        "raw_range_scaled_and_elasticity_plot_views": "derived-browser"
       },
       "limitations": [
         "All results are conditional on the selected output, initial conditions, time window, parameter ranges, perturbation or sample count, solver and tolerances.",

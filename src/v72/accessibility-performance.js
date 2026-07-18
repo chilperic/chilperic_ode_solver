@@ -215,7 +215,7 @@
  */
 (function (root) {
   'use strict';
-  const RELEASE = '72.47.0';
+  const RELEASE = '72.48.0';
   const telemetry = {
     release: RELEASE,
     startedAt: typeof performance !== 'undefined' ? performance.now() : 0,

@@ -49,12 +49,12 @@ def test_global_navigation_has_six_clear_top_level_destinations():
 def test_guides_are_distinct_user_facing_continuous_surfaces():
     docs = soup('docs.html')
     tutorial = soup('tutorial.html')
-    assert docs.find('h1').get_text(' ', strip=True) == 'Using Foko Lab'
-    assert tutorial.find('h1').get_text(' ', strip=True) == 'Practical tutorials'
+    assert docs.find('h1').get_text(' ', strip=True) == 'Foko Lab modelling handbook'
+    assert tutorial.find('h1').get_text(' ', strip=True) == 'Practical modelling curriculum'
     docs_text = docs.get_text(' ', strip=True)
     tutorial_text = tutorial.get_text(' ', strip=True)
-    assert 'Understand the four capability labels' in docs_text
-    assert 'Tutorial 1 — Read a result before the plot' in tutorial_text
+    assert 'A complete modelling workflow' in docs_text and 'Capability labels' in docs_text
+    assert 'Tutorial 1 — Turn a question into a model' in tutorial_text and 'Tutorial 20 — Produce a reproducible report' in tutorial_text
     assert docs.select_one('.guide-layout .guide-toc') is not None
     assert tutorial.select_one('.guide-layout .guide-toc') is not None
     for page in (docs, tutorial):

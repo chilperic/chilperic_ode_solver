@@ -7,7 +7,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPECTED = "72.47.0"
+EXPECTED = "72.48.0"
 V72_PAGES = [
     path for path in ROOT.glob("*.html")
     if 'data-v72-shell="true"' in path.read_text(encoding="utf-8", errors="ignore")

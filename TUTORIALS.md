@@ -1,46 +1,91 @@
-# Practical tutorials
+# Foko Lab modelling curriculum
 
-These tutorials show how to run a model, challenge the result, and decide what evidence is still missing. Complete the first tutorial before choosing a topic-specific exercise.
+These tutorials teach modelling rather than button pressing. Each exercise contains a scientific goal, an implementation task, a deliberate challenge, an interpretation checkpoint, and a reporting outcome.
 
-## Tutorial 1 — Read a result before the plot
+Complete Tutorials 1–4 before using the advanced labs.
 
-**Goal:** Learn the standard reading order.
+## Tutorial 1 — Turn a question into a model
 
-1. Open ODE Lab and run the loaded example.
-2. Ignore the plot for a moment.
-3. Read the status, method, tolerances, accepted and rejected steps, minimum step, warnings, and provenance.
-4. Change the method to Euler and run again.
+**Goal:** Build a minimal model whose output directly answers a scientific question.
 
-**Check:** Euler reports no rejected steps because it has no local error estimate. A quiet diagnostic panel is not evidence that the method is accurate.
+**Question:** How do growth rate and carrying capacity affect population after 15 time units?
 
-**Keep:** Read status and diagnostics before interpreting the figure.
+1. Open **ODE Lab** and load Logistic Growth.
+2. Identify the state `x`, parameters `r` and `K`, initial condition `x(0)`, and time interval.
+3. Write the units you would assign to each quantity.
+4. Confirm the equation:
 
-## Tutorial 2 — Keep Two-up under your control
+```text
+dx/dt = r*x*(1-x/K)
+```
 
-**Goal:** Confirm that plot choice and layout choice are independent.
+5. Run the nominal model.
+6. Change only `r`; run again.
+7. Restore `r`, change only `K`; run again.
+8. Extend the final time and inspect whether the conclusion changes.
 
-1. Open ODE Lab with the SIR example.
-2. Select **Two-up**.
-3. Choose a trajectory on the left and another compatible plot on the right.
-4. Change the left plot, wait, then change the right plot.
-5. Repeat the same steps in another lab such as Statistics or Agent.
+**Challenge:** Set `x(0)` above `K`. Predict the direction of motion before running.
 
-**Check:** Both evidence panels remain visible. On a narrow screen they may stack vertically, but Two-up remains selected.
+**Checkpoint:** `r` primarily controls approach speed while `K` controls the asymptotic level, but a short observation window can make their effects difficult to separate.
 
-Select **Focus** and change a plot again. Focus should remain selected because you chose it explicitly.
+**Report:** State the question, output time, initial condition, parameter values, solver and one limitation of logistic growth.
 
-**Keep:** Plot selectors choose evidence. They do not choose the workspace layout.
+## Tutorial 2 — Build equations from mechanisms
 
-## Tutorial 3 — Detect a plausible stiff-solver failure
+**Goal:** Derive balances from a reaction network rather than copying equations blindly.
 
-**Goal:** See why a smooth trajectory may still be unreliable.
+Consider:
+
+```text
+S --k1--> M --k2--> P
+```
+
+1. Write rates `v1=k1*S` and `v2=k2*M`.
+2. Derive:
+
+```text
+dS/dt = -v1
+dM/dt =  v1-v2
+dP/dt =  v2
+```
+
+3. Enter the model in ODE Lab or import the reaction-network Model IR.
+4. Use `S(0)=10`, `M(0)=0`, `P(0)=0`, `k1=0.4`, `k2=0.2`.
+5. Plot all states and the total `S+M+P` if the conservation view is available.
+
+**Challenge:** Change the stoichiometric coefficient producing `M` from `1` to `2`. Explain why total material is no longer conserved under the original counting convention.
+
+**Failure test:** Refer to an undeclared state `X`. The model should be rejected before computation.
+
+**Checkpoint:** Mechanism-to-balance construction makes signs, units and conservation inspectable.
+
+## Tutorial 3 — Separate output-grid density from numerical accuracy
+
+**Goal:** Learn why a smooth plot can be numerically weak.
+
+1. Open ODE Lab with a nonlinear oscillator.
+2. Run adaptive RK45 with the default reported points.
+3. Double the reported points without changing tolerances.
+4. Compare the diagnostic work and the plotted smoothness.
+5. Restore the point count and tighten `rtol`/`atol` by two orders of magnitude.
+6. Compare a scalar quantity such as maximum amplitude or final state.
+
+**Challenge:** Run a fixed-step method with a coarse step and then halve the step repeatedly.
+
+**Checkpoint:** More reported points change the output grid. Tighter tolerances or smaller fixed steps change the numerical approximation.
+
+**Report:** Include the convergence table, not only the final plot.
+
+## Tutorial 4 — Diagnose stiffness with an independent method
+
+**Goal:** Recognize when explicit browser integration is not sufficient.
 
 Use the Robertson system:
 
 ```text
 dA/dt = -k1*A + k3*B*C
-dB/dt =  k1*A - k2*B*B - k3*B*C
-dC/dt =  k2*B*B
+dB/dt =  k1*A - k2*B^2 - k3*B*C
+dC/dt =  k2*B^2
 ```
 
 with:
@@ -48,143 +93,266 @@ with:
 ```text
 A(0)=1, B(0)=0, C(0)=0
 k1=0.04, k2=3e7, k3=1e4
-t from 0 to 40
+t = 0 ... 40
 ```
 
-1. Run adaptive RKF45.
-2. Inspect rejected steps, minimum step, function evaluations, conservation, and the estimated timescale ratio.
-3. Switch to a coarse fixed-step RK4 and run again.
-4. Use **Verify against SciPy** to compare with Radau on the same output grid.
+1. Run adaptive RK45.
+2. Record rejected steps, minimum step, function evaluations and conservation drift.
+3. Attempt a coarse fixed-step run.
+4. Export or run **Verify against SciPy** with Radau or BDF.
+5. Compare on the same output grid.
 
-**Check:** Fixed-step RK4 may produce a smooth curve while losing the rejection evidence that warned you about stiffness.
+**Checkpoint:** A stiff problem can produce a smooth but wrong fixed-step curve. Independent implicit verification addresses numerical integration, not model validity.
 
-**Keep:** For suspected stiffness, compare with an independent implicit method. Agreement supports the numerics, not the biological model.
+## Tutorial 5 — Local sensitivity with scale discipline
 
-## Tutorial 4 — Build a reaction network and test conservation
+**Goal:** Distinguish raw derivatives, range-scaled effects and elasticities.
 
-**Goal:** Let stoichiometry generate the differential equations.
+1. Open **Sensitivity Analysis** and load Exponential Decay Verification.
+2. Select **Local central finite differences**.
+3. Run with the default perturbation.
+4. Switch the plot scale between raw derivative, range-scaled derivative and elasticity.
+5. Inspect the perturbation-convergence plot.
+6. Compare the numerical derivative with the analytic result for `x(T)=x0*exp(-k*T)`.
 
-Import this model:
+**Challenge:** Make the perturbation too large and then very small. Observe truncation versus floating-point sensitivity.
 
-```json
-{
-  "schema": "foko.model-ir/1",
-  "kind": "reaction-network",
-  "name": "Two-step pathway",
-  "states": [
-    {"id": "S", "initial": 10},
-    {"id": "M", "initial": 0},
-    {"id": "P", "initial": 0}
-  ],
-  "parameters": {
-    "k1": {"value": 0.4, "min": 0, "max": 2},
-    "k2": {"value": 0.2, "min": 0, "max": 2}
-  },
-  "reactions": [
-    {"id": "r1", "rate": "k1*S", "stoichiometry": {"S": -1, "M": 1}},
-    {"id": "r2", "rate": "k2*M", "stoichiometry": {"M": -1, "P": 1}}
-  ],
-  "time": {"start": 0, "end": 30, "points": 500},
-  "method": "rk45"
-}
+**Checkpoint:** A ranking can change solely because the scaling convention changed. Always report the convention.
+
+## Tutorial 6 — Local influence through states and time
+
+**Goal:** Separate vector-field Jacobians from propagated trajectory sensitivity.
+
+1. Load the Three-tier Activation Cascade.
+2. Run Local sensitivity for final `x3`.
+3. Compare:
+   - parameter Jacobian `∂f/∂p`;
+   - state Jacobian `∂f/∂x`;
+   - selected-state sensitivity through time;
+   - parameter-by-state influence map.
+4. Select a different output state and rerun.
+
+**Challenge:** Increase the final time. Determine whether early upstream influence persists in the final downstream state.
+
+**Checkpoint:** A large right-hand-side derivative at one time does not automatically imply a large propagated effect on the final output.
+
+## Tutorial 7 — OFAT, tornado and directional analysis
+
+**Goal:** Understand conditional slices through parameter space.
+
+1. Load the Chemostat example.
+2. Run Local sensitivity.
+3. Inspect OFAT curves and the tornado plot.
+4. Define a direction such as:
+
+```text
+D:1, mumax:-1, Ks:0.5
 ```
 
-1. Run the model and inspect `S + M + P`.
-2. Change the coefficient of `M` in `r1` from `1` to `2`.
-3. Replace one valid state name with `X`.
+5. Run the directional profile.
+6. Enable a response surface for `D` and `mumax`.
+7. Use contour view first; switch to 3D only when it helps inspect geometry.
 
-**Check:** The first change creates material and breaks conservation. The second is malformed structure and should be rejected before computation.
+**Challenge:** Move the nominal point near washout and repeat.
 
-**Keep:** Declarative reaction structure is easier to inspect than hand-copied signs in several equations.
+**Checkpoint:** OFAT and response surfaces condition on all unvaried parameters. They reveal geometry but do not partition global variance.
 
-## Tutorial 5 — Find steady states without claiming completeness
+## Tutorial 8 — Morris screening for a larger parameter set
 
-**Goal:** Separate roots you found from all roots that may exist.
+**Goal:** Screen parameters while retaining evidence of nonlinearity and interaction.
 
-1. Open Steady-State Lab and load a nonlinear example with multiple candidates.
-2. Run deterministic multi-start search.
-3. Inspect the residual norm, termination reason, physical admissibility, and local stability evidence for each candidate.
-4. Change the initial-guess range and repeat.
-5. Run a one-parameter scan near a suspected branch transition.
+1. Load the Goodwin oscillator.
+2. Select **Morris screening**.
+3. Start with 12 trajectories and six grid levels.
+4. Inspect `μ*–σ`, signed elementary-effect distributions and the normalized design paths.
+5. Increase the trajectory count.
+6. Compare prefix convergence and bootstrap rank intervals.
+7. Repeat with a different seed.
 
-**Check:** Different starting sets may find different candidates. A sequential scan can jump branches or fail near a fold without identifying a bifurcation.
+**Challenge:** Change the output metric from range to mean and rerun.
 
-**Keep:** Say “the search found these roots,” not “these are all the roots.” Use continuation software when the existence and structure of branches matter.
+**Checkpoint:** `μ*` ranks overall effect, while large `σ` may reflect nonlinearity, interaction, or both. Rank overlap means the finite design does not resolve the ordering.
 
-## Tutorial 6 — Compare stochastic paths with ensemble evidence
+## Tutorial 9 — Sobol/Jansen first and total effects
 
-**Goal:** Understand extinction, seeds, and Monte Carlo uncertainty.
+**Goal:** Interpret variance-based indices over declared independent ranges.
 
-1. Open Stochastic Lab and choose a birth–death or stochastic SIR example.
-2. Use a small initial population, seed `42`, and 100 runs.
-3. Inspect individual paths, empirical bands, endpoint distribution, Monte Carlo error, and censoring.
-4. Repeat with seed `42`, then seed `43`.
-5. Increase the run count.
+1. Load SEIR Outbreak Peak.
+2. Select **Global variance: Jansen + Saltelli**.
+3. Use 128 base samples without second-order interactions.
+4. Inspect first and total indices with uncertainty.
+5. Inspect the total-minus-first gap.
+6. Increase the sample count and compare convergence.
+7. Inspect the sampled output distribution and parameter-output relationships.
 
-**Check:** The same seed reproduces the same finite ensemble. A different seed changes the realization. More runs reduce Monte Carlo error but do not remove the process variability.
+**Challenge:** Narrow the `beta` range while keeping its nominal value. Explain why the index can fall even though the underlying mechanism did not change.
 
-**Keep:** Record the seed, run count, and censoring count with every stochastic result.
+**Checkpoint:** Global importance belongs to the declared joint input domain. It is not an intrinsic constant of the equation.
 
-## Tutorial 7 — Expose non-identifiable fitted parameters
+## Tutorial 10 — Pairwise interactions, time and state resolution
 
-**Goal:** Show that an excellent fit can contain poorly determined parameters.
+**Goal:** Add second-order and structured output evidence without overclaiming.
 
-1. Open Curve Fitting and load the low-substrate Michaelis–Menten example.
-2. Fit `v = Vmax*S/(Km+S)`.
-3. Inspect R², residuals, the parameter-correlation matrix, and the profile scan.
-4. Refit from different starting values.
-5. Add measurements in the saturation region and repeat.
+1. Use a model with no more than five varied parameters.
+2. Enable pairwise second-order interactions.
+3. Read the projected ODE-solve budget before running.
+4. Inspect the second-order heatmap and bootstrap uncertainty.
+5. Compare first/total effects through time.
+6. Compare first/total effects across states.
+7. Identify periods or states with near-zero output variance.
 
-**Check:** Low-substrate data can constrain `Vmax/Km` while leaving `Vmax` and `Km` individually uncertain. The curve may fit extremely well even when the profile is flat and the parameters are strongly correlated.
+**Challenge:** Increase the sample count until the browser guard refuses the request.
 
-**Keep:** Check profiles and correlations before reporting nonlinear parameters. Better data can solve a problem that a different optimiser cannot.
+**Checkpoint:** Pairwise second-order terms do not recover arbitrary higher-order interactions. Time/state heatmaps reuse the same finite design.
 
-## Tutorial 8 — Read a live Agent simulation honestly
+## Tutorial 11 — Limited MI and HSIC dependence screening
 
-**Goal:** Separate one animated realization from finite-ensemble evidence.
+**Goal:** Use nonlinear dependence diagnostics without confusing them with variance shares.
 
-1. Open Agent Lab and select a biological or ecological preset.
-2. Choose **Slow** or **Normal** and start the live ensemble.
-3. Confirm that the step counter and lattice advance together.
-4. Pause, wait, and resume.
-5. Repeat with the same seed and then a different seed.
-6. Compare the animation with the population bands and endpoint summaries.
+1. Run a bounded Global variance analysis with at least 64–128 samples.
+2. Enable MI/HSIC diagnostics.
+3. Inspect normalized histogram MI, RBF-HSIC and permutation p-values.
+4. Compare their rankings with Sobol total effects.
+5. Repeat with a different seed and larger sample budget.
 
-**Check:** Each visible frame is computed before it is displayed, but the animation is still one run. The uncertainty is represented by the ensemble summaries, not by the movie itself.
+**Challenge:** Use an output with a threshold-like response.
 
-**Keep:** Do not interpret a lattice animation as a calibrated biological movie or an ensemble average.
+**Checkpoint:** MI and HSIC can detect dependence that is not monotonic, but their values depend on estimator choices. They are not causal measures or Sobol indices.
 
-## Tutorial 9 — Produce a result another scientist can inspect
+## Tutorial 12 — Optimization with feasibility separated from objective
 
-**Goal:** Move from exploration to defensible reporting.
+**Goal:** Avoid calling an infeasible low-objective point an optimum.
 
-1. Run an ODE model with recorded tolerances and diagnostics.
-2. Tighten the tolerances and confirm that the quantity of interest is stable.
-3. Run independent SciPy verification when appropriate.
-4. Generate the Model Report Card.
-5. Export the model and reproduce it in an external tool.
-6. Write down what was not established.
+1. Open **Optimization Lab** and load Constrained Quadratic.
+2. Run bounded coordinate search.
+3. Inspect objective history and constraint history separately.
+4. Compare raw and penalized landscapes.
+5. Run projected penalty descent and seeded differential evolution.
+6. Compare candidates, feasibility and sensitivity to starting points.
 
-A useful methods statement includes the model, parameters, method, tolerances, seed where relevant, software version, diagnostics, independent comparison, and the limits of the claim.
+**Challenge:** Reduce the penalty or constraint tolerance until an apparently attractive but infeasible candidate appears.
 
-**Keep:** A reproducible result contains both the evidence and the non-claims.
+**Checkpoint:** Feasibility is a separate scientific and numerical requirement.
+
+## Tutorial 13 — Finite multi-objective trade-offs
+
+**Goal:** Read a sampled Pareto front without claiming completeness.
+
+1. Load Bi-objective Rosenbrock–Rastrigin or Tracking vs Control Effort.
+2. Run the finite multi-objective workflow.
+3. Inspect the Pareto front, dominance heatmap, crowding distance, objective correlation and hypervolume progression.
+4. Locate the geometric knee candidate.
+5. Repeat with a larger candidate budget and another seed.
+
+**Challenge:** Change the reference point used for hypervolume interpretation outside the platform export workflow and observe its effect.
+
+**Checkpoint:** Nondominated sampled candidates are not proof of the complete Pareto set. A knee is preference-dependent, even when identified geometrically.
+
+## Tutorial 14 — Find equilibria without claiming all roots
+
+**Goal:** Distinguish a converged root from root completeness and bifurcation evidence.
+
+1. Open **Steady-State Lab** and load CSTR Thermal Runaway or a normal-form example.
+2. Run from the default initial guess.
+3. inspect residual history and the final tolerance gate.
+4. Run deterministic multi-start search.
+5. Inspect nullclines or residual surface where available.
+6. Run a parameter branch scan and stability-margin view.
+
+**Challenge:** Change the initial-guess domain and scan resolution.
+
+**Checkpoint:** Say “the search found these roots.” A sequential branch is not pseudo-arclength continuation, and a grid sign change is only a candidate bifurcation.
+
+## Tutorial 15 — Stochastic paths, ensembles and censoring
+
+**Goal:** Separate one realization from finite-ensemble evidence.
+
+1. Open **Stochastic Lab** and load Birth–Death or Stochastic SIR.
+2. Set seed `42` and 100 trajectories.
+3. Inspect sample paths, mean/band, endpoint histogram, variance, Fano factor and event counts.
+4. Repeat with the same seed and then seed `43`.
+5. Increase the trajectory count.
+6. Inspect censored runs and first-passage or zero-state evidence where relevant.
+
+**Challenge:** Lower the event cap until censoring occurs.
+
+**Checkpoint:** More trajectories reduce Monte Carlo error but do not remove process variability or parameter uncertainty.
+
+## Tutorial 16 — Parameter fitting and practical identifiability
+
+**Goal:** Show that an excellent fit can still contain poorly estimated parameters.
+
+1. Open **Curve Fitting** and load low-substrate Michaelis–Menten data.
+2. Fit `v=Vmax*S/(Km+S)`.
+3. Inspect residuals, parameter correlation, bootstrap and profile scans.
+4. Refit from several starting values.
+5. Add or choose data that extend into saturation and repeat.
+
+**Checkpoint:** Low-substrate data may constrain `Vmax/Km` without separately identifying `Vmax` and `Km`.
+
+## Tutorial 17 — Statistics before machine learning
+
+**Goal:** Audit data before building a predictive baseline.
+
+1. Open **Statistics** with a dataset containing missingness and correlated features.
+2. Inspect missing-data policy, distributions, correlations and PCA.
+3. Move to **Machine Learning** with a compatible preset.
+4. Select features and target explicitly.
+5. Run fold-safe cross-validation.
+6. Inspect out-of-fold predictions, residuals or classification curves, calibration and permutation importance.
+
+**Challenge:** Include a target-derived feature and confirm the leakage guard rejects it.
+
+**Checkpoint:** Cross-validation cannot rescue leakage, inappropriate labels, nonrepresentative data or an invalid scientific target.
+
+## Tutorial 18 — Conditioning in linear algebra
+
+**Goal:** Understand why a small residual may coexist with an unstable solution.
+
+1. Open **Linear Algebra** and load the well-conditioned solve.
+2. Solve `Ax=b`; inspect residual and singular values.
+3. Load the Hilbert example and repeat.
+4. Perturb one entry of `b` slightly.
+5. Compare the change in the solution.
+
+**Checkpoint:** Residual measures equation satisfaction. Conditioning governs amplification of input and rounding errors.
+
+## Tutorial 19 — Use SciML without fabricating neural evidence
+
+**Goal:** Distinguish computed SINDy/surrogate evidence from export-only PINN and neural-operator templates.
+
+1. Open **SciML** and run a compatible SINDy example.
+2. Inspect coefficient paths, active library terms, error versus sparsity and trajectory evidence.
+3. Change the sparsity threshold and noise assumptions.
+4. Select a PINN or operator-learning example.
+5. Confirm that the platform presents an export boundary rather than invented loss curves or residual maps.
+
+**Checkpoint:** A scientific problem card is not a trained model. Only interpret evidence generated by an actual maintained computation.
+
+## Tutorial 20 — Produce a reproducible report
+
+Before the final reporting exercise, inspect one Agent Lab run. Each visible frame is computed before it is displayed, but the animation is still one run and must not be interpreted as an ensemble or calibrated biological movie.
 
 
-## Tutorial 10 — Build a defensible sensitivity analysis
+**Goal:** Create a result another scientist can inspect and challenge.
 
-**Goal:** Distinguish local derivatives, screening, variance decomposition and information diagnostics while keeping the browser workload bounded.
+1. Choose one completed model from an earlier tutorial.
+2. Repeat the run with tighter numerical controls or a larger sampling budget.
+3. Perform an independent comparison where available.
+4. Save the configuration and export model/result JSON.
+5. Export a plot only while the evidence is current.
+6. Record version, solver, tolerances, seed, sample count, parameter ranges and warnings.
+7. Write at least three explicit non-claims.
 
-1. Open Sensitivity Analysis and load the SIR example.
-2. Run **Local central finite differences**. Compare the signed sensitivity, parameter Jacobian, state Jacobian, trajectory influence, OFAT, tornado and perturbation-convergence views.
-3. Enter `beta:1,gamma:-1,N:0` as the directional vector. Run again and inspect the range-normalized directional profile.
-4. Enable the two-parameter response surface for `beta` and `gamma`. Confirm that the budget increases and that all other parameters remain nominal.
-5. Switch to **Morris screening**. Inspect μ*–σ, elementary-effect distributions, normalized parameter trajectories, convergence and rank stability.
-6. Switch to **Global variance: Jansen + Saltelli**. Start with 128 samples and no second-order interactions. Compare first/total indices, effects through time, effects across states, variance accounting and the sampled relationship matrix.
-7. Enable second-order interactions only when the parameter count and projected workload remain within the browser guard. Treat low-sample interactions as screening evidence.
-8. Optionally enable MI/HSIC. Read the estimator and permutation warnings; do not compare them numerically with Sobol fractions.
-9. Change a parameter range or tolerance. Confirm that the previous plots become **Stale** and exports are disabled.
-10. Increase the requested workload until the capacity guard refuses the run. Export the configuration rather than bypassing the guard.
+A defensible methods statement contains:
 
-**Check:** Morris and Sobol rankings need not agree because they answer different questions. A response surface may reveal geometry but does not become a variance decomposition. State-resolved and time-resolved indices reuse the same finite design rather than creating independent evidence.
+- model equations or rules;
+- state, parameter and unit definitions;
+- initial/boundary conditions;
+- numerical method and controls;
+- verification and diagnostics;
+- sensitivity/uncertainty design;
+- software version and export;
+- limitations.
 
-**Keep:** Report the selected output metric, parameter ranges, initial conditions, time window, sample budget, seed, solver, tolerances and all unresolved limitations.
+**Final checkpoint:** Reproducibility requires enough information to recompute the result, not merely a screenshot of the result.
