@@ -25,11 +25,11 @@ def test_tcell_rerun_cancels_old_worker_and_canvas_animation():
     assert "error.name === 'AbortError'" in source
 
 
-def test_home_rerun_has_offline_and_local_browser_regressions():
+def test_home_editable_model_has_offline_and_local_browser_regressions():
     package = text('package.json')
     offline = text('scripts/check-home-research-rerun-offline.js')
     e2e = text('tests/e2e/registry-agent-animation.spec.js')
     assert 'test:home-research-rerun-offline' in package
-    assert 'seed 202611' in offline
-    assert 'seed 202614' in offline
-    assert 'T-cell research Run again starts a new realization' in e2e
+    assert "#v76HomeCapacity" in offline
+    assert "data-engine" in offline
+    assert 'home project console recomputes and the newest inputs own the result' in e2e

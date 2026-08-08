@@ -5,11 +5,11 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPECTED = "72.48.0"
+EXPECTED = "77.4.1"
 
 
 def iter_release_sources():
-    excluded = {"tests", "release-audits", "dist", "node_modules", ".venv", ".git"}
+    excluded = {"tests", "release-audits", "dist", "test-results", "playwright-report", "node_modules", ".venv", ".git"}
     for path in ROOT.rglob("*"):
         if not path.is_file() or any(part in excluded for part in path.relative_to(ROOT).parts):
             continue
@@ -115,19 +115,16 @@ def test_scientific_runtime_dependencies_are_vendored():
     assert "cdn.jsdelivr.net/npm/mathjs" not in html
     worker = (ROOT / "src/worker.js").read_text()
     assert "cdn.jsdelivr.net" not in worker
-    assert "../assets/vendor/mathjs/math-15.2.0.js?v=72.48.0" in worker
+    assert "../assets/vendor/mathjs/math-15.2.0.js?v=77.4.1" in worker
 
 
-def test_v72_dropdown_is_opaque_and_not_overridden_by_legacy_runtime_css():
-    css = (ROOT / "styles/v72-tokens.css").read_text()
-    nav = (ROOT / "src/navigation.js").read_text()
-    assert "--panel: var(--surface);" in css
-    assert "--text: var(--ink);" in css
-    assert "background: #ffffff;" in css
-    assert "z-index: 1010;" in css
-    assert ".nav-menu:not([open]) > .labs-menu-panel { display: none; }" in css
-    assert 'Runtime style injection previously created another override layer' in nav
-    assert 'injectUnifiedNavStyles()' in nav
-    body = nav[nav.index('function injectUnifiedNavStyles()'):nav.index('function injectThemeControl()')]
-    assert 'return;' in body
-    assert 'createElement' not in body
+def test_v76_dropdown_is_opaque_and_portaled_outside_page_layout():
+    css = (ROOT / "styles/v76-system.css").read_text()
+    nav = (ROOT / "src/v76/app-shell.js").read_text()
+    assert ".v76-popover" in css
+    assert "position: fixed" in css
+    assert "pointer-events: none" in css
+    assert '.v76-popover[data-open="true"]' in css
+    assert "doc.body.appendChild(portal)" in nav
+    assert "positionPopover" in nav
+    assert "createElement('style')" not in nav

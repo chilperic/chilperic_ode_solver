@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[2]
 REQUIRED = {
-    "index.html", "workbench.html", "ode.html", "steady.html", "stochastic.html",
+    "index.html", "studio.html", "workbench.html", "ode.html", "steady.html", "stochastic.html",
     "optimization.html", "symbolic.html", "agent.html", "sciml.html", "statistics.html",
     "fitting.html", "linear-algebra.html", "networks.html", "ml.html", "examples.html",
     "docs.html", "tutorial.html", "research.html", "platform.html",

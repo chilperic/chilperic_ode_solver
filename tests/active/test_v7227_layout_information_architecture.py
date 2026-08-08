@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[2]
 AUTHORED = [
-    'ode.html','steady.html','stochastic.html','optimization.html','statistics.html',
+    'studio.html','ode.html','steady.html','stochastic.html','optimization.html','statistics.html',
     'fitting.html','linear-algebra.html','networks.html','ml.html','sciml.html',
-    'agent.html','symbolic.html','sensitivity.html','workbench.html'
+    'agent.html','symbolic.html','sensitivity.html','workbench.html','population-genetics.html',
+    'advanced-methods.html','bifurcation.html','evolution.html','ai-modeling.html'
 ]
 
 
@@ -17,43 +18,44 @@ def soup(name: str) -> BeautifulSoup:
 def test_home_has_compact_product_hierarchy_and_visible_authorship():
     page = soup('index.html')
     assert len(page.find_all('h1')) == 1
-    primary = page.select('.trust-home-primary')
+    primary = page.select('.foko-home-actions .primary')
     assert len(primary) == 1
-    assert 'example=FA%20metabolism%20bistability' in primary[0].get('href', '')
-    assert 'autorun=1' in primary[0].get('href', '')
-    assert page.select_one('.home-author-profile img[src="assets/profile-chilperic.webp"]') is not None
+    assert primary[0].get('href', '') == 'studio.html?new=1'
+    assert page.select_one('.foko-creator-strip img[src="assets/profile-chilperic.webp"]') is not None
     assert 'Dr. Chilperic Armel Foko Kuate' in page.get_text(' ', strip=True)
-    assert 'From model to evidence' in page.get_text(' ', strip=True)
-    claims = page.select('.home-evidence-key > a')
+    assert 'Start with the system, not a menu of methods.' in page.get_text(' ', strip=True)
+    claims = page.select('.foko-evidence-row > a')
     assert len(claims) == 4
     rendered = ' '.join(node.get_text(' ', strip=True) for node in claims)
     for label in ('Computed here', 'Limited', 'Export workflow', 'Not available'):
         assert label in rendered
-    labels = {node.get_text(' ', strip=True) for node in page.select('.home-engine-row h3, .home-analysis-row h3, .home-supporting-index b')}
-    for required in ('ODE', 'Steady-State', 'Stochastic', 'Agent', 'Curve fitting', 'Statistical analysis', 'Machine learning', 'Equation discovery', 'Constrained optimization', 'Symbolic', 'Linear Algebra', 'Networks', 'Workbench'):
-        assert required in labels, (required, labels)
+    labels = page.get_text(' ', strip=True)
+    for required in ('ODE dynamics', 'Steady state', 'Stochastic dynamics', 'Agent models', 'Model fitting', 'Statistics', 'Machine learning', 'Scientific ML', 'Optimization', 'Symbolic mathematics', 'Linear algebra', 'Networks', 'Workbench', 'Bifurcation', 'Evolution landscapes', 'AI modeling'):
+        assert required in labels, required
 
 
-def test_global_navigation_has_six_clear_top_level_destinations():
+def test_global_navigation_uses_one_compact_modeling_shell():
+    shell = (ROOT / 'src/v76/app-shell.js').read_text(encoding='utf-8')
+    for label in ('Home', 'Model Studio', 'Simulate', 'Analyze', 'Evidence', 'Atlas'):
+        assert f'>{label}' in shell or f'>{label} ' in shell
+    assert shell.count('class="v76-primary-nav"') == 1
     for name in ['index.html','docs.html','tutorial.html','trust.html',*AUTHORED]:
         page = soup(name)
-        nav = page.select_one('nav.foko-main-nav')
-        assert nav is not None, name
-        top = [node for node in nav.find_all(recursive=False) if getattr(node, 'name', None)]
-        assert len(top) == 6, (name, [node.name for node in top])
-        labels = [node.find('summary').get_text(' ', strip=True) if node.name == 'details' else node.get_text(' ', strip=True) for node in top]
-        assert labels == ['Home','Modeling','Data / Analysis','SciML','Explore','GitHub'], (name, labels)
-        assert top[0].name == 'a' and top[0].get('href', '').endswith('index.html')
+        header = page.select_one('header[data-v76-appbar="true"]')
+        assert header is not None, name
+        assert page.select_one('script[src^="src/v76/app-shell.js"]') is not None, name
+        assert page.select_one('link[href^="styles/v76-system.css"]') is not None, name
+        assert page.select_one('[data-nav-menu]') is None, name
 
 
 def test_guides_are_distinct_user_facing_continuous_surfaces():
     docs = soup('docs.html')
     tutorial = soup('tutorial.html')
-    assert docs.find('h1').get_text(' ', strip=True) == 'Foko Lab modelling handbook'
-    assert tutorial.find('h1').get_text(' ', strip=True) == 'Practical modelling curriculum'
+    assert docs.find('h1').get_text(' ', strip=True) == 'Foko Lab modeling handbook'
+    assert tutorial.find('h1').get_text(' ', strip=True) == 'Practical modeling curriculum'
     docs_text = docs.get_text(' ', strip=True)
     tutorial_text = tutorial.get_text(' ', strip=True)
-    assert 'A complete modelling workflow' in docs_text and 'Capability labels' in docs_text
+    assert 'A complete modeling workflow' in docs_text and 'Capability labels' in docs_text
     assert 'Tutorial 1 — Turn a question into a model' in tutorial_text and 'Tutorial 20 — Produce a reproducible report' in tutorial_text
     assert docs.select_one('.guide-layout .guide-toc') is not None
     assert tutorial.select_one('.guide-layout .guide-toc') is not None
@@ -67,7 +69,9 @@ def test_guides_are_distinct_user_facing_continuous_surfaces():
 
 def test_model_atlas_restores_visual_previews_and_compact_copy():
     page = soup('examples.html')
-    assert page.find('p', class_='eyebrow').get_text(' ', strip=True) == 'Runnable examples'
+    assert page.find('p', class_='eyebrow').get_text(' ', strip=True) == 'Validated starting points'
+    assert page.select_one('#atlasStatus') is not None
+    assert 'Open as editable starting point' in (ROOT/'src/v72/example-atlas.js').read_text(encoding='utf-8')
     script = (ROOT/'src/v72/example-atlas.js').read_text(encoding='utf-8')
     assert 'v72-atlas-media' in script
     assert 'imageFor(item)' in script

@@ -1,0 +1,23 @@
+'use strict';
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const ROOT = path.resolve(__dirname, '../..');
+globalThis.FokoSensitivityPresets = require('../../src/models/sensitivity-presets.js');
+const presets = require('../../src/models/model-studio-presets.js');
+const html = fs.readFileSync(path.join(ROOT, 'studio.html'), 'utf8');
+const controller = fs.readFileSync(path.join(ROOT, 'src/v73/model-studio.js'), 'utf8');
+let checks = 0;
+function ok(value, message) { assert.ok(value, message); checks += 1; }
+ok(Object.keys(presets).length >= 21, 'Model Studio retains at least 21 strong starters');
+for (const id of ['sir','lotka','vanderpol','brusselator','chemostat','toggle','fitzhugh','lorenz','rossler','lorenz96']) ok(Boolean(presets[id]), `starter ${id} is present`);
+for (const token of ['studioStateRows','studioInitialRows','studioParameterRows','studioT0','studioT1','studioPoints','studioMethod','studioRtol','studioAtol']) ok(html.includes(`id="${token}"`), `${token} is editable`);
+for (const plot of ['trajectory','normalized','heatmap','phase2d','phase-time','phase3d','parallel','radar','derivative','correlation','solver-step','local-error','response-heatmap','response-contour','response-surface']) ok(controller.includes(`${plot}:`) || controller.includes(`'${plot}':`), `${plot} plot is registered`);
+ok(controller.includes('FokoPlotLifecycle') || controller.includes('const PRESETS'), 'Studio uses the shared browser workspace contract');
+ok(controller.includes('FokoLive3D') && html.includes('src/core/live-3d.js'), 'Studio loads the shared live-3D scientific view core');
+ok(html.includes('studio3dPlay') && html.includes('studio3dFrame'), 'Studio exposes explicit live-3D playback and scrubbing controls');
+ok(html.includes('studioEquationPreview') && html.includes('katex-0.16.47.min.js'), 'Studio renders editable equations with local KaTeX');
+ok(controller.includes("data-studio-route") || html.includes('data-studio-route="sensitivity"'), 'compatible model routing is exposed');
+ok(html.includes('Full Model Atlas') && html.includes('href="examples.html"'), 'full Model Atlas remains first-class');
+ok(html.match(/data-plot-card="left"/g).length === 1 && html.match(/data-plot-card="right"/g).length === 1, 'Studio has two stable plot hosts');
+console.log(`${checks}/${checks} Model Studio contract checks passed (${Object.keys(presets).length} starters, 15 plot families)`);

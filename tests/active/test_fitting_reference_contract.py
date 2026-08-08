@@ -16,17 +16,18 @@ def test_fitting_uses_authored_v72_reference_shell():
     assert body is not None
     assert body.get("data-v72-shell") == "true"
     assert body.get("data-lab") == "fitting"
-    assert body.get("data-version") == "72.48.0"
+    assert body.get("data-version") is None
     local_styles = [
         tag.get("href", "")
         for tag in SOUP.find_all("link", rel="stylesheet")
         if not tag.get("href", "").startswith("http")
     ]
     assert local_styles == [
-        "styles/v72-tokens.css?v=72.48.0",
-        "styles/v72-lab-shell.css?v=72.48.0",
-        "styles/v72-accessibility-performance.css?v=72.48.0",
-    ]
+        "styles/v72-tokens.css?v=77.4.1",
+            "styles/v72-lab-shell.css?v=77.4.1",
+            "styles/v72-accessibility-performance.css?v=77.4.1",
+            "styles/v76-system.css?v=77.4.1",
+        ]
     assert SOUP.select_one("main.layout")
     assert SOUP.select_one(".v72-workspace")
     assert SOUP.select_one(".v72-inspector")

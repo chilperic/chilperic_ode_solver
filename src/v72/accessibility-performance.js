@@ -215,7 +215,7 @@
  */
 (function (root) {
   'use strict';
-  const RELEASE = '72.48.0';
+  const RELEASE = '77.4.1';
   const telemetry = {
     release: RELEASE,
     startedAt: typeof performance !== 'undefined' ? performance.now() : 0,
@@ -369,6 +369,118 @@
     wireArrowNavigation('.side-nav', '.nav-item');
   }
 
+  function initMobileTaskbar() {
+    if (!document.body || document.body.dataset.v72Shell !== 'true') return;
+    const layout = document.querySelector('main.layout');
+    const controls = layout && layout.querySelector('.v72-task-controls, .work-panel.controls, .controls-panel');
+    const workspace = layout && layout.querySelector('.v72-workspace, .workspace-area, .workspace');
+    const inspector = layout && layout.querySelector('.v72-inspector');
+    if (!layout || !controls || !workspace || !inspector || document.querySelector('.v72-mobile-taskbar')) return;
+
+    const bar = document.createElement('nav');
+    bar.className = 'v72-mobile-taskbar';
+    bar.setAttribute('aria-label', 'Lab task panels');
+    const panels = [
+      { id: 'setup', label: 'Setup' },
+      { id: 'results', label: 'Results' },
+      { id: 'evidence', label: 'Evidence' }
+    ];
+    let userSelected = false;
+    let autoSelected = false;
+
+    function apply(panel, manual) {
+      if (!panels.some(function (item) { return item.id === panel; })) panel = 'setup';
+      document.body.dataset.mobilePanel = panel;
+      bar.querySelectorAll('button').forEach(function (button) {
+        const active = button.dataset.mobilePanelTarget === panel;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      if (manual) userSelected = true;
+      root.requestAnimationFrame(function () {
+        root.dispatchEvent(new Event('resize'));
+        document.querySelectorAll('.js-plotly-plot').forEach(function (node) {
+          if (root.FokoPlotLifecycle) root.FokoPlotLifecycle.resize(node);
+        });
+      });
+    }
+
+    panels.forEach(function (panel) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.mobilePanelTarget = panel.id;
+      button.textContent = panel.label;
+      button.addEventListener('click', function () { apply(panel.id, true); });
+      bar.appendChild(button);
+    });
+    document.body.appendChild(bar);
+    apply('setup', false);
+
+    document.addEventListener('foko:plot-rendered', function () {
+      if (autoSelected || userSelected || !root.matchMedia('(max-width: 720px)').matches) return;
+      autoSelected = true;
+      apply('results', false);
+    });
+    root.FokoMobileTaskbar = Object.freeze({ show: function (panel) { apply(panel, true); } });
+  }
+
+  function initLabTaskFlow() {
+    if (!document.body || document.body.dataset.v72Shell !== 'true') return;
+    const layout = document.querySelector('main.layout');
+    const controls = layout && layout.querySelector('.work-panel.controls, .controls-panel');
+    const workspace = layout && layout.querySelector('.v72-workspace, .workspace-area, .workspace');
+    const inspector = layout && layout.querySelector('.v72-inspector');
+    if (!layout || !controls || !workspace || !inspector || controls.dataset.taskFlow === 'true') return;
+    controls.dataset.taskFlow = 'true';
+    controls.classList.add('v72-task-controls');
+    workspace.classList.add('v72-workspace');
+
+    const action = Array.from(controls.children).find(function (node) { return node.classList && node.classList.contains('actionbar'); });
+    if (action) {
+      action.classList.add('v72-run-dock');
+      controls.appendChild(action);
+    }
+
+    function first(selectors, fallback) {
+      for (const selector of selectors) {
+        const node = controls.querySelector(selector) || document.querySelector(selector);
+        if (node) return node;
+      }
+      return fallback || null;
+    }
+    const steps = [
+      { id: 'choose', label: 'Choose', target: first(['#examplesBlock','#agentExamplesBlock','#mlExamplesBlock','#modelArea','.examples-section']) },
+      { id: 'configure', label: 'Configure', target: first(['#modelBlock','#agentModelBlock','#mlDataBlock','#dataBlock','#matrixBlock','#graphBlock','#odeEditor','#forcesBlock'], controls) },
+      { id: 'run', label: 'Run', target: action || controls },
+      { id: 'inspect', label: 'Inspect', target: workspace },
+      { id: 'export', label: 'Export', target: document.getElementById('exportsBlock') || inspector }
+    ];
+    const nav = document.createElement('nav');
+    nav.className = 'v72-task-sequence';
+    nav.setAttribute('aria-label', 'Lab task sequence');
+    let visibleStep = 0;
+    steps.forEach(function (step) {
+      if (!step.target && step.id === 'choose') return;
+      visibleStep += 1;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.taskStep = step.id;
+      button.innerHTML = '<span>' + visibleStep + '</span>' + step.label;
+      button.addEventListener('click', function () {
+        if (root.matchMedia('(max-width: 720px)').matches && root.FokoMobileTaskbar) {
+          root.FokoMobileTaskbar.show(step.id === 'inspect' ? 'results' : step.id === 'export' ? 'evidence' : 'setup');
+        }
+        root.requestAnimationFrame(function () { step.target.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        nav.querySelectorAll('button').forEach(function (item) { item.classList.toggle('active', item === button); });
+      });
+      nav.appendChild(button);
+    });
+    const intro = Array.from(controls.children).find(function (node) {
+      return node.classList && (node.classList.contains('intro-card') || node.classList.contains('lab-intro'));
+    });
+    controls.insertBefore(nav, intro ? intro.nextSibling : controls.firstChild);
+  }
+
   function collectResourceSummary() {
     if (!performance || !performance.getEntriesByType) return;
     const entries = performance.getEntriesByType('resource');
@@ -396,6 +508,8 @@
     document.documentElement.classList.add('v72-accessibility-ready');
     wrapPlotly();
     enhanceStaticSemantics();
+    initLabTaskFlow();
+    initMobileTaskbar();
     initLongTaskObserver();
     root.addEventListener('load', function () { setTimeout(collectResourceSummary, 0); }, { once: true });
   }

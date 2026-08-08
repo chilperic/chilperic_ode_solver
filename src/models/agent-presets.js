@@ -13,7 +13,7 @@
     tcell_baseline: {
       title: 'T-cell activation and proliferation', model: 'tcell', family: 'cell-state dynamics', difficulty: 'intermediate', provenance: 'research-inspired teaching model',
       question: 'How do local activation, division, death and clearance rules shape population composition?',
-      note: 'A qualitative lattice state-transition model inspired by the creator’s T-cell modelling work. It is not calibrated to a specific experiment and omits clone identity, motility, cytokines and cell-cycle phases.',
+      note: 'A qualitative lattice state-transition model inspired by the creator’s T-cell modeling work. It is not calibrated to a specific experiment and omits clone identity, motility, cytokines and cell-cycle phases.',
       size: 34, steps: 120, runs: 24, seed: 202610, recordEvery: 2, snapshotCount: 24, neighborhood: 'moore', boundary: 'toroidal', updateSchedule: 'random-with-replacement', initialization: 'random',
       params: { activation: 0.030, division: 0.080, qDeath: 0.004, aDeath: 0.020, clearance: 0.080 }, initialFractions: [0.10, 0.78, 0.12, 0]
     },
@@ -68,6 +68,7 @@
     },
     sir_clustered_seed: {
       title: 'Spatial SIR clustered introduction', model: 'sir', family: 'epidemiology', difficulty: 'advanced', provenance: 'synthetic stress test',
+      visualization: { spaceTime3D: true, rationale: 'A localized infectious seed creates an interpretable invasion front through lattice space and algorithmic time.' },
       question: 'How does a localized infectious seed change outbreak timing and finite-horizon attack fraction?',
       note: 'Central-patch initialization is a controlled scenario, not reconstruction of a real introduction event.',
       size: 40, steps: 180, runs: 32, seed: 314160, recordEvery: 3, snapshotCount: 24, neighborhood: 'von-neumann', boundary: 'fixed', updateSchedule: 'shuffled-sweep', initialization: 'central-patch',
@@ -89,6 +90,7 @@
     },
     voter_interface: {
       title: 'Voter interface erosion', model: 'voter', family: 'collective dynamics', difficulty: 'intermediate', provenance: 'synthetic teaching model',
+      visualization: { spaceTime3D: true, rationale: 'The evolving interface is a genuine coarsening surface in lattice space and algorithmic time.' },
       question: 'How does a sharp initial interface erode under local copying?',
       note: 'The split state isolates coarsening. It is not a model of persuasion, media exposure or institutions.',
       size: 38, steps: 220, runs: 28, seed: 271829, recordEvery: 4, snapshotCount: 24, neighborhood: 'moore', boundary: 'toroidal', updateSchedule: 'shuffled-sweep', initialization: 'split',
@@ -110,6 +112,7 @@
     },
     segregation_initial_blocks: {
       title: 'Segregation initial-condition sensitivity', model: 'segregation', family: 'spatial sorting', difficulty: 'advanced', provenance: 'synthetic stress test',
+      visualization: { spaceTime3D: true, rationale: 'The model asks how structured spatial blocks reorganize through time.' },
       question: 'How much final sorting is inherited from an already structured initial condition?',
       note: 'Initialization dependence is explicit. Final patterns cannot identify preferences by themselves.',
       size: 36, steps: 100, runs: 20, seed: 161804, recordEvery: 2, snapshotCount: 24, neighborhood: 'moore', boundary: 'fixed', updateSchedule: 'shuffled-sweep', initialization: 'split',
@@ -124,6 +127,7 @@
     },
     predator_prey_cycles: {
       title: 'Lattice predator–prey cycles', model: 'predator_prey', family: 'ecology', difficulty: 'advanced', provenance: 'synthetic teaching model',
+      visualization: { spaceTime3D: true, rationale: 'Local predator and prey waves produce interpretable moving spatial structures.' },
       question: 'How can local birth, predation and death produce irregular population oscillations?',
       note: 'Qualitative interacting-particle model; no energetic budgets, age structure, movement kernels or calibrated encounter rates.',
       size: 40, steps: 180, runs: 24, seed: 424242, recordEvery: 2, snapshotCount: 24, neighborhood: 'von-neumann', boundary: 'toroidal', updateSchedule: 'random-with-replacement', initialization: 'random',
@@ -138,6 +142,7 @@
     },
     forest_fire_spread: {
       title: 'Forest-fire spread and burnout', model: 'forest_fire', family: 'disturbance ecology', difficulty: 'intermediate', provenance: 'synthetic teaching model',
+      visualization: { spaceTime3D: true, rationale: 'The curated central ignition generates a propagating fire front.' },
       question: 'How do local spread, burnout and recovery generate transient fire fronts?',
       note: 'A stylized cellular process. It omits wind, fuel heterogeneity, moisture, terrain and calibrated time.',
       size: 42, steps: 160, runs: 28, seed: 867530, recordEvery: 2, snapshotCount: 24, neighborhood: 'moore', boundary: 'fixed', updateSchedule: 'shuffled-sweep', initialization: 'central-patch',
@@ -152,6 +157,7 @@
     },
     prisoner_cooperation_front: {
       title: 'Spatial prisoner’s dilemma cooperation front', model: 'prisoner_dilemma', family: 'evolutionary game dynamics', difficulty: 'advanced', provenance: 'published reference abstraction',
+      visualization: { spaceTime3D: true, rationale: 'The question concerns persistence and movement of a spatial cooperation front.' },
       question: 'Can spatial clustering protect cooperation when defection has a local payoff advantage?',
       note: 'A pairwise-imitation lattice abstraction using normalized payoffs R=1, P=S=0 and temptation T. It is not a calibrated social or microbial game.',
       size: 38, steps: 180, runs: 28, seed: 818181, recordEvery: 3, snapshotCount: 24, neighborhood: 'moore', boundary: 'toroidal', updateSchedule: 'shuffled-sweep', initialization: 'central-patch',
@@ -166,6 +172,7 @@
     },
     biofilm_growth_front: {
       title: 'Biofilm nutrient-limited growth front', model: 'biofilm', family: 'microbial spatial dynamics', difficulty: 'advanced', provenance: 'research-inspired qualitative abstraction',
+      visualization: { spaceTime3D: true, rationale: 'Nutrient-limited biomass expansion is explicitly modeled as a spatial growth front.' },
       question: 'How can local nutrient conversion and biomass inactivation shape a finite growth front?',
       note: 'This is a categorical cellular abstraction. It omits diffusion, biomass mechanics, extracellular matrix, flow and calibration to biofilm data.',
       size: 40, steps: 200, runs: 28, seed: 515151, recordEvery: 4, snapshotCount: 28, neighborhood: 'von-neumann', boundary: 'fixed', updateSchedule: 'shuffled-sweep', initialization: 'central-patch',

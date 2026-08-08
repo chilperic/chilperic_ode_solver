@@ -87,6 +87,27 @@ assert.equal(sobol.analysis.sampleRows.length, 64);
 assert.equal(sobol.analysis.dependence.rows.length, 2);
 assert.ok(sobol.analysis.dependence.rows.every(row => row.mutualInformationP > 0 && row.hsicP > 0));
 
+const multiModel = {
+  vars: ['x', 'z'], eqs: ['r*x*(1-x/K)', '0.3*x-0.2*z'], y0: [0.2, 0.1],
+  params: model.params, paramDefs: model.paramDefs,
+  t0: 0, t1: 4, points: 60, method: 'rk45', rtol: 1e-7, atol: 1e-10,
+  stepSize: 'auto', initialStep: 'auto', maxStep: 'auto', safety: 0.9
+};
+context.postMessages.length = 0;
+context.onmessage({ data: {
+  type: 'run', model: multiModel,
+  analysis: { method: 'sobol', samples: 32, seed: 1729, secondOrder: false, bootstrapReplicates: 20, parameterCount: 2 },
+  outputVar: 'x', outputVars: ['x', 'z'], outputMetric: 'final'
+} });
+const multi = context.postMessages.find(message => message.type === 'result');
+assert.ok(multi && multi.ok, multi && multi.error || 'multi-output Sobol run failed');
+assert.deepEqual(Array.from(multi.outputVars), ['x', 'z']);
+assert.deepEqual(Object.keys(multi.analysesByOutput), ['x', 'z']);
+assert.ok(multi.analysesByOutput.x.rows.every(row => Number.isFinite(row.first) && Number.isFinite(row.total)));
+assert.ok(multi.analysesByOutput.z.rows.every(row => Number.isFinite(row.first) && Number.isFinite(row.total)));
+assert.equal(multi.solverSummary.odeSolves, 32 * 4, 'one shared Saltelli design must be solved once, not once per output');
+assert.equal(multi.estimatedOdeSolves, multi.solverSummary.odeSolves);
+
 const fim = run({ method: 'fim', relativeStep: 1e-3, sigma: 1, parameterCount: 2 });
 assert.equal(fim.outputMetric, 'trajectory');
 assert.equal(fim.analysis.matrix.length, 2);
@@ -109,4 +130,4 @@ assert.ok(blocked && blocked.ok===false);
 assert.match(blocked.error,/too large for reliable in-browser sensitivity analysis/i);
 assert.match(blocked.error,/No worker should be started/i);
 
-console.log('Sensitivity worker end-to-end contracts passed: local Jacobians/OFAT/direction/surface, Morris normalized designs, Jansen/Saltelli time/state/dependence diagnostics, global response surfaces and FIM use editable ODE inputs and the canonical ODE core.');
+console.log('Sensitivity worker end-to-end contracts passed: local Jacobians/OFAT/direction/surface, Morris normalized designs, shared-design multi-output Jansen/Saltelli time/state/dependence diagnostics, global response surfaces and FIM use editable ODE inputs and the canonical ODE core.');

@@ -14,7 +14,7 @@ function deterministicView(value) {
   return out;
 }
 
-ok(Workbench.VERSION === '72.48.0', 'adapter registry version is current');
+ok(Workbench.VERSION === '77.4.1', 'adapter registry version is current');
 ok(Workbench.ids.length >= 11, 'all migrated reference labs are registered');
 const expected = ['ode','steady','stochastic','optimization','agent','statistics','fitting','linalg','networks','ml','sciml'];
 expected.forEach(id => ok(Workbench.ids.includes(id), id + ' adapter exists'));

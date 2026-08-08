@@ -10,9 +10,11 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8"))["version"]
 ACTIVE_PAGES = [
-    "ode.html", "steady.html", "stochastic.html", "optimization.html", "statistics.html",
+    "studio.html",
+    "ode.html", "steady.html", "stochastic.html", "optimization.html", "population-genetics.html", "advanced-methods.html", "statistics.html",
     "fitting.html", "linear-algebra.html", "networks.html", "ml.html", "sciml.html",
     "agent.html", "symbolic.html", "workbench.html", "sensitivity.html",
+    "bifurcation.html", "evolution.html", "ai-modeling.html",
 ]
 PUBLIC_PAGES = ["index.html", "docs.html", "tutorial.html", "trust.html", "research.html", "contact.html", "acknowledgement.html", "beauty.html", "cv.html"]
 
@@ -27,7 +29,7 @@ def main() -> int:
     checks.append(("One runtime cache token", runtime_tokens == {VERSION}, str(sorted(runtime_tokens))))
 
     styles = sorted((ROOT / "styles").glob("*.css"))
-    checks.append(("Bounded stylesheet inventory", len(styles) <= 13, f"{len(styles)} files (limit 13)"))
+    checks.append(("Bounded stylesheet inventory", len(styles) <= 14, f"{len(styles)} files (limit 14, including v76 system)"))
     legacy = [p.name for p in styles if re.match(r"v70-(?:4|5|6|7|11|13|15|19)-", p.name)]
     checks.append(("Retired version-layer styles absent", not legacy, ", ".join(legacy) or "none"))
 
@@ -41,7 +43,7 @@ def main() -> int:
             max_public_css = max(max_public_css, len(refs))
     orphans = [p.name for p in styles if p.name not in referenced_styles]
     checks.append(("No orphan stylesheet", not orphans, ", ".join(orphans) or "none"))
-    checks.append(("Public pages use a compact CSS stack", max_public_css <= 5, f"maximum {max_public_css} requests"))
+    checks.append(("Public pages use a compact CSS stack", max_public_css <= 6, f"maximum {max_public_css} requests"))
 
     card_failures = []
     script_order_failures = []

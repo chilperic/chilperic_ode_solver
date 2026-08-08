@@ -1,0 +1,20 @@
+'use strict';
+const assert=require('assert');
+const Core=require('../../src/core/bifurcation.js');
+let checks=0;function check(ok,message){checks+=1;assert.ok(ok,message);}
+const pitch=Core.scan({rhs:(x,mu)=>mu*x-x*x*x,muMin:-1,muMax:1,muPoints:121,xMin:-1.6,xMax:1.6,xPoints:401});
+check(pitch.rows.some(row=>row.mu<0&&Math.abs(row.x)<1e-5&&row.stable),'pitchfork origin is stable below the transition');
+check(pitch.rows.some(row=>row.mu>.5&&row.x>.6&&row.stable),'positive stable pitchfork branch is found');
+check(pitch.rows.some(row=>row.mu>.5&&row.x<-.6&&row.stable),'negative stable pitchfork branch is found');
+check(pitch.rows.some(row=>row.mu>.5&&Math.abs(row.x)<1e-5&&!row.stable),'origin becomes unstable above the transition');
+check(pitch.maxResidual<1e-5,'reported equilibria have small residuals');
+const fold=Core.scan({rhs:(x,mu)=>mu-x*x,muMin:-1,muMax:2,muPoints:121,xMin:-2,xMax:2,xPoints:401});
+check(fold.counts.some(row=>row.mu<0&&row.count===0),'fold has no equilibria below zero');
+check(fold.counts.some(row=>row.mu>.5&&row.count===2),'fold has two equilibria above zero');
+check(fold.critical.length>0,'finite scan reports candidate critical changes');
+const view=Core.slice({rhs:(x,mu)=>mu*x-x*x*x,mu:.8,muMin:-1,muMax:1,xMin:-2,xMax:2,muPoints:101,xPoints:401});
+check(view.x.length===401&&view.field.length===401&&view.potential.length===401,'vector-field slice is plot ready');
+check(view.roots.length===3,'inspection slice finds three pitchfork equilibria');
+check(Core.presets.length>=6,'bifurcation lab exposes at least six editable starters');
+assert.throws(()=>Core.scan({rhs:(x)=>x,muMin:1,muMax:0}),/maximum/);checks+=1;
+console.log(`${checks}/${checks} bifurcation checks passed`);

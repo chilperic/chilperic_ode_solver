@@ -1,6 +1,15 @@
 (function(root){'use strict';
   const data=root.FokoScientificExampleCatalog||[];
+  const PAGE_SIZE=24;
+  let page=1;
   const $=function(id){return document.getElementById(id);};
+  const LAB_IDENTITY={
+    'ODE':['ode','dynamical-systems'],'Stochastic':['stochastic','dynamical-systems'],'Steady State':['steady','dynamical-systems'],'Bifurcation':['bifurcation','dynamical-systems'],
+    'Agent':['agent','populations-evolution'],'Population Genetics':['population-genetics','populations-evolution'],'Evolution Landscapes':['evolution','populations-evolution'],
+    'Optimization':['optimization','inference-uncertainty'],'Fitting':['fitting','inference-uncertainty'],'Statistics':['statistics','inference-uncertainty'],'Advanced Methods':['advanced-methods','inference-uncertainty'],
+    'AI Modeling':['ai-modeling','scientific-intelligence'],'SciML':['sciml','scientific-intelligence'],'Machine Learning':['ml','scientific-intelligence'],
+    'Linear Algebra':['linalg','mathematical-structure'],'Networks':['networks','mathematical-structure'],'Symbolic':['symbolic','mathematical-structure'],'Research':['research','resources']
+  };
   function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function options(values,label){return '<option value="">'+label+'</option>'+Array.from(new Set(values)).sort().map(function(value){return '<option value="'+esc(value)+'">'+esc(value)+'</option>';}).join('');}
   function includes(text,terms){return terms.some(function(term){return text.includes(term);});}
@@ -64,33 +73,48 @@
       'Machine Learning':'assets/lab-logos/model-atlas.webp',
       'Linear Algebra':'assets/model-atlas/romeo-juliet.webp',
       'Networks':'assets/model-atlas/braess.webp',
+      'Population Genetics':'assets/lab-logos/model-atlas.webp',
       'Symbolic':'assets/model-atlas/vanderpol.webp'
     };
     return defaults[item.lab]||'assets/lab-logos/model-atlas.webp';
   }
   function render(){
-    const q=$('atlasSearch').value.trim().toLowerCase(),lab=$('atlasLab').value,prov=$('atlasProvenance').value,family=$('atlasFamily').value;
-    const filtered=data.filter(function(item){const text=[item.title,item.lab,item.family,item.provenance,item.status,item.summary].concat(aliasesFor(item)).join(' ').toLowerCase();return (!q||text.includes(q))&&(!lab||item.lab===lab)&&(!prov||item.provenance===prov)&&(!family||item.family===family);});
+    const q=$('atlasSearch').value.trim().toLowerCase(),lab=$('atlasLab').value,prov=$('atlasProvenance').value,family=$('atlasFamily').value,status=$('atlasStatus').value;
+    const filtered=data.filter(function(item){const text=[item.title,item.lab,item.family,item.provenance,item.status,item.summary].concat(aliasesFor(item)).join(' ').toLowerCase();return (!q||text.includes(q))&&(!lab||item.lab===lab)&&(!prov||item.provenance===prov)&&(!family||item.family===family)&&(!status||item.status===status);});
+    const pageCount=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));
+    page=Math.min(Math.max(1,page),pageCount);
+    const start=(page-1)*PAGE_SIZE;
+    const visible=filtered.slice(start,start+PAGE_SIZE);
     $('atlasCount').textContent=filtered.length+' of '+data.length+' examples';
-    $('atlasGridV72').innerHTML=filtered.map(function(item){
+    $('atlasPageStatus').textContent=filtered.length?'Page '+page+' of '+pageCount+' · showing '+(start+1)+'–'+(start+visible.length):'No matching pages';
+    $('atlasPrevious').disabled=page<=1;
+    $('atlasNext').disabled=page>=pageCount;
+    $('atlasPagination').hidden=filtered.length<=PAGE_SIZE;
+    $('atlasGridV72').innerHTML=visible.map(function(item){
       const image=imageFor(item);
-      return '<article class="v72-atlas-card">'
+      const identity=LAB_IDENTITY[item.lab]||['examples','resources'];
+      return '<article class="v72-atlas-card" data-lab-target="'+esc(identity[0])+'" data-subject-target="'+esc(identity[1])+'">'
         +'<figure class="v72-atlas-media"><img alt="'+esc(item.title)+' preview" decoding="async" src="'+esc(image)+'"/></figure>'
         +'<div class="v72-atlas-meta"><span class="v72-atlas-badge">'+esc(item.lab)+'</span><span class="v72-atlas-badge provenance">'+esc(item.provenance)+'</span><span class="v72-atlas-badge status">'+esc(item.status)+'</span></div>'
-        +'<div class="v72-atlas-card-body"><h2>'+esc(item.title)+'</h2><p><b>'+esc(item.family)+'</b></p><p>'+esc(item.summary)+'</p></div>'
-        +'<a href="'+esc(item.href)+'">Open example</a></article>';
+        +'<div class="v72-atlas-card-body"><h2>'+esc(item.title)+'</h2><p><b>'+esc(item.family)+'</b></p><dl><dt>Scientific use</dt><dd>'+esc(item.summary)+'</dd><dt>Evidence boundary</dt><dd>'+esc(item.status)+'</dd></dl></div>'
+        +'<a href="'+esc(item.href)+'">Open as editable starting point</a></article>';
     }).join('')||'<p>No examples match the current filters.</p>';
   }
   function init(){
     $('atlasLab').innerHTML=options(data.map(function(x){return x.lab;}),'All labs');
     $('atlasProvenance').innerHTML=options(data.map(function(x){return x.provenance;}),'All provenance classes');
     $('atlasFamily').innerHTML=options(data.map(function(x){return x.family;}),'All scientific families');
+    $('atlasStatus').innerHTML=options(data.map(function(x){return x.status;}),'All evidence levels');
     const params=new URLSearchParams(window.location.search);
     if(params.get('q')) $('atlasSearch').value=params.get('q');
     if(params.get('lab') && Array.from($('atlasLab').options).some(function(option){return option.value===params.get('lab');})) $('atlasLab').value=params.get('lab');
     if(params.get('provenance') && Array.from($('atlasProvenance').options).some(function(option){return option.value===params.get('provenance');})) $('atlasProvenance').value=params.get('provenance');
     if(params.get('family') && Array.from($('atlasFamily').options).some(function(option){return option.value===params.get('family');})) $('atlasFamily').value=params.get('family');
-    ['atlasSearch','atlasLab','atlasProvenance','atlasFamily'].forEach(function(id){$(id).addEventListener(id==='atlasSearch'?'input':'change',render);});render();
+    if(params.get('status') && Array.from($('atlasStatus').options).some(function(option){return option.value===params.get('status');})) $('atlasStatus').value=params.get('status');
+    ['atlasSearch','atlasLab','atlasProvenance','atlasFamily','atlasStatus'].forEach(function(id){$(id).addEventListener(id==='atlasSearch'?'input':'change',function(){page=1;render();});});
+    $('atlasPrevious').addEventListener('click',function(){page=Math.max(1,page-1);render();$('atlasGridV72').scrollIntoView({block:'start'});});
+    $('atlasNext').addEventListener('click',function(){page+=1;render();$('atlasGridV72').scrollIntoView({block:'start'});});
+    render();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 }(typeof window!=='undefined'?window:globalThis));

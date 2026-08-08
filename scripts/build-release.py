@@ -13,13 +13,13 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = json.loads((ROOT / "VERSION.json").read_text(encoding="utf-8"))["version"]
 DIST = ROOT / "dist"
-ARCHIVE_BASENAME = f"foko-lab-v{VERSION}-platform-benchmark-hardening"
+ARCHIVE_BASENAME = f"foko-lab-v{VERSION}-complete"
 ARCHIVE = DIST / f"{ARCHIVE_BASENAME}.zip"
 MANIFEST = ROOT / "RELEASE_MANIFEST.json"
 
 EXCLUDED_DIRS = {
     ".git", ".venv", "venv", "node_modules", "__pycache__", ".pytest_cache",
-    "dist", "release-audits", "test-results", "playwright-report"
+    "dist", "release-audits", "release-history", "test-results", "playwright-report"
 }
 EXCLUDED_PREFIXES = {Path("tests/archive")}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".zip", ".swp", "~"}

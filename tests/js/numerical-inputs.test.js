@@ -8,6 +8,8 @@ const ode=N.validateOde({vars:['x'],eqs:['-k*x'],y0:[1],params:{k:[.2,.1,.5]},t0
 ok(ode.t1===20,'ODE time span is normalized');
 ok(ode.rtol===1e-6 && ode.atol===1e-9,'ODE tolerances are numeric');
 ok(ode.paramDefs.k[0]===.2 && ode.paramDefs.k[1]===.1 && ode.paramDefs.k[2]===.5,'parameter value and range are preserved');
+const restoredShapes=N.validateOde({...ode,params:{k:{value:.3,min:.1,max:.7}},paramDefs:{k:{value:.3,min:.1,max:.7}}});
+ok(restoredShapes.params.k===.3 && restoredShapes.paramDefs.k[2]===.7,'restored object-shaped parameters are normalized');
 throws(()=>N.validateOde({...ode,t0:5,t1:5}),/end must be greater/,'equal ODE time endpoints are rejected');
 throws(()=>N.validateOde({...ode,method:'bdf'}),/export-only/,'browser run rejects export-only BDF');
 throws(()=>N.validateOde({...ode,rtol:0}),/greater than zero/,'zero relative tolerance is rejected');

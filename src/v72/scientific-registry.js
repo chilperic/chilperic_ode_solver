@@ -1,4 +1,4 @@
-/* Foko Lab v72.48.0 central scientific example and plot compatibility registry.
+/* Foko Lab v77.4.1 central scientific example and plot compatibility registry.
  *
  * Goals:
  * - one source of truth for example provenance and plot compatibility;
@@ -12,6 +12,7 @@
   'use strict';
 
   const LAB_PAGE_MAP = {
+    studio: { gridId: 'plotGrid', selects: ['leftStudioPlotType', 'rightStudioPlotType'], exampleSelect: 'studioPreset', cards: ['left', 'right'] },
     ode: { gridId: 'plotGrid', selects: ['leftPlotType', 'rightPlotType'], exampleSelect: 'exampleSelect', cards: ['left', 'right'] },
     steady: { gridId: 'plotGrid', selects: ['leftPlotType', 'rightPlotType'], exampleSelect: 'steadySelect', cards: ['left', 'right'] },
     stochastic: { gridId: 'plotGrid', selects: ['leftPlotType', 'rightPlotType'], exampleSelect: 'stochasticSelect', cards: ['left', 'right'] },
@@ -24,18 +25,23 @@
     sciml: { gridId: 'plotGrid', selects: ['sciPlotType', 'sciPlotType2'], exampleSelect: 'sciExample', cards: ['left', 'right'] },
     agent: { gridId: 'agentPlotGrid', selects: ['leftAgentPlotType', 'rightAgentPlotType'], exampleSelect: 'agentPresetSelect', cards: ['left', 'right'] },
     symbolic: { gridId: 'plotGrid', selects: ['leftPlotType', 'rightPlotType'], exampleSelect: 'symbolicSelect', cards: ['left', 'right'] },
-    sensitivity: { gridId: 'plotGrid', selects: ['leftPlotType', 'rightPlotType'], exampleSelect: 'sensitivitySelect', cards: ['left', 'right'] }
+    sensitivity: { gridId: 'plotGrid', selects: ['leftPlotType', 'rightPlotType'], exampleSelect: 'sensitivitySelect', cards: ['left', 'right'] },
+    bifurcation: { gridId: 'plotGrid', selects: ['leftBfPlotType', 'rightBfPlotType'], exampleSelect: 'bfPreset', cards: ['left', 'right'] },
+    evolution: { gridId: 'plotGrid', selects: ['leftEvPlotType', 'rightEvPlotType'], exampleSelect: 'evPreset', cards: ['left', 'right'] },
+    'ai-modeling': { gridId: 'plotGrid', selects: ['leftAiPlotType', 'rightAiPlotType'], exampleSelect: 'aiExample', cards: ['left', 'right'] }
   };
 
   const registry = Object.create(null);
   const pageControllers = Object.create(null);
   const EXAMPLE_GLOBALS = {
+    studio: 'FokoModelStudioPresets',
     steady: 'FokoSteadyPresets', stochastic: 'FokoStochasticPresets', optimization: 'FokoOptimizationPresets',
     statistics: 'FokoStatisticsPresets', fitting: 'FokoFittingPresets', linalg: 'FokoLinalgPresets',
     networks: 'FokoNetworksPresets', ml: 'FokoMLPresets', agent: 'FokoAgentPresets', symbolic: 'FokoSymbolicPresets',
     sciml: 'FokoSciMLExamples', sensitivity: 'FokoSensitivityPresets'
   };
   const PLOT_GLOBALS = {
+    studio: 'FokoModelStudioPlotMeta',
     agent: 'FokoAgentPlotMeta', fitting: 'FokoFittingPlotMeta', linalg: 'FokoLinalgPlotMeta',
     networks: 'FokoNetworksPlotMeta', ml: 'FokoMLPlotMeta', steady: 'FokoSteadyPlotMeta',
     stochastic: 'FokoStochasticPlotMeta', sciml: 'FokoSciMLPlotMeta', optimization: 'FokoOptimizationPlotMeta',

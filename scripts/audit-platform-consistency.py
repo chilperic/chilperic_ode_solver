@@ -55,13 +55,13 @@ assert 'ofatPoints * parameterCount' in inputs
 assert 'surfacePoints * surfacePoints' in inputs
 assert 'dependencePermutations' in inputs
 
-expected_copy = 'Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.'
+expected_copy = 'Local, Morris, Sobol and multi-output GSA.'
+app_shell = (ROOT / 'src/v76/app-shell.js').read_text()
+assert expected_copy in app_shell
 for page in ROOT.glob('*.html'):
     text = page.read_text(errors='ignore')
-    if 'href="sensitivity.html"' in text:
-        assert expected_copy in text, f'outdated Sensitivity navigation copy in {page.name}'
-nav = (ROOT / 'src/navigation.js').read_text()
-assert expected_copy in nav
+    assert 'data-nav-menu=' not in text, f'legacy navigation copy remains in {page.name}'
+    assert 'src/v76/app-shell.js?v=77.4.1' in text, f'central application shell missing from {page.name}'
 assert 'Sobol/Jansen and local information diagnostics' not in ''.join(p.read_text(errors='ignore') for p in ROOT.glob('*.html'))
 
 # Public documentation must describe the actual conditional runtime evidence.
@@ -80,15 +80,15 @@ for acronym in ('ODE', 'HSIC', 'FIM', 'SSA'):
     assert acronym in trust, f'trust acronym formatting is missing {acronym}'
 assert 'Adjoint sensitivity' in trust and 'Unavailable' in trust
 
-runner = (ROOT / 'test-v72.48.0-local.sh').read_text()
-assert 'PREVIOUS_VERSION="72.47.0"' in runner, 'runner predecessor variable is stale'
-assert "previous='72.47.0'" in runner, 'runner embedded preflight predecessor is stale'
+runner = (ROOT / f'test-v{version}-local.sh').read_text()
+assert 'PREVIOUS_VERSION="76.2.0"' in runner, 'runner predecessor variable is stale'
+assert "previous='76.2.0'" in runner, 'runner embedded preflight predecessor is stale'
 
 # Every authored workspace must retain exactly two stable plot hosts.
-workspaces = ['ode','steady','stochastic','optimization','statistics','fitting','linear-algebra','networks','ml','sciml','agent','symbolic','sensitivity','workbench']
+workspaces = ['studio','ode','steady','stochastic','optimization','population-genetics','advanced-methods','statistics','fitting','linear-algebra','networks','ml','sciml','agent','symbolic','sensitivity','workbench','bifurcation','evolution','ai-modeling']
 for name in workspaces:
     text = (ROOT / f'{name}.html').read_text()
     count = text.count('data-plot-card="left"') + text.count('data-plot-card="right"')
     assert count == 2, f'{name}.html exposes {count} stable plot hosts'
 
-print(f'Platform consistency audit passed for {version}: local Jacobian/OFAT/directional diagnostics, Morris design trajectories, local/global bounded response surfaces, time- and state-resolved global effects, limited dependence screening, synchronized public documentation, guarded browser capacity, synchronized navigation copy, and 14 two-panel workspaces.')
+print(f'Platform consistency audit passed for {version}: synchronized scientific diagnostics, guarded browser capacity, synchronized navigation copy, and {len(workspaces)} two-panel workspaces.')

@@ -78,7 +78,8 @@ def test_all_focused_workspaces_render_only_visible_sides():
     ]
     for path in paths:
         source = text(path)
-        assert 'requestAnimationFrame' in source, path
+        assert ('requestAnimationFrame' in source or
+                'FokoPlotLifecycle.afterLayout' in source), path
         assert ('visiblePlotSides' in source or 'visibleMlSides' in source or
                 'visibleSciSides' in source or 'visibleSides' in source or
                 "dataset.layout==='focus'" in source or "dataset.layout === 'focus'" in source), path

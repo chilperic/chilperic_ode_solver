@@ -9,82 +9,22 @@
 <meta content="Scientific machine learning with compatible plots, numerical evidence and explicit computation boundaries." property="og:description"/>
 <meta content="website" property="og:type"/>
 <title>SciML Lab · Foko Lab</title>
-<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.48.0" rel="stylesheet"/>
-<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.48.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.48.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.48.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.48.0" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-sciml.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=72.48.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.48.0"></script></head>
-<body data-lab="sciml" data-v72-shell="true" data-version="72.48.0"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=77.4.1" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=77.4.1"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=77.4.1" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=77.4.1" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=77.4.1" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-sciml.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=77.4.1" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=77.4.1"></script><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
+</head>
+<body data-lab="sciml" data-v72-shell="true"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
 <div class="app-shell">
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.48.0" width="190"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div>
-</header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="layout v72-lab-shell" id="main-content" tabindex="-1">
 <aside aria-label="SciML workflow" class="side-nav">
 <button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
@@ -130,11 +70,11 @@
 </aside>
 <section aria-label="SciML results" class="workspace v72-workspace">
 <section aria-label="Computed SciML results" class="results-card" role="region">
-<header class="v72-workspace-head"><div><p class="v72-eyebrow">Computed workspace</p><h1>Compatible plots from one computed result</h1><p>Plot choices are rebuilt from the selected workflow. Export-only neural workflows do not fabricate training loss, residual fields or speedup claims.</p></div><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div></header>
+<header class="v72-workspace-head"><div><p class="v72-eyebrow">Results</p><h1>Compatible plots from one computed result</h1><p>Plot choices are rebuilt from the selected workflow. Export-only neural workflows do not fabricate training loss, residual fields or speedup claims.</p></div><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div></header>
 <div class="plot-toolbar-v2"><span class="result-kind" id="sciResultKind">No computed SciML result</span><button class="ghost" id="exportSciPng" type="button">Current PNG</button><button class="ghost" id="exportSciSvg" type="button">Current SVG</button></div>
 <div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
-<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="sciPlotLabel">Primary evidence</h3><select aria-label="Primary SciML plot" id="sciPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div><div class="sciml-phase-controls" hidden="" id="sciPhaseControls"><label><span>X axis</span><select id="sciPhaseX"></select></label><label><span>Y axis</span><select id="sciPhaseY"></select></label><label><span>Z axis</span><select id="sciPhaseZ"></select></label></div><div class="plot" id="sciPlot"><div class="diagnostics empty">Run a compatible workflow to create a plot.</div></div><details class="plot-evidence"><summary>Scientific meaning</summary><p id="sciPlotEvidence">No plot has been computed.</p></details></article>
-<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="sciPlotLabel2">Diagnostic evidence</h3><select aria-label="Secondary SciML plot" id="sciPlotType2"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div><div class="plot" id="sciPlot2"><div class="diagnostics empty">Run a compatible workflow to create a plot.</div></div><details class="plot-evidence"><summary>Scientific meaning</summary><p id="sciPlotEvidence2">No plot has been computed.</p></details></article>
+<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="sciPlotLabel">Primary evidence</h3><select aria-label="Primary SciML plot" id="sciPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div><div class="sciml-phase-controls" hidden="" id="sciPhaseControls"><label><span>X axis</span><select id="sciPhaseX"></select></label><label><span>Y axis</span><select id="sciPhaseY"></select></label><label><span>Z axis</span><select id="sciPhaseZ"></select></label></div><div class="plot" id="sciPlot"><div class="diagnostics empty">Run a compatible workflow to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="sciPlotEvidence">Available after a run.</p></details></article>
+<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="sciPlotLabel2">Diagnostic evidence</h3><select aria-label="Secondary SciML plot" id="sciPlotType2"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div><div class="plot" id="sciPlot2"><div class="diagnostics empty">Run a compatible workflow to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="sciPlotEvidence2">Available after a run.</p></details></article>
 </div>
 <p class="info-strip" id="sciPlotHint">Only plots connected to the current computed result are selectable.</p>
 <section class="sciml-artifact-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Model artifact</p><h2>Equations or workflow result</h2></div></div><div class="sciml-math" id="sciEquations"></div></section>
@@ -143,18 +83,18 @@
 <aside aria-label="SciML diagnostics and exports" class="v72-inspector">
 <section class="v72-inspector-card"><p class="v72-eyebrow">Run status</p><div class="status-strip"><div class="status-ok"><span>●</span><b id="sciTopStatus">Ready</b></div><div><span>Runtime</span><b id="sciRuntime">—</b></div><div><span>Workflow</span><b id="sciResultWorkflow">—</b></div><div><span>Example</span><b id="sciResultExample">—</b></div><div><span>States</span><b id="sciResultStates">—</b></div></div><div class="metrics-grid"><article class="metric-card"><small>Computation</small><b id="sciComputation">Not run</b><em>browser or export-only</em></article><article class="metric-card"><small>Available plots</small><b id="sciAvailablePlots">0</b><em>compatible outputs</em></article></div></section>
 <section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Numerical evidence</p><h2>Diagnostics</h2></div></div><div class="diagnostics empty sciml-diagnostics" id="sciDiagnostics">Run an analysis to see residuals, fit evidence and limitations.</div></section>
-<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Computation boundary</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="sciBoundaryStatus">Not computed</dd></div><div><dt>Engine</dt><dd id="sciBoundaryEngine">FokoSINDy / bounded browser adapters</dd></div><div><dt>Method</dt><dd id="sciBoundaryMethod">Not run</dd></div><div><dt>Data</dt><dd id="sciBoundaryData">Synthetic or uploaded trajectory</dd></div><div><dt>Claim</dt><dd id="sciBoundaryClaim">No scientific result yet</dd></div></dl><p class="v72-warning" id="sciBoundaryText">A browser diagnostic is not evidence that a neural model was trained.</p></section>
+<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="sciBoundaryStatus">Not computed</dd></div><div><dt>Engine</dt><dd id="sciBoundaryEngine">FokoSINDy / bounded browser adapters</dd></div><div><dt>Method</dt><dd id="sciBoundaryMethod">Not run</dd></div><div><dt>Data</dt><dd id="sciBoundaryData">Synthetic or uploaded trajectory</dd></div><div><dt>Claim</dt><dd id="sciBoundaryClaim">No scientific result yet</dd></div></dl><p class="v72-warning" id="sciBoundaryText">A browser diagnostic is not evidence that a neural model was trained.</p></section>
 <section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Configuration and export</h2></div></div><div class="export-row"><button class="secondary" id="saveSciSession" type="button">Save session</button><button class="secondary" id="restoreSciSession" type="button">Restore session</button><button class="secondary" id="copySciShareUrl" type="button">Copy share URL</button><button class="secondary" id="sciCopyJson" type="button">Copy model JSON</button><button class="secondary" id="sciGenerateExport" type="button">Generate Python export</button><button class="secondary" id="sciCopyExport" type="button">Copy export</button></div><textarea aria-label="SciML export" id="sciExport" rows="10" spellcheck="false"></textarea><p class="note">Saved and shared states preserve configuration and input data only. Computed evidence is regenerated.</p></section>
 </aside>
 </main>
 </div>
-<script defer="" src="src/core/ode.js?v=72.48.0"></script>
-<script defer="" src="src/core/pca.js?v=72.48.0"></script>
-<script defer="" src="src/core/sindy.js?v=72.48.0"></script>
-<script defer="" src="src/inverse.js?v=72.48.0"></script>
-<script defer="" src="src/surrogate.js?v=72.48.0"></script>
-<script defer="" src="src/sciml-lab.js?v=72.48.0"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=72.48.0"></script>
-<script defer="" src="src/navigation.js?v=72.48.0"></script>
+<script defer="" src="src/core/ode.js?v=77.4.1"></script>
+<script defer="" src="src/core/pca.js?v=77.4.1"></script>
+<script defer="" src="src/core/sindy.js?v=77.4.1"></script>
+<script defer="" src="src/inverse.js?v=77.4.1"></script>
+<script defer="" src="src/surrogate.js?v=77.4.1"></script>
+<script defer="" src="src/sciml-lab.js?v=77.4.1"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=77.4.1"></script>
+<script defer src="src/v76/app-shell.js?v=77.4.1"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the modelling handbook and tutorials as accessible, searchable learning pages."""
+"""Render the modeling handbook and tutorials as accessible, searchable learning pages."""
 from __future__ import annotations
 
 import html
@@ -99,15 +99,16 @@ NAV = '''<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true
 </header>'''
 
 FOOTER = '''<footer class="v70-footer foko-product-footer compact-public-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v={version}"/><p><b>Foko Lab</b><br/>Scientific modelling with visible evidence boundaries.</p></div>
-<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Modelling handbook</a><a href="trust.html">Trust</a><a href="research.html">Research</a></nav>
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v={version}"/><p><b>Foko Lab</b><br/>Scientific modeling with visible evidence boundaries.</p></div>
+<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Modeling handbook</a><a href="trust.html">Trust</a><a href="research.html">Research</a></nav>
 <div class="foko-footer-meta"><p><a href="https://chilperic.github.io/" rel="noopener" target="_blank">Dr. Chilperic Armel Foko Kuate</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a></p></div>
 </footer>'''
 
 LAB_LINKS = '''<nav class="guide-lab-links" aria-label="Open a scientific workspace">
-<a href="ode.html">ODE</a><a href="sensitivity.html">Sensitivity</a><a href="optimization.html">Optimization</a>
-<a href="steady.html">Steady-State</a><a href="stochastic.html">Stochastic</a><a href="fitting.html">Fitting</a>
-<a href="statistics.html">Statistics</a><a href="linear-algebra.html">Linear Algebra</a><a href="ml.html">ML</a><a href="sciml.html">SciML</a>
+<a href="studio.html">Model Studio</a><a href="examples.html">Model Atlas</a><a href="ode.html">ODE</a><a href="stochastic.html">Stochastic</a><a href="agent.html">Agent</a>
+<a href="population-genetics.html">Population Genetics</a><a href="bifurcation.html">Bifurcation</a><a href="sensitivity.html">Sensitivity</a><a href="optimization.html">Optimization</a>
+<a href="steady.html">Steady-State</a><a href="fitting.html">Fitting</a><a href="statistics.html">Statistics</a><a href="advanced-methods.html">Advanced</a>
+<a href="ai-modeling.html">AI Modeling</a><a href="linear-algebra.html">Linear Algebra</a><a href="ml.html">ML</a><a href="sciml.html">SciML</a>
 </nav>'''
 
 GUIDE_SCRIPT = r'''<script>
@@ -186,27 +187,27 @@ def page(title: str, description: str, eyebrow: str, source: str, output: str, l
 <html data-theme="aurora" lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="{html.escape(description)}" name="description"/><title>{html.escape(title)} · Foko Lab</title>
-<link href="assets/brand/foko-lab-mark.svg?v={VERSION}" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/foko-lab-micro.svg?v={VERSION}" rel="icon" type="image/svg+xml"/>
 <link href="styles/style.css?v={VERSION}" rel="stylesheet"/>
-<link href="styles/v72-tokens.css?v={VERSION}" rel="stylesheet"/><link href="styles/v72-public-shell.css?v={VERSION}" rel="stylesheet"/>
+<link href="styles/v72-tokens.css?v={VERSION}" rel="stylesheet"/><link href="styles/v72-public-shell.css?v={VERSION}" rel="stylesheet"/><link href="styles/v76-system.css?v={VERSION}" rel="stylesheet"/>
 </head><body data-lab="{lab}"><div class="app-shell">
 <progress aria-label="Reading progress" class="guide-reading-progress" id="guideReadingProgress" max="100" value="0"></progress>
-{NAV.format(version=VERSION, navigation=static_navigation())}
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="guide-page" id="main-content">
 <header class="guide-hero"><p class="guide-eyebrow">{html.escape(eyebrow)}</p><h1>{html.escape(title)}</h1><p>{html.escape(description)}</p>
-<nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">Modelling handbook</a><a href="tutorial.html">Practical curriculum</a><a href="trust.html">Trust and limitations</a></nav>
+<nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">Modeling handbook</a><a href="tutorial.html">Practical curriculum</a><a href="trust.html">Trust and limitations</a></nav>
 {LAB_LINKS}{progress}{taxonomy_link}</header>
 <div class="guide-tools"><label for="guideSearch">Search this page</label><input id="guideSearch" type="search" placeholder="solver tolerance, Sobol, identifiability, PCA…"/><span aria-live="polite" id="guideSearchCount">{module_count} sections</span></div>
-<p class="guide-search-empty" id="guideSearchEmpty" hidden>No section matches this search. Try a method, lab, diagnostic or modelling term.</p>
+<p class="guide-search-empty" id="guideSearchEmpty" hidden>No section matches this search. Try a method, lab, diagnostic or modeling term.</p>
 <div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong>{toc}</aside><article class="guide-document">{body}</article></div>
 </main>
 {FOOTER.format(version=VERSION)}
-</div><script>(function(){{document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';}})();</script>{GUIDE_SCRIPT}<script defer src="src/navigation.js?v={VERSION}"></script></body></html>'''
+</div><script>(function(){{document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';}})();</script>{GUIDE_SCRIPT}<script defer src="src/v76/app-shell.js?v={VERSION}"></script></body></html>'''
     (ROOT / output).write_text(html_page, encoding="utf-8")
 
 
 page(
-    "Foko Lab modelling handbook",
+    "Foko Lab modeling handbook",
     "A complete workflow for turning a scientific question into equations, choosing a numerical method, checking evidence, and reporting limitations.",
     "Model with evidence",
     "USER_GUIDE.md",
@@ -214,12 +215,12 @@ page(
     "docs",
 )
 page(
-    "Practical modelling curriculum",
-    "Twenty guided investigations that teach model construction, numerical verification, sensitivity, inference, optimization and reproducible reporting.",
+    "Practical modeling curriculum",
+    "Twenty-one guided investigations that teach model construction, interchange, numerical verification, sensitivity, inference, optimization and reproducible reporting.",
     "Learn by building and challenging models",
     "TUTORIALS.md",
     "tutorial.html",
     "tutorial",
     tutorial=True,
 )
-print("Rendered searchable modelling handbook and twenty-tutorial curriculum")
+print("Rendered searchable modeling handbook and twenty-one-tutorial curriculum")

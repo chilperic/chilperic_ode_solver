@@ -221,6 +221,127 @@
       inequalities: ['x + y - 6'],
       equalities: [],
     },
+    'CMA-ES · aerodynamic shape surrogate': {
+      title: 'CMA-ES · aerodynamic shape surrogate', family: 'CMA-ES application · aerodynamics',
+      narrative: 'Tune camber, thickness and angle of attack on a rugged analytic drag surrogate inspired by airfoil design.',
+      scientificNote: 'Runnable CMA-ES demonstration only. It does not call CFD, resolve a flow field or certify an airfoil.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [0.04, 0.12, 2.5],
+      settings: { iterations: 120, populationSize: 28, cmaSigma: 0.28 },
+      variables: [{name:'camber',start:0.02,lower:-0.05,upper:0.12},{name:'thickness',start:0.18,lower:0.06,upper:0.3},{name:'alpha',start:0,lower:-5,upper:10}],
+      objective: '180*(camber-0.04)^2 + 90*(thickness-0.12)^2 + 0.03*(alpha-2.5)^2 + 0.04*sin(18*camber+0.7*alpha)^2', objective2: '', inequalities: ['0.08-thickness'], equalities: []
+    },
+    'CMA-ES · ML hyperparameters': {
+      title: 'CMA-ES · ML hyperparameters', family: 'CMA-ES application · machine learning',
+      narrative: 'Search log learning rate, tree/depth capacity and regularization on a deterministic validation-loss surrogate.',
+      scientificNote: 'No model is trained. The objective is an analytic proxy for demonstrating bounded hyperparameter search.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [-3.1, 7, 1.2], settings: { iterations: 130, populationSize: 30, cmaSigma: 0.35 },
+      variables: [{name:'log_lr',start:-2,lower:-5,upper:-1},{name:'depth',start:12,lower:2,upper:16},{name:'reg',start:0.2,lower:0,upper:5}],
+      objective: '(log_lr+3.1)^2 + 0.025*(depth-7)^2 + 0.18*(reg-1.2)^2 + 0.08*sin(2.4*depth+reg)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · quantum circuit parameters': {
+      title: 'CMA-ES · quantum circuit parameters', family: 'CMA-ES application · quantum computing',
+      narrative: 'Tune three periodic gate angles on a multimodal expectation-value surrogate.',
+      scientificNote: 'This does not execute a quantum circuit or model shot/device noise; it is a periodic optimization benchmark.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [0.4, -0.7, 1.1], settings: { iterations: 150, populationSize: 34, cmaSigma: 0.4 },
+      variables: [{name:'theta1',start:-2,lower:-3.14159,upper:3.14159},{name:'theta2',start:2,lower:-3.14159,upper:3.14159},{name:'theta3',start:0,lower:-3.14159,upper:3.14159}],
+      objective: 'sin(theta1-0.4)^2 + sin(theta2+0.7)^2 + sin(theta3-1.1)^2 + 0.12*sin(theta1+theta2+theta3)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · robot gait control': {
+      title: 'CMA-ES · robot gait control', family: 'CMA-ES application · robotics',
+      narrative: 'Calibrate oscillator frequency, phase offset and feedback gain on a reduced gait-cost surface.',
+      scientificNote: 'No rigid-body simulator or hardware safety model is present. The objective is a bounded control surrogate.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [1.8, 0.65, 2.1], settings: { iterations: 140, populationSize: 32, cmaSigma: 0.32 },
+      variables: [{name:'frequency',start:0.8,lower:0.2,upper:4},{name:'phase',start:2,lower:0,upper:3.14159},{name:'gain',start:0.4,lower:0,upper:5}],
+      objective: '1.2*(frequency-1.8)^2 + 0.8*(phase-0.65)^2 + 0.3*(gain-2.1)^2 + 0.2*sin(3*phase-frequency*gain)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · structural truss surrogate': {
+      title: 'CMA-ES · structural truss surrogate', family: 'CMA-ES application · structural engineering',
+      narrative: 'Minimize a material proxy over two member areas and truss height while satisfying reduced stress and deflection constraints.',
+      scientificNote: 'This is not finite-element structural analysis and omits buckling, joints, load cases and safety factors.',
+      sense: 'minimize', algorithm: 'cma_es', settings: { iterations: 150, populationSize: 36, cmaSigma: 0.3 },
+      variables: [{name:'a1',start:2,lower:0.2,upper:8},{name:'a2',start:2,lower:0.2,upper:8},{name:'height',start:3,lower:1,upper:8}],
+      objective: '2*a1 + 2.4*a2 + 0.12*height^2', objective2: '', inequalities: ['4/a1 + 2/a2 - 3', '8/(height*(a1+a2)) - 0.45'], equalities: []
+    },
+    'CMA-ES · portfolio allocation': {
+      title: 'CMA-ES · portfolio allocation', family: 'CMA-ES application · finance',
+      narrative: 'Balance a quadratic risk proxy against expected return under non-negative weights and a full-investment equality.',
+      scientificNote: 'Educational synthetic objective only; not investment advice, a market model or a downside-risk guarantee.',
+      sense: 'minimize', algorithm: 'cma_es', settings: { iterations: 160, populationSize: 40, cmaSigma: 0.25 },
+      variables: [{name:'w1',start:0.33,lower:0,upper:1},{name:'w2',start:0.33,lower:0,upper:1},{name:'w3',start:0.34,lower:0,upper:1}],
+      objective: '0.20*w1^2+0.13*w2^2+0.18*w3^2+0.05*w1*w2-0.09*w1-0.12*w2-0.07*w3', objective2: '', inequalities: [], equalities: ['w1+w2+w3-1']
+    },
+    'CMA-ES · medical image registration': {
+      title: 'CMA-ES · medical image registration', family: 'CMA-ES application · medical imaging',
+      narrative: 'Recover translation and rotation on a non-convex analytic registration-error surface.',
+      scientificNote: 'No patient data, image resampling or similarity metric is used; this is a transformation-parameter surrogate.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [3.2, -1.7, 0.12], settings: { iterations: 120, populationSize: 28, cmaSigma: 0.3 },
+      variables: [{name:'dx',start:-4,lower:-10,upper:10},{name:'dy',start:5,lower:-10,upper:10},{name:'rotation',start:-0.4,lower:-1,upper:1}],
+      objective: '0.08*(dx-3.2)^2+0.08*(dy+1.7)^2+3*(rotation-0.12)^2+0.12*sin(0.8*dx+0.5*dy)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · power dispatch surrogate': {
+      title: 'CMA-ES · power dispatch surrogate', family: 'CMA-ES application · power systems',
+      narrative: 'Allocate three generator outputs to a fixed demand while minimizing a reduced quadratic loss/cost surface.',
+      scientificNote: 'Not AC optimal power flow: network physics, voltage, contingencies and unit commitment are absent.',
+      sense: 'minimize', algorithm: 'cma_es', settings: { iterations: 160, populationSize: 40, cmaSigma: 0.25 },
+      variables: [{name:'p1',start:0.4,lower:0,upper:1},{name:'p2',start:0.3,lower:0,upper:1},{name:'p3',start:0.3,lower:0,upper:1}],
+      objective: '0.8*p1^2+1.1*p2^2+0.65*p3^2+0.08*(p1-p2)^2+0.05*(p2-p3)^2', objective2: '', inequalities: [], equalities: ['p1+p2+p3-1']
+    },
+    'CMA-ES · antenna geometry surrogate': {
+      title: 'CMA-ES · antenna geometry surrogate', family: 'CMA-ES application · electromagnetics',
+      narrative: 'Tune normalized element length, spacing and feed phase on a periodic gain/directivity proxy.',
+      scientificNote: 'No Maxwell solver, impedance matching or fabrication model is executed.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [0.48, 0.52, 0], settings: { iterations: 150, populationSize: 34, cmaSigma: 0.36 },
+      variables: [{name:'length',start:0.25,lower:0.1,upper:0.9},{name:'spacing',start:0.8,lower:0.1,upper:1},{name:'phase',start:2,lower:-3.14159,upper:3.14159}],
+      objective: '8*(length-0.48)^2+5*(spacing-0.52)^2+0.3*sin(phase/2)^2+0.15*sin(10*length+6*spacing)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · force-field calibration': {
+      title: 'CMA-ES · force-field calibration', family: 'CMA-ES application · chemical kinetics',
+      narrative: 'Fit three reduced force-field parameters to synthetic energy, bond-length and angle targets.',
+      scientificNote: 'This is not ReaxFF re-parameterization or molecular dynamics; the residual surface is analytic and synthetic.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [2.4, 1.1, -0.35], settings: { iterations: 140, populationSize: 32, cmaSigma: 0.3 },
+      variables: [{name:'bond',start:0.5,lower:0.1,upper:5},{name:'angle',start:3,lower:0.1,upper:5},{name:'charge',start:0.7,lower:-2,upper:2}],
+      objective: '1.5*(bond-2.4)^2+0.8*(angle-1.1)^2+2*(charge+0.35)^2+0.1*(bond*charge+0.84)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · continuous feature gates': {
+      title: 'CMA-ES · continuous feature gates', family: 'CMA-ES application · feature selection',
+      narrative: 'Optimize four continuous inclusion gates with a sparsity penalty on a synthetic prediction-loss surface.',
+      scientificNote: 'The gates are continuous and no dataset is fitted; this is not discrete subset selection or cross-validation.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [1, 0, 1, 0], settings: { iterations: 160, populationSize: 40, cmaSigma: 0.3 },
+      variables: [{name:'g1',start:0.5,lower:0,upper:1},{name:'g2',start:0.5,lower:0,upper:1},{name:'g3',start:0.5,lower:0,upper:1},{name:'g4',start:0.5,lower:0,upper:1}],
+      objective: '(g1-1)^2+0.6*g2^2+0.8*(g3-1)^2+0.4*g4^2+0.08*(g1+g2+g3+g4)', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · waveguide S-bend surrogate': {
+      title: 'CMA-ES · waveguide S-bend surrogate', family: 'CMA-ES application · wave physics',
+      narrative: 'Tune bend radius, offset and taper on an oscillatory signal-loss proxy.',
+      scientificNote: 'No electromagnetic or acoustic wave equation is solved; modal coupling is represented only by an analytic surrogate.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [4.5, 1.2, 0.65], settings: { iterations: 140, populationSize: 32, cmaSigma: 0.34 },
+      variables: [{name:'radius',start:1,lower:0.5,upper:8},{name:'offset',start:3,lower:0.1,upper:4},{name:'taper',start:0.1,lower:0,upper:1}],
+      objective: '0.12*(radius-4.5)^2+0.7*(offset-1.2)^2+1.1*(taper-0.65)^2+0.15*sin(1.7*radius+2*offset)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · game AI heuristics': {
+      title: 'CMA-ES · game AI heuristics', family: 'CMA-ES application · game AI',
+      narrative: 'Calibrate aggression, defense and mobility weights on a rugged synthetic tournament-score loss.',
+      scientificNote: 'No game engine or opponents are simulated; the deterministic surface only demonstrates heuristic-weight search.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [1.4, 2.1, 0.9], settings: { iterations: 130, populationSize: 30, cmaSigma: 0.35 },
+      variables: [{name:'aggression',start:4,lower:0,upper:5},{name:'defense',start:0.2,lower:0,upper:5},{name:'mobility',start:3.5,lower:0,upper:5}],
+      objective: '(aggression-1.4)^2+0.8*(defense-2.1)^2+0.6*(mobility-0.9)^2+0.18*sin(2*aggression+defense-mobility)^2', objective2: '', inequalities: [], equalities: []
+    },
+    'CMA-ES · PID control surrogate': {
+      title: 'CMA-ES · PID control surrogate', family: 'CMA-ES application · control systems',
+      narrative: 'Tune proportional, integral and derivative gains on a reduced tracking/overshoot/effort cost.',
+      scientificNote: 'No plant is integrated and robustness margins are not established. This is not BMI or nonlinear MPC certification.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [2.2, 0.8, 0.35], settings: { iterations: 150, populationSize: 34, cmaSigma: 0.32 },
+      variables: [{name:'kp',start:0.2,lower:0,upper:8},{name:'ki',start:3,lower:0,upper:4},{name:'kd',start:1.5,lower:0,upper:3}],
+      objective: '0.7*(kp-2.2)^2+1.1*(ki-0.8)^2+1.5*(kd-0.35)^2+0.1*(kp*kd-0.77)^2+0.08*sin(kp+2*ki)^2', objective2: '', inequalities: ['kp+ki+kd-10'], equalities: []
+    },
+    'CMA-ES · metamaterial lattice surrogate': {
+      title: 'CMA-ES · metamaterial lattice surrogate', family: 'CMA-ES application · materials science',
+      narrative: 'Tune lattice period, fill fraction and resonator ratio on a multimodal effective-index target proxy.',
+      scientificNote: 'No band-structure or full-wave solver is present; negative-refraction behavior is not established.',
+      sense: 'minimize', algorithm: 'cma_es', knownOptimum: [0.72, 0.38, 1.25], settings: { iterations: 170, populationSize: 42, cmaSigma: 0.38 },
+      variables: [{name:'period',start:1.8,lower:0.2,upper:2},{name:'fill',start:0.8,lower:0.05,upper:0.9},{name:'resonance',start:0.3,lower:0.1,upper:2.5}],
+      objective: '1.2*(period-0.72)^2+2*(fill-0.38)^2+0.9*(resonance-1.25)^2+0.2*sin(6*period*fill+2*resonance)^2', objective2: '', inequalities: [], equalities: []
+    },
   };
 
   root.FokoOptimizationPresets = presets;

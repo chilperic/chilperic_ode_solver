@@ -1,5 +1,5 @@
 {
-  "release": "72.48.0",
+  "release": "77.4.1",
   "statusDefinitions": {
     "reference": "Uses the v72 authored shell and active release contracts.",
     "browser-computed": "The visible result is computed locally from the current input in browser code.",
@@ -10,6 +10,32 @@
     "derived-browser": "Computed from an already completed finite browser result without launching a separate estimator; interpretation remains conditional on that result."
   },
   "labs": {
+    "studio": {
+      "interface": "reference",
+      "capabilities": {
+        "project_owned_editable_ode_model": "browser-computed",
+        "state_equation_initial_condition_parameter_range_and_time_editing": "browser-computed",
+        "shared_foko_ode_engine_simulation": "browser-computed",
+        "bounded_two_parameter_response_sweeps": "limited-browser",
+        "trajectory_phase_heatmap_contour_surface_and_multivariate_plots": "browser-computed",
+        "live_rotatable_three_dimensional_phase_replay": "browser-computed",
+        "katex_rendered_equation_preview": "browser-computed",
+        "txt_json_dictionary_yaml_csv_and_model_ir_import": "browser-computed",
+        "strict_sbml_reaction_subset_import": "limited-browser",
+        "cellml_sed_ml_and_combine_archive_execution": "unavailable",
+        "run_ledger_and_local_project_restore": "browser-computed",
+        "direct_model_handoff_to_sensitivity_and_steady_state": "browser-computed",
+        "implicit_stiff_solver_and_large_ensemble_execution": "export-only",
+        "model_calibration_or_predictive_validity_certificate": "unavailable"
+      },
+      "limitations": [
+        "The Model Studio currently owns deterministic ODE projects; stochastic, agent, population-genetic, evolutionary and data-driven models retain dedicated builders.",
+        "Two-parameter sweeps vary independent rectangular ranges with all other parameters nominal and are not Sobol, Morris or uncertainty analyses.",
+        "Three-dimensional and color-encoded plots visualize computed finite trajectories or grids; they do not certify chaos, causality, global stability or identifiability.",
+        "Browser explicit integration remains exploratory for stiff or high-cost systems and must be independently verified with an appropriate external solver.",
+        "SBML events, rules, packages, non-unit compartments and unsupported MathML are rejected rather than partially imported; CellML, SED-ML and COMBINE/OMEX are recognized but not executed."
+      ]
+    },
     "ode": {
       "interface": "reference",
       "capabilities": {
@@ -28,6 +54,7 @@
         "editable_initial_conditions_parameters_time_span_and_tolerances": "browser-computed",
         "numerical_settings_session_share_and_model_json_roundtrip": "browser-computed",
         "stale_result_export_guard": "browser-computed"
+        ,"shared_strict_declarative_model_import": "browser-computed"
       },
       "limitations": [
         "Requested tolerances constrain the numerical solve; they do not quantify model-form, parameter, measurement or biological uncertainty.",
@@ -40,7 +67,8 @@
         "Publication-grade results require independent convergence and domain validation.",
         "The foko.model-ir/1 reaction-network route is a limited local schema, not SBML, CellML, Modelica or a DAE/hybrid-system standard.",
         "Reaction rates and direct equations still use the platform restricted expression evaluator and must be independently checked.",
-        "The fatty-acid and FADNS browser examples are reduced public research models, not the complete calibrated repositories; they require independent reproduction before publication use."
+        "The fatty-acid and FADNS browser examples are reduced public research models, not the complete calibrated repositories; they require independent reproduction before publication use.",
+        "The SBML browser route supports a strict reaction subset only; it rejects unsupported semantics and requires the user to review time-span and numerical experiment settings."
       ]
     },
     "steady_state": {
@@ -104,6 +132,10 @@
         "bounded_coordinate_search": "browser-computed",
         "projected_finite_difference_penalty_descent": "limited-browser",
         "seeded_differential_evolution": "limited-browser",
+        "seeded_bounded_cma_es_ask_tell": "limited-browser",
+        "fifteen_cma_es_application_surrogates": "limited-browser",
+        "cma_es_fitness_mean_sigma_covariance_paths_population_selection_evaluations_runtime_entropy": "browser-computed",
+        "distance_to_declared_known_reference": "limited-browser",
         "seeded_multistart_coordinate_search": "limited-browser",
         "seeded_uniform_random_search": "limited-browser",
         "independent_feasibility_gate": "browser-computed",
@@ -130,7 +162,26 @@
         "Differential evolution, random search, and multi-start are seeded finite-budget heuristics; repeated runs do not prove global optimality.",
         "Finite-difference projected descent can fail on nonsmooth, poorly scaled, or ill-conditioned problems.",
         "The Pareto view is a seeded finite candidate sample, not an exact frontier.",
-        "KKT conditions, convexity, uniqueness, sensitivity, and robustness require independent analysis."
+        "KKT conditions, convexity, uniqueness, sensitivity, and robustness require independent analysis.",
+        "The 15 application examples are analytic surrogates and do not execute CFD, quantum hardware, clinical image registration, finite elements, molecular dynamics, Maxwell solvers, power-flow solvers, game engines or control-plant simulations.",
+        "Distance-to-reference is available only when a preset declares a known analytic reference vector; arbitrary user objectives have no assumed true optimum."
+      ]
+    },
+    "population_genetics": {
+      "interface": "reference",
+      "capabilities": {
+        "thirteen_searchable_runnable_examples": "browser-computed",
+        "two_deme_diploid_wright_fisher_ensemble": "browser-computed",
+        "viability_selection_and_dominance": "browser-computed",
+        "bidirectional_mutation_and_symmetric_migration": "browser-computed",
+        "exact_seeded_binomial_genetic_drift": "browser-computed",
+        "allele_frequency_quantiles_heterozygosity_elementary_fst_and_fixation": "browser-computed",
+        "ten_frequency_deme_path_phase_diversity_absorption_and_endpoint_plots": "browser-computed"
+      },
+      "limitations": [
+        "The engine is a constant-size, non-overlapping, two-deme Wright–Fisher teaching model at one biallelic locus.",
+        "The elementary two-deme FST ratio is not a Weir–Cockerham estimator or historical-demography inference.",
+        "No VCF/PLINK ingestion, linkage, recombination, coalescent inference, ancestry, GWAS, relatedness or genomic quality-control pipeline is implemented in this lab."
       ]
     },
     "statistics": {
@@ -152,6 +203,9 @@
         "large_specialized_or_clustered_inference": "export-only",
         "curated_stress_test_example_library": "browser-computed",
         "standardized_pca_scores_loadings_and_explained_variance": "limited-browser"
+        ,"empirical_cdf_violin_and_density_contour_views": "browser-computed"
+        ,"regression_scale_location_leverage_qq_acf_and_error_distribution_views": "browser-computed"
+        ,"bootstrap_convergence_group_ecdf_moving_range_and_process_acf_views": "limited-browser"
       },
       "limitations": [
         "Inference remains conditional on sampling, measurement quality, model assumptions, multiplicity decisions, and the analysis plan.",
@@ -365,6 +419,7 @@
         "manual_non_looping_recorded_frame_replay": "browser-computed",
         "incremental_paced_numerical_runner": "browser-computed",
         "live_pause_resume_control": "browser-computed"
+        ,"live_rotatable_lattice_time_scene_from_representative_frames": "browser-computed"
       },
       "limitations": [
         "Exact-count mode requires non-negative integer state counts summing exactly to N\u00b2. Fraction mode uses deterministic largest-remainder allocation and reports the exact counts actually simulated.",
@@ -408,6 +463,31 @@
         "Advanced model authoring, large datasets and production-scale runs remain in focused or external workflows."
       ]
     },
+    "advanced_methods": {
+      "interface": "reference",
+      "capabilities": {
+        "fourteen_searchable_runnable_examples_across_eight_families": "browser-computed",
+        "beta_binomial_bayesian_updating": "browser-computed",
+        "bayesian_posterior_cdf_likelihood_predictive_and_log_geometry": "browser-computed",
+        "local_fisher_information_d_optimal_design": "limited-browser",
+        "reproducibility_manifest_schema_check": "limited-browser",
+        "analytic_normal_form_branch_scan": "limited-browser",
+        "one_dimensional_explicit_diffusion_pde": "limited-browser",
+        "seeded_ornstein_uhlenbeck_euler_maruyama_ensemble": "limited-browser",
+        "synthetic_two_population_genotype_fst_summary": "limited-browser",
+        "reproducible_logistic_scenario_sweep": "browser-computed",
+        "three_or_more_computed_views_per_non_bayesian_module": "browser-computed",
+        "pde_and_scenario_three_dimensional_surfaces": "browser-computed"
+      },
+      "limitations": [
+        "The Bayesian example is a one-rate conjugate model, not a general posterior sampler or hierarchical modeling system.",
+        "Design evidence is local to a two-parameter exponential model; standards checks do not certify SBML, SED-ML or COMBINE archives.",
+        "Continuation uses canonical analytic normal forms rather than pseudo-arclength continuation of arbitrary residuals.",
+        "PDE and SDE examples are bounded references, not general FEM/SPDE/stiff stochastic solvers.",
+        "Genomic examples use synthetic independent biallelic loci and do not ingest VCF/PLINK files or infer demography, linkage or selection.",
+        "Study sweeps run locally on one closed-form model and are not a distributed workflow engine."
+      ]
+    },
     "sensitivity": {
       "interface": "reference",
       "capabilities": {
@@ -449,6 +529,9 @@
         "curated_17_model_library_across_13_scientific_families": "browser-computed",
         "searchable_model_library_and_method_dependent_plot_catalogue": "browser-computed",
         "raw_range_scaled_and_elasticity_plot_views": "derived-browser"
+        ,"single_or_multiple_global_output_selection": "browser-computed"
+        ,"shared_saltelli_design_and_cached_trajectories_across_outputs": "browser-computed"
+        ,"per_output_ranking_uncertainty_plot_and_export_switching": "browser-computed"
       },
       "limitations": [
         "All results are conditional on the selected output, initial conditions, time window, parameter ranges, perturbation or sample count, solver and tolerances.",
@@ -469,6 +552,62 @@
         "State-resolved first and total indices apply the selected scalar metric to each state using the same finite seeded Jansen design; they are not independent replications.",
         "The optional two-parameter response surface is available in Local and Global variance modes but remains an OFAT-style bounded grid with all other parameters fixed at nominal values."
       ]
+    },
+    "bifurcation": {
+      "interface": "reference",
+      "capabilities": {
+        "editable_scalar_rhs_parameters_and_scan_domain": "browser-computed",
+        "finite_bracketed_equilibrium_scan": "limited-browser",
+        "derivative_based_local_stability": "limited-browser",
+        "branch_eigenvalue_count_vector_field_potential_and_residual_plots": "browser-computed",
+        "six_editable_reference_starters": "browser-computed",
+        "pseudo_arclength_continuation": "unavailable",
+        "hopf_periodic_orbit_and_multidimensional_continuation": "unavailable"
+      },
+      "limitations": [
+        "A finite state grid can miss roots that are not bracketed or approached closely.",
+        "Stability is one-dimensional and local; candidate events are not certified bifurcation points.",
+        "Pseudo-arclength continuation, Hopf points, periodic orbits, multidimensional branches and codimension-two analysis require external specialist software."
+      ]
+    },
+    "evolution_landscape": {
+      "interface": "reference",
+      "capabilities": {
+        "editable_complete_binary_genotype_fitness_table": "browser-computed",
+        "additive_single_peak_sign_epistasis_and_seeded_nk_landscapes": "browser-computed",
+        "seeded_haploid_wright_fisher_selection_mutation_and_drift": "browser-computed",
+        "fitness_diversity_distance_landscape_endpoint_and_occupancy_plots": "browser-computed",
+        "fitness_heatmap_contour_and_3d_surface": "browser-computed",
+        "live_time_frequency_population_on_3d_landscape": "browser-computed",
+        "live_three_dimensional_play_pause_generation_speed_and_trail_controls": "browser-computed",
+        "katex_rendered_fitness_equation_preview": "browser-computed",
+        "twelve_documented_editable_starters": "browser-computed"
+      },
+      "limitations": [
+        "Landscapes are fixed, haploid, asexual and frequency independent.",
+        "There is no recombination, diploidy, spatial structure, migration, changing environment or evolutionary-history inference.",
+        "A finite seeded realization does not establish mutation-selection equilibrium or inevitable convergence to the global optimum."
+      ]
+    },
+    "ai_modeling": {
+      "interface": "reference",
+      "capabilities": {
+        "editable_xy_data": "browser-computed",
+        "rbf_gaussian_process_mean_and_conditional_uncertainty": "limited-browser",
+        "maximum_predictive_uncertainty_sampling_proposal": "limited-browser",
+        "seeded_random_feature_tanh_surrogate_with_ridge_readout": "limited-browser",
+        "fit_residual_parity_uncertainty_error_and_data_plots": "browser-computed",
+        "twelve_scientific_example_datasets_across_eight_or_more_families": "browser-computed",
+        "thirteen_fit_residual_qq_acf_derivative_coverage_and_error_plots": "browser-computed",
+        "katex_rendered_method_equation_preview": "browser-computed",
+        "pinn_neural_operator_and_large_deep_training": "export-only"
+      },
+      "limitations": [
+        "The Gaussian-process interval is conditional on the RBF kernel and user-selected hyperparameters.",
+        "The random-feature surrogate is not deep-network training and reports no predictive uncertainty.",
+        "All displayed errors are in-sample; deployment requires held-out validation and domain assessment.",
+        "The workspace is limited to browser-scale one-input regression."
+      ]
     }
   },
   "platformHardening": {
@@ -486,7 +625,7 @@
     "browser_test_install": "only Playwright is installed through npm; Plotly, math.js and KaTeX remain vendored",
     "npm_ci_command": "npm ci --ignore-scripts --no-audit --no-fund --omit=optional",
     "agent_spatial_evidence": "representative temporal snapshots plus ensemble agreement, diversity and occupancy summaries",
-    "example_atlas": "searchable provenance-classified catalog with 121 curated routes",
+    "example_atlas": "searchable provenance-classified catalog with 251 curated routes",
     "model_ir": "validated foko.model-ir/1 direct ODE and reaction-network lowering",
     "external_architecture_review": "mxlweb-core concepts reviewed; no source or binary redistribution"
   },
@@ -495,6 +634,11 @@
     "steady_state": "editable residual equations and JSON import",
     "stochastic": "editable CTMC states, propensities and stoichiometry; model/session JSON import",
     "optimization": "editable variables, bounds, objectives and constraints; configuration JSON import",
+    "population_genetics": "editable demography, initial allele frequencies, selection, dominance, mutation, migration, ensemble size and seed",
+    "advanced_methods": "editable bounded reference parameters for Bayesian, design, standards, continuation, PDE, SDE, genomic-summary and study-sweep modules",
+    "bifurcation": "editable scalar right-hand side, constants, parameter/state domains, finite scan resolution and inspection slice",
+    "evolution_landscape": "editable landscape family or complete genotype-fitness table plus population, selection, mutation and seed",
+    "ai_modeling": "editable local x,y data and transparent Gaussian-process or seeded random-feature surrogate settings",
     "statistics": "local tabular data upload and editable table",
     "fitting": "local tabular data upload and editable data",
     "linear_algebra": "editable matrix/vector; text, CSV or JSON import",
@@ -507,7 +651,7 @@
   },
   "modelAtlas": {
     "status": "reference",
-    "exampleCount": 121,
+    "exampleCount": 251,
     "filters": [
       "lab",
       "scientific family",

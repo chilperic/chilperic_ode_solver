@@ -3,11 +3,12 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[2]
 AUTHORED = [
-    'ode.html', 'steady.html', 'stochastic.html', 'optimization.html',
+    'studio.html', 'ode.html', 'steady.html', 'stochastic.html', 'optimization.html',
     'statistics.html', 'fitting.html', 'linear-algebra.html', 'networks.html',
     'ml.html', 'sciml.html', 'agent.html', 'symbolic.html', 'sensitivity.html', 'workbench.html'
 ]
 NON_ODE_CONTROLLERS = [
+    'src/v73/model-studio.js',
     'src/v72/steady-workspace.js', 'src/v72/stochastic-workspace.js',
     'src/v72/optimization-workspace.js', 'src/v72/statistics-workspace.js',
     'src/v72/fitting-workspace.js', 'src/v72/linalg-workspace.js',
@@ -34,7 +35,7 @@ def test_shared_layout_contract_is_declarative_and_loaded_everywhere():
     assert 'grid.dataset.layout = effective' in shared
     for page in AUTHORED:
         html = text(page)
-        assert 'src/v72/accessibility-performance.js?v=72.48.0' in html
+        assert 'src/v72/accessibility-performance.js?v=77.4.1' in html
         assert 'layout-stability.js' not in html
     for controller in NON_ODE_CONTROLLERS:
         source = text(controller)
@@ -42,40 +43,26 @@ def test_shared_layout_contract_is_declarative_and_loaded_everywhere():
         assert 'breakpoint: 1024' in source, controller
 
 
-def test_home_uses_equal_research_cards_and_places_creator_beside_research():
+def test_home_uses_equal_model_cards_and_a_compact_creator_path():
     page = BeautifulSoup(text('index.html'), 'html.parser')
-    rail = page.select_one('.home-reel-hero-rail')
-    assert rail is not None
-    assert rail.select_one('.home-author-profile') is None
-    layout = page.select_one('.home-research-layout')
-    assert layout is not None
-    creator = layout.select_one('.home-author-profile-home')
+    creator = page.select_one('.foko-creator-strip')
     assert creator is not None
     assert 'Dr. Chilperic Armel Foko Kuate' in creator.get_text(' ', strip=True)
-    assert 'Multiscale Modeller | Applied Mathematician | Computational Biology | Scientific Software' in creator.get_text(' ', strip=True)
-    cards = layout.select('.home-research-grid > .home-research-card')
-    assert len(cards) == 4
-    assert {card.get('data-research-card') for card in cards} == {
-        'fatty-acid-metabolism', 'fadns', 'tcell-proliferation', 'thermoplants'
-    }
+    assert creator.select_one('img[src="assets/profile-chilperic.webp"]') is not None
+    assert creator.select_one('a[href="cv.html"]') is not None
+    cards = page.select('.foko-feature-grid > .foko-feature-card')
+    assert len(cards) == 6
     for card in cards:
-        assert card.select_one('.home-research-card-figure img') is not None
-        assert card.select_one('.home-research-card-body h3') is not None
-        assert card.select_one('.home-research-card-visual') is not None
-        assert card.select_one('.home-research-card-evidence') is not None
-    thermo = layout.select_one('[data-research-card="thermoplants"]')
-    assert thermo is not None
-    assert len(thermo.select('.home-research-card-gallery figure')) == 3
-    assert 'Protected unpublished research' in thermo.get_text(' ', strip=True)
-    assert thermo.select('[data-run-demo]') == []
+        assert card.select_one('.foko-feature-visual') is not None
+        assert card.select_one('.foko-feature-body h3') is not None
+        assert card.get('data-subject-target')
+        assert card.get('data-lab-target')
 
 
 def test_mathematical_beauty_uses_rendered_preview_canvases_and_interactive_manifolds():
-    for page_name in [p.name for p in ROOT.glob('*.html')]:
-        page = BeautifulSoup(text(page_name), 'html.parser')
-        explore = page.select_one('details[data-nav-menu="explore"]')
-        if explore is not None:
-            assert len(explore.select('a[href="beauty.html"]')) == 1, page_name
+    shell = text('src/v76/app-shell.js')
+    assert shell.count("'beauty.html'") == 1
+    assert "'Mathematical beauty'" in shell
     page = BeautifulSoup(text('beauty.html'), 'html.parser')
     assert page.select_one('#beautyPreviewGrid') is not None
     assert page.select_one('.beauty-sections') is None

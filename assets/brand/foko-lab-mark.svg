@@ -1,12 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-<title id="title">Foko Lab mark</title><desc id="desc">Infinity phase trajectory and network motif.</desc>
-<defs><linearGradient id="orbit" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2DD4BF"/><stop offset="0.45" stop-color="#38BDF8"/><stop offset="1" stop-color="#155EEF"/></linearGradient><radialGradient id="core" cx="45%" cy="42%" r="70%"><stop offset="0" stop-color="#E8FFFC"/><stop offset="0.55" stop-color="#38BDF8"/><stop offset="1" stop-color="#155EEF"/></radialGradient></defs>
-<rect width="128" height="128" rx="30" fill="#061B2A"/>
-<path d="M17 66 C35 21 75 18 100 43 C124 68 93 107 61 69 C30 32 15 64 17 66 Z" fill="none" stroke="url(#orbit)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20 87 C39 57 63 54 82 71 C94 82 105 86 111 75" fill="none" stroke="#E8FFFC" stroke-width="3.2" stroke-linecap="round" opacity=".94"/>
-<path d="M27 64 H106 M64 26 V102" stroke="#BFEFFF" stroke-width="2.3" opacity=".42" stroke-linecap="round"/>
-<circle cx="64" cy="64" r="8" fill="url(#core)" stroke="#F8FEFF" stroke-width="2.5"/>
-<circle cx="35" cy="89" r="5.3" fill="#2DD4BF"/><circle cx="94" cy="40" r="5.3" fill="#38BDF8"/>
-<g stroke="#38BDF8" stroke-width="2.3" opacity=".92"><line x1="86" y1="79" x2="102" y2="69"/><line x1="86" y1="79" x2="104" y2="92"/><line x1="104" y1="92" x2="112" y2="76"/></g>
-<circle cx="86" cy="79" r="4.2" fill="#2DD4BF"/><circle cx="102" cy="69" r="4.2" fill="#38BDF8"/><circle cx="104" cy="92" r="4.2" fill="#155EEF"/><circle cx="112" cy="76" r="4.2" fill="#BFFAF3"/>
+  <title id="title">Foko Lab State Observatory mark</title>
+  <desc id="desc">Three scientific model layers linked by one highlighted state axis: dynamics, inference, and discrete populations.</desc>
+  <path d="M64 8 113 34 64 60 15 34Z" fill="#243C86" fill-opacity=".08" stroke="#243C86" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M25 35C36 27 45 31 54 25C64 18 70 27 79 21C88 16 98 25 106 30" fill="none" stroke="#654DA6" stroke-width="3" stroke-linecap="round"/>
+  <path d="M27 42C39 34 47 38 56 32C65 27 72 34 81 29C90 24 98 32 104 35" fill="none" stroke="#009B89" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M64 42 106 64 64 86 22 64Z" fill="#FFFFFF" fill-opacity=".92" stroke="#654DA6" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M36 64C45 56 55 56 64 60C73 56 83 56 92 64C83 72 73 72 64 68C55 72 45 72 36 64Z" fill="#654DA6" fill-opacity=".10" stroke="#2B6FA8" stroke-width="2.4"/>
+  <path d="M64 72 99 91 64 110 29 91Z" fill="#17232D" stroke="#17232D" stroke-width="4.5" stroke-linejoin="round"/>
+  <path d="M41 85 76 104M52 79 87 98M41 97 76 78M52 103 87 84" fill="none" stroke="#7E93B4" stroke-width="1.6" opacity=".92"/>
+  <path d="M64 21V104" stroke="#D17B2F" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M64 27 71 34 64 41 57 34ZM64 57 71 64 64 71 57 64ZM64 84 71 91 64 98 57 91Z" fill="#F0AD3D" stroke="#FFF8ED" stroke-width="2"/>
+  <path d="M64 91C56 87 51 82 48 76M64 91C72 87 77 82 80 76" fill="none" stroke="#5E9A68" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="48" cy="76" r="2.8" fill="#5E9A68"/><circle cx="80" cy="76" r="2.8" fill="#5E9A68"/>
 </svg>

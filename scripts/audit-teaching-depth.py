@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Release-blocking audit for the modelling handbook, tutorials and feature honesty."""
+"""Release-blocking audit for the modeling handbook, tutorials and feature honesty."""
 from __future__ import annotations
 import json
 import re
@@ -14,28 +14,31 @@ docs = (ROOT / 'docs.html').read_text()
 tutorial_html = (ROOT / 'tutorial.html').read_text()
 trust = (ROOT / 'trust.html').read_text()
 
-assert len(handbook.splitlines()) >= 650, 'modelling handbook is too shallow'
+assert len(handbook.splitlines()) >= 650, 'modeling handbook is too shallow'
 assert len(tutorials.splitlines()) >= 340, 'tutorial curriculum is too shallow'
 numbered = re.findall(r'^## Tutorial\s+(\d+)\s+—', tutorials, flags=re.M)
-assert numbered == [str(i) for i in range(1, 21)], f'expected Tutorials 1–20, found {numbered}'
+assert numbered == [str(i) for i in range(1, 22)], f'expected Tutorials 1–21, found {numbered}'
 
 for token in [
-    'A complete modelling workflow', 'Define the question and output', 'Check dimensions',
+    'A complete modeling workflow', 'Define the question and output', 'Check dimensions',
     'Adaptive tolerances', 'Verification, validation and uncertainty', 'Reporting checklist',
     'Current platform depth and the master feature list', 'Why some requested labs are integrated rather than separate',
     'Sensitivity Analysis Lab in detail', 'Optimization and multi-objective analysis',
-    'Steady-State / Algebraic Lab', 'Stochastic Lab', 'Machine Learning Toolkit', 'SciML Lab'
+    'Model Studio in detail', 'Steady-State / Algebraic Lab', 'Stochastic Lab', 'Machine Learning Toolkit', 'SciML Lab'
 ]:
     assert token in handbook, f'handbook missing {token}'
 
 for token in [
     'data-guide-section', 'guideSearch', 'guideReadingProgress', 'guide-toc-level-3',
-    'Foko Lab modelling handbook', 'Twenty guided investigations'
+    'Foko Lab modeling handbook', 'Twenty-one guided investigations'
 ]:
     assert token in docs + tutorial_html, f'rendered learning pages missing {token}'
 assert docs.count('data-guide-section') >= 26, 'handbook chapters were not rendered as navigable modules'
-assert tutorial_html.count('data-tutorial-id=') == 20, 'tutorial completion controls do not match the 20 numbered tutorials'
-assert tutorial_html.count('data-nav-menu=') == 4 and docs.count('data-nav-menu=') == 4, 'help pages lack canonical static navigation'
+assert tutorial_html.count('data-tutorial-id=') == 21, 'tutorial completion controls do not match the 21 numbered tutorials'
+for name, html in [('tutorial', tutorial_html), ('docs', docs)]:
+    assert 'src/v76/app-shell.js?v=77.4.1' in html, f'{name} page lacks the central application shell'
+    assert 'styles/v76-system.css?v=77.4.1' in html, f'{name} page lacks the central design system'
+    assert 'data-nav-menu=' not in html, f'{name} page still duplicates legacy navigation markup'
 
 for unsafe in ['Adjoint sensitivities', 'FAST/eFAST', 'Shapley effects', 'PINNs, neural operators']:
     assert unsafe in handbook, f'handbook does not disclose boundary for {unsafe}'
@@ -46,7 +49,7 @@ node_probe = r"""
 const fs=require('fs'),vm=require('vm'),path=require('path');
 const root=process.argv[1];
 const specs=[
- ['optimization','optimization-presets.js','FokoOptimizationPresets',17],
+ ['optimization','optimization-presets.js','FokoOptimizationPresets',32],
  ['steady','steady-presets.js','FokoSteadyPresets',26],
  ['stochastic','stochastic-presets.js','FokoStochasticPresets',13],
  ['linear-algebra','linalg-presets.js','FokoLinalgPresets',8],
@@ -83,4 +86,4 @@ serialized = json.dumps(taxonomy).lower()
 for status in ['browser-computed', 'derived-browser', 'limited-browser', 'export-only', 'unavailable']:
     assert status in serialized, f'taxonomy is missing capability state {status}'
 
-print(f"Teaching-depth audit passed for {version}: {len(handbook.splitlines())} handbook lines, 20 practical tutorials, searchable/progress-aware HTML, canonical navigation, explicit feature boundaries, and verified curated-library counts {counts}.")
+print(f"Teaching-depth audit passed for {version}: {len(handbook.splitlines())} handbook lines, 21 practical tutorials, searchable/progress-aware HTML, canonical navigation, explicit feature boundaries, and verified curated-library counts {counts}.")

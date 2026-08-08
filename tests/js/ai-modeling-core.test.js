@@ -1,0 +1,22 @@
+'use strict';
+const assert=require('assert');
+const Core=require('../../src/core/ai-modeling.js');
+let checks=0;function check(ok,message){checks+=1;assert.ok(ok,message);}
+const data=Core.parseData('x,y\n0,0\n1,0.8\n2,1\n3,0.1\n4,-0.7\n5,-0.9');
+check(data.length===6&&data[0].x===0,'CSV data parser accepts a header');
+const gp=Core.analyze({data,method:'gp',lengthScale:1,noise:.05,gridPoints:121});
+check(gp.prediction.length===121,'GP prediction grid is plot ready');
+check(gp.prediction.every(row=>Number.isFinite(row.mean)&&row.sd>=0),'GP means and uncertainty are finite');
+check(gp.activeLearningCandidate&&Number.isFinite(gp.activeLearningCandidate.x),'GP proposes a transparent uncertainty-based next point');
+check(gp.fit.rmse<.08,'GP interpolates the small smooth training set at low noise');
+check(gp.observationPrediction.length===data.length,'AI result retains observation-level predictive evidence');
+check(gp.fit.standardizedResiduals.every(Number.isFinite),'scaled residual diagnostics are finite');
+check(gp.fit.intervalCoverage>=0&&gp.fit.intervalCoverage<=1,'conditional interval coverage is explicitly computed');
+const neuralA=Core.analyze({data,method:'random-feature',hiddenUnits:12,ridge:.01,seed:4});
+const neuralB=Core.analyze({data,method:'random-feature',hiddenUnits:12,ridge:.01,seed:4});
+check(JSON.stringify(neuralA.prediction)===JSON.stringify(neuralB.prediction),'random-feature surrogate is seeded and reproducible');
+check(neuralA.prediction.every(row=>row.sd===null),'random-feature model does not invent uncertainty');
+check(Core.examples.length>=12,'AI lab exposes a broad editable scientific data catalogue');
+check(new Set(Core.examples.map(example=>example.family)).size>=8,'AI starters span at least eight modeling families');
+assert.throws(()=>Core.parseData('0,1\n1,2\n2,3'),/at least four/);checks+=1;
+console.log(`${checks}/${checks} AI-modeling checks passed`);

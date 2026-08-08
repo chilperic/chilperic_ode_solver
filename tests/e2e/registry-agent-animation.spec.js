@@ -57,14 +57,14 @@ async function assertTwoPanelStable(page, route) {
   if (await twoButton.count()) await twoButton.click();
   await expect(grid).toHaveAttribute('data-layout', 'two');
 
-  const sciMenu = page.locator('details[data-nav-menu="sciml"]');
-  const sciSummary = sciMenu.locator('summary');
-  if (await sciSummary.count()) {
-    const navBox = await sciSummary.boundingBox();
+  const analysisMenu = page.locator('[data-v76-popover="analyze"]');
+  const analysisSummary = page.locator('[data-v76-trigger="analyze"]');
+  if (await analysisSummary.count()) {
+    const navBox = await analysisSummary.boundingBox();
     if (navBox) {
       await page.mouse.move(navBox.x + navBox.width / 2, navBox.y + navBox.height / 2);
       await page.waitForTimeout(120);
-      await expect(sciMenu, `${route.url}: navigation must not open from pointer travel`).not.toHaveAttribute('open', '');
+      await expect(analysisMenu, `${route.url}: navigation must not open from pointer travel`).toHaveAttribute('data-open', 'false');
     }
   }
 
@@ -280,48 +280,34 @@ test('home ODE demo computes a real SVG trajectory and links to an autorun examp
 });
 
 
-test('T-cell research Run again starts a new realization and the newest run owns the card', async ({ page }) => {
+test('home project console recomputes and the newest inputs own the result', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/index.html', { waitUntil: 'networkidle' });
-  const card = page.locator('[data-demo-card="research-tcell"]');
-  await card.scrollIntoViewIfNeeded();
-  await expect(page.locator('#demo-research-tcell-status')).toHaveText('Computed', { timeout: 25_000 });
-  const beforeMetrics = await page.locator('#research-tcell-metrics').textContent();
-  const beforeCanvas = await page.locator('#research-tcell-canvas').screenshot();
-
-  await card.locator('[data-run-demo="research-tcell"]').click();
-  await expect.poll(async () => page.evaluate(() => window.FokoHomeDemoReel?.attempt('research-tcell')), { timeout: 5_000 }).toBe(1);
-  await expect(page.locator('#demo-research-tcell-status')).toHaveText('Computed', { timeout: 25_000 });
-  await expect(page.locator('#research-tcell-metrics')).toContainText('seed 202611');
-  const afterMetrics = await page.locator('#research-tcell-metrics').textContent();
-  const afterCanvas = await page.locator('#research-tcell-canvas').screenshot();
-  expect(afterMetrics).not.toBe(beforeMetrics);
-  expect(Buffer.compare(beforeCanvas, afterCanvas)).not.toBe(0);
-  await expect(card).toHaveAttribute('data-state', 'complete');
+  await expect(page.locator('#v76HomeStatus')).toContainText('Computed', { timeout: 10_000 });
+  const before = await page.locator('#v76HomeFinal').textContent();
+  await page.locator('#v76HomeCapacity').fill('180');
+  await page.locator('#v76HomeRun').click();
+  await expect.poll(async () => page.locator('#v76HomeFinal').textContent()).not.toBe(before);
+  await expect(page.locator('#v76HomePlot')).toHaveAttribute('data-engine', 'FokoODECore');
 });
 
-test('homepage uses four equal research cards and places creator identity beside them', async ({ page }) => {
+test('homepage uses six model cards and keeps creator identity compact', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/index.html', { waitUntil: 'networkidle' });
-  await expect(page.locator('.home-reel-hero-rail .home-author-profile')).toHaveCount(0);
-  await expect(page.locator('.home-research-layout .home-author-profile-home')).toBeVisible();
-  await expect(page.locator('.home-author-title')).toHaveText('Multiscale Modeller | Applied Mathematician | Computational Biology | Scientific Software');
-  const cards = page.locator('.home-research-grid > .home-research-card');
-  await expect(cards).toHaveCount(4);
-  const boxes = await cards.evaluateAll((nodes) => nodes.map((node) => ({ width: node.getBoundingClientRect().width, height: node.getBoundingClientRect().height })));
-  expect(Math.max(...boxes.map((box) => box.width)) - Math.min(...boxes.map((box) => box.width))).toBeLessThan(3);
-  expect(Math.max(...boxes.map((box) => box.height)) - Math.min(...boxes.map((box) => box.height))).toBeLessThan(3);
-  const thermoplants = page.locator('[data-research-card="thermoplants"]');
-  await thermoplants.scrollIntoViewIfNeeded();
-  await expect(thermoplants.locator('.home-research-card-figure img')).toBeVisible();
-  await expect(thermoplants.locator('.home-research-card-gallery figure')).toHaveCount(3);
-  await expect(thermoplants.locator('[data-run-demo]')).toHaveCount(0);
+  await expect(page.locator('.foko-creator-strip')).toBeVisible();
+  await expect(page.locator('.foko-creator-strip')).toContainText('Dr. Chilperic Armel Foko Kuate');
+  const cards = page.locator('.foko-feature-grid > .foko-feature-card');
+  await expect(cards).toHaveCount(6);
+  await expect(cards.filter({ hasText: 'Population genetics' })).toHaveCount(1);
+  await expect(cards.filter({ hasText: 'CMA-ES' })).toHaveCount(1);
+  await expect(cards.filter({ hasText: 'Sobol and Morris' })).toHaveCount(1);
 });
 
 test('Explore exposes Mathematical Beauty and the manifold canvas is interactive', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 920 });
   await page.goto('/beauty.html', { waitUntil: 'networkidle' });
-  await expect(page.locator('details[data-nav-menu="explore"] a[href="beauty.html"]')).toHaveCount(1);
+  await page.locator('[data-v76-trigger="profile"]').click();
+  await expect(page.locator('[data-v76-popover="profile"] a[href="beauty.html"]')).toHaveCount(1);
   await expect(page.locator('.beauty-preview-card')).toHaveCount(34);
   await expect.poll(async () => page.locator('.beauty-preview-card canvas').first().evaluate((canvas) => canvas.toDataURL().length), { timeout: 15_000 }).toBeGreaterThan(2_000);
   const selector = page.locator('#beautyExample');

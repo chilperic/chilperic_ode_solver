@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Foko Lab State Observatory mark monochrome</title>
+  <desc id="desc">Monochrome layered model mark linking dynamics, inference, and populations.</desc>
+  <g fill="none" stroke="#17232D" stroke-linejoin="round">
+    <path d="M64 8 113 34 64 60 15 34Z" stroke-width="5"/>
+    <path d="M25 35C36 27 45 31 54 25C64 18 70 27 79 21C88 16 98 25 106 30M27 42C39 34 47 38 56 32C65 27 72 34 81 29C90 24 98 32 104 35" stroke-width="2.5"/>
+    <path d="M64 42 106 64 64 86 22 64Z" stroke-width="4.5"/>
+    <path d="M36 64C45 56 55 56 64 60C73 56 83 56 92 64C83 72 73 72 64 68C55 72 45 72 36 64Z" stroke-width="2.4"/>
+    <path d="M64 72 99 91 64 110 29 91Z" stroke-width="4.5"/>
+    <path d="M41 85 76 104M52 79 87 98M41 97 76 78M52 103 87 84" stroke-width="1.6"/>
+    <path d="M64 21V104" stroke-width="4.5"/>
+  </g>
+  <path d="M64 27 71 34 64 41 57 34ZM64 57 71 64 64 71 57 64ZM64 84 71 91 64 98 57 91Z" fill="#17232D"/>
+</svg>

@@ -12,7 +12,7 @@ function resources(html, tag, attr) {
   return Array.from(html.matchAll(re), m => m[1].split('?',1)[0]).filter(v => v && !/^(https?:|data:|\/\/)/i.test(v));
 }
 (async () => {
-  const browser = await chromium.launch({ executablePath: fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined, headless: true, args: ['--no-sandbox','--disable-dev-shm-usage'] });
+  const browser = await chromium.launch({ executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined), headless: true, args: ['--no-sandbox','--disable-dev-shm-usage'] });
   try {
     const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
     page.on('console', m => { if (m.type()==='error') console.error('PAGE CONSOLE:', m.text()); });
@@ -28,7 +28,7 @@ function resources(html, tag, attr) {
     for (const css of resources(html,'link','href').filter(v=>v.endsWith('.css'))) await page.addStyleTag({ path:path.join(ROOT,css) });
     const scripts = resources(html,'script','src').filter(v=>v.endsWith('.js'));
     for (const script of scripts) {
-      if (script === 'src/v72/sensitivity-workspace.js' || script === 'src/v72/scientific-registry.js' || script === 'src/navigation.js') continue;
+      if (script === 'src/v72/sensitivity-workspace.js' || script === 'src/v72/scientific-registry.js' || script === 'src/v76/app-shell.js') continue;
       await page.addScriptTag({ path:path.join(ROOT,script) });
     }
     await page.addScriptTag({ path:path.join(ROOT,'src/core/ode.js') });
@@ -71,14 +71,14 @@ function resources(html, tag, attr) {
                 analysis.directional=window.FokoSensitivityCore.directionalProfile({parameters:checked.paramDefs,points:methodConfig.directionPoints,span:methodConfig.directionalSpan,direction:Object.fromEntries(names.map(name=>[name,1])),evaluate:scalar}); analysis.directional.available=true;
                 if(methodConfig.responseSurface) analysis.responseSurface=window.FokoSensitivityCore.responseSurface({parameters:checked.paramDefs,first:request.analysis.surfaceFirst,second:request.analysis.surfaceSecond,points:methodConfig.surfacePoints,evaluate:scalar});
               }
-              this.onmessage?.({data:{type:'result',ok:true,release:'72.48.0',method:methodConfig.method,outputVar,outputMetric:metricName,model:checked,analysis,solverSummary:{odeSolves:solves,functionEvaluations:evals,acceptedSteps:accepted,rejectedSteps:rejected,maxRejectionRatio:0,minStep:0,maxTimescaleRatio:1,warnings:[],methods:[checked.method]},estimatedOdeSolves:methodConfig.expectedEvaluations,runtime:12,warnings:(checked.warnings||[]).concat(methodConfig.warnings||[]),configuration:{model:request.model,analysis:request.analysis,outputVar,outputMetric:metricName}}});
+              this.onmessage?.({data:{type:'result',ok:true,release:'77.4.1',method:methodConfig.method,outputVar,outputMetric:metricName,model:checked,analysis,solverSummary:{odeSolves:solves,functionEvaluations:evals,acceptedSteps:accepted,rejectedSteps:rejected,maxRejectionRatio:0,minStep:0,maxTimescaleRatio:1,warnings:[],methods:[checked.method]},estimatedOdeSolves:methodConfig.expectedEvaluations,runtime:12,warnings:(checked.warnings||[]).concat(methodConfig.warnings||[]),configuration:{model:request.model,analysis:request.analysis,outputVar,outputMetric:metricName}}});
             }catch(error){ this.onmessage?.({data:{type:'result',ok:false,error:error.message,runtime:1}}); }
           }, 10);
         }
       }
       Object.defineProperty(window,'Worker',{configurable:true,writable:true,value:SensitivityWorkerShim});
     });
-    for (const script of ['src/v72/sensitivity-workspace.js','src/v72/scientific-registry.js','src/navigation.js']) await page.addScriptTag({ path:path.join(ROOT,script) });
+    for (const script of ['src/v72/sensitivity-workspace.js','src/v72/scientific-registry.js','src/v76/app-shell.js']) await page.addScriptTag({ path:path.join(ROOT,script) });
     await page.evaluate(() => document.dispatchEvent(new Event('DOMContentLoaded',{bubbles:true})));
     await page.waitForFunction(() => document.querySelectorAll('#sensitivitySelect option').length >= 17 && document.querySelectorAll('#sensitivityParameterRows .table-row').length >= 3);
     assert.equal(await page.locator('#sensitivitySelect').inputValue(), 'sir');

@@ -8,7 +8,7 @@
   const INPUT = root.FokoNumericalInputs;
   const CORE = root.FokoSensitivityCore;
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '72.48.0';
+  const RELEASE = '77.4.1';
   const STORAGE_KEY = 'fokolab:v72.44:sensitivity-config';
   if (!INPUT || !CORE || !PLOT) throw new Error('Sensitivity Lab requires FokoNumericalInputs, FokoSensitivityCore and FokoPlotLifecycle.');
 
@@ -17,7 +17,8 @@
   const state = {
     current: Object.keys(PRESETS)[0] || '', model: null, result: null, worker: null,
     layout: 'two', focusSide: 'left', plotTypes: { left: 'ranking', right: 'signed' },
-    lastPlotSide: 'left', dirty: true, runToken: 0, lastScalarMetric: 'final', capacityBlocked: false
+    lastPlotSide: 'left', dirty: true, runToken: 0, lastScalarMetric: 'final', capacityBlocked: false,
+    activeOutput: ''
   };
   const PLOTS = {
     ranking: { label: 'Influence ranking', title: 'Parameter influence ranking', evidence: 'Magnitude ranking uses local elasticity where defined, normalized Morris μ*, raw Jansen total-order estimates, or the diagonal of the range-scaled information matrix.' },
@@ -118,6 +119,26 @@
     const select = $('sensitivityOutputVar'); const current = select.value || state.model.outputVar;
     select.innerHTML = state.model.vars.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
     select.value = state.model.vars.includes(current) ? current : (state.model.vars[0] || '');
+    const selected = new Set((state.model.outputVars || []).filter(v => state.model.vars.includes(v)));
+    if (!selected.size && select.value) selected.add(select.value);
+    $('sensitivityOutputVars').innerHTML = state.model.vars.map(v => `<label class="sensitivity-output-option"><input type="checkbox" value="${escapeHtml(v)}" ${selected.has(v) ? 'checked' : ''}/><span>${escapeHtml(v)}</span></label>`).join('');
+    $('sensitivityOutputVars').querySelectorAll('input').forEach(input => input.addEventListener('change', () => {
+      state.model.outputVars = selectedOutputVars();
+      markDirty('Output selection changed. Run to recompute every requested decomposition.');
+    }));
+  }
+  function selectedOutputVars() {
+    const all = Array.from($('sensitivityOutputVars').querySelectorAll('input:checked')).map(input => input.value).filter(v => state.model.vars.includes(v));
+    if ($('sensitivityMethod').value !== 'sobol' || $('sensitivityOutputMode').value !== 'multiple') return [$('sensitivityOutputVar').value || state.model.vars[0]].filter(Boolean);
+    if (!all.length) throw new Error('Select at least one output variable for multi-output global sensitivity.');
+    return all;
+  }
+  function syncOutputMode() {
+    const multiple = $('sensitivityMethod').value === 'sobol' && $('sensitivityOutputMode').value === 'multiple';
+    $('sensitivitySingleOutputField').hidden = multiple;
+    $('sensitivityOutputVarsField').hidden = !multiple;
+    $('sensitivityOutputMode').disabled = $('sensitivityMethod').value !== 'sobol';
+    $('sensitivityOutputMode').closest('label')?.classList.toggle('control-inactive', $('sensitivityMethod').value !== 'sobol');
   }
   function refreshSurfaceParameters() {
     const names = Object.keys(state.model && state.model.params || {});
@@ -134,6 +155,7 @@
     $('sensitivityStepSize').value = state.model.stepSize || 'auto'; $('sensitivityInitialStep').value = state.model.initialStep || 'auto';
     $('sensitivityMaxStep').value = state.model.maxStep || 'auto'; $('sensitivitySafety').value = state.model.safety || 0.9;
     renderEditors(); refreshOutputVariables(); $('sensitivityOutputVar').value = state.model.outputVar || state.model.vars[0];
+    $('sensitivityOutputMode').value = state.model.outputMode === 'multiple' ? 'multiple' : 'single';
     state.lastScalarMetric = state.model.outputMetric && state.model.outputMetric !== 'trajectory' ? state.model.outputMetric : state.lastScalarMetric;
     $('sensitivityOutputMetric').value = state.lastScalarMetric || 'final'; refreshSurfaceParameters(); syncMethodControls(); updateBudget();
   }
@@ -142,6 +164,8 @@
     state.model.method = $('sensitivitySolver').value; state.model.rtol = Number($('sensitivityRtol').value); state.model.atol = Number($('sensitivityAtol').value);
     state.model.stepSize = $('sensitivityStepSize').value; state.model.initialStep = $('sensitivityInitialStep').value; state.model.maxStep = $('sensitivityMaxStep').value;
     state.model.safety = Number($('sensitivitySafety').value); state.model.outputVar = $('sensitivityOutputVar').value;
+    state.model.outputMode = $('sensitivityMethod').value === 'sobol' ? $('sensitivityOutputMode').value : 'single';
+    state.model.outputVars = selectedOutputVars();
     state.model.outputMetric = $('sensitivityMethod').value === 'fim' ? 'trajectory' : $('sensitivityOutputMetric').value;
     return clone(state.model);
   }
@@ -207,7 +231,7 @@
     });
     $('sensitivityDeck').innerHTML = filtered.length ? filtered.map(name => {
       const preset = PRESETS[name];
-      return `<button type="button" data-preset="${escapeHtml(name)}" class="${name === state.current ? 'active' : ''}"><b>${escapeHtml(preset.title)}</b><small>${escapeHtml(preset.family)} · ${escapeHtml(preset.difficulty || 'reference')}</small><span>${escapeHtml(preset.question || preset.note || '')}</span></button>`;
+      return `<button type="button" data-preset="${escapeHtml(name)}" class="${name === state.current ? 'active' : ''}"><b>${escapeHtml(preset.title)}</b><small>${escapeHtml(preset.family)} · ${escapeHtml(preset.difficulty || 'reference')}</small></button>`;
     }).join('') : '<p class="empty-library">No sensitivity model matches the current filters.</p>';
   }
   function loadPreset(name) {
@@ -230,7 +254,8 @@
     syncExportState(); updateBudget(); if (message) setText('sensitivityStatus', message);
   }
   function clearResult(message) {
-    state.result = null; state.dirty = true; document.querySelector('.results-card')?.classList.remove('stale-results');
+    state.result = null; state.activeOutput = ''; state.dirty = true; document.querySelector('.results-card')?.classList.remove('stale-results');
+    $('sensitivityResultOutputField').hidden = true;
     ['left', 'right'].forEach(side => PLOT.clear($(side + 'Plot'), message || 'Run sensitivity analysis to create this plot.'));
     $('sensitivityDiagnostics').classList.add('empty'); $('sensitivityDiagnostics').textContent = 'Run an analysis to see estimator settings, warnings and ranking evidence.';
     setText('sensitivityTopStatus', 'Ready'); setText('sensitivityRuntime', '—'); setText('sensitivityMethodMetric', '—'); setText('sensitivityEvaluations', '—');
@@ -276,6 +301,11 @@
 
   function syncMethodControls() {
     const method = $('sensitivityMethod').value;
+    document.querySelectorAll('[data-sensitivity-method]').forEach(button => {
+      const selected = button.dataset.sensitivityMethod === method;
+      button.classList.toggle('active', selected);
+      button.setAttribute('aria-checked', String(selected));
+    });
     const local = method === 'local'; const global = method === 'sobol'; const enoughSurfaceParameters = Object.keys(state.model && state.model.params || {}).length >= 2; const canSurface = (local || global) && enoughSurfaceParameters;
     if (!canSurface) $('sensitivityResponseSurface').checked = false;
     const enabled = {
@@ -287,6 +317,7 @@
       sensitivityDependence: global, sensitivityDependencePermutations: global && $('sensitivityDependence').checked
     };
     Object.entries(enabled).forEach(([id, active]) => { $(id).disabled = !active; $(id).closest('label')?.classList.toggle('control-inactive', !active); });
+    syncOutputMode();
     const metric = $('sensitivityOutputMetric');
     if (method === 'fim') {
       if (metric.value !== 'trajectory') state.lastScalarMetric = metric.value;
@@ -307,7 +338,7 @@
     const analysis = analysisFromInputs(); const checkedAnalysis = INPUT.validateSensitivity(analysis);
     if (checkedAnalysis.capacity && checkedAnalysis.capacity.blocked) throw new Error(checkedAnalysis.capacity.message);
     state.runToken += 1; const token = state.runToken;
-    state.worker = new Worker('src/v72/sensitivity-worker.js?v=72.48.0'); syncRunAvailability();
+    state.worker = new Worker('src/v72/sensitivity-worker.js?v=77.4.1'); syncRunAvailability();
     $('sensitivityProgress').style.width = '4%'; setText('sensitivityStatus', `Starting about ${checkedAnalysis.expectedEvaluations.toLocaleString()} ODE solves in a worker…`);
     setText('sensitivityTopStatus', 'Running'); document.querySelector('.results-card')?.classList.add('stale-results');
     state.worker.onmessage = function (event) {
@@ -316,7 +347,7 @@
       if (data.type === 'result') finishRun(data);
     };
     state.worker.onerror = event => { if (token === state.runToken) finishRun({ ok: false, error: event.message || 'Sensitivity worker failed.' }); };
-    state.worker.postMessage({ type: 'run', model: Object.assign({}, model, { paramDefs: model.params, params: model.params }), analysis, outputVar: model.outputVar, outputMetric: model.outputMetric });
+    state.worker.postMessage({ type: 'run', model: Object.assign({}, model, { paramDefs: model.params, params: model.params }), analysis, outputVar: model.outputVar, outputVars: model.outputVars, outputMetric: model.outputMetric });
     return checked;
   }
   function cancelRun(visible) {
@@ -329,9 +360,25 @@
     syncRunAvailability(); $('sensitivityProgress').style.width = data.ok ? '100%' : '0%';
     setTimeout(() => { $('sensitivityProgress').style.width = '0%'; }, 350);
     if (!data.ok) { setText('sensitivityStatus', data.error || 'Sensitivity analysis failed.'); setText('sensitivityTopStatus', 'Failed'); setText('provenanceStatus', 'Computation failed'); setText('provenanceWarning', data.error || 'Unknown numerical failure.'); syncExportState(); return; }
-    state.result = data; state.dirty = false; document.querySelector('.results-card')?.classList.remove('stale-results');
+    state.result = data; state.activeOutput = data.outputVar; state.dirty = false; document.querySelector('.results-card')?.classList.remove('stale-results');
+    syncResultOutputs();
     setText('sensitivityStatus', 'Sensitivity analysis completed. Inspect estimator and solver limitations before interpreting rankings.');
     updateEvidence(); updatePlotOptions(); applyLayout(state.layout); syncExportState();
+  }
+
+  function syncResultOutputs() {
+    const outputs = state.result && Array.isArray(state.result.outputVars) ? state.result.outputVars : [];
+    const field = $('sensitivityResultOutputField'); const select = $('sensitivityResultOutput');
+    field.hidden = outputs.length < 2;
+    select.innerHTML = outputs.map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join('');
+    select.value = outputs.includes(state.activeOutput) ? state.activeOutput : (outputs[0] || '');
+  }
+  function activateResultOutput(name) {
+    if (!state.result || !state.result.analysesByOutput || !state.result.analysesByOutput[name]) return;
+    state.activeOutput = name; state.result.outputVar = name; state.result.analysis = state.result.analysesByOutput[name];
+    $('sensitivityResultOutput').value = name;
+    updateEvidence(); updatePlotOptions(); renderPlots();
+    setText('sensitivityStatus', `Showing the ${state.result.outputMetric} sensitivity decomposition for ${name}. All requested outputs remain available in the result export.`);
   }
 
   function availablePlots() {
@@ -498,7 +545,8 @@
     const analysis = state.result.analysis; const solver = state.result.solverSummary || {}; const warnings = warningsText(state.result.warnings);
     setText('sensitivityTopStatus', 'Computed'); setText('sensitivityRuntime', (state.result.runtime / 1000).toFixed(3) + ' s'); setText('sensitivityMethodMetric', state.result.method);
     setText('sensitivityEvaluations', number(solver.odeSolves || analysis.evaluations, 0)); setText('sensitivityParameterCount', String(Object.keys(state.result.model.paramDefs || {}).length));
-    setText('sensitivityOutputMetricCard', state.result.outputMetric === 'trajectory' ? `trajectory(${state.result.outputVar})` : `${state.result.outputMetric}(${state.result.outputVar})`);
+    const outputCount = Array.isArray(state.result.outputVars) ? state.result.outputVars.length : 1;
+    setText('sensitivityOutputMetricCard', outputCount > 1 ? `${outputCount} outputs · ${state.result.outputMetric}` : (state.result.outputMetric === 'trajectory' ? `trajectory(${state.result.outputVar})` : `${state.result.outputMetric}(${state.result.outputVar})`));
     setText('sensitivityRtolMetric', Number(state.result.model.rtol).toExponential(1)); setText('sensitivityAtolMetric', Number(state.result.model.atol).toExponential(1));
     setText('provenanceStatus', 'Computed'); setText('provenanceMethod', state.result.method);
     setText('provenanceScope', `${state.result.outputMetric === 'trajectory' ? 'downsampled trajectory' : state.result.outputMetric} of ${state.result.outputVar} on t=[${number(state.result.model.t0)}, ${number(state.result.model.t1)}]`);
@@ -517,7 +565,15 @@
   function serializable() { return { release: RELEASE, configuration: resultConfiguration(), result: state.result }; }
   function summaryCsv() {
     if (!state.result || state.dirty) return '';
-    const rows = [['parameter', 'primary', 'secondary', 'method']]; rankingRows().forEach(row => rows.push([row.name, row.value, row.secondary, state.result.method])); return rows.map(row => row.join(',')).join('\n') + '\n';
+    const rows = [['output', 'parameter', 'primary', 'secondary', 'method']];
+    const outputs = state.result.analysesByOutput ? Object.keys(state.result.analysesByOutput) : [state.result.outputVar];
+    const activeAnalysis = state.result.analysis;
+    outputs.forEach(output => {
+      state.result.analysis = state.result.analysesByOutput ? state.result.analysesByOutput[output] : activeAnalysis;
+      rankingRows().forEach(row => rows.push([output, row.name, row.value, row.secondary, state.result.method]));
+    });
+    state.result.analysis = activeAnalysis;
+    return rows.map(row => row.join(',')).join('\n') + '\n';
   }
   function pythonScript() {
     const cfg = configFromInputs();
@@ -543,8 +599,16 @@
     $('addSensitivityState').addEventListener('click', () => { const index = state.model.vars.length + 1; state.model.vars.push('u' + index); state.model.eqs.push('0'); state.model.y0.push(0); renderEditors(); refreshOutputVariables(); markDirty('State added.'); });
     $('addSensitivityParameter').addEventListener('click', () => { let index = 1; while (state.model.params['p' + index]) index += 1; state.model.params['p' + index] = [1, 0.5, 1.5]; renderEditors(); markDirty('Parameter added.'); });
     ['sensitivityT0', 'sensitivityT1', 'sensitivityPoints', 'sensitivitySolver', 'sensitivityRtol', 'sensitivityAtol', 'sensitivityStepSize', 'sensitivityInitialStep', 'sensitivityMaxStep', 'sensitivitySafety', 'sensitivityOutputVar', 'sensitivityOutputMetric', 'sensitivityRelativeStep', 'sensitivitySamples', 'sensitivitySecondOrder', 'sensitivityBootstrap', 'sensitivityTrajectories', 'sensitivityLevels', 'sensitivitySeed', 'sensitivitySigma', 'sensitivityOfatPoints', 'sensitivityDirection', 'sensitivityDirectionalSpan', 'sensitivityDirectionPoints', 'sensitivityResponseSurface', 'sensitivitySurfaceFirst', 'sensitivitySurfaceSecond', 'sensitivitySurfacePoints', 'sensitivityDependence', 'sensitivityDependencePermutations'].forEach(id => $(id).addEventListener('input', () => markDirty('Numerical or analysis settings changed. Run to recompute.')));
+    $('sensitivityOutputMode').addEventListener('change', () => { syncOutputMode(); markDirty('Output scope changed. Run to recompute.'); });
+    $('sensitivityResultOutput').addEventListener('change', function () { activateResultOutput(this.value); });
     $('sensitivityOutputMetric').addEventListener('change', function () { state.lastScalarMetric = this.value; });
     $('sensitivityMethod').addEventListener('change', () => { syncMethodControls(); markDirty('Sensitivity method changed. Run to recompute.'); });
+    document.querySelectorAll('[data-sensitivity-method]').forEach(button => button.addEventListener('click', () => {
+      $('sensitivityMethod').value = button.dataset.sensitivityMethod;
+      syncMethodControls();
+      markDirty(`${button.textContent.trim()} selected. Review its active settings, then run.`);
+      document.querySelector('#methodBlock')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }));
     $('sensitivityResponseSurface').addEventListener('change', syncMethodControls);
     $('sensitivityDependence').addEventListener('change', syncMethodControls);
     document.querySelectorAll('[data-layout-mode]').forEach(button => button.addEventListener('click', () => applyLayout(button.dataset.layoutMode)));

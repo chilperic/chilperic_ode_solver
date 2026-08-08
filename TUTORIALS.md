@@ -1,6 +1,6 @@
-# Foko Lab modelling curriculum
+# Foko Lab modeling curriculum
 
-These tutorials teach modelling rather than button pressing. Each exercise contains a scientific goal, an implementation task, a deliberate challenge, an interpretation checkpoint, and a reporting outcome.
+These tutorials teach modeling rather than button pressing. Each exercise contains a scientific goal, an implementation task, a deliberate challenge, an interpretation checkpoint, and a reporting outcome.
 
 Complete Tutorials 1–4 before using the advanced labs.
 
@@ -356,3 +356,24 @@ A defensible methods statement contains:
 - limitations.
 
 **Final checkpoint:** Reproducibility requires enough information to recompute the result, not merely a screenshot of the result.
+
+## Tutorial 21 — Move a model between formats without changing its meaning
+
+**Goal:** Treat model exchange as a scientific equivalence test rather than a file-conversion exercise.
+
+1. Open **Model Studio** and expand **Import or paste a model**.
+2. Load the supplied plain-text logistic model and check the rendered equation, `x(0)`, parameter values/ranges, time span and solver.
+3. Run it and record the final state and solver diagnostics.
+4. Export the project as JSON.
+5. Create a blank project, import the JSON and rerun it. The new result should agree within the declared numerical tolerance.
+6. Repeat with a Python data dictionary using `FOKO_MODEL = {...}`. Confirm that no Python code is executed.
+7. Widen the model panel with the separator while editing, then reset it. Confirm that plot selection and computed data do not change when only panel geometry changes.
+8. Try a CellML or SED-ML filename, or an SBML model containing an event. Record the explicit rejection instead of trying to work around it.
+
+**Challenge:** Change one parameter range in only one representation. Explain why matching nominal trajectories do not imply matching sensitivity questions.
+
+**Failure test:** Add `x(0) = Infinity` or an undeclared symbol. The import or model validator must reject it before a scientific result is created.
+
+**Checkpoint:** A successful parse proves syntax compatibility. A successful numerical round trip supports implementation equivalence for that tested configuration. Neither proves that the model is scientifically valid or that Foko Lab supports the full source standard.
+
+**Report:** List the source format, imported states/equations/parameters, any rejected semantics, numerical settings, comparison tolerance and the software/release used for both runs.

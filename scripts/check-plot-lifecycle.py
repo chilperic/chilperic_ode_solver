@@ -8,10 +8,13 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = {
+    "studio.html": "src/v73/model-studio.js",
     "ode.html": "src/app.js",
     "steady.html": "src/v72/steady-workspace.js",
     "stochastic.html": "src/v72/stochastic-workspace.js",
     "optimization.html": "src/v72/optimization-workspace.js",
+    "population-genetics.html": "src/v72/population-genetics-workspace.js",
+    "advanced-methods.html": "src/v72/advanced-methods-workspace.js",
     "statistics.html": "src/v72/statistics-workspace.js",
     "fitting.html": "src/v72/fitting-workspace.js",
     "linear-algebra.html": "src/v72/linalg-workspace.js",
@@ -22,6 +25,9 @@ PAGES = {
     "symbolic.html": "src/v72/symbolic-workspace.js",
     "workbench.html": "src/v72/workbench-workspace.js",
     "sensitivity.html": "src/v72/sensitivity-workspace.js",
+    "bifurcation.html": "src/v72/bifurcation-workspace.js",
+    "evolution.html": "src/v72/evolution-landscape-workspace.js",
+    "ai-modeling.html": "src/v72/ai-modeling-workspace.js",
 }
 DIRECT_PLOTLY = re.compile(r"(?:root\.|window\.)?Plotly\.(?:newPlot|react|purge|Plots\.resize)\s*\(")
 

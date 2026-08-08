@@ -9,12 +9,12 @@
 <link href="assets/brand/favicon-32.png" rel="icon" sizes="32x32"/>
 <link href="assets/brand/favicon-16.png" rel="icon" sizes="16x16"/>
 <link href="assets/brand/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=72.48.0" rel="stylesheet"/><link href="styles/v72-profile-shell.css?v=72.48.0" rel="stylesheet"/>
+<link href="styles/style.css?v=77.4.1" rel="stylesheet"/><link href="styles/v72-profile-shell.css?v=77.4.1" rel="stylesheet"/>
 <style>
     .creator-profile-page{width:min(100% - 36px,1180px);margin:0 auto;padding:42px 0 64px;}
     .creator-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:24px;align-items:stretch;margin-bottom:24px;}
-    .creator-card{background:var(--panel);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:28px;}
-    .creator-hero h1{font-size:clamp(2.2rem,4vw,4rem);line-height:.98;margin:.15em 0 .25em;color:var(--text);letter-spacing:-.04em;}
+    .creator-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 34px rgba(15,31,55,.07);padding:26px;}
+    .creator-hero h1{font-size:clamp(2rem,3.2vw,3.2rem);line-height:1.02;margin:.15em 0 .25em;color:var(--text);letter-spacing:-.035em;}
     .creator-kicker{text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:var(--accent);font-size:.82rem;margin:0 0 10px;}
     .creator-lead{font-size:1.08rem;max-width:72ch;color:var(--muted);}
     .creator-profile-card{display:grid;grid-template-columns:118px 1fr;gap:18px;align-items:center;}
@@ -22,11 +22,11 @@
     .creator-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
     .creator-pill-row span,.creator-pill-row a{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:var(--panel2);font-weight:800;color:var(--text);}
     .cv-download-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 28px;}
-    .cv-download-grid a{display:flex;flex-direction:column;gap:10px;min-height:150px;padding:20px;border-radius:20px;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);color:var(--text);}
+    .cv-download-grid a{display:flex;flex-direction:column;gap:10px;min-height:142px;padding:18px;border-radius:14px;border:1px solid var(--line);background:var(--panel);box-shadow:none;color:var(--text);}
     .cv-download-grid strong{font-size:1.05rem;}
     .cv-download-grid small{color:var(--muted);line-height:1.45;}
     .cv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
-    .cv-section-card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);}
+    .cv-section-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:none;}
     .cv-section-card h2{margin:.1em 0 .65em;font-size:1.35rem;}
     .cv-section-card ul{margin:0;padding-left:1.1em;}
     .cv-section-card li{margin:.45em 0;color:var(--muted);}
@@ -37,74 +37,12 @@
     .cv-wide{grid-column:1/-1;}
     @media(max-width:850px){.creator-hero,.cv-grid,.cv-download-grid{grid-template-columns:1fr;}.creator-profile-card{grid-template-columns:1fr;}}
   </style>
-<link href="styles/lab-identity.css?v=72.48.0" rel="stylesheet"/>
+<link href="styles/lab-identity.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
 </head>
 <body data-lab="creator">
 <div class="app-shell public-shell">
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand" href="index.html">
-<img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.48.0"/>
-</a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div>
-</header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="creator-profile-page" id="main">
 <section class="creator-hero">
 <div class="creator-card">
@@ -119,7 +57,7 @@
 </div>
 </div>
 <aside class="creator-card creator-profile-card">
-<img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=72.48.0"/>
+<img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp?v=77.4.1"/>
 <div>
 <p class="creator-kicker">Düsseldorf, Germany</p>
 <p><b>Current focus:</b> model-driven analysis, browser-native scientific tools, reproducible repositories and career transition across academia and industry.</p>
@@ -205,17 +143,17 @@
 </section>
 </main>
 <footer class="v70-footer foko-product-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.48.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
-<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="workbench.html">Workbench</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Docs</a><a href="trust.html">Trust</a><a href="research.html">Research</a><a href="beauty.html">Mathematical Beauty</a></nav>
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=77.4.1"/><p><b>Foko Lab</b><br/>Browser-native scientific modeling with explicit evidence boundaries.</p></div>
+<nav aria-label="Footer navigation"><a href="ode.html?module=ode&amp;new=1">Create model</a><a href="examples.html">Model Atlas</a><a href="workbench.html">Workbench</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Docs</a><a href="trust.html">Trust</a><a href="research.html">Research</a></nav>
 <div class="foko-footer-meta"><p><a href="mailto:chilpericarmel@gmail.com">Contact</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a> · <a href="https://chilperic.github.io/" rel="noopener" target="_blank">About the author</a></p><p>HHU Düsseldorf · CEPLAS · AIMS Ghana · PoLiMeR ITN</p><p><a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">Source code</a></p></div>
 </footer>
 </div>
 <script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script>
-<script defer="" src="src/navigation.js?v=72.48.0"></script>
-<script defer="" src="src/platform-data-engine.js?v=72.48.0"></script>
-<script defer="" src="src/platform-shell.js?v=72.48.0"></script>
-<script defer="" src="src/fokokit.js?v=72.48.0"></script>
-<script defer="" src="src/v71-platform.js?v=72.48.0"></script>
-<script src="src/platform/compute-bus.js?v=72.48.0"></script>
+<script defer="" src="src/platform-data-engine.js?v=77.4.1"></script>
+<script defer="" src="src/platform-shell.js?v=77.4.1"></script>
+<script defer="" src="src/fokokit.js?v=77.4.1"></script>
+<script defer="" src="src/v71-platform.js?v=77.4.1"></script>
+<script src="src/platform/compute-bus.js?v=77.4.1"></script>
+<script defer src="src/v76/app-shell.js?v=77.4.1"></script>
 </body>
 </html>

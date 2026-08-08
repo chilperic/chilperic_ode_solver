@@ -86,7 +86,7 @@ async function waitFor(page, predicate, message, timeout = 15000) {
   const speeds = speedValuesFromHtml(html);
   assert.ok(speeds.includes('90'), `Agent test speed 90 is not present. Available values: ${speeds.join(', ')}`);
 
-  const executablePath = fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined;
+  const executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined);
   const browser = await chromium.launch({
     executablePath,
     headless: true,
@@ -122,6 +122,7 @@ async function waitFor(page, predicate, message, timeout = 15000) {
       'assets/vendor/plotly/plotly-2.35.2.min.js',
       'src/v72/accessibility-performance.js',
       'src/core/agent-reference.js',
+      'src/core/live-3d.js',
       'src/models/agent-presets.js',
       'src/v72/agent-workspace.js'
     ]) await page.addScriptTag({ path: path.join(ROOT, script) });

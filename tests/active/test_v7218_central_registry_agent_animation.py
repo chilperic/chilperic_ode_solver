@@ -2,7 +2,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 AUTHORED_PAGES = [
-    "ode.html", "steady.html", "stochastic.html", "optimization.html",
+    "studio.html", "ode.html", "steady.html", "stochastic.html", "optimization.html",
     "statistics.html", "fitting.html", "linear-algebra.html", "networks.html",
     "ml.html", "sciml.html", "agent.html", "symbolic.html", "sensitivity.html", "workbench.html",
 ]
@@ -15,7 +15,7 @@ def text(path: str) -> str:
 def test_central_registry_is_loaded_by_all_authored_labs():
     for page in AUTHORED_PAGES:
         source = text(page)
-        assert "src/v72/scientific-registry.js?v=72.48.0" in source, page
+        assert "src/v72/scientific-registry.js?v=77.4.1" in source, page
 
 
 def test_central_registry_keeps_plot_selection_separate_from_layout_ownership():

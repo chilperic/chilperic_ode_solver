@@ -149,7 +149,7 @@ async function steadyContract(browser) {
 
 (async () => {
   const browser = await chromium.launch({
-    executablePath: fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined,
+    executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined),
     headless: true,
     args: ['--no-sandbox', '--disable-dev-shm-usage']
   });

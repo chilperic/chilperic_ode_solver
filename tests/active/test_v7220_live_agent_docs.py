@@ -12,8 +12,8 @@ def test_public_documents_are_user_facing_and_maintenance_is_separate():
     guide = read('USER_GUIDE.md')
     tutorials = read('TUTORIALS.md')
     roadmap = read('PLATFORM_TODO.md')
-    assert guide.startswith('# Foko Lab modelling handbook')
-    assert tutorials.startswith('# Foko Lab modelling curriculum')
+    assert guide.startswith('# Foko Lab modeling handbook')
+    assert tutorials.startswith('# Foko Lab modeling curriculum')
     assert roadmap.startswith('# Maintainer roadmap')
     assert 'P0.1 — Kill' not in roadmap
     assert 'Source documents:' not in read('docs.html')

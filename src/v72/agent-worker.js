@@ -1,11 +1,11 @@
-/* Foko Lab v72.48.0 Agent ensemble worker.
+/* Foko Lab v77.4.1 Agent ensemble worker.
  * The representative run is computed incrementally. Each published lattice
  * frame is the current state of the numerical runner at that moment; frames
  * are deliberately paced so the browser can paint them instead of receiving
  * a post-hoc burst after the calculation has already finished.
  */
 'use strict';
-importScripts('../core/agent-reference.js?v=72.48.0');
+importScripts('../core/agent-reference.js?v=77.4.1');
 
 let activeJob = null;
 

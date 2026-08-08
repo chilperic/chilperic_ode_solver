@@ -60,5 +60,9 @@ for (const [name, preset] of Object.entries(Presets)) {
   }
 }
 
+const cmaApplications = Object.values(Presets).filter(preset => preset.algorithm === 'cma_es' && String(preset.family).startsWith('CMA-ES application'));
+check(cmaApplications.length === 15, 'exactly 15 visible CMA-ES application surrogates are included');
+check(cmaApplications.every(preset => preset.title.startsWith('CMA-ES · ')), 'CMA-ES application titles are searchable and consistently named');
+
 console.log(`\n${checks - failures}/${checks} checks passed`);
 if (failures) process.exitCode = 1;

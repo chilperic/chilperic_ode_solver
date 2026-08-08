@@ -803,30 +803,30 @@
     }, extra || {});
   }
 
-  function enrich(model, x, y, optimisation, options, weightInfo) {
+  function enrich(model, x, y, optimization, options, weightInfo) {
     const opts = Object.assign({ alpha: 0.05, bootstrapReplicates: 0, bootstrapSeed: 9144, computeProfile: false }, options || {});
     const info = modelInfo(model);
-    const base = score(x, y, optimisation.pred, {
+    const base = score(x, y, optimization.pred, {
       model: info.id,
       equation: info.equation,
-      coef: optimisation.coef.slice(),
-      converged: optimisation.converged,
-      terminationReason: optimisation.terminationReason,
-      iterations: optimisation.iterations,
-      acceptedSteps: optimisation.acceptedSteps,
-      rejectedSteps: optimisation.rejectedSteps,
-      evaluations: optimisation.evaluations,
-      objectiveHistory: optimisation.history || [],
+      coef: optimization.coef.slice(),
+      converged: optimization.converged,
+      terminationReason: optimization.terminationReason,
+      iterations: optimization.iterations,
+      acceptedSteps: optimization.acceptedSteps,
+      rejectedSteps: optimization.rejectedSteps,
+      evaluations: optimization.evaluations,
+      objectiveHistory: optimization.history || [],
       weighting: weightInfo.mode,
       absoluteSigma: weightInfo.absoluteSigma,
-      conditionIndicator: conditionIndicator(optimisation.normalMatrix),
+      conditionIndicator: conditionIndicator(optimization.normalMatrix),
     }, info.names.length, weightInfo.weights, weightInfo.absoluteSigma, weightInfo.sigmas);
 
-    const covariance = covarianceFromJacobian(optimisation.jacobian, weightInfo.weights, base.covarianceScale);
+    const covariance = covarianceFromJacobian(optimization.jacobian, weightInfo.weights, base.covarianceScale);
     base.covariance = covariance;
     base.parameterSummary = parameterSummary(info.names, base.coef, covariance, opts.alpha);
     base.parameterSE = base.parameterSummary.map(function (parameter) { return parameter.se; });
-    base.influence = influenceDiagnostics(optimisation.jacobian, base.residuals, info.names.length, base.residualVariance, weightInfo.weights, weightInfo.sigmas);
+    base.influence = influenceDiagnostics(optimization.jacobian, base.residuals, info.names.length, base.residualVariance, weightInfo.weights, weightInfo.sigmas);
     base.predictionBandAvailable = weightInfo.mode !== 'known-sigma';
     base.predictionBands = predictionBands(info.id, x, base.coef, covariance, base.residualVariance, opts.alpha, base.predictionBandAvailable);
     base.confidenceEllipse = confidenceEllipse(base.coef, covariance, info.names, opts.alpha);
@@ -877,13 +877,13 @@
     const opts = Object.assign({}, options || {});
     const weightInfo = normaliseWeights(x.length, opts);
     const degree = polynomialDegree(info.id);
-    let optimisation;
-    if (degree != null) optimisation = weightedPolynomialFit(x, y, degree, weightInfo.weights);
+    let optimization;
+    if (degree != null) optimization = weightedPolynomialFit(x, y, degree, weightInfo.weights);
     else {
       const start = Array.isArray(opts.initialParams) && opts.initialParams.length === info.names.length ? opts.initialParams : initialParams(info.id, x, y);
-      optimisation = lmOptimize(info.id, x, y, start, Object.assign({}, opts, { weights: weightInfo.weights }));
+      optimization = lmOptimize(info.id, x, y, start, Object.assign({}, opts, { weights: weightInfo.weights }));
     }
-    return enrich(info.id, x, y, optimisation, opts, weightInfo);
+    return enrich(info.id, x, y, optimization, opts, weightInfo);
   }
 
   function polyFit(x, y, degree, options) {

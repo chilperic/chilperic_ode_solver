@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Foko Lab micro mark</title>
+  <desc id="desc">Compact two-layer scientific state mark for small icons.</desc>
+  <path d="M32 6 58 20 32 34 6 20Z" fill="none" stroke="#243C86" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M32 28 53 39 32 50 11 39Z" fill="none" stroke="#009B89" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M32 13V47" stroke="#D17B2F" stroke-width="4" stroke-linecap="round"/>
+  <path d="M32 25 38 31 32 37 26 31Z" fill="#F0AD3D" stroke="#FFF8ED" stroke-width="1.5"/>
+</svg>

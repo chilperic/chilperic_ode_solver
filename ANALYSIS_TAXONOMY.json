@@ -1,6 +1,6 @@
 {
   "schema": "fokolab-analysis-taxonomy-v1",
-  "release": "72.48.0",
+  "release": "77.4.1",
   "statusDefinitions": {
     "browser-computed": "Computed directly in the browser by a maintained Foko Lab numerical core.",
     "derived-browser": "Derived in the browser from a computed finite result; interpretation remains conditional on that result.",

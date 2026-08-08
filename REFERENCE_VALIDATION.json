@@ -1,5 +1,5 @@
 {
-  "release": "72.48.0",
+  "release": "77.4.1",
   "libraries": {
     "numpy": "2.3.5",
     "scipy": "1.17.0",

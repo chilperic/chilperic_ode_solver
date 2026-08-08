@@ -1,0 +1,33 @@
+{
+  "name": "Foko Lab",
+  "concept": "State Observatory",
+  "description": "A responsive scientific identity built from three views of one model state: a continuous dynamics/fitness manifold, an inference and uncertainty plane, and a discrete population/agent lattice. A warm state axis connects the layers; an evolutionary branch emerges from the discrete level. The identity therefore represents the platform's modeling logic rather than one laboratory or AI method.",
+  "responsive_system": {
+    "flagship": "foko-lab-emblem.svg and display lockup: full manifold, uncertainty geometry, population lattice, evolutionary branch, shared state axis, and the Modeling · Simulation · Validation descriptor",
+    "compact": "foko-lab-mark.svg and adaptive shell: three model layers with enough scientific detail for headers and navigation",
+    "micro": "foko-lab-micro.svg and raster favicons: two structural layers and the shared state only"
+  },
+  "principles": [
+    "One scientific object is observed through continuous, inferential and discrete model layers",
+    "The state/evidence axis is stable while exact-lab and subject accents can adapt in the application shell",
+    "Evolution is present as branching from a population layer, not as a decorative tree",
+    "The state axis plus upper layers hide an abstract F while the evolutionary split suggests K, a restrained Foko Kuate signature that never outranks the scientific reading",
+    "The flagship emblem is allowed more information than a favicon; responsive simplification is intentional",
+    "Scientific plots retain independent semantic palettes; identity color never encodes numerical magnitude",
+    "Validation names a workflow of confronting model output with diagnostics and evidence; the identity never presents it as automatic certification of a user model",
+    "No brain, gear, quantum, neural-cloud, generic AI, or copied cultural motif"
+  ],
+  "palette": {
+    "indigo": "#243C86",
+    "violet": "#654DA6",
+    "teal": "#009B89",
+    "computation": "#2B6FA8",
+    "population": "#5E9A68",
+    "ink": "#17232D",
+    "signal": "#D17B2F",
+    "signalLight": "#F0AD3D",
+    "ivory": "#F8F6EE",
+    "surface": "#FFFFFF",
+    "graphite": "#5D6874"
+  }
+}

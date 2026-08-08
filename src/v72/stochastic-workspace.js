@@ -30,6 +30,7 @@
     busy: false,
     selectedVariable: '',
   };
+  let plotRenderRevision = 0;
 
   const PLOT_META = {
     paths: {
@@ -661,8 +662,12 @@
   }
 
   function renderAllPlots() {
-    if (!state.result) return;
-    requestAnimationFrame(function () { requestAnimationFrame(function () { visiblePlotSides().forEach(renderPlot); }); });
+    if (!state.result) return Promise.resolve([]);
+    const revision = ++plotRenderRevision;
+    return root.FokoPlotLifecycle.afterLayout().then(function () {
+      if (revision !== plotRenderRevision || !state.result) return [{ stale: true }];
+      return Promise.all(visiblePlotSides().map(renderPlot));
+    });
   }
 
   function applyLayout(mode, focusSide, persist) {
@@ -696,7 +701,7 @@
   function configBundle() {
     readEditorIntoModel();
     return {
-      release: '72.48.0',
+      release: '77.4.1',
       lab: 'stochastic',
       note: 'Configuration only. No computed trajectory or Monte Carlo claim is preserved.',
       currentName: state.currentName,
@@ -753,7 +758,7 @@
       const change = model.stateNames.map(function (name) { return Number(reaction.change[name]) || 0; });
       return `    {"name": ${JSON.stringify(reaction.name)}, "propensity": ${JSON.stringify(reaction.propensity.replace(/\^/g, '**'))}, "change": np.array(${JSON.stringify(change)}, dtype=int)},`;
     }).join('\n');
-    return `"""Independent Python validation starter for Foko Lab v72.48.0.\nUses NumPy's RNG, so trajectories are distributionally comparable but not bitwise identical to browser xorshift32 streams.\nThe direct method below assumes time-homogeneous propensities.\n"""\nimport math\nimport numpy as np\n\nSTATE_NAMES = ${JSON.stringify(model.stateNames)}\nINITIAL = np.array(${JSON.stringify(model.initial)}, dtype=int)\nPARAMS = ${JSON.stringify(model.params, null, 2)}\nREACTIONS = [\n${reactions}\n]\nT0, T1 = ${settings.t0}, ${settings.t1}\nPOINTS, RUNS, BASE_SEED = ${settings.points}, ${settings.runs}, ${settings.seed}\nMAX_EVENTS = ${settings.maxEvents}\nTIMES = np.linspace(T0, T1, POINTS)\n\ndef propensity(expr, state):\n    scope = {name: float(state[i]) for i, name in enumerate(STATE_NAMES)}\n    scope.update(PARAMS)\n    scope.update({"exp": math.exp, "log": math.log, "sqrt": math.sqrt, "abs": abs, "min": min, "max": max})\n    value = float(eval(expr, {"__builtins__": {}}, scope))\n    if not np.isfinite(value) or value < -1e-12:\n        raise ValueError(f"invalid propensity {expr}: {value}")\n    return max(0.0, value)\n\ndef simulate(seed):\n    rng = np.random.default_rng(seed)\n    state = INITIAL.copy()\n    out = np.empty((len(STATE_NAMES), len(TIMES)), dtype=int)\n    out[:, 0] = state\n    time = TIMES[0]\n    events = 0\n    for j, target in enumerate(TIMES[1:], start=1):\n        while time < target and events < MAX_EVENTS:\n            rates = np.array([propensity(r["propensity"], state) for r in REACTIONS])\n            total = rates.sum()\n            if total <= 0:\n                time = target\n                break\n            waiting = rng.exponential(1.0 / total)\n            if time + waiting > target:\n                time = target\n                break\n            time += waiting\n            reaction = rng.choice(len(REACTIONS), p=rates / total)\n            candidate = state + REACTIONS[reaction]["change"]\n            if np.any(candidate < 0):\n                raise ValueError("negative state: check propensity guards")\n            state = candidate\n            events += 1\n        out[:, j] = state\n    return out, events\n\nensemble = [simulate(BASE_SEED + i) for i in range(RUNS)]\npaths = np.stack([item[0] for item in ensemble])\nprint("final means", dict(zip(STATE_NAMES, paths[:, :, -1].mean(axis=0))))\nprint("mean events", np.mean([item[1] for item in ensemble]))\n`;
+    return `"""Independent Python validation starter for Foko Lab v77.4.1.\nUses NumPy's RNG, so trajectories are distributionally comparable but not bitwise identical to browser xorshift32 streams.\nThe direct method below assumes time-homogeneous propensities.\n"""\nimport math\nimport numpy as np\n\nSTATE_NAMES = ${JSON.stringify(model.stateNames)}\nINITIAL = np.array(${JSON.stringify(model.initial)}, dtype=int)\nPARAMS = ${JSON.stringify(model.params, null, 2)}\nREACTIONS = [\n${reactions}\n]\nT0, T1 = ${settings.t0}, ${settings.t1}\nPOINTS, RUNS, BASE_SEED = ${settings.points}, ${settings.runs}, ${settings.seed}\nMAX_EVENTS = ${settings.maxEvents}\nTIMES = np.linspace(T0, T1, POINTS)\n\ndef propensity(expr, state):\n    scope = {name: float(state[i]) for i, name in enumerate(STATE_NAMES)}\n    scope.update(PARAMS)\n    scope.update({"exp": math.exp, "log": math.log, "sqrt": math.sqrt, "abs": abs, "min": min, "max": max})\n    value = float(eval(expr, {"__builtins__": {}}, scope))\n    if not np.isfinite(value) or value < -1e-12:\n        raise ValueError(f"invalid propensity {expr}: {value}")\n    return max(0.0, value)\n\ndef simulate(seed):\n    rng = np.random.default_rng(seed)\n    state = INITIAL.copy()\n    out = np.empty((len(STATE_NAMES), len(TIMES)), dtype=int)\n    out[:, 0] = state\n    time = TIMES[0]\n    events = 0\n    for j, target in enumerate(TIMES[1:], start=1):\n        while time < target and events < MAX_EVENTS:\n            rates = np.array([propensity(r["propensity"], state) for r in REACTIONS])\n            total = rates.sum()\n            if total <= 0:\n                time = target\n                break\n            waiting = rng.exponential(1.0 / total)\n            if time + waiting > target:\n                time = target\n                break\n            time += waiting\n            reaction = rng.choice(len(REACTIONS), p=rates / total)\n            candidate = state + REACTIONS[reaction]["change"]\n            if np.any(candidate < 0):\n                raise ValueError("negative state: check propensity guards")\n            state = candidate\n            events += 1\n        out[:, j] = state\n    return out, events\n\nensemble = [simulate(BASE_SEED + i) for i in range(RUNS)]\npaths = np.stack([item[0] for item in ensemble])\nprint("final means", dict(zip(STATE_NAMES, paths[:, :, -1].mean(axis=0))))\nprint("mean events", np.mean([item[1] for item in ensemble]))\n`;
   }
 
   function addState() {

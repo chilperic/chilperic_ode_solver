@@ -1,6 +1,6 @@
-# Foko Lab modelling handbook
+# Foko Lab modeling handbook
 
-Foko Lab is a browser-native scientific modelling platform. It is designed for four connected activities:
+Foko Lab is a browser-native scientific modeling platform. It is designed for four connected activities:
 
 1. translating a scientific question into an explicit mathematical model;
 2. computing a result with visible numerical settings;
@@ -9,7 +9,7 @@ Foko Lab is a browser-native scientific modelling platform. It is designed for f
 
 The platform is not a substitute for domain validation, experimental design, specialist continuation software, large-scale optimization, finite-element simulation, or a production machine-learning stack. Its role is to make small and medium scientific workflows inspectable before they are scaled up.
 
-## A complete modelling workflow
+## A complete modeling workflow
 
 A defensible model is not produced by pressing **Run**. Use the following sequence.
 
@@ -36,14 +36,20 @@ Start from the mathematical task rather than from the plot you hope to obtain.
 
 | Scientific task | Primary lab | Typical evidence | Important boundary |
 |---|---|---|---|
+| Create and manage an editable ODE project | **Model Studio** | equations, initial conditions, parameter ranges, solver diagnostics, run ledger, trajectories and response surfaces | two-parameter sweeps are not global sensitivity; explicit browser solvers are exploratory for stiff systems |
 | Time evolution governed by differential equations | **ODE** | trajectories, phase views, solver work, conservation, stiffness evidence | explicit browser solvers are not a general stiff/DAE/PDE solution |
-| Parameter influence in an ODE model | **Sensitivity** | local derivatives, Morris, Jansen/Saltelli, FIM, convergence | rankings depend on output, ranges, initial conditions, time window and estimator |
+| Parameter influence in an ODE model | **Sensitivity** | local derivatives, Morris, single/multiple-output Jansen/Saltelli, FIM, convergence | rankings depend on every selected output, ranges, initial conditions, time window and estimator |
 | Solve nonlinear equations or equilibria | **Steady-State** | residual history, roots, Jacobian, local eigenvalues, scans | finite searches do not prove completeness; scans are not certified continuation |
 | Random reaction or jump dynamics | **Stochastic** | seeded SSA paths, empirical intervals, extinction and event evidence | only time-homogeneous CTMC/Gillespie direct SSA is maintained |
 | Minimize or maximize an explicit function | **Optimization** | objective history, feasibility, candidates, finite Pareto evidence | heuristic candidates are not certificates of global optimality |
+| Explore drift, selection, mutation and migration | **Population Genetics** | seeded frequency bands, diversity, elementary FST, fixation/loss | a two-deme one-locus simulation is not genomic-history inference |
+| Analyse equilibrium branches and tipping structure | **Bifurcation** | stable/unstable branches, local eigenvalue, root count, vector field, potential | finite scalar scans are not certified continuation or Hopf analysis |
+| Simulate adaptation on a declared fitness landscape | **Evolution Landscape** | mean/best fitness, diversity, Hamming distance, occupancy and endpoints | fixed haploid asexual landscapes are not genomic inference |
+| Run bounded advanced reference methods | **Advanced Methods** | Bayesian posterior/predictive geometry, Fisher design, branches, 3D PDE and sweep surfaces, SDE and genomic summaries | compact references do not replace specialist production packages |
 | Estimate parameters from data | **Curve Fitting** | residuals, uncertainty, bootstrap, correlation, profiles | a good fit does not imply identifiable parameters or valid model structure |
-| Describe, compare, or test tabular data | **Statistics** | distributions, tests, effect sizes, PCA, ROC/PR, survival | assumptions, missingness and multiplicity remain the user's responsibility |
+| Describe, compare, or test tabular data | **Statistics** | ECDF/violin/contour views, tests, regression diagnostics, PCA, ROC/PR, survival, SPC and ACF | assumptions, missingness and multiplicity remain the user's responsibility |
 | Build small predictive baselines | **Machine Learning** | fold-safe predictions, CV, calibration, importance, clustering, PCA | not a deep-learning or deployment platform; leakage checks remain essential |
+| Emulate a simulation or response with transparent AI | **AI Modeling** | GP fit/uncertainty, active sampling, random features, residual Q–Q/ACF, derivative, coverage and cumulative-error views | one-input browser surrogates and in-sample diagnostics are not deployment validation |
 | Analyse a matrix problem | **Linear Algebra** | structure, singular values, eigenvalues, residuals, conditioning | small dense educational workflows, not sparse/HPC linear algebra |
 | Analyse graph structure | **Networks** | paths, components, centrality and spanning-tree evidence | graph measures do not imply causal or biological importance |
 | Discover or compare compact scientific ML representations | **SciML** | SINDy, inverse and surrogate diagnostics where computed | PINN, neural-operator and Neural ODE examples are export-only unless a real engine is shown |
@@ -56,13 +62,19 @@ The long feature catalogue is a useful roadmap, but it mixes working browser com
 
 | Workspace | Maintained example library | Maintained computed plot library | What is deliberately not claimed |
 |---|---:|---:|---|
-| Optimization, including finite multi-objective evidence | 17 problems | 23 views | no Bayesian optimization, topology/CFD solver, nonlinear MPC certificate or complete ZDT/DTLZ MOEA |
+| Model Studio | 21 editable ODE starters across biological, physical and nonlinear systems | 15 trajectory, phase, multivariate, solver and 2-parameter surface views | no calibration certificate, general stiff solver, or replacement for specialist stochastic/agent/genomic builders |
+| Optimization, including finite multi-objective evidence and CMA-ES | 32 problems, including 15 CMA-ES application surrogates | 39 views | no Bayesian optimization, topology/CFD solver, nonlinear MPC certificate or complete ZDT/DTLZ MOEA |
+| Population Genetics | 13 finite-ensemble configurations | 10 views | no linkage, coalescent/demography inference, VCF/PLINK or genomic QC |
+| Bifurcation | 6 editable scalar systems | 6 views | finite root scan, not pseudo-arclength, multidimensional, Hopf or periodic-orbit continuation |
+| Evolution Landscapes | 12 editable starters plus custom tables | 10 views, including heatmap, contour, 3D and live time/frequency landscape | fixed haploid asexual landscapes, not evolutionary-history inference |
+| AI Modeling | 12 editable scientific datasets plus user CSV | 13 views | browser-scale GP/random-feature surrogates, not deep training or deployment |
+| Advanced Methods | 14 examples across 8 method families | 5 Bayesian views; at least 3 for every other module | bounded references, not general MCMC, continuation, FEM/SPDE, genomic or workflow infrastructure |
 | Steady-State / Algebraic | 26 systems | 18 views | no certified continuation, complete root proof or generic limit-cycle computation |
 | Stochastic | 13 jump-process models | 12 views | no generic SDE/SPDE engine, stochastic bifurcation certificate or Lyapunov analysis |
 | Linear Algebra | 8 curated tasks | 11 views | no sparse large-scale GMRES/Krylov suite, pseudospectrum or general Schur/Sylvester/Lyapunov solver |
-| Statistics | 22 curated datasets | analysis-dependent views | no general Bayesian engine, automatic causal inference or unrestricted time-series forecasting |
+| Statistics | 22 curated datasets | analysis-dependent ECDF, violin, contour, regression, resampling, classification, survival and process views | no general Bayesian engine, automatic causal inference or unrestricted time-series forecasting |
 | Machine Learning | 14 small-data tasks | 18 views | no SHAP, UMAP/t-SNE, deep training, reinforcement learning or production monitoring |
-| Sensitivity | 17 editable ODE models across 13 families | 35 method-dependent views | no adjoints, FAST/eFAST, Shapley effects or dependent-input Sobol analysis |
+| Sensitivity | 17 editable ODE models across 13 families | 35 method-dependent views with one or multiple global outputs | no adjoints, FAST/eFAST, Shapley effects or dependent-input Sobol analysis |
 | Curve Fitting | 7 datasets | 14 views | no structural-identifiability proof or Bayesian posterior sampler |
 | Networks | 7 graphs | 12 views | no large distributed graph engine or exact community ground truth |
 | Symbolic | 20 systems | exact/derived views | no unrestricted computer algebra system |
@@ -137,6 +149,68 @@ rate = k*A*B
 ```
 
 `k` must carry the units needed to make the rate dimensionally correct. Foko Lab evaluates numbers and expressions; it does not certify units automatically.
+
+## Model Studio in detail
+
+Use **Model Studio** when you want the model—not an example page—to be the durable object of the workflow. A Studio project keeps the scientific question, state names, one right-hand side per state, initial conditions, parameter values and ranges, time span, solver settings, a compact run ledger, and compatible experiment routes together.
+
+On a desktop or large tablet, drag the separator between the model panel and the plotting canvas to make equation entry wider or to give more room to plots. The **−**, **Reset**, and **＋** controls provide the same operation without dragging. The separator is keyboard accessible: Left/Right changes the width, Shift changes it in larger steps, Home/End selects the compact/wide limit, and Enter restores the default. Width is saved separately for each lab. On phones, Foko Lab intentionally uses the Setup, Results and Evidence task views instead of a narrow drag target.
+
+The starter catalogue contains 21 editable ODE systems, including epidemiology, ecology, enzyme kinetics, gene regulation, physiology, oscillators, Lorenz and Rössler dynamics, and a five-state Lorenz–96 benchmark. The full 259-entry **Model Atlas** remains a separate searchable catalogue and is linked directly from the Studio.
+
+After a trajectory run, the Studio offers trajectories, range-normalized trajectories, a state–time heatmap, 2D and 3D phase portraits, phase points colored by time, parallel coordinates, a final-state radar view, derivative and correlation heatmaps, and adaptive-step/error evidence. Each view states its axes and interpretation boundary.
+
+The two-parameter experiment varies two declared parameter ranges over a finite rectangular grid. Heatmap, labeled contour and 3D surface views display the same scalar output. This is useful for response geometry, interactions and thresholds, but it is not Morris screening, Sobol decomposition, uncertainty propagation or proof of a global optimum. Send the current model directly to **Sensitivity** for local, Morris, Sobol or FIM analysis, or to **Steady-State** for roots and stability evidence.
+
+Project JSON preserves the editable project and compact run metadata. Model IR export preserves the direct ODE definition in `foko.model-ir/1`. Result CSV contains the current trajectory arrays. A restored or imported configuration must be rerun; saved metadata is not presented as fresh computed evidence.
+
+## Model interchange and community standards
+
+Model Studio accepts several local, declarative inputs. Import never executes the supplied Python or JavaScript.
+
+| Input | What Foko Lab accepts | Scientific boundary |
+|---|---|---|
+| Foko Project JSON | model, scientific question, experiment settings and compact run ledger | imported runs are metadata; computed evidence must be regenerated |
+| `foko.model-ir/1` JSON | direct ODEs or reaction networks lowered through stoichiometry | no units, events, delays, rules, compartments or DAEs |
+| Plain TXT / ODE | one `dstate/dt = expression` line per state, initial values, parameters, ranges, time and method | a small explicit grammar, not arbitrary source code |
+| Python dictionary | `FOKO_MODEL = {...}` or `FOKO_PROJECT = {...}` containing data literals | Python functions, imports and expressions are rejected and never evaluated |
+| JavaScript object | `const FOKO_MODEL = {...}` containing data literals | executable JavaScript is rejected and never evaluated |
+| YAML | nested mappings with inline arrays/objects | a documented dependency-free subset, not the complete YAML specification |
+| Model-table CSV | equation, parameter, time and solver rows | intended for simple deterministic ODE exchange |
+| SBML/XML | species, reactions, numeric stoichiometry, global/local parameters and a restricted MathML kinetic-law subset | events, rules, initial assignments, function definitions, packages, piecewise logic, non-unit compartments and unsupported MathML are rejected as a whole |
+
+SBML represents biological models. SED-ML represents simulation experiments that refer to models and numerical procedures. A COMBINE/OMEX archive packages models, experiments and related files. CellML is another model-exchange language with component, units and MathML semantics. Foko Lab recognizes CellML, SED-ML and OMEX filenames so it can give a precise route, but v77.4.1 does not claim to execute them. Use OpenCOR, Tellurium, COPASI, libRoadRunner, BioSimulators or another standards-compliant environment when those semantics matter.
+
+The strict rejection policy is deliberate. Silently dropping an SBML event, rule or compartment scale can produce a smooth plot for a different mathematical model. Foko Lab therefore imports only the subset it can lower transparently, reports the imported boundary, and requires a new run.
+
+### Plain-text example
+
+```text
+name: Logistic growth
+dx/dt = r*x*(1-x/K)
+x(0) = 2
+param r = 0.6 [0.1, 1.2]
+param K = 100 [40, 180]
+time 0 15 400
+method: rk45
+```
+
+### Python dictionary example
+
+```python
+FOKO_MODEL = {
+    'name': 'Logistic growth',
+    'vars': ['x'],
+    'eqs': ['r*x*(1-x/K)'],
+    'y0': [2],
+    'params': {'r': [0.6, 0.1, 1.2], 'K': [100, 40, 180]},
+    't0': 0,
+    't1': 15,
+    'points': 400
+}
+```
+
+After import, inspect the rendered equations, every initial value, every parameter/range and the time/numerical settings. Format validity is not scientific validity.
 
 ## Author equations safely
 
@@ -527,7 +601,7 @@ Mean imputation is displayed as a warning because it can distort variance and co
 
 ## Machine Learning Toolkit
 
-The maintained scope is small-data baseline modelling:
+The maintained scope is small-data baseline modeling:
 
 - linear and ridge-style regression baselines;
 - binary logistic classification;

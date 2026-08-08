@@ -49,6 +49,7 @@ def test_atlas_is_compact_searchable_and_provenance_aware():
     assert doc.select_one("#atlasSearch")
     assert doc.select_one("#atlasLab")
     assert doc.select_one("#atlasProvenance")
+    assert doc.select_one("#atlasStatus")
     assert doc.select_one("#atlasGridV72")
     assert not doc.select(".agent-atlas-section")
     styles = [tag.get("href", "") for tag in doc.find_all("link", rel="stylesheet")]
@@ -86,4 +87,3 @@ def test_model_atlas_deep_links_are_consumed_by_authored_workspaces():
     ]:
         controller = text(path)
         assert "get('example')" in controller or 'get("example")' in controller
-

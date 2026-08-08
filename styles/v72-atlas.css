@@ -4,7 +4,7 @@ body[data-lab="examples"] { overflow-x: hidden; }
 .v72-atlas-hero h1 { margin:.1rem 0 .3rem; font-size:clamp(1.55rem,2.5vw,2.2rem); letter-spacing:-.035em; }
 .v72-atlas-hero p { margin:.2rem 0; max-width:68ch; color:var(--muted,#64748b); line-height:1.5; }
 .v72-atlas-hero .lab-mark { width:84px; height:84px; object-fit:contain; }
-.v72-atlas-toolbar { position:sticky; top:86px; z-index:3; display:grid; grid-template-columns:minmax(220px,1.2fr) repeat(3,minmax(150px,.6fr)); gap:8px; margin:14px 0; padding:10px; border:1px solid var(--line,#cbdde7); border-radius:14px; background:rgba(255,255,255,.97); box-shadow:0 10px 28px rgba(15,23,42,.08); }
+.v72-atlas-toolbar { position:sticky; top:74px; z-index:3; display:grid; grid-template-columns:minmax(240px,1.25fr) repeat(4,minmax(145px,.65fr)); gap:8px; margin:14px 0; padding:10px; border:1px solid var(--line,#cbdde7); border-radius:14px; background:rgba(255,255,255,.97); box-shadow:0 10px 28px rgba(15,23,42,.08); }
 .v72-atlas-toolbar input,.v72-atlas-toolbar select { width:100%; min-height:40px; box-sizing:border-box; border:1px solid var(--line,#cbdde7); border-radius:9px; padding:8px 10px; background:#fff; color:#172033; font:inherit; }
 .v72-atlas-summary { display:flex; justify-content:space-between; align-items:center; gap:10px; margin:12px 0; color:var(--muted,#64748b); }
 .v72-atlas-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(285px,1fr)); gap:14px; }
@@ -16,14 +16,33 @@ body[data-lab="examples"] { overflow-x: hidden; }
 .v72-atlas-card-body { display:grid; gap:8px; padding:14px 15px 4px; }
 .v72-atlas-card h2 { margin:0; font-size:1.05rem; line-height:1.25; }
 .v72-atlas-card p { margin:0; color:var(--muted,#64748b); font-size:.86rem; line-height:1.45; }
+.v72-atlas-card dl { display:grid; gap:3px; margin:2px 0 0; }
+.v72-atlas-card dt { margin-top:5px; color:#526475; font-size:.67rem; font-weight:850; letter-spacing:.07em; text-transform:uppercase; }
+.v72-atlas-card dd { margin:0; color:var(--muted,#64748b); font-size:.82rem; line-height:1.42; }
 .v72-atlas-meta { display:flex; flex-wrap:wrap; gap:5px; padding:12px 15px 0; }
 .v72-atlas-badge { display:inline-flex; align-items:center; padding:4px 7px; border-radius:999px; background:#eef7f8; color:#075e63; font-size:.68rem; font-weight:850; }
 .v72-atlas-badge.provenance { background:#f3efff; color:#5b21b6; }
 .v72-atlas-badge.status { background:#edf3fb; color:#315f9f; }
 .v72-atlas-card > a { justify-self:start; display:inline-flex; margin:12px 15px 15px; padding:8px 11px; border-radius:9px; background:#008b92; color:white; text-decoration:none; font-weight:850; font-size:.82rem; }
+.v72-atlas-hero-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.v72-atlas-hero-actions a { display:inline-flex; align-items:center; min-height:42px; text-decoration:none; }
 .v72-atlas-boundary { margin-top:16px; padding:13px 15px; border:1px solid #fdba74; border-radius:13px; background:#fff7ed; color:#7c2d12; line-height:1.5; }
+.v72-atlas-pagination { display:flex; align-items:center; justify-content:center; gap:12px; margin:18px 0 4px; }
+.v72-atlas-pagination button { min-width:100px; color:var(--brand-strong,#075e63); background:var(--surface,#fff); border:1px solid var(--line-strong,#94a3b8); }
+.v72-atlas-pagination button:disabled { opacity:.45; cursor:not-allowed; }
+.v72-atlas-pagination span { min-width:180px; color:var(--muted,#64748b); text-align:center; font-size:.82rem; font-weight:750; }
 @media(max-width:900px){.v72-atlas-toolbar{position:static;grid-template-columns:1fr 1fr}.v72-atlas-toolbar input{grid-column:1/-1}}
-@media(max-width:600px){.v72-atlas{width:min(100% - 18px,1420px)}.v72-atlas-toolbar{grid-template-columns:1fr}.v72-atlas-toolbar input{grid-column:auto}.v72-atlas-hero{display:block}.v72-atlas-hero .lab-mark{display:none}.v72-atlas-grid{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .v72-atlas{width:min(100% - 18px,1420px)}
+  .v72-atlas-toolbar{grid-template-columns:1fr}
+  .v72-atlas-toolbar input{grid-column:auto}
+  .v72-atlas-hero{display:block}
+  .v72-atlas-hero .lab-mark{display:none}
+  .v72-atlas-grid{grid-template-columns:1fr}
+  .v72-atlas-pagination{gap:6px}
+  .v72-atlas-pagination button{flex:1 1 0;min-width:0;padding-inline:8px}
+  .v72-atlas-pagination span{flex:1.35 1 0;min-width:0}
+}
 
 /* Scientific catalog images should remain legible rather than fill-cropped. */
 .v72-atlas-grid { grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); }

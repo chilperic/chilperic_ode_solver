@@ -131,6 +131,55 @@
     menu.appendChild(link);
   }
 
+  function ensurePopulationGeneticsNavigationLink() {
+    if (document.querySelector('.foko-main-nav a[href$="population-genetics.html"]')) return;
+    var menu = document.querySelector('[data-nav-menu="simulate"] .menu-section:last-child, [data-nav-menu="analysis"] .menu-section');
+    if (!menu) return;
+    var link = document.createElement('a');
+    link.href = pathPrefix() + 'population-genetics.html';
+    link.setAttribute('role', 'menuitem');
+    link.innerHTML = '<span class="menu-icon">2N</span><span><b>Population Genetics</b><small>Seeded drift, selection, mutation, migration, diversity and fixation.</small></span>';
+    var sensitivity = menu.querySelector('a[href$="sensitivity.html"]');
+    menu.insertBefore(link, sensitivity || null);
+  }
+
+  function ensureAdvancedMethodsNavigationLink() {
+    if (document.querySelector('.foko-main-nav a[href$="advanced-methods.html"]')) return;
+    var menu = document.querySelector('[data-nav-menu="analysis"] .menu-section');
+    if (!menu) return;
+    var link = document.createElement('a');
+    link.href = pathPrefix() + 'advanced-methods.html';
+    link.setAttribute('role', 'menuitem');
+    link.innerHTML = '<span class="menu-icon">Σ+</span><span><b>Advanced Methods</b><small>Bayesian UQ, design, continuation, spatial PDE, SDE, genomic summaries, standards and study sweeps.</small></span>';
+    menu.appendChild(link);
+  }
+
+  function injectCreatorProfileLink() {
+    var actions = document.querySelector('.foko-top-actions');
+    if (!actions || actions.querySelector('.profile-avatar-link')) return;
+    var link = document.createElement('a');
+    link.className = 'profile-avatar-link';
+    link.href = pathPrefix() + 'cv.html';
+    link.setAttribute('aria-label', 'About the creator — Dr. Chilperic Armel Foko Kuate');
+    link.title = 'About the creator';
+    link.innerHTML = '<img alt="Dr. Chilperic Armel Foko Kuate, creator of Foko Lab" decoding="async" src="' + pathPrefix() + 'assets/profile-chilperic.webp?v=77.4.1">';
+    actions.appendChild(link);
+  }
+
+  function normalizeNavigationTaxonomy() {
+    var labels = {
+      simulate: 'Simulate',
+      analysis: 'Analyze',
+      explore: 'Explore'
+    };
+    Object.keys(labels).forEach(function (key) {
+      var summary = document.querySelector('[data-nav-menu="' + key + '"] > summary');
+      if (summary) summary.textContent = labels[key];
+    });
+    // Grouping is authored once by rebuild-site-shell.py. Runtime code only
+    // normalizes labels and never moves links or reconstructs menu sections.
+  }
+
   function initNavigationMenus() {
     var menus = Array.from(document.querySelectorAll('.nav-menu, .labs-menu'));
     if (!menus.length) return;
@@ -243,15 +292,13 @@
 
   function resolveActiveNavigationTarget() {
     var page = navPageName();
-    var modeling = new Set(['ode.html','steady.html','stochastic.html','agent.html','optimization.html','symbolic.html','workbench.html']);
-    var analysis = new Set(['fitting.html','statistics.html','linear-algebra.html','networks.html','sensitivity.html']);
-    var sciml = new Set(['sciml.html','ml.html']);
+    var simulate = new Set(['ode.html','steady.html','stochastic.html','agent.html','population-genetics.html','workbench.html','bifurcation.html','evolution.html']);
+    var analysis = new Set(['optimization.html','fitting.html','statistics.html','advanced-methods.html','linear-algebra.html','networks.html','symbolic.html','sensitivity.html','sciml.html','ml.html','ai-modeling.html']);
     var explore = new Set(['examples.html','docs.html','tutorial.html','trust.html','platform.html','research.html','cv.html','contact.html','acknowledgement.html','beauty.html']);
-    if (modeling.has(page)) return { section: 'modeling', file: page };
+    if (simulate.has(page)) return { section: 'simulate', file: page };
     if (analysis.has(page)) return { section: 'analysis', file: page };
-    if (sciml.has(page)) return { section: 'sciml', file: page };
     if (explore.has(page)) return { section: 'explore', file: page };
-    if (page === 'index.html') return { section: 'direct', file: page };
+    if (page === 'index.html' || page === 'studio.html') return { section: 'direct', file: page };
     return { section: null, file: page };
   }
 
@@ -303,8 +350,8 @@
   }
 
   // Legacy test contracts: markWorkbench markSciML markAnalysis markStandalone.
-  function markWorkbench() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'modeling', navPageName()); }
-  function markSciML() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'sciml', navPageName()); }
+  function markWorkbench() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'simulate', navPageName()); }
+  function markSciML() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'analysis', navPageName()); }
   function markAnalysis() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'analysis', navPageName()); }
   function markStandalone() { return markMenuNavigation(document.querySelector('.foko-main-nav, .topnav'), 'standalone', navPageName()); }
 
@@ -346,6 +393,42 @@
     apply(stored);
   }
 
+  function wireMobileNavigation() {
+    var topbar = document.querySelector('.topbar');
+    var nav = document.querySelector('.foko-main-nav, .topnav');
+    var actions = document.querySelector('.foko-top-actions');
+    if (!topbar || !nav || !actions || document.getElementById('mobileNavigationToggle')) return;
+    if (!nav.id) nav.id = 'primaryNavigation';
+    var button = document.createElement('button');
+    button.id = 'mobileNavigationToggle';
+    button.className = 'foko-mobile-menu-toggle';
+    button.type = 'button';
+    button.setAttribute('aria-controls', nav.id);
+    button.setAttribute('aria-expanded', 'false');
+    button.innerHTML = '<span aria-hidden="true">☰</span><span>Menu</span>';
+
+    function apply(open) {
+      topbar.classList.toggle('mobile-nav-open', open);
+      button.setAttribute('aria-expanded', open ? 'true' : 'false');
+      button.querySelector('[aria-hidden="true"]').textContent = open ? '×' : '☰';
+    }
+
+    button.addEventListener('click', function () {
+      apply(!topbar.classList.contains('mobile-nav-open'));
+    });
+    nav.addEventListener('click', function (event) {
+      if (event.target.closest('a')) apply(false);
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') apply(false);
+    });
+    var rootMedia = window.matchMedia('(min-width: 721px)');
+    if (rootMedia.addEventListener) rootMedia.addEventListener('change', function (event) { if (event.matches) apply(false); });
+    else if (rootMedia.addListener) rootMedia.addListener(function (event) { if (event.matches) apply(false); });
+    actions.insertBefore(button, actions.firstChild);
+    apply(false);
+  }
+
   function boot() {
     // Apply the persisted palette before controls and page-specific runtimes
     // read computed styles. Merely updating the picker state is insufficient.
@@ -353,10 +436,15 @@
     injectUnifiedNavStyles();
     normalizePrimaryNavigation();
     ensureSensitivityNavigationLink();
+    ensurePopulationGeneticsNavigationLink();
+    ensureAdvancedMethodsNavigationLink();
+    normalizeNavigationTaxonomy();
     syncActiveNavigation();
     injectThemeControl();
+    injectCreatorProfileLink();
     wireThemeCycle();
     wireCanvasMode();
+    wireMobileNavigation();
     initNavigationMenus();
   }
 

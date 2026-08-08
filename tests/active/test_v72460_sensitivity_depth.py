@@ -8,6 +8,7 @@ def text(rel):
 
 def test_local_sensitivity_depth_is_computed_and_bounded():
     html = text('sensitivity.html')
+    assert '<details class="example-browser" open="">' in html or '<details class="example-browser" open>' in html
     workspace = text('src/v72/sensitivity-workspace.js')
     worker = text('src/v72/sensitivity-worker.js')
     core = text('src/core/sensitivity.js')
@@ -43,6 +44,11 @@ def test_global_sensitivity_depth_reuses_real_sample_design():
     assert 'normalizedHsic' in core
     assert 'not a variance fraction' in html
     assert 'independent uniform' in core
+    for control in ['sensitivityOutputMode', 'sensitivityOutputVars', 'sensitivityResultOutput']:
+        assert f'id="{control}"' in html
+    assert 'analysesByOutput' in worker
+    assert 'computeSobolForOutput' in worker
+    assert 'activateResultOutput' in workspace
 
 
 def test_new_diagnostics_remain_inside_browser_capacity_contract():

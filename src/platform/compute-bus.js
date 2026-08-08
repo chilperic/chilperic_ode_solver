@@ -7,8 +7,8 @@
  * ===================================================================== */
 (function(root){
   'use strict';
-  const DEFAULT_WORKER = 'src/worker.js?v=72.48.0';
-  const PLATFORM_WORKER = 'src/v71-worker.js?v=72.48.0';
+  const DEFAULT_WORKER = 'src/worker.js?v=77.4.1';
+  const PLATFORM_WORKER = 'src/v71-worker.js?v=77.4.1';
   let seq = 0;
   const active = new Map();
 
@@ -19,12 +19,14 @@
     assertObject(job,'compute job');
     const type = job.type || job.method || job.engine;
     if(!type || typeof type !== 'string') throw new Error('compute job requires a string type/method/engine.');
+    const requestedTimeout = Number(job.timeoutMs || 0) || 0;
     return {
       id: job.id || ('job-'+(++seq)),
       type,
       payload: job.payload || {},
       workerUrl: job.workerUrl || job.worker || DEFAULT_WORKER,
-      timeoutMs: Math.max(1000, Number(job.timeoutMs || 0) || 0),
+      // Zero means disabled. Positive timeouts have a one-second safety floor.
+      timeoutMs: requestedTimeout <= 0 ? 0 : Math.max(1000, requestedTimeout),
       progress: typeof job.progress === 'function' ? job.progress : null,
       raw: !!job.raw
     };
@@ -159,7 +161,7 @@
   }
 
   root.FokoComputeBus = {
-    RELEASE: '72.48.0',
+    RELEASE: '77.4.1',
     DEFAULT_WORKER,
     PLATFORM_WORKER,
     supportsWorkers,
@@ -169,6 +171,7 @@
     cancel,
     createLegacyHandle,
     activeCount(){ return active.size; },
-    _active: active
+    _active: active,
+    _normalizeJob: normalizeJob
   };
 })(typeof window !== 'undefined' ? window : globalThis);

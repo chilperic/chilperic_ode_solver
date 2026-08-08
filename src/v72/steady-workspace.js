@@ -970,7 +970,7 @@
     readEditorIntoModel();
     return {
       schema: 'fokolab-steady-config-v1',
-      release: '72.48.0',
+      release: '77.4.1',
       name: state.currentName,
       model: clone(state.model),
       settings: {
@@ -1075,7 +1075,7 @@
   function resultPayload() {
     return {
       schema: 'fokolab-steady-result-v1',
-      release: '72.48.0',
+      release: '77.4.1',
       exportedAt: new Date().toISOString(),
       configuration: currentConfig(),
       resultKind: state.resultKind,

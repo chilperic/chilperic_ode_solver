@@ -16,6 +16,9 @@ WORKSPACES = [
     ROOT / "src/v72/stochastic-workspace.js",
     ROOT / "src/v72/symbolic-workspace.js",
     ROOT / "src/v72/sensitivity-workspace.js",
+    ROOT / "src/v72/bifurcation-workspace.js",
+    ROOT / "src/v72/evolution-landscape-workspace.js",
+    ROOT / "src/v72/ai-modeling-workspace.js",
 ]
 
 def test_agent_uses_ode_preferred_effective_layout_contract():

@@ -22,7 +22,23 @@
     convergence: { label: 'Convergence curve', status: 'browser-computed' },
     'constraint-history': { label: 'Constraint violation plot', status: 'browser-computed' },
     variables: { label: 'Parameter trajectory plot', status: 'browser-computed' },
-    'step-length': { label: 'Step size evolution plot', status: 'browser-computed' },
+    'step-length': { label: 'Best-candidate displacement', status: 'browser-computed' },
+    'cma-fitness': { label: 'CMA-ES fitness band', status: 'browser-computed' },
+    'cma-distance': { label: 'CMA-ES distance to known reference', status: 'browser-computed' },
+    'cma-mean': { label: 'CMA-ES distribution mean', status: 'browser-computed' },
+    'cma-sigma': { label: 'CMA-ES global step size σ', status: 'browser-computed' },
+    'cma-stddev': { label: 'CMA-ES coordinate standard deviations', status: 'browser-computed' },
+    'cma-condition': { label: 'CMA-ES covariance condition', status: 'browser-computed' },
+    'cma-eigen': { label: 'CMA-ES covariance eigenvalues', status: 'browser-computed' },
+    'cma-diagonal': { label: 'CMA-ES covariance diagonal', status: 'browser-computed' },
+    'cma-covariance': { label: 'CMA-ES covariance heatmap', status: 'browser-computed' },
+    'cma-paths': { label: 'CMA-ES evolution-path norms', status: 'browser-computed' },
+    'cma-population': { label: 'CMA-ES final population projection', status: 'browser-computed' },
+    'cma-selection': { label: 'CMA-ES selection and feasibility ratios', status: 'browser-computed' },
+    'cma-feasibility': { label: 'CMA-ES feasible fraction', status: 'browser-computed' },
+    'cma-entropy': { label: 'CMA-ES Gaussian entropy', status: 'browser-computed' },
+    'cma-runtime': { label: 'CMA-ES generation runtime', status: 'browser-computed' },
+    'cma-evaluations': { label: 'CMA-ES evaluations vs cumulative time', status: 'browser-computed' },
     'gradient-norm': { label: 'Gradient norm plot', status: 'limited-browser' },
     'local-sensitivity': { label: 'Local sensitivity bar plot', status: 'limited-browser' },
     'bound-distance': { label: 'Distance to nearest bound', status: 'derived-browser' },
@@ -52,6 +68,7 @@
     focusSide: 'left',
     plotTypes: { left: 'landscape', right: 'convergence' },
   };
+  let plotRenderRevision = 0;
 
   function $(id) { return document.getElementById(id); }
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
@@ -177,6 +194,7 @@
     $('optimizationAlgorithm').value = state.model.algorithm || 'coordinate';
     $('optimizationIterations').value = state.model.settings && state.model.settings.iterations || 180;
     $('optimizationPopulation').value = state.model.settings && state.model.settings.population || 36;
+    $('optimizationCmaSigma').value = state.model.settings && state.model.settings.cmaSigma || 0.3;
     $('optimizationStarts').value = state.model.settings && state.model.settings.starts || 16;
     $('optimizationSeed').value = state.model.settings && state.model.settings.seed || 1729;
     $('optimizationPenalty').value = state.model.settings && state.model.settings.penalty || 1000;
@@ -265,6 +283,7 @@
       algorithm: $('optimizationAlgorithm').value,
       maxIterations: Number($('optimizationIterations').value),
       populationSize: Number($('optimizationPopulation').value),
+      cmaSigma: Number($('optimizationCmaSigma').value),
       starts: Number($('optimizationStarts').value),
       seed: Number($('optimizationSeed').value),
       penalty: Number($('optimizationPenalty').value),
@@ -306,7 +325,6 @@
         state.pareto = problem.secondaryObjective ? CORE.paretoSample(problem, Object.assign({}, settings, { samples: settings.paretoSamples })) : null;
         $('optimizationProgress').style.width = '100%';
         updatePlotSelectors();
-        renderAllPlots();
         renderEvidence();
         setTimeout(function () { $('optimizationProgress').style.width = '0'; }, 450);
       } catch (error) {
@@ -330,6 +348,14 @@
     options.push(['constraint-history', PLOT_META['constraint-history'].label]);
     options.push(['variables', PLOT_META.variables.label]);
     options.push(['step-length', PLOT_META['step-length'].label]);
+    if (state.result.cmaes) {
+      const cmaPlots = ['cma-fitness','cma-mean','cma-sigma','cma-stddev','cma-condition','cma-eigen','cma-diagonal','cma-covariance','cma-paths','cma-population','cma-selection','cma-feasibility','cma-entropy','cma-runtime','cma-evaluations'];
+      const reference = state.model && state.model.knownOptimum;
+      if (Array.isArray(reference) && reference.length === state.result.problem.names.length && reference.every(Number.isFinite)) cmaPlots.splice(1, 0, 'cma-distance');
+      cmaPlots.forEach(function (key) {
+        options.push([key, PLOT_META[key].label]);
+      });
+    }
     options.push(['gradient-norm', PLOT_META['gradient-norm'].label]);
     options.push(['local-sensitivity', PLOT_META['local-sensitivity'].label]);
     options.push(['bound-distance', PLOT_META['bound-distance'].label]);
@@ -355,7 +381,7 @@
     const keys = options.map(function (item) { return item[0]; });
     const defaults = {
       left: state.landscape ? 'landscape' : (keys.includes('samples') ? 'samples' : 'variables'),
-      right: 'convergence',
+      right: state.result.cmaes ? 'cma-sigma' : 'convergence',
     };
     PLOT_SIDES.forEach(function (side) {
       const select = $(`${side}PlotType`);
@@ -581,6 +607,70 @@
       const history=result.history; const values=history.map(function(row,index){if(index===0)return 0;return Math.hypot.apply(null,row.x.map(function(value,j){return value-history[index-1].x[j];}));});
       return { traces:[{x:history.map(function(h){return h.evaluations;}),y:values,mode:'lines+markers',name:'step length'}], layout:Object.assign(baseLayout('Best-candidate step length','objective evaluations','Euclidean step length'),{yaxis:{title:'Euclidean step length',type:'log',gridcolor:'#dce8ef'}}), evidence:'Distance between consecutive recorded best candidates. Small steps can indicate convergence, stalling, clipping at bounds, or a weak search operator; they are not an optimality certificate.' };
     }
+    if (result.cmaes && type.indexOf('cma-') === 0) {
+      const generations = result.cmaes.generations;
+      const generationAxis = generations.map(function (row) { return row.generation; });
+      if (type === 'cma-fitness') {
+        return { traces: [
+          { x:generationAxis, y:generations.map(function(row){return row.bestObjective;}), mode:'lines', name:'best objective' },
+          { x:generationAxis, y:generations.map(function(row){return row.medianObjective;}), mode:'lines', name:'median objective' },
+          { x:generationAxis, y:generations.map(function(row){return row.worstObjective;}), mode:'lines', name:'worst objective' }
+        ], layout:baseLayout('CMA-ES population fitness','generation','raw objective'), evidence:'Best, median and worst raw objectives in each evaluated CMA-ES population. Constraints are optimized through the displayed penalty and checked separately.' };
+      }
+      if (type === 'cma-distance') {
+        const reference = state.model && state.model.knownOptimum;
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return Math.max(1e-16,Math.hypot.apply(null,row.bestX.map(function(value,index){return value-reference[index];})));}),mode:'lines+markers',name:'best-to-reference distance'}], layout:Object.assign(baseLayout('CMA-ES distance to declared reference','generation','Euclidean distance'),{yaxis:{title:'Euclidean distance',type:'log',gridcolor:'#dce8ef'}}), evidence:'Euclidean distance from the best-so-far candidate to the reference vector declared by this benchmark preset. It is available only where a known analytic or published reference is encoded; it is not inferred by the optimizer.' };
+      }
+      if (type === 'cma-mean') {
+        return { traces:result.problem.names.map(function(name,index){return{x:generationAxis,y:generations.map(function(row){return row.mean[index];}),mode:'lines',name:name};}), layout:baseLayout('CMA-ES distribution mean','generation','parameter value'), evidence:'Coordinates of the sampling-distribution mean. These are distribution parameters, not confidence intervals or necessarily the best evaluated candidate.' };
+      }
+      if (type === 'cma-sigma') {
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return row.sigma;}),mode:'lines+markers',name:'σ'}], layout:Object.assign(baseLayout('CMA-ES global step size','generation','σ · normalized bounds'),{yaxis:{title:'σ · normalized bounds',type:'log',gridcolor:'#dce8ef'}}), evidence:'The global CMA-ES step size in normalized bound coordinates. It may increase or decrease; shrinking is not itself proof of convergence.' };
+      }
+      if (type === 'cma-stddev') {
+        return { traces:result.problem.names.map(function(name,index){return{x:generationAxis,y:generations.map(function(row){return row.coordinateStd[index];}),mode:'lines',name:name};}), layout:Object.assign(baseLayout('CMA-ES coordinate standard deviations','generation','σ√Cii · parameter units'),{yaxis:{title:'σ√Cii · parameter units',type:'log',gridcolor:'#dce8ef'}}), evidence:'Marginal sampling standard deviation for each parameter, transformed back to parameter units. It describes search dispersion, not posterior uncertainty.' };
+      }
+      if (type === 'cma-condition') {
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return row.conditionNumber;}),mode:'lines',name:'condition number'},{x:generationAxis,y:generations.map(function(row){return row.axisRatio;}),mode:'lines',name:'axis ratio'}], layout:Object.assign(baseLayout('CMA-ES covariance conditioning','generation','ratio'),{yaxis:{title:'ratio',type:'log',gridcolor:'#dce8ef'}}), evidence:'Condition number and longest-to-shortest axis ratio of the normalized covariance. Large values reveal an ill-conditioned search distribution.' };
+      }
+      if (type === 'cma-eigen') {
+        return { traces:[{x:generationAxis,y:result.problem.names.map(function(_,index){return 'axis '+(index+1);}),z:result.problem.names.map(function(_,index){return generations.map(function(row){return Math.log10(Math.max(1e-20,row.eigenvalues[index]));});}),type:'heatmap',colorscale:'Viridis',colorbar:{title:'log10 λ'}}], layout:baseLayout('CMA-ES covariance eigenvalues','generation','principal axis'), evidence:'Log eigenvalues of the normalized covariance matrix. Principal-axis labels are ordered by eigenvalue and need not align with named parameters.' };
+      }
+      if (type === 'cma-diagonal') {
+        return { traces:result.problem.names.map(function(name,index){return{x:generationAxis,y:generations.map(function(row){return Math.max(1e-20,row.covarianceDiagonal[index]);}),mode:'lines',name:name};}), layout:Object.assign(baseLayout('CMA-ES covariance diagonal','generation','Cii · normalized coordinates'),{yaxis:{title:'Cii · normalized coordinates',type:'log',gridcolor:'#dce8ef'}}), evidence:'Diagonal elements of the normalized CMA-ES covariance matrix. Unlike coordinate standard deviations, these exclude the global step size σ and the physical parameter span.' };
+      }
+      if (type === 'cma-covariance') {
+        const covariance = generations[generations.length-1].covariance;
+        const diagonal = covariance.map(function(row,index){return Math.sqrt(Math.max(1e-20,row[index]));});
+        const correlation = covariance.map(function(row,i){return row.map(function(value,j){return value/(diagonal[i]*diagonal[j]);});});
+        return { traces:[{x:result.problem.names,y:result.problem.names,z:correlation,type:'heatmap',zmin:-1,zmax:1,zmid:0,colorscale:'RdBu',colorbar:{title:'correlation'}}], layout:baseLayout('Final CMA-ES covariance correlation','',''), evidence:'Correlation implied by the final normalized sampling covariance. This is optimizer state, not parameter-estimation uncertainty.' };
+      }
+      if (type === 'cma-paths') {
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return row.psNorm;}),mode:'lines',name:'||pσ||'},{x:generationAxis,y:generations.map(function(row){return row.pcNorm;}),mode:'lines',name:'||pc||'}], layout:baseLayout('CMA-ES evolution paths','generation','path norm'), evidence:'Step-size and covariance evolution-path norms. They diagnose persistent search directions; they are not physical model trajectories.' };
+      }
+      if (type === 'cma-population') {
+        const population=generations[generations.length-1].population;
+        const second=Math.min(1,result.problem.names.length-1);
+        return { traces:[{x:population.map(function(row){return row.x[0];}),y:population.map(function(row){return row.x[second];}),mode:'markers',name:'final population',marker:{size:8,color:population.map(function(row){return row.score;}),colorscale:'Viridis',showscale:true,colorbar:{title:'penalized score'}}},{x:[result.candidate.x[0]],y:[result.candidate.x[second]],mode:'markers',name:'reported candidate',marker:{size:14,symbol:'star'}}], layout:baseLayout('Final CMA-ES population projection',result.problem.names[0],result.problem.names[second]), evidence:result.problem.names.length>2?'Projection of the final population onto the first two parameters; high-dimensional structure is hidden.':'Final evaluated population colored by penalized score.' };
+      }
+      if (type === 'cma-selection') {
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return 100*row.selectedFraction;}),mode:'lines+markers',name:'selected μ/λ'},{x:generationAxis,y:generations.map(function(row){return 100*row.feasibleFraction;}),mode:'lines+markers',name:'feasible candidates'}], layout:baseLayout('CMA-ES selection and feasibility ratios','generation','population (%)'), evidence:'The selected ratio is the configured rank-μ share used for covariance adaptation and is normally constant. Feasible fraction is data-dependent. The two ratios answer different questions and should not be conflated.' };
+      }
+      if (type === 'cma-feasibility') {
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return 100*row.feasibleFraction;}),mode:'lines+markers',name:'feasible population'}], layout:baseLayout('CMA-ES feasible fraction','generation','feasible candidates (%)'), evidence:'Fraction of each population satisfying the declared constraint tolerance. It replaces the misleading fixed μ/λ “selection ratio.”' };
+      }
+      if (type === 'cma-entropy') {
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return row.entropy;}),mode:'lines',name:'Gaussian entropy'}], layout:baseLayout('CMA-ES search-distribution entropy','generation','differential entropy (nats)'), evidence:'Differential entropy of the normalized Gaussian search distribution, computed from σ and det(C). It is scale-dependent and may be negative.' };
+      }
+      if (type === 'cma-runtime') {
+        return { traces:[{x:generationAxis,y:generations.map(function(row){return row.runtimeMs;}),type:'bar',name:'generation runtime'}], layout:baseLayout('CMA-ES generation runtime','generation','milliseconds'), evidence:'Browser wall-clock time for sampling, objective evaluation and adaptation in each generation. Timing depends on device load and is not a solver-quality metric.' };
+      }
+      if (type === 'cma-evaluations') {
+        let cumulative = 0;
+        const cumulativeRuntime = generations.map(function(row){cumulative += row.runtimeMs; return cumulative;});
+        return { traces:[{x:cumulativeRuntime,y:generations.map(function(row){return row.evaluations;}),mode:'lines+markers',name:'cumulative evaluations'}], layout:baseLayout('CMA-ES evaluations versus cumulative browser time','cumulative runtime (ms)','objective evaluations'), evidence:'Cumulative objective evaluations plotted against measured browser wall-clock time. Device load, tab scheduling, and objective cost affect the horizontal scale; this is a profiling view, not a hardware-neutral benchmark.' };
+      }
+    }
     if (type === 'gradient-norm') {
       const history=result.history; const norms=history.map(function(row){return Math.hypot.apply(null,finiteDifferenceGradient(row.x));});
       return { traces:[{x:history.map(function(h){return h.evaluations;}),y:norms,mode:'lines+markers',name:'finite-difference gradient norm'}], layout:Object.assign(baseLayout('Local gradient-norm trace','objective evaluations','||∇f||₂'),{yaxis:{title:'||∇f||₂',type:'log',gridcolor:'#dce8ef'}}), evidence:'Finite-difference gradient of the raw objective at each recorded best candidate. Constraints and non-smooth terms can make this quantity incomplete or unstable.' };
@@ -695,8 +785,13 @@
   }
 
   function renderAllPlots() {
-    requestAnimationFrame(function () { requestAnimationFrame(function () { const sides = $('plotGrid').dataset.layout === 'focus' ? [state.focusSide] : ['left','right']; sides.forEach(renderPlot); }); });
     setText('optimizationResultKind', `${state.result.algorithm.replace(/_/g, ' ')} · ${state.result.evaluations} evaluations · ${state.result.globalOptimality}`);
+    const revision = ++plotRenderRevision;
+    return root.FokoPlotLifecycle.afterLayout().then(function () {
+      if (revision !== plotRenderRevision || !state.result) return [{ stale: true }];
+      const sides = $('plotGrid').dataset.layout === 'focus' ? [state.focusSide] : ['left', 'right'];
+      return Promise.all(sides.map(renderPlot));
+    });
   }
 
   function renderEvidence() {
@@ -715,7 +810,7 @@
     setText('optimizationCandidateStatus', candidate.feasible ? 'within tolerance' : 'outside tolerance');
 
     setText('provenanceStatus', candidate.feasible ? 'Computed feasible candidate' : 'Computed least-violating candidate');
-    setText('provenanceEngine', 'FokoOptimizationCore');
+    setText('provenanceEngine', result.cmaes ? 'FokoCMAESCore + FokoOptimizationCore' : 'FokoOptimizationCore');
     setText('provenanceMethod', result.methodEvidence);
     setText('provenanceConstraints', `${result.problem.inequalityCount} inequality, ${result.problem.equalityCount} equality; quadratic penalty + independent tolerance gate`);
     setText('provenanceOptimality', 'Global optimality not established; local optimality not certified');
@@ -753,7 +848,7 @@
     PLOT_SIDES.forEach(function (side) {
       const node = $(`${side}Plot`);
       root.FokoPlotLifecycle.clear(node, 'Run the optimizer to create this plot.');
-      setText(`${side}PlotEvidence`, 'No plot has been computed.');
+      setText(`${side}PlotEvidence`, 'Available after a run.');
     });
     applyLayout();
   }
@@ -783,14 +878,14 @@
       compatibleCount: 2
     });
     localStorage.setItem(LAYOUT_KEY, JSON.stringify({ layout: state.layout, focusSide: state.focusSide }));
-    if (state.result) requestAnimationFrame(function () { requestAnimationFrame(renderAllPlots); });
+    if (state.result) renderAllPlots();
     if(root.FokoScientificRegistry) root.FokoScientificRegistry.notifyRendered('optimization');
     return report;
   }
 
   function configuration() {
     readEditorIntoModel();
-    return { version: '72.48.0', example: state.currentName, model: clone(state.model), settings: readSettings(), layout: state.layout, focusSide: state.focusSide, plotTypes: clone(state.plotTypes) };
+    return { version: '77.4.1', example: state.currentName, model: clone(state.model), settings: readSettings(), layout: state.layout, focusSide: state.focusSide, plotTypes: clone(state.plotTypes) };
   }
 
   function restoreConfiguration(config, source) {
@@ -806,7 +901,7 @@
     if (config.settings) {
       Object.keys(config.settings).forEach(function (key) {
         const mapping = {
-          algorithm: 'optimizationAlgorithm', maxIterations: 'optimizationIterations', populationSize: 'optimizationPopulation', starts: 'optimizationStarts', seed: 'optimizationSeed', penalty: 'optimizationPenalty', feasibilityTolerance: 'optimizationFeasibilityTolerance', stepTolerance: 'optimizationStepTolerance', paretoSamples: 'optimizationParetoSamples',
+          algorithm: 'optimizationAlgorithm', maxIterations: 'optimizationIterations', populationSize: 'optimizationPopulation', cmaSigma: 'optimizationCmaSigma', starts: 'optimizationStarts', seed: 'optimizationSeed', penalty: 'optimizationPenalty', feasibilityTolerance: 'optimizationFeasibilityTolerance', stepTolerance: 'optimizationStepTolerance', paretoSamples: 'optimizationParetoSamples',
         };
         if (mapping[key] && $(mapping[key])) $(mapping[key]).value = config.settings[key];
       });
@@ -866,7 +961,7 @@
 
   function serialisableResult() {
     const result = resultForExport();
-    return { release: '72.48.0', computedAt: new Date().toISOString(), result, model: state.model, warning: 'Numerical candidate only. Global optimality and KKT sufficiency are not established.' };
+    return { release: '77.4.1', computedAt: new Date().toISOString(), result, model: state.model, warning: 'Numerical candidate only. Global optimality and KKT sufficiency are not established.' };
   }
 
   function exportPython() {
@@ -880,7 +975,7 @@
     const constraints = [];
     state.model.inequalities.forEach(function (expr) { constraints.push(`    {'type': 'ineq', 'fun': lambda x: -(${py(expr)})}`); });
     state.model.equalities.forEach(function (expr) { constraints.push(`    {'type': 'eq', 'fun': lambda x: (${py(expr)})}`); });
-    const text = `"""Validation export from Foko Lab v72.48.0.\nRun with SciPy and inspect termination/constraint evidence independently.\nThe browser result is not a global-optimality certificate.\n"""\nimport numpy as np\nfrom scipy.optimize import minimize, differential_evolution\n\ndef objective(x):\n${unpack}\n    value = ${py(state.model.objective)}\n    return ${state.model.sense === 'maximize' ? '-value' : 'value'}\n\nx0 = np.array([${state.model.variables.map(function (v) { return v.start; }).join(', ')}], dtype=float)\nbounds = [${bounds}]\nconstraints = [\n${constraints.join(',\n')}\n]\n\nlocal = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints, options={'ftol': ${$('optimizationFeasibilityTolerance').value}, 'maxiter': ${$('optimizationIterations').value}, 'disp': True})\nprint(local)\nprint('reported objective:', ${state.model.sense === 'maximize' ? '-local.fun' : 'local.fun'})\n# For non-convex problems, compare multiple starts or a bounded global heuristic.\n`;
+    const text = `"""Validation export from Foko Lab v77.4.1.\nRun with SciPy and inspect termination/constraint evidence independently.\nThe browser result is not a global-optimality certificate.\n"""\nimport numpy as np\nfrom scipy.optimize import minimize, differential_evolution\n\ndef objective(x):\n${unpack}\n    value = ${py(state.model.objective)}\n    return ${state.model.sense === 'maximize' ? '-value' : 'value'}\n\nx0 = np.array([${state.model.variables.map(function (v) { return v.start; }).join(', ')}], dtype=float)\nbounds = [${bounds}]\nconstraints = [\n${constraints.join(',\n')}\n]\n\nlocal = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints, options={'ftol': ${$('optimizationFeasibilityTolerance').value}, 'maxiter': ${$('optimizationIterations').value}, 'disp': True})\nprint(local)\nprint('reported objective:', ${state.model.sense === 'maximize' ? '-local.fun' : 'local.fun'})\n# For non-convex problems, compare multiple starts or a bounded global heuristic.\n`;
     download('foko-lab-optimization-validation.py', text, 'text/x-python');
   }
 
@@ -900,6 +995,12 @@
     });
     if ($('optimizationExampleSearch')) $('optimizationExampleSearch').addEventListener('input', renderPresetLibrary);
     if ($('optimizationFamilyFilter')) $('optimizationFamilyFilter').addEventListener('change', renderPresetLibrary);
+    if ($('showCmaExamples')) $('showCmaExamples').addEventListener('click', function () {
+      $('optimizationExampleSearch').value = 'CMA-ES';
+      $('optimizationFamilyFilter').value = 'all';
+      renderPresetLibrary();
+      $('optimizationExampleSearch').focus();
+    });
     $('addOptimizationVariable').addEventListener('click', function () {
       try { readEditorIntoModel(); } catch (error) { return showError(error); }
       const index = state.model.variables.length + 1;

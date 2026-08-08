@@ -65,12 +65,15 @@ const packageJson = JSON.parse(text('package.json'));
 equal(packageJson.dependencies, {}, 'runtime npm dependencies are empty because scientific libraries are vendored');
 ok(packageJson.scripts['install:browser-tests'].includes('--no-audit') && packageJson.scripts['install:browser-tests'].includes('--no-fund') && packageJson.scripts['install:browser-tests'].includes('--omit=optional'), 'browser-test install command avoids slow audit, funding and optional dependency work');
 
-const pages = ['ode.html','steady.html','stochastic.html','optimization.html','statistics.html','fitting.html','linear-algebra.html','networks.html','ml.html','sciml.html','agent.html','symbolic.html','sensitivity.html','workbench.html'];
+const pages = ['studio.html','ode.html','steady.html','stochastic.html','optimization.html','population-genetics.html','advanced-methods.html','statistics.html','fitting.html','linear-algebra.html','networks.html','ml.html','sciml.html','agent.html','symbolic.html','sensitivity.html','workbench.html','bifurcation.html','evolution.html','ai-modeling.html'];
 pages.forEach(page => ok(!text(page).includes('data-layout-mode="three"') && !text(page).includes('data-wb-layout="three"'), page + ' exposes only reliability-first two/focus layouts'));
 const imports = {
+  'studio.html':'id="studioImport"',
   'ode.html':'id="modelFile"','steady.html':'id="steadyImport"','stochastic.html':'id="stochasticImport"','optimization.html':'id="optimizationImport"',
   'statistics.html':'id="statisticsFile"','fitting.html':'id="fittingFile"','linear-algebra.html':'id="linalgImport"','networks.html':'id="networksImport"',
-  'ml.html':'id="mlUpload"','sciml.html':'id="sciUploadDataFile"','agent.html':'id="agentCustomModelFile"','symbolic.html':'id="symbolicImport"','sensitivity.html':'id="sensitivityImport"','workbench.html':'id="wbImportJson"'
+  'population-genetics.html':'id="pgInitialP1"','advanced-methods.html':'id="advancedControls"',
+  'ml.html':'id="mlUpload"','sciml.html':'id="sciUploadDataFile"','agent.html':'id="agentCustomModelFile"','symbolic.html':'id="symbolicImport"','sensitivity.html':'id="sensitivityImport"','workbench.html':'id="wbImportJson"',
+  'bifurcation.html':'id="bfExpression"','evolution.html':'id="evCustomFitness"','ai-modeling.html':'id="aiData"'
 };
 Object.entries(imports).forEach(([page, marker]) => ok(text(page).includes(marker), page + ' exposes a user input or model import route'));
 

@@ -1,7 +1,15 @@
 const fs = require('fs');
+const { execFileSync } = require('child_process');
 const { defineConfig, devices } = require('@playwright/test');
 
-const PORT = Number(process.env.FOKOLAB_PORT || 8102);
+function freshPort() {
+  return Number(execFileSync('python3', ['-c', "import socket;s=socket.socket();s.bind(('127.0.0.1',0));print(s.getsockname()[1]);s.close()"], { encoding: 'utf8' }).trim());
+}
+const requestedPort = Number(process.env.FOKOLAB_PORT);
+const PORT = Number.isInteger(requestedPort) && requestedPort > 0 ? requestedPort : freshPort();
+// Playwright reloads this config in worker processes. Persist the selected port
+// so the web server and every worker use one fresh port for this entire run.
+process.env.FOKOLAB_PORT = String(PORT);
 const HOST = process.env.FOKOLAB_HOST || '127.0.0.1';
 const systemChromium = process.env.PLAYWRIGHT_CHROMIUM_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined);
 const chromiumUse = systemChromium ? {

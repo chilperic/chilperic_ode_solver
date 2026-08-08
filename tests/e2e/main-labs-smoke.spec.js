@@ -70,40 +70,41 @@ async function expectActionControlsNotClipped(page, selector, label) {
 test.describe('Foko Lab v72 public gate', () => {
   test('home routes by task and surfaces the evidence boundary', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('#homeTitle')).toHaveText('Build, test, and compare scientific models in your browser.');
-    await expect(page.locator('.trust-home-primary')).toHaveCount(1);
-    await expect(page.locator('.trust-home-primary')).toHaveAttribute('href', /example=FA%20metabolism%20bistability.*autorun=1/);
+    await expect(page.locator('#homeTitle')).toContainText('From model definition to numerical evidence.');
+    await expect(page.locator('.foko-home-actions .primary')).toHaveCount(1);
+    await expect(page.locator('.foko-home-actions .primary')).toHaveAttribute('href', 'studio.html?new=1');
+    await expect(page.locator('#v76HomePlot')).toHaveAttribute('data-render-state', 'rendered', { timeout: 10_000 });
+    await expect(page.locator('#v76HomePlot')).toHaveAttribute('data-engine', 'FokoODECore');
+    await expect(page.locator('#v76HomeStatus')).toContainText('Computed');
     await expect(page.locator('#homeResearchEvidence')).toHaveAttribute('data-computed', 'true', { timeout: 10_000 });
     await expect(page.locator('#homeResearchEvidence')).toHaveAttribute('data-engine', 'FokoODECore');
-    await expect(page.locator('.home-research-list > a')).toHaveCount(4);
-    await expect(page.locator('.home-evidence-key > a')).toHaveCount(4);
-    await expect(page.locator('.home-engine-row')).toHaveCount(4);
-    await expect(page.locator('.home-analysis-row')).toHaveCount(5);
-    await expect(page.locator('.home-supporting-index > a')).toHaveCount(4);
-    await expect(page.locator('nav.foko-main-nav > details, nav.foko-main-nav > a')).toHaveCount(6);
-    await expect(page.locator('nav.foko-main-nav > a.nav-home-link')).toHaveText('Home');
-    await expect(page.locator('.home-author-profile')).toContainText('Dr. Chilperic Armel Foko Kuate');
+    await expect(page.locator('.foko-route-grid > .foko-route-card')).toHaveCount(3);
+    await expect(page.locator('.foko-subject-grid > .foko-subject-card')).toHaveCount(6);
+    await expect(page.locator('.foko-feature-grid > .foko-feature-card')).toHaveCount(6);
+    await expect(page.locator('.foko-evidence-row > a')).toHaveCount(4);
+    await expect(page.locator('nav.v76-primary-nav > *')).toHaveCount(6);
+    await expect(page.locator('nav.v76-primary-nav a[href="index.html"]')).toHaveText('Home');
+    await expect(page.locator('nav.v76-primary-nav')).toContainText('Model Studio');
+    await expect(page.locator('nav.v76-primary-nav')).toContainText('Simulate');
+    await expect(page.locator('nav.v76-primary-nav')).toContainText('Atlas');
+    await expect(page.locator('.foko-creator-strip')).toContainText('Dr. Chilperic Armel Foko Kuate');
   });
 
 
-  test('home demo reel uses real cores for live evidence', async ({ page }) => {
+  test('home editable experiment recomputes from user inputs', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    await page.locator('#actComputesTitle').scrollIntoViewIfNeeded();
-    await expect(page.locator('#demo-ode-status')).toContainText('Computed', { timeout: 15_000 });
-    await expect(page.locator('#demo-steady-status')).toContainText('Computed', { timeout: 15_000 });
-    await expect(page.locator('#demo-stochastic-status')).toContainText('Computed', { timeout: 20_000 });
-    await expect(page.locator('#demo-agent-status')).toContainText('Computed', { timeout: 20_000 });
-    await expect(page.locator('#demo-ode-metrics')).toContainText('accepted');
-    await expect(page.locator('#demo-stochastic-metrics')).toContainText('Gillespie direct SSA');
-    await page.locator('#actTrustTitle').scrollIntoViewIfNeeded();
-    await expect(page.locator('#demo-fit-r2')).not.toHaveText('—', { timeout: 15_000 });
-    await page.getByRole('button', { name: 'Run identifiability check' }).click();
-    await expect(page.locator('#demo-fit-verdict')).toContainText(/non-identifiability/i, { timeout: 20_000 });
-    await expect(page.locator('#demo-fit-correlation')).toContainText('corr(Vmax, Km)');
+    await expect(page.locator('#v76HomeStatus')).toContainText('Computed', { timeout: 10_000 });
+    const before = await page.locator('#v76HomeFinal').textContent();
+    await page.locator('#v76HomeRate').fill('1.25');
+    await expect(page.locator('#v76HomeStatus')).toContainText('run required');
+    await page.locator('#v76HomeRun').click();
+    await expect(page.locator('#v76HomeStatus')).toContainText('Computed');
+    await expect.poll(async () => page.locator('#v76HomeFinal').textContent()).not.toBe(before);
+    await expect(page.locator('#v76HomePlot')).toHaveAttribute('data-engine', 'FokoODECore');
   });
 
   test('ODE is the authored v72 reference shell', async ({ page }) => {
-    await expectUsablePage(page, '/ode.html', ['ODE and parametric analysis', 'Computation boundary']);
+    await expectUsablePage(page, '/ode.html', ['ODE and parametric analysis', 'Method & limits']);
     await expect(page.locator('body[data-v72-shell="true"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="two"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="three"]')).toHaveCount(0);
@@ -131,7 +132,7 @@ test.describe('Foko Lab v72 public gate', () => {
 
 
   test('Steady-State is the authored v72.1 reference shell', async ({ page }) => {
-    await expectUsablePage(page, '/steady.html', ['Roots, residuals and parameter scans', 'Computation boundary']);
+    await expectUsablePage(page, '/steady.html', ['Roots, residuals and parameter scans', 'Method & limits']);
     await expect(page.locator('body[data-v72-shell="true"][data-lab="steady"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="two"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="three"]')).toHaveCount(0);
@@ -195,7 +196,7 @@ test.describe('Foko Lab v72 public gate', () => {
 
 
   test('Stochastic is the authored v72.2 reference shell', async ({ page }) => {
-    await expectUsablePage(page, '/stochastic.html', ['Trajectories, uncertainty and final-state distributions', 'Computation boundary']);
+    await expectUsablePage(page, '/stochastic.html', ['Trajectories, uncertainty and final-state distributions', 'Method & limits']);
     await expect(page.locator('body[data-v72-shell="true"][data-lab="stochastic"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="two"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="three"]')).toHaveCount(0);
@@ -236,7 +237,7 @@ test.describe('Foko Lab v72 public gate', () => {
   });
 
   test('Optimization is the authored v72.3 reference shell', async ({ page }) => {
-    await expectUsablePage(page, '/optimization.html', ['Candidates, feasibility and search diagnostics', 'Computation boundary']);
+    await expectUsablePage(page, '/optimization.html', ['Results and search diagnostics', 'Method & limits']);
     await expect(page.locator('body[data-v72-shell="true"][data-lab="optimization"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="two"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="three"]')).toHaveCount(0);
@@ -301,7 +302,7 @@ test.describe('Foko Lab v72 public gate', () => {
 
 
   test('Statistics is the authored v72.4 reference shell', async ({ page }) => {
-    await expectUsablePage(page, '/statistics.html', ['Data quality, inference and uncertainty', 'Computation boundary']);
+    await expectUsablePage(page, '/statistics.html', ['Data quality, inference and uncertainty', 'Method & limits']);
     await expect(page.locator('body[data-v72-shell="true"][data-lab="statistics"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="two"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="three"]')).toHaveCount(0);
@@ -341,12 +342,12 @@ test.describe('Foko Lab v72 public gate', () => {
     await expectNoPageOverflow(page);
   });
 
-  test('authored v72 dropdown stays opaque and above scientific page content', async ({ page }) => {
+  test('v76 portal menu stays opaque and above scientific page content', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/fitting.html', { waitUntil: 'domcontentloaded' });
-    const menu = page.locator('details[data-nav-menu="modeling"]');
-    await menu.locator('summary').click();
-    const panel = menu.locator('.labs-menu-panel');
+    const menu = page.locator('[data-v76-trigger="experiment"]');
+    await menu.click();
+    const panel = page.locator('[data-v76-popover="experiment"]');
     await expect(panel).toBeVisible();
     const evidence = await panel.evaluate((node) => {
       const style = getComputedStyle(node);
@@ -366,7 +367,7 @@ test.describe('Foko Lab v72 public gate', () => {
   });
 
   test('Curve Fitting is the authored v72.5 reference shell', async ({ page }) => {
-    await expectUsablePage(page, '/fitting.html', ['Fit, uncertainty and diagnostics', 'Computation boundary']);
+    await expectUsablePage(page, '/fitting.html', ['Fit, uncertainty and diagnostics', 'Method & limits']);
     await expect(page.locator('body[data-v72-shell="true"][data-lab="fitting"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="two"]')).toBeVisible();
     await expect(page.locator('[data-layout-mode="three"]')).toHaveCount(0);
@@ -420,17 +421,17 @@ test.describe('Foko Lab v72 public gate', () => {
     });
   }
 
-  test('theme control remains legible in the dark header', async ({ page }) => {
+  test('Creator control remains legible in the light application bar', async ({ page }) => {
     await page.goto('/statistics.html', { waitUntil: 'domcontentloaded' });
-    const summary = page.locator('#themeBtn');
-    await expect(summary).toBeVisible();
-    const contrast = await summary.evaluate((node) => {
+    const profile = page.locator('[data-v76-trigger="profile"]');
+    await expect(profile).toBeVisible();
+    const contrast = await profile.evaluate((node) => {
       const style = getComputedStyle(node);
       return { color: style.color, background: style.backgroundColor, width: node.getBoundingClientRect().width };
     });
     expect(contrast.color).not.toBe(contrast.background);
-    expect(contrast.width).toBeGreaterThan(75);
-    await expect(summary).toHaveAttribute('aria-label', 'Choose interface theme');
+    expect(contrast.width).toBeGreaterThanOrEqual(40);
+    await expect(profile).toHaveAttribute('aria-label', 'Open creator, help and trust menu');
   });
 
   test('Statistics exposes the expanded and filterable scientific example library', async ({ page }) => {
@@ -633,37 +634,27 @@ test.describe('Foko Lab v72 public gate', () => {
   });
 
 
-  test('theme chooser changes the shell and existing plots, then persists across pages', async ({ page }) => {
+  test('Aurora brand theme is deterministic and existing plots use its surface token', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
+    await page.addInitScript(() => localStorage.setItem('chilperic-theme', 'midnight'));
     await page.goto('/statistics.html', { waitUntil: 'networkidle' });
     await expect(page.locator('#leftPlot.js-plotly-plot')).toBeVisible();
-    const before = await page.evaluate(() => {
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'aurora');
+    const theme = await page.evaluate(() => {
       const css = getComputedStyle(document.documentElement);
       return { canvas: css.getPropertyValue('--canvas').trim(), surface: css.getPropertyValue('--surface').trim(), ink: css.getPropertyValue('--ink').trim() };
     });
-    const picker = page.locator('#themeControl');
-    const summary = picker.locator('#themeBtn');
-    await expect(summary).toBeVisible();
-    await summary.click();
-    await expect(picker.locator('.theme-menu-panel')).toBeVisible();
-    await expect(picker.locator('[data-theme-choice]')).toHaveCount(14);
-    await picker.locator('[data-theme-choice="midnight"]').click();
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'midnight');
-    await expect(picker.locator('[data-theme-choice="midnight"]')).toHaveAttribute('aria-checked', 'true');
-    expect(await page.evaluate(() => localStorage.getItem('chilperic-theme'))).toBe('midnight');
-    const after = await page.evaluate(() => {
-      const css = getComputedStyle(document.documentElement);
-      return { canvas: css.getPropertyValue('--canvas').trim(), surface: css.getPropertyValue('--surface').trim(), ink: css.getPropertyValue('--ink').trim() };
-    });
-    expect(after).not.toEqual(before);
+    expect(theme.canvas).toBeTruthy();
+    expect(theme.surface).toBeTruthy();
+    expect(theme.ink).toBeTruthy();
     await expect.poll(async () => page.locator('#leftPlot').evaluate((node) => ({
       paper: node.layout && node.layout.paper_bgcolor,
       surface: getComputedStyle(document.documentElement).getPropertyValue('--surface').trim()
-    })), { timeout: 12_000 }).toEqual(expect.objectContaining({ paper: after.surface, surface: after.surface }));
+    })), { timeout: 12_000 }).toEqual(expect.objectContaining({ paper: theme.surface, surface: theme.surface }));
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'midnight');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'aurora');
     await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('html')).toHaveAttribute('data-theme', 'midnight');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'aurora');
   });
 
 
@@ -996,22 +987,16 @@ test.describe('Public UX gate', () => {
   test('home is compact, model-first, and includes the creator', async ({ page }) => {
     await page.goto('/', { waitUntil: 'networkidle' });
     const heading = page.getByRole('heading', { level: 1 });
-    await expect(heading).toHaveText('Build, test, and compare scientific models in your browser.');
+    await expect(heading).toHaveText('From model definition to numerical evidence.');
     const fontSize = await heading.evaluate((node) => parseFloat(getComputedStyle(node).fontSize));
-    expect(fontSize).toBeLessThanOrEqual(70);
+    expect(fontSize).toBeLessThanOrEqual(76);
     await expect(page.locator('#homeResearchEvidence')).toHaveAttribute('data-computed', 'true');
-    await expect(page.locator('.home-author-profile img')).toBeVisible();
-    await expect(page.locator('.home-author-profile')).toContainText('Dr. Chilperic Armel Foko Kuate');
-    await expect(page.locator('#homePlatformAnswerTitle')).toHaveText('From model to evidence');
-    await expect(page.locator('.home-engine-row')).toHaveCount(4);
-    await expect(page.locator('.home-research-grid > .home-research-card')).toHaveCount(4);
-    await expect(page.locator('.home-research-layout .home-author-profile-home')).toBeVisible();
-    const researchBoxes = await page.locator('.home-research-grid > .home-research-card').evaluateAll((nodes) => nodes.map((node) => ({ width: node.getBoundingClientRect().width, height: node.getBoundingClientRect().height })));
-    expect(Math.max(...researchBoxes.map((box) => box.width)) - Math.min(...researchBoxes.map((box) => box.width))).toBeLessThan(3);
-    expect(Math.max(...researchBoxes.map((box) => box.height)) - Math.min(...researchBoxes.map((box) => box.height))).toBeLessThan(3);
-    await expect(page.locator('[data-research-card="thermoplants"]')).toContainText('Protected unpublished research');
-    await expect(page.locator('[data-research-card="thermoplants"] [data-run-demo]')).toHaveCount(0);
-    await expect(page.locator('.home-analysis-row')).toHaveCount(5);
+    await expect(page.locator('.foko-creator-strip img')).toBeVisible();
+    await expect(page.locator('.foko-creator-strip')).toContainText('Dr. Chilperic Armel Foko Kuate');
+    await expect(page.locator('#routesTitle')).toHaveText('Start with the system, not a menu of methods.');
+    await expect(page.locator('.foko-route-grid > .foko-route-card')).toHaveCount(3);
+    await expect(page.locator('.foko-feature-grid > .foko-feature-card')).toHaveCount(6);
+    await expect(page.locator('.foko-subject-links [data-lab-target]')).toHaveCount(21);
     await expectNoPageOverflow(page);
   });
 
@@ -1032,7 +1017,9 @@ test.describe('Public UX gate', () => {
     await page.goto('/examples.html', { waitUntil: 'networkidle' });
     await expect(page.locator('.v72-atlas-card').first()).toBeVisible();
     const cardCount = await page.locator('.v72-atlas-card').count();
-    expect(cardCount).toBeGreaterThan(100);
+    expect(cardCount).toBeGreaterThanOrEqual(20);
+    expect(cardCount).toBeLessThanOrEqual(24);
+    await expect(page.locator('#atlasNext')).toBeEnabled();
     await expect(page.locator('.v72-atlas-media')).toHaveCount(cardCount);
     const images = await page.locator('.v72-atlas-media img').evaluateAll((nodes) =>
       nodes.slice(0, 12).map((img) => ({ complete: img.complete, width: img.naturalWidth, height: img.naturalHeight }))

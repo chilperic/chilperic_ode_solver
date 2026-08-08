@@ -1,227 +1,147 @@
-<!DOCTYPE html>
-
-<html data-theme="aurora" lang="en">
+<!doctype html>
+<html lang="en" data-theme="woven-state">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Foko Lab computes scientific models locally in the browser, exposes evidence boundaries beside every result, and now surfaces a representative example for every lab directly on the home page." name="description"/>
-<meta content="Foko Lab" property="og:title"/>
-<meta content="Model, analyse, and challenge results in your browser." property="og:description"/>
-<meta content="website" property="og:type"/>
-<meta content="assets/homepage-preview.webp" property="og:image"/>
-<title>Foko Lab · Evidence-first browser modelling</title>
-<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.48.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.48.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.48.0" rel="apple-touch-icon"/>
-<link href="styles/style.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/lab-identity.css?v=72.48.0" rel="stylesheet"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Foko Lab is a browser-native scientific modeling workbench for defining, simulating, analyzing, and challenging user-owned models."/>
+  <meta property="og:title" content="Foko Lab · Scientific modeling workbench"/>
+  <meta property="og:description" content="From model definition to numerical evidence."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="assets/homepage-preview.webp"/>
+  <title>Foko Lab · Scientific modeling workbench</title>
+  <link rel="icon" href="assets/brand/foko-lab-micro.svg?v=77.4.1" type="image/svg+xml"/>
+  <link rel="icon" href="assets/brand/favicon-32.png?v=77.4.1" sizes="32x32" type="image/png"/>
+  <link rel="icon" href="favicon.ico?v=77.4.1" sizes="any"/>
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png?v=77.4.1"/>
+  <link rel="stylesheet" href="styles/style.css?v=77.4.1"/>
+  <link rel="stylesheet" href="styles/v72-tokens.css?v=77.4.1"/>
+  <link rel="stylesheet" href="styles/v72-public-shell.css?v=77.4.1"/>
+  <link rel="stylesheet" href="styles/lab-identity.css?v=77.4.1"/>
+  <link rel="stylesheet" href="assets/vendor/katex/katex-0.16.47.min.css?v=77.4.1"/>
+  <script defer src="assets/vendor/katex/katex-0.16.47.min.js?v=77.4.1"></script>
+  <link rel="stylesheet" href="styles/v76-system.css?v=77.4.1"/>
 </head>
-<body data-lab="home">
-<div class="app-shell v70-ide-shell">
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.48.0"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div></header>
-<main aria-labelledby="homeTitle" class="trust-home home-reel" id="main-content">
-<section aria-label="Foko Lab introduction and live research result" class="home-reel-hero">
-<div class="home-reel-hero-copy">
-<p class="trust-home-eyebrow">Browser-native · no install · nothing uploaded</p>
-<h1 id="homeTitle">Build, test, and compare scientific models in your browser.</h1>
-<p class="trust-home-lede">Start from a worked example or enter your own model or data. Foko Lab keeps the method, diagnostics, assumptions, and limits beside every result.</p>
-<div class="home-live-actions"><a class="trust-home-primary" href="ode.html?module=ode&amp;example=FA%20metabolism%20bistability&amp;autorun=1">Open ODE Lab</a><span>or enter your own equations</span></div>
-<ul class="home-hero-facts"><li>Mechanistic models, data analysis, scientific ML, and supporting mathematics</li><li>Diagnostics stay beside each result</li><li>Worked examples include the assumptions and limits needed to interpret them</li></ul>
-<section aria-labelledby="homePlatformAnswerTitle" class="home-platform-answer"><h2 id="homePlatformAnswerTitle">From model to evidence</h2><p>Configure the model, run the analysis, inspect the diagnostics, and export a reproducible record without leaving the browser.</p></section>
-</div>
-<div class="home-reel-hero-rail">
-<article aria-labelledby="homeResearchPlotTitle" class="home-live-compact home-reel-hero-result" id="homeResearchEvidence">
-<div class="home-live-card-head"><div><p class="trust-home-eyebrow">Research-derived ODE</p><h2 id="homeResearchPlotTitle">Reduced fatty-acid metabolism</h2></div><span aria-live="polite" class="home-live-status" id="homeResearchStatus">Preparing local solve…</span></div>
-<svg aria-label="Live trajectory of the reduced fatty-acid metabolism model" id="homeResearchPlot" role="img"></svg>
-<div aria-label="State legend" class="home-live-legend"><span><i class="home-live-key key-0"></i>Acetyl-CoA</span><span><i class="home-live-key key-1"></i>Malonyl-CoA</span><span><i class="home-live-key key-2"></i>Fatty acids</span><span><i class="home-live-key key-3"></i>Triglycerides</span></div>
-<dl aria-label="Solver diagnostics" class="home-live-diagnostics-inline"><div><dt>method</dt><dd id="homeDiagMethod">—</dd></div><div><dt>accepted</dt><dd id="homeDiagAccepted">—</dd></div><div><dt>rejected</dt><dd id="homeDiagRejected">—</dd></div><div><dt>rtol</dt><dd id="homeDiagRtol">—</dd></div><div><dt>atol</dt><dd id="homeDiagAtol">—</dd></div><div><dt>runtime</dt><dd id="homeDiagRuntime">—</dd></div><div><dt>status</dt><dd id="homeDiagStatus">Computing</dd></div></dl>
-<p class="home-live-citation"><b>Fatty-acid metabolism — reduced public research model.</b> RK45 with displayed tolerances. Not calibrated; this trajectory does not establish bistability or biological validity. <a href="trust.html#research-model-boundary">Boundary.</a></p>
-</article>
-</div>
-</section>
-<section aria-labelledby="actComputesTitle" class="home-reel-act act-computes">
-<div class="home-act-heading"><h2 id="actComputesTitle">Explore model dynamics</h2><span>Run four worked examples and inspect the numerical evidence beside each result.</span></div>
-<div class="home-engine-bench">
-<article class="home-engine-row home-live-demo" data-auto-demo="ode" data-demo-card="ode">
-<header class="home-engine-label"><span>Deterministic dynamics</span><h3>ODE</h3><p>Explore the Lorenz system and inspect adaptive-step diagnostics.</p><a href="ode.html?module=ode&amp;example=Lorenz&amp;autorun=1">Open full lab</a></header>
-<div class="home-engine-visual"><svg aria-label="Computed ODE trajectory" id="demo-ode-plot" role="img"></svg></div>
-<div class="home-engine-evidence"><p class="home-demo-metrics" id="demo-ode-metrics">Ready to run.</p><div class="home-demo-card-foot"><button data-run-demo="ode" type="button">Run again</button><span id="demo-ode-status">Ready</span></div></div>
-</article>
-<article class="home-engine-row home-live-demo" data-auto-demo="steady" data-demo-card="steady">
-<header class="home-engine-label"><span>Equilibria</span><h3>Steady-State</h3><p>Find candidate equilibria and inspect local stability.</p><a href="steady.html?example=Toggle-switch%20equilibrium">Open full lab</a></header>
-<div class="home-engine-visual"><svg aria-label="Computed steady-state residual curve" id="demo-steady-plot" role="img"></svg></div>
-<div class="home-engine-evidence"><p class="home-demo-metrics" id="demo-steady-metrics">Ready to run.</p><p class="home-demo-detail">Roots: <span id="demo-steady-roots">—</span></p><div class="home-demo-card-foot"><button data-run-demo="steady" type="button">Run again</button><span id="demo-steady-status">Ready</span></div></div>
-</article>
-<article class="home-engine-row home-live-demo" data-auto-demo="stochastic" data-demo-card="stochastic">
-<header class="home-engine-label"><span>Stochastic dynamics</span><h3>Stochastic</h3><p>Compare seeded sample paths and event variability.</p><a href="stochastic.html?example=Stochastic%20SIR%20epidemic">Open full lab</a></header>
-<div class="home-engine-visual"><svg aria-label="Computed stochastic sample paths" id="demo-stochastic-plot" role="img"></svg></div>
-<div class="home-engine-evidence"><p class="home-demo-metrics" id="demo-stochastic-metrics">Ready to run.</p><p class="home-demo-detail" id="demo-stochastic-boundary">Seeded paths are not an uncertainty interval.</p><div class="home-demo-card-foot"><button data-run-demo="stochastic" type="button">Run again</button><span id="demo-stochastic-status">Ready</span></div></div>
-</article>
-<article class="home-engine-row home-live-demo" data-auto-demo="agent" data-demo-card="agent">
-<header class="home-engine-label"><span>Spatial models</span><h3>Agent</h3><p>Follow one T-cell realization and compare it with repeated runs.</p><a href="agent.html?example=tcell_baseline">Open full lab</a></header>
-<div class="home-engine-visual home-agent-canvas-shell"><canvas aria-label="Computed T-cell lattice realization" id="demo-agent-canvas"></canvas></div>
-<div class="home-engine-evidence"><p class="home-demo-metrics" id="demo-agent-metrics">Ready to run.</p><p class="home-demo-detail" id="demo-agent-boundary">One representative realization, not an ensemble field.</p><div class="home-demo-card-foot"><button data-run-demo="agent" type="button">Run again</button><span id="demo-agent-status">Ready</span></div></div>
-</article>
-</div>
-</section>
-<section aria-labelledby="actTrustTitle" class="home-reel-act act-trust" data-auto-demo="fit-preview">
-<div class="home-act-heading"><h2 id="actTrustTitle">Check whether a good fit is trustworthy</h2><span>A high R² can hide poorly constrained parameters.</span></div>
-<article class="home-fit-demolition home-live-demo" data-demo-card="fit">
-<div class="home-fit-copy">
-<p class="trust-home-eyebrow">Parameter identifiability</p>
-<h3>This Michaelis–Menten fit has R² = <span id="demo-fit-r2">—</span>.</h3>
-<p>The curve is visually excellent, but the low-substrate design does not independently constrain <em>Vmax</em> and <em>Km</em>. Run the identifiability diagnostics before interpreting either parameter.</p>
-<button data-run-demo="fit-demolish" type="button">Run identifiability check</button>
-<p class="home-demo-detail" id="demo-fit-status">Preparing the ordinary fit.</p>
-<div class="home-fit-verdict"><strong id="demo-fit-verdict">Parameter trust not yet tested</strong><span id="demo-fit-correlation">Correlation not computed</span><p id="demo-fit-explanation">A high R² is not evidence that nonlinear parameters are separately identifiable.</p></div>
-<a class="home-text-link" href="fitting.html?example=enzyme_low_substrate&amp;autorun=1">Open the full fitting workflow →</a>
-</div>
-<div class="home-fit-plots"><svg aria-label="Michaelis-Menten fit to low-substrate data" id="demo-fit-plot" role="img"></svg><svg aria-label="Computed parameter profile diagnostics" id="demo-fit-profile" role="img"></svg></div>
-</article>
-</section>
-<section aria-labelledby="actResearchTitle" class="home-reel-act act-research">
-<div class="home-act-heading"><h2 id="actResearchTitle">Research behind Foko Lab</h2><span>Explore public model reductions and the scientific context of protected projects.</span></div>
-<div class="home-research-layout">
-<div class="home-research-ledger home-research-grid">
-<article class="home-research-card home-live-demo" data-auto-demo="research-fa" data-demo-card="research-fa" data-research-card="fatty-acid-metabolism">
-<figure class="home-research-card-figure"><img alt="Coarse-grained fatty-acid metabolism network" src="assets/research/fatty-acid/coarse-grained-network.png"/></figure>
-<div class="home-research-card-body"><span>Public model reduction</span><h3>Fatty-acid metabolism</h3><p>Reduced synthesis, oxidation, storage, transport and feedback dynamics from the metabolic modelling work.</p><nav><a href="ode.html?module=ode&amp;example=FA%20metabolism%20bistability&amp;autorun=1">Open reduced simulation</a><a href="research/fatty-acid-metabolism.html">Research context</a></nav></div>
-<div class="home-research-card-visual"><svg aria-label="Computed fatty-acid metabolism research trajectory" id="research-fa-plot" role="img"></svg></div>
-<div class="home-research-card-evidence"><p class="home-demo-metrics" id="research-fa-metrics">Ready to run.</p><div class="home-demo-card-foot"><button data-run-demo="research-fa" type="button">Run again</button><span id="demo-research-fa-status">Ready</span></div></div>
-</article>
-<article class="home-research-card home-live-demo" data-auto-demo="research-fadns" data-demo-card="research-fadns" data-research-card="fadns">
-<figure class="home-research-card-figure"><img alt="Detailed de novo fatty-acid synthesis network" src="assets/research/fatty-acid/denovo-full.png"/></figure>
-<div class="home-research-card-body"><span>Public model reduction</span><h3>FADNS</h3><p>Semi-mechanistic de novo synthesis with enzyme-bound elongation, CoA sequestration, termination and C14/C16/C18 products.</p><nav><a href="ode.html?module=ode&amp;example=FADNS%20semi-mechanistic&amp;autorun=1">Open reduced simulation</a><a href="research/fatty-acid-metabolism.html">Research context</a></nav></div>
-<div class="home-research-card-visual"><svg aria-label="Computed FADNS product trajectories" id="research-fadns-plot" role="img"></svg></div>
-<div class="home-research-card-evidence"><p class="home-demo-metrics" id="research-fadns-metrics">Ready to run.</p><div class="home-demo-card-foot"><button data-run-demo="research-fadns" type="button">Run again</button><span id="demo-research-fadns-status">Ready</span></div></div>
-</article>
-<article class="home-research-card home-live-demo" data-auto-demo="research-tcell" data-demo-card="research-tcell" data-research-card="tcell-proliferation">
-<figure class="home-research-card-figure"><img alt="Generation-structured T-cell activation, proliferation and death scheme" src="assets/research/tcell/generation-cascade.png"/></figure>
-<div class="home-research-card-body"><span>Research-inspired model</span><h3>T-cell proliferation</h3><p>Generation-structured activation, division, quiescence, death and clearance dynamics represented by a seeded public lattice model.</p><nav><a href="agent.html?example=tcell_baseline&amp;autorun=1">Open reduced simulation</a><a href="research/tcell-proliferation.html">Research context</a></nav></div>
-<div class="home-research-card-visual home-agent-canvas-shell"><canvas aria-label="Computed T-cell research-inspired lattice" id="research-tcell-canvas"></canvas></div>
-<div class="home-research-card-evidence"><p class="home-demo-metrics" id="research-tcell-metrics">Ready to run.</p><p class="home-demo-detail" id="research-tcell-boundary">One realization, not calibrated experimental time.</p><div class="home-demo-card-foot"><button data-run-demo="research-tcell" type="button">Run again</button><span id="demo-research-tcell-status">Ready</span></div></div>
-</article>
-<article class="home-research-card home-research-card-protected" data-research-card="thermoplants">
-<figure class="home-research-card-figure"><a aria-label="Open the protected Thermoplants research overview" href="research/photosynthesis.html"><img alt="Thermoplants graphical abstract linking crop scale, mesophyll and bundle-sheath temperatures, and C4 photosynthesis" src="assets/research/photosynthesis/thermoplants-graphical-abstract.png"/></a></figure>
-<div class="home-research-card-body"><span class="home-research-status">Protected unpublished research</span><h3>Thermoplants</h3><p>A multiscale framework linking climate forcing, leaf heat transfer, hydraulics, compartment temperatures and C3–C4 carbon-concentrating dynamics.</p><nav><a href="research/photosynthesis.html">View research</a><a href="research.html">Research provenance</a></nav></div>
-<div aria-label="Selected Thermoplants analyses" class="home-research-card-visual home-research-card-gallery"><figure><img alt="C3-C4 evolutionary trajectory in Brazil" src="assets/research/photosynthesis/c3c4_3d_evolution_brazil.png"/><figcaption>Evolution</figcaption></figure><figure><img alt="C3-C4 Sobol sensitivity indices" src="assets/research/photosynthesis/c3c4_sobol_indices.png"/><figcaption>Sensitivity</figcaption></figure><figure><img alt="C3-C4 Pareto analysis in Germany" src="assets/research/photosynthesis/c3c4_pareto_germany.png"/><figcaption>Pareto</figcaption></figure></div>
-<div class="home-research-card-evidence home-research-card-boundary"><b>Evidence boundary.</b> The full project is unpublished and protected. No model code, parameter files or fabricated public surrogate are exposed here.</div>
-</article>
-</div>
-<article class="home-author-profile home-author-profile-home">
-<img alt="Dr. Chilperic Armel Foko Kuate" src="assets/profile-chilperic.webp"/>
-<div>
-<p class="trust-home-eyebrow">About the creator</p>
-<h2>Dr. Chilperic Armel Foko Kuate</h2>
-<p class="home-author-title">Multiscale Modeller | Applied Mathematician | Computational Biology | Scientific Software</p>
-<p>Research and software spanning metabolic dynamics, plant adaptation, cell-population models, and evidence-aware scientific computing.</p>
-<nav aria-label="Author and research links"><a href="research.html">Research</a><a href="cv.html">CVs</a><a href="https://chilperic.github.io/" rel="noopener" target="_blank">Personal website</a></nav>
-</div>
-</article></div>
-<div aria-label="Research-derived links retained for compatibility" class="home-research-list home-research-list-hidden"><a href="ode.html?module=ode&amp;example=FA%20metabolism%20bistability&amp;autorun=1">Fatty-acid metabolism</a><a href="ode.html?module=ode&amp;example=FADNS%20semi-mechanistic&amp;autorun=1">FADNS</a><a href="agent.html?example=tcell_baseline&amp;autorun=1">T-cell proliferation</a><a href="research/photosynthesis.html">Thermoplants C3–C4 adaptation</a></div>
-</section>
-<section aria-labelledby="actDataTitle" class="home-reel-act act-data">
-<div class="home-act-heading"><h2 id="actDataTitle">Analyse data and fitted models</h2><span>Use focused workflows for fitting, statistics, machine learning, equation discovery, and optimization.</span></div>
-<div class="home-analysis-ledger">
-<article class="home-analysis-row" data-auto-demo="fit-preview"><header><span>Fitting</span><h3>Curve fitting</h3></header><p>Fit nonlinear models, inspect residuals, and check parameter identifiability.</p><div class="home-analysis-actions"><a href="#actTrustTitle">Check identifiability</a><a href="fitting.html?example=enzyme_low_substrate&amp;autorun=1">Open Fitting</a></div></article>
-<article class="home-analysis-row home-live-demo" data-auto-demo="statistics" data-demo-card="statistics"><header><span>Statistics</span><h3>Statistical analysis</h3></header><p id="analysis-statistics-output">Run the example to inspect the data and fitted trend.</p><div class="home-analysis-actions"><button data-run-demo="statistics" type="button">Run example</button><span id="demo-statistics-status">Ready</span><a href="statistics.html?example=regression">Open Statistics</a></div></article>
-<article class="home-analysis-row home-live-demo" data-auto-demo="ml" data-demo-card="ml"><header><span>Machine Learning</span><h3>Machine learning</h3></header><p id="analysis-ml-output">Run the example to inspect validation and leakage warnings.</p><div class="home-analysis-actions"><button data-run-demo="ml" type="button">Run example</button><span id="demo-ml-status">Ready</span><a href="ml.html?example=leakage-trap">Open ML</a></div></article>
-<article class="home-analysis-row home-live-demo" data-auto-demo="sciml" data-demo-card="sciml"><header><span>SciML</span><h3>Equation discovery</h3></header><p id="analysis-sciml-output">Run the example to recover a sparse equation from a trajectory.</p><div class="home-analysis-actions"><button data-run-demo="sciml" type="button">Run example</button><span id="demo-sciml-status">Ready</span><a href="sciml.html?example=logistic&amp;approach=sindy">Open SciML</a></div></article>
-<article class="home-analysis-row home-live-demo" data-auto-demo="optimization" data-demo-card="optimization"><header><span>Optimization</span><h3>Constrained optimization</h3></header><p id="analysis-optimization-output">Run the example to inspect the objective and constraint violation.</p><div class="home-analysis-actions"><button data-run-demo="optimization" type="button">Run example</button><span id="demo-optimization-status">Ready</span><a href="optimization.html?example=Constrained%20quadratic">Open Optimization</a></div></article>
-</div>
-<div aria-label="Supporting labs represented on the home page" class="home-supporting-index">
-<p><b>More tools</b><span>Open a dedicated workspace for symbolic algebra, matrices, networks, or side-by-side analysis.</span></p>
-<a href="symbolic.html?example=lotka"><span>Σ</span><b>Symbolic</b><small>Jacobians and finite-range roots</small></a>
-<a href="linear-algebra.html?example=pca-correlated"><span>A</span><b>Linear Algebra</b><small>Conditioning, spectra and PCA</small></a>
-<a href="networks.html?example=transport-path"><span>⟠</span><b>Networks</b><small>Paths, centrality and resilience</small></a>
-<a href="workbench.html?lab=ode&amp;preset=sir"><span>▦</span><b>Workbench</b><small>Compare analyses in one workspace</small></a>
-</div>
-</section>
-<section aria-labelledby="actFinePrintTitle" class="home-reel-act act-fine-print">
-<div class="home-act-heading"><h2 id="actFinePrintTitle">Understand the limits of each result</h2><span>Each workflow states what was calculated, what remains approximate, and when an external tool is required.</span></div>
-<div aria-label="Capability labels" class="home-evidence-key">
-<a class="computed" href="trust.html#browser-computed"><b>Computed here</b><span>Calculated from the current model or data in this session.</span></a>
-<a class="limited" href="trust.html#limited-browser"><b>Limited</b><span>Useful within a stated range or approximation.</span></a>
-<a class="export" href="trust.html#export-only"><b>Export workflow</b><span>Prepared for an external tool when the browser is not enough.</span></a>
-<a class="unavailable" href="trust.html#unavailable"><b>Not available</b><span>Not offered as a calculated result.</span></a>
-</div>
-<a class="home-fine-print-link" href="trust.html">View methods and limitations →</a>
-</section>
-<section aria-label="Model Atlas call to action" class="home-reel-close"><p><strong id="homeAtlasCount">Curated examples</strong> across modeling and data analysis.</p><a href="examples.html">Explore the Model Atlas</a></section>
-</main>
-<footer class="v70-footer foko-product-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.48.0"/><p><b>Foko Lab</b><br/>Browser-native scientific modelling with explicit evidence boundaries.</p></div>
-<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="workbench.html">Workbench</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Docs</a><a href="trust.html">Trust</a><a href="research.html">Research</a><a href="beauty.html">Mathematical Beauty</a></nav>
-<div class="foko-footer-meta"><p><a href="mailto:chilpericarmel@gmail.com">Contact</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a> · <a href="https://chilperic.github.io/" rel="noopener" target="_blank">About the author</a></p><p>HHU Düsseldorf · CEPLAS · AIMS Ghana · PoLiMeR ITN</p><p><a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">Source code</a></p></div>
-</footer>
-</div>
-<script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script>
-<script defer="" src="src/core/ode.js?v=72.48.0"></script>
-<script defer="" src="src/models/home-research-models.js?v=72.48.0"></script>
-<script defer="" src="src/home-live-research.js?v=72.48.0"></script>
-<script defer="" src="src/home-demo-reel.js?v=72.48.0"></script>
-<script defer="" src="src/navigation.js?v=72.48.0"></script>
+<body data-lab="home" data-subject="platform">
+  <div class="app-shell">
+    <header class="topbar v76-appbar" data-v76-appbar="true">
+      <a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a>
+    </header>
+
+    <main class="foko-home" id="main-content" aria-labelledby="homeTitle">
+      <section class="foko-home-hero" aria-labelledby="homeTitle">
+        <div class="foko-home-intro">
+          <p class="foko-home-kicker">Scientific modeling workbench</p>
+          <h1 id="homeTitle">From model definition to <span>numerical evidence.</span></h1>
+          <p class="foko-home-lede">Write the system you mean to study. Change parameters, initial conditions, time spans, outputs, and numerical methods. Simulate it, challenge it, and keep every result connected to the model that produced it.</p>
+          <div class="foko-home-actions" aria-label="Start modeling">
+            <a class="primary" href="studio.html?new=1">Create a model</a>
+            <a class="secondary" href="studio.html#import">Import model or data</a>
+            <a class="secondary" href="examples.html">Use a starting model</a>
+          </div>
+          <ul class="foko-home-claims" aria-label="Platform principles">
+            <li><b>User-owned model</b>Start blank, import, or adapt.</li>
+            <li><b>Scientific controls</b>Inputs and numerics stay editable.</li>
+            <li><b>Attached evidence</b>Plots retain method and limits.</li>
+          </ul>
+        </div>
+
+        <article class="foko-model-console" aria-labelledby="v76PreviewTitle">
+          <header class="foko-console-top">
+            <span class="foko-console-project"><i aria-hidden="true"></i><b>Untitled growth model</b><span>Experiment 01</span></span>
+            <span class="foko-console-status" id="v76HomeStatus" aria-live="polite">Ready to compute</span>
+          </header>
+          <div class="foko-console-body">
+            <section class="foko-console-model" aria-label="Editable model">
+              <label>Model definition</label>
+              <div class="foko-console-equation foko-math-output" id="v76HomeEquation" aria-label="Rendered logistic growth equation">dx/dt = r x (1 - x/K)</div>
+              <div class="foko-console-params">
+                <label class="foko-console-parameter"><span>Growth rate <i>r</i></span><input id="v76HomeRate" type="number" min="0.01" max="3" step="0.05" value="0.65"/></label>
+                <label class="foko-console-parameter"><span>Capacity <i>K</i></span><input id="v76HomeCapacity" type="number" min="1" max="1000" step="1" value="100"/></label>
+                <label class="foko-console-parameter"><span>Initial state <i>x</i><sub>0</sub></span><input id="v76HomeInitial" type="number" min="0.01" max="1000" step="0.5" value="5"/></label>
+              </div>
+              <button class="primary" id="v76HomeRun" type="button">Run experiment</button>
+            </section>
+            <section class="foko-console-result" aria-label="Computed result">
+              <label id="v76PreviewTitle">Population trajectory · adaptive RK45</label>
+              <svg class="foko-console-plot" id="v76HomePlot" role="img" aria-label="Computed logistic growth trajectory"></svg>
+              <div class="foko-console-diagnostics" aria-label="Numerical diagnostics">
+                <div><span>accepted steps</span><b id="v76HomeAccepted">—</b></div>
+                <div><span>rejected steps</span><b id="v76HomeRejected">—</b></div>
+                <div><span>final state</span><b id="v76HomeFinal">—</b></div>
+              </div>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <ol class="foko-workflow-strip" aria-label="Modeling workflow">
+        <li><i>01</i><span><b>Define</b><br/>states · rules · data</span></li>
+        <li><i>02</i><span><b>Configure</b><br/>inputs · numerics</span></li>
+        <li><i>03</i><span><b>Simulate</b><br/>trajectories · ensembles</span></li>
+        <li><i>04</i><span><b>Analyze</b><br/>sensitivity · inference</span></li>
+        <li><i>05</i><span><b>Verify</b><br/>diagnostics · export</span></li>
+      </ol>
+
+      <section class="foko-home-section" aria-labelledby="routesTitle">
+        <header class="foko-section-head">
+          <div><p class="foko-home-kicker">Model structure</p><h2 id="routesTitle">Start with the system, not a menu of methods.</h2></div>
+          <p>Describe what changes, what interacts, and what you observe. The workspace then exposes compatible experiments and analyses without losing model provenance.</p>
+        </header>
+        <div class="foko-route-grid">
+          <a class="foko-route-card" href="studio.html?new=1" data-subject-target="dynamical-systems" data-lab-target="ode"><span>Equations and reactions</span><h3>Continuous and stochastic dynamics</h3><p>States, derivatives, reaction rules, parameters, initial conditions, events, tolerances, and requested outputs.</p><strong>Create an equation model →</strong></a>
+          <a class="foko-route-card" href="agent.html?mode=builder" data-subject-target="populations-evolution" data-lab-target="agent"><span>Individuals and populations</span><h3>Agents, space, inheritance, and evolution</h3><p>Agent rules, lattices, movement, interaction, mutation, selection, migration, drift, and fitness landscapes.</p><strong>Create a population model →</strong></a>
+          <a class="foko-route-card" href="statistics.html?mode=import" data-subject-target="inference-uncertainty" data-lab-target="statistics"><span>Observations and mechanisms</span><h3>Data and hybrid models</h3><p>Import observations, fit mechanisms, quantify uncertainty, build surrogates, or discover governing equations.</p><strong>Import observations →</strong></a>
+        </div>
+      </section>
+
+      <section class="foko-home-section" aria-labelledby="workspaceTitle">
+        <header class="foko-section-head">
+          <div><p class="foko-home-kicker">Connected workspaces</p><h2 id="workspaceTitle">One model. Several scientific views.</h2></div>
+          <p>Subject color answers “where am I?” and the lab accent answers “what am I doing?”. Quantitative plots keep independent scientific palettes.</p>
+        </header>
+        <div class="foko-subject-grid">
+          <article class="foko-subject-card" data-subject-target="model-engineering"><header><h3>Model engineering</h3><span>Build · compare · reuse</span></header><nav class="foko-subject-links" aria-label="Model engineering workspaces"><a href="studio.html" data-subject-target="model-engineering" data-lab-target="studio"><b>Model Studio</b><small>equations · parameters · imports</small></a><a href="workbench.html" data-subject-target="model-engineering" data-lab-target="workbench"><b>Workbench</b><small>connected analyses</small></a><a href="examples.html" data-subject-target="model-engineering" data-lab-target="examples"><b>Model Atlas</b><small>259 starting points</small></a></nav></article>
+          <article class="foko-subject-card" data-subject-target="dynamical-systems"><header><h3>Dynamical systems</h3><span>Time · noise · stability</span></header><nav class="foko-subject-links" aria-label="Dynamical systems workspaces"><a href="ode.html" data-subject-target="dynamical-systems" data-lab-target="ode"><b>ODE dynamics</b><small>integration · events</small></a><a href="stochastic.html" data-subject-target="dynamical-systems" data-lab-target="stochastic"><b>Stochastic dynamics</b><small>seeded ensembles</small></a><a href="steady.html" data-subject-target="dynamical-systems" data-lab-target="steady"><b>Steady state</b><small>equilibria · stability</small></a><a href="bifurcation.html" data-subject-target="dynamical-systems" data-lab-target="bifurcation"><b>Bifurcation</b><small>branches · tipping</small></a></nav></article>
+          <article class="foko-subject-card" data-subject-target="populations-evolution"><header><h3>Populations &amp; evolution</h3><span>Agents · genes · fitness</span></header><nav class="foko-subject-links" aria-label="Population and evolution workspaces"><a href="agent.html" data-subject-target="populations-evolution" data-lab-target="agent"><b>Agent models</b><small>lattice · contextual 3D</small></a><a href="population-genetics.html" data-subject-target="populations-evolution" data-lab-target="population-genetics"><b>Population genetics</b><small>selection · drift · migration</small></a><a href="evolution.html" data-subject-target="populations-evolution" data-lab-target="evolution"><b>Evolution landscapes</b><small>fitness · trajectories</small></a></nav></article>
+          <article class="foko-subject-card" data-subject-target="inference-uncertainty"><header><h3>Inference &amp; uncertainty</h3><span>Explain · rank · search</span></header><nav class="foko-subject-links" aria-label="Inference and uncertainty workspaces"><a href="sensitivity.html" data-subject-target="inference-uncertainty" data-lab-target="sensitivity"><b>Global sensitivity</b><small>Sobol · Morris · multi-output</small></a><a href="optimization.html" data-subject-target="inference-uncertainty" data-lab-target="optimization"><b>Optimization</b><small>CMA-ES · constraints</small></a><a href="fitting.html" data-subject-target="inference-uncertainty" data-lab-target="fitting"><b>Model fitting</b><small>residuals · identifiability</small></a><a href="statistics.html" data-subject-target="inference-uncertainty" data-lab-target="statistics"><b>Statistics</b><small>explore · test · diagnose</small></a><a href="advanced-methods.html" data-subject-target="inference-uncertainty" data-lab-target="advanced-methods"><b>Bayesian &amp; advanced</b><small>posterior · PDE · SDE</small></a></nav></article>
+          <article class="foko-subject-card" data-subject-target="scientific-intelligence"><header><h3>Scientific intelligence</h3><span>Learn · discover · assist</span></header><nav class="foko-subject-links" aria-label="Scientific intelligence workspaces"><a href="ai-modeling.html" data-subject-target="scientific-intelligence" data-lab-target="ai-modeling"><b>AI modeling</b><small>surrogates · active sampling</small></a><a href="sciml.html" data-subject-target="scientific-intelligence" data-lab-target="sciml"><b>Scientific ML</b><small>equation discovery · hybrids</small></a><a href="ml.html" data-subject-target="scientific-intelligence" data-lab-target="ml"><b>Machine learning</b><small>validation · calibration</small></a></nav></article>
+          <article class="foko-subject-card" data-subject-target="mathematical-structure"><header><h3>Mathematical structure</h3><span>Algebra · matrices · graphs</span></header><nav class="foko-subject-links" aria-label="Mathematical structure workspaces"><a href="linear-algebra.html" data-subject-target="mathematical-structure" data-lab-target="linalg"><b>Linear algebra</b><small>spectra · conditioning · PCA</small></a><a href="networks.html" data-subject-target="mathematical-structure" data-lab-target="networks"><b>Networks</b><small>paths · centrality · resilience</small></a><a href="symbolic.html" data-subject-target="mathematical-structure" data-lab-target="symbolic"><b>Symbolic mathematics</b><small>LaTeX · Jacobians · roots</small></a></nav></article>
+        </div>
+      </section>
+
+      <section class="foko-home-section" aria-labelledby="modelsTitle">
+        <header class="foko-section-head"><div><p class="foko-home-kicker">Strong starting points</p><h2 id="modelsTitle">Examples that open as models, not lessons.</h2></div><p>Examples are templates, not the product. Each starter exposes scientific inputs and relevant visual evidence; replace its equations, rules, parameters, data, or objective whenever you are ready.</p></header>
+        <div class="foko-feature-grid">
+          <article class="foko-feature-card" id="homeResearchEvidence" data-subject-target="dynamical-systems" data-lab-target="ode"><div class="foko-feature-visual"><svg id="homeResearchPlot" role="img" aria-label="Live trajectory of a reduced fatty-acid metabolism model"></svg></div><div class="foko-feature-body"><span id="homeResearchStatus" aria-live="polite">Preparing local solve…</span><h3>Reduced fatty-acid metabolism</h3><p>Four-state research-derived ODE solved locally with adaptive RK45.</p><dl class="foko-live-diagnostics" aria-label="Solver diagnostics"><div><dt>method</dt><dd id="homeDiagMethod">—</dd></div><div><dt>accepted</dt><dd id="homeDiagAccepted">—</dd></div><div><dt>rejected</dt><dd id="homeDiagRejected">—</dd></div><div><dt>rtol</dt><dd id="homeDiagRtol">—</dd></div><div><dt>atol</dt><dd id="homeDiagAtol">—</dd></div><div><dt>runtime</dt><dd id="homeDiagRuntime">—</dd></div><div><dt>status</dt><dd id="homeDiagStatus">Computing</dd></div></dl><a href="ode.html?module=ode&amp;example=FA%20metabolism%20bistability&amp;autorun=1">Open model →</a> <a href="research/fatty-acid-metabolism.html">Research boundary →</a></div></article>
+          <article class="foko-feature-card" data-subject-target="populations-evolution" data-lab-target="population-genetics"><div class="foko-feature-visual foko-mini-surface" aria-label="Nested population fitness contours"><span></span></div><div class="foko-feature-body"><span>Population genetics</span><h3>Selection, migration, mutation &amp; drift</h3><p>Deterministic frequency change and finite-population stochastic replicates with fixation and diversity evidence.</p><a href="population-genetics.html">Open model →</a></div></article>
+          <article class="foko-feature-card" data-subject-target="inference-uncertainty" data-lab-target="optimization"><div class="foko-feature-visual foko-mini-surface" aria-label="CMA-ES covariance contours"><span></span></div><div class="foko-feature-body"><span>Optimization · CMA-ES</span><h3>Rugged objective &amp; adaptive covariance</h3><p>Fitness, step size, covariance spectrum, coordinate deviations, diversity, evaluation cost, and search trajectory.</p><a href="optimization.html?method=cma-es">Open model →</a></div></article>
+          <article class="foko-feature-card" data-subject-target="inference-uncertainty" data-lab-target="sensitivity"><div class="foko-feature-visual foko-mini-heatmap" aria-label="Multi-output global sensitivity heat map"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="foko-feature-body"><span>Global sensitivity</span><h3>Sobol and Morris · one or many outputs</h3><p>First-order, total-order, interaction, screening, convergence, and uncertainty views remain output-aware.</p><a href="sensitivity.html">Open model →</a></div></article>
+          <article class="foko-feature-card" data-subject-target="populations-evolution" data-lab-target="evolution"><div class="foko-feature-visual"><img src="assets/research/photosynthesis/c3c4_3d_evolution_brazil.png" alt="Three-dimensional evolutionary fitness trajectory"/></div><div class="foko-feature-body"><span>Evolution simulation</span><h3>Live fitness landscapes</h3><p>Heat maps, contours, fitness surfaces, trajectories, and contextual 3D when spatial or phenotype geometry justifies it.</p><a href="evolution.html">Open model →</a></div></article>
+          <article class="foko-feature-card" data-subject-target="scientific-intelligence" data-lab-target="ai-modeling"><div class="foko-feature-visual foko-mini-heatmap" aria-label="Scientific AI response-surface uncertainty"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="foko-feature-body"><span>Scientific AI</span><h3>Surrogate-assisted model exploration</h3><p>Response surfaces, residuals, calibration, uncertainty, and active sampling for expensive model evaluations.</p><a href="ai-modeling.html">Open model →</a></div></article>
+        </div>
+        <a class="foko-atlas-link" href="examples.html"><span><b>Model Atlas · 259 curated models</b><span>Editable starting points with provenance, assumptions, and scientific-use boundaries.</span></span><strong>Explore the full Atlas →</strong></a>
+      </section>
+
+      <section class="foko-home-section" aria-labelledby="evidenceTitle">
+        <header class="foko-section-head"><div><p class="foko-home-kicker">Result contract</p><h2 id="evidenceTitle">A plot is not evidence until its computation is clear.</h2></div><p>The interface separates results calculated in this browser from bounded approximations, export workflows, and methods that are not available.</p></header>
+        <div class="foko-evidence-row" aria-label="Evidence categories"><a href="trust.html#browser-computed" data-subject-target="dynamical-systems" data-lab-target="ode"><b>Computed here</b><span>Produced from the active model or data in this session.</span><i></i></a><a href="trust.html#limited-browser" data-subject-target="inference-uncertainty" data-lab-target="advanced-methods"><b>Limited</b><span>Useful inside a stated approximation or browser-scale boundary.</span><i></i></a><a href="trust.html#export-only" data-subject-target="model-engineering" data-lab-target="workbench"><b>Export workflow</b><span>Prepared for an external solver when local computation is insufficient.</span><i></i></a><a href="trust.html#unavailable" data-subject-target="resources" data-lab-target="trust"><b>Not available</b><span>Never presented as if it had been calculated.</span><i></i></a></div>
+      </section>
+
+      <section class="foko-home-section foko-creator-strip" aria-labelledby="creatorTitle">
+        <img src="assets/profile-chilperic.webp" alt="Dr. Chilperic Armel Foko Kuate"/>
+        <div><p class="foko-home-kicker">Creator</p><h3 id="creatorTitle">Dr. Chilperic Armel Foko Kuate</h3><p>Multiscale modeler, applied mathematician, computational biologist, and scientific software developer.</p></div>
+        <nav aria-label="Creator links"><a href="cv.html">Profile</a><a href="research.html">Research</a><a href="https://chilperic.github.io/" rel="noopener" target="_blank">Website ↗</a></nav>
+      </section>
+
+      <footer class="foko-home-footer"><span>Foko Lab · scientific modeling workbench</span><nav aria-label="Footer navigation"><a href="studio.html?new=1">New model</a><a href="examples.html">Model Atlas</a><a href="tutorial.html">Guides</a><a href="docs.html">Documentation</a><a href="trust.html">Methods &amp; limits</a><a href="cv.html">Creator</a></nav></footer>
+    </main>
+  </div>
+
+  <script>(function(){document.documentElement.dataset.theme='woven-state';})();</script>
+  <script defer src="src/core/ode.js?v=77.4.1"></script>
+  <script defer src="src/models/home-research-models.js?v=77.4.1"></script>
+  <script defer src="src/home-live-research.js?v=77.4.1"></script>
+  <script defer src="src/v76/home-workspace.js?v=77.4.1"></script>
+  <script defer src="src/v76/app-shell.js?v=77.4.1"></script>
 </body>
 </html>

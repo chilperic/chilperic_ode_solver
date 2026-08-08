@@ -1,212 +1,36 @@
-/* ==========================================================================
-   Foko Lab — Per-lab colour identity  (V71.38)
-   --------------------------------------------------------------------------
-   PURPOSE
-     Give each compute workspace and each analysis module ONE signature hue,
-     applied only to a small, fixed set of orientation surfaces:
-       · a 3px accent bar on the header top edge   (you-are-here)
-       · the active top-nav item underline          (where you are in the nav)
-       · the page eyebrow / kicker text             (page identity)
-       · section-title and plot-header rules         (workspace accent)
-       · the focus ring                              (accessible, on-brand)
+/* Foko Lab identity compatibility bridge.
+ *
+ * The authoritative subject and per-lab palette lives in v76-system.css.
+ * This file intentionally defines no colours: older public components consume
+ * the same --subject-accent / --lab-accent tokens without creating a second,
+ * contradictory taxonomy. Quantitative charts never inherit identity colours.
+ */
 
-   DESIGN CONTRACT (enforced by tests/test_v71_38_lab_color_identity.py)
-     · Backgrounds, panels and body text stay THEME-driven → contrast stays
-       safe on all 14 themes. We never repaint surfaces here.
-     · This file is loaded LAST in the cascade, so it wins by ORDER and uses
-       ZERO !important. If a rule ever needs !important, the load order is
-       wrong — fix the order, not this file.
-     · Every hue is data-driven via body[data-lab] / body[data-module]; no
-       page-specific class hacks.
-
-   TOKENS
-     --lab-accent         signature hue (borders, underlines, small text)
-     --lab-accent-strong  darker variant, AA-legible with white text on fills
-     --lab-tint           translucent wash derived at runtime via color-mix,
-                          so it composites correctly over any theme background.
-   ========================================================================== */
-
-/* Neutral fallback: uncoloured/informational pages inherit the theme accent. */
-:root,
 body {
-  --lab-accent: var(--accent, #0e7c86);
-  --lab-accent-strong: var(--accent, #0a5b62);
+  --lab-tint: color-mix(in srgb, var(--lab-accent, var(--accent)) 14%, transparent);
+  --lab-tint-soft: color-mix(in srgb, var(--lab-accent, var(--accent)) 8%, transparent);
 }
 
-/* Runtime-derived translucent wash. color-mix is supported in all current
-   evergreen browsers; over transparent it adapts to light AND dark themes. */
-body {
-  --lab-tint: color-mix(in srgb, var(--lab-accent) 14%, transparent);
-  --lab-tint-soft: color-mix(in srgb, var(--lab-accent) 8%, transparent);
+body[data-lab] :is(.eyebrow, .mw-eyebrow, .platform-kicker, .quiet-kicker) {
+  color: var(--lab-accent, var(--accent));
 }
 
-/* ---- Palette: 13 coloured tools -----------------------------------------
-   Workspaces keyed on data-lab; analysis modules on data-module.
-   Hues chosen to be mutually distinguishable and to map to the science:
-   dynamics=teal, randomness=indigo, search=amber, equilibrium=emerald,
-   algebra=violet, emergence=rose, learning=blue; matrices=crimson,
-   graphs=bronze, distributions=cobalt, fitting=teal-green, ml=magenta. */
-
-/* Dynamics family (integrated workbench + focused ODE share the hue by design) */
-body[data-lab="model-workbench"] {
-  --lab-accent: #0e7c86;
-  --lab-accent-strong: #0a5b62;
-}
-body[data-lab="ode"] {
-  --lab-accent: #0e7c86;
-  --lab-accent-strong: #0a5b62;
-}
-body[data-lab="stochastic"] {
-  --lab-accent: #4338ca;
-  --lab-accent-strong: #312e81;
-}
-body[data-lab="optimization"] {
-  --lab-accent: #1d4ed8;
-  --lab-accent-strong: #1e40af;
-}
-body[data-lab="steady"] {
-  --lab-accent: #0e7490;
-  --lab-accent-strong: #155e75;
-}
-body[data-lab="symbolic"] {
-  --lab-accent: #7c3aed;
-  --lab-accent-strong: #6d28d9;
-}
-body[data-lab="agent"] {
-  --lab-accent: #4f46e5;
-  --lab-accent-strong: #3730a3;
-}
-body[data-lab="sciml"] {
-  --lab-accent: #7e22ce;
-  --lab-accent-strong: #6b21a8;
-}
-body[data-lab="beauty"] {
-  --lab-accent: #a21caf;
-  --lab-accent-strong: #86198f;
-}
-
-/* Analysis modules (all share data-lab="analysis"; distinguished by module) */
-body[data-module="statistics"] {
-  --lab-accent: #b45309;
-  --lab-accent-strong: #92400e;
-}
-body[data-module="fitting"] {
-  --lab-accent: #c2410c;
-  --lab-accent-strong: #9a3412;
-}
-body[data-module="linalg"] {
-  --lab-accent: #166534;
-  --lab-accent-strong: #14532d;
-}
-body[data-module="networks"] {
-  --lab-accent: #0f766e;
-  --lab-accent-strong: #115e59;
-}
-body[data-module="ml"] {
-  --lab-accent: #be185d;
-  --lab-accent-strong: #9d174d;
-}
-
-
-body[data-lab="examples"] {
-  --lab-accent: #a16207;
-  --lab-accent-strong: #854d0e;
-}
-body[data-lab="docs"] {
-  --lab-accent: #475569;
-  --lab-accent-strong: #334155;
-}
-body[data-lab="tutorial"] {
-  --lab-accent: #0284c7;
-  --lab-accent-strong: #0369a1;
-}
-
-/* ==========================================================================
-   SURFACE APPLICATION  (only these five surfaces carry the identity)
-   ========================================================================== */
-
-/* 1 · Header identity bar — a calm 3px top edge on the universal topbar. */
-body[data-lab] .foko-ide-topbar {
-  border-top: 3px solid var(--lab-accent);
-}
-
-/* 2 · Active top-nav item — signature underline + tinted pill.
-   Matches the specificity of navigation.js's own active selectors, and wins
-   because this sheet loads last. */
-body[data-lab] .foko-main-nav.foko-unified-nav > a.active,
-body[data-lab] .foko-main-nav.foko-unified-nav > a[aria-current="page"],
-body[data-lab] .foko-main-nav.foko-unified-nav > details > summary.active {
-  color: var(--lab-accent-strong);
-  box-shadow: inset 0 -2px 0 0 var(--lab-accent);
-  background: var(--lab-tint-soft);
-}
-
-/* 3 · Page eyebrow / kicker — the small uppercase label above each page H1. */
-body[data-lab] .eyebrow,
-body[data-lab] .mw-eyebrow,
-body[data-lab] .platform-kicker {
-  color: var(--lab-accent-strong);
-}
-
-/* 4 · Section-title and plot-header rules — a left accent tick that reads as
-   "this workspace's colour" without repainting the panel. */
-body[data-lab] .mw-section-title > h2,
-body[data-lab] .analysis-panel > h2,
-body[data-lab] .analysis-hero .analysis-title,
-body[data-lab] .foko-shell-title h1 {
-  border-left: 3px solid var(--lab-accent);
+body[data-lab] :is(.mw-section-title > h2, .analysis-panel > h2, .foko-shell-title h1) {
   padding-left: 10px;
+  border-left: 3px solid var(--subject-accent, var(--lab-accent, var(--accent)));
 }
 
-/* Plot header underline where the cockpit exposes a plot title strip. */
-body[data-lab] .analysis-plot-head,
-body[data-lab] .foko-shell-plot-head {
-  border-bottom: 2px solid var(--lab-tint);
-}
-
-/* 5 · Focus ring — accessible, and on-brand per lab. Keeps a visible outline
-   for keyboard users while adopting the lab hue. */
-body[data-lab] a:focus-visible,
-body[data-lab] button:focus-visible,
-body[data-lab] select:focus-visible,
-body[data-lab] input:focus-visible,
-body[data-lab] textarea:focus-visible {
-  outline: 2px solid var(--lab-accent);
-  outline-offset: 2px;
-}
-
-/* Primary action tint — accent the primary "Run"/"Open" buttons via a soft
-   left keyline so they read as the lab colour without a background repaint
-   that could fail contrast on some themes. */
-body[data-lab] .analysis-run,
-body[data-lab] .foko-shell-run,
-body[data-lab] .mw-primary {
-  box-shadow: inset 3px 0 0 0 var(--lab-accent);
-}
-
-/* V71.40 · Cockpit propagation: identity colour on functional controls, not only headings. */
-body[data-lab] .mode-tab.active,
-body[data-lab] .analysis-workflow-tabs .mode-tab.active {
-  color: var(--lab-accent-strong);
-  border-color: var(--lab-accent);
-  box-shadow: inset 0 -2px 0 0 var(--lab-accent);
+body[data-lab] :is(.mode-tab.active, .analysis-workflow-tabs .mode-tab.active) {
+  color: var(--lab-accent, var(--accent));
+  border-color: var(--lab-accent, var(--accent));
   background: var(--lab-tint-soft);
+  box-shadow: inset 0 -2px 0 var(--lab-accent, var(--accent));
 }
-body[data-lab] .analysis-brand-chip .analysis-dot,
-body[data-lab] .analysis-live-state .analysis-dot {
-  color: var(--lab-accent);
+
+body[data-lab] :is(a, button, select, input, textarea):focus-visible {
+  outline-color: var(--lab-accent, var(--accent));
 }
-body[data-lab] .analysis-run-main,
-body[data-lab] .analysis-run,
-body[data-lab] .run-button.primary {
-  background: var(--lab-accent-strong);
-  border-color: var(--lab-accent-strong);
-}
+
 body[data-lab] .analysis-plot-card {
-  border-top: 3px solid var(--lab-accent);
-}
-body[data-lab] .analysis-plot-card-head strong,
-body[data-lab] .analysis-model-data-input h3,
-body[data-lab] .analysis-result-panel h3 {
-  color: var(--lab-accent-strong);
+  border-top-color: var(--lab-accent, var(--accent));
 }

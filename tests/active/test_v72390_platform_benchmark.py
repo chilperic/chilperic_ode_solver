@@ -6,10 +6,13 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[2]
 PAGES = {
+    "studio.html": "src/v73/model-studio.js",
     "ode.html": "src/app.js",
     "steady.html": "src/v72/steady-workspace.js",
     "stochastic.html": "src/v72/stochastic-workspace.js",
     "optimization.html": "src/v72/optimization-workspace.js",
+    "population-genetics.html": "src/v72/population-genetics-workspace.js",
+    "advanced-methods.html": "src/v72/advanced-methods-workspace.js",
     "statistics.html": "src/v72/statistics-workspace.js",
     "sensitivity.html": "src/v72/sensitivity-workspace.js",
     "fitting.html": "src/v72/fitting-workspace.js",
@@ -20,6 +23,9 @@ PAGES = {
     "agent.html": "src/v72/agent-workspace.js",
     "symbolic.html": "src/v72/symbolic-workspace.js",
     "workbench.html": "src/v72/workbench-workspace.js",
+    "bifurcation.html": "src/v72/bifurcation-workspace.js",
+    "evolution.html": "src/v72/evolution-landscape-workspace.js",
+    "ai-modeling.html": "src/v72/ai-modeling-workspace.js",
 }
 
 
@@ -28,15 +34,15 @@ def text(path: str) -> str:
 
 
 def test_release_identity_and_port():
-    assert '"version": "72.48.0"' in text("package.json")
-    assert '"version": "72.48.0"' in text("VERSION.json")
-    assert "8102" in text("package.json")
-    assert "8102" in text("playwright.config.js")
-    script = text("test-v72.48.0-local.sh")
-    assert 'EXPECTED_VERSION="72.48.0"' in script
-    assert "PORT=8102" in script
-    assert "--repeat-each=3" in script
-    assert "Complete 123-test browser suite" in script
+    assert '"version": "77.4.1"' in text("package.json")
+    assert '"version": "77.4.1"' in text("VERSION.json")
+    assert "scripts/serve-fresh.py" in text("package.json")
+    assert "freshPort()" in text("playwright.config.js")
+    script = text("test-v77.4.1-local.sh")
+    assert 'EXPECTED_VERSION="77.4.1"' in script
+    assert "FOKOLAB_PORT" in script
+    assert "npm run test:e2e" in script
+    assert "All requested validation gates passed." in script
 
 
 def test_all_authored_workspaces_have_two_stable_plot_hosts():
@@ -74,7 +80,7 @@ def test_render_state_and_accessibility_state_are_atomic():
 
 def test_public_css_layers_are_consolidated_without_orphans():
     styles = sorted(path.name for path in (ROOT / "styles").glob("*.css"))
-    assert len(styles) <= 13
+    assert len(styles) <= 14
     for retired in (
         "v70-4-consistency.css", "v70-5-home-nav.css", "v70-6-polish.css",
         "v70-7-unified.css", "v70-11-modeling-platform.css", "v70-19-platform-system.css",
@@ -83,6 +89,7 @@ def test_public_css_layers_are_consolidated_without_orphans():
         assert retired not in styles
     assert "v72-public-shell.css" in styles
     assert "v72-profile-shell.css" in styles
+    assert "v76-system.css" in styles
     referenced = set()
     for page in list(ROOT.glob("*.html")) + list((ROOT / "research").glob("*.html")):
         soup = BeautifulSoup(page.read_text(encoding="utf-8"), "html.parser")
@@ -95,15 +102,16 @@ def test_public_css_layers_are_consolidated_without_orphans():
 
 def test_homepage_is_task_first_and_links_to_trust():
     home = text("index.html")
-    assert "Build, test, and compare scientific models in your browser." in home
-    assert "From model to evidence" in home
-    assert "View methods and limitations" in home
+    assert "From model definition to" in home
+    assert "numerical evidence." in home
+    assert "Start with the system, not a menu of methods." in home
+    assert "A plot is not evidence until its computation is clear." in home
     for phrase in ("real numerical cores", "toy tool", "verified lab adapters", "Release 72."):
         assert phrase not in home
 
 
 def test_external_benchmark_covers_relevant_scientific_platforms():
-    benchmark = text("BENCHMARK-v72.48.0.md")
+    benchmark = text("BENCHMARK-v77.4.1.md")
     for product in ("VCell", "SimBiology", "COPASI", "Tellurium", "Cell Collective", "BioUML"):
         assert product in benchmark
     for dimension in ("Scientific reliability", "Platform stability", "UX", "Modern GUI"):

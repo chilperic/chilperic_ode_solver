@@ -2,73 +2,13 @@
 
 <html data-theme="aurora" lang="en">
 <head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="Quantitative immunology project page for T-cell proliferation models." name="description"/><title>T-cell proliferation · Research Hub</title>
-<link href="../assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="../assets/brand/favicon-32.png?v=72.48.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="../favicon.ico?v=72.48.0" rel="icon" sizes="any"/>
-<link href="../assets/brand/apple-touch-icon.png?v=72.48.0" rel="apple-touch-icon"/>
-<link href="../styles/style.css?v=72.48.0" rel="stylesheet"/><link href="../styles/v72-public-shell.css?v=72.48.0" rel="stylesheet"/><meta content="assets/homepage-preview.webp" property="og:image"/></head>
-<body><div class="app-shell"><header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="../index.html"><img alt="Foko Lab" class="logo" src="../assets/brand/foko-lab-logo.svg?v=72.48.0"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="../index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="../workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="../ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="../steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="../stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="../agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="../optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="../symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="../fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="../statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="../sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local, Morris, Sobol/Jansen and local information diagnostics.</small></span></a>
-<a href="../linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="../networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="../sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="../ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="../docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="../examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="../beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="../docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="../tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="../trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="../research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="../cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div>
-</header><main class="doc-page model-atlas research-project-page"><div id="top"></div><nav aria-label="Research project navigation" class="project-nav-bar"><a href="../research.html">← Back to Research Hub</a><a href="fatty-acid-metabolism.html">Previous project</a><a href="photosynthesis.html">Next project</a></nav>
+<link href="../assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
+<link href="../assets/brand/favicon-32.png?v=77.4.1" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../favicon.ico?v=77.4.1" rel="icon" sizes="any"/>
+<link href="../assets/brand/apple-touch-icon.png?v=77.4.1" rel="apple-touch-icon"/>
+<link href="../styles/style.css?v=77.4.1" rel="stylesheet"/><link href="../styles/v72-public-shell.css?v=77.4.1" rel="stylesheet"/><meta content="assets/homepage-preview.webp" property="og:image"/><link href="../styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
+</head>
+<body><div class="app-shell"><header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="../index.html" aria-label="Foko Lab home"><img src="../assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header><main class="doc-page model-atlas research-project-page"><div id="top"></div><nav aria-label="Research project navigation" class="project-nav-bar"><a href="../research.html">← Back to Research Hub</a><a href="fatty-acid-metabolism.html">Previous project</a><a href="photosynthesis.html">Next project</a></nav>
 <section class="card hero-doc atlas-hero project-launch-hero">
 <div class="project-launch-copy"><p class="eyebrow">MSc research · quantitative immunology</p><h1>Mathematical models of T cell proliferation</h1><p class="project-subtitle">Mathematical models of T cell proliferation, with potential applications to data</p><p class="research-lead">A quantitative immunology project comparing generation-structured models that infer hidden activation, proliferation and death processes from CFSE-style division readouts.</p><div class="research-pill-row"><span>CFSE</span><span>Smith–Martin</span><span>Cyton</span><span>DDE / ODE</span><span>individual-based simulation</span><span>branching processes</span><span>stochastic master equation</span></div></div>
 <figure class="project-launch-figure"><img alt="T-cell generation structured activation proliferation and death scheme" decoding="async" loading="eager" src="../assets/research/tcell/tcell_scheme.webp"/><figcaption>Generation-structured T-cell model: quiescence, activation, proliferation and death across divisions.</figcaption></figure></section>
@@ -87,4 +27,5 @@
 <section class="card"><h2>Results narrative</h2><p>The AIMS work showed that the Cyton model generally recovered proliferation parameters better than the Smith–Martin formulation in the tested simulation setting, while also revealing that more realistic age-dependent multitype branching-process models may be theoretically stronger but harder to fit and communicate. The later Yaoundé work extended the same direction by formulating stochastic master-equation logic and deriving statistical quantities such as means and variances of cell counts.</p></section>
 <section class="card"><h2>What this sells</h2><p>This project sells quantitative immunology, stochastic thinking, model criticism and simulation-based parameter recovery.</p></section><section class="card"><h2>What this project demonstrates about my profile</h2><table class="research-matrix"><tbody><tr><td>Quantitative immunology</td><td>Immune-cell proliferation was translated into model families tied to experimental observables.</td></tr><tr><td>Stochastic modeling</td><td>The work moves from ODE/DDE descriptions toward branching processes and master equations.</td></tr><tr><td>Model criticism</td><td>Models are compared not by aesthetics but by assumptions and parameter-recovery performance.</td></tr><tr><td>Scientific continuity</td><td>This is the early version of the same pattern later used in metabolism and plant modeling: experiment → model → simulation → inference → critique.</td></tr></tbody></table></section>
 <section class="card"><h2>Limitations</h2><ul><li>The AIMS comparison used simulated CFSE-style datasets, so its purpose is controlled model criticism rather than clinical prediction.</li><li>Simplified Smith–Martin and Cyton assumptions can obscure heterogeneity in death, activation and generation-dependent behavior.</li><li>Branching-process and master-equation models are more expressive but require careful inference design and stronger data support.</li></ul></section>
-<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="fatty-acid-metabolism.html">Previous</a><a href="photosynthesis.html">Next</a><a href="#top">Back to top ↑</a></section></main></div><script defer="" src="../src/navigation.js?v=72.48.0"></script></body></html>
+<section class="project-bottom-nav"><a href="../research.html">← Research Hub</a><a href="fatty-acid-metabolism.html">Previous</a><a href="photosynthesis.html">Next</a><a href="#top">Back to top ↑</a></section></main></div><script defer src="../src/v76/app-shell.js?v=77.4.1"></script>
+</body></html>

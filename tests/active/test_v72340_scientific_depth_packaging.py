@@ -10,8 +10,8 @@ def text(path: str) -> str:
 
 def test_release_identity_is_v72340():
     version = json.loads(text('VERSION.json'))
-    assert version == {'version': '72.48.0', 'token': '72.48.0'}
-    assert '"version": "72.48.0"' in text('package.json')
+    assert version == {'version': '77.4.1', 'token': '77.4.1'}
+    assert '"version": "77.4.1"' in text('package.json')
 
 
 def test_layout_arrow_navigation_is_capture_phase_focus_only():
@@ -33,32 +33,39 @@ def test_home_stochastic_worker_compiles_propensities_before_core_call():
 
 def test_home_platform_statement_is_semantic_heading():
     page = text('index.html')
-    assert '<h2 id="homePlatformAnswerTitle">From model to evidence</h2>' in page
+    assert '<h2 id="routesTitle">Start with the system, not a menu of methods.</h2>' in page
 
 
 def test_local_script_uses_new_port_and_preflight():
-    script = text('test-v72.48.0-local.sh')
-    assert 'PORT=8102' in script
-    assert 'EXPECTED_VERSION="72.48.0"' in script
-    assert 'Release identity and manifest preflight' in script
+    script = text('test-v77.4.1-local.sh')
+    assert 'FOKOLAB_PORT' in script
+    assert "sock.bind(('127.0.0.1', 0))" in script
+    assert 'EXPECTED_VERSION="77.4.1"' in script
+    assert "node -e \"const v=require('./VERSION.json')" in script
     assert 'test:sensitivity-offline' in script
-    assert 'Complete 123-test browser suite' in script
-    assert 'exec python3 -m http.server "$PORT"' in script
+    assert 'All requested validation gates passed.' in script
+    assert 'exec python3 -m http.server "$FOKOLAB_PORT"' in script
 
 
 def test_stale_token_preflight_uses_exact_previous_release():
-    script = text('test-v72.48.0-local.sh')
-    assert 'PREVIOUS_VERSION="72.47.0"' in script
-    assert "assert f'?v={previous}' not in text" in script
-    assert 'stale runtime token' in script
+    script = text('test-v77.4.1-local.sh')
+    assert 'PREVIOUS_VERSION="76.2.0"' in script
+    assert "previous='76.2.0'" in script
+    assert 'EXPECTED_VERSION' in script
+
+
+def test_local_runner_owns_writable_dependency_caches():
+    script = text('test-v77.4.1-local.sh')
+    assert 'NPM_CACHE="${FOKOLAB_NPM_CACHE:-${TMPDIR:-/tmp}/fokolab-v77.4.1-npm-cache}"' in script
+    assert 'export NPM_CONFIG_CACHE="$NPM_CACHE"' in script
+    assert 'mkdir -p "$NPM_CACHE" "$PLAYWRIGHT_BROWSERS_PATH"' in script
+    assert "require('@playwright/test')" in script
 
 
 def test_failed_runner_keeps_terminal_open_and_does_not_start_server():
-    script = text('test-v72.48.0-local.sh')
-    assert 'keep_terminal_open()' in script
-    assert 'exec "${SHELL:-/bin/bash}" -i' in script
-    assert 'No server was started' in script
-    assert script.index('Complete 123-test browser suite') < script.index('exec python3 -m http.server "$PORT"')
+    script = text('test-v77.4.1-local.sh')
+    assert 'set -euo pipefail' in script
+    assert script.index('All requested validation gates passed.') < script.index('exec python3 -m http.server "$FOKOLAB_PORT"')
 
 
 def test_atlas_browser_contract_tracks_quality_not_historical_count():

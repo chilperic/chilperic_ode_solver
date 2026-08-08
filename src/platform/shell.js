@@ -217,7 +217,7 @@ function mount(rootEl, id){
     const head=el('div','analysis-plot-card-head');
     const title=el('strong',null,label);
     const picker=el('label','analysis-plot-picker analysis-plot-picker-'+slot); picker.innerHTML='<span>'+label+'</span><select '+attr+'></select>';
-    const pal=el('label','analysis-palette-picker'); pal.innerHTML='<span>Palette</span><select data-analysis-palette="'+slot+'"><option value="lab-identity">Lab identity</option><option value="scientific">Scientific</option><option value="viridis">Viridis</option><option value="cividis">Cividis</option><option value="plasma">Plasma</option><option value="turbo">Turbo</option><option value="mono">Mono</option></select>';
+    const pal=el('label','analysis-palette-picker'); pal.innerHTML='<span>Palette</span><select data-analysis-palette="'+slot+'"><option value="scientific">Scientific categorical</option><option value="viridis">Viridis</option><option value="cividis">Cividis</option><option value="plasma">Plasma</option><option value="turbo">Turbo</option><option value="mono">Monochrome</option><option value="lab-identity">Lab accent · presentation only</option></select>';
     const size=el('button','analysis-plot-size','⛶'); size.type='button'; size.title='Toggle wide view'; size.dataset.analysisSize=slot;
     head.append(title,picker,pal,size);
     const body=el('div','analysis-plot-body'); body.dataset.plotSlot=slot;
@@ -284,7 +284,7 @@ function mount(rootEl, id){
     [plotHost,plotHost2,plotHost3].forEach((host,i)=>{
       const slot=['primary','secondary','tertiary'][i]; const name=values[i]; host.dataset.plotName=name; setPanelStatus(slot,'Drawing '+name+'…');
       const input=Object.assign({},lastInput,{plot:name}); const output=Object.assign({},lastOutput,{plot:name});
-      try{lab.Plot(input,output,host); const pal=frame.querySelector('[data-analysis-palette="'+slot+'"]'); applyPlotPalette(host,(pal&&pal.value)||'lab-identity'); setPanelStatus(slot,'Rendered '+name);}catch(err){host.innerHTML='<div class="analysis-plot-error">'+((err&&err.message)||String(err))+'</div>'; setPanelStatus(slot,'Error');}
+      try{lab.Plot(input,output,host); const pal=frame.querySelector('[data-analysis-palette="'+slot+'"]'); applyPlotPalette(host,(pal&&pal.value)||'scientific'); setPanelStatus(slot,'Rendered '+name);}catch(err){host.innerHTML='<div class="analysis-plot-error">'+((err&&err.message)||String(err))+'</div>'; setPanelStatus(slot,'Error');}
     });
   }
   function refreshPreviewAndCards(input,output,resultNode){renderCards(resultHost,lab,input,output,resultNode);}

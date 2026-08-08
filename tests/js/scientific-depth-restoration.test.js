@@ -92,7 +92,7 @@ ok(!registry.includes("dispatchEvent(new Event('change'"), 'central registry can
 ].forEach((file) => {
   const source = text(file);
   ok(source.includes('offsetParent === null') || source.includes('offsetParent===null') || source.includes('FokoPlotLifecycle.render'), `${file}: hidden plot hosts are not rendered`);
-  ok(source.includes('requestAnimationFrame'), `${file}: visible plots wait for layout geometry`);
+  ok(source.includes('requestAnimationFrame') || source.includes('FokoPlotLifecycle.afterLayout'), `${file}: visible plots wait for layout geometry`);
 });
 const agentWorkspace = text('src/v72/agent-workspace.js');
 ok(agentWorkspace.includes("if (!host) throw new Error('Agent plot host is unavailable"), 'Agent reports a missing plot host instead of throwing appendChild on null');

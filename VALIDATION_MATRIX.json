@@ -1,5 +1,5 @@
 {
-  "release": "72.48.0",
+  "release": "77.4.1",
   "levels": {
     "unit": "Deterministic algorithm and contract tests executed in Node or Python.",
     "differential": "Representative outputs compared with independent scientific Python libraries.",

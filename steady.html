@@ -9,81 +9,21 @@
 <meta content="Browser-computed Newton solves, residual diagnostics, local Jacobians, and transparent parameter scans." property="og:description"/>
 <meta content="website" property="og:type"/>
 <title>Steady-State Lab · Foko Lab</title>
-<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.48.0" rel="stylesheet"/>
-<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.48.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.48.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.48.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.48.0" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=72.48.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.48.0"></script></head>
-<body data-lab="steady" data-v72-shell="true" data-version="72.48.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=77.4.1" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=77.4.1"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=77.4.1" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=77.4.1" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=77.4.1" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=77.4.1" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=77.4.1"></script><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
+</head>
+<body data-lab="steady" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.48.0" width="190"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div>
-</header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="layout" id="workbench" tabindex="-1">
 <aside aria-label="Steady-state workflow" class="side-nav">
 <button class="nav-item active" data-jump="modelBlock" type="button"><span>f=0</span><b>Model</b></button>
@@ -95,7 +35,7 @@
 <aside aria-label="Steady-state controls" class="work-panel controls">
 <section class="intro-card hero-with-mark">
 <div><p class="v72-eyebrow">Algebraic systems · equilibria · parameter scans</p><h2>Steady-State Lab</h2><p class="note">Solve <b>f(x,p)=0</b>, inspect residual evidence, and separate algebraic convergence from dynamical stability.</p></div>
-<img alt="Steady-State Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/steady-state-lab.webp?v=72.48.0"/>
+<img alt="Steady-State Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/steady-state-lab.webp?v=77.4.1"/>
 </section>
 <section aria-label="Run controls" class="actionbar">
 <button class="primary run-button" id="solveSteady" type="button">▶ Solve root</button>
@@ -165,7 +105,7 @@
 <section aria-label="Steady-state results" class="workspace v72-workspace">
 <section aria-label="Numerical results" class="results-card" role="region">
 <header class="v72-workspace-head">
-<div><p class="v72-eyebrow">Computed workspace</p><h1>Roots, residuals and parameter scans</h1><p>Compare two views generated from the current solve or scan. Unavailable views are removed rather than replaced by decorative output.</p></div>
+<div><p class="v72-eyebrow">Results</p><h1>Roots, residuals and parameter scans</h1><p>Compare two views generated from the current solve or scan. Unavailable views are removed rather than replaced by decorative output.</p></div>
 <div aria-label="Plot layout" class="v72-layout-switch" role="group">
 <button class="active" data-layout-mode="two" type="button">2-up</button>
 <button data-layout-mode="focus" type="button">Focus</button>
@@ -180,12 +120,12 @@
 <article class="chart-card" data-plot-card="left">
 <div class="chart-title"><h3 id="leftPlotTitle">Primary view</h3><select aria-label="Primary plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div>
 <div class="plot" id="leftPlot"><div class="diagnostics empty">Solve a model to create a plot.</div></div>
-<details class="plot-evidence"><summary>Scientific meaning</summary><p id="leftPlotEvidence">No plot has been computed.</p></details>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details>
 </article>
 <article class="chart-card" data-plot-card="right">
 <div class="chart-title"><h3 id="rightPlotTitle">Diagnostic view</h3><select aria-label="Secondary plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div>
 <div class="plot" id="rightPlot"><div class="diagnostics empty">Solve a model to create a diagnostic plot.</div></div>
-<details class="plot-evidence"><summary>Scientific meaning</summary><p id="rightPlotEvidence">No plot has been computed.</p></details>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details>
 </article>
 </div>
 <p class="info-strip" id="plotHint">Root convergence and dynamical stability are distinct claims. Read the evidence panel before interpreting a result.</p>
@@ -213,7 +153,7 @@
 <div class="diagnostics empty" id="steadyDiagnostics">Solve a model to see residual history, termination evidence, Jacobian scope, and interpretation limits.</div>
 </section>
 <section class="v72-inspector-card" id="provenanceCard">
-<div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Computation boundary</h2></div></div>
+<div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div>
 <dl class="v72-provenance">
 <div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div>
 <div><dt>Engine</dt><dd id="provenanceEngine">FokoSteadyCore</dd></div>
@@ -221,7 +161,7 @@
 <div><dt>Scope</dt><dd id="provenanceScope">Browser-computed root finding</dd></div>
 <div><dt>Meaning</dt><dd id="provenanceInterpretation">—</dd></div>
 </dl>
-<p class="v72-warning" id="provenanceWarning">No numerical result exists yet.</p>
+<p class="v72-warning" id="provenanceWarning">Run an analysis to create results.</p>
 </section>
 <section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region">
 <div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div>
@@ -240,11 +180,11 @@
 </aside>
 </main>
 </div>
-<script defer="" src="src/models/analysis-taxonomy.js?v=72.48.0"></script>
-<script defer="" src="src/models/steady-presets.js?v=72.48.0"></script>
-<script defer="" src="src/core/steady.js?v=72.48.0"></script>
-<script defer="" src="src/v72/steady-workspace.js?v=72.48.0"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=72.48.0"></script>
-<script defer="" src="src/navigation.js?v=72.48.0"></script>
+<script defer="" src="src/models/analysis-taxonomy.js?v=77.4.1"></script>
+<script defer="" src="src/models/steady-presets.js?v=77.4.1"></script>
+<script defer="" src="src/core/steady.js?v=77.4.1"></script>
+<script defer="" src="src/v72/steady-workspace.js?v=77.4.1"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=77.4.1"></script>
+<script defer src="src/v76/app-shell.js?v=77.4.1"></script>
 </body>
 </html>

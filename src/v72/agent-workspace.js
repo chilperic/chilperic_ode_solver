@@ -1,4 +1,4 @@
-/* Foko Lab v72.48.0 live Agent workspace.
+/* Foko Lab v77.4.1 live Agent workspace.
  * Worker-backed finite ensembles, explicit rendering states, cancellation,
  * deterministic fallback graphics, and model-specific endpoint evidence.
  */
@@ -7,13 +7,15 @@
   const CORE = root.FokoAgentReference;
   const PRESETS = root.FokoAgentPresets || {};
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '72.48.0';
+  const LIVE3D = root.FokoLive3D;
+  const RELEASE = '77.4.1';
   const STORAGE_KEY = 'fokolab:v72.16:agent-config';
   const LAYOUT_STORAGE_KEY = 'fokolab:v72:agent-layout';
   const VALID_LAYOUTS = new Set(['two', 'focus']);
   const VALID_SIDES = new Set(['left', 'right']);
   if (!CORE) throw new Error('Agent Lab requires FokoAgentReference.');
   if (!PLOT) throw new Error('Agent Lab requires FokoPlotLifecycle.');
+  if (!LIVE3D) throw new Error('Agent Lab requires FokoLive3D.');
   const $ = function (id) { return document.getElementById(id); };
   const SIDES = ['left', 'right'];
   const state = {
@@ -24,9 +26,11 @@
     plotSerial: { left: 0, right: 0 },
     animations: { left: null, right: null },
     runSerial: 0, worker: null, fallback: null, activeRequestId: null, cancelled: false,
-    live: { active: false, paused: false, config: null, states: [], colors: [], frames: [], latest: null, raf: 0, frameSequence: 0 }
+    live: { active: false, paused: false, config: null, states: [], colors: [], frames: [], latest: null, raf: 0, frameSequence: 0 },
+    live3d: { index: 0, playing: false, timer: 0 }
   };
   const PLOTS = {
+    'space-time-3d': { label: 'Live 3D space–time simulation', title: 'Live Agent space–time cube', lattice: true, animation: true, evidence: 'X and Y are literal lattice coordinates and Z is the algorithmic step. Translucent points retain recent computed frames, opaque points are the selected current slice, and centroid trails summarize spatial movement by state. Empty sites and some points may be omitted under the disclosed rendering budget; the simulation itself is never downsampled.' },
     'spatial-dynamics': { label: 'Live spatial simulation', title: 'Live spatial simulation / replay', lattice: true, animation: true, evidence: 'During computation this panel shows the actual representative seeded lattice as it evolves. After completion, the recorded frames can be reviewed once without automatic looping. It is one stochastic realization, not an ensemble-average spatial field or empirical movie.' },
     initial: { label: 'Representative initial lattice', title: 'Initial spatial state', lattice: true, evidence: 'The exact initial lattice from the representative derived seed. Initialization is part of the model specification, not measurement data.' },
     spatial: { label: 'Representative final lattice', title: 'Representative final spatial state', lattice: true, evidence: 'This is the first derived-seed realization. It is one stochastic trajectory, not an ensemble average or calibrated spatial map.' },
@@ -121,6 +125,16 @@
       badge.dataset.paused = paused ? 'true' : 'false';
     });
   }
+  function stopAgent3DPlayback() {
+    state.live3d.playing = false;
+    if (state.live3d.timer) root.clearTimeout(state.live3d.timer);
+    state.live3d.timer = 0;
+    const button = $('agent3dPlay');
+    if (button) {
+      button.textContent = '▶ Play 3D';
+      button.setAttribute('aria-pressed', 'false');
+    }
+  }
   function stopLivePreview() {
     const live = state.live;
     live.active = false;
@@ -129,6 +143,89 @@
     live.frameSequence = 0;
     if (live.raf) cancelAnimationFrame(live.raf);
     live.raf = 0;
+  }
+
+  function agent3DContext() {
+    if (state.result) {
+      const config = state.result.config;
+      const meta = config.model === 'custom' ? config.customModel : CORE.MODEL_META[config.model];
+      return { frames: state.result.representative.snapshots || [], size: config.size, states: state.result.states, colors: state.result.colors, emptyState: meta && meta.emptyState };
+    }
+    if (state.live.active && state.live.config) {
+      const config = state.live.config;
+      const meta = config.model === 'custom' ? config.customModel : CORE.MODEL_META[config.model];
+      return { frames: state.live.frames, size: config.size, states: state.live.states, colors: state.live.colors, emptyState: meta && meta.emptyState };
+    }
+    return { frames: [], size: 1, states: [], colors: [], emptyState: null };
+  }
+  function agent3DSpec(index) {
+    const context = agent3DContext();
+    const trailSelect = $('agent3dTrail');
+    return LIVE3D.agentSpaceTimeSpec(Object.assign({}, context, {
+      index: index,
+      trailFrames: trailSelect ? Number(trailSelect.value) : 12,
+      pointBudget: 5200
+    }));
+  }
+  function syncAgent3DControls(index) {
+    const context = agent3DContext();
+    const controls = $('agent3dControls');
+    if (!controls) return;
+    const selected = SIDES.some(function (side) { return state.plotTypes[side] === 'space-time-3d'; });
+    controls.hidden = !selected;
+    const slider = $('agent3dFrame');
+    const play = $('agent3dPlay');
+    if (!selected || !slider || !play) return;
+    slider.max = String(Math.max(0, context.frames.length - 1));
+    state.live3d.index = LIVE3D.clampIndex(index == null ? state.live3d.index : index, context.frames.length || 1);
+    slider.value = String(state.live3d.index);
+    slider.disabled = state.live.active || context.frames.length < 2;
+    play.disabled = state.live.active || context.frames.length < 2;
+    const frame = context.frames[state.live3d.index];
+    $('agent3dLabel').textContent = frame ? (state.live.active ? 'Live step ' : 'Step ') + frame.step + ' · frame ' + (state.live3d.index + 1) + '/' + context.frames.length : 'Waiting for frame';
+  }
+  function renderAgent3DSides(index) {
+    const context = agent3DContext();
+    if (!context.frames.length) { syncAgent3DControls(0); return Promise.resolve([]); }
+    state.live3d.index = LIVE3D.clampIndex(index, context.frames.length);
+    syncAgent3DControls(state.live3d.index);
+    const spec = agent3DSpec(state.live3d.index);
+    const targets = SIDES.filter(function (side) { return state.plotTypes[side] === 'space-time-3d' && visibleSides().includes(side); });
+    return Promise.all(targets.map(function (side) {
+      const host = $(side + 'AgentPlot');
+      if (!PLOT.mounted(host)) PLOT.takeover(host, 'rendering');
+      $(side + 'AgentPlotTitle').textContent = PLOTS['space-time-3d'].title;
+      $(side + 'AgentPlotEvidence').textContent = PLOTS['space-time-3d'].evidence + ' Current rendering: ' + spec.metadata.displayedFrames + ' retained frames; spatial stride ' + spec.metadata.stride + '.';
+      return PLOT.render(host, spec.traces, spec.layout, { responsive: true, displaylogo: false, displayModeBar: 'hover' }).then(function (outcome) {
+        if (!outcome || !outcome.error) {
+          try { markSingleActiveRenderRoot(host, 'space-time-3d'); } catch (_) { /* a newer queued frame owns the host */ }
+        }
+        return outcome;
+      });
+    }));
+  }
+  function scheduleAgent3DPlayback() {
+    if (!state.live3d.playing) return;
+    const context = agent3DContext();
+    const delay = Number($('agent3dSpeed').value) || 420;
+    if (state.live3d.timer) root.clearTimeout(state.live3d.timer);
+    state.live3d.timer = root.setTimeout(function () {
+      if (!state.live3d.playing) return;
+      const next = state.live3d.index + 1;
+      if (next >= context.frames.length) { stopAgent3DPlayback(); $('agent3dPlay').textContent = '↻ Replay 3D'; return; }
+      renderAgent3DSides(next);
+      scheduleAgent3DPlayback();
+    }, delay);
+  }
+  function toggleAgent3DPlayback() {
+    const context = agent3DContext();
+    if (state.live.active || context.frames.length < 2) return;
+    if (state.live3d.playing) { stopAgent3DPlayback(); return; }
+    if (state.live3d.index >= context.frames.length - 1) renderAgent3DSides(0);
+    state.live3d.playing = true;
+    $('agent3dPlay').textContent = '❚❚ Pause 3D';
+    $('agent3dPlay').setAttribute('aria-pressed', 'true');
+    scheduleAgent3DPlayback();
   }
   function liveCanvas(host, className, label) {
     if (!host) throw new Error('Agent plot host is unavailable. Refresh the page or choose another plot panel.');
@@ -229,6 +326,7 @@
     state.live.frameSequence = Math.max(state.live.frameSequence + 1, Number(frameSequence) || 0);
     drawLiveGrid(frame);
     drawLivePopulation();
+    renderAgent3DSides(state.live.frames.length - 1);
     updateLiveBadges('Live · computed step ' + frame.step + ' / ' + frame.totalSteps, state.live.paused);
     $('agentTopStatus').textContent = state.live.paused ? 'Paused' : 'Simulating';
     $('agentStatus').textContent = (state.live.paused ? 'Paused at' : 'Live representative run ·') + ' step ' + frame.step + ' of ' + frame.totalSteps + ' · both panels show the current computed state.';
@@ -249,7 +347,10 @@
     if(!host||!meta)return;
     $(side+'AgentPlotTitle').textContent=meta.title;
     renderStateLegend(side,kind);
-    if(kind==='spatial-dynamics'){
+    if(kind==='space-time-3d'){
+      PLOT.clear(host, 'Waiting for the first computed space–time frame.');
+      $(side+'AgentPlotEvidence').textContent=meta.evidence;
+    }else if(kind==='spatial-dynamics'){
       liveCanvas(host,'agent-live-lattice','Live representative lattice simulation');
       $(side+'AgentPlotEvidence').textContent='The representative seeded lattice is advanced in paced numerical chunks. Every displayed frame is the state just computed at that algorithmic step, not a replay of a completed run; after completion the recorded frames remain available as a manual replay.';
     }else if(kind==='population'||kind==='representative'){
@@ -269,6 +370,7 @@
     const last=state.live.frames[state.live.frames.length-1];
     if(last)drawLiveGrid(last);
     drawLivePopulation();
+    if(last)renderAgent3DSides(state.live.frames.length-1);
     if(last)updateLiveBadges((state.live.paused?'Paused · step ':'Live · computed step ')+last.step+' / '+last.totalSteps,state.live.paused);
   }
   function startLivePreview(config) {
@@ -279,6 +381,9 @@
     state.live.states = (meta.states || []).map(function (entry) { return typeof entry === 'string' ? entry : entry.name; });
     state.live.colors = (meta.colors || []).slice();
     state.live.frames = [];
+    state.live3d.index = 0;
+    stopAgent3DPlayback();
+    syncAgent3DControls(0);
     refreshLivePanels(SIDES);
   }
 
@@ -333,6 +438,31 @@
     $('agentPresetDeck').innerHTML = names.map(function (name) { const p=PRESETS[name]; return '<button data-preset="'+esc(name)+'" class="'+(name===state.preset?'active':'')+'" type="button"><b>'+esc(p.title)+'</b><small>'+esc(p.family)+'</small></button>'; }).join('');
     $('agentModel').innerHTML = Object.keys(CORE.MODEL_META).map(function (key) { return '<option value="'+esc(key)+'">'+esc(CORE.MODEL_META[key].title)+'</option>'; }).join('');
   }
+  function spaceTime3DRelevant() {
+    const preset = PRESETS[state.preset];
+    return !!(preset && preset.visualization && preset.visualization.spaceTime3D === true);
+  }
+  function enforceContextualVisualizations() {
+    if (!spaceTime3DRelevant()) {
+      SIDES.forEach(function (side) {
+        if (state.plotTypes[side] === 'space-time-3d') state.plotTypes[side] = side === 'left' ? 'spatial-dynamics' : 'population';
+      });
+      stopAgent3DPlayback();
+    }
+    populatePlotSelectors();
+    syncAgent3DControls(0);
+  }
+  function agentLatexName(name) { return '\\mathrm{' + String(name).replace(/_/g,'\\_').replace(/-/g,'\\text{-}') + '}'; }
+  function renderAgentEquation() {
+    const target=$('agentEquationPreview');if(!target)return;
+    try{
+      const model=$('agentModel').value,meta=metaForUi(model),size=Math.max(1,Math.floor(Number($('agentSize').value)||1));
+      const values={};document.querySelectorAll('.agent-param-input').forEach(function(input){values[input.dataset.param]=Number(input.value);});
+      const theta=meta.params.map(function(name){return agentLatexName(name)+'='+fmt(values[name],3);}).join(',\\;');
+      const source='\\begin{aligned}P(s_i^{k+1}=b\\mid s_i^k=a,\\mathcal N_i;\\theta)&=T_{a\\to b}(\\mathcal N_i,\\theta)\\\\[3pt]N_j(k)&=\\sum_{i=1}^{L^2}\\mathbf 1[s_i^k=j]\\\\[3pt]1\\;\\text{ sweep}&='+size+'^2\\;\\text{ site-update attempts}'+(theta?'\\\\[3pt]\\theta&=\\{'+theta+'\\}':'')+'\\end{aligned}';
+      target.dataset.invalid='false';root.FokoMathRender.render(target,source,{displayMode:true,throwOnError:true});
+    }catch(error){target.dataset.invalid='true';target.textContent='Agent equation preview unavailable: '+(error.message||error);}
+  }
   function renderEditors(model, params, fractions, counts) {
     const meta = metaForUi(model); const capacity=Math.max(1,Math.floor(Number($('agentSize').value)||32))**2;
     $('agentParamGrid').innerHTML = meta.params.map(function (key) { const value=params[key] == null ? (meta.parameters&&meta.parameters[key] != null ? meta.parameters[key] : 0) : params[key]; return '<label><span>'+esc(PARAM_LABELS[key]||key)+'</span><input class="agent-param-input" data-param="'+esc(key)+'" min="0" max="1" step="0.001" type="number" value="'+esc(value)+'"/></label>'; }).join('');
@@ -343,21 +473,25 @@
     $('agentCustomModelBlock').hidden=model!=='custom';
     document.querySelectorAll('.agent-fraction-input').forEach(function(input){input.addEventListener('input',function(){if($('agentInitialMode').value==='fractions')syncCountsFromFractions();});});
     document.querySelectorAll('.agent-count-input').forEach(function(input){input.addEventListener('input',renderPopulationSummary);});
+    document.querySelectorAll('.agent-param-input').forEach(function(input){input.addEventListener('input',renderAgentEquation);});
     setInitialMode($('agentInitialMode').value||'counts');
+    renderAgentEquation();
   }
-  function applyConfig(config, message) {
+  function applyConfig(config, message, options) {
+    if (!(options && options.preservePreset === true)) state.preset = '';
     if(config.model==='custom'&&config.customModel){state.customModel=config.customModel;$('agentCustomModelJson').value=JSON.stringify(config.customModel,null,2);} $('agentModel').value=config.model; $('agentSize').value=config.size; $('agentSteps').value=config.steps; $('agentRuns').value=config.runs; $('agentSeed').value=config.seed; $('agentRecordEvery').value=config.recordEvery; if ($('agentSnapshotCount')) $('agentSnapshotCount').value=String(config.snapshotCount || 4); $('agentNeighborhood').value=config.neighborhood; $('agentBoundary').value=config.boundary;
     if ($('agentUpdateSchedule')) $('agentUpdateSchedule').value=config.updateSchedule || 'random-with-replacement';
     if ($('agentInitialization')) $('agentInitialization').value=config.initialization || 'random';
     $('agentInitialMode').value=config.initialMode||'counts'; renderEditors(config.model, config.params || {}, config.initialFractions || metaForUi(config.model).defaultFractions, config.initialCounts); setInitialMode(config.initialMode||'counts');
     clearComputed(message || 'Configuration loaded. Run the ensemble to regenerate evidence.');
+    enforceContextualVisualizations();
   }
   function loadPreset(name, autorun) {
     const preset=PRESETS[name] || PRESETS[Object.keys(PRESETS)[0]]; if(!preset)return;
     state.preset=name in PRESETS?name:Object.keys(PRESETS)[0]; $('agentPresetSelect').value=state.preset;
     document.querySelectorAll('#agentPresetDeck [data-preset]').forEach(function(button){button.classList.toggle('active',button.dataset.preset===state.preset);});
     $('agentPresetQuestion').innerHTML='<b>Question:</b> '+esc(preset.question); $('agentPresetNote').textContent=preset.note;
-    applyConfig(clone(preset), 'Example loaded. Run the ensemble to compute stochastic evidence.');
+    applyConfig(clone(preset), 'Example loaded. Run the ensemble to compute stochastic evidence.', { preservePreset: true });
     if(autorun!==false)setTimeout(run,40);
   }
   function configFromInputs() {
@@ -407,7 +541,7 @@
     if (last) updateLiveBadges((state.live.paused ? 'Paused · step ' : 'Live · computed step ') + last.step + ' / ' + last.totalSteps, state.live.paused);
   }
   function clearComputed(message) {
-    state.runSerial += 1; stopComputation(); stopLivePreview(); state.result=null; state.runtime=0; state.renderRuntime=0; state.cancelled=false; SIDES.forEach(clearPlot);
+    state.runSerial += 1; stopComputation(); stopLivePreview(); stopAgent3DPlayback(); state.result=null; state.runtime=0; state.renderRuntime=0; state.cancelled=false; SIDES.forEach(clearPlot); syncAgent3DControls(0);
     $('agentResultKind').textContent='No computed agent result'; $('agentTopStatus').textContent='Ready'; $('agentRuntime').textContent='—'; $('agentResultModel').textContent='—'; $('agentResultRuns').textContent='—'; $('agentResultGrid').textContent='—'; $('agentOccupied').textContent='—'; $('agentAgreement').textContent='—'; $('agentDiversity').textContent='—'; $('agentAttempts').textContent='—';
     if ($('agentAbsorbed')) $('agentAbsorbed').textContent='—'; if ($('agentAutocorrelation')) $('agentAutocorrelation').textContent='—'; if ($('agentLargestCluster')) $('agentLargestCluster').textContent='—';
     $('agentDiagnostics').classList.add('empty'); $('agentDiagnostics').textContent=message || 'Run an ensemble to inspect state totals, events and variability.';
@@ -431,7 +565,7 @@
   }
   async function acceptResult(result, start, serial) {
     if(serial!==state.runSerial)return;
-    stopComputation(); stopLivePreview(); state.result=result; state.runtime=performance.now()-start; const renderStart=performance.now();
+    stopComputation(); stopLivePreview(); state.result=result; state.live3d.index=Math.max(0,(result.representative.snapshots||[]).length-1); syncAgent3DControls(state.live3d.index); state.runtime=performance.now()-start; const renderStart=performance.now();
     try {
       await renderResult();
       if(serial!==state.runSerial)return;
@@ -442,7 +576,7 @@
   }
   function run() {
     const serial=++state.runSerial, start=performance.now();
-    state.cancelled=false; stopComputation(); stopLivePreview(); SIDES.forEach(stopAnimation);
+    state.cancelled=false; stopComputation(); stopLivePreview(); stopAgent3DPlayback(); SIDES.forEach(stopAnimation);
     state.result=null;
     $('agentResultKind').textContent='No computed agent result';
     $('agentRuntime').textContent='—'; $('agentResultRuns').textContent='—';
@@ -515,7 +649,7 @@
     if (root.Worker) {
       try {
         const requestId='agent-'+Date.now()+'-'+serial; state.activeRequestId=requestId;
-        const worker=new Worker('src/v72/agent-worker.js?v=72.48.0'); state.worker=worker;
+        const worker=new Worker('src/v72/agent-worker.js?v=77.4.1'); state.worker=worker;
         worker.onmessage=function(event){
           const message=event.data||{}; if(serial!==state.runSerial||message.requestId!==requestId)return;
           if(message.type==='started'){
@@ -611,7 +745,9 @@
   }
   function plotSpec(kind) {
     const r=state.result, rep=r.representative, colors=r.colors, states=r.states; let traces=[],lay=layout('','');
-    if(kind==='spatial-dynamics'){
+    if(kind==='space-time-3d'){
+      return agent3DSpec(state.live3d.index);
+    } else if(kind==='spatial-dynamics'){
       // Animated spatial dynamics are rendered by renderAnimatedSpatial().
       // Keep a single-frame specification as a deterministic non-animated fallback.
       traces=[latticeTrace(rep.finalGrid,states,colors,r.config.size,1)];
@@ -657,10 +793,10 @@
     return {traces:traces,layout:lay};
   }
   function compatiblePlotKeys() {
-    if(!state.result)return Object.keys(PLOTS);
-    const keys=Object.keys(PLOTS);
+    const keys=Object.keys(PLOTS).filter(function(key){return key!=='space-time-3d'||spaceTime3DRelevant();});
+    if(!state.result)return keys;
     return keys.filter(function(key){
-      if(key==='spatial-dynamics')return state.result.representative.snapshots&&state.result.representative.snapshots.length>=2;
+      if(key==='spatial-dynamics'||key==='space-time-3d')return state.result.representative.snapshots&&state.result.representative.snapshots.length>=2;
       if(key==='phase')return state.result.states.length>=2;
       if(key==='endpoint-spatial'||key==='endpoint')return !!endpointChoice();
       if(key==='event-time')return state.result.representative.eventSeries.some(function(row){return Object.keys(row.counts||{}).length;});
@@ -815,7 +951,7 @@
       if(!host.data||!host.data.length||!hasVisibleEvidence(host))throw new Error('Plotly returned no visible evidence.');
       markSingleActiveRenderRoot(host,kind);
       return 'rendered';
-    }catch(error){if(ticket!==state.plotSerial[side])return 'stale';fallbackCanvas(host,kind);$(side+'AgentPlotEvidence').textContent=meta.evidence+' Plotly could not mount this panel, so the same computed result is shown with the built-in canvas fallback.';return 'fallback';}
+    }catch(error){if(ticket!==state.plotSerial[side])return 'stale';fallbackCanvas(host,kind==='space-time-3d'?'spatial':kind);$(side+'AgentPlotEvidence').textContent=meta.evidence+' Plotly could not mount this panel, so the representative lattice is shown with the built-in canvas fallback.';return 'fallback';}
   }
   function safeStoredLayout() {
     try {
@@ -890,7 +1026,7 @@
     return exact+'<table class="diagnostic-table"><thead><tr><th>Final state</th><th>Representative</th><th>Mean</th><th>MCSE</th><th>5–95%</th></tr></thead><tbody>'+rows+'</tbody></table>'+endpointHtml()+'<p><b>Irreversible terminal condition reached:</b> '+absorption.count+'/'+r.config.runs+' ('+fmt(100*absorption.fraction,1)+'%; Wilson 95% ['+fmt(100*absorption.wilson95.low,1)+'%, '+fmt(100*absorption.wilson95.high,1)+'%]). Median first recorded terminal step: '+fmt(absorption.stepSummary.q50,1)+'.</p><p><b>Clusters:</b> representative '+rep.metrics.clusterCount+'; largest occupied-state cluster fraction '+fmt(rep.metrics.largestClusterFraction,3)+'.</p>'+normalized+'<h3>Transition events per run</h3><ul>'+events+'</ul><h3>Interpretation boundary</h3><p>One step is one '+esc(r.config.updateSchedule)+' site-based asynchronous lattice sweep. Finite-run percentiles and Monte Carlo errors describe simulation variability only. They do not estimate parameter uncertainty, measurement error, model discrepancy, stationarity or real-world predictive validity.</p>';
   }
   async function renderResult() {
-    const r=state.result,rep=r.representative,meta=r.config.model==='custom'?r.config.customModel:CORE.MODEL_META[r.config.model];populatePlotSelectors();renderLayout(false);$('agentTopStatus').textContent='Rendering';
+    const r=state.result,rep=r.representative,meta=r.config.model==='custom'?r.config.customModel:CORE.MODEL_META[r.config.model];populatePlotSelectors();syncAgent3DControls(state.live3d.index);renderLayout(false);$('agentTopStatus').textContent='Rendering';
     $('agentResultKind').textContent=meta.title+' · '+r.config.runs+' runs · master seed '+r.config.seed+' · config '+r.provenance.configHash;$('agentRuntime').textContent=fmt(state.runtime,1)+' ms';$('agentResultModel').textContent=meta.title;$('agentResultRuns').textContent=String(r.config.runs);$('agentResultGrid').textContent=r.config.size+'×'+r.config.size;$('agentOccupied').textContent=fmt(rep.metrics.occupied,0);$('agentAgreement').textContent=fmt(rep.metrics.spatialAgreement);if($('agentAutocorrelation'))$('agentAutocorrelation').textContent=fmt(rep.metrics.categoricalAutocorrelation);$('agentDiversity').textContent=fmt(rep.metrics.normalizedDiversity);$('agentAttempts').textContent=String(r.config.size*r.config.size*r.config.steps);if($('agentAbsorbed'))$('agentAbsorbed').textContent=fmt(100*r.ensemble.absorption.fraction,1)+'%';if($('agentLargestCluster'))$('agentLargestCluster').textContent=fmt(rep.metrics.largestClusterFraction,3);
     $('agentDiagnostics').classList.remove('empty');$('agentDiagnostics').innerHTML=diagnosticsHtml();$('agentBoundaryStatus').textContent='Browser-computed finite stochastic ensemble';$('agentBoundaryAlgorithm').textContent=r.provenance.updateSchedule+' · '+r.provenance.siteUpdateSemantics+' · '+r.provenance.updateAttemptsPerStep+' attempts/step';$('agentBoundaryTopology').textContent=r.config.neighborhood+' · '+r.config.boundary+' boundary · '+r.config.initialization+' initialization';$('agentBoundarySeeds').textContent='master '+r.config.seed+'; '+r.provenance.seeds.slice(0,3).join(', ')+' … ('+r.config.runs+' derived)';$('agentBoundaryClaim').textContent='Conditional simulation evidence under explicit local rules';$('agentBoundaryText').textContent='No calibration, causal interpretation, equilibrium certificate or external validity is implied by the simulated patterns. Configuration hash: '+r.provenance.configHash+'.';
     const results=await Promise.all(visibleSides().map(renderPlot));if(results.some(function(value){return value!=='rendered'&&value!=='fallback';}))throw new Error('At least one visible panel did not produce evidence.');renderLayout(false);$('agentTopStatus').textContent='Rendered';
@@ -902,8 +1038,12 @@
   function copyShareUrl(){const url=new URL(location.href);url.searchParams.set('state',encodeState(configForStorage()));const done=function(){$('agentStatus').textContent='Share URL copied. It contains configuration and seed only.';};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url.toString()).then(done).catch(function(){prompt('Copy share URL',url.toString());});else prompt('Copy share URL',url.toString());}
   function bind(){
     $('loadAgentPreset').addEventListener('click',function(){loadPreset($('agentPresetSelect').value);});$('agentPresetSelect').addEventListener('change',function(){loadPreset(this.value);});$('agentPresetDeck').addEventListener('click',function(e){const b=e.target.closest('[data-preset]');if(b)loadPreset(b.dataset.preset);});
-    $('agentModel').addEventListener('change',function(){if(this.value==='custom'&&!$('agentCustomModelJson').value.trim())$('agentCustomModelJson').value=JSON.stringify(CUSTOM_TEMPLATE,null,2);const meta=metaForUi(this.value);renderEditors(this.value,Object.fromEntries(meta.params.map(function(k){return [k,meta.parameters&&meta.parameters[k]!=null?meta.parameters[k]:0.05];})),meta.defaultFractions);clearComputed('Model changed. Configure the rules and exact initial population, then run the ensemble.');});$('agentInitialMode').addEventListener('change',function(){if(this.value==='counts')syncCountsFromFractions();setInitialMode(this.value);});$('agentSize').addEventListener('change',syncCountsFromFractions);$('validateAgentCustomModel').addEventListener('click',function(){try{const meta=parseCustomModel();renderEditors('custom',meta.parameters,meta.defaultFractions);$('agentStatus').textContent='Custom model validated: '+meta.states.length+' states and '+meta.transitions.length+' ordered transition rules.';}catch(error){$('agentStatus').textContent=error.message;}});$('downloadAgentModelTemplate').addEventListener('click',function(){download('fokolab-agent-custom-template.json',JSON.stringify(CUSTOM_TEMPLATE,null,2),'application/json');});if($('exportAgentModel'))$('exportAgentModel').addEventListener('click',function(){try{const config=configForStorage();const meta=config.model==='custom'?config.customModel:CORE.MODEL_META[config.model];download('fokolab-agent-model-'+config.model+'.json',JSON.stringify({schema:'foko.agent-model/1',release:RELEASE,model:config.model,title:meta.title,states:meta.states,colors:meta.colors,parameters:config.params,customModel:config.model==='custom'?config.customModel:null,initialPopulation:{mode:config.initialMode,counts:config.initialCounts,fractions:config.initialFractions},topology:{size:config.size,neighborhood:config.neighborhood,boundary:config.boundary,updateSchedule:config.updateSchedule,initialization:config.initialization}},null,2),'application/json');$('agentStatus').textContent='Exact model definition exported separately from simulation results.';}catch(error){$('agentStatus').textContent='Model export failed: '+error.message;}});$('agentCustomModelFile').addEventListener('change',function(){const file=this.files&&this.files[0];if(!file)return;file.text().then(function(text){$('agentCustomModelJson').value=text;$('agentModel').value='custom';const meta=parseCustomModel();renderEditors('custom',meta.parameters,meta.defaultFractions);clearComputed('Custom model imported and validated.');}).catch(function(error){$('agentStatus').textContent='Custom model import failed: '+error.message;});});$('importAgentConfig').addEventListener('change',function(){const file=this.files&&this.files[0];if(!file)return;file.text().then(function(text){const parsed=JSON.parse(text);applyConfig(parsed.result&&parsed.result.config?parsed.result.config:(parsed.config||parsed),'Imported Agent configuration loaded. Run to regenerate evidence.');}).catch(function(error){$('agentStatus').textContent='Agent configuration import failed: '+error.message;});});$('runAgent').addEventListener('click',run);$('resetAgent').addEventListener('click',function(){loadPreset(state.preset);});if($('pauseAgent'))$('pauseAgent').addEventListener('click',togglePause);if($('cancelAgent'))$('cancelAgent').addEventListener('click',cancelRun);
-    SIDES.forEach(function(side){$(side+'AgentPlotType').addEventListener('change',function(){const requested=this.value,old=state.plotTypes[side],changed=[side],other=SIDES.find(function(candidate){return candidate!==side&&state.plotTypes[candidate]===requested;});if(other&&old&&old!==requested){state.plotTypes[other]=old;$(other+'AgentPlotType').value=old;changed.push(other);}state.plotTypes[side]=requested;if(state.live.active&&!state.result)refreshLivePanels(changed);else changed.forEach(function(changedSide){if(visibleSides().includes(changedSide))renderPlot(changedSide);});});});document.querySelectorAll('[data-layout-mode]').forEach(function(b){b.addEventListener('click',function(){chooseLayout(this.dataset.layoutMode);});});document.querySelectorAll('.focus-card[data-focus-side]').forEach(function(b){b.addEventListener('click',function(event){event.stopPropagation();chooseFocus(this.dataset.focusSide);});});document.querySelectorAll('[data-export-side]').forEach(function(b){b.addEventListener('click',function(){exportPlot(this.dataset.exportSide,'png');});});$('exportAgentPng').addEventListener('click',function(){exportPlot(state.lastPlotSide,'png');});$('exportAgentSvg').addEventListener('click',function(){exportPlot(state.lastPlotSide,'svg');});
+    $('agentModel').addEventListener('change',function(){state.preset='';document.querySelectorAll('#agentPresetDeck [data-preset]').forEach(function(button){button.classList.remove('active');});if(this.value==='custom'&&!$('agentCustomModelJson').value.trim())$('agentCustomModelJson').value=JSON.stringify(CUSTOM_TEMPLATE,null,2);const meta=metaForUi(this.value);renderEditors(this.value,Object.fromEntries(meta.params.map(function(k){return [k,meta.parameters&&meta.parameters[k]!=null?meta.parameters[k]:0.05];})),meta.defaultFractions);clearComputed('Model changed. Configure the rules and exact initial population, then run the ensemble.');enforceContextualVisualizations();});$('agentInitialMode').addEventListener('change',function(){if(this.value==='counts')syncCountsFromFractions();setInitialMode(this.value);});$('agentSize').addEventListener('change',function(){syncCountsFromFractions();renderAgentEquation();});['agentNeighborhood','agentBoundary','agentUpdateSchedule'].forEach(function(id){$(id).addEventListener('change',renderAgentEquation);});$('validateAgentCustomModel').addEventListener('click',function(){try{const meta=parseCustomModel();renderEditors('custom',meta.parameters,meta.defaultFractions);$('agentStatus').textContent='Custom model validated: '+meta.states.length+' states and '+meta.transitions.length+' ordered transition rules.';}catch(error){$('agentStatus').textContent=error.message;}});$('downloadAgentModelTemplate').addEventListener('click',function(){download('fokolab-agent-custom-template.json',JSON.stringify(CUSTOM_TEMPLATE,null,2),'application/json');});if($('exportAgentModel'))$('exportAgentModel').addEventListener('click',function(){try{const config=configForStorage();const meta=config.model==='custom'?config.customModel:CORE.MODEL_META[config.model];download('fokolab-agent-model-'+config.model+'.json',JSON.stringify({schema:'foko.agent-model/1',release:RELEASE,model:config.model,title:meta.title,states:meta.states,colors:meta.colors,parameters:config.params,customModel:config.model==='custom'?config.customModel:null,initialPopulation:{mode:config.initialMode,counts:config.initialCounts,fractions:config.initialFractions},topology:{size:config.size,neighborhood:config.neighborhood,boundary:config.boundary,updateSchedule:config.updateSchedule,initialization:config.initialization}},null,2),'application/json');$('agentStatus').textContent='Exact model definition exported separately from simulation results.';}catch(error){$('agentStatus').textContent='Model export failed: '+error.message;}});$('agentCustomModelFile').addEventListener('change',function(){const file=this.files&&this.files[0];if(!file)return;file.text().then(function(text){$('agentCustomModelJson').value=text;$('agentModel').value='custom';state.preset='';const meta=parseCustomModel();renderEditors('custom',meta.parameters,meta.defaultFractions);clearComputed('Custom model imported and validated.');enforceContextualVisualizations();}).catch(function(error){$('agentStatus').textContent='Custom model import failed: '+error.message;});});$('importAgentConfig').addEventListener('change',function(){const file=this.files&&this.files[0];if(!file)return;file.text().then(function(text){const parsed=JSON.parse(text);applyConfig(parsed.result&&parsed.result.config?parsed.result.config:(parsed.config||parsed),'Imported Agent configuration loaded. Run to regenerate evidence.');}).catch(function(error){$('agentStatus').textContent='Agent configuration import failed: '+error.message;});});$('runAgent').addEventListener('click',run);$('resetAgent').addEventListener('click',function(){loadPreset(state.preset||Object.keys(PRESETS)[0]);});if($('pauseAgent'))$('pauseAgent').addEventListener('click',togglePause);if($('cancelAgent'))$('cancelAgent').addEventListener('click',cancelRun);
+    SIDES.forEach(function(side){$(side+'AgentPlotType').addEventListener('change',function(){const requested=this.value,old=state.plotTypes[side],changed=[side],other=SIDES.find(function(candidate){return candidate!==side&&state.plotTypes[candidate]===requested;});if(other&&old&&old!==requested){state.plotTypes[other]=old;$(other+'AgentPlotType').value=old;changed.push(other);}state.plotTypes[side]=requested;if(!SIDES.some(function(candidate){return state.plotTypes[candidate]==='space-time-3d';}))stopAgent3DPlayback();syncAgent3DControls(state.live3d.index);if(state.live.active&&!state.result)refreshLivePanels(changed);else changed.forEach(function(changedSide){if(visibleSides().includes(changedSide))renderPlot(changedSide);});});});document.querySelectorAll('[data-layout-mode]').forEach(function(b){b.addEventListener('click',function(){chooseLayout(this.dataset.layoutMode);});});document.querySelectorAll('.focus-card[data-focus-side]').forEach(function(b){b.addEventListener('click',function(event){event.stopPropagation();chooseFocus(this.dataset.focusSide);});});document.querySelectorAll('[data-export-side]').forEach(function(b){b.addEventListener('click',function(){exportPlot(this.dataset.exportSide,'png');});});$('exportAgentPng').addEventListener('click',function(){exportPlot(state.lastPlotSide,'png');});$('exportAgentSvg').addEventListener('click',function(){exportPlot(state.lastPlotSide,'svg');});
+    $('agent3dPlay').addEventListener('click',toggleAgent3DPlayback);
+    $('agent3dFrame').addEventListener('input',function(){stopAgent3DPlayback();renderAgent3DSides(Number(this.value));});
+    $('agent3dSpeed').addEventListener('change',function(){if(state.live3d.playing)scheduleAgent3DPlayback();});
+    $('agent3dTrail').addEventListener('change',function(){renderAgent3DSides(state.live3d.index);});
     $('saveAgentSession').addEventListener('click',function(){localStorage.setItem(STORAGE_KEY,JSON.stringify(configForStorage()));$('agentStatus').textContent='Configuration saved locally. Computed output was not stored.';});$('restoreAgentSession').addEventListener('click',function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return $('agentStatus').textContent='No saved Agent configuration exists.';applyConfig(JSON.parse(raw),'Configuration restored. Run to regenerate evidence.');});$('copyAgentShareUrl').addEventListener('click',copyShareUrl);$('exportAgentCsv').addEventListener('click',function(){if(state.result)download('fokolab-agent-population.csv',csvResult(),'text/csv');});$('exportAgentJson').addEventListener('click',function(){if(state.result)download('fokolab-agent-result.json',JSON.stringify({release:RELEASE,generated:new Date().toISOString(),result:state.result},null,2),'application/json');});$('exportAgentPython').addEventListener('click',function(){download('fokolab-agent-validation.py',pythonScript(),'text/x-python');});
     document.querySelectorAll('[data-jump]').forEach(function(button){button.addEventListener('click',function(){const target=document.querySelector(this.dataset.jump);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('[data-jump]').forEach(function(b){b.classList.toggle('active',b===button);});});});window.addEventListener('resize',function(){renderLayout(true);},{passive:true});
   }
@@ -912,6 +1052,6 @@
     activeRenderRoots: function (side) { const host=$(side+'AgentPlot'); return activeRenderRoots(host).length; },
     activeRenderKind: function (side) { const host=$(side+'AgentPlot'); return host ? host.dataset.agentRenderKind || '' : ''; }
   };
-  function init(){safeStoredLayout();renderLayout(false);$('agentCustomModelJson').value=JSON.stringify(CUSTOM_TEMPLATE,null,2);renderPresetLibrary();populatePlotSelectors();bind();const url=new URL(location.href),encoded=url.searchParams.get('state'),requested=url.searchParams.get('example');if(encoded){try{applyConfig(decodeState(encoded),'Shared configuration loaded. Recomputing from the stored master seed.');setTimeout(run,50);return;}catch(error){$('agentStatus').textContent='Invalid shared state: '+error.message;}}loadPreset(requested&&PRESETS[requested]?requested:state.preset,true);}
+  function init(){safeStoredLayout();renderLayout(false);$('agentCustomModelJson').value=JSON.stringify(CUSTOM_TEMPLATE,null,2);renderPresetLibrary();populatePlotSelectors();syncAgent3DControls(0);bind();const url=new URL(location.href),encoded=url.searchParams.get('state'),requested=url.searchParams.get('example');if(encoded){try{applyConfig(decodeState(encoded),'Shared configuration loaded. Recomputing from the stored master seed.');setTimeout(run,50);return;}catch(error){$('agentStatus').textContent='Invalid shared state: '+error.message;}}loadPreset(requested&&PRESETS[requested]?requested:state.preset,true);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 }(typeof window !== 'undefined' ? window : globalThis));

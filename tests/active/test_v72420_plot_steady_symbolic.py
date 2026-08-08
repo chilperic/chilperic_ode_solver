@@ -19,10 +19,13 @@ def test_one_plot_geometry_normalizer_owns_all_plotly_calls():
 
 def test_action_controls_expand_instead_of_clipping_text():
     css = text("styles/v72-lab-shell.css")
+    system = text("styles/v76-system.css")
     assert ".actionbar > button" in css
     assert "min-height: 46px" in css
     assert "white-space: normal" in css
     assert "overflow: visible" in css
+    assert ".actionbar > .file-label" in system
+    assert "min-height: 44px !important" in system
 
 
 def test_steady_examples_are_visible_searchable_and_compute_on_selection():
@@ -53,3 +56,25 @@ def test_offline_visual_gate_is_release_blocking():
     build = text("scripts/build-release.py")
     assert '"test:visual-contracts-offline"' in package
     assert 'test:visual-contracts-offline' in build
+
+
+def test_optimization_and_stochastic_coalesce_overlapping_plot_requests():
+    for controller in (
+        "src/v72/optimization-workspace.js",
+        "src/v72/stochastic-workspace.js",
+    ):
+        source = text(controller)
+        assert "let plotRenderRevision = 0" in source
+        assert "const revision = ++plotRenderRevision" in source
+        assert "root.FokoPlotLifecycle.afterLayout()" in source
+        assert "revision !== plotRenderRevision" in source
+        assert "Promise.all" in source
+
+
+def test_visual_gate_reports_the_exact_lab_and_terminal_plot_state():
+    gate = text("scripts/check-plot-steady-symbolic-offline.js")
+    assert "async function waitForRenderedPair" in gate
+    assert "plot rendering failed" in gate
+    assert "plots did not reach the rendered state" in gate
+    assert "${spec.label} (${spec.file}) contract failed" in gate
+    assert "runtimeErrors" in gate

@@ -9,81 +9,21 @@
 <meta content="Browser-only ODE Lab for deterministic models, sweeps, plots, and reproducible export." property="og:description"/>
 <meta content="website" property="og:type"/>
 <title>ODE Lab · Foko Lab</title>
-<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.48.0" rel="stylesheet"/>
-<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.48.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.48.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.48.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.48.0" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=72.48.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.48.0"></script></head>
-<body data-lab="ode" data-v72-shell="true" data-version="72.48.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=77.4.1" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=77.4.1"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=77.4.1" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=77.4.1" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=77.4.1" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=77.4.1" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=77.4.1"></script><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
+</head>
+<body data-lab="ode" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.48.0" width="190"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div>
-</header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="layout" id="workbench" tabindex="-1">
 <aside aria-label="Module navigation" class="side-nav">
 <button class="nav-item active" data-mode-jump="ode" type="button"><span>⌁</span><b>ODE Solver</b></button>
@@ -100,7 +40,7 @@
 <button class="mode-tab" data-mode="param" type="button">Parametric</button>
 </section>
 <section class="intro-card">
-<b>ODE Lab</b> handles deterministic systems and parametric ODE sweeps. For other model classes, use the dedicated <a href="workbench.html?model=quadratic">Optimization Lab</a>, <a href="workbench.html?model=enzyme-steady">Steady-State Lab</a>, or <a href="workbench.html?model=stoch-sir">Stochastic Lab</a>.
+<b>Create and simulate your own model.</b> Edit states, equations, parameters, initial conditions and numerical settings directly. Examples are optional starting points.
         </section><section class="actionbar">
 <button class="primary run-button" id="runBtn" type="button">▶ Run</button>
 <button class="primary sweep-button hidden" id="runSweep" type="button">↻ Sweep</button>
@@ -137,7 +77,7 @@
 </details>
 </section>
 <section class="examples-section" id="modelArea">
-<div class="section-title flat"><h2>Examples</h2><div class="button-row compact-actions"><button class="secondary subtle" id="loadExample" type="button">Load</button><button class="ghost subtle" id="resetBtn" title="Reload the selected example" type="button">Reset</button></div></div>
+<div class="section-title flat"><h2>Model starter</h2><div class="button-row compact-actions"><button class="primary subtle" id="newModelBtn" type="button">＋ New model</button><button class="secondary subtle" id="loadExample" type="button">Load example</button><button class="ghost subtle" id="resetBtn" title="Reload the selected example" type="button">Reset</button></div></div>
 <select aria-label="Example model" id="exampleSelect"></select>
 <div aria-label="Core example model chips" class="model-deck" id="modelDeck"></div>
 <p class="narrative" id="exampleNarrative"></p>
@@ -158,7 +98,7 @@
 </div>
 </article>
 <article class="card subdetails" id="paramDetails" open="">
-<div class="card-head"><h2>Parameters</h2></div>
+<div class="card-head"><h2>Parameters</h2><button class="icon-btn" id="addOdeParameter" title="Add parameter" type="button">＋</button></div>
 <div class="clean-table param-table" id="paramRows"></div>
 </article>
 <div class="two-col">
@@ -208,11 +148,11 @@
 <section class="import-drawer" id="importBlock">
 <details>
 <summary>Import model / templates</summary>
-<p class="note compact-note">Import a Foko Lab model: JSON, CSV, TXT/ODE, YAML, Python config, optimization template, or basic SBML/XML. For SBML, search/download models from <a href="https://www.ebi.ac.uk/biomodels/" rel="noopener" target="_blank">BioModels</a> or <a href="http://bigg.ucsd.edu/" rel="noopener" target="_blank">BiGG Models</a>, then click here or drag and drop the file.</p>
+<p class="note compact-note">Import a local declarative model: JSON/Model IR, model-table CSV, TXT/ODE, YAML, Python or JavaScript data dictionary, or the strict SBML reaction subset. Files are parsed locally and dictionary code is never executed. SBML rules, events, packages, delays and unsupported MathML are rejected instead of silently omitted.</p>
 <label class="upload-drop" for="modelFile" id="uploadDrop">
-<span>Click here or drag and drop JSON, CSV, TXT/ODE, YAML, Python config, or SBML/XML</span>
-<small>.json · .csv · .txt · .ode · .yml · .py</small>
-<input accept=".json,.csv,.txt,.ode,.eqn,.yaml,.yml,.py,.xml,.sbml,.md" id="modelFile" type="file"/>
+<span>Click here or drag and drop a supported model file</span>
+<small>.json · .foko · .csv · .txt/.ode · .yaml · .py/.js · .sbml/.xml</small>
+<input accept=".json,.foko,.csv,.txt,.ode,.eqn,.yaml,.yml,.py,.js,.xml,.sbml,.cellml,.sedml,.omex" id="modelFile" type="file"/>
 </label>
 <div class="template-row">
 <select aria-label="Template" id="templateSelect">
@@ -230,14 +170,14 @@
 <section class="card model-authoring-standard" id="modelAuthoringStandard">
 <div class="card-head"><h2>Custom ODE model and method choice</h2></div>
 <p class="note">This lab accepts user-defined models. The selected method controls how the browser interprets the model; exports remain the route for heavy or validated computation.</p>
-<table class="clean-table compact-table"><tbody><tr><td><b>Own model</b></td><td>Import JSON, CSV, TXT/ODE, YAML, Python config or SBML/XML from the import drawer.</td></tr><tr><td><b>Methods</b></td><td>RK45/RK5/RK4/Heun/Euler run in browser; Radau/BDF/LSODA/DOP853 are exported for Python.</td></tr><tr><td><b>Approach</b></td><td>Initial-value simulation, parameter sweep, phase portrait, vector field and export.</td></tr></tbody></table>
+<table class="clean-table compact-table"><tbody><tr><td><b>Own model</b></td><td>Import JSON/Model IR, model-table CSV, TXT/ODE, YAML, data-only Python/JavaScript dictionaries, or the validated SBML subset.</td></tr><tr><td><b>Methods</b></td><td>RK45/RK5/RK4/Heun/Euler run in browser; Radau/BDF/LSODA/DOP853 are exported for Python.</td></tr><tr><td><b>Approach</b></td><td>Initial-value simulation, parameter sweep, phase portrait, vector field and export.</td></tr></tbody></table>
 </section>
 </aside>
 <section aria-label="Results workspace" class="workspace v72-workspace">
 <section aria-label="Numerical results" class="results-card" role="region">
 <header class="v72-workspace-head">
 <div>
-<p class="v72-eyebrow">Computed workspace</p>
+<p class="v72-eyebrow">Results</p>
 <h1>ODE and parametric analysis</h1>
 <p>Run the current model, then compare up to three computed views. A panel is hidden when no compatible computed result exists.</p>
 </div>
@@ -324,7 +264,7 @@
 <div aria-live="polite" class="diagnostics empty" id="verificationStatus">Run the browser model first. The first verification downloads Pyodide, NumPy and SciPy.</div>
 </section>
 <section class="v72-inspector-card" id="provenanceCard">
-<div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Computation boundary</h2></div></div>
+<div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div>
 <dl class="v72-provenance">
 <div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div>
 <div><dt>Engine</dt><dd id="provenanceEngine">FokoODECore worker</dd></div>
@@ -352,13 +292,14 @@
 </aside>
 </main>
 </div>
-<script defer="" src="src/platform/compute-bus.js?v=72.48.0"></script>
-<script defer="" src="src/v72/ode-workspace.js?v=72.48.0"></script>
-<script defer="" src="src/core/model-ir.js?v=72.48.0"></script>
-<script defer="" src="src/core/numerical-inputs.js?v=72.48.0"></script>
-<script defer="" src="src/app.js?v=72.48.0"></script>
-<script defer="" src="src/model-validator.js?v=72.48.0"></script>
-<script defer="" src="src/model-session.js?v=72.48.0"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=72.48.0"></script>
-<script defer="" src="src/navigation.js?v=72.48.0"></script></body>
+<script defer="" src="src/platform/compute-bus.js?v=77.4.1"></script>
+<script defer="" src="src/v72/ode-workspace.js?v=77.4.1"></script>
+<script defer="" src="src/core/model-ir.js?v=77.4.1"></script>
+<script defer="" src="src/core/model-import.js?v=77.4.1"></script>
+<script defer="" src="src/core/numerical-inputs.js?v=77.4.1"></script>
+<script defer="" src="src/app.js?v=77.4.1"></script>
+<script defer="" src="src/model-validator.js?v=77.4.1"></script>
+<script defer="" src="src/model-session.js?v=77.4.1"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=77.4.1"></script><script defer src="src/v76/app-shell.js?v=77.4.1"></script>
+</body>
 </html>

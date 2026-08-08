@@ -116,6 +116,59 @@ async function assertPlotGeometry(page, hostSelector, label) {
   }
 }
 
+async function plotPairSnapshot(page) {
+  return page.evaluate(() => {
+    const geometry = (node) => {
+      if (!node) return null;
+      const rect = node.getBoundingClientRect();
+      const style = getComputedStyle(node);
+      return {
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
+        display: style.display,
+        visibility: style.visibility,
+        minWidth: style.minWidth,
+        gridTemplateColumns: style.gridTemplateColumns
+      };
+    };
+    const snapshot = (id) => {
+      const node = document.getElementById(id);
+      if (!node) return { id, missing: true };
+      return {
+        id,
+        state: node.dataset.renderState || 'unset',
+        ariaBusy: node.getAttribute('aria-busy'),
+        ...geometry(node),
+        card: geometry(node.closest('.chart-card')),
+        message: node.textContent.replace(/\s+/g, ' ').trim().slice(0, 240)
+      };
+    };
+    return {
+      status: document.querySelector('[id$="TopStatus"]')?.textContent.trim() || '',
+      layout: document.getElementById('plotGrid')?.dataset.layout || '',
+      main: geometry(document.querySelector('main.layout')),
+      workspace: geometry(document.querySelector('.v72-workspace')),
+      grid: geometry(document.getElementById('plotGrid')),
+      left: snapshot('leftPlot'),
+      right: snapshot('rightPlot')
+    };
+  });
+}
+
+async function waitForRenderedPair(page, label, runtimeErrors, timeoutMs = Number(process.env.FOKO_VISUAL_TIMEOUT_MS || 60000)) {
+  const deadline = Date.now() + timeoutMs;
+  let snapshot = await plotPairSnapshot(page);
+  while (Date.now() < deadline) {
+    if (snapshot.left.state === 'rendered' && snapshot.right.state === 'rendered') return snapshot;
+    if (snapshot.left.state === 'failed' || snapshot.right.state === 'failed') {
+      throw new Error(`${label}: plot rendering failed.\n${JSON.stringify({ snapshot, runtimeErrors }, null, 2)}`);
+    }
+    await page.waitForTimeout(100);
+    snapshot = await plotPairSnapshot(page);
+  }
+  throw new Error(`${label}: plots did not reach the rendered state within ${timeoutMs / 1000}s.\n${JSON.stringify({ snapshot, runtimeErrors }, null, 2)}`);
+}
+
 async function syntheticPlotContract(browser) {
   const page = await browser.newPage({ viewport: { width: 900, height: 720 } });
   await page.setContent(`<!doctype html><html data-theme="aurora"><body data-v72-shell="true"><main class="layout"><section class="workspace v72-workspace"><article class="chart-card"><div class="chart-title"><h3>Stiffness evidence timeline</h3><select><option>Stiffness evidence timeline</option></select><button class="focus-card">Focus</button><button class="kebab">⇩</button></div><div id="contractPlot" class="plot"></div></article></section></main></body></html>`);
@@ -238,13 +291,25 @@ async function authoredScreenshotLabsContract(browser) {
     }
   ]) {
     const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
-    await loadAuthoredPage(page, spec.file);
-    await page.waitForFunction(spec.status, null, { timeout: 30000 });
-    await page.waitForFunction(() => document.getElementById('leftPlot').dataset.renderState === 'rendered' && document.getElementById('rightPlot').dataset.renderState === 'rendered', null, { timeout: 30000 });
-    await assertPlotGeometry(page, '#leftPlot', `${spec.label} primary plot`);
-    await assertPlotGeometry(page, '#rightPlot', `${spec.label} secondary plot`);
-    await assertActionButtonsNotClipped(page, spec.controls, `${spec.label} controls`);
-    await page.close();
+    const runtimeErrors = [];
+    page.on('pageerror', (error) => runtimeErrors.push(`pageerror: ${error.message || error}`));
+    page.on('console', (message) => {
+      if (message.type() === 'error') runtimeErrors.push(`console: ${message.text()}`);
+    });
+    try {
+      await loadAuthoredPage(page, spec.file);
+      await page.waitForFunction(spec.status, null, { timeout: 60000 });
+      await waitForRenderedPair(page, spec.label, runtimeErrors);
+      await assertPlotGeometry(page, '#leftPlot', `${spec.label} primary plot`);
+      await assertPlotGeometry(page, '#rightPlot', `${spec.label} secondary plot`);
+      await assertActionButtonsNotClipped(page, spec.controls, `${spec.label} controls`);
+      console.log(`${spec.label} authored two-plot contract passed.`);
+    } catch (error) {
+      const snapshot = await plotPairSnapshot(page).catch(() => ({ unavailable: true }));
+      throw new Error(`${spec.label} (${spec.file}) contract failed.\n${JSON.stringify({ snapshot, runtimeErrors }, null, 2)}\n${error.message || error}`);
+    } finally {
+      await page.close();
+    }
   }
 }
 
@@ -265,7 +330,7 @@ async function steadyContract(browser) {
   await page.waitForFunction(() => document.querySelectorAll('#steadySelect option').length >= 26 && document.getElementById('steadyTopStatus').textContent.trim() === 'Converged', null, { timeout: 20000 });
   assert.equal(await page.locator('#steadySelect option').count(), 26, 'Steady-State example count changed unexpectedly.');
   assert.equal(await page.locator('#steadyDeck [data-steady-preset]').count(), 26, 'Steady-State deck does not expose all examples.');
-  await page.waitForFunction(() => document.getElementById('leftPlot').dataset.renderState === 'rendered' && document.getElementById('rightPlot').dataset.renderState === 'rendered');
+  await waitForRenderedPair(page, 'Steady-State', []);
   await assertPlotGeometry(page, '#leftPlot', 'Steady-State primary plot');
   await assertPlotGeometry(page, '#rightPlot', 'Steady-State diagnostic plot');
   await assertActionButtonsNotClipped(page, '.actionbar > button, .actionbar > .file-label', 'Steady-State controls');
@@ -299,7 +364,7 @@ async function symbolicContract(browser) {
   await page.waitForFunction(() => document.querySelectorAll('#symbolicSelect option').length >= 20 && document.getElementById('symbolicTopStatus').textContent.trim() === 'Computed', null, { timeout: 20000 });
   assert.equal(await page.locator('#symbolicSelect option').count(), 20, 'Symbolic example count changed unexpectedly.');
   assert.equal(await page.locator('#symbolicDeck [data-symbolic-preset]').count(), 20, 'Symbolic deck does not expose all examples.');
-  await page.waitForFunction(() => document.getElementById('leftPlot').dataset.renderState === 'rendered' && document.getElementById('rightPlot').dataset.renderState === 'rendered');
+  await waitForRenderedPair(page, 'Symbolic', []);
   await assertPlotGeometry(page, '#leftPlot', 'Symbolic primary plot');
   await assertPlotGeometry(page, '#rightPlot', 'Symbolic secondary plot');
   await assertActionButtonsNotClipped(page, '.actionbar > button', 'Symbolic controls');
@@ -316,7 +381,7 @@ async function symbolicContract(browser) {
 
 (async () => {
   const browser = await chromium.launch({
-    executablePath: fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined,
+    executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined),
     headless: true,
     args: ['--no-sandbox', '--disable-dev-shm-usage']
   });

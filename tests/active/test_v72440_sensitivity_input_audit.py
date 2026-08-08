@@ -16,7 +16,7 @@ def test_sensitivity_is_a_first_class_workspace():
     for source in (
         'src/core/numerical-inputs.js', 'src/models/sensitivity-presets.js',
         'src/core/sensitivity.js', 'src/v72/sensitivity-workspace.js',
-        'src/v72/scientific-registry.js', 'src/navigation.js'
+        'src/v72/scientific-registry.js', 'src/v76/app-shell.js'
     ):
         assert source in scripts
     assert scripts.index('src/v72/accessibility-performance.js') < scripts.index('src/v72/sensitivity-workspace.js')
@@ -85,8 +85,10 @@ def test_ode_numerical_controls_are_persisted_and_stale_safe():
 
 
 def test_navigation_exposes_sensitivity_statically():
+    shell = text('src/v76/app-shell.js')
+    assert "'Sensitivity'" in shell
+    assert "'sensitivity.html'" in shell
     pages = ['index.html', 'ode.html', 'statistics.html', 'sensitivity.html', 'docs.html']
     for page_name in pages:
         soup = BeautifulSoup(text(page_name), 'html.parser')
-        links = [node.get('href') for node in soup.select('[data-nav-menu="analysis"] a')]
-        assert any((href or '').endswith('sensitivity.html') for href in links), page_name
+        assert soup.select_one('script[src^="src/v76/app-shell.js"]') is not None, page_name

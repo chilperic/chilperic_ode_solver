@@ -39,7 +39,9 @@ const byLab = data.reduce((out, item) => { out[item.lab] = (out[item.lab] || 0) 
 for (const [lab, minimum] of Object.entries({
   ODE: 20, Stochastic: 12, 'Steady State': 18, Optimization: 12,
   Agent: 15, SciML: 18, Symbolic: 10, Statistics: 12,
-  'Machine Learning': 10, Fitting: 6, 'Linear Algebra': 7, Networks: 7
+  'Machine Learning': 10, Fitting: 6, 'Linear Algebra': 7, Networks: 7,
+  'Population Genetics': 13, 'Advanced Methods': 12, Bifurcation: 6,
+  'Evolution Landscapes': 12, 'AI Modeling': 12
 })) {
   checks += 1;
   assert.ok((byLab[lab] || 0) >= minimum, `${lab}: catalog retains at least ${minimum} examples/views`);

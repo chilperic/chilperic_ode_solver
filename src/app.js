@@ -300,6 +300,10 @@ function init(){
     try{ applySessionConfig(decodeSharedState(sharedState),'Shared configuration'); return; }
     catch(e){ setStatus(`Shared configuration rejected: ${actionable(e.message)}`,true); }
   }
+  if(params.get('new')==='1'){
+    loadBlankModel();
+    return;
+  }
   const explicitSaved=(!ex) ? readStoredSession(V72_SESSION_PREFIX+sessionKeyForModule(state.module)) : null;
   if(explicitSaved?.payload){ applySessionConfig(explicitSaved.payload,`Session from ${(explicitSaved.savedAt||'').slice(0,19)||'local storage'}`); return; }
 
@@ -338,8 +342,10 @@ function wire(){
   $('themeBtn')?.addEventListener('change',e=>setTheme(e.target.value));
   $('resetBtn')?.addEventListener('click',()=>loadExample($('exampleSelect').value));
   $('loadExample').addEventListener('click',()=>loadExample($('exampleSelect').value));
+  $('newModelBtn')?.addEventListener('click',loadBlankModel);
   $('exampleSelect').addEventListener('change',e=>previewExampleSelection(e.target.value));
   $('addEq').addEventListener('click',addEquation);
+  $('addOdeParameter')?.addEventListener('click',addOdeParameter);
   $('addVar')?.addEventListener('click',addVariable);
   $('runBtn').addEventListener('click',runDefault);
   $('verifySciPyBtn')?.addEventListener('click',verifyCurrentResult);
@@ -473,8 +479,30 @@ function loadExample(name){
   updateMathPreview(); refreshAllSelects(); updatePlotOptions(); clearPlots(); resetStatus();
   setStatus(`Loaded ${name}. Run the model to update plots.`);
 }
+function loadBlankModel(){
+  if(state.worker){ state.worker.terminate(); state.worker=null; }
+  if(state.module==='opt') setModule('ode');
+  const scaffold={
+    vars:['x'], eqs:['r*x*(1-x/K)'], y0:[1],
+    params:{r:[0.8,0.05,2],K:[10,2,30]},
+    t0:0,t1:15,points:500,method:'rk45',
+    narrative:'User-authored model scaffold. Replace the equation, states, parameters and ranges before interpreting results.'
+  };
+  loadOde(scaffold);
+  state.result=null; state.sweep=null; state.opt=null; state.resultKind='default';
+  document.querySelectorAll('.model-card,.additional-example-card').forEach(button=>button.classList.remove('active'));
+  safeText($('exampleNarrative'),'New editable model. The logistic equation is a removable scaffold, not a locked example.');
+  resetPlotAxes(true); updateMathPreview(); refreshAllSelects(); updatePlotOptions(); clearPlots(); resetStatus();
+  const url=new URL(window.location.href); url.search=''; url.searchParams.set('module','ode'); url.searchParams.set('new','1'); history.replaceState(null,'',url);
+  setStatus('New model ready. Edit the scaffold, then press Run.');
+}
 function loadOde(ex){
-  state.model={vars:ex.vars, eqs:ex.eqs, y0:ex.y0, params:ex.params||{}, t0:ex.t0, t1:ex.t1, points:ex.points, method:ex.method||'rk45', sweep:ex.sweep||null, sectionVar:ex.sectionVar||null, sectionValue:ex.sectionValue??0, narrative:ex.narrative||''};
+  // Sessions, imports and cross-lab handoffs legitimately use three parameter
+  // representations: a scalar, {value,min,max}, or [value,min,max].  The ODE
+  // editor owns the array representation, so canonicalize at its boundary.
+  // Without this conversion a restored scalar/object is rendered as undefined
+  // and later reaches the worker as NaN even though the equation is valid.
+  state.model={vars:ex.vars, eqs:ex.eqs, y0:ex.y0, params:normalizeParams(ex.params||{}), t0:ex.t0, t1:ex.t1, points:ex.points, method:ex.method||'rk45', sweep:ex.sweep||null, sectionVar:ex.sectionVar||null, sectionValue:ex.sectionValue??0, narrative:ex.narrative||''};
   applyNumericalSettings(ex.numerics ? {...ex,...ex.numerics} : ex);
   state.resultsStale=false;
   if(ex.sweep){ $('sweepMetric').value=ex.sweep[3]||'max'; }
@@ -519,6 +547,7 @@ function renderTable(id,heads,rows,callback,deletable=false){
 }
 function deleteTableRow(id,i){ if(id==='paramRows'){ const k=Object.keys(state.model.params)[i]; delete state.model.params[k]; renderOdeControls(); markScientificInputsStale(); } if(id==='variableRows'){ state.model.variables.splice(i,1); renderOptControls(); } updateMathPreview(); refreshAllSelects(); }
 function addEquation(){ const n='u'+(state.model.vars.filter(v=>v.startsWith('u')).length+1); state.model.vars.push(n); state.model.eqs.push('0'); state.model.y0.push(0); renderOdeControls(); refreshAllSelects(); updateMathPreview(); markScientificInputsStale(); }
+function addOdeParameter(){ let index=1; while(state.model.params['p'+index]) index+=1; state.model.params['p'+index]=[1,0,2]; renderOdeControls(); refreshAllSelects(); updateMathPreview(); markScientificInputsStale('Parameter added. Define its value and range before running.'); }
 function addVariable(){ state.model.variables.push({name:'x'+(state.model.variables.length+1),initial:0,lower:-10,upper:10}); renderOptControls(); }
 function readOde(){ compiledEquationCacheKey=''; compiledEquationCache=null; state.model.t0=Number($('t0').value); state.model.t1=Number($('t1').value); state.model.points=Number($('points').value); state.model.method=$('method').value; state.numerics=numericalSettingsFromInputs(); syncSummary(); }
 function readOpt(){ state.model.optClass=$('optClass')?.value || state.model.optClass || 'nonconvex'; state.model.algorithm=$('optAlgorithm')?.value || state.model.algorithm || defaultOptAlgorithm(state.model.optClass); state.model.sense=$('optSense').value; state.model.objective=$('objective').value; state.model.objective2=$('objective2')?.value?.trim()||''; state.model.ineq=$('ineq').value.split('\n').map(s=>s.trim()).filter(Boolean); state.model.eq=$('eqcon').value.split('\n').map(s=>s.trim()).filter(Boolean); }
@@ -594,7 +623,7 @@ function currentOdePayload(){
   return {...state.model,...normalized,narrative:state.model.narrative||'',warnings:normalized.warnings||[]};
 }
 function runOde(){
-  try{ const payload=currentOdePayload(); const check=window.FokoModelValidator?.validate?.(payload,'ode'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); window.FokoSession?.save?.(sessionKeyForModule(state.module), currentConfig()); state.resultsStale=false; startBusy('Solving...'); worker().postMessage({type:'solve',payload}); }catch(e){ setStatus(actionable(e.message),true); }
+  try{ const payload=currentOdePayload(); const check=window.FokoModelValidator?.validate?.(payload,'ode'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); window.FokoSession?.save?.(sessionKeyForModule(state.module), currentConfig()); state.resultsStale=Boolean(state.result||state.sweep||state.opt); startBusy('Solving...'); worker().postMessage({type:'solve',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
 async function verifyCurrentResult(){
   const button=$('verifySciPyBtn'), host=$('verificationStatus');
@@ -616,7 +645,7 @@ async function verifyCurrentResult(){
   finally{button.disabled=false;}
 }
 function runSweep(){
-  try{ const base=currentOdePayload(); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const sweepN=window.FokoNumericalInputs?.integer ? window.FokoNumericalInputs.integer($('sweepN').value,'Sweep grid size',{min:2,max:200}) : Number($('sweepN').value); const payload={...base,sweepA:$('sweepA').value,sweepB:$('sweepB').value,sweepVar:$('sweepVar').value,sweepMetric:$('sweepMetric').value,sweepN}; window.FokoSession?.save?.(sessionKeyForModule(state.module),currentConfig()); state.resultsStale=false; startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
+  try{ const base=currentOdePayload(); if(!$('sweepA').value || !$('sweepB').value) throw new Error('Choose two parameter ranges before sweeping.'); const sweepN=window.FokoNumericalInputs?.integer ? window.FokoNumericalInputs.integer($('sweepN').value,'Sweep grid size',{min:2,max:200}) : Number($('sweepN').value); const payload={...base,sweepA:$('sweepA').value,sweepB:$('sweepB').value,sweepVar:$('sweepVar').value,sweepMetric:$('sweepMetric').value,sweepN}; window.FokoSession?.save?.(sessionKeyForModule(state.module),currentConfig()); state.resultsStale=Boolean(state.result||state.sweep||state.opt); startBusy('Sweeping...'); worker().postMessage({type:'sweep',payload}); }catch(e){ setStatus(actionable(e.message),true); }
 }
 function runOdeFit(){
   try{
@@ -626,22 +655,22 @@ function runOdeFit(){
     if(!vary.length) throw new Error('No fitted parameters available. Give at least one parameter different min and max values.');
     if(!state.observations?.rows?.length) throw new Error('Load observed data before fitting.');
     const payload={...base,observations:state.observations,vary,maxIter:36};
-    state.resultsStale=false;
+    state.resultsStale=Boolean(state.result||state.sweep||state.opt);
     startBusy('Fitting ODE parameters...');
     worker().postMessage({type:'fitOde',payload});
   }catch(e){ setStatus(actionable(e.message), true); }
 }
-function runOpt(){ try{ readOpt(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const samples=+$('optSamples').value, population=+($('optPopulation')?.value||36); const budget=samples*population; const payload={...state.model, samples, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population, temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; startBusy(budget>50000?`Optimizing large browser budget (${budget.toLocaleString()} evaluations). Reduce samples/population if the tab slows down.`:'Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
+function runOpt(){ try{ readOpt(); window.FokoSession?.save?.(sessionKeyForModule(state.module), state.model); const check=window.FokoModelValidator?.validate?.(state.model,'optimization'); if(check && check.blockers.length) throw new Error(window.FokoModelValidator.message(check)); const samples=+$('optSamples').value, population=+($('optPopulation')?.value||36); const budget=samples*population; const payload={...state.model, samples, penalty:$('penalty').value, refineSteps:+$('refineSteps').value, population, temperature:$('optTemperature')?.value||1, tolerance:$('optTolerance')?.value||'1e-8'}; state.resultsStale=Boolean(state.result||state.sweep||state.opt); startBusy(budget>50000?`Optimizing large browser budget (${budget.toLocaleString()} evaluations). Reduce samples/population if the tab slows down.`:'Optimizing...'); worker().postMessage({type:'opt',payload}); }catch(e){ setStatus(actionable(e.message),true); } }
 function worker(){
   if(state.worker) return state.worker;
-  state.worker = window.FokoComputeBus?.createLegacyHandle ? window.FokoComputeBus.createLegacyHandle({workerUrl:'src/worker.js?v=72.48.0'}) : new Worker('src/worker.js?v=72.48.0');
+  state.worker = window.FokoComputeBus?.createLegacyHandle ? window.FokoComputeBus.createLegacyHandle({workerUrl:'src/worker.js?v=77.4.1'}) : new Worker('src/worker.js?v=77.4.1');
   state.worker.onmessage=e=>{ const d=e.data; if(d.progress!==undefined){ $('progressWrap').classList.remove('hidden'); $('progressBar').style.width=Math.round(d.progress*100)+'%'; setStatus(`${d.text||'Running'} ${Math.round(d.progress*100)}%`); return; } finishRun(d); };
   state.worker.onerror=err=>{
     // MUST null the reference first — the keep-alive guard in worker() checks
     // if(state.worker) return state.worker; a dead worker here means the next
     // run silently postMessages into a terminated thread and produces no result.
     state.worker = null;
-    document.querySelector('.results-card')?.classList.remove('stale-results');
+    document.querySelector('.results-card')?.classList.toggle('stale-results', Boolean(state.result||state.sweep||state.opt));
     endBusy('Worker error.');
     setStatus(actionable(err.message||'ODE worker crashed. Reload or run again to restart.'), true);
   };
@@ -650,7 +679,7 @@ function worker(){
 function cancelWorker(){ if(state.worker){ state.worker.postMessage({type:'cancel'}); } document.querySelector('.results-card')?.classList.toggle('stale-results',!!state.resultsStale); endBusy(state.resultsStale?'Cancelled. Previous evidence remains stale.':'Cancelled.'); }
 function startBusy(msg){ if($('verificationStatus')){$('verificationStatus').textContent='New browser run in progress; prior verification is stale.';$('verificationStatus').classList.add('empty');} document.querySelector('.results-card').classList.add('stale-results'); $('runBtn').disabled=true; $('runSweep').disabled=true; $('runBtn').dataset.label=$('runBtn').textContent; $('runBtn').textContent=state.module==='opt'?'Optimizing...':'Solving...'; $('cancelBtn').classList.remove('hidden'); $('progressWrap').classList.remove('hidden'); $('progressBar').style.width='5%'; setStatus(msg); }
 function endBusy(msg){ $('runBtn').disabled=false; $('runSweep').disabled=false; $('runBtn').textContent=$('runBtn').dataset.label || (state.module==='opt'?'Optimize':(state.module==='param'?'Run default':'Run')); $('cancelBtn').classList.add('hidden'); $('progressWrap').classList.add('hidden'); $('progressBar').style.width='0%'; setStatus(msg); }
-function finishRun(d){ if(d.ok) state.resultsStale=false; document.querySelector('.results-card').classList.toggle('stale-results',!!state.resultsStale); endBusy(d.ok?'Done.':'Error.'); if(!d.ok){ setStatus(actionable(d.error),true); return; }
+function finishRun(d){ if(d.ok) state.resultsStale=false; else state.resultsStale=Boolean(state.result||state.sweep||state.opt); document.querySelector('.results-card').classList.toggle('stale-results',!!state.resultsStale); endBusy(d.ok?'Done.':(state.resultsStale?'Run failed. Previous result retained.':'Error.')); if(!d.ok){ setStatus(actionable(d.error)+(state.resultsStale?' Previous result retained and marked stale.':''),true); return; }
   if(d.kind==='ode'){ state.result=d; state.opt=null; state.resultKind='default'; updatePlotOptions(); showDiagnostics(d.diagnostics); updateMetrics(d.diagnostics); renderPlots(); const verificationHost=$('verificationStatus'); if(verificationHost){ verificationHost.textContent='Independent SciPy verification not run for this browser result.'; verificationHost.classList.add('empty'); } setStatus(d.diagnostics.warning||'Solved.'); emitProvenance({status:d.diagnostics.warning?'Computed with warning':'Computed',engine:d.provenance?.engine||'FokoODECore worker',method:d.diagnostics.method,scope:`Browser-computed integration · ${d.T?.length||0} reported points · rtol ${d.diagnostics.rtol||$('rtol').value} · atol ${d.diagnostics.atol||$('atol').value}`,warning:d.diagnostics.warning||''}); }
   if(d.kind==='ode_fit'){ applyOdeFitResult(d); return; }
   if(d.kind==='sweep'){ state.sweep=d; state.resultKind='sweep'; updatePlotOptions(); showDiagnostics({method:'parameter sweep',runtime:0,accepted:'—',rejected:'—',functionEvaluations:'—'}); updateMetrics({runtime:0,accepted:'—',rejected:'—',functionEvaluations:'—'}); renderPlots(); setStatus('Sweep complete.'); emitProvenance({status:'Computed sweep',engine:'FokoODECore worker',method:'Nested browser ODE solves',scope:`${d.x?.length||0} × ${d.y?.length||0} parameter grid · ${d.sweepMetric||'metric'}(${d.sweepVar||'state'})`}); }
@@ -1203,65 +1232,25 @@ function copyInstall(){ const text=`# Linux/macOS\npython3 -m venv .venv\nsource
 
 function setupDragDrop(){ const zone=$('uploadDrop'); ['dragenter','dragover'].forEach(ev=>zone.addEventListener(ev,e=>{ e.preventDefault(); zone.classList.add('drag'); })); ['dragleave','drop'].forEach(ev=>zone.addEventListener(ev,e=>{ e.preventDefault(); zone.classList.remove('drag'); })); zone.addEventListener('drop',e=>handleFiles(e.dataTransfer.files)); }
 function handleFiles(files){ const file=files&&files[0]; if(!file) return; const reader=new FileReader(); reader.onload=()=>{ try{ const parsed=parseImport(String(reader.result),file.name); applyImported(parsed,file.name); } catch(e){ setStatus(actionable(e.message),true); } }; reader.readAsText(file); }
-function parseImport(text,name){ const ext=(name.split('.').pop()||'').toLowerCase(); if(ext==='json') return normalizeImported(JSON.parse(text)); if(ext==='csv') return parseCsvModel(text); if(['xml','sbml'].includes(ext)) return parseSbmlModel(text,name); if(['txt','ode','eqn'].includes(ext)) return parseTextModel(text); if(['yml','yaml'].includes(ext)) return parseYamlLikeModel(text); if(ext==='py'){ const m=text.match(/DYNAMICS_LAB_CONFIG\s*=\s*({[\s\S]*?})\s*(?:#\s*END_DYNAMICS_LAB_CONFIG|$)/); if(!m) throw new Error('Python import requires DYNAMICS_LAB_CONFIG = {...}.'); return normalizeImported(JSON.parse(m[1])); } throw new Error('Unsupported file type.'); }
-
-function parseSbmlModel(text,name='model.sbml'){
-  const doc=new DOMParser().parseFromString(text,'application/xml');
-  if(doc.querySelector('parsererror')) throw new Error('SBML/XML parse error. Check that the file is valid XML.');
-  if(doc.getElementsByTagName('piecewise').length) throw new Error('SBML import does not yet support piecewise/conditional MathML kinetics. Simplify the model or export a version without conditional laws.');
-  const warnings=[];
-  if(doc.querySelector('assignmentRule, rateRule')) warnings.push('rules');
-  if(doc.querySelector('event')) warnings.push('events');
-  if(doc.querySelector('functionDefinition')) warnings.push('function definitions');
-  if(doc.querySelector('compartment')) warnings.push('compartment scaling is treated as volume 1');
-  const speciesNodes=[...doc.getElementsByTagName('species')];
-  if(!speciesNodes.length) throw new Error('No species found in SBML file.');
-  const species=speciesNodes.filter(sp=>sp.getAttribute('boundaryCondition')!=='true' && sp.getAttribute('constant')!=='true');
-  const vars=species.map(sp=>cleanId(sp.getAttribute('id')||sp.getAttribute('name')));
-  const y0=species.map(sp=>Number(sp.getAttribute('initialConcentration') ?? sp.getAttribute('initialAmount') ?? 0));
-  const params={};
-  [...doc.getElementsByTagName('parameter')].forEach(pa=>{ const id=cleanId(pa.getAttribute('id')||pa.getAttribute('name')); if(id) params[id]=[Number(pa.getAttribute('value')??0),Number(pa.getAttribute('value')??0),Number(pa.getAttribute('value')??0)]; });
-  const eqs=Object.fromEntries(vars.map(v=>[v,'0']));
-  const varSet=new Set(vars);
-  [...doc.getElementsByTagName('reaction')].forEach((rxn,ri)=>{
-    const rid=cleanId(rxn.getAttribute('id')||`reaction_${ri+1}`);
-    const mathNode=rxn.getElementsByTagName('kineticLaw')[0]?.getElementsByTagName('math')[0];
-    if(!mathNode) return;
-    const rate=mathmlToInfix(mathNode.firstElementChild || mathNode).replace(/\s+/g,' ');
-    [...rxn.getElementsByTagName('listOfReactants')[0]?.getElementsByTagName('speciesReference')||[]].forEach(sr=>{
-      const sp=cleanId(sr.getAttribute('species')); if(!varSet.has(sp)) return;
-      const st=Number(sr.getAttribute('stoichiometry')||1); eqs[sp]=`(${eqs[sp]}) - (${st})*(${rate})`;
-    });
-    [...rxn.getElementsByTagName('listOfProducts')[0]?.getElementsByTagName('speciesReference')||[]].forEach(sr=>{
-      const sp=cleanId(sr.getAttribute('species')); if(!varSet.has(sp)) return;
-      const st=Number(sr.getAttribute('stoichiometry')||1); eqs[sp]=`(${eqs[sp]}) + (${st})*(${rate})`;
-    });
-    [...rxn.getElementsByTagName('kineticLaw')[0]?.getElementsByTagName('parameter')||[]].forEach(pa=>{ const id=cleanId(pa.getAttribute('id')); if(id && !params[id]) params[id]=[Number(pa.getAttribute('value')??0),Number(pa.getAttribute('value')??0),Number(pa.getAttribute('value')??0)]; });
-  });
-  if(!Object.values(eqs).some(e=>e!=='0')) throw new Error('SBML import found no kinetic laws. Events, rules-only models, and algebraic SBML are not yet supported.');
-  const warn = warnings.length ? ` Warning: unsupported SBML features detected (${warnings.join(', ')}). Results may be incomplete.` : '';
-  return normalizeImported({module:'ode',model:{vars,eqs:vars.map(v=>eqs[v]),y0,params,t0:0,t1:50,points:800,method:'rk45',narrative:`Imported SBML model: ${name}. Browser support covers species, reactions, stoichiometry, parameters, and basic MathML kinetic laws.${warn}`}});
-}
-function cleanId(x){ return String(x||'').trim().replace(/[^A-Za-z0-9_]/g,'_').replace(/^([0-9])/,'_$1'); }
-function mathmlToInfix(node){
-  const tag=(node.localName||node.nodeName||'').toLowerCase();
-  if(tag==='math') return mathmlToInfix(node.firstElementChild);
-  if(tag==='ci') return cleanId(node.textContent.trim());
-  if(tag==='cn') return node.textContent.trim();
-  if(tag==='apply'){
-    const kids=[...node.children]; const op=(kids.shift()?.localName||'').toLowerCase(); const args=kids.map(mathmlToInfix);
-    if(op==='plus') return '('+args.join(' + ')+')';
-    if(op==='times') return '('+args.join(' * ')+')';
-    if(op==='minus') return args.length===1?`(-${args[0]})`:'('+args.join(' - ')+')';
-    if(op==='divide') return `(${args[0]} / ${args[1]})`;
-    if(op==='power') return `(${args[0]}^${args[1]})`;
-    if(['exp','ln','log','sin','cos','tan','sqrt','abs'].includes(op)) return `${op==='ln'?'log':op}(${args[0]||''})`;
-    if(op==='piecewise') throw new Error('Piecewise MathML is not supported by the browser SBML importer.');
-    return args.join(' ');
+function parseImport(text,name){
+  const ext=(name.split('.').pop()||'').toLowerCase();
+  // Optimization TXT remains a distinct grammar. Every deterministic ODE
+  // format goes through the same non-executing interchange core as Studio.
+  if(['txt','ode','eqn'].includes(ext) && /^\s*module\s*:\s*(?:opt|optimization)\s*$/im.test(text)) return parseTextModel(text);
+  if(window.FokoModelImport){
+    const imported=window.FokoModelImport.parse(text,name);
+    const normalized=normalizeImported(imported.raw);
+    normalized.importWarnings=imported.warnings||[];
+    normalized.importFormat=imported.format;
+    return normalized;
   }
-  if(tag==='true') return '1'; if(tag==='false') return '0';
-  return node.textContent?.trim() || '0';
+  if(ext==='json') return normalizeImported(JSON.parse(text));
+  if(ext==='csv') return parseCsvModel(text);
+  if(['txt','ode','eqn'].includes(ext)) return parseTextModel(text);
+  if(['yml','yaml'].includes(ext)) return parseYamlLikeModel(text);
+  throw new Error('The model interchange parser did not load. Refresh the page and try again.');
 }
+
 function normalizeImported(raw){
   if(window.FokoModelIR&&window.FokoModelIR.isModelIR(raw)) raw=window.FokoModelIR.lower(raw);
   const module=(raw.module||raw.type||'ode').toLowerCase().replace('optimization','opt');
@@ -1271,7 +1260,7 @@ function normalizeImported(raw){
   if(vars.length!==eqs.length) throw new Error('ODE import needs matching vars and equations arrays.');
   const numerics={...(raw.numerics||{}),...(model.numerics||{})};
   for(const key of ['t0','t1','points','method','rtol','atol','maxStep','stepSize','initialStep','safety']) if(model[key]!=null) numerics[key]=model[key];
-  return {module:module==='param'?'param':'ode',model:{vars,eqs,y0:arr(model.y0||model.initial||[]).map(Number),params:normalizeParams(model.params||model.parameters||{}),t0:Number(numerics.t0??0),t1:Number(numerics.t1??20),points:Number(numerics.points??800),method:numerics.method||'rk45',rtol:numerics.rtol??'1e-6',atol:numerics.atol??'1e-9',maxStep:numerics.maxStep??'auto',stepSize:numerics.stepSize??'auto',initialStep:numerics.initialStep??'auto',safety:numerics.safety??'0.9',sweep:model.sweep||null,narrative:model.narrative||'Imported model.'}};
+  return {module:module==='param'?'param':'ode',model:{vars,eqs,y0:arr(model.y0||model.initial||[]).map(Number),params:normalizeParams(model.params||model.parameters||{}),t0:Number(numerics.t0??0),t1:Number(numerics.t1??20),points:Number(numerics.points??800),method:numerics.method||'rk45',rtol:numerics.rtol??'1e-6',atol:numerics.atol??'1e-9',maxStep:numerics.maxStep??'auto',stepSize:numerics.stepSize??'auto',initialStep:numerics.initialStep??'auto',safety:numerics.safety??'0.9',sweep:model.sweep||null,narrative:model.narrative||model.description||'Imported model.'}};
 }
 function normalizeParams(params){ const out={}; if(Array.isArray(params)){ params.forEach(p=>Array.isArray(p)?out[p[0]]=[Number(p[1]),Number(p[2]??p[1]),Number(p[3]??p[1])]:out[p.name]=[Number(p.value),Number(p.min??p.value),Number(p.max??p.value)]); } else Object.entries(params).forEach(([k,v])=>{ if(Array.isArray(v)) out[k]=[Number(v[0]),Number(v[1]??v[0]),Number(v[2]??v[0])]; else if(typeof v==='object') out[k]=[Number(v.value),Number(v.min??v.value),Number(v.max??v.value)]; else out[k]=[Number(v),Number(v),Number(v)]; }); return out; }
 function normalizeVariables(vs){ if(!vs.length) throw new Error('Optimization import needs at least one decision variable.'); return vs.map(v=>Array.isArray(v)?{name:String(v[0]),initial:Number(v[1]??0),lower:Number(v[2]??-10),upper:Number(v[3]??10)}:{name:String(v.name),initial:Number(v.initial??v.value??0),lower:Number(v.lower??v.min??-10),upper:Number(v.upper??v.max??10)}); }
@@ -1280,7 +1269,7 @@ function parseCsvRows(text){ const lines=text.split(/\r?\n/).filter(l=>l.trim()&
 function parseCsvModel(text){ const rows=parseCsvRows(text); const vars=[],eqs=[],y0=[],params={}; rows.filter(r=>r.kind==='equation').forEach(r=>{vars.push(r.name); eqs.push(r.equation||r.expression||r.value); y0.push(Number(r.initial||0));}); rows.filter(r=>r.kind==='parameter').forEach(r=>params[r.name]=[Number(r.value),Number(r.min||r.value),Number(r.max||r.value)]); const get=(k,d)=>rows.find(r=>r.kind==='time'&&r.name===k)?.value??d; return normalizeImported({module:'ode',model:{vars,eqs,y0,params,t0:get('t0',0),t1:get('t1',20),points:get('points',800),method:rows.find(r=>r.kind==='solver')?.value||'rk45'}}); }
 function parseTextModel(text){ const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean); let module='ode',vars=[],eqs=[],y0=[],params={},variables=[],objective='',objective2='',ineq=[],eq=[],t0=0,t1=20,points=800,method='rk45'; for(const line of lines){ let m;if(m=line.match(/^module\s*:\s*(.+)$/i)){module=m[1].toLowerCase().replace('optimization','opt');continue;} if(m=line.match(/^d([A-Za-z_]\w*)\/dt\s*=\s*(.+)$/i)){vars.push(m[1]);eqs.push(m[2]);y0.push(0);continue;} if(m=line.match(/^param\s+([A-Za-z_]\w*)\s*=\s*([^\[,]+)(?:\s*\[\s*([^,]+),\s*([^\]]+)\])?/i)){params[m[1]]=[Number(m[2]),Number(m[3]??m[2]),Number(m[4]??m[2])];continue;} if(m=line.match(/^initial\s+([A-Za-z_]\w*)\s*=\s*(.+)$/i)){const i=vars.indexOf(m[1]); if(i>=0)y0[i]=Number(m[2]);continue;} if(m=line.match(/^time\s+([^\s]+)\s+([^\s]+)(?:\s+([^\s]+))?/i)){t0=Number(m[1]);t1=Number(m[2]);points=Number(m[3]||points);continue;} if(m=line.match(/^var\s+([A-Za-z_]\w*)\s*=\s*([^\[,]+)(?:\s*\[\s*([^,]+),\s*([^\]]+)\])?/i)){variables.push({name:m[1],initial:Number(m[2]),lower:Number(m[3]??-10),upper:Number(m[4]??10)});continue;} if(m=line.match(/^objective2\s*:\s*(.+)$/i)){objective2=m[1];continue;} if(m=line.match(/^secondary objective\s*:\s*(.+)$/i)){objective2=m[1];continue;} if(m=line.match(/^objective\s*:\s*(.+)$/i)){objective=m[1];continue;} if(m=line.match(/^ineq\s*:\s*(.+)$/i)){ineq.push(m[1]);continue;} if(m=line.match(/^eq\s*:\s*(.+)$/i)){eq.push(m[1]);continue;} } return normalizeImported(module==='opt'?{module:'opt',model:{variables,objective,objective2,ineq,eq}}:{module,model:{vars,eqs,y0,params,t0,t1,points,method}}); }
 function parseYamlLikeModel(text){ const obj={module:'ode',model:{}}; text.split(/\r?\n/).forEach(line=>{ const m=line.match(/^\s*([A-Za-z_]\w*)\s*:\s*(.+)$/); if(!m)return; let v=m[2].trim(); try{ if(v.startsWith('[')||v.startsWith('{')) v=JSON.parse(v.replaceAll("'",'"')); }catch{} if(m[1]==='module') obj.module=String(v); else obj.model[m[1]]=v; }); return normalizeImported(obj); }
-function applyImported(parsed,filename){ setModule(parsed.module); state.model=parsed.model; if(parsed.module==='opt'){ if($('optClass')) $('optClass').value=state.model.optClass||'nonconvex'; if($('optAlgorithm')) $('optAlgorithm').value=state.model.algorithm||defaultOptAlgorithm(state.model.optClass||'nonconvex'); $('optSense').value=state.model.sense; $('objective').value=state.model.objective; if($('objective2')) $('objective2').value=state.model.objective2||''; $('ineq').value=state.model.ineq.join('\\n'); $('eqcon').value=state.model.eq.join('\\n'); renderOptControls(); } else { $('t0').value=state.model.t0; $('t1').value=state.model.t1; $('points').value=state.model.points; $('method').value=state.model.method||'rk45'; renderOdeControls(); } safeText($('exampleNarrative'),`Imported: ${filename}`); refreshAllSelects(); updatePlotOptions(); clearPlots(); updateMathPreview(); setStatus('Model imported. Review it, then run.'); }
+function applyImported(parsed,filename){ setModule(parsed.module); state.model=parsed.model; if(parsed.module==='opt'){ if($('optClass')) $('optClass').value=state.model.optClass||'nonconvex'; if($('optAlgorithm')) $('optAlgorithm').value=state.model.algorithm||defaultOptAlgorithm(state.model.optClass||'nonconvex'); $('optSense').value=state.model.sense; $('objective').value=state.model.objective; if($('objective2')) $('objective2').value=state.model.objective2||''; $('ineq').value=state.model.ineq.join('\\n'); $('eqcon').value=state.model.eq.join('\\n'); renderOptControls(); } else { $('t0').value=state.model.t0; $('t1').value=state.model.t1; $('points').value=state.model.points; $('method').value=state.model.method||'rk45'; renderOdeControls(); } safeText($('exampleNarrative'),`Imported: ${filename}`); refreshAllSelects(); updatePlotOptions(); clearPlots(); updateMathPreview(); const warning=(parsed.importWarnings||[]).join(' '); setStatus(`Model imported as ${parsed.importFormat||parsed.module}. Review it, then run.${warning?` ${warning}`:''}`); }
 const TEMPLATE_CONTENT={ode_json:{name:'foko_lab_ode_lorenz_template.json',type:'application/json',body:()=>JSON.stringify({module:'ode',model:EXAMPLES.ode.Lorenz},null,2)},param_json:{name:'foko_lab_parametric_sir_template.json',type:'application/json',body:()=>JSON.stringify({module:'param',model:EXAMPLES.param['SIR beta–gamma']},null,2)},reaction_ir:{name:'fokolab_fadns_reaction_network_ir.json',type:'application/json',body:()=>JSON.stringify({schema:'foko.model-ir/1',kind:'reaction-network',name:'FADNS minimal reaction network',description:'Research-inspired minimal reaction network for demonstrating dx/dt = N·v lowering. It is not the full calibrated FADNS model.',states:[{id:'AcetCoA',initial:120},{id:'MalCoA',initial:18},{id:'NADPH',initial:160},{id:'EC2',initial:0},{id:'EC14',initial:0},{id:'EC16',initial:0},{id:'EC18',initial:0},{id:'C14',initial:0},{id:'C16',initial:0},{id:'C18',initial:0}],parameters:{kon:{value:.018,min:.002,max:.08},kappa:{value:.00002,min:.000002,max:.00008},delta14:{value:.010,min:.001,max:.05},delta16:{value:.026,min:.002,max:.09},delta18:{value:.012,min:.001,max:.06}},reactions:[{id:'initiation',rate:'kon*AcetCoA',stoichiometry:{AcetCoA:-1,EC2:1}},{id:'elongate14',rate:'kappa*EC2*MalCoA*NADPH',stoichiometry:{MalCoA:-1,NADPH:-2,EC2:-1,EC14:1}},{id:'elongate16',rate:'kappa*EC14*MalCoA*NADPH',stoichiometry:{MalCoA:-1,NADPH:-2,EC14:-1,EC16:1}},{id:'elongate18',rate:'kappa*EC16*MalCoA*NADPH',stoichiometry:{MalCoA:-1,NADPH:-2,EC16:-1,EC18:1}},{id:'release14',rate:'delta14*EC14',stoichiometry:{EC14:-1,C14:1}},{id:'release16',rate:'delta16*EC16',stoichiometry:{EC16:-1,C16:1}},{id:'release18',rate:'delta18*EC18',stoichiometry:{EC18:-1,C18:1}}],time:{start:0,end:120,points:900},method:'rk45'},null,2)},opt_json:{name:'foko_lab_optimization_template.json',type:'application/json',body:()=>JSON.stringify({module:'opt',model:EXAMPLES.opt['Pareto design trade-off']},null,2)},ode_csv:{name:'foko_lab_ode_template.csv',type:'text/csv',body:()=>`kind,name,value,min,max,equation,initial\nmodule,,ode,,,,\nequation,x,,,,sigma*(y-x),1\nequation,y,,,,x*(rho-z)-y,1\nequation,z,,,,x*y-beta*z,1\nparameter,sigma,10,6,16,,\nparameter,rho,28,12,40,,\nparameter,beta,2.6666666666666665,2,3,,\ntime,t0,0,,,,\ntime,t1,35,,,,\ntime,points,2500,,,,\nsolver,method,rk45,,,,\n`},opt_txt:{name:'foko_lab_optimization_template.txt',type:'text/plain',body:()=>`module: opt\nvar x = 1 [0, 10]\nvar y = 1 [0, 10]\nobjective: (x-3)^2 + (y-2)^2\nobjective2: (x+1)^2 + (y-4)^2\nineq: x + y - 4\n`},py_embed:{name:'foko_lab_python_embedded_config.py',type:'text/x-python',body:()=>`DYNAMICS_LAB_CONFIG = ${JSON.stringify({module:'ode',model:EXAMPLES.ode.Lorenz},null,2)}\n# END_DYNAMICS_LAB_CONFIG\n`}};
 function downloadSelectedTemplate(){ const t=TEMPLATE_CONTENT[$('templateSelect').value]||TEMPLATE_CONTENT.ode_json; download(t.name,t.body(),t.type); }
 

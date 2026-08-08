@@ -7,7 +7,7 @@
   const PLOT = root.FokoPlotLifecycle;
   if (!Core || !Steady || !PLOT) throw new Error('Symbolic Lab requires FokoSymbolicReference, FokoSteadyCore and FokoPlotLifecycle.');
 
-  const RELEASE = '72.48.0';
+  const RELEASE = '77.4.1';
   const STORAGE_KEY = 'fokolab-v72-symbolic-config';
   const LAYOUT_KEY = 'fokolab-v72-symbolic-layout';
   const VALID_LAYOUTS = new Set(['two', 'focus']);
@@ -624,21 +624,21 @@
       equilibria: state.result.equilibria.status === 'computed' ? state.result.equilibria.uniqueSolutions.map(function (solution) { return { x: solution.x, residualNorm: solution.residualNorm, stability: solution.stability }; }) : state.result.equilibria,
       runtimeMs: state.result.runtimeMs,
     } : null };
-    download('fokolab-symbolic-result-v72.48.0.json', JSON.stringify(payload, null, 2), 'application/json');
+    download('fokolab-symbolic-result-v77.4.1.json', JSON.stringify(payload, null, 2), 'application/json');
   }
   function exportCsv() {
     if (!state.result) throw new Error('Compute a result before exporting CSV.');
     const rows = [['row', ...state.result.config.variables], ...state.result.analysis.jacobianNumeric.map(function (row, index) { return [`f${index + 1}`, ...row]; })];
-    download('fokolab-symbolic-jacobian-v72.48.0.csv', rows.map(function (row) { return row.join(','); }).join('\n') + '\n', 'text/csv');
+    download('fokolab-symbolic-jacobian-v77.4.1.csv', rows.map(function (row) { return row.join(','); }).join('\n') + '\n', 'text/csv');
   }
   function exportPython() {
     const config = readConfig();
-    download('fokolab-symbolic-validation-v72.48.0.py', Core.generateSympyScript(config), 'text/x-python');
+    download('fokolab-symbolic-validation-v77.4.1.py', Core.generateSympyScript(config), 'text/x-python');
   }
   function exportPlot(side, formatName) {
     const node = $(`${side}Plot`);
     if (!state.result || !node || !node.data) throw new Error('No computed plot is available for export.');
-    root.Plotly.downloadImage(node, { format: formatName, filename: `fokolab-symbolic-${state.plotType[side]}-v72.48.0`, width: 1200, height: 760, scale: 1 });
+    root.Plotly.downloadImage(node, { format: formatName, filename: `fokolab-symbolic-${state.plotType[side]}-v77.4.1`, width: 1200, height: 760, scale: 1 });
   }
 
   function importOdeHandoff() {

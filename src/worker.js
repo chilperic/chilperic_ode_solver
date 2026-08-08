@@ -1,6 +1,6 @@
 /* ODE Lab worker: safe parsing via Math.js, no new Function. */
-importScripts('../assets/vendor/mathjs/math-15.2.0.js?v=72.48.0');
-importScripts('core/ode.js?v=72.48.0');
+importScripts('../assets/vendor/mathjs/math-15.2.0.js?v=77.4.1');
+importScripts('core/ode.js?v=77.4.1');
 
 const ALLOWED_FUNCS = new Set(['sin','cos','tan','asin','acos','atan','sinh','cosh','tanh','exp','log','log10','sqrt','abs','min','max','pow','floor','ceil','round']);
 const ALLOWED_CONSTS = new Set(['pi','e','PI','E']);
@@ -24,7 +24,7 @@ function progress(p, text){ postMessage({progress:p, text}); }
 function cleanErr(err){ return String((err && err.message) || err).slice(0, 500); }
 function preprocess(s){ return String(s||'0').trim(); } // Math.js accepts ^ for powers; do not convert to JS ** here.
 function collectSymbols(node){ const out = new Set(); node.traverse(n => { if (n.isSymbolNode) out.add(n.name); }); return out; }
-function compileSafe(expr, allowedSymbols){
+function compileSafe(expr, allowedSymbols, equationIndex){
   const source = preprocess(expr);
   let node;
   try { node = math.parse(source); } catch(e){ throw new Error(`Cannot parse expression: ${expr}`); }
@@ -33,16 +33,44 @@ function compileSafe(expr, allowedSymbols){
     if (allowedSymbols.has(s) || ALLOWED_CONSTS.has(s) || ALLOWED_FUNCS.has(s)) continue;
     throw new Error(`Unknown symbol "${s}" in expression "${expr}"`);
   }
-  return { expr, node, compiled: node.compile() };
+  return { expr, node, compiled: node.compile(), equationIndex };
 }
 function evalCompiled(comp, scope){
   const v = comp.compiled.evaluate(scope);
-  if (typeof v !== 'number' || !Number.isFinite(v)) throw new Error(`Expression produced non-finite value: ${comp.expr}`);
+  if (typeof v !== 'number' || !Number.isFinite(v)) {
+    const invalid = Object.entries(scope).filter(([_name,value]) => typeof value !== 'number' || !Number.isFinite(value)).map(([name]) => name);
+    const finiteEntries = Object.entries(scope)
+      .filter(([_name,value]) => typeof value === 'number' && Number.isFinite(value))
+      .slice(0, 12);
+    const zeros = finiteEntries.filter(([_name,value]) => Math.abs(value) <= Number.EPSILON).map(([name]) => name);
+    const likelyDenominators = zeros.filter(name => new RegExp(`/\\s*(?:\\([^)]*)?\\b${name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`).test(comp.expr));
+    const values = finiteEntries.map(([name,value]) => `${name}=${Math.abs(value)>=1e5||Math.abs(value)<1e-4&&value!==0?value.toExponential(3):Number(value.toPrecision(6))}`).join(', ');
+    let cause;
+    if (invalid.length) cause = `Invalid numeric input${invalid.length===1?'':'s'}: ${invalid.join(', ')}.`;
+    else if (likelyDenominators.length) cause = `Likely division by zero: ${likelyDenominators.join(', ')} = 0. Set a positive denominator or correct the corresponding initial condition/parameter.`;
+    else if (/\b(?:log|log10|sqrt)\s*\(/.test(comp.expr)) cause = 'Check the domain of log/log10/sqrt and keep their arguments valid throughout the run.';
+    else cause = 'Inputs are finite at this evaluation. The state may have left the model domain or grown beyond a numerically stable scale; shorten the time span, rescale the model, or inspect signs and parameter magnitudes.';
+    const label = Number.isInteger(comp.equationIndex) ? `Equation ${comp.equationIndex + 1}` : 'Expression';
+    const time = Number.isFinite(Number(scope.t)) ? ` at t=${Number(scope.t).toPrecision(6)}` : '';
+    throw new Error(`${label} became non-finite${time}: “${comp.expr}”. ${cause} Current values: ${values}.`);
+  }
   return v;
+}
+function parameterValue(raw, name){
+  const candidate = Array.isArray(raw) ? raw[0] : (raw && typeof raw === 'object' ? raw.value : raw);
+  const value = Number(candidate);
+  if (!Number.isFinite(value)) throw new Error(`Parameter "${name}" must have a finite numeric value.`);
+  return value;
+}
+function normalizeParameterValues(cfg){
+  const direct = cfg && cfg.params && typeof cfg.params === 'object' && !Array.isArray(cfg.params) ? cfg.params : null;
+  const definitions = cfg && cfg.paramDefs && typeof cfg.paramDefs === 'object' && !Array.isArray(cfg.paramDefs) ? cfg.paramDefs : null;
+  const source = direct && Object.keys(direct).length ? direct : (definitions || {});
+  return Object.fromEntries(Object.entries(source).map(([name, raw]) => [name, parameterValue(raw, name)]));
 }
 function makeRhs(cfg){
   const allowed = new Set(['t', ...cfg.vars, ...Object.keys(cfg.params||{})]);
-  const comps = cfg.eqs.map(e => compileSafe(e, allowed));
+  const comps = cfg.eqs.map((e, index) => compileSafe(e, allowed, index));
   return function(t, y, params){
     const scope = { t, ...params };
     for (let i=0;i<cfg.vars.length;i++) scope[cfg.vars[i]] = y[i];
@@ -50,8 +78,9 @@ function makeRhs(cfg){
   };
 }
 function solveJob(cfg){
-  const rhs = makeRhs(cfg);
-  return self.FokoODECore.solveWithRhs(cfg, rhs, {
+  const normalized = {...cfg, params:normalizeParameterValues(cfg)};
+  const rhs = makeRhs(normalized);
+  return self.FokoODECore.solveWithRhs(normalized, rhs, {
     cancelled: () => cancelled,
     progress: (fraction, label) => progress(fraction, label),
     now: () => performance.now()

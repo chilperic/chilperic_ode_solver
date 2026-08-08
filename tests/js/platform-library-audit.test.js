@@ -40,7 +40,7 @@ const plots = {
   fitting: extractPlotKeys('src/v72/fitting-workspace.js', 'PLOTS'),
   networks: extractPlotKeys('src/v72/networks-workspace.js', 'PLOTS')
 };
-const expected = { optimization:23, steady:18, stochastic:12, linearAlgebra:11, machineLearning:18, sensitivity:35, fitting:14, networks:12 };
+const expected = { optimization:39, steady:18, stochastic:12, linearAlgebra:11, machineLearning:18, sensitivity:35, fitting:14, networks:12 };
 for (const [lab, count] of Object.entries(expected)) {
   assert.equal(plots[lab].length, count, `${lab}: plot registry depth changed unexpectedly`);
   assert.equal(new Set(plots[lab]).size, plots[lab].length, `${lab}: duplicate plot identifiers`);
@@ -50,6 +50,9 @@ for (const required of ['parameter-jacobian','state-jacobian','influence-map','o
 }
 for (const required of ['pareto','dominance-heatmap','crowding-distance','hypervolume-convergence','objective-correlation','knee-point']) {
   assert.ok(plots.optimization.includes(required), `Optimization multi-objective plot ${required} is missing`);
+}
+for (const required of ['cma-fitness','cma-distance','cma-mean','cma-sigma','cma-stddev','cma-condition','cma-eigen','cma-diagonal','cma-covariance','cma-paths','cma-population','cma-selection','cma-feasibility','cma-entropy','cma-runtime','cma-evaluations']) {
+  assert.ok(plots.optimization.includes(required), `Optimization CMA-ES plot ${required} is missing`);
 }
 for (const required of ['residual-surface','nullclines','branch','jacobian-sign','stiffness-indicator','implicit-sensitivity']) {
   assert.ok(plots.steady.includes(required), `Steady-State plot ${required} is missing`);

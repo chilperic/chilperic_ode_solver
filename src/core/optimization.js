@@ -8,6 +8,8 @@
 (function (root) {
   'use strict';
 
+  const CMA = root.FokoCMAESCore || (typeof module !== 'undefined' && module.exports ? require('./cmaes.js') : null);
+
   function assert(condition, message) {
     if (!condition) throw new Error(message);
   }
@@ -84,7 +86,7 @@
   function normaliseOptions(options) {
     const source = options || {};
     const algorithm = String(source.algorithm || 'coordinate');
-    assert(['coordinate', 'projected_gradient', 'differential_evolution', 'multi_start', 'random_search'].includes(algorithm), `Unsupported algorithm ${algorithm}.`);
+    assert(['coordinate', 'projected_gradient', 'differential_evolution', 'cma_es', 'multi_start', 'random_search'].includes(algorithm), `Unsupported algorithm ${algorithm}.`);
     return {
       algorithm,
       seed: Number(source.seed == null ? 1729 : source.seed) >>> 0,
@@ -99,6 +101,7 @@
       initialStepFraction: finiteNumber(source.initialStepFraction == null ? 0.2 : source.initialStepFraction, 'initialStepFraction'),
       mutationFactor: finiteNumber(source.mutationFactor == null ? 0.8 : source.mutationFactor, 'mutationFactor'),
       crossoverRate: finiteNumber(source.crossoverRate == null ? 0.9 : source.crossoverRate, 'crossoverRate'),
+      cmaSigma: finiteNumber(source.cmaSigma == null ? 0.3 : source.cmaSigma, 'cmaSigma'),
       stallIterations: positiveInteger(source.stallIterations == null ? 30 : source.stallIterations, 'stallIterations', 5000),
       recordLimit: positiveInteger(source.recordLimit == null ? 5000 : source.recordLimit, 'recordLimit', 100000),
     };
@@ -373,6 +376,57 @@
     return { best, history, terminationReason, population, localEvidence: 'seeded differential evolution heuristic' };
   }
 
+  function cmaEvolutionStrategy(problem, evaluator, options) {
+    assert(CMA && typeof CMA.createStrategy === 'function', 'FokoCMAESCore is unavailable.');
+    const strategy = CMA.createStrategy({
+      mean: problem.start,
+      lower: problem.lower,
+      upper: problem.upper,
+      sigma: options.cmaSigma,
+      populationSize: options.populationSize,
+      seed: options.seed,
+      maxGenerations: options.maxIterations,
+      stallGenerations: options.stallIterations,
+      stepTolerance: options.stepTolerance,
+    });
+    let best = null;
+    let population = [];
+    const history = [];
+    while (!strategy.terminated) {
+      const generationStart = typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
+      const samples = strategy.ask();
+      const evaluated = samples.map(function (sample) {
+        const candidate = evaluator.evaluate(sample.x, { phase: 'cma_es' });
+        if (betterCandidate(candidate, best)) best = candidate;
+        return { id: sample.id, score: candidate.penalizedObjective, metadata: candidate };
+      });
+      const generation = strategy.tell(evaluated);
+      population = generation.population.map(function (item) { return item.metadata; });
+      const rankedObjectives = generation.population.map(function (item) { return item.metadata.objective; });
+      generation.evaluations = evaluator.evaluations;
+      generation.bestObjective = rankedObjectives[0];
+      generation.medianObjective = rankedObjectives[Math.floor(rankedObjectives.length / 2)];
+      generation.worstObjective = rankedObjectives[rankedObjectives.length - 1];
+      generation.bestViolation = generation.population[0].metadata.maxViolation;
+      const generationEnd = typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
+      generation.runtimeMs = generationEnd - generationStart;
+      history.push(summaryPoint(best, generation.generation, evaluator.evaluations));
+    }
+    return {
+      best,
+      history,
+      terminationReason: strategy.terminationReason,
+      population,
+      cmaes: {
+        generations: strategy.history,
+        finalState: strategy.getState(),
+        populationSize: strategy.populationSize,
+        coordinateSystem: 'normalized bounds with reflected repair',
+      },
+      localEvidence: 'seeded bounded rank-one + rank-mu CMA-ES',
+    };
+  }
+
   function multiStart(problem, evaluator, options) {
     const random = seededRandom(options.seed);
     let best = null;
@@ -412,12 +466,14 @@
     assert(options.initialStepFraction > 0 && options.initialStepFraction <= 1, 'initialStepFraction must be in (0, 1].');
     assert(options.mutationFactor > 0 && options.mutationFactor <= 2, 'mutationFactor must be in (0, 2].');
     assert(options.crossoverRate >= 0 && options.crossoverRate <= 1, 'crossoverRate must be in [0, 1].');
+    assert(options.cmaSigma > 0 && options.cmaSigma <= 2, 'cmaSigma must be in (0, 2].');
     const evaluator = createEvaluator(problem, options);
     const startTime = typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
     let run;
     if (options.algorithm === 'coordinate') run = coordinateSearch(problem, evaluator, options);
     else if (options.algorithm === 'projected_gradient') run = projectedGradient(problem, evaluator, options);
     else if (options.algorithm === 'differential_evolution') run = differentialEvolution(problem, evaluator, options);
+    else if (options.algorithm === 'cma_es') run = cmaEvolutionStrategy(problem, evaluator, options);
     else if (options.algorithm === 'multi_start') run = multiStart(problem, evaluator, options);
     else run = randomSearch(problem, evaluator, options);
     const endTime = typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
@@ -456,6 +512,7 @@
       runtimeMs: endTime - startTime,
       feasibleEvaluations: evaluator.feasibleEvaluations,
       feasibilityRate: evaluator.evaluations ? evaluator.feasibleEvaluations / evaluator.evaluations : 0,
+      cmaes: run.cmaes || null,
     };
   }
 

@@ -1,84 +1,25 @@
 <!DOCTYPE html>
 <html data-theme="aurora" lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Twenty guided investigations that teach model construction, numerical verification, sensitivity, inference, optimization and reproducible reporting." name="description"/><title>Practical modelling curriculum · Foko Lab</title>
-<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="styles/style.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=72.48.0" rel="stylesheet"/>
+<meta content="Twenty-one guided investigations that teach model construction, interchange, numerical verification, sensitivity, inference, optimization and reproducible reporting." name="description"/><title>Practical modeling curriculum · Foko Lab</title>
+<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
+<link href="styles/style.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=77.4.1" rel="stylesheet"/><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
 </head><body data-lab="tutorial"><div class="app-shell">
 <progress aria-label="Reading progress" class="guide-reading-progress" id="guideReadingProgress" max="100" value="0"></progress>
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" src="assets/brand/foko-lab-logo.svg?v=72.48.0"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-</header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="guide-page" id="main-content">
-<header class="guide-hero"><p class="guide-eyebrow">Learn by building and challenging models</p><h1>Practical modelling curriculum</h1><p>Twenty guided investigations that teach model construction, numerical verification, sensitivity, inference, optimization and reproducible reporting.</p>
-<nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">Modelling handbook</a><a href="tutorial.html">Practical curriculum</a><a href="trust.html">Trust and limitations</a></nav>
+<header class="guide-hero"><p class="guide-eyebrow">Learn by building and challenging models</p><h1>Practical modeling curriculum</h1><p>Twenty-one guided investigations that teach model construction, interchange, numerical verification, sensitivity, inference, optimization and reproducible reporting.</p>
+<nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">Modeling handbook</a><a href="tutorial.html">Practical curriculum</a><a href="trust.html">Trust and limitations</a></nav>
 <nav class="guide-lab-links" aria-label="Open a scientific workspace">
-<a href="ode.html">ODE</a><a href="sensitivity.html">Sensitivity</a><a href="optimization.html">Optimization</a>
-<a href="steady.html">Steady-State</a><a href="stochastic.html">Stochastic</a><a href="fitting.html">Fitting</a>
-<a href="statistics.html">Statistics</a><a href="linear-algebra.html">Linear Algebra</a><a href="ml.html">ML</a><a href="sciml.html">SciML</a>
-</nav><div class="tutorial-progress-card"><label id="tutorialProgressLabel" for="tutorialProgressMeter">0 of 20 tutorials completed</label><progress id="tutorialProgressMeter" max="20" value="0"></progress><small>Progress is stored only in this browser.</small></div></header>
-<div class="guide-tools"><label for="guideSearch">Search this page</label><input id="guideSearch" type="search" placeholder="solver tolerance, Sobol, identifiability, PCA…"/><span aria-live="polite" id="guideSearchCount">20 sections</span></div>
-<p class="guide-search-empty" id="guideSearchEmpty" hidden>No section matches this search. Try a method, lab, diagnostic or modelling term.</p>
-<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a class="guide-toc-level-2" href="#tutorial-1-turn-a-question-into-a-model">Tutorial 1 — Turn a question into a model</a><a class="guide-toc-level-2" href="#tutorial-2-build-equations-from-mechanisms">Tutorial 2 — Build equations from mechanisms</a><a class="guide-toc-level-2" href="#tutorial-3-separate-output-grid-density-from-numerical-accuracy">Tutorial 3 — Separate output-grid density from numerical accuracy</a><a class="guide-toc-level-2" href="#tutorial-4-diagnose-stiffness-with-an-independent-method">Tutorial 4 — Diagnose stiffness with an independent method</a><a class="guide-toc-level-2" href="#tutorial-5-local-sensitivity-with-scale-discipline">Tutorial 5 — Local sensitivity with scale discipline</a><a class="guide-toc-level-2" href="#tutorial-6-local-influence-through-states-and-time">Tutorial 6 — Local influence through states and time</a><a class="guide-toc-level-2" href="#tutorial-7-ofat-tornado-and-directional-analysis">Tutorial 7 — OFAT, tornado and directional analysis</a><a class="guide-toc-level-2" href="#tutorial-8-morris-screening-for-a-larger-parameter-set">Tutorial 8 — Morris screening for a larger parameter set</a><a class="guide-toc-level-2" href="#tutorial-9-sobol-jansen-first-and-total-effects">Tutorial 9 — Sobol/Jansen first and total effects</a><a class="guide-toc-level-2" href="#tutorial-10-pairwise-interactions-time-and-state-resolution">Tutorial 10 — Pairwise interactions, time and state resolution</a><a class="guide-toc-level-2" href="#tutorial-11-limited-mi-and-hsic-dependence-screening">Tutorial 11 — Limited MI and HSIC dependence screening</a><a class="guide-toc-level-2" href="#tutorial-12-optimization-with-feasibility-separated-from-objective">Tutorial 12 — Optimization with feasibility separated from objective</a><a class="guide-toc-level-2" href="#tutorial-13-finite-multi-objective-trade-offs">Tutorial 13 — Finite multi-objective trade-offs</a><a class="guide-toc-level-2" href="#tutorial-14-find-equilibria-without-claiming-all-roots">Tutorial 14 — Find equilibria without claiming all roots</a><a class="guide-toc-level-2" href="#tutorial-15-stochastic-paths-ensembles-and-censoring">Tutorial 15 — Stochastic paths, ensembles and censoring</a><a class="guide-toc-level-2" href="#tutorial-16-parameter-fitting-and-practical-identifiability">Tutorial 16 — Parameter fitting and practical identifiability</a><a class="guide-toc-level-2" href="#tutorial-17-statistics-before-machine-learning">Tutorial 17 — Statistics before machine learning</a><a class="guide-toc-level-2" href="#tutorial-18-conditioning-in-linear-algebra">Tutorial 18 — Conditioning in linear algebra</a><a class="guide-toc-level-2" href="#tutorial-19-use-sciml-without-fabricating-neural-evidence">Tutorial 19 — Use SciML without fabricating neural evidence</a><a class="guide-toc-level-2" href="#tutorial-20-produce-a-reproducible-report">Tutorial 20 — Produce a reproducible report</a></aside><article class="guide-document"><p>These tutorials teach modelling rather than button pressing. Each exercise contains a scientific goal, an implementation task, a deliberate challenge, an interpretation checkpoint, and a reporting outcome.</p>
+<a href="studio.html">Model Studio</a><a href="examples.html">Model Atlas</a><a href="ode.html">ODE</a><a href="stochastic.html">Stochastic</a><a href="agent.html">Agent</a>
+<a href="population-genetics.html">Population Genetics</a><a href="bifurcation.html">Bifurcation</a><a href="sensitivity.html">Sensitivity</a><a href="optimization.html">Optimization</a>
+<a href="steady.html">Steady-State</a><a href="fitting.html">Fitting</a><a href="statistics.html">Statistics</a><a href="advanced-methods.html">Advanced</a>
+<a href="ai-modeling.html">AI Modeling</a><a href="linear-algebra.html">Linear Algebra</a><a href="ml.html">ML</a><a href="sciml.html">SciML</a>
+</nav><div class="tutorial-progress-card"><label id="tutorialProgressLabel" for="tutorialProgressMeter">0 of 21 tutorials completed</label><progress id="tutorialProgressMeter" max="21" value="0"></progress><small>Progress is stored only in this browser.</small></div></header>
+<div class="guide-tools"><label for="guideSearch">Search this page</label><input id="guideSearch" type="search" placeholder="solver tolerance, Sobol, identifiability, PCA…"/><span aria-live="polite" id="guideSearchCount">21 sections</span></div>
+<p class="guide-search-empty" id="guideSearchEmpty" hidden>No section matches this search. Try a method, lab, diagnostic or modeling term.</p>
+<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a class="guide-toc-level-2" href="#tutorial-1-turn-a-question-into-a-model">Tutorial 1 — Turn a question into a model</a><a class="guide-toc-level-2" href="#tutorial-2-build-equations-from-mechanisms">Tutorial 2 — Build equations from mechanisms</a><a class="guide-toc-level-2" href="#tutorial-3-separate-output-grid-density-from-numerical-accuracy">Tutorial 3 — Separate output-grid density from numerical accuracy</a><a class="guide-toc-level-2" href="#tutorial-4-diagnose-stiffness-with-an-independent-method">Tutorial 4 — Diagnose stiffness with an independent method</a><a class="guide-toc-level-2" href="#tutorial-5-local-sensitivity-with-scale-discipline">Tutorial 5 — Local sensitivity with scale discipline</a><a class="guide-toc-level-2" href="#tutorial-6-local-influence-through-states-and-time">Tutorial 6 — Local influence through states and time</a><a class="guide-toc-level-2" href="#tutorial-7-ofat-tornado-and-directional-analysis">Tutorial 7 — OFAT, tornado and directional analysis</a><a class="guide-toc-level-2" href="#tutorial-8-morris-screening-for-a-larger-parameter-set">Tutorial 8 — Morris screening for a larger parameter set</a><a class="guide-toc-level-2" href="#tutorial-9-sobol-jansen-first-and-total-effects">Tutorial 9 — Sobol/Jansen first and total effects</a><a class="guide-toc-level-2" href="#tutorial-10-pairwise-interactions-time-and-state-resolution">Tutorial 10 — Pairwise interactions, time and state resolution</a><a class="guide-toc-level-2" href="#tutorial-11-limited-mi-and-hsic-dependence-screening">Tutorial 11 — Limited MI and HSIC dependence screening</a><a class="guide-toc-level-2" href="#tutorial-12-optimization-with-feasibility-separated-from-objective">Tutorial 12 — Optimization with feasibility separated from objective</a><a class="guide-toc-level-2" href="#tutorial-13-finite-multi-objective-trade-offs">Tutorial 13 — Finite multi-objective trade-offs</a><a class="guide-toc-level-2" href="#tutorial-14-find-equilibria-without-claiming-all-roots">Tutorial 14 — Find equilibria without claiming all roots</a><a class="guide-toc-level-2" href="#tutorial-15-stochastic-paths-ensembles-and-censoring">Tutorial 15 — Stochastic paths, ensembles and censoring</a><a class="guide-toc-level-2" href="#tutorial-16-parameter-fitting-and-practical-identifiability">Tutorial 16 — Parameter fitting and practical identifiability</a><a class="guide-toc-level-2" href="#tutorial-17-statistics-before-machine-learning">Tutorial 17 — Statistics before machine learning</a><a class="guide-toc-level-2" href="#tutorial-18-conditioning-in-linear-algebra">Tutorial 18 — Conditioning in linear algebra</a><a class="guide-toc-level-2" href="#tutorial-19-use-sciml-without-fabricating-neural-evidence">Tutorial 19 — Use SciML without fabricating neural evidence</a><a class="guide-toc-level-2" href="#tutorial-20-produce-a-reproducible-report">Tutorial 20 — Produce a reproducible report</a><a class="guide-toc-level-2" href="#tutorial-21-move-a-model-between-formats-without-changing-its-meaning">Tutorial 21 — Move a model between formats without changing its meaning</a></aside><article class="guide-document"><p>These tutorials teach modeling rather than button pressing. Each exercise contains a scientific goal, an implementation task, a deliberate challenge, an interpretation checkpoint, and a reporting outcome.</p>
 <p>Complete Tutorials 1–4 before using the advanced labs.</p>
 <section class="guide-module" data-guide-section data-guide-search="tutorial 1 — turn a question into a model
 goal: build a minimal model whose output directly answers a scientific question.
@@ -624,11 +565,42 @@ final checkpoint: reproducibility requires enough information to recompute the r
 <li>limitations.</li>
 </ul>
 <p><strong>Final checkpoint:</strong> Reproducibility requires enough information to recompute the result, not merely a screenshot of the result.</p>
+</section><section class="guide-module" data-guide-section data-guide-search="tutorial 21 — move a model between formats without changing its meaning
+goal: treat model exchange as a scientific equivalence test rather than a file-conversion exercise.
+
+open model studio and expand import or paste a model.
+load the supplied plain-text logistic model and check the rendered equation, x(0), parameter values/ranges, time span and solver.
+run it and record the final state and solver diagnostics.
+export the project as json.
+create a blank project, import the json and rerun it. the new result should agree within the declared numerical tolerance.
+repeat with a python data dictionary using foko_model = {...}. confirm that no python code is executed.
+widen the model panel with the separator while editing, then reset it. confirm that plot selection and computed data do not change when only panel geometry changes.
+try a cellml or sed-ml filename, or an sbml model containing an event. record the explicit rejection instead of trying to work around it.
+
+challenge: change one parameter range in only one representation. explain why matching nominal trajectories do not imply matching sensitivity questions.
+failure test: add x(0) = infinity or an undeclared symbol. the import or model validator must reject it before a scientific result is created.
+checkpoint: a successful parse proves syntax compatibility. a successful numerical round trip supports implementation equivalence for that tested configuration. neither proves that the model is scientifically valid or that foko lab supports the full source standard.
+report: list the source format, imported states/equations/parameters, any rejected semantics, numerical settings, comparison tolerance and the software/release used for both runs." data-guide-id="tutorial-21-move-a-model-between-formats-without-changing-its-meaning"><div class="guide-module-heading"><h2 id="tutorial-21-move-a-model-between-formats-without-changing-its-meaning">Tutorial 21 — Move a model between formats without changing its meaning</h2><button class="tutorial-complete" type="button" data-tutorial-id="tutorial-21-move-a-model-between-formats-without-changing-its-meaning" aria-pressed="false"><span aria-hidden="true">✓</span> Mark complete</button></div>
+<p><strong>Goal:</strong> Treat model exchange as a scientific equivalence test rather than a file-conversion exercise.</p>
+<ol>
+<li>Open <strong>Model Studio</strong> and expand <strong>Import or paste a model</strong>.</li>
+<li>Load the supplied plain-text logistic model and check the rendered equation, <code>x(0)</code>, parameter values/ranges, time span and solver.</li>
+<li>Run it and record the final state and solver diagnostics.</li>
+<li>Export the project as JSON.</li>
+<li>Create a blank project, import the JSON and rerun it. The new result should agree within the declared numerical tolerance.</li>
+<li>Repeat with a Python data dictionary using <code>FOKO_MODEL = {...}</code>. Confirm that no Python code is executed.</li>
+<li>Widen the model panel with the separator while editing, then reset it. Confirm that plot selection and computed data do not change when only panel geometry changes.</li>
+<li>Try a CellML or SED-ML filename, or an SBML model containing an event. Record the explicit rejection instead of trying to work around it.</li>
+</ol>
+<p><strong>Challenge:</strong> Change one parameter range in only one representation. Explain why matching nominal trajectories do not imply matching sensitivity questions.</p>
+<p><strong>Failure test:</strong> Add <code>x(0) = Infinity</code> or an undeclared symbol. The import or model validator must reject it before a scientific result is created.</p>
+<p><strong>Checkpoint:</strong> A successful parse proves syntax compatibility. A successful numerical round trip supports implementation equivalence for that tested configuration. Neither proves that the model is scientifically valid or that Foko Lab supports the full source standard.</p>
+<p><strong>Report:</strong> List the source format, imported states/equations/parameters, any rejected semantics, numerical settings, comparison tolerance and the software/release used for both runs.</p>
 </section></article></div>
 </main>
 <footer class="v70-footer foko-product-footer compact-public-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=72.48.0"/><p><b>Foko Lab</b><br/>Scientific modelling with visible evidence boundaries.</p></div>
-<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Modelling handbook</a><a href="trust.html">Trust</a><a href="research.html">Research</a></nav>
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=77.4.1"/><p><b>Foko Lab</b><br/>Scientific modeling with visible evidence boundaries.</p></div>
+<nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Modeling handbook</a><a href="trust.html">Trust</a><a href="research.html">Research</a></nav>
 <div class="foko-footer-meta"><p><a href="https://chilperic.github.io/" rel="noopener" target="_blank">Dr. Chilperic Armel Foko Kuate</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a></p></div>
 </footer>
 </div><script>(function(){document.documentElement.dataset.theme=localStorage.getItem('chilperic-theme')||'aurora';})();</script><script>
@@ -688,4 +660,4 @@ final checkpoint: reproducibility requires enough information to recompute the r
   }
   addEventListener('scroll',updateReading,{passive:true});updateReading();
 })();
-</script><script defer src="src/navigation.js?v=72.48.0"></script></body></html>
+</script><script defer src="src/v76/app-shell.js?v=77.4.1"></script></body></html>

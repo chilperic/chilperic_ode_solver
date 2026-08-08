@@ -13,7 +13,7 @@ PAGES = sorted(
     if 'data-v72-shell="true"' in path.read_text(encoding="utf-8", errors="ignore")
 )
 UNUSED_MATH_PAGES = {
-    "agent.html", "fitting.html", "linear-algebra.html", "ml.html",
+    "fitting.html", "linear-algebra.html", "ml.html",
     "networks.html", "statistics.html",
 }
 PLOTLY = ROOT / "assets/vendor/plotly/plotly-2.35.2.min.js"
@@ -62,7 +62,11 @@ def audit_page(path: Path) -> list[str]:
     if not skip or not main or skip.get("href") != f"#{main.get('id')}":
         failures.append("skip link does not target the main landmark")
     nav = soup.find("nav", attrs={"aria-label": True})
-    if nav is None:
+    central_shell = (
+        soup.find("header", attrs={"data-v76-appbar": "true"}) is not None
+        and soup.find("script", src=lambda value: value and "v76/app-shell.js" in value) is not None
+    )
+    if nav is None and not central_shell:
         failures.append("primary navigation lacks an accessible label")
 
     unlabeled = [
@@ -105,11 +109,11 @@ def audit_page(path: Path) -> list[str]:
     js_bytes = sum(local_asset_size(ref) for ref in references)
     plotly_bytes = PLOTLY.stat().st_size if any("vendor/plotly" in ref for ref in references) else 0
     page_specific = js_bytes - plotly_bytes
-    math_pages = {"ode.html", "steady.html", "stochastic.html", "optimization.html", "sensitivity.html", "sciml.html", "symbolic.html"}
+    math_pages = {"ode.html", "steady.html", "stochastic.html", "optimization.html", "sensitivity.html", "sciml.html", "symbolic.html", "bifurcation.html", "agent.html", "evolution.html", "studio.html"}
     budget = 1_250_000 if path.name == "workbench.html" else (1_200_000 if path.name in math_pages else 900_000)
     if page_specific > budget:
         failures.append(f"page-specific JavaScript {page_specific} bytes exceeds {budget}")
-    script_limit = 20 if path.name == "workbench.html" else (13 if path.name in {"ode.html", "sensitivity.html"} else 12)
+    script_limit = 21 if path.name == "workbench.html" else (14 if path.name in {"ode.html", "sensitivity.html", "studio.html"} else 13)
     if len(external_scripts) > script_limit:
         failures.append(f"script count {len(external_scripts)} exceeds page budget {script_limit}")
     return failures

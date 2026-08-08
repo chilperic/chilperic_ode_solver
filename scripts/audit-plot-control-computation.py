@@ -8,10 +8,11 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = [
-    "ode.html", "steady.html", "stochastic.html", "optimization.html",
+    "studio.html",
+    "ode.html", "steady.html", "stochastic.html", "optimization.html", "population-genetics.html", "advanced-methods.html",
     "statistics.html", "fitting.html", "linear-algebra.html", "networks.html",
     "ml.html", "sciml.html", "agent.html", "symbolic.html", "workbench.html",
-    "sensitivity.html",
+    "sensitivity.html", "bifurcation.html", "evolution.html", "ai-modeling.html",
 ]
 
 

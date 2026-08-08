@@ -7,7 +7,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPECTED = "72.48.0"
+EXPECTED = "77.4.1"
 V72_PAGES = [
     path for path in ROOT.glob("*.html")
     if 'data-v72-shell="true"' in path.read_text(encoding="utf-8", errors="ignore")
@@ -43,7 +43,8 @@ def test_authored_pages_have_landmarks_skip_links_and_one_h1():
         skip = doc.find("a", class_="skip-link")
         assert skip and skip.get("href") == f"#{main['id']}", page.name
         assert len(doc.find_all("h1")) == 1, page.name
-        assert doc.find("nav", attrs={"aria-label": True}), page.name
+        assert doc.find("header", attrs={"data-v76-appbar": "true"}), page.name
+        assert doc.find("script", src=lambda value: value and "v76/app-shell.js" in value), page.name
 
 
 def test_authored_pages_do_not_parser_block_or_preload_plotly():
@@ -57,11 +58,14 @@ def test_authored_pages_do_not_parser_block_or_preload_plotly():
 
 
 def test_unused_math_dependencies_are_removed_from_non_symbolic_pages():
-    pages = ["agent.html", "fitting.html", "linear-algebra.html", "ml.html", "networks.html", "statistics.html"]
+    pages = ["fitting.html", "linear-algebra.html", "ml.html", "networks.html", "statistics.html"]
     for name in pages:
         text = (ROOT / name).read_text()
         assert "assets/vendor/mathjs/" not in text, name
         assert "assets/vendor/katex/" not in text, name
+    agent = (ROOT / "agent.html").read_text()
+    assert "agentEquationPreview" in agent
+    assert "assets/vendor/katex/katex-0.16.47.min.js" in agent
 
 
 def test_accessibility_runtime_wraps_plot_rendering_and_exposes_telemetry():

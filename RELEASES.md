@@ -1,3 +1,333 @@
+# v77.4.1 — command-palette dismissal patch
+
+- Gives the corrected shell and stylesheet a new `77.4.1` cache token so an older localhost session cannot reuse the broken v77.4.0 modal CSS.
+- Makes command-palette dismissal redundant by design: closing sets both the semantic `hidden` state and inline `display:none`; the stylesheet also enforces `[hidden]` with `!important`.
+- Keeps three independent dismissal paths: **Esc**, outside/backdrop click, and a visible **Esc ×** button.
+- Extends the navigation browser regression to open and dismiss the palette repeatedly instead of checking only menu hitboxes.
+- Local verification uses `./test-v77.4.1-local.sh --browser`; every invocation asks the OS for a fresh free localhost port. `--full` adds Chromium/Playwright certification.
+
+# v77.4.0 — State Observatory identity
+
+- Replaces the rejected Model Space cube with the **State Observatory**: a continuous response manifold, inference/uncertainty contours, a discrete population/agent lattice, one observable-state axis and an evolutionary branch.
+- Gives the display lockup an explicit platform descriptor: **MODELING · SIMULATION · VALIDATION**, with evidence/challenge language that prevents “validation” from reading as automatic certification.
+- Introduces a genuinely responsive logo system: rich flagship emblem, simplified adaptive header mark, dedicated monochrome mark, and a purpose-built micro favicon rather than one drawing scaled indiscriminately.
+- Hides a restrained creator signature in the scientific geometry: the state axis and upper planes imply `F`, while the evolutionary split suggests `K` for Foko Kuate.
+- Keeps subject and exact-lab colours adaptive in navigation while quantitative plots remain scientifically semantic and independent.
+- Regenerates 16/32 px favicons, touch icon and 512 px application icon and adds brand regression contracts for every vector scale.
+- Preserves the model-first workbench, resizable authoring panel, 259-entry Model Atlas, LaTeX, population genetics, CMA-ES, multi-output Sobol/Morris, bifurcation, Bayesian/advanced methods, AI/SciML, statistics, evolution and contextual 3D.
+- Local verification uses `./test-v77.4.0-local.sh --browser`; every invocation asks the OS for a fresh free localhost port. `--full` adds Chromium/Playwright certification.
+
+# v77.3.0 — Model Space identity
+
+- Replaces the Woven State tessellation with the **Model Space Mark**: an open isometric model/state volume, a structural `F`, and one highlighted computed state.
+- Keeps one recognizable silhouette while the runtime shell assigns subject and exact-lab colors to separate model-space edges; scientific plot palettes remain semantic and independent.
+- Rejects AI-only visual clichés such as brains, gears, neural spheres, particle vortices and “quantum” cubes because Foko Lab is a general scientific modeling platform.
+- Regenerates the static mark, monochrome mark, compact/display lockups, favicon, touch icon and 512 px application icon from the new geometry.
+- Preserves the model-first workbench, resizable authoring panel, 259-entry Atlas, examples, LaTeX, population genetics, CMA-ES, multi-output Sobol/Morris, bifurcation, Bayesian/advanced methods, AI/SciML, statistics, evolution and contextual 3D.
+- Local verification uses `./test-v77.3.0-local.sh --browser`; every invocation selects a fresh free localhost port. `--full` adds Chromium/Playwright certification.
+
+# v77.2.0 — Woven State identity
+
+- Replaces the Confluence trajectory/node mark with the **Woven State Mark**, a completely different faceted tessellation with no curves, paths, dots or enclosing badge.
+- Uses a stable indigo facet plus subject- and exact-lab-aware facets in the runtime shell; scientific plot palettes remain independent.
+- Introduces a restrained personal reference through indigo and modular negative-space construction without copying a named Grassfields ceremonial motif.
+- Regenerates the compact/display/monochrome SVG lockups, favicon, touch icon and application icon from one geometry.
+- Preserves the model-first home, Model Studio, 259-model Atlas, resizable authoring workspace, LaTeX, multi-output Sobol/Morris, CMA-ES, population genetics, bifurcation, Bayesian/advanced methods, AI/SciML, statistics and contextual 3D.
+- Local verification uses `./test-v77.2.0-local.sh --browser`; every invocation selects a fresh free localhost port. `--full` adds Chromium/Playwright certification.
+
+# v77.1.0 — Confluence identity
+
+- Replaces the previous contour/path logo concept entirely with the **Confluence Mark**: three interdisciplinary strands meet at an explicit model state and open into multiple evidence directions. The static identity uses ink, biological teal, mathematical violet, computational blue and evidence amber; the runtime mark adapts to subject and exact lab without recoloring scientific data.
+- Rebuilds the wordmark in mixed-case editorial typography and carries the same Confluence geometry through the header, monochrome mark, favicon, touch icon and application icon.
+- Rebuilds the home around a runnable user-owned model and the Define → Configure → Simulate → Analyze → Verify workflow; the Model Atlas remains a 259-entry editable starting library rather than the product's center.
+- Simplifies desktop navigation to Home, Model Studio, Simulate, Analyze, Atlas and Evidence while retaining complete mobile navigation, creator access, command search and direct Run behavior.
+- Reworks the scientific shell with six subject families, twenty distinct AA lab accents, the requested vertical desktop task rail, a resizable authoring panel, plot-first results canvas and responsive evidence inspector.
+- Preserves LaTeX equation rendering, multi-output Sobol/Morris, CMA-ES, population genetics, system-dynamics bifurcation, Bayesian/advanced methods, AI/SciML, statistics, evolution landscapes and contextual live 3D agent/state simulations.
+- Local verification uses `./test-v77.1.0-local.sh --browser`; every invocation selects a fresh free localhost port. `--full` additionally requires Chromium for browser certification.
+
+# v76.2.0 — Phase identity and model-first visual rebuild
+
+- Replaces the rejected dark-teal badge system with the free-standing Phase Monogram, carbon/ultramarine/coral/warm-paper palette, light application bar and regenerated favicon family.
+- Rebuilds Home from a blank document structure around one editable canonical-engine model, three problem-structure routes, all 20 labs, six strong models, the evidence contract and creator access.
+- Removes the legacy demonstration reel from the runtime while preserving the 259-model Atlas and research-derived starting points.
+- Rebuilds desktop lab presentation with a 64 px vertical workflow rail, resizable authoring panel, lab-coloured active state, large evidence canvas and compact inspector; compact layouts use a horizontal rail.
+- Keeps subject/lab colour strictly presentational and scientific plots semantic.
+- Updates browser contracts to validate editable-model recomputation rather than retired home-card animations.
+- Baseline verification covers 129 JavaScript files, 322 active Python contracts, 101 workspace checks, 221 shell checks, 32 independent references and 2,351 Atlas assertions.
+- Local verification: `./test-v76.2.0-local.sh --browser` validates, chooses a fresh port, serves and opens localhost; add `--full` on a Chromium-capable host.
+
+# v76.1.0 — Model Field identity and two-level scientific orientation
+
+- Replaced the static logo with the sophisticated Model Field SVG system: scientific inputs converge on a model kernel, a computed path exits it and an evidence point closes the mark.
+- Added an adaptive runtime logo whose field follows the current subject and whose output/evidence geometry follows the exact lab.
+- Established six subject families and twenty unique scientific lab accents in one authoritative taxonomy.
+- Propagated identity into desktop and mobile navigation, command search, workflow rails, run actions, home routes, result frames and every Model Atlas card.
+- Removed the competing legacy palette; `styles/lab-identity.css` is now a compatibility bridge only.
+- Corrected scientific plotting so semantic categorical colors are the default and lab color is explicitly presentation-only.
+- Added automated WCAG AA contrast, taxonomy, SVG accessibility, Atlas, home, semantic-plot and release-evidence checks.
+- Reconciled validation documentation and added a release-specific professional audit, platform benchmark and limitations record.
+- Local verification: `./test-v76.1.0-local.sh --browser` baseline-validates, selects a fresh free port and opens localhost; add `--full` when Chromium certification is required.
+
+# v76.0.7 — restored laboratory rail and per-lab visual identity
+
+- Restores the desktop workflow rail as a 54 px vertical column with readable
+  88 px controls, matching the authored Examples/Model/Simulation/Export
+  structure instead of clipping a horizontal bar inside a narrow grid track.
+- Preserves authored “Examples” and “Atlas” labels rather than silently
+  replacing them with generic shell terminology.
+- Gives each of the 20 scientific laboratories its own accessible accent and
+  applies it to the active rail control, primary run actions and result frame.
+- Keeps plot colours data-driven: laboratory identity never changes the
+  scientific meaning of a series, category, uncertainty interval or heat map.
+- Keeps the rail horizontal and scrollable at tablet/phone widths and verifies
+  that it does not create document-level horizontal overflow.
+- Adds source, WCAG contrast, desktop geometry, representative-lab and phone
+  regressions so older horizontal-rail styles cannot silently override the fix.
+- Local verification: `./test-v76.0.7-local.sh --browser` selects a fresh free
+  localhost port on every run; `--full --browser` performs release certification
+  before opening the platform.
+- Certified with 324 active Python contracts, 32 independent numerical
+  references, 152 Playwright browser scenarios, seven offline Chromium gates,
+  a 100/100 platform benchmark, and 2,351 Atlas checks across 259 entries.
+
+# v76.0.6 — user-owned model interchange and adjustable scientific workspace
+
+- Adds a dynamically resizable model/results workspace to every compatible authored lab. The separator supports pointer drag, keyboard arrows, compact/wide/reset positions, per-lab persistence and plot lifecycle resizing; phone layouts keep explicit task panels.
+- Adds one non-executing deterministic model interchange core shared by Model Studio and ODE Lab: TXT/ODE, JSON/Model IR, Python and JavaScript data dictionaries, declarative YAML, model-table CSV and a strict SBML reaction subset.
+- Removes the active legacy SBML route that warned and continued after unsupported semantics. Events, rules, packages, delays, non-unit compartments, piecewise expressions and unsupported MathML now reject the complete import.
+- Recognizes CellML, SED-ML and COMBINE/OMEX without claiming to execute or flatten their semantics.
+- Adds a visible Model Studio paste/file workflow, imported-result invalidation, an interchange tutorial, a revised input contract and a detailed scientific/UX audit.
+- Reframes the 259-entry Model Atlas as editable starting points with status, provenance, scientific-use and evidence-boundary information.
+- Introduces accessible lab-family orientation accents while retaining one platform identity and data-appropriate scientific plot palettes.
+- Keeps the examples, Model Atlas, rendered equations, advanced visualizations and direct creator/trust routes.
+- Local verification: `./test-v76.0.6-local.sh --browser` selects a fresh free localhost port on every invocation; use `--full --browser` for complete browser certification.
+- Certified with 324 active Python contracts, 32 independent numerical references, 149 Playwright browser scenarios, seven offline Chromium gates, a 100/100 platform benchmark, and 2,351 Atlas checks across 259 entries.
+
+# v76.0.5 — explicit Home navigation and refined identity
+
+- Adds a named Home destination to the desktop application bar instead of
+  relying on the logo as an undocumented shortcut.
+- Adds Home to the phone navigation sheet and the persistent five-destination
+  mobile dock, with a clear current-page state and a 48 px touch target.
+- Refines the Convergent Field symbol into a simpler model-first story: three
+  scientific trajectories converge at an editable model node and continue to a
+  verified evidence point.
+- Rebuilds the compact header lockup, full display lockup, monochrome mark,
+  favicons, touch icon and 512 px application icon from the same accessible
+  vector geometry.
+- Keeps the approved v76 layout, typography, palette, model catalogue and
+  scientific workspaces unchanged.
+- Retains the fresh-port localhost workflow with
+  `./test-v76.0.5-local.sh --browser`.
+- Certified with 324 active contracts, 32 independent numerical references,
+  seven offline Chromium gates, benchmark 100/100 and the complete 145-scenario
+  desktop/phone Playwright inventory.
+
+# v76.0.4 — deterministic plot startup and usable localhost workflow
+
+- Fixes the v76.0.3 combined visual-contract timeout after all scientific,
+  reference, navigation and Agent gates had already passed.
+- Coalesces overlapping Optimization and Stochastic startup renders through one
+  post-layout revision, eliminating duplicate fire-and-forget Plotly requests.
+- Fixes the hidden layout cause: four desktop workspace columns now use four
+  matching named grid areas, so neither authored plot can collapse to zero width.
+- Replaces the opaque 30-second two-plot timeout with a hardware-tolerant,
+  fail-fast diagnostic that identifies the exact lab, file, host render state,
+  geometry and browser error.
+- Keeps the phone Setup/Results/Evidence dock above the global navigation,
+  reserves space for both controls, and enforces usable phone touch targets.
+- Preserves the expanded scientific product contract: 13 AI plot types, seven
+  supporting home tools, an open searchable Sensitivity catalogue, equal
+  research cards and a runnable editable new-model scaffold.
+- Persists one fresh localhost port across Playwright's server and worker
+  processes, eliminating intermittent `ERR_CONNECTION_REFUSED` runs.
+- Makes `./test-v76.0.4-local.sh --browser` the normal localhost route: reliable
+  baseline validation, a new free port, server startup and automatic browser
+  opening.
+- Retains the complete offline Chromium and Playwright certification suite under
+  the explicit `--full` flag, including `--browser --full` when certification
+  must precede the demo.
+- Certified on Chromium: 324 active Python contracts, 32 independent numerical
+  references, seven offline browser gates, benchmark 100/100 and 145/145
+  desktop/mobile Playwright scenarios.
+
+# v76.0.3 — unified popover geometry and localhost hardening
+
+- Fixes the v76.0.2 Profile-menu overflow. The positioning code assumed a
+  430 px Profile panel while shared CSS rendered every popover at 620 px.
+- Introduces one bounded geometry function that owns both rendered width and
+  horizontal position for every menu. It guarantees 12 px left and right
+  viewport gutters on desktop and phone widths.
+- Adds deterministic geometry regressions for right-edge Profile and Analyze
+  menus, narrow phones and left-edge triggers, in addition to the Chromium
+  hitbox gate.
+- Provides `./test-v76.0.3-local.sh --browser` (`--demo` alias) as the verified localhost workflow:
+  full validation, a fresh port, local server startup and automatic browser
+  opening.
+
+# v76.0.2 — strict-selector gate repair and browser demo
+
+- Fixes the v76.0.1 Chromium gate failure caused by the ambiguous selector
+  `[data-v76-popover="experiment"] a:first-of-type`. The selector matched the
+  first link in both authored menu sections, so Playwright strict mode rejected
+  the test even though the menu itself was visible and interactive.
+- The gate now selects the first actual matching link explicitly and continues
+  to verify geometry, hit testing, stable app-bar layout and Escape behavior.
+- Adds `./test-v76.0.2-local.sh --demo`: after all scientific and browser gates
+  pass, it chooses a fresh port, starts the server and opens the verified
+  platform in the default browser.
+- Keeps `--serve` for serving without automatically opening a browser.
+
+# v76.0.1 — immediate navigation hitbox repair
+
+- Fixes the Chromium failure `project: first menu option is not visible`.
+- Root cause: `visibility` was included in the popover transition. Because it is
+  a discrete property, an opened menu remained temporarily hidden from hit
+  testing and keyboard focus even after `data-open` and `aria-hidden` changed.
+- Removes `visibility` from the animated properties. Opacity and movement remain
+  animated, while menu links become interactive immediately.
+- Adds a static regression contract that rejects any future attempt to animate
+  menu visibility.
+- Retains the v76 scientific engines, model catalogue, visual system and
+  user-owned modeling workflow unchanged.
+
+# v76.0.0 — model-first product rebuild
+
+- Replaces duplicated page menus with one portal-based application shell:
+  Project, Model, Experiment, Analyze, Evidence and Atlas.
+- Introduces the Convergent Field identity, responsive phone sheet and bottom
+  controls, compact scientific typography, command search, global Run and a
+  populated creator/trust menu.
+- Rebuilds the home page around an editable canonical-engine model and routes
+  users by equations, populations/agents or data while retaining the Model Atlas.
+- Preserves contextual 3D, multi-output global sensitivity, KaTeX equations,
+  population genetics, Bayesian/advanced methods, AI, bifurcation, evolution,
+  CMA-ES and platform-wide visualization contracts.
+- Adds actionable non-finite diagnostics for zero denominators and divergent
+  model scales, with executable SIR and Lotka–Volterra regressions.
+- Selects a fresh localhost port on every validation and serve invocation.
+
+# v75.0.4 — offline-gate repair and redesign groundwork
+
+- Fixes `check-agent-layout-offline.js`, which threw `Agent Lab requires FokoLive3D` the moment v75.0.3 unblocked the gate chain. The gate rebuilds `agent.html` by hand and never injected `src/core/live-3d.js`, so `agent-workspace.js` threw on injection and tested nothing. The omission predates the v75.0.x line; it was unreachable while the hitbox gate failed first. Fix injects the module in the page's own order. No runtime file changed.
+- Adds `scripts/audit-offline-gate-dependencies.py` (`npm run test:gate-deps`, and wired into `test:syntax`): maps which module defines each `Foko*` global, then verifies every gate's injected modules can satisfy their load-time guards. Turns a multi-minute Chromium failure into an instant, explanatory one. It correctly retrodicts both known outcomes — flags agent-layout for `FokoLive3D`, reports navigation-hitboxes clean — and distinguishes hardcoded gates (six, can drift) from self-maintaining ones (`check-sensitivity-offline.js`, derives its list from the page, cannot drift).
+- Adds `scripts/report-dead-css.py` (`npm run report:dead-css`) as groundwork for the v76 declutter. Baseline: 1,295 of 4,106 rules (31.5%) have no referencing HTML/JS token, concentrated in `style.css` (582), `v72-public-shell.css` (310) and `v72-profile-shell.css` (278); the v72-era sheets are essentially clean. Report only — nothing fails on a high count. Zero false positives across five known-live selectors.
+- Verified at 75.0.4: 320 active Python contracts, all eight Python audits, 125-file JS syntax, the new gate-dependency audit, studio and full JS core suites.
+- The Chromium gates remain unrunnable in the build environment. `check-agent-layout-offline.js` has **not** been observed passing — the static check proves its guards are satisfiable, which is necessary but not sufficient. Run `./test-v75.0.4-local.sh` on a Chromium host.
+
+# v75.0.3 — Creator navigation hitbox gate passes
+
+- Fixes the failure that survived v75.0.0, v75.0.1 and v75.0.2: `scripts/check-navigation-hitboxes-offline.js` now passes.
+- Root cause was one missing declaration in the v75.0.2 rule. The base `.labs-menu-panel` rule in `style.css` carries `transform:translateX(-50%)`, authored for a `left:50%` panel. v75.0.2 overrode `left`/`right`/`width` but not `transform`, so once the panel was pinned `position:fixed` and full-width the inherited translation shifted it half its own width off-screen. A browser probe measured `transform: matrix(1,0,0,1,-632,0)` on a 1264 px panel, first-link centre at `cx = -311`, and `document.elementFromPoint` returning `null` — which the gate reports as `covered by none`.
+- Fix adds `transform:none` to the existing block in `styles/v72-profile-shell.css`, matching `v72-tokens.css` line 470, the equivalent rule the working lab pages have always used. No other file changed.
+- Confirmed by running the Chromium gate on this exact CSS: `Navigation and Symbolic hitbox regression passed`. Also passes 320 active Python contracts, the platform-consistency, teaching-depth, benchmark, plot-lifecycle, accessibility, plot-control and input audits, 125-file JS syntax and the full JS core/studio/reference unit suites.
+- The Chromium gate still cannot execute in the build environment (no local Chromium; Playwright browser CDN outside the network allowlist); its passing status for this release comes from the maintainer's run on identical CSS. Re-run it on a Chromium host with `./test-v75.0.3-local.sh`.
+- Known cosmetic residual: the open panel's computed `left` resolves to `0px` rather than the requested `16px`, so it sits flush to the viewport edge. Appearance only — all links are on-screen and hittable. Deliberately left unchanged so the shipped CSS matches what was verified in the browser.
+
+# v75.0.2 — Creator navigation dropdown fix (correct CSS target)
+
+- Fixes the Creator Profile (`cv.html`) Simulate / Analyze / Explore dropdowns, which the v75.0.0 and v75.0.1 "navigation repair" work never reached: those rules targeted `.v70-workbench-panel` and `.analysis-menu-panel`, but the authored panels carry `.labs-menu-panel.menu-panel-wide`, so no rule applied and both defects survived.
+- Re-shows hidden link content. `style.css` blanks every `<span>` inside `.nav-menu .labs-menu-panel a` — the icon and the `<b>`/`<small>` text wrapper alike; a higher-specificity rule scoped to `.menu-panel-wide` restores it.
+- Stops the panel being clipped off-screen. At the 1280 px gate width `style.css` makes `.foko-main-nav` a scroll container while the panel is `position:absolute` inside it; the open `.menu-panel-wide` panel is now pinned `position:fixed` so it escapes the clip, mirroring the lab-page escape used by `v72-tokens.css`.
+- Change is isolated to `styles/v72-profile-shell.css`, the only non-lab sheet `cv.html` loads; no other page or lab is touched. Closed panels stay `display:none`, so only the open menu is affected.
+- Passes 320 active Python contracts, the platform-consistency, benchmark, plot-lifecycle, accessibility, plot-control and input audits, 125-file JS syntax and the full JS core/studio/reference unit suites. The Chromium navigation-hitbox gate was not runnable in the build environment (no local Chromium; Playwright browser CDN outside the network allowlist) and must be run on a Chromium host via `./test-v75.0.2-local.sh`.
+
+# v75.0.1 — release-runner consistency patch
+
+- Replaced the brittle v75.0.0 predecessor assertion with a self-consistent v75.0.1 runner contract.
+- Issued a uniquely named archive to prevent browsers from reusing the superseded v75.0.0 download.
+- Retains the complete v75 scientific-instrument redesign, model atlas, contextual 3D policy, and validated numerical engines.
+
+# v75.0.0 — scientific-instrument redesign and contextual spatial visualization
+
+- Replaces the oversized dark-green home hero with a quiet, grid-based scientific instrument overview, compact typography, task routes and a live evidence console.
+- Consolidates every lab into a compact build rail, dominant evidence canvas and divided provenance ledger; nested cards, oversized radii and competing shadows are removed.
+- Changes Agent Lab’s default to the computed live lattice. The optional 3D space-time cube is now exposed only by curated front, invasion, coarsening and wave presets that declare a scientific rationale.
+- Repairs the Creator Profile’s empty Simulate, Analyze and Explore menus by enforcing visible menu-link contrast, multi-column layout and direct hitboxes on `cv.html`.
+- Retains the 259-entry Model Atlas, strong examples, editable equations with LaTeX, initial conditions, time spans, parameter values/ranges, multi-output Sobol/Morris sensitivity, CMA-ES, Population Genetics, bifurcation, Bayesian/advanced, AI, statistics and reproducible exports.
+- Uses Deep Ocean Blue as the product identity, restrained cyan for scientific orientation, and terracotta only for exceptional actions or warnings.
+- Passes 320 active contracts, 32 differential numerical references, the 100/100 platform benchmark and all 20 plot-lifecycle workspaces.
+
+# v74.0.2 — navigation hitbox taxonomy repair
+
+- Synchronizes the navigation hitbox regression with the shipped `Simulate / Analyze / Explore` taxonomy.
+- Removes stale `modeling` and `sciml` selectors from the offline hitbox gate, full browser suites and menu-positioning CSS.
+- Makes the offline gate assert the complete authored primary-menu inventory before testing pointer travel, click, Escape, inert panels and Symbolic plot-selector hitboxes.
+- Includes the injected Theme menu in the same interaction check.
+- Adds a release-blocking cross-file taxonomy contract; the active suite now contains 320 Python contracts.
+
+# v74.0.1 — clean-install acceptance repair
+
+- Makes the local validation runner own writable, release-scoped npm and Playwright caches instead of inheriting an unusable global cache.
+- Verifies the Playwright module itself rather than trusting the presence of a partial `node_modules` directory.
+- Creates dependency-cache directories before installation and keeps caller overrides explicit through `FOKOLAB_NPM_CACHE` and `PLAYWRIGHT_BROWSERS_PATH`.
+- Adds a release-blocking clean-install cache contract; the active suite now contains 319 Python contracts.
+- Retains the complete v74 experience architecture, 259-entry Model Atlas, scientific engines, examples, plots and modeling inputs unchanged.
+
+# v74.0.0 — experience architecture and responsive scientific workspace
+
+- Replaces the historical four-column cockpit and rotated lab labels with a three-zone workspace: horizontal context rail, bounded build/model column, large results canvas and compact evidence rail.
+- Makes every model catalogue single-column, scroll-bounded and overlap-safe while retaining the full 259-entry Model Atlas, strong starters and research-derived models.
+- Rebuilds the home page as an editorial modeling entry with a dark live-evidence hero, four clear starting paths, independent experiment cards, unclipped research cards and direct creator access.
+- Introduces the Abyssal Teal product shell, quiet mineral canvas and restrained Solar Coral primary-action signal; per-lab hues remain orientation accents rather than competing page themes.
+- Enlarges and regularizes plot surfaces, plot selectors and two-up/Focus controls; removes duplicated ODE export actions from the build rail while retaining exports in Evidence.
+- Adds 1450 px, 1080 px and 720 px layout contracts so tablet and phone browsers remain single-task, scroll-contained and plot-safe.
+- Retains editable equations with KaTeX, initial conditions, parameter values/ranges, time spans, solver settings, multi-output sensitivity, CMA-ES, Population Genetics, Bayesian/advanced methods, AI plots and live 3D Agent/Evolution/Studio simulations.
+- Adds nine release-blocking experience contracts; the active suite now contains 318 Python contracts.
+
+# v73.1.1 — unified identity and reliable equation binding
+
+- Replaces the mismatched header, icon and favicon symbols with one responsive Scientific Teal identity: an `F` coordinate frame crossed by a mint simulation trajectory.
+- Uses `#006D77` as the primary brand color with a deep teal navigation surface, a high-contrast compact header lockup and a readable display lockup.
+- Regenerates the 512 px app icon, Apple touch icon, 16/32 px favicons and multi-size ICO from the same vector mark.
+- Canonicalizes scalar, array and `{value,min,max}` parameter representations whenever ODE models are loaded from examples, imports, sessions or lab handoffs.
+- Normalizes and validates parameters again at the worker boundary, so Lotka–Volterra and SIR/SEIR equations no longer receive `NaN` from representation mismatches.
+- Replaces generic non-finite failures with equation, time and input/domain context, and adds executable Lotka–Volterra, SIR and invalid-binding regressions.
+
+# v73.1.0 — visualization-rich modeling workflows
+
+- Refactors the home page around four modeler intentions—build a system, load the 259-entry Atlas, simulate, or analyze—while retaining all worked and research-derived examples.
+- Adds live rotatable 3D Studio phase replay, Agent lattice-time simulation and Evolution population paths with play, pause, generation, speed and trail controls.
+- Renders editable Studio, Agent, Evolution and AI method equations with vendored KaTeX.
+- Adds single- or multiple-output global Sobol analysis; selected outputs share one seeded Saltelli design and cached ODE trajectories while retaining separate rankings, plots and exports.
+- Expands AI Modeling to 12 scientific starters and 13 diagnostic plots, including standardized residuals, residual Q–Q/ACF, derivatives, coverage and cumulative error.
+- Expands Advanced Methods to 14 starters, five Bayesian views and at least three computed plots for every non-Bayesian module, including 3D PDE and scenario surfaces.
+- Expands Statistics with ECDF, violin, density contour, scale/location, leverage, residual distribution, bootstrap convergence, moving range and process ACF plots.
+- Reworks narrow-screen workspaces into one-column tasks with Setup/Results/Evidence navigation, contained tables and bounded 3D canvases.
+
+# v73.0.0 — central Model Studio and model-first platform
+
+- Adds the `foko.project/1` project contract and a central Model Studio for editable ODEs, experiments, run metadata, import/export and analysis handoff.
+- Retains 21 strong Studio starters, the full 251-entry Model Atlas, every specialist lab and every existing computed plot selector.
+- Adds 15 Studio plots, including state/time and derivative heatmaps, phase/time/3D/multivariate views, adaptive-solver evidence, and two-parameter heatmap, contour and 3D response surfaces.
+- Reorganizes navigation as Home, Model Studio, Simulate, Analyze, Explore and GitHub while preserving upper-right creator access.
+- Extends lifecycle, accessibility, input, consistency, benchmark, active-contract and browser specifications to the twentieth authored workspace.
+
+# v72.51.0 — modelling-first UX, dynamics, evolution and transparent AI
+
+- Makes **Create model** the first modelling action and opens an editable runnable ODE scaffold with user-owned equations, initial conditions, parameters, ranges, time span and numerical settings.
+- Keeps strong example catalogues and modelling notes in optional, collapsible browsers so they remain discoverable without crowding the control rail.
+- Makes Local, Morris, Sobol and FIM sensitivity methods immediately visible and retains the full method-dependent 35-plot registry.
+- Expands Population Genetics to 10 selectable frequency, deme, path, phase, diversity, absorption and endpoint plots.
+- Ensures every Advanced Methods starter produces at least two computed plots.
+- Adds an editable Bifurcation Lab with six normal-form/mechanistic starters and six branch, stability, count, vector-field, potential and residual views.
+- Adds an Evolution Landscape Lab with 12 documented starters, custom genotype–fitness tables, editable population/initial genotype/generations/selection/mutation/seeds, and 10 plots including heatmaps, contours, 3D and live time/frequency landscape views.
+- Adds a transparent AI Modeling Lab with user-pasted data, Gaussian-process uncertainty/active sampling, a seeded random-feature neural surrogate, and six diagnostic plot families.
+- Expands the provenance-classified Model Atlas to 251 routes and applies no-overlap card/layout contracts across 19 scientific workspaces.
+
+# v72.50.0 — reliability, CMA-ES and responsive workflow remediation
+
+- Fixes the compute-bus zero-timeout defect that silently converted disabled timeouts into one-second cancellations.
+- Retains the last successful ODE evidence when a later run fails and marks it stale.
+- Adds a seeded bounded ask/tell CMA-ES core with covariance, evolution paths, entropy, feasibility and runtime diagnostics.
+- Adds CMA-ES-specific Optimization controls, exports and conditional diagnostic plots.
+- Adds a seeded finite two-deme Wright–Fisher Population Genetics Lab with selection, dominance, mutation, migration, drift, heterozygosity, elementary FST and fixation/loss summaries.
+- Reorganizes navigation by scientific purpose and every authored lab around Choose → Configure → Run → Inspect → Export.
+- Adds responsive task navigation, compact mobile headers, mobile result/evidence panels and paginated Model Atlas rendering.
+- Replaces maintainer-facing and repetitive interface phrases with concise user-facing language and removes the legacy CSS override layer.
+- Adds release-identity, timeout, CMA-ES and responsive-density regression gates.
+- Uses an automatically selected fresh local validation port.
+
 # v72.48.0 — Sensitivity discoverability and documentation closure
 
 - Adds genuine normalized Morris parameter-design trajectories, distinct from scalar output paths.
@@ -349,7 +679,7 @@
 - Preserved the static header/nav structure; no generated chrome rewrite.
 - Preserved the V71.38 lab color identity baseline.
 - Added regression tests for analysis, focused, SciML and creator/learn/explore active-state mappings.
-- Cache token normalized to `?v=72.48.0`.
+- Cache token normalized to `?v=77.4.1`.
 
 
 ## V71.32 — Functional cockpit boxes and plot palettes
@@ -413,7 +743,7 @@
 - Added Playwright browser smoke tests for home, focused labs, descriptor analysis labs, and reproducibility controls.
 - Added `package.json`, `playwright.config.js`, and `tests/e2e/main-labs-smoke.spec.js`.
 - Added pytest structural checks so the e2e gate itself is protected.
-- Cache token normalized to `?v=72.48.0`.
+- Cache token normalized to `?v=77.4.1`.
 
 # Foko Lab release history
 ## V71.11 — ML Toolkit descriptor shell and focused-lab noise cleanup
@@ -427,7 +757,7 @@
 
 ## v70.20 — Cache-token normalization
 
-- One cache token across the whole tree: `?v=72.48.0`.
+- One cache token across the whole tree: `?v=77.4.1`.
 - Legacy asset tokens removed.
 - Added `tests/test_v70_20_token_normalization.py`.
 - Audit: `release-audits/AUDIT-v70-20-token-normalization.md`.

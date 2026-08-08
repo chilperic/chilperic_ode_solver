@@ -31,11 +31,11 @@
 
 /* v18: symbolic control and plot visibility fixes */
 .plot-priority{order:-1}
-.symbolic-buttons{align-items:center}.symbolic-buttons button{min-width:108px}.sym-check{display:flex!important;align-items:center;gap:.55rem}.sym-check input{width:auto!important;margin:0!important}.sym-param-controls{border:1px solid rgba(120,140,170,.18);border-radius:16px;background:color-mix(in srgb,var(--panel) 72%,transparent);padding:.7rem;margin:.7rem 0}.sym-param-controls>b{display:block;margin-bottom:.45rem;color:var(--text,#142033)}.sym-param-row{display:grid!important;grid-template-columns:80px minmax(0,1fr);gap:.55rem;align-items:center;margin:.35rem 0!important}.sym-param-row span{font-weight:850;color:var(--text,#142033)}.symbolic-results .plot-priority{grid-column:1/-1}.symbolic-explain .clean-list{margin:.2rem 0 .8rem;padding-left:1.15rem}.symbolic-explain .clean-list li{margin:.35rem 0;color:var(--muted,#667085);line-height:1.5}.math-box .katex-error{color:var(--text,#142033)!important}
+.symbolic-buttons{align-items:center}.symbolic-buttons button{min-width:108px}.sym-check{display:flex;align-items:center;gap:.55rem}.sym-check input{width:auto;margin:0}.sym-param-controls{border:1px solid rgba(120,140,170,.18);border-radius:16px;background:color-mix(in srgb,var(--panel) 72%,transparent);padding:.7rem;margin:.7rem 0}.sym-param-controls>b{display:block;margin-bottom:.45rem;color:var(--text,#142033)}.sym-param-row{display:grid;grid-template-columns:80px minmax(0,1fr);gap:.55rem;align-items:center;margin:.35rem 0}.sym-param-row span{font-weight:850;color:var(--text,#142033)}.symbolic-results .plot-priority{grid-column:1/-1}.symbolic-explain .clean-list{margin:.2rem 0 .8rem;padding-left:1.15rem}.symbolic-explain .clean-list li{margin:.35rem 0;color:var(--muted,#667085);line-height:1.5}.math-box .katex-error{color:var(--text,#142033)}
 @media(min-width:1180px){.symbolic-results{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.symbolic-results .plot-priority .sym-plot{min-height:480px}}
 
 /* v19: symbolic lab is an analysis surface, not a decorative viewer */
-.symbolic-layout-v19{display:grid;grid-template-columns:330px minmax(0,1fr);grid-template-areas:"controls plot" "results results";gap:1rem;align-items:start}.symbolic-layout-v19 .controls-panel{grid-area:controls;position:sticky;top:92px}.symbolic-mainplot{grid-area:plot}.symbolic-results-v19{grid-area:results;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.symbolic-results-v19 .wide{grid-column:1/-1}.symbolic-mainplot h2,.controls-panel h2{font-size:1.12rem;letter-spacing:-.02em;margin:.05rem 0 .75rem}.plot-control-grid{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:.65rem;margin-bottom:.7rem}.plot-control-grid label{font-size:.8rem;font-weight:780;color:var(--muted,#667085)}.plot-control-grid input,.plot-control-grid select,.symbolic-mainplot textarea{width:100%;box-sizing:border-box;margin-top:.25rem;border:1px solid rgba(120,140,170,.3);border-radius:14px;padding:.58rem;background:var(--panel);color:inherit;font:inherit}.symbolic-mainplot textarea{min-height:78px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem}.sticky-actions{position:sticky;bottom:.65rem;background:color-mix(in srgb,var(--panel) 86%,transparent);backdrop-filter:blur(8px);border:1px solid rgba(120,140,170,.18);border-radius:18px;padding:.55rem;z-index:3}.symbolic-results-v19 .math-box{min-height:90px}.sym-plot{min-height:520px}.sym-param-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem}.sym-param-controls>b{grid-column:1/-1}.sym-param-row{grid-template-columns:58px minmax(0,1fr)!important}.sym-param-row input{padding:.45rem .55rem!important}.symbolic-note#symStatus{border-radius:14px;background:color-mix(in srgb,var(--panel2) 90%,transparent);border:1px solid rgba(120,140,170,.16);padding:.65rem}.sym-table{font-size:.84rem}.code-output{min-height:340px}@media(max-width:1180px){.symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "plot" "results"}.symbolic-layout-v19 .controls-panel{position:static}.plot-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.symbolic-results-v19{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:720px){.plot-control-grid,.symbolic-results-v19{grid-template-columns:1fr}.sym-plot{min-height:360px}.sticky-actions{position:static}.symbolic-results-v19 .wide{grid-column:auto}}
+.symbolic-layout-v19{display:grid;grid-template-columns:330px minmax(0,1fr);grid-template-areas:"controls plot" "results results";gap:1rem;align-items:start}.symbolic-layout-v19 .controls-panel{grid-area:controls;position:sticky;top:92px}.symbolic-mainplot{grid-area:plot}.symbolic-results-v19{grid-area:results;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.symbolic-results-v19 .wide{grid-column:1/-1}.symbolic-mainplot h2,.controls-panel h2{font-size:1.12rem;letter-spacing:-.02em;margin:.05rem 0 .75rem}.plot-control-grid{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:.65rem;margin-bottom:.7rem}.plot-control-grid label{font-size:.8rem;font-weight:780;color:var(--muted,#667085)}.plot-control-grid input,.plot-control-grid select,.symbolic-mainplot textarea{width:100%;box-sizing:border-box;margin-top:.25rem;border:1px solid rgba(120,140,170,.3);border-radius:14px;padding:.58rem;background:var(--panel);color:inherit;font:inherit}.symbolic-mainplot textarea{min-height:78px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem}.sticky-actions{position:sticky;bottom:.65rem;background:color-mix(in srgb,var(--panel) 86%,transparent);backdrop-filter:blur(8px);border:1px solid rgba(120,140,170,.18);border-radius:18px;padding:.55rem;z-index:3}.symbolic-results-v19 .math-box{min-height:90px}.sym-plot{min-height:520px}.sym-param-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem}.sym-param-controls>b{grid-column:1/-1}.sym-param-row{grid-template-columns:58px minmax(0,1fr)}.sym-param-row input{padding:.45rem .55rem}.symbolic-note#symStatus{border-radius:14px;background:color-mix(in srgb,var(--panel2) 90%,transparent);border:1px solid rgba(120,140,170,.16);padding:.65rem}.sym-table{font-size:.84rem}.code-output{min-height:340px}@media(max-width:1180px){.symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "plot" "results"}.symbolic-layout-v19 .controls-panel{position:static}.plot-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.symbolic-results-v19{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:720px){.plot-control-grid,.symbolic-results-v19{grid-template-columns:1fr}.sym-plot{min-height:360px}.sticky-actions{position:static}.symbolic-results-v19 .wide{grid-column:auto}}
 
 
 /* v20 symbolic authoring */
@@ -57,49 +57,49 @@
 .symbolic-page-v23 .sticky-actions{position:static;background:color-mix(in srgb,var(--panel2) 95%,transparent);backdrop-filter:none;margin:.45rem 0;display:grid;grid-template-columns:1fr 1fr;gap:.45rem}
 .symbolic-page-v23 .sticky-actions button{min-width:0;width:100%;padding:.58rem .65rem;font-size:.84rem}
 .symbolic-page-v23 #symModelJson{min-height:110px}.symbolic-page-v23 .symbolic-panel textarea{min-height:105px}.symbolic-page-v23 .symbolic-authoring-block{padding:.62rem;margin-bottom:.65rem}.symbolic-page-v23 .symbolic-approach-info{font-size:.8rem;padding:.48rem .58rem}
-.symbolic-page-v23 .symbolic-mainplot{padding:.78rem;border-radius:20px}.symbolic-page-v23 .plot-control-grid{grid-template-columns:repeat(4,minmax(110px,1fr));gap:.48rem}.symbolic-page-v23 .plot-control-grid label{font-size:.74rem}.symbolic-page-v23 .plot-control-grid input,.symbolic-page-v23 .plot-control-grid select,.symbolic-page-v23 .symbolic-mainplot textarea{padding:.48rem .52rem;border-radius:11px}.symbolic-page-v23 .sym-param-controls{padding:.55rem;gap:.35rem}.symbolic-page-v23 .sym-param-row{grid-template-columns:50px minmax(0,1fr)!important}.symbolic-page-v23 .sym-plot{min-height:470px;border-radius:18px}
-.symbolic-analysis-panel{grid-area:results;display:grid!important;grid-template-columns:1fr!important;gap:.55rem;max-height:calc(100vh - 106px);overflow:auto;position:sticky;top:76px;padding-right:.25rem;scrollbar-width:thin}.symbolic-analysis-panel .analysis-panel-title{font-size:1rem;margin:.05rem 0 .15rem;letter-spacing:-.02em}.symbolic-analysis-panel .symbolic-card{padding:.75rem;border-radius:18px}.symbolic-analysis-panel .symbolic-card h2{font-size:.92rem;margin:0 0 .45rem}.symbolic-analysis-panel .math-box{min-height:54px;padding:.62rem;border-radius:14px}.symbolic-analysis-panel .symbolic-explain{font-size:.84rem;line-height:1.45}.symbolic-analysis-panel .code-output{min-height:210px;font-size:12px}.symbolic-analysis-panel .wide{grid-column:auto!important}.symbolic-analysis-panel .sym-table{font-size:.76rem}
-@media(max-width:1320px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"controls plot" "results results"}.symbolic-analysis-panel{position:static;max-height:none;grid-template-columns:repeat(2,minmax(0,1fr))!important}.symbolic-analysis-panel .analysis-panel-title{grid-column:1/-1}.symbolic-analysis-panel .wide{grid-column:1/-1!important}}
-@media(max-width:920px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "plot" "results"}.symbolic-page-v23 .controls-panel{position:static;max-height:none}.symbolic-page-v23 .plot-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.symbolic-analysis-panel{grid-template-columns:1fr!important}.symbolic-hero-compact{grid-template-columns:1fr}.symbolic-page-v23 .sym-plot{min-height:360px}}
+.symbolic-page-v23 .symbolic-mainplot{padding:.78rem;border-radius:20px}.symbolic-page-v23 .plot-control-grid{grid-template-columns:repeat(4,minmax(110px,1fr));gap:.48rem}.symbolic-page-v23 .plot-control-grid label{font-size:.74rem}.symbolic-page-v23 .plot-control-grid input,.symbolic-page-v23 .plot-control-grid select,.symbolic-page-v23 .symbolic-mainplot textarea{padding:.48rem .52rem;border-radius:11px}.symbolic-page-v23 .sym-param-controls{padding:.55rem;gap:.35rem}.symbolic-page-v23 .sym-param-row{grid-template-columns:50px minmax(0,1fr)}.symbolic-page-v23 .sym-plot{min-height:470px;border-radius:18px}
+.symbolic-analysis-panel{grid-area:results;display:grid;grid-template-columns:1fr;gap:.55rem;max-height:calc(100vh - 106px);overflow:auto;position:sticky;top:76px;padding-right:.25rem;scrollbar-width:thin}.symbolic-analysis-panel .analysis-panel-title{font-size:1rem;margin:.05rem 0 .15rem;letter-spacing:-.02em}.symbolic-analysis-panel .symbolic-card{padding:.75rem;border-radius:18px}.symbolic-analysis-panel .symbolic-card h2{font-size:.92rem;margin:0 0 .45rem}.symbolic-analysis-panel .math-box{min-height:54px;padding:.62rem;border-radius:14px}.symbolic-analysis-panel .symbolic-explain{font-size:.84rem;line-height:1.45}.symbolic-analysis-panel .code-output{min-height:210px;font-size:12px}.symbolic-analysis-panel .wide{grid-column:auto}.symbolic-analysis-panel .sym-table{font-size:.76rem}
+@media(max-width:1320px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"controls plot" "results results"}.symbolic-analysis-panel{position:static;max-height:none;grid-template-columns:repeat(2,minmax(0,1fr))}.symbolic-analysis-panel .analysis-panel-title{grid-column:1/-1}.symbolic-analysis-panel .wide{grid-column:1/-1}}
+@media(max-width:920px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "plot" "results"}.symbolic-page-v23 .controls-panel{position:static;max-height:none}.symbolic-page-v23 .plot-control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.symbolic-analysis-panel{grid-template-columns:1fr}.symbolic-hero-compact{grid-template-columns:1fr}.symbolic-page-v23 .sym-plot{min-height:360px}}
 @media(max-width:640px){.symbolic-page-v23 .plot-control-grid,.symbolic-page-v23 .sticky-actions{grid-template-columns:1fr}.symbolic-page-v23{width:min(100vw - .65rem,1480px)}}
 
 
 /* v24 upload audit: remove sticky-panel overlap in Symbolic Lab and keep all panels reachable. */
 .symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:minmax(280px,320px) minmax(0,1fr);grid-template-areas:"controls plot" "controls results";gap:.85rem;align-items:start}
-.symbolic-page-v23 .controls-panel{position:static!important;top:auto!important;max-height:none!important;overflow:visible!important;z-index:1}
-.symbolic-analysis-panel{position:static!important;top:auto!important;max-height:none!important;overflow:visible!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:.75rem;padding-right:0}
+.symbolic-page-v23 .controls-panel{position:static;top:auto;max-height:none;overflow:visible;z-index:1}
+.symbolic-analysis-panel{position:static;top:auto;max-height:none;overflow:visible;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;padding-right:0}
 .symbolic-analysis-panel .analysis-panel-title{grid-column:1/-1}
-.symbolic-analysis-panel .wide{grid-column:1/-1!important}
-.symbolic-page-v23 .sticky-actions{position:static!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;z-index:1}
+.symbolic-analysis-panel .wide{grid-column:1/-1}
+.symbolic-page-v23 .sticky-actions{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;z-index:1}
 .symbolic-page-v23 .sticky-actions button{min-height:38px;line-height:1.1;white-space:normal}
 .symbolic-page-v23 .symbolic-mainplot{min-width:0}.symbolic-page-v23 .sym-plot{min-height:500px}
-@media(max-width:1180px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "plot" "results"}.symbolic-analysis-panel{grid-template-columns:1fr!important}}
+@media(max-width:1180px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "plot" "results"}.symbolic-analysis-panel{grid-template-columns:1fr}}
 @media(max-width:640px){.symbolic-page-v23 .sticky-actions{grid-template-columns:1fr}.symbolic-page-v23 .sym-plot{min-height:360px}}
 
 
 /* v49 symbolic audit: computation result first, plot second. */
-.symbolic-hero-compact{grid-template-columns:1fr!important;}
+.symbolic-hero-compact{grid-template-columns:1fr;}
 .symbolic-hero-compact .symbolic-lede{max-width:72ch;}
 .symbolic-page-v23 .symbolic-layout-v19{
-  grid-template-columns:minmax(280px,320px) minmax(0,1fr)!important;
-  grid-template-areas:"controls results" "controls plot"!important;
-  gap:.9rem!important;
+  grid-template-columns:minmax(280px,320px) minmax(0,1fr);
+  grid-template-areas:"controls results" "controls plot";
+  gap:.9rem;
 }
 .symbolic-analysis-panel{
-  grid-area:results!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-area:results;
+  grid-template-columns:repeat(2,minmax(0,1fr));
   align-items:start;
 }
-.symbolic-computation-priority{grid-column:1/-1!important;border-color:color-mix(in srgb,var(--foko-teal) 34%,var(--line))!important;}
+.symbolic-computation-priority{grid-column:1/-1;border-color:color-mix(in srgb,var(--foko-teal) 34%,var(--line));}
 .symbolic-computation-priority .result-primary{min-height:118px;font-size:1.04rem;background:linear-gradient(135deg,color-mix(in srgb,var(--panel) 93%,var(--foko-cyan)),color-mix(in srgb,var(--panel) 95%,var(--foko-magenta)));}
-.symbolic-mainplot{grid-area:plot!important;}
+.symbolic-mainplot{grid-area:plot;}
 .symbolic-mainplot h2::after{content:' numeric preview';font-size:.78rem;color:var(--muted);font-weight:700;margin-left:.35rem;}
 .compact-table-mirror{display:none;}
-.symbolic-page-v23 .plot-control-grid{grid-template-columns:repeat(3,minmax(120px,1fr))!important;}
-.symbolic-page-v23 .sym-plot{min-height:420px!important;}
+.symbolic-page-v23 .plot-control-grid{grid-template-columns:repeat(3,minmax(120px,1fr));}
+.symbolic-page-v23 .sym-plot{min-height:420px;}
 .symbolic-analysis-panel .math-box{overflow-x:auto;}
-@media(max-width:1180px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr!important;grid-template-areas:"controls" "results" "plot"!important}.symbolic-analysis-panel{grid-template-columns:1fr!important}}
-@media(max-width:760px){.symbolic-page-v23 .plot-control-grid{grid-template-columns:1fr!important}.symbolic-computation-priority .result-primary{font-size:.95rem}}
+@media(max-width:1180px){.symbolic-page-v23 .symbolic-layout-v19{grid-template-columns:1fr;grid-template-areas:"controls" "results" "plot"}.symbolic-analysis-panel{grid-template-columns:1fr}}
+@media(max-width:760px){.symbolic-page-v23 .plot-control-grid{grid-template-columns:1fr}.symbolic-computation-priority .result-primary{font-size:.95rem}}
 
 
 /* v53 unified theming: Symbolic Lab uses the same theme variables as the core labs. */

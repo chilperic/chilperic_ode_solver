@@ -1,64 +1,50 @@
-# Foko Lab v72.48.0 Validation Record
+# Foko Lab v77.4.1 validation record
 
-## Completed source and browser-independent gates
+## Release decision
 
-- 109 JavaScript files passed syntax validation.
-- One deterministic ODE integration engine boundary was retained.
-- Sensitivity core: 47/47 checks passed.
-- Numerical-input and capacity core: 21/21 checks passed.
-- The 17-model Sensitivity library completed canonical worker-backed trajectory/FIM smoke runs across 13 families, 37 states and 57 varied parameters.
-- Platform plot-registry audit passed: Optimization 23, Steady-State 18, Stochastic 12, Linear Algebra 11, Machine Learning 18, Sensitivity 35, Fitting 14 and Networks 12.
-- 301/301 active Python contracts passed.
-- User-input reliability audit passed.
-- Platform and teaching-depth consistency audits passed.
-- The modelling handbook contains 696 source lines and the curriculum contains 20 practical tutorials.
-- 14/14 authored workspaces passed shared plot/computation and lifecycle contracts.
-- 15/15 authored pages passed accessibility/performance budgets.
-- Platform benchmark: 100/100, 12/12 measurable criteria.
-- 32/32 independent differential reference checks passed.
-- Offline Chromium navigation, Agent layout, shared plot, taxonomy, T-cell rerun, expanded Sensitivity and guide/tutorial gates passed.
-- Playwright discovered 123 tests in 3 files.
-- Release manifest contains 537 controlled files; a clean extraction had zero membership, size or hash mismatches.
-- Two independent final release builds were byte-identical.
+v77.4.1 retains the model-first v77 workbench architecture and introduces the responsive State Observatory identity. Tests distinguish interface change from scientific change: branding contracts were updated; numerical reference tolerances and scientific core assertions were not weakened.
 
-## Maintained library checks
+## Automated baseline
 
-The teaching audit verifies current curated-library counts:
+| Gate | Result | Scope |
+|---|---:|---|
+| JavaScript syntax and engine boundary | 129 files passed | maintained scripts and one authoritative ODE engine |
+| Active Python contracts | 322 passed | scientific, product, accessibility, interchange and packaging |
+| Model Atlas integrity | 2,351 / 2,351 | 259 entries, routes, metadata and catalogue integrity |
+| Workspace and identity contracts | 101 / 101 | resizable split, responsive rail, State Observatory and two-level taxonomy |
+| Product-shell contracts | 222 / 222 | Home, menus, creator, command search and model routes across 36 pages |
+| Independent numerical references | 32 / 32 | SciPy/scikit-learn/NetworkX/SymPy comparisons |
+| Professional experience audit | passed | six subjects, 20 unique lab accents, AA contrast and semantic plots |
+| Scientific core suites | passed | CMA-ES, population genetics, Bayesian references, bifurcation, evolution, AI, multi-output sensitivity and canonical solvers |
+| Input, consistency, plot and lifecycle audits | passed | user-owned inputs, result provenance, stale state and export boundaries |
+| Platform benchmark | 100 / 100 | twelve measurable modeling-platform criteria |
 
-- Optimization 17;
-- Steady-State 26;
-- Stochastic 13;
-- Linear Algebra 8;
-- Statistics 22;
-- Machine Learning 14;
-- Sensitivity 17;
-- Curve Fitting 7;
-- Networks 7;
-- Symbolic 20.
+## Design evidence
 
-Existing ODE, Optimization, Steady-State, Stochastic, Statistics, Fitting, Linear Algebra, Networks, ML, SciML, Agent, Workbench and Symbolic core/reference suites all passed during the release gate.
+- The accessible flagship emblem, compact mark, adaptive header, display wordmark, monochrome mark and micro favicon form one responsive identity rather than shrinking one over-detailed drawing to every size.
+- Indigo, violet, biological teal, computational blue, population green, ink, signal amber and warm ivory define the institutional identity. Subject and lab accents remain separate from quantitative plot palettes, so navigation colour never implies a data value.
+- Six subject families and 20 distinct labs are identified in the shell, home, vertical rail, result keylines and Model Atlas without recolouring scientific data.
+- Home contains one editable canonical-engine experiment, three model-structure routes, every maintained lab, six strong scientific models, the evidence contract and creator access.
+- Desktop authoring is resizable by pointer and keyboard; compact layouts use a horizontal rail; phones use one-column model/result/evidence surfaces and a persistent bottom navigation.
+- KaTeX remains local and visible for user equations; 3D remains conditional on scientifically meaningful axes.
 
-## Learning-surface checks
+## Scientific paths rechecked
 
-- `docs.html` exposes a searchable modelling handbook with 27 high-level sections and nested topic navigation.
-- `tutorial.html` exposes 20 completion controls, persistent local progress and searchable investigations.
-- Both surfaces use the canonical six-destination public navigation.
-- Capability labels and unsupported boundaries are synchronized with Trust and the analysis taxonomy.
+- Model Studio: 21 editable starters, blank model, multiple safe import formats and 15 scientific plot families.
+- ODE: finite parameter normalization and actionable SIR/Lotka–Volterra domain failures.
+- Population Genetics: 13 worked models and a seeded finite two-deme Wright–Fisher ensemble.
+- CMA-ES: 15 application surrogates and bounded ask/tell diagnostics.
+- Global Sensitivity: local, Morris and Sobol/Jansen for one or multiple selected outputs.
+- Advanced Methods: 14 executable bounded references including Bayesian, design, PDE/SDE and genomic-summary examples.
+- Bifurcation, Evolution, Agent and AI: editable inputs, computed outputs and relevant—not universal—3D.
+- Complete catalogue: 259 examples passed 2,351 integrity assertions.
 
-## Sensitivity paths explicitly validated
+## Browser certification boundary
 
-- Search and family filtering expose all 17 models.
-- Editable equations, initial conditions, parameters/ranges, time span, output metric, solver settings and tolerances reach the worker.
-- Local Jacobian, trajectory influence, perturbation convergence, OFAT, tornado, directional and response-surface paths render through stable two-panel hosts.
-- Morris retains normalized parameter-design trajectories separately from output trajectories.
-- Jansen/Saltelli first, total, second-order, bootstrap, time/state, variance-accounting and sampled-relationship paths remain available under the correct options.
-- MI and HSIC remain labelled limited dependence screens.
-- Raw, range-scaled and elasticity presentation, top-N filtering, uncertainty visibility and contour/3D surface controls do not alter the stored numerical result.
-- Oversized requests are refused before worker launch and revalidated inside the worker.
-- Changing a scientific input marks evidence stale and disables export until rerun.
+The reliable baseline and independent references are mandatory before a server starts. `./test-v77.4.1-local.sh --full` additionally executes the browser interaction and Playwright suite.
 
-## Browser-suite boundary
+A fresh Playwright/Chromium certification is **not** claimed for v77.4.1 in this build environment. The browser-capable tests remain in the release for execution on the user's Chromium-capable machine; the ordinary `--browser` mode still baseline-validates first, chooses a fresh port, serves localhost and opens the default browser.
 
-The managed validation environment does not provide a trustworthy complete localhost Playwright run. Therefore the full 123-test localhost suite is not claimed as passed here. Equivalent browser-independent Chromium paths passed, and the local runner executes the two maintained Sensitivity tests repeatedly and then all 123 tests before starting the server.
+## Interpretation boundary
 
-Passing these gates validates the tested implementation paths. It does not certify arbitrary user equations, large/stiff systems or unsupported roadmap algorithms.
+Passing these gates validates the implemented and tested paths. It does not certify arbitrary user equations, scientific assumptions, difficult stiff systems, high-dimensional studies or capabilities listed as unavailable in [LIMITATIONS-v77.4.1.md](LIMITATIONS-v77.4.1.md).

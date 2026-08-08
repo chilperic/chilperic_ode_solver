@@ -6,79 +6,19 @@
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="Compare two analyses on one model or dataset, with methods, diagnostics, and export options kept together." name="description"/>
 <title>Scientific Workbench · Foko Lab</title>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.48.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.48.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.48.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.48.0" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-workbench.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=72.48.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.48.0"></script></head>
-<body data-lab="workbench" data-v72-shell="true" data-version="72.48.0"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=77.4.1"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=77.4.1" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=77.4.1" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=77.4.1" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-workbench.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=77.4.1" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=77.4.1"></script><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
+</head>
+<body data-lab="workbench" data-v72-shell="true"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
 <div class="app-shell wb-app">
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.48.0" width="190"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div>
-</header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="wb-page" id="main-content" tabindex="-1">
 <section aria-labelledby="workbenchTitle" class="wb-context">
 <div>
@@ -117,7 +57,7 @@
 <p>Use this workspace to compare views quickly. Open the dedicated lab when you need full model editing or advanced controls.</p>
 </section>
 </aside>
-<section aria-label="Computed workspace" class="wb-center">
+<section aria-label="Results" class="wb-center">
 <header class="wb-workspace-head">
 <div><p class="panel-kicker">RESULTS</p><h2 id="wbWorkspaceTitle">Compare two views of the result</h2><p id="wbWorkspaceSubtitle">Choose an example and run the analysis.</p></div>
 <div aria-label="Plot layout" class="wb-layout-switch" role="group">
@@ -127,8 +67,8 @@
 </header>
 <div class="wb-export-row"><button id="wbCurrentPng" type="button">Current PNG</button><button id="wbCurrentSvg" type="button">Current SVG</button></div>
 <div aria-live="polite" class="wb-plot-grid layout-two" data-focus-side="left" data-layout="two" data-layout-reason="user-two" data-preferred-layout="two" id="wbPlotGrid">
-<article class="wb-plot-card" data-card="0" data-plot-card="left"><header><h3 id="wbPlotTitle0">Primary plot</h3><div class="wb-card-controls"><select aria-label="Primary plot" id="wbPlotSelect0"></select><button data-wb-focus="0" type="button">Focus</button><button aria-label="Download primary plot" data-wb-download="0" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot0"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Scientific meaning</summary><p id="wbMeaning0"></p></details></article>
-<article class="wb-plot-card" data-card="1" data-plot-card="right"><header><h3 id="wbPlotTitle1">Diagnostic plot</h3><div class="wb-card-controls"><select aria-label="Diagnostic plot" id="wbPlotSelect1"></select><button data-wb-focus="1" type="button">Focus</button><button aria-label="Download diagnostic plot" data-wb-download="1" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot1"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Scientific meaning</summary><p id="wbMeaning1"></p></details></article>
+<article class="wb-plot-card" data-card="0" data-plot-card="left"><header><h3 id="wbPlotTitle0">Primary plot</h3><div class="wb-card-controls"><select aria-label="Primary plot" id="wbPlotSelect0"></select><button data-wb-focus="0" type="button">Focus</button><button aria-label="Download primary plot" data-wb-download="0" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot0"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Interpretation &amp; limits</summary><p id="wbMeaning0"></p></details></article>
+<article class="wb-plot-card" data-card="1" data-plot-card="right"><header><h3 id="wbPlotTitle1">Diagnostic plot</h3><div class="wb-card-controls"><select aria-label="Diagnostic plot" id="wbPlotSelect1"></select><button data-wb-focus="1" type="button">Focus</button><button aria-label="Download diagnostic plot" data-wb-download="1" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot1"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Interpretation &amp; limits</summary><p id="wbMeaning1"></p></details></article>
 </div>
 </section>
 <aside aria-label="Run evidence and provenance" class="wb-right">
@@ -161,22 +101,22 @@
 </main>
 <div aria-live="polite" class="wb-toast" id="wbToast" role="status"></div>
 </div>
-<script defer="" src="src/core/ode.js?v=72.48.0"></script>
-<script defer="" src="src/core/steady.js?v=72.48.0"></script>
-<script defer="" src="src/core/stochastic.js?v=72.48.0"></script>
-<script defer="" src="src/core/optimization.js?v=72.48.0"></script>
-<script defer="" src="src/core/data.js?v=72.48.0"></script>
-<script defer="" src="src/core/statistics.js?v=72.48.0"></script>
-<script defer="" src="src/core/fitting.js?v=72.48.0"></script>
-<script defer="" src="src/core/linalg-reference.js?v=72.48.0"></script>
-<script defer="" src="src/core/networks-reference.js?v=72.48.0"></script>
-<script defer="" src="src/core/ml-reference.js?v=72.48.0"></script>
-<script defer="" src="src/core/sindy.js?v=72.48.0"></script>
-<script defer="" src="src/core/agent-reference.js?v=72.48.0"></script>
-<script defer="" src="src/models/agent-presets.js?v=72.48.0"></script>
-<script defer="" src="src/workbench/adapters.js?v=72.48.0"></script>
-<script defer="" src="src/v72/workbench-workspace.js?v=72.48.0"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=72.48.0"></script>
-<script defer="" src="src/navigation.js?v=72.48.0"></script>
+<script defer="" src="src/core/ode.js?v=77.4.1"></script>
+<script defer="" src="src/core/steady.js?v=77.4.1"></script>
+<script defer="" src="src/core/stochastic.js?v=77.4.1"></script>
+<script defer="" src="src/core/optimization.js?v=77.4.1"></script>
+<script defer="" src="src/core/data.js?v=77.4.1"></script>
+<script defer="" src="src/core/statistics.js?v=77.4.1"></script>
+<script defer="" src="src/core/fitting.js?v=77.4.1"></script>
+<script defer="" src="src/core/linalg-reference.js?v=77.4.1"></script>
+<script defer="" src="src/core/networks-reference.js?v=77.4.1"></script>
+<script defer="" src="src/core/ml-reference.js?v=77.4.1"></script>
+<script defer="" src="src/core/sindy.js?v=77.4.1"></script>
+<script defer="" src="src/core/agent-reference.js?v=77.4.1"></script>
+<script defer="" src="src/models/agent-presets.js?v=77.4.1"></script>
+<script defer="" src="src/workbench/adapters.js?v=77.4.1"></script>
+<script defer="" src="src/v72/workbench-workspace.js?v=77.4.1"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=77.4.1"></script>
+<script defer src="src/v76/app-shell.js?v=77.4.1"></script>
 </body>
 </html>

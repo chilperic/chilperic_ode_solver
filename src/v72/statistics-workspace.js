@@ -205,7 +205,7 @@
 
   function currentConfig() {
     return {
-      version: '72.48.0',
+      version: '77.4.1',
       example: state.currentName,
       data: $('statisticsData').value,
       delimiter: $('statisticsDelimiter').value,
@@ -238,7 +238,7 @@
       return Object.assign({ column: column.name, index: column.index, missing: column.missing }, STATS.describe(DATA.numericValues(dataset, column.index)));
     });
     const result = {
-      release: '72.48.0',
+      release: '77.4.1',
       mode: config.mode,
       method: '',
       dataset,
@@ -444,17 +444,17 @@
     const mode = state.result.mode;
     const common = [['missingness', 'Missingness map']];
     const map = {
-      descriptive: [['histogram-x', 'Distribution'], ['box-columns', 'Column box plots'], ['qq-x', 'Normal Q–Q'], ['correlation-matrix', 'Correlation matrix']],
+      descriptive: [['histogram-x', 'Distribution'], ['ecdf-x', 'Empirical CDF'], ['violin-columns', 'Violin + observations'], ['box-columns', 'Column box plots'], ['qq-x', 'Normal Q–Q'], ['correlation-matrix', 'Correlation matrix']],
       pca: [['pca-scores', 'PCA scores'], ['pca-explained', 'Explained variance'], ['pca-loadings', 'PCA loadings'], ['correlation-matrix', 'Correlation matrix']],
-      regression: [['scatter-fit', 'Data + OLS bands'], ['residuals', 'Residuals vs fitted'], ['qq-residuals', 'Residual Q–Q'], ['cooks', 'Cook’s distance'], ['histogram-y', 'Response distribution']],
-      correlation: [['scatter-correlation', 'X–Y association'], ['correlation-matrix', 'Correlation matrix'], ['histogram-x', 'X distribution'], ['histogram-y', 'Y distribution']],
-      welch: [['box-groups', 'Group distributions'], ['group-means', 'Means + intervals'], ['histogram-groups', 'Group histograms']],
-      anova: [['box-groups', 'Group distributions'], ['group-means', 'Means + intervals'], ['histogram-groups', 'Group histograms']],
-      bootstrap: [['bootstrap-distribution', 'Bootstrap mean distribution'], ['histogram-x', 'Observed distribution'], ['qq-x', 'Observed Q–Q']],
-      classification: [['roc', 'ROC curve'], ['precision-recall', 'Precision–recall'], ['scores-by-class', 'Scores by class']],
-      survival: [['survival', 'Kaplan–Meier'], ['event-counts', 'Events and censoring'], ['time-distribution', 'Observed-time distribution']],
+      regression: [['scatter-fit', 'Data + OLS bands'], ['residuals', 'Residuals vs fitted'], ['scale-location', 'Scale–location'], ['residual-leverage', 'Residuals vs leverage'], ['qq-residuals', 'Residual Q–Q'], ['residual-histogram', 'Residual distribution'], ['cooks', 'Cook’s distance'], ['histogram-y', 'Response distribution']],
+      correlation: [['scatter-correlation', 'X–Y association'], ['density-correlation', 'X–Y density contours'], ['correlation-matrix', 'Correlation matrix'], ['histogram-x', 'X distribution'], ['histogram-y', 'Y distribution']],
+      welch: [['box-groups', 'Group distributions'], ['group-ecdf', 'Group empirical CDFs'], ['group-means', 'Means + intervals'], ['histogram-groups', 'Group histograms']],
+      anova: [['box-groups', 'Group distributions'], ['group-ecdf', 'Group empirical CDFs'], ['group-means', 'Means + intervals'], ['histogram-groups', 'Group histograms']],
+      bootstrap: [['bootstrap-distribution', 'Bootstrap mean distribution'], ['bootstrap-convergence', 'Interval convergence'], ['histogram-x', 'Observed distribution'], ['ecdf-x', 'Observed empirical CDF'], ['qq-x', 'Observed Q–Q']],
+      classification: [['roc', 'ROC curve'], ['precision-recall', 'Precision–recall'], ['threshold-performance', 'Threshold performance'], ['scores-by-class', 'Scores by class']],
+      survival: [['survival', 'Kaplan–Meier'], ['cumulative-hazard', 'Cumulative hazard'], ['event-counts', 'Events and censoring'], ['time-distribution', 'Observed-time distribution']],
       fdr: [['p-q', 'Raw p vs adjusted q'], ['ranked-p', 'Ranked p and BH line'], ['discoveries', 'Discovery status']],
-      spc: [['control-chart', 'Control chart'], ['run-order', 'Run-order series'], ['histogram-y', 'Measurement distribution']],
+      spc: [['control-chart', 'Control chart'], ['run-order', 'Run-order series'], ['moving-range', 'Moving range'], ['process-acf', 'Process autocorrelation'], ['histogram-y', 'Measurement distribution']],
     };
     return (map[mode] || map.descriptive).concat(common);
   }
@@ -501,6 +501,16 @@
     const theoretical = sorted.map(function (_, index) { return mean + sd * STATS.normalInv((index + 0.5) / sorted.length); });
     return { sorted, theoretical, name };
   }
+  function ecdfTrace(values, name) {
+    const sorted = values.filter(Number.isFinite).slice().sort(function (a, b) { return a - b; });
+    return { x: sorted, y: sorted.map(function (_, index) { return (index + 1) / sorted.length; }), mode: 'lines', line: { shape: 'hv' }, name: name };
+  }
+  function autocorrelation(values, maxLag) {
+    const center = STATS.mean(values); const denominator = values.reduce(function (sum, value) { return sum + (value - center) ** 2; }, 0) || 1;
+    return Array.from({ length: Math.min(maxLag || 20, values.length - 1) + 1 }, function (_, lag) {
+      return values.slice(lag).reduce(function (sum, value, index) { return sum + (value - center) * (values[index] - center); }, 0) / denominator;
+    });
+  }
 
   function buildPlot(type) {
     const result = state.result;
@@ -531,6 +541,14 @@
       const name = dataset.names[index];
       return { traces: [{ x: values, type: 'histogram', nbinsx: config.bins, name }], layout: baseLayout(`${name} distribution`, name, 'Count'), evidence: 'Histogram bins are user-configured and can change visual impressions. The plot is descriptive and does not establish a probability distribution.' };
     }
+    if (type === 'ecdf-x') {
+      const values = DATA.numericValues(dataset, config.x);
+      return { traces: [ecdfTrace(values, xName)], layout: Object.assign(baseLayout(`${xName} empirical distribution`, xName, 'Empirical cumulative probability'), { yaxis: { title: 'Empirical cumulative probability', range: [0, 1] } }), evidence: 'The empirical CDF is bin-free and shows every observed value. It remains a sample description and is not a fitted probability model.' };
+    }
+    if (type === 'violin-columns') {
+      const traces = result.summaries.map(function (summary) { return { y: DATA.numericValues(dataset, summary.index), type: 'violin', name: summary.column, box: { visible: true }, meanline: { visible: true }, points: 'all', jitter: .18 }; });
+      return { traces, layout: baseLayout('Numeric distributions and observations', 'Column', 'Value'), evidence: 'Violin width is a kernel-density visualization and depends on smoothing. Embedded box summaries and observations keep the finite sample visible.' };
+    }
     if (type === 'box-columns') {
       const traces = result.summaries.map(function (summary) { return { y: DATA.numericValues(dataset, summary.index), type: 'box', name: summary.column, boxpoints: 'outliers' }; });
       return { traces, layout: baseLayout('Numeric-column distributions', 'Column', 'Value'), evidence: 'Box plots display median, quartiles and rule-based outliers. They do not test normality or identify data errors.' };
@@ -558,6 +576,17 @@
       const reg = result.regression;
       return { traces: [{ x: reg.pred, y: reg.resid, mode: 'markers', name: 'residuals' }, { x: [Math.min.apply(null, reg.pred), Math.max.apply(null, reg.pred)], y: [0, 0], mode: 'lines', name: 'zero', line: { dash: 'dash' } }], layout: baseLayout('Residuals versus fitted values', 'Fitted value', 'Residual'), evidence: 'Residual patterns can reveal nonlinearity or heteroscedasticity, but a visually quiet plot does not prove assumptions or independence.' };
     }
+    if (type === 'scale-location') {
+      const reg = result.regression;
+      return { traces: [{ x: reg.pred, y: reg.standardizedResidual.map(function (value) { return Math.sqrt(Math.abs(value)); }), mode: 'markers', marker: { color: reg.leverage, colorscale: 'Viridis', colorbar: { title: 'leverage' } }, name: 'observations' }], layout: baseLayout('Scale–location diagnostic', 'Fitted value', '√|standardized residual|'), evidence: 'Increasing spread can indicate heteroscedasticity. This finite visual diagnostic does not select a variance model or repair classical inference.' };
+    }
+    if (type === 'residual-leverage') {
+      const reg = result.regression;
+      return { traces: [{ x: reg.leverage, y: reg.standardizedResidual, mode: 'markers', marker: { size: reg.cooks.map(function (value) { return 7 + 28 * Math.min(1, value); }), color: reg.cooks, colorscale: 'Turbo', colorbar: { title: 'Cook D' } }, name: 'observations' }], layout: baseLayout('Residuals versus leverage', 'Leverage', 'Standardized residual'), evidence: 'Marker size and color encode Cook’s distance. Influential points require scientific review; they are not automatic deletion candidates.' };
+    }
+    if (type === 'residual-histogram') {
+      return { traces: [{ x: result.regression.resid, type: 'histogram', nbinsx: config.bins, name: 'OLS residuals' }], layout: baseLayout('OLS residual distribution', 'Residual', 'Count'), evidence: 'The histogram is in sample and bin-dependent. It complements but does not replace Q–Q, scale–location and dependence diagnostics.' };
+    }
     if (type === 'cooks') {
       const values = result.regression.cooks;
       return { traces: [{ x: values.map(function (_, index) { return index + 1; }), y: values, type: 'bar', name: 'Cook distance' }, { x: values.map(function (_, index) { return index + 1; }), y: values.map(function () { return 4 / values.length; }), mode: 'lines', name: '4/n heuristic', line: { dash: 'dash' } }], layout: baseLayout('Cook’s distance', 'Usable observation index', 'Cook distance'), evidence: 'Cook’s distance is a model-dependent influence diagnostic. The 4/n line is a heuristic flag, not an automatic exclusion rule.' };
@@ -565,6 +594,10 @@
     if (type === 'scatter-correlation') {
       const pair = result.prepared;
       return { traces: [{ x: pair.x, y: pair.y, mode: 'markers', name: `r=${fmt(result.correlationTest.r)}` }], layout: baseLayout('Paired association', xName, yName), evidence: 'The scatter plot and Pearson r summarize linear association among usable pairs. Outliers, range restriction and dependence can strongly alter the result.' };
+    }
+    if (type === 'density-correlation') {
+      const pair = result.prepared;
+      return { traces: [{ x: pair.x, y: pair.y, type: 'histogram2dcontour', colorscale: 'Viridis', reversescale: false, contours: { coloring: 'heatmap', showlines: true }, colorbar: { title: 'count density' }, name: 'density' }, { x: pair.x, y: pair.y, mode: 'markers', marker: { size: 5, color: 'rgba(23,32,51,.42)' }, name: 'observations' }], layout: baseLayout('Paired observation density', xName, yName), evidence: 'Density contours summarize occupied regions and can reveal clusters or range restriction. Smoothing/binning does not change the computed Pearson coefficient.' };
     }
     if (type === 'box-groups') {
       const traces = result.groupNames.map(function (name) { return { y: result.groups[name], type: 'box', name, boxpoints: 'all', jitter: 0.25, pointpos: 0 }; });
@@ -579,12 +612,20 @@
       const layout = baseLayout('Group distributions', yName, 'Count'); layout.barmode = 'overlay';
       return { traces, layout, evidence: 'Overlaid histograms are sensitive to binning and unequal group sizes. Use them as descriptive context, not a test result.' };
     }
+    if (type === 'group-ecdf') {
+      return { traces: result.groupNames.map(function (name) { return ecdfTrace(result.groups[name], name); }), layout: Object.assign(baseLayout('Group empirical distributions', yName, 'Empirical cumulative probability'), { yaxis: { title: 'Empirical cumulative probability', range: [0, 1] } }), evidence: 'Empirical CDF separation shows distributional differences without bins. Welch and ANOVA target means; Kruskal–Wallis targets rank distributions under its own assumptions.' };
+    }
     if (type === 'bootstrap-distribution') {
       const boot = result.bootstrap;
       const layout = baseLayout('Seeded bootstrap distribution of the mean', 'Bootstrap mean', 'Count');
       layout.shapes = [{ type: 'line', x0: boot.low, x1: boot.low, y0: 0, y1: 1, yref: 'paper', line: { dash: 'dash' } }, { type: 'line', x0: boot.high, x1: boot.high, y0: 0, y1: 1, yref: 'paper', line: { dash: 'dash' } }];
       layout.annotations = [{ x: boot.low, y: 1, yref: 'paper', text: 'lower', showarrow: false }, { x: boot.high, y: 1, yref: 'paper', text: 'upper', showarrow: false }];
       return { traces: [{ x: result.bootstrapMeans, type: 'histogram', nbinsx: config.bins, name: 'bootstrap means' }], layout, evidence: `The plot contains ${boot.reps} resampled means generated with seed ${boot.seed}. Percentile limits are approximate and conditional on exchangeable resampling units.` };
+    }
+    if (type === 'bootstrap-convergence') {
+      const sizes = Array.from(new Set([50,100,200,500,1000,2000,5000,10000,result.bootstrapMeans.length].filter(function (n) { return n <= result.bootstrapMeans.length; }))).sort(function (a,b) { return a-b; });
+      const lower = sizes.map(function (n) { return quantile(result.bootstrapMeans.slice(0,n), config.alpha/2); }); const upper = sizes.map(function (n) { return quantile(result.bootstrapMeans.slice(0,n), 1-config.alpha/2); });
+      return { traces: [{ x:sizes,y:lower,mode:'lines+markers',name:'lower percentile' },{ x:sizes,y:upper,mode:'lines+markers',name:'upper percentile' }], layout: Object.assign(baseLayout('Bootstrap interval prefix stability','Resamples used','Interval endpoint'), { xaxis:{title:'Resamples used',type:'log'} }), evidence: 'Prefix estimates reuse one seeded bootstrap stream. Stabilization is useful numerical evidence but is not an independent replication or a coverage study.' };
     }
     if (type === 'roc') {
       const curve = result.classification;
@@ -597,6 +638,10 @@
     }
     if (type === 'scores-by-class') {
       return { traces: [0, 1].map(function (label) { return { y: result.scores.filter(function (_, index) { return result.labels[index] === label; }), type: 'box', name: label ? 'positive' : 'negative', boxpoints: 'all' }; }), layout: baseLayout('Score distributions by observed class', 'Observed class', xName), evidence: 'Class-separated score distributions explain discrimination on this sample. They do not demonstrate stable performance in another population.' };
+    }
+    if (type === 'threshold-performance') {
+      const curve = result.classification; const rows = curve.roc.slice(1); const precision = curve.pr;
+      return { traces: [{x:rows.map(function(row){return row.threshold;}),y:rows.map(function(row){return row.tpr;}),mode:'lines+markers',name:'sensitivity / TPR'},{x:rows.map(function(row){return row.threshold;}),y:rows.map(function(row){return 1-row.fpr;}),mode:'lines+markers',name:'specificity'},{x:precision.map(function(row){return row.threshold;}),y:precision.map(function(row){return row.precision;}),mode:'lines+markers',name:'precision'}], layout: Object.assign(baseLayout('Empirical threshold trade-offs',xName,'Sample performance'),{yaxis:{title:'Sample performance',range:[0,1]}}), evidence: 'Every displayed threshold is an observed score. Choosing a threshold on the same sample is optimistic and requires an external utility or validation plan.' };
     }
     if (type === 'survival') {
       const traces = result.groupNames.map(function (name) { const km = result.km[name]; return { x: km.x, y: km.y, mode: 'lines', line: { shape: 'hv' }, name: `${name} (n=${km.n})` }; });
@@ -612,6 +657,10 @@
       const traces = result.groupNames.map(function (name) { return { x: result.time.filter(function (_, index) { return result.survivalGroup[index] === name; }), type: 'histogram', nbinsx: config.bins, opacity: 0.65, name }; });
       const layout = baseLayout('Observed follow-up times', 'Observed time', 'Count'); layout.barmode = 'overlay';
       return { traces, layout, evidence: 'Observed-time distributions mix event and censoring times. They are descriptive and are not survival functions.' };
+    }
+    if (type === 'cumulative-hazard') {
+      const traces = result.groupNames.map(function (name) { const km=result.km[name]; return {x:km.x,y:km.y.map(function(value){return -Math.log(Math.max(value,1e-12));}),mode:'lines',line:{shape:'hv'},name:name}; });
+      return { traces, layout: baseLayout('Nelson-style cumulative-hazard transform','Time','−log survival'), evidence: 'This is the negative-log transform of the Kaplan–Meier estimate, not a separately fitted hazard model. It can make proportional-hazard departures visually apparent but does not test them.' };
     }
     if (type === 'p-q') {
       return { traces: [{ x: result.pValues, y: result.qValues, mode: 'markers+text', text: result.fdrLabels, textposition: 'top center', name: 'tests' }, { x: [0, 1], y: [0, 1], mode: 'lines', name: 'q=p', line: { dash: 'dash' } }], layout: baseLayout('Raw p-values and BH-adjusted q-values', 'Raw p', 'Adjusted q'), evidence: 'Each q-value is computed by the Benjamini–Hochberg step-up procedure across the supplied family. The family definition is a scientific decision outside the algorithm.' };
@@ -631,6 +680,14 @@
         traces.push({ x: result.run, y: result.run.map(function () { return result.spc.lcl; }), mode: 'lines', name: 'LCL' });
       }
       return { traces, layout: baseLayout(type === 'control-chart' ? 'Sample-estimated Shewhart chart' : 'Run-order series', xName, yName), evidence: type === 'control-chart' ? 'Center and ±3σ limits are estimated from the same supplied series. Limit violations are flags, not proof of assignable causes or process stability.' : 'The run-order plot preserves temporal ordering. No autocorrelation, change-point or drift model is fitted.' };
+    }
+    if (type === 'moving-range') {
+      const ranges=result.values.slice(1).map(function(value,index){return Math.abs(value-result.values[index]);});
+      return {traces:[{x:result.run.slice(1),y:ranges,mode:'lines+markers',name:'moving range'}],layout:baseLayout('Successive moving range',xName,'|xᵢ − xᵢ₋₁|'),evidence:'Moving ranges reveal abrupt local changes and are computed in supplied run order. No subgroup or phase-I control limits are inferred.'};
+    }
+    if (type === 'process-acf') {
+      const values=autocorrelation(result.values,20),band=1.96/Math.sqrt(result.values.length);
+      return {traces:[{x:values.map(function(_,i){return i;}),y:values,type:'bar',name:'sample ACF'},{x:[0,values.length-1],y:[band,band],mode:'lines',line:{dash:'dash'},name:'±1.96/√n'},{x:[0,values.length-1],y:[-band,-band],mode:'lines',line:{dash:'dash'},showlegend:false}],layout:baseLayout('Process autocorrelation','Lag','Sample autocorrelation'),evidence:'The ACF uses the supplied run order and simple white-noise reference bands. It is exploratory and does not fit a time-series error model.'};
     }
     throw new Error(`Plot type ${type} is unavailable for this result.`);
   }
@@ -792,7 +849,7 @@
   function resultForExport() { if (!state.result) throw new Error('Run the analysis before exporting a numerical result.'); return state.result; }
   function exportSummary() {
     const result = resultForExport();
-    const rows = [['field', 'value'], ['release', '72.48.0'], ['method', result.method], ['source_rows', result.dataset.rowCount], ['usable_rows', result.usableRows], ['excluded_rows', result.dropped], ['imputed_cells', result.imputed], ['missing_cells', result.dataset.missingCells], ['primary_label', result.primary.label], ['primary_value', result.primary.value], ['uncertainty_label', result.uncertainty.label], ['uncertainty_value', result.uncertainty.value], ['effect_label', result.effect.label], ['effect_value', result.effect.value], ['assumptions', result.assumptions], ['warnings', result.warnings.join(' | ')]];
+    const rows = [['field', 'value'], ['release', '77.4.1'], ['method', result.method], ['source_rows', result.dataset.rowCount], ['usable_rows', result.usableRows], ['excluded_rows', result.dropped], ['imputed_cells', result.imputed], ['missing_cells', result.dataset.missingCells], ['primary_label', result.primary.label], ['primary_value', result.primary.value], ['uncertainty_label', result.uncertainty.label], ['uncertainty_value', result.uncertainty.value], ['effect_label', result.effect.label], ['effect_value', result.effect.value], ['assumptions', result.assumptions], ['warnings', result.warnings.join(' | ')]];
     download('foko-lab-statistics-summary.csv', rows.map(function (row) { return row.map(csvEscape).join(','); }).join('\n'), 'text/csv');
   }
   function exportCleanData() {
@@ -805,15 +862,15 @@
     const compact = clone(result);
     delete compact.dataset.sourceText;
     if (compact.bootstrapMeans && compact.bootstrapMeans.length > 5000) compact.bootstrapMeans = compact.bootstrapMeans.slice(0, 5000);
-    return { release: '72.48.0', computedAt: new Date().toISOString(), result: compact, warning: 'Inference remains conditional on data quality, sampling and model assumptions.' };
+    return { release: '77.4.1', computedAt: new Date().toISOString(), result: compact, warning: 'Inference remains conditional on data quality, sampling and model assumptions.' };
   }
   function exportValidation(language) {
     const config = currentConfig(); const dataset = state.dataset || parseDatasetFromEditor(false); const x = dataset.names[config.x]; const y = dataset.names[config.y]; const group = dataset.names[config.group]; const event = dataset.names[config.event];
     if (language === 'python') {
-      const text = `"""Validation scaffold exported by Foko Lab v72.48.0.\nInspect assumptions and adapt the method before scientific use.\n"""\nimport pandas as pd\nfrom scipy import stats\n\ndf = pd.read_csv("your_data.csv")\nmode = ${JSON.stringify(config.mode)}\nalpha = ${config.alpha}\n\n# Selected columns\nx = df[${JSON.stringify(x)}]\ny = df[${JSON.stringify(y)}]\ngroup = df[${JSON.stringify(group)}]\nevent = df[${JSON.stringify(event)}]\n\nprint(df.describe(include="all"))\n# Implement and validate the selected mode explicitly; do not rely on the browser result alone.\n`;
+      const text = `"""Validation scaffold exported by Foko Lab v77.4.1.\nInspect assumptions and adapt the method before scientific use.\n"""\nimport pandas as pd\nfrom scipy import stats\n\ndf = pd.read_csv("your_data.csv")\nmode = ${JSON.stringify(config.mode)}\nalpha = ${config.alpha}\n\n# Selected columns\nx = df[${JSON.stringify(x)}]\ny = df[${JSON.stringify(y)}]\ngroup = df[${JSON.stringify(group)}]\nevent = df[${JSON.stringify(event)}]\n\nprint(df.describe(include="all"))\n# Implement and validate the selected mode explicitly; do not rely on the browser result alone.\n`;
       download('foko-lab-statistics-validation.py', text, 'text/x-python');
     } else {
-      const text = `# Validation scaffold exported by Foko Lab v72.48.0.\n# Inspect assumptions and adapt the method before scientific use.\ndf <- read.csv("your_data.csv")\nmode <- ${JSON.stringify(config.mode)}\nalpha <- ${config.alpha}\nsummary(df)\n# Selected columns: X=${x}, Y=${y}, group=${group}, event=${event}\n# Implement and validate the selected analysis explicitly.\n`;
+      const text = `# Validation scaffold exported by Foko Lab v77.4.1.\n# Inspect assumptions and adapt the method before scientific use.\ndf <- read.csv("your_data.csv")\nmode <- ${JSON.stringify(config.mode)}\nalpha <- ${config.alpha}\nsummary(df)\n# Selected columns: X=${x}, Y=${y}, group=${group}, event=${event}\n# Implement and validate the selected analysis explicitly.\n`;
       download('foko-lab-statistics-validation.R', text, 'text/x-r-source');
     }
   }

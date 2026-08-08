@@ -198,7 +198,7 @@ Browser capacity is guarded before computation. Oversized state, parameter, samp
 - Jacobian Spectrum Sensitivity Plot — `limited-browser`.
 
 
-## v72.48.0 Sensitivity runtime additions
+## v73.0.0 Sensitivity runtime additions
 
 - Morris normalized parameter-design trajectories (`morris-design`) are distinct from Morris output paths.
 - Global variance mode exposes first- and total-order effects through time and across every model state using the selected scalar metric.

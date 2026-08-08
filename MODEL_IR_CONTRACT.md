@@ -35,4 +35,4 @@ before passing the result to the existing ODE validator and solver.
 
 ## Scope
 
-This contract is not SBML and does not claim semantic equivalence to SBML, CellML or Modelica. Events, algebraic rules, delays, units, compartments and DAEs are not represented in the v72.16 schema. Those require a larger standards and numerical audit.
+This contract is not SBML and does not claim semantic equivalence to SBML, CellML or Modelica. Events, algebraic rules, delays, units, compartments and DAEs are not represented in the current Model IR schema. Those require a larger standards and numerical audit.

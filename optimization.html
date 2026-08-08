@@ -4,86 +4,26 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Foko Lab Optimization Lab computes bounded continuous nonlinear-program candidates with explicit constraint violation, search-budget, termination, and reproducibility evidence." name="description"/>
+<meta content="Foko Lab Optimization Lab computes bounded continuous nonlinear-program candidates with explicit feasibility, search-budget, termination, and CMA-ES diagnostics." name="description"/>
 <meta content="Foko Lab Optimization Lab" property="og:title"/>
-<meta content="Browser-computed bounded optimization candidates with honest feasibility gates, seeded search, convergence diagnostics, and reproducible exports." property="og:description"/>
+<meta content="Bounded optimization candidates with feasibility gates, seeded CMA-ES, convergence diagnostics, and reproducible exports." property="og:description"/>
 <meta content="website" property="og:type"/>
 <title>Optimization Lab · Foko Lab</title>
-<link href="assets/vendor/katex/katex-0.16.47.min.css?v=72.48.0" rel="stylesheet"/>
-<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=72.48.0"></script>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=72.48.0"></script>
-<link href="assets/brand/foko-lab-mark.svg?v=72.48.0" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=72.48.0" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=72.48.0" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=72.48.0" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=72.48.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=72.48.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=72.48.0"></script></head>
-<body data-lab="optimization" data-v72-shell="true" data-version="72.48.0"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=77.4.1" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=77.4.1"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=77.4.1"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=77.4.1" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=77.4.1" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=77.4.1" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=77.4.1" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=77.4.1" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=77.4.1"></script><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
+</head>
+<body data-lab="optimization" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
-<header class="topbar public-topbar foko-ide-topbar" data-v70-nav="true">
-<a aria-label="Foko Lab home" class="brand foko-wordmark" href="index.html"><img alt="Foko Lab" class="logo" decoding="async" fetchpriority="high" height="43" src="assets/brand/foko-lab-logo.svg?v=72.48.0" width="190"/></a>
-<nav aria-label="Primary navigation" class="topnav public-nav foko-main-nav foko-unified-nav">
-<a class="nav-home-link" href="index.html">Home</a>
-<details class="labs-menu nav-menu" data-nav-menu="modeling">
-<summary class="labs-summary">Modeling</summary>
-<div aria-label="Modeling workspaces" class="labs-menu-panel menu-panel-wide" role="menu">
-<div class="menu-section"><p class="menu-section-title">Build and simulate</p>
-<a href="workbench.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Workbench</b><small>One configuration across compatible scientific workflows.</small></span></a>
-<a href="ode.html?module=ode" role="menuitem"><span class="menu-icon">∿</span><span><b>ODE Lab</b><small>Trajectories, sweeps, stiffness evidence and verification.</small></span></a>
-<a href="steady.html" role="menuitem"><span class="menu-icon">⇌</span><span><b>Steady-State</b><small>Roots, admissibility and local stability.</small></span></a>
-<a href="stochastic.html" role="menuitem"><span class="menu-icon">∴</span><span><b>Stochastic</b><small>Gillespie ensembles, seeds and censoring evidence.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Rules and search</p>
-<a href="agent.html" role="menuitem"><span class="menu-icon">◎</span><span><b>Agent Lab</b><small>Spatial realizations and finite-ensemble evidence.</small></span></a>
-<a href="optimization.html" role="menuitem"><span class="menu-icon">◇</span><span><b>Optimization</b><small>Bounds, feasibility and algorithm diagnostics.</small></span></a>
-<a href="symbolic.html" role="menuitem"><span class="menu-icon">Σ</span><span><b>Symbolic</b><small>Exact derivatives, Jacobians and export boundaries.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="analysis">
-<summary class="labs-summary">Data / Analysis</summary>
-<div aria-label="Data and analysis labs" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Analyse observations</p>
-<a href="fitting.html" role="menuitem"><span class="menu-icon">ƒ</span><span><b>Curve Fitting</b><small>Residuals, profiles and practical identifiability.</small></span></a>
-<a href="statistics.html" role="menuitem"><span class="menu-icon">σ</span><span><b>Statistics</b><small>Missingness, tests, regression and uncertainty.</small></span></a>
-<a href="sensitivity.html" role="menuitem"><span class="menu-icon">∂S</span><span><b>Sensitivity</b><small>Local Jacobians, OFAT, Morris, first/total/second-order variance, state/time effects and FIM.</small></span></a>
-<a href="linear-algebra.html" role="menuitem"><span class="menu-icon">A</span><span><b>Linear Algebra</b><small>Solves, spectra, conditioning and PCA.</small></span></a>
-<a href="networks.html" role="menuitem"><span class="menu-icon">⟠</span><span><b>Networks</b><small>Graph structure, paths, communities and resilience.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="sciml">
-<summary class="labs-summary">SciML</summary>
-<div aria-label="Scientific machine learning" class="labs-menu-panel menu-panel-compact" role="menu">
-<div class="menu-section"><p class="menu-section-title">Learn from models and data</p>
-<a href="sciml.html" role="menuitem"><span class="menu-icon">∂</span><span><b>SciML Lab</b><small>SINDy, inverse diagnostics, surrogates and export limits.</small></span></a>
-<a href="ml.html" role="menuitem"><span class="menu-icon">μ</span><span><b>Machine Learning</b><small>Fold-safe validation, calibration, leakage audit and PCA.</small></span></a>
-<a href="docs.html#sciml-export" role="menuitem"><span class="menu-icon">⇥</span><span><b>External workflows</b><small>Know when the browser is not the right compute boundary.</small></span></a>
-</div>
-</div>
-</details>
-<details class="labs-menu nav-menu" data-nav-menu="explore">
-<summary class="labs-summary">Explore</summary>
-<div aria-label="Examples, learning and provenance" class="labs-menu-panel menu-panel-wide explore-menu-panel" role="menu">
-<div class="menu-section"><p class="menu-section-title">Find and learn</p>
-<a href="examples.html" role="menuitem"><span class="menu-icon">▦</span><span><b>Model Atlas</b><small>Search runnable and export-only examples.</small></span></a>
-<a href="beauty.html" role="menuitem"><span class="menu-icon">∞</span><span><b>Mathematical Beauty</b><small>Interactive fractals, topology, manifolds and geometric structure.</small></span></a>
-<a href="docs.html" role="menuitem"><span class="menu-icon">▤</span><span><b>Documentation</b><small>Inputs, outputs, diagnostics and boundaries.</small></span></a>
-<a href="tutorial.html" role="menuitem"><span class="menu-icon">▣</span><span><b>Tutorials</b><small>Practical failure-driven exercises.</small></span></a>
-</div>
-<div class="menu-section"><p class="menu-section-title">Trust and provenance</p>
-<a href="trust.html" role="menuitem"><span class="menu-icon">✓</span><span><b>Trust</b><small>Capability matrix, validation and known limits.</small></span></a>
-<a href="research.html" role="menuitem"><span class="menu-icon">⌁</span><span><b>Research</b><small>Fatty-acid metabolism, Thermoplants and T-cell models.</small></span></a>
-<a href="cv.html" role="menuitem"><span class="menu-icon">CV</span><span><b>Creator profile</b><small>Academic and industry background.</small></span></a>
-</div>
-</div>
-</details>
-<a href="https://github.com/chilperic/FokoLab" rel="noopener" target="_blank">GitHub</a>
-</nav>
-<div aria-label="Display controls" class="foko-top-actions"></div>
-</header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
 <main class="layout" id="workbench" tabindex="-1">
 <aside aria-label="Optimization workflow" class="side-nav">
 <button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
@@ -95,16 +35,16 @@
 <aside aria-label="Optimization controls" class="work-panel controls">
 <section class="card intro-card hero-with-mark">
 <div><p class="v72-eyebrow">Bounded nonlinear programs · explicit feasibility · seeded search</p><h2>Optimization Lab</h2><p class="note">Compute and inspect numerical candidates without confusing a low objective value, a stopped algorithm, or a heuristic search with a proof of optimality.</p></div>
-<img alt="Optimization Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/optimization-lab.webp?v=72.48.0"/>
+<img alt="Optimization Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/optimization-lab.webp?v=77.4.1"/>
 </section>
 <section aria-label="Run optimization" class="actionbar card">
 <button class="primary" id="runOptimization" type="button">Run optimizer</button>
 <button class="secondary" id="resetOptimization" type="button">Reset example</button>
-<div class="status" id="optimizationStatus">Ready. No optimization result exists yet.</div>
+<div class="status" id="optimizationStatus">Choose a problem, then run the optimizer.</div>
 <div class="progress"><div id="optimizationProgress"></div></div>
 </section>
 <section class="card" id="examplesBlock">
-<div class="card-head"><div><p class="v72-eyebrow">Curated problems</p><h2>Examples</h2></div><button class="secondary small" id="loadOptimization" type="button">Load selected</button></div>
+<div class="card-head"><div><p class="v72-eyebrow">Curated problems</p><h2>Examples</h2></div><div class="button-row"><button class="secondary small" id="showCmaExamples" type="button">Show 15 CMA-ES uses</button><button class="secondary small" id="loadOptimization" type="button">Load selected</button></div></div>
 <label><span>Example</span><select id="optimizationSelect"></select></label>
 <div class="steady-example-filters">
 <label><span>Search examples</span><input id="optimizationExampleSearch" placeholder="benchmark, application or method" type="search"/></label>
@@ -114,6 +54,7 @@
 <div class="model-deck steady-example-deck" id="optimizationDeck"></div>
 <p class="narrative" id="optimizationNarrative">Select an optimization problem.</p>
 <p class="field-help" id="optimizationScientificNote"></p>
+<details class="method-note"><summary>CMA-ES diagnostic coverage</summary><p class="field-help">A CMA-ES run unlocks fitness, mean, population, distance-to-reference where known, σ, axis ratio/condition, eigenvalues, covariance diagonal and heatmap, evolution paths, coordinate deviations, selection and feasibility ratios, evaluations versus time, per-generation runtime, and entropy/diversity views.</p></details>
 </section>
 <section class="card" id="modelBlock">
 <div class="card-head"><div><p class="v72-eyebrow" id="optimizationFamily">Model</p><h2 id="optimizationTitle">Bounded optimization problem</h2></div><button class="icon-btn" id="addOptimizationVariable" type="button">＋ variable</button></div>
@@ -132,9 +73,10 @@
 <section class="card" id="methodBlock">
 <details open=""><summary>Search method and evidence settings</summary>
 <div class="advanced-grid">
-<label><span>Algorithm</span><select id="optimizationAlgorithm"><option value="coordinate">Bounded coordinate search</option><option value="projected_gradient">Projected finite-difference penalty descent</option><option value="differential_evolution">Seeded differential evolution</option><option value="multi_start">Seeded multi-start coordinate search</option><option value="random_search">Seeded uniform random search</option></select></label>
+<label><span>Algorithm</span><select id="optimizationAlgorithm"><option value="coordinate">Bounded coordinate search</option><option value="projected_gradient">Projected finite-difference penalty descent</option><option value="differential_evolution">Seeded differential evolution</option><option value="cma_es">Seeded bounded CMA-ES</option><option value="multi_start">Seeded multi-start coordinate search</option><option value="random_search">Seeded uniform random search</option></select></label>
 <label><span>Iterations / generations</span><input id="optimizationIterations" max="20000" min="1" type="number" value="180"/></label>
 <label><span>Population size</span><input id="optimizationPopulation" max="2000" min="4" type="number" value="36"/></label>
+<label><span>CMA-ES initial σ · fraction of bounds</span><input id="optimizationCmaSigma" max="2" min="0.000001" step="any" type="number" value="0.3"/></label>
 <label><span>Multi-start count</span><input id="optimizationStarts" max="500" min="1" type="number" value="16"/></label>
 <label><span>Seed</span><input id="optimizationSeed" step="1" type="number" value="1729"/></label>
 <label><span>Quadratic penalty</span><input id="optimizationPenalty" min="0.000001" step="any" type="number" value="1000"/></label>
@@ -156,7 +98,7 @@
 <section aria-label="Optimization results" class="workspace v72-workspace">
 <section aria-label="Numerical results" class="results-card" role="region">
 <header class="v72-workspace-head">
-<div><p class="v72-eyebrow">Computed workspace</p><h1>Candidates, feasibility and search diagnostics</h1><p>Compare two computed views from the same run. Every visible panel is tied to evaluated candidates; unsupported optimality claims are omitted.</p></div>
+<div><h1>Results and search diagnostics</h1><p>Compare views from the same run. Unsupported optimality claims are omitted.</p></div>
 <div aria-label="Plot layout" class="v72-layout-switch" role="group">
 <button class="active" data-layout-mode="two" type="button">2-up</button>
 <button data-layout-mode="focus" type="button">Focus</button>
@@ -171,12 +113,12 @@
 <article class="chart-card" data-plot-card="left">
 <div class="chart-title"><h3 id="leftPlotTitle">Objective landscape</h3><select aria-label="Primary optimization plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div>
 <div class="plot" id="leftPlot"><div class="diagnostics empty">Run the optimizer to create a plot.</div></div>
-<details class="plot-evidence"><summary>Scientific meaning</summary><p id="leftPlotEvidence">No plot has been computed.</p></details>
+<details class="plot-evidence"><summary>Method &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details>
 </article>
 <article class="chart-card" data-plot-card="right">
 <div class="chart-title"><h3 id="rightPlotTitle">Search history</h3><select aria-label="Secondary optimization plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div>
 <div class="plot" id="rightPlot"><div class="diagnostics empty">Run the optimizer to create a plot.</div></div>
-<details class="plot-evidence"><summary>Scientific meaning</summary><p id="rightPlotEvidence">No plot has been computed.</p></details>
+<details class="plot-evidence"><summary>Method &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details>
 </article>
 </div>
 <p class="info-strip" id="plotHint">The objective, penalty score, feasibility tolerance, search budget, seed, and termination state answer different questions. Do not collapse them into a single “optimal” label.</p>
@@ -204,7 +146,7 @@
 <div class="diagnostics empty" id="optimizationDiagnostics">Run the optimizer to see candidate, feasibility, termination, and search-budget evidence.</div>
 </section>
 <section class="v72-inspector-card" id="provenanceCard">
-<div class="v72-card-head"><div><p class="v72-eyebrow">Scientific provenance</p><h2>Computation boundary</h2></div></div>
+<div class="v72-card-head"><div><h2>Method &amp; limits</h2></div></div>
 <dl class="v72-provenance">
 <div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div>
 <div><dt>Engine</dt><dd id="provenanceEngine">FokoOptimizationCore</dd></div>
@@ -213,7 +155,7 @@
 <div><dt>Optimality</dt><dd id="provenanceOptimality">No claim</dd></div>
 <div><dt>Reproducibility</dt><dd id="provenanceReproducibility">Configuration only</dd></div>
 </dl>
-<p class="v72-warning" id="provenanceWarning">No numerical result exists yet.</p>
+<p class="v72-warning" id="provenanceWarning">Run an analysis to create results.</p>
 </section>
 <section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region">
 <div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div>
@@ -232,11 +174,12 @@
 </aside>
 </main>
 </div>
-<script defer="" src="src/models/analysis-taxonomy.js?v=72.48.0"></script>
-<script defer="" src="src/models/optimization-presets.js?v=72.48.0"></script>
-<script defer="" src="src/core/optimization.js?v=72.48.0"></script>
-<script defer="" src="src/v72/optimization-workspace.js?v=72.48.0"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=72.48.0"></script>
-<script defer="" src="src/navigation.js?v=72.48.0"></script>
+<script defer="" src="src/models/analysis-taxonomy.js?v=77.4.1"></script>
+<script defer="" src="src/models/optimization-presets.js?v=77.4.1"></script>
+<script defer="" src="src/core/cmaes.js?v=77.4.1"></script>
+<script defer="" src="src/core/optimization.js?v=77.4.1"></script>
+<script defer="" src="src/v72/optimization-workspace.js?v=77.4.1"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=77.4.1"></script>
+<script defer src="src/v76/app-shell.js?v=77.4.1"></script>
 </body>
 </html>

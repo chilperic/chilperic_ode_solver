@@ -15,10 +15,10 @@ def test_home_removes_developer_facing_marketing_noise():
     for phrase in forbidden:
         assert phrase not in home
 
-def test_thermoplants_uses_graphical_abstract():
+def test_evolution_feature_uses_a_real_research_visual():
     home = text('index.html')
-    assert 'assets/research/photosynthesis/thermoplants-graphical-abstract.png' in home
-    assert (ROOT / 'assets/research/photosynthesis/thermoplants-graphical-abstract.png').exists()
+    assert 'assets/research/photosynthesis/c3c4_3d_evolution_brazil.png' in home
+    assert (ROOT / 'assets/research/photosynthesis/c3c4_3d_evolution_brazil.png').exists()
 
 def test_scientific_images_are_not_fill_cropped():
     home_css = text('styles/v72-public-shell.css')
@@ -36,6 +36,6 @@ def test_workbench_public_copy_avoids_implementation_architecture():
     assert 'Compare analyses in one workspace.' in page
 
 def test_new_release_and_port():
-    assert '72.48.0' in text('VERSION.json')
-    assert '8102' in text('package.json')
-    assert 'PORT=8102' in text('test-v72.48.0-local.sh')
+    assert '77.4.1' in text('VERSION.json')
+    assert 'scripts/serve-fresh.py' in text('package.json')
+    assert 'FOKOLAB_PORT' in text('test-v77.4.1-local.sh')

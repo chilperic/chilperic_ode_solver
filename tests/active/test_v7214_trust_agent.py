@@ -17,7 +17,7 @@ def test_agent_is_worker_backed_cancellable_and_render_verified():
     assert page.select_one('#agentLiveSpeed')
     assert page.select_one('#agentAbsorbed')
     assert page.select_one('#agentLargestCluster')
-    assert "new Worker('src/v72/agent-worker.js?v=72.48.0')" in controller
+    assert "new Worker('src/v72/agent-worker.js?v=77.4.1')" in controller
     assert 'cancelRun' in controller
     assert 'No partial ensemble was published' in controller
     assert 'failRender' in controller
@@ -27,7 +27,7 @@ def test_agent_is_worker_backed_cancellable_and_render_verified():
     assert 'const ticket=++state.plotSerial[side]' in controller
     assert 'hasVisibleEvidence' in controller
     assert 'Plotly returned no visible evidence' in controller
-    assert "importScripts('../core/agent-reference.js?v=72.48.0')" in worker
+    assert "importScripts('../core/agent-reference.js?v=77.4.1')" in worker
     assert "post(job, 'progress'" in worker
     assert "post(job, 'complete'" in worker
 

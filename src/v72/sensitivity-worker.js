@@ -2,10 +2,10 @@
  * is implemented by terminating the worker from the workspace controller.
  */
 'use strict';
-importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=72.48.0');
-importScripts('../core/ode.js?v=72.48.0');
-importScripts('../core/sensitivity.js?v=72.48.0');
-importScripts('../core/numerical-inputs.js?v=72.48.0');
+importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=77.4.1');
+importScripts('../core/ode.js?v=77.4.1');
+importScripts('../core/sensitivity.js?v=77.4.1');
+importScripts('../core/numerical-inputs.js?v=77.4.1');
 
 function stableParameterKey(params) {
   return Object.keys(params).sort().map(name => `${name}:${Number(params[name]).toPrecision(17)}`).join('|');
@@ -18,8 +18,15 @@ function compileModel(model, progress) {
   function rhs(t, y, params) {
     const scope = Object.assign({ t }, params);
     checked.vars.forEach((name, index) => { scope[name] = y[index]; });
-    const values = compiled.map(expression => Number(expression.evaluate(scope)));
-    if (!values.every(Number.isFinite)) throw new Error('A differential equation returned a non-finite derivative.');
+    const values = compiled.map((expression, index) => {
+      const value = Number(expression.evaluate(scope));
+      if (Number.isFinite(value)) return value;
+      const source = checked.eqs[index];
+      const zeros = Object.entries(scope).filter(([, entry]) => Number.isFinite(Number(entry)) && Math.abs(Number(entry)) <= Number.EPSILON).map(([name]) => name);
+      const denominator = zeros.find(name => new RegExp(`/\\s*(?:\\([^)]*)?\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(source));
+      const context = Object.entries(scope).slice(0, 12).map(([name, entry]) => `${name}=${Number(entry).toPrecision(5)}`).join(', ');
+      throw new Error(`Equation ${index + 1} became non-finite during sensitivity analysis at t=${Number(t).toPrecision(6)}: “${source}”.${denominator ? ` Likely division by zero: ${denominator}=0.` : ' Check the model domain, parameter ranges and state scaling.'} Current values: ${context}.`);
+    });
     return values;
   }
   function solve(params) {
@@ -182,6 +189,45 @@ function computeStateSobol(samples, parameterNames, stateNames) {
   return { states: stateNames, names: parameterNames, totalMatrix, firstMatrix, warning: 'State-summary indices reuse the same seeded Jansen design and apply the selected scalar metric separately to every state. States with near-zero sampled variance are left unresolved.' };
 }
 
+function computeSobolForOutput(compiled, parameters, parameterNames, methodConfig, request, outputVar, outputMetric) {
+  const timeSamples = { A: [], B: [], AB: Object.fromEntries(parameterNames.map(name => [name, []])), time: null };
+  const stateNames = compiled.checked.vars.slice();
+  const stateSamples = {
+    A: Object.fromEntries(stateNames.map(name => [name, []])),
+    B: Object.fromEntries(stateNames.map(name => [name, []])),
+    AB: Object.fromEntries(parameterNames.map(parameter => [parameter, Object.fromEntries(stateNames.map(name => [name, []]))]))
+  };
+  const scalar = params => metric(compiled.solve(params), outputVar, outputMetric);
+  const sampleObserver = function (context, params) {
+    if (!['A', 'B', 'AB'].includes(context.role)) return;
+    const result = compiled.solve(params); const values = series(result, outputVar); const indices = downsampleIndices(values.length, 32); const row = indices.map(index => values[index]);
+    if (!timeSamples.time) timeSamples.time = indices.map(index => result.T[index]);
+    if (context.role === 'A') timeSamples.A[context.index] = row;
+    else if (context.role === 'B') timeSamples.B[context.index] = row;
+    else timeSamples.AB[context.name][context.index] = row;
+    stateNames.forEach(function (stateName) {
+      const stateMetric = metric(result, stateName, outputMetric);
+      if (context.role === 'A') stateSamples.A[stateName][context.index] = stateMetric;
+      else if (context.role === 'B') stateSamples.B[stateName][context.index] = stateMetric;
+      else stateSamples.AB[context.name][stateName][context.index] = stateMetric;
+    });
+  };
+  const analysis = self.FokoSensitivityCore.sobolJansen({
+    parameters, samples: methodConfig.samples, seed: methodConfig.seed, secondOrder: methodConfig.secondOrder,
+    bootstrapReplicates: methodConfig.bootstrapReplicates, dependence: methodConfig.dependence,
+    dependencePermutations: methodConfig.dependencePermutations, evaluate: scalar, sampleObserver
+  });
+  analysis.outputVar = outputVar;
+  analysis.timeSensitivity = computeTimeSobol(timeSamples, parameterNames);
+  analysis.stateSensitivity = computeStateSobol(stateSamples, parameterNames, stateNames);
+  if (methodConfig.responseSurface) analysis.responseSurface = self.FokoSensitivityCore.responseSurface({ parameters, first: request.analysis.surfaceFirst, second: request.analysis.surfaceSecond, points: methodConfig.surfacePoints, evaluate: scalar });
+  if (analysis.timeSensitivity) analysis.warning += ` ${analysis.timeSensitivity.warning}`;
+  if (analysis.stateSensitivity) analysis.warning += ` ${analysis.stateSensitivity.warning}`;
+  if (analysis.responseSurface) analysis.warning += ` ${analysis.responseSurface.warning}`;
+  if (analysis.dependence) analysis.warning += ` ${analysis.dependence.warning}`;
+  return analysis;
+}
+
 self.onmessage = function (event) {
   const request = event.data || {};
   if (request.type !== 'run') return;
@@ -202,7 +248,7 @@ self.onmessage = function (event) {
     const outputMetric = methodConfig.method === 'fim' ? 'trajectory' : (request.outputMetric || 'final');
     const scalar = params => metric(compiled.solve(params), outputVar, outputMetric);
     self.postMessage({ type: 'progress', progress: 0.1, text: `Computing about ${expectedSolves} guarded browser ODE solves in a worker` });
-    let analysis;
+    let analysis; let analysesByOutput = null; let outputVars = [outputVar];
     if (methodConfig.method === 'local') {
       analysis = self.FokoSensitivityCore.localFiniteDifference({ parameters, relativeStep: methodConfig.relativeStep, evaluate: scalar });
       analysis.trajectory = localTrajectory(compiled, parameters, outputVar, methodConfig.relativeStep);
@@ -221,39 +267,11 @@ self.onmessage = function (event) {
     } else if (methodConfig.method === 'morris') {
       analysis = self.FokoSensitivityCore.morris({ parameters, trajectories: methodConfig.trajectories, levels: methodConfig.levels, seed: methodConfig.seed, bootstrapReplicates: methodConfig.bootstrapReplicates, evaluate: scalar });
     } else if (methodConfig.method === 'sobol') {
-      const timeSamples = { A: [], B: [], AB: Object.fromEntries(parameterNames.map(name => [name, []])), time: null };
-      const stateNames = compiled.checked.vars.slice();
-      const stateSamples = {
-        A: Object.fromEntries(stateNames.map(name => [name, []])),
-        B: Object.fromEntries(stateNames.map(name => [name, []])),
-        AB: Object.fromEntries(parameterNames.map(parameter => [parameter, Object.fromEntries(stateNames.map(name => [name, []]))]))
-      };
-      const sampleObserver = function (context, params) {
-        if (!['A', 'B', 'AB'].includes(context.role)) return;
-        const result = compiled.solve(params); const values = series(result, outputVar); const indices = downsampleIndices(values.length, 32); const row = indices.map(index => values[index]);
-        if (!timeSamples.time) timeSamples.time = indices.map(index => result.T[index]);
-        if (context.role === 'A') timeSamples.A[context.index] = row;
-        else if (context.role === 'B') timeSamples.B[context.index] = row;
-        else timeSamples.AB[context.name][context.index] = row;
-        stateNames.forEach(function (stateName) {
-          const stateMetric = metric(result, stateName, outputMetric);
-          if (context.role === 'A') stateSamples.A[stateName][context.index] = stateMetric;
-          else if (context.role === 'B') stateSamples.B[stateName][context.index] = stateMetric;
-          else stateSamples.AB[context.name][stateName][context.index] = stateMetric;
-        });
-      };
-      analysis = self.FokoSensitivityCore.sobolJansen({
-        parameters, samples: methodConfig.samples, seed: methodConfig.seed, secondOrder: methodConfig.secondOrder,
-        bootstrapReplicates: methodConfig.bootstrapReplicates, dependence: methodConfig.dependence,
-        dependencePermutations: methodConfig.dependencePermutations, evaluate: scalar, sampleObserver
-      });
-      analysis.timeSensitivity = computeTimeSobol(timeSamples, parameterNames);
-      analysis.stateSensitivity = computeStateSobol(stateSamples, parameterNames, stateNames);
-      if (methodConfig.responseSurface) analysis.responseSurface = self.FokoSensitivityCore.responseSurface({ parameters, first: request.analysis.surfaceFirst, second: request.analysis.surfaceSecond, points: methodConfig.surfacePoints, evaluate: scalar });
-      if (analysis.timeSensitivity) analysis.warning += ` ${analysis.timeSensitivity.warning}`;
-      if (analysis.stateSensitivity) analysis.warning += ` ${analysis.stateSensitivity.warning}`;
-      if (analysis.responseSurface) analysis.warning += ` ${analysis.responseSurface.warning}`;
-      if (analysis.dependence) analysis.warning += ` ${analysis.dependence.warning}`;
+      outputVars = Array.from(new Set((Array.isArray(request.outputVars) ? request.outputVars : [outputVar]).filter(name => compiled.checked.vars.includes(name))));
+      if (!outputVars.length) throw new Error('At least one valid model output is required for global sensitivity.');
+      analysesByOutput = {};
+      outputVars.forEach(function (name) { analysesByOutput[name] = computeSobolForOutput(compiled, parameters, parameterNames, methodConfig, request, name, outputMetric); });
+      analysis = analysesByOutput[outputVars.includes(outputVar) ? outputVar : outputVars[0]];
     } else {
       analysis = self.FokoSensitivityCore.fim({ parameters, relativeStep: methodConfig.relativeStep, sigma: methodConfig.sigma, evaluateVector: params => downsampleVector(compiled.solve(params), outputVar, 48) });
       analysis.observationPoints = Math.min(48, compiled.checked.points);
@@ -261,10 +279,11 @@ self.onmessage = function (event) {
     const solverSummary = compiled.summary();
     self.postMessage({ type: 'progress', progress: 0.96, text: 'Preparing diagnostics and plots' });
     self.postMessage({
-      type: 'result', ok: true, release: '72.48.0', method: methodConfig.method, outputVar, outputMetric,
+      type: 'result', ok: true, release: '77.4.1', method: methodConfig.method, outputVar: outputVars.includes(outputVar) ? outputVar : outputVars[0], outputVars, outputMetric,
       model: compiled.checked, analysis, solverSummary, estimatedOdeSolves: expectedSolves,
+      analysesByOutput,
       runtime: performance.now() - started, warnings: (compiled.checked.warnings || []).concat(methodConfig.warnings || []),
-      configuration: { model: request.model, analysis: request.analysis, outputVar, outputMetric }
+      configuration: { model: request.model, analysis: request.analysis, outputVar, outputVars, outputMetric }
     });
   } catch (error) { self.postMessage({ type: 'result', ok: false, error: String(error && error.message || error), runtime: performance.now() - started }); }
 };
