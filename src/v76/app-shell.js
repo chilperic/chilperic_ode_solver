@@ -173,13 +173,12 @@
         {
           title: 'Model project',
           items: [
-            ['→', 'Connected experiment', 'One model: simulate, fit, test robustness and compare learned approximations.', 'workspace.html?resume=last'],
-            ['+', 'Create a connected model', 'Start an empty, reproducible experiment.', 'workspace.html?new=1'],
-            ['▤', 'Model library', 'Four research paths, the full catalogue and every specialist lab.', 'library.html'],
-            ['+', 'New model', 'Create an editable model from an empty project.', 'studio.html?new=1'],
-            ['↗', 'Open Model Studio', 'Continue editing model and experiment settings.', 'studio.html'],
-            ['▦', 'Start from template', 'Open a documented example; inspect its assumptions before use.', 'examples.html'],
-            ['⇩', 'Import model', 'Open Model Studio and import TXT/ODE, JSON, a data-only dictionary, YAML, CSV or the validated SBML subset.', 'studio.html#import']
+            ['↗', 'Model Studio', 'Equations, examples, solver selection and scientific plots.', 'studio.html'],
+            ['+', 'New model', 'Start from your own equations.', 'studio.html?new=1'],
+            ['⇩', 'Import model', 'Open the supported model import controls.', 'studio.html#import'],
+            ['▤', 'Model Atlas', 'The complete example catalogue, linked to original labs.', 'examples.html'],
+            ['▦', 'All labs & methods', 'Browse every scientific workspace.', 'labs.html'],
+            ['→', 'Guided workflow (optional)', 'A connected investigation alongside the original labs.', 'workspace.html?resume=last']
           ]
         }
       ]
@@ -191,6 +190,8 @@
         {
           title: 'Help and provenance',
           items: [
+            ['▤', 'Book & materials', 'Read the companion book without leaving the platform.', 'book.html'],
+            ['▦', 'All labs & methods', 'Find the original laboratories and their examples.', 'labs.html'],
             ['↗', 'Career programme', 'Book chapters, evidence gates and research transfer.', 'programme.html'],
             ['▤', 'Learn & practice', 'Worked scientific-ML lessons, exercises and runnable investigations.', 'learn.html'],
             ['?', 'Documentation', 'Inputs, outputs, diagnostics and boundaries.', 'docs.html'],
@@ -279,7 +280,7 @@
 
   function popoverMarkup(key, group) {
     return `<section class="v76-popover" id="v76-${key}-menu" data-v76-popover="${key}" data-open="false" aria-label="${group.title}">
-      <div class="v76-popover-head"><b>${group.title}</b><span>${group.note}</span></div>
+      <div class="v76-popover-head"><b>${group.title}</b><span>${group.note}</span>${key === 'experiment' || key === 'analyze' ? `<a class="recovery-all-labs" href="${route('labs.html')}">All labs &amp; methods →</a>` : ''}</div>
       <div class="v76-popover-grid">${group.sections.map(section => `<section class="v76-popover-section" data-subject-target="${identityFor(labFromHref(section.items[0][3])).subject}"><h2>${section.title}</h2>${section.items.map(itemMarkup).join('')}</section>`).join('')}</div>
     </section>`;
   }
@@ -292,15 +293,15 @@
       </a>
       <nav class="v76-primary-nav" aria-label="Primary navigation">
         <a class="v76-nav-link" href="${route('index.html')}"${active === 'home' ? ' aria-current="page"' : ''}>Home</a>
-        <a class="v76-nav-link" href="${route('workspace.html?resume=last')}">Workspace</a>
+        <a class="v76-nav-link" href="${route('studio.html')}"${active === 'model' ? ' aria-current="page"' : ''}>Model Studio</a>
         <button class="v76-nav-trigger" type="button" data-v76-trigger="experiment" aria-expanded="false" aria-controls="v76-experiment-menu"${active === 'experiment' ? ' data-active="true"' : ''}>Simulate ${chevron}</button>
         <button class="v76-nav-trigger" type="button" data-v76-trigger="analyze" aria-expanded="false" aria-controls="v76-analyze-menu"${active === 'analyze' ? ' data-active="true"' : ''}>Analyze ${chevron}</button>
-        <a class="v76-nav-link" href="${route('library.html')}"${active === 'atlas' ? ' aria-current="page"' : ''}>Library</a>
-        <a class="v76-nav-link" href="${route('learn.html')}">Learn</a>
+        <a class="v76-nav-link" href="${route('examples.html')}"${active === 'atlas' ? ' aria-current="page"' : ''}>Model Atlas</a>
+        <a class="v76-nav-link" href="${route('book.html')}">Book</a>
       </nav>
       <div class="v76-app-actions">
         <button class="v76-command" type="button" data-v76-command aria-label="Search models, labs and help"><span aria-hidden="true">⌕</span> Find</button>
-        <button class="v76-run-action" type="button" data-v76-run>${doc.body.dataset.v72Shell === 'true' ? 'Run' : 'Open Studio'}</button>
+        <button class="v76-run-action" type="button" data-v76-run>${RUN_IDS.some(id => doc.getElementById(id)) ? 'Run' : 'Open Studio'}</button>
         <button class="v76-profile" type="button" data-v76-trigger="profile" aria-expanded="false" aria-label="Help, appearance and creator" aria-controls="v76-profile-menu">
           <img src="${route('assets/profile-chilperic.webp')}" alt=""/>
         </button>
@@ -320,7 +321,7 @@
       <div class="v76-mobile-sheet-body">
         <a class="v76-mobile-home" href="${route('index.html')}">${icons.home}<span>Home</span></a>
         <div class="v76-mobile-project-actions"><a href="${route('studio.html?new=1')}">New model</a><a href="${route('studio.html')}">Open project</a></div>
-        ${navSections.map(([title, items]) => `<section class="v76-mobile-nav-section"><h2>${title}</h2><nav>${items.map(item => `<a href="${route(item[3])}"${identityAttributes(item[3])}>${item[1]}</a>`).join('')}</nav></section>`).join('')}
+        ${navSections.map(([title, items], i) => i === 0 ? `<section class="v76-mobile-nav-section"><h2>${title}</h2><nav>${items.map(item => `<a href="${route(item[3])}"${identityAttributes(item[3])}>${item[1]}</a>`).join('')}</nav></section>` : `<details class="v76-mobile-nav-section"><summary>${title}</summary><nav>${items.map(item => `<a href="${route(item[3])}"${identityAttributes(item[3])}>${item[1]}</a>`).join('')}</nav></details>`).join('')}
       </div>
     </section>
     ${doc.body.dataset.v72Shell === 'true' ? '' : `<nav class="v76-bottom-nav v77-public-bottom" aria-label="Mobile primary navigation">
@@ -658,7 +659,9 @@
     if (doc.body.dataset.lab === 'studio') {
       const controls = doc.querySelector('.studio-controls');
       const catalogue = doc.getElementById('catalogueBlock');
-      if (controls && catalogue) controls.appendChild(catalogue);
+      // Do not demote the example selector below every model/method control.
+      const identity = doc.getElementById('identityBlock');
+      if (controls && catalogue && identity) identity.insertAdjacentElement('afterend', catalogue);
       const catalogueTitle = catalogue?.querySelector('h2');
       if (catalogueTitle) catalogueTitle.textContent = 'Editable example models';
       const loadTemplate = doc.getElementById('loadStudioPreset');

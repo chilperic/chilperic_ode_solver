@@ -1,6 +1,6 @@
 (function(root){'use strict';
   const data=root.FokoScientificExampleCatalog||[];
-  const PAGE_SIZE=24;
+  const PAGE_SIZE=12;
   let page=1;
   const $=function(id){return document.getElementById(id);};
   const LAB_IDENTITY={
@@ -90,22 +90,32 @@
     $('atlasPrevious').disabled=page<=1;
     $('atlasNext').disabled=page>=pageCount;
     $('atlasPagination').hidden=filtered.length<=PAGE_SIZE;
+    $('atlasPageTop').textContent=$('atlasPageStatus').textContent;
+    $('atlasPreviousTop').disabled=page<=1;$('atlasNextTop').disabled=page>=pageCount;
+    const view=$('atlasView').value;
+    $('atlasGridV72').dataset.view=view;
+    const extra=[family,status,prov].filter(Boolean).length;
+    $('atlasActiveFilters').textContent=extra?'('+extra+' active)':'';
     $('atlasGridV72').innerHTML=visible.map(function(item){
-      const image=imageFor(item);
       const identity=LAB_IDENTITY[item.lab]||['examples','resources'];
+      const media='<figure class="v72-atlas-media"><img alt="'+esc(item.title)+' preview" loading="lazy" decoding="async" src="'+esc(imageFor(item))+'"/></figure>';
+      const meta='<p class="atlas-record-meta"><b>Family:</b> '+esc(item.family)+'<br><b>Provenance:</b> <span class="v72-atlas-badge provenance">'+esc(item.provenance)+'</span></p>';
       return '<article class="v72-atlas-card" data-lab-target="'+esc(identity[0])+'" data-subject-target="'+esc(identity[1])+'">'
-        +'<figure class="v72-atlas-media"><img alt="'+esc(item.title)+' preview" decoding="async" src="'+esc(image)+'"/></figure>'
-        +'<div class="v72-atlas-meta"><span class="v72-atlas-badge">'+esc(item.lab)+'</span><span class="v72-atlas-badge provenance">'+esc(item.provenance)+'</span><span class="v72-atlas-badge status">'+esc(item.status)+'</span></div>'
-        +'<div class="v72-atlas-card-body"><h2>'+esc(item.title)+'</h2><p><b>'+esc(item.family)+'</b></p><dl><dt>Scientific use</dt><dd>'+esc(item.summary)+'</dd><dt>Evidence boundary</dt><dd>'+esc(item.status)+'</dd></dl></div>'
-        +'<a href="'+esc(item.href)+'">Open as editable starting point</a></article>';
-    }).join('')||'<p>No examples match the current filters.</p>';
+        +(view==='gallery'?media:'')
+        +'<div class="v72-atlas-card-body"><div class="atlas-title-line"><h2>'+esc(item.title)+'</h2><span class="v72-atlas-badge">'+esc(item.lab)+'</span></div><p>'+esc(item.summary)+'</p>'
+        +'<p class="atlas-status"><b>Execution scope:</b> <span class="v72-atlas-badge status">'+esc(item.status)+'</span></p>'
+        +'<details class="atlas-item-details"><summary>'+(view==='gallery'?'Provenance & family':'Preview & provenance')+'</summary>'+(view==='list'?media:'')+meta+'</details></div>'
+        +'<a href="'+esc(item.href)+'">Open example →</a></article>';
+    }).join('')||'<p>No examples match the current filters. Clear filters to return to the complete catalogue.</p>';
   }
+
   function init(){
     $('atlasLab').innerHTML=options(data.map(function(x){return x.lab;}),'All labs');
     $('atlasProvenance').innerHTML=options(data.map(function(x){return x.provenance;}),'All provenance classes');
     $('atlasFamily').innerHTML=options(data.map(function(x){return x.family;}),'All scientific families');
     $('atlasStatus').innerHTML=options(data.map(function(x){return x.status;}),'All evidence levels');
     const params=new URLSearchParams(window.location.search);
+    if(params.get('view')==='gallery') $('atlasView').value='gallery';
     if(params.get('q')) $('atlasSearch').value=params.get('q');
     if(params.get('lab') && Array.from($('atlasLab').options).some(function(option){return option.value===params.get('lab');})) $('atlasLab').value=params.get('lab');
     if(params.get('provenance') && Array.from($('atlasProvenance').options).some(function(option){return option.value===params.get('provenance');})) $('atlasProvenance').value=params.get('provenance');
@@ -114,6 +124,10 @@
     ['atlasSearch','atlasLab','atlasProvenance','atlasFamily','atlasStatus'].forEach(function(id){$(id).addEventListener(id==='atlasSearch'?'input':'change',function(){page=1;render();});});
     $('atlasPrevious').addEventListener('click',function(){page=Math.max(1,page-1);render();$('atlasGridV72').scrollIntoView({block:'start'});});
     $('atlasNext').addEventListener('click',function(){page+=1;render();$('atlasGridV72').scrollIntoView({block:'start'});});
+    $('atlasPreviousTop').addEventListener('click',()=>{page=Math.max(1,page-1);render();});
+    $('atlasNextTop').addEventListener('click',()=>{page++;render();});
+    $('atlasView').addEventListener('change',render);
+    $('atlasReset').addEventListener('click',function(){['atlasSearch','atlasLab','atlasProvenance','atlasFamily','atlasStatus'].forEach(id=>$(id).value='');page=1;render();$('atlasSearch').focus();});
     render();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();

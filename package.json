@@ -4,7 +4,7 @@
   "private": true,
   "description": "Browser-native scientific modeling with user-owned inputs, attached diagnostics, independent verification, reproducible reporting, visual examples, and explicit capability boundaries.",
   "scripts": {
-    "test": "npm run test:syntax && npm run test:identity && npm run test:studio && npm run test:core && npm run test:public && npm run test:contracts && npm run test:inputs && npm run test:consistency && npm run test:plot-contract && npm run test:quality && npm run test:lifecycle && npm run test:benchmark && npm run test:research",
+    "test": "npm run test:syntax && npm run test:identity && npm run test:studio && npm run test:core && npm run test:public && npm run test:contracts && npm run test:inputs && npm run test:consistency && npm run test:plot-contract && npm run test:quality && npm run test:lifecycle && npm run test:benchmark && npm run test:research && npm run test:core-access",
     "test:studio": "node tests/js/project-core.test.js && node tests/js/model-import-core.test.js && node tests/js/live-3d-core.test.js && node tests/js/live-3d-platform-contract.test.js && node tests/js/model-studio-contract.test.js && node tests/js/v76-popover-geometry.test.js && node tests/js/v76-product-shell.test.js && node tests/js/v76-workspace-sizing.test.js",
     "test:syntax": "node scripts/build-research-assets.js --check && node scripts/check-js-syntax.js && python3 scripts/check-engine-boundaries.py && python3 scripts/audit-offline-gate-dependencies.py",
     "test:identity": "python3 scripts/audit-professional-experience.py",
@@ -44,7 +44,8 @@
     "replay": "node scripts/replay-research.js",
     "test:structured:rendered": "python3 tests/research/structured_browser.py",
     "build:research-assets": "node scripts/build-research-assets.js",
-    "test:book": "python3 tests/research/book_contract.py"
+    "test:book": "python3 tests/research/book_contract.py",
+    "test:core-access": "node tests/recovery/core-access.test.js"
   },
   "devDependencies": {
     "@playwright/test": "1.61.1"

@@ -12,23 +12,22 @@
 <link href="assets/brand/apple-touch-icon.png?v=78.2.0" rel="apple-touch-icon"/>
 <link href="styles/v72-tokens.css?v=78.2.0" rel="stylesheet"/>
 <link href="styles/v72-lab-shell.css?v=78.2.0" rel="stylesheet"/>
-<link href="styles/v72-atlas.css?v=78.2.0" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=78.2.0" rel="stylesheet"/><script defer="" src="src/platform/storage.js?v=78.2.0"></script><script defer="" src="src/v72/accessibility-performance.js?v=78.2.0"></script><link href="styles/v76-system.css?v=78.2.0" rel="stylesheet"/>
+<link href="styles/v72-atlas.css?v=78.2.0&amp;core-access=1" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=78.2.0" rel="stylesheet"/><script defer="" src="src/platform/storage.js?v=78.2.0"></script><script defer="" src="src/v72/accessibility-performance.js?v=78.2.0"></script><link href="styles/v76-system.css?v=78.2.0&amp;core-access=1" rel="stylesheet"/>
 </head>
 <body data-lab="examples" data-v72-shell="true"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
 <div class="app-shell">
 <header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
 <main class="v72-atlas" id="main-content" tabindex="-1">
-<section class="v72-atlas-hero"><div><p class="eyebrow">Documented starting points</p><h1>Model Atlas</h1><p>Use the catalogue to inspect mechanisms, assumptions and evidence boundaries, then edit the model in its scientific workspace. The Atlas is optional: you can always build or import your own model.</p><div class="v72-atlas-hero-actions"><a class="primary" href="studio.html?new=1">Create an empty model</a><a class="secondary" href="studio.html#import">Import your model</a></div></div><img alt="Model Atlas mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/model-atlas.webp"/></section>
-<section aria-label="Example filters" class="v72-atlas-toolbar"><input aria-label="Search examples" id="atlasSearch" placeholder="Search mechanisms, methods or scientific fields" type="search"/><select aria-label="Filter by lab" id="atlasLab"></select><select aria-label="Filter by scientific family" id="atlasFamily"></select><select aria-label="Filter by evidence status" id="atlasStatus"></select><select aria-label="Filter by provenance" id="atlasProvenance"></select></section>
-<div class="v72-atlas-summary"><b id="atlasCount">Loading examples…</b><span><a href="studio.html">Model Studio</a> · <a href="research.html">Research provenance</a> · <a href="trust.html">Capability boundaries</a></span></div>
-<section aria-live="polite" class="v72-atlas-grid" id="atlasGridV72"></section>
+<section class="v72-atlas-hero"><div><p class="eyebrow">Documented starting points</p><h1>Model Atlas</h1><p>All examples remain editable in their original labs. Search by name or scientific topic.</p><div class="v72-atlas-hero-actions"><a class="primary" href="studio.html?new=1">Create an empty model</a><a class="secondary" href="studio.html#import">Import your model</a></div></div></section>
+<section aria-label="Example filters" class="v72-atlas-toolbar"><input aria-label="Search examples" id="atlasSearch" placeholder="Search mechanisms, methods or scientific fields" type="search"/><select aria-label="Filter by lab" id="atlasLab"></select><label class="atlas-view-label" for="atlasView">View<select id="atlasView"><option value="list">List</option><option value="gallery">Gallery</option></select></label><button id="atlasReset" type="button">Clear filters</button></section><details class="atlas-more-filters"><summary>More filters <span id="atlasActiveFilters"></span></summary><div class="atlas-extra-fields"><select aria-label="Filter by scientific family" id="atlasFamily"></select><select aria-label="Filter by evidence status" id="atlasStatus"></select><select aria-label="Filter by provenance" id="atlasProvenance"></select></div></details>
+<div class="v72-atlas-summary"><b id="atlasCount" role="status">Loading examples…</b><span><a href="studio.html">Model Studio</a> · <a href="research.html">Research provenance</a> · <a href="trust.html">Capability boundaries</a></span></div>
+<nav aria-label="Model Atlas pages, top" class="atlas-top-pagination"><button aria-label="Previous Atlas page" id="atlasPreviousTop" type="button">Previous</button><span id="atlasPageTop"></span><button aria-label="Next Atlas page" id="atlasNextTop" type="button">Next</button></nav><section class="v72-atlas-grid" data-view="list" id="atlasGridV72"></section>
 <nav aria-label="Model Atlas pages" class="v72-atlas-pagination" id="atlasPagination"><button id="atlasPrevious" type="button">Previous</button><span aria-live="polite" id="atlasPageStatus">Page 1</span><button id="atlasNext" type="button">Next</button></nav>
 <p class="v72-atlas-boundary"><b>Before interpreting an example:</b> check its provenance, parameters, diagnostics, and capability label. A named model is not automatically calibrated or validated.</p>
 </main>
 <script defer="" src="src/models/scientific-example-catalog.js?v=78.2.0"></script>
-<script defer="" src="src/v72/example-atlas.js?v=78.2.0"></script>
-</div><script defer="" src="src/models/search-index.js?v=78.2.0"></script><script defer="" src="src/v76/app-shell.js?v=78.2.0"></script>
+<script defer="" src="src/v72/example-atlas.js?v=78.2.0&amp;core-access=1"></script>
+</div><script defer="" src="src/models/search-index.js?v=78.2.0"></script><script defer="" src="src/v76/app-shell.js?v=78.2.0&amp;core-access=1"></script>
 </body>
 </html>
-

@@ -1,3 +1,15 @@
+# Core-access recovery — base FokoLab v78.2.0
+
+Start at `index.html`: Model Studio, all labs and methods, and the complete Model
+Atlas are primary. The book and guided career workflows remain supplementary.
+No scientific core or native lab was replaced for this interface repair.
+
+Read [CORE_ACCESS_RECOVERY.md](CORE_ACCESS_RECOVERY.md) for the restored navigation,
+page-density choices, fresh checks and native-browser limitations. The full author
+book remains subject to [PUBLICATION_REVIEW.md](PUBLICATION_REVIEW.md).
+
+---
+
 > **Book companion preview (base v78.2.0).** Start with [Book companion validation](BOOK_COMPANION_VALIDATION.md) and [Publication review](PUBLICATION_REVIEW.md). The complete author PDF is included; do not push it or its index publicly before reviewing the personal front matter. Serve the app and open `book.html`. The underlying application release notes below remain the v78.2.0 record.
 
 # FokoLab · v78.2.0
