@@ -104,3 +104,16 @@ A release is blocked by any of the following:
 - a failed active contract, differential reference, page-quality gate, or required browser gate;
 - documentation that claims a capability the current release does not provide.
 
+
+## v77.5.0 reliability corrections
+
+Invalid initial conditions are rejected before cloning. Adaptive error acceptance cannot be bypassed by tiny time scales; fixed-step output sampling no longer silently relaxes step limits. Statistical degeneracy, ROC ties, singleton silhouette and zero-valued regularization have explicit regression coverage. Studio records immutable experiment snapshots and rejects obsolete completions. See VALIDATION.md for executed evidence and unexecuted native browser/deployment checks.
+
+
+## Connected research contracts (v78)
+
+Training data alone determine fitted parameters and learned coefficients; the time holdout does not enter the objective or normalization. Constant, mechanistic, time-polynomial and residual-hybrid predictions are scored on the same held-out rows. Conditional parameter surrogates train on seeded stratified settings and evaluate different settings, then separately challenge two outside-range points. Choosing models by repeatedly inspecting the same holdout is explicitly discouraged; the software does not magically make user-driven model selection unbiased.
+
+Sensitivity in this workflow is finite-difference local sensitivity, not Sobol. Independent-uniform ensemble quantiles reflect the declared sampling assumptions, not measured probabilities or confidence/credible intervals. Synthetic Gaussian observation noise is distinguished from process noise and empirical observations. Metadata checks do not prove dimensional consistency, identifiability, calibration, external validity or causality. Negative synthetic observations are not silently clipped. Model-domain failures must be shown, not omitted from a sweep to improve a metric.
+
+The teaching plant and T-cell models are explicitly reduced. Their equations are inspectable and editable; the protected C3–C4 solver is not exposed. No learning feature may be presented as an implementation of the author's complete thesis unless that implementation and its validation are actually supplied.

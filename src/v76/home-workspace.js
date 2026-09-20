@@ -4,6 +4,7 @@
   const doc = root.document;
   if (!doc) return;
 
+  let lastRun = null;
   const byId = id => doc.getElementById(id);
   const finitePositive = (value, label) => {
     const number = Number(value);
@@ -86,7 +87,7 @@
     const endY = y(values[values.length - 1]);
     svg.appendChild(svgNode('circle', { cx: endX, cy: endY, r: 5, fill: '#F7F8F5', stroke: '#E8A11A', 'stroke-width': 3 }));
 
-    const axis = svgNode('g', { fill: '#AEB8C4', 'font-family': 'Inter, sans-serif', 'font-size': 10 });
+    const axis = svgNode('g', { fill: '#AEB8C4', 'font-family': 'Inter, sans-serif', 'font-size': 12 });
     const xLabel = svgNode('text', { x: margin.left + innerWidth / 2, y: height - 8, 'text-anchor': 'middle' });
     xLabel.textContent = 'time';
     const yLabel = svgNode('text', { x: 12, y: margin.top + innerHeight / 2, transform: `rotate(-90 12 ${margin.top + innerHeight / 2})`, 'text-anchor': 'middle' });
@@ -119,7 +120,11 @@
         params: { r: rate, K: capacity }
       }, (_time, state, params) => [params.r * state[0] * (1 - state[0] / params.K)]);
       if (!result.ok || !result.Y[0].every(Number.isFinite)) throw new Error('The experiment did not produce a finite trajectory.');
+      lastRun={result,capacity};
+      byId('v76HomePlot').dataset.stale='false';
       renderPlot(byId('v76HomePlot'), result, capacity);
+      const summary=`From x(0)=${initial} to x(14)=${result.Y[0].at(-1).toPrecision(6)}; carrying capacity K=${capacity}. Time and state units are unspecified. This is an illustrative model, not a fit to observations.`;
+      byId('v77HomeSummary').textContent=summary;byId('v76HomePlot').setAttribute('aria-label',summary);
       byId('v76HomeAccepted').textContent = String(result.diagnostics.accepted);
       byId('v76HomeRejected').textContent = String(result.diagnostics.rejected);
       byId('v76HomeFinal').textContent = result.Y[0].at(-1).toFixed(3);
@@ -138,12 +143,12 @@
     ['v76HomeRate', 'v76HomeCapacity', 'v76HomeInitial'].forEach(id => {
       byId(id).addEventListener('input', () => {
         byId('v76HomeStatus').textContent = 'Inputs changed · run required';
-        byId('v76HomePlot').dataset.stale = 'true';
+        byId('v76HomePlot').dataset.stale = 'true';lastRun=null;byId('v76HomePlot').replaceChildren();byId('v77HomeSummary').textContent='Inputs changed. Run again to compute values for these inputs.';byId('v76HomePlot').setAttribute('aria-label','No current result. Inputs changed; run the example again.');['v76HomeAccepted','v76HomeRejected','v76HomeFinal'].forEach(key=>byId(key).textContent='—');
       });
     });
-    root.setTimeout(run, 0);
+    byId('v76HomeStatus').textContent='Ready · select Run example';
     root.addEventListener('resize', () => {
-      if (byId('v76HomePlot')?.dataset.renderState === 'rendered') run();
+      if (lastRun && byId('v76HomePlot')?.dataset.stale !== 'true') renderPlot(byId('v76HomePlot'),lastRun.result,lastRun.capacity);
     }, { passive: true });
   }
 

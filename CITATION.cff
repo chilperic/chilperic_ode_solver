@@ -7,8 +7,8 @@ authors:
     given-names: "Chilperic Armel"
 repository-code: "https://github.com/chilperic/FokoLab"
 url: "https://chilperic.github.io/FokoLab/"
-version: "72.29.0"
-date-released: "2026-07-13"
+version: "78.2.0"
+date-released: "2026-09-20"
 keywords:
   - mechanistic modeling
   - computational biology

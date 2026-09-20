@@ -20,6 +20,7 @@
   });
 
   function finite(value, label) {
+    if (value == null || typeof value === 'boolean' || typeof value === 'object' || (typeof value === 'string' && !value.trim())) throw new Error(`${label} must be numeric, not blank or null.`);
     const number = Number(value);
     if (!Number.isFinite(number)) throw new Error(`${label} must be finite.`);
     return number;
@@ -309,11 +310,33 @@
     if (doc.getElementsByTagName('parsererror').length) throw new Error('SBML/XML is not well formed.');
     const sbml = doc.getElementsByTagName('sbml')[0];
     if (!sbml) throw new Error('The XML document is not an SBML model.');
-    const forbidden = ['event', 'assignmentRule', 'rateRule', 'algebraicRule', 'initialAssignment', 'functionDefinition', 'constraint', 'delay', 'piecewise'];
+    const forbidden = ['event', 'assignmentRule', 'rateRule', 'algebraicRule', 'initialAssignment', 'functionDefinition', 'constraint', 'delay', 'piecewise', 'stoichiometryMath', 'unitDefinition', 'csymbol'];
     const found = forbidden.filter(tag => doc.getElementsByTagName(tag).length);
     if (found.length) throw new Error(`SBML features outside the validated browser subset: ${found.join(', ')}. No partial model was imported.`);
     const packages = Array.from(sbml.attributes || []).filter(attr => /^xmlns:/.test(attr.name) && !/(math|xhtml)/i.test(attr.name));
     if (packages.length) throw new Error(`SBML Level 3 packages are not supported (${packages.map(attr => attr.name.replace('xmlns:', '')).join(', ')}). No package semantics were discarded.`);
+    const level = sbml.getAttribute('level');
+    if (!['2','3'].includes(level)) throw new Error('Only the declared SBML Level 2 or Level 3 reaction subset is supported.');
+    const coreTags = new Set(['sbml','model','listOfCompartments','compartment','listOfSpecies','species','listOfParameters','parameter','listOfReactions','reaction','listOfReactants','listOfProducts','listOfModifiers','modifierSpeciesReference','speciesReference','kineticLaw','listOfLocalParameters','localParameter','notes','annotation']);
+    const mathNS = 'http://www.w3.org/1998/Math/MathML';
+    for (const node of Array.from(doc.getElementsByTagName('*'))) {
+      // Notes/annotations carry metadata, never executable equations.
+      let metadata = false;
+      for (let parent=node; parent; parent=parent.parentElement) if (['notes','annotation'].includes(parent.localName)) metadata=true;
+      if (metadata) continue;
+      if (node.namespaceURI !== mathNS && !coreTags.has(node.localName)) throw new Error(`SBML element ${node.nodeName} is outside the supported reaction subset. No partial model was imported.`);
+      for (const attr of Array.from(node.attributes || [])) {
+        if (attr.localName === 'conversionFactor') throw new Error('SBML conversionFactor is not supported. No conversion semantics were discarded.');
+        if (['units','substanceUnits','timeUnits','volumeUnits','areaUnits','lengthUnits','extentUnits','spatialSizeUnits'].includes(attr.localName)) throw new Error(`SBML unit attribute ${attr.name} is not supported. Convert and check units before import.`);
+      }
+    }
+    function xmlBoolean(node, key, fallback=false) {
+      const value=node.getAttribute(key);
+      if (value == null || value === '') return fallback;
+      if (value === 'true' || value === '1') return true;
+      if (value === 'false' || value === '0') return false;
+      throw new Error(`Invalid XML boolean ${key}=${value}.`);
+    }
     const parameters = {};
     Array.from(doc.getElementsByTagName('compartment')).forEach(node => {
       const id = cleanId(node.getAttribute('id'));
@@ -328,7 +351,7 @@
     });
     const speciesNodes = Array.from(doc.getElementsByTagName('species'));
     if (!speciesNodes.length) throw new Error('SBML contains no species.');
-    const dynamic = speciesNodes.filter(node => node.getAttribute('boundaryCondition') !== 'true' && node.getAttribute('constant') !== 'true');
+    const dynamic = speciesNodes.filter(node => !xmlBoolean(node, 'boundaryCondition') && !xmlBoolean(node, 'constant'));
     const vars = dynamic.map(node => identifier(cleanId(node.getAttribute('id') || node.getAttribute('name')), 'SBML species'));
     if (new Set(vars).size !== vars.length) throw new Error('SBML species identifiers are not unique after safe normalization.');
     const y0 = dynamic.map(node => finite(node.getAttribute('initialConcentration') ?? node.getAttribute('initialAmount') ?? 0, `Initial value for ${node.getAttribute('id')}`));
@@ -358,8 +381,9 @@
         const list = reaction.getElementsByTagName(listName)[0];
         Array.from(list ? list.getElementsByTagName('speciesReference') : []).forEach(function (reference) {
           const id = cleanId(reference.getAttribute('species'));
-          if (!varSet.has(id)) return;
+          if (!varSet.has(id)) { if (!Object.prototype.hasOwnProperty.call(parameters,id)) throw new Error(`Reaction ${reactionId} references unknown species ${id}.`); return; }
           const coefficient = finite(reference.getAttribute('stoichiometry') || 1, `Stoichiometry for ${reactionId}/${id}`) * sign;
+          if (!Number.isFinite(coefficient) || coefficient * sign < 0) throw new Error(`Invalid stoichiometry in reaction ${reactionId}.`);
           equations[id] = `(${equations[id]}) ${coefficient < 0 ? '-' : '+'} (${Math.abs(coefficient)})*(${rate})`;
         });
       });

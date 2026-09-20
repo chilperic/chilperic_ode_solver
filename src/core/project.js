@@ -8,8 +8,8 @@
   const SCHEMA = 'foko.project/1';
   const IDENT = /^[A-Za-z_][A-Za-z0-9_]*$/;
   const clone = value => JSON.parse(JSON.stringify(value));
-  function finite(value, label) { const number = Number(value); if (!Number.isFinite(number)) throw new Error(`${label} must be finite.`); return number; }
-  function identifier(value, label) { const text = String(value || '').trim(); if (!IDENT.test(text)) throw new Error(`${label} must be a valid identifier.`); return text; }
+  function finite(value, label) { if (value == null || typeof value === 'boolean' || typeof value === 'object' || (typeof value === 'string' && !value.trim())) throw new Error(`${label} must be a finite number, not blank or null.`); const number = Number(value); if (!Number.isFinite(number)) throw new Error(`${label} must be finite.`); return number; }
+  function identifier(value, label) { const text = String(value || '').trim(); if (!IDENT.test(text) || ['__proto__','constructor','prototype'].includes(text)) throw new Error(`${label} must be a valid identifier.`); return text; }
   function parameter(value, name) {
     const row = Array.isArray(value) ? value : [value && value.value, value && value.min, value && value.max];
     const nominal = finite(row[0], `${name} value`), minimum = finite(row[1] == null ? nominal : row[1], `${name} minimum`), maximum = finite(row[2] == null ? nominal : row[2], `${name} maximum`);
@@ -17,7 +17,7 @@
     return [nominal, minimum, maximum];
   }
   function normalizeModel(raw) {
-    const input = clone(raw || {});
+    const input = raw || {};
     const vars = (input.vars || []).map((value, index) => identifier(value, `State ${index + 1}`));
     if (!vars.length) throw new Error('A model needs at least one state.');
     if (new Set(vars).size !== vars.length) throw new Error('State identifiers must be unique.');
@@ -33,12 +33,38 @@
     if (t0 === t1) throw new Error('Start and end time must differ.');
     const points = Math.floor(finite(input.points == null ? 500 : input.points, 'Output points'));
     if (points < 20 || points > 20000) throw new Error('Output points must be between 20 and 20,000.');
+    const rtol = finite(input.rtol === undefined ? 1e-6 : input.rtol, 'Relative tolerance');
+    const atol = finite(input.atol === undefined ? 1e-9 : input.atol, 'Absolute tolerance');
+    if (rtol <= 0 || atol <= 0) throw new Error('Tolerances must be greater than zero.');
+    for (const key of ['maxStep', 'initialStep']) {
+      if (input[key] != null && input[key] !== '' && input[key] !== 'auto' && finite(input[key], key) <= 0) throw new Error(`${key} must be greater than zero or auto.`);
+    }
+    const annotations = {};
+    if (input.stateLabels !== undefined) annotations.stateLabels = Object.fromEntries(vars.map(id => [id, String(input.stateLabels?.[id] || id)]));
+    if (input.parameterMeta !== undefined) annotations.parameterMeta = Object.fromEntries(Object.keys(params).map(id => [id, {
+      label: String(input.parameterMeta?.[id]?.label || id), unit: String(input.parameterMeta?.[id]?.unit || 'unspecified'),
+      source: String(input.parameterMeta?.[id]?.source || '')
+    }]));
+    if (input.observables !== undefined) {
+      if (!Array.isArray(input.observables) || input.observables.length > 20) throw new Error('Declare at most 20 observation operators.');
+      const used = new Set(vars.concat(Object.keys(params), ['t','pi','e','sin','cos','tan','exp','log','sqrt','abs','min','max','pow','floor','ceil','round','asin','acos','atan']));
+      annotations.observables = input.observables.map((o, i) => {
+        const id = identifier(o?.id, `Observable ${i + 1}`);
+        if (used.has(id)) throw new Error(`Observable ${id} conflicts with an existing symbol. Use a distinct measurement name.`);
+        used.add(id);
+        const expression = String(o.expression ?? '').trim();
+        if (!expression || expression.length > 5000) throw new Error(`Observable ${id} needs an expression under 5,000 characters.`);
+        return { id, expression, label: String(o.label || id), unit: String(o.unit || 'unspecified'), source: String(o.source || '') };
+      });
+    }
     return {
+      ...annotations,
       name: String(input.name || 'Untitled ODE model').trim() || 'Untitled ODE model',
       kind: 'ode', vars, eqs, y0, params, t0, t1, points,
+      timeUnit: String(input.timeUnit || 'unspecified'),
+      units: Object.fromEntries(vars.map(name => [name, String(input.units && input.units[name] || '')])),
       method: String(input.method || 'rk45').toLowerCase(),
-      rtol: finite(input.rtol == null ? 1e-6 : input.rtol, 'Relative tolerance'),
-      atol: finite(input.atol == null ? 1e-9 : input.atol, 'Absolute tolerance'),
+      rtol, atol,
       maxStep: input.maxStep == null || input.maxStep === '' || input.maxStep === 'auto' ? 'auto' : finite(input.maxStep, 'Maximum step'),
       initialStep: input.initialStep == null || input.initialStep === '' || input.initialStep === 'auto' ? 'auto' : finite(input.initialStep, 'Initial step'),
       description: String(input.description || input.narrative || ''),
@@ -70,18 +96,40 @@
   function toModelIR(projectLike) {
     const project = normalize(projectLike), model = project.model;
     const equations = {}; model.vars.forEach((name, index) => { equations[name] = model.eqs[index]; });
-    return { schema: 'foko.model-ir/1', kind: 'direct-ode', name: model.name, description: model.description, states: model.vars.map((id, index) => ({ id, initial: model.y0[index] })), parameters: clone(model.params), equations, time: { start: model.t0, end: model.t1, points: model.points }, method: model.method };
+    return { schema: 'foko.model-ir/1', kind: 'direct-ode', name: model.name, description: model.description, states: model.vars.map((id, index) => ({ id, initial: model.y0[index] })), parameters: clone(model.params), equations, time: { start: model.t0, end: model.t1, points: model.points }, method: model.method, fokoExperiment: { schema: 'foko.experiment/1', settings: { rtol:model.rtol, atol:model.atol, maxStep:model.maxStep, initialStep:model.initialStep, outputVar:model.outputVar, outputMetric:model.outputMetric, question:model.question, assumptions:clone(model.assumptions),timeUnit:model.timeUnit,units:clone(model.units), ...(model.observables ? {observables:clone(model.observables)} : {}), ...(model.parameterMeta ? {parameterMeta:clone(model.parameterMeta)} : {}), ...(model.stateLabels ? {stateLabels:clone(model.stateLabels)} : {}) }, notice: 'Foko extension: other Model IR consumers may ignore experiment settings. Use Project JSON for complete run history.' } };
   }
   function fromModelIR(ir, lowerer) {
     if (!lowerer || typeof lowerer.lower !== 'function') throw new Error('A Foko Model IR lowerer is required.');
     const lowered = lowerer.lower(ir);
-    return create({ name: lowered.model.name || ir.name, description: lowered.model.narrative || ir.description, model: lowered.model });
+    const ext = ir.fokoExperiment;
+    if (ext && ext.schema !== 'foko.experiment/1') throw new Error('Unsupported Foko experiment extension. No settings were discarded.');
+    const settings = {};
+    if (ext && ext.settings) ['rtol','atol','maxStep','initialStep','outputVar','outputMetric','question','assumptions','timeUnit','units','observables','parameterMeta','stateLabels'].forEach(key => { if (Object.prototype.hasOwnProperty.call(ext.settings,key)) settings[key] = ext.settings[key]; });
+    return create({ name: lowered.model.name || ir.name, description: lowered.model.narrative || ir.description, model: Object.assign({},lowered.model,settings) });
+  }
+  function canonical(value) {
+    if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
+    if (value && typeof value === 'object') return '{' + Object.keys(value).sort().map(key => JSON.stringify(key) + ':' + canonical(value[key])).join(',') + '}';
+    return JSON.stringify(value);
+  }
+  // A deterministic, explicitly non-cryptographic identity. Never an integrity/security proof.
+  function fingerprint(value) {
+    let hash = 0xcbf29ce484222325n;
+    for (const byte of new TextEncoder().encode(canonical(value))) { hash ^= BigInt(byte); hash = BigInt.asUintN(64, hash * 0x100000001b3n); }
+    return 'fnv1a64:' + hash.toString(16).padStart(16, '0');
   }
   function appendRun(projectLike, run) {
     const project = normalize(projectLike);
-    project.runs.push(Object.assign({ id: `run-${project.runs.length + 1}`, createdAt: new Date().toISOString() }, clone(run || {})));
+    const snapshot = { schema:'foko.experiment/1', model:clone(project.model), experiment:clone(run && run.configuration || {}) };
+    const record = Object.assign({ id: `run-${project.runs.length + 1}`, createdAt: new Date().toISOString() }, clone(run || {}));
+    record.snapshot = snapshot;
+    record.configurationFingerprint = fingerprint(snapshot);
+    record.fingerprintPolicy = 'Non-cryptographic identity; replay uses the full immutable snapshot.';
+    record.engine = 'FokoODECore';
+    record.release = '78.2.0';
+    project.runs.push(record);
     project.updatedAt = new Date().toISOString();
     return project;
   }
-  return Object.freeze({ SCHEMA, create, normalize, normalizeModel, toModelIR, fromModelIR, appendRun });
+  return Object.freeze({ SCHEMA, create, normalize, normalizeModel, toModelIR, fromModelIR, appendRun, fingerprint, canonical });
 }));

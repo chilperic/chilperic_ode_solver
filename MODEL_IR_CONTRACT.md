@@ -36,3 +36,7 @@ before passing the result to the existing ODE validator and solver.
 ## Scope
 
 This contract is not SBML and does not claim semantic equivalence to SBML, CellML or Modelica. Events, algebraic rules, delays, units, compartments and DAEs are not represented in the current Model IR schema. Those require a larger standards and numerical audit.
+
+## v77.5.0 experiment envelope
+
+`foko.model-ir/1` exports from Studio may include `fokoExperiment` with schema `foko.experiment/1`, the experiment definition and selected solver/unit/question/assumption fields. FokoLab's importer round-trips that extension; unrelated tools may ignore it. Plain model interchange is not equivalent to a full experiment archive. Full Project JSON stores per-run snapshots. Units are descriptive only.

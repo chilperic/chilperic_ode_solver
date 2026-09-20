@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Foko Lab State Observatory mark</title>
-  <desc id="desc">Three scientific model layers linked by one highlighted state axis: dynamics, inference, and discrete populations.</desc>
-  <path d="M64 8 113 34 64 60 15 34Z" fill="#243C86" fill-opacity=".08" stroke="#243C86" stroke-width="5" stroke-linejoin="round"/>
-  <path d="M25 35C36 27 45 31 54 25C64 18 70 27 79 21C88 16 98 25 106 30" fill="none" stroke="#654DA6" stroke-width="3" stroke-linecap="round"/>
-  <path d="M27 42C39 34 47 38 56 32C65 27 72 34 81 29C90 24 98 32 104 35" fill="none" stroke="#009B89" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M64 42 106 64 64 86 22 64Z" fill="#FFFFFF" fill-opacity=".92" stroke="#654DA6" stroke-width="4.5" stroke-linejoin="round"/>
-  <path d="M36 64C45 56 55 56 64 60C73 56 83 56 92 64C83 72 73 72 64 68C55 72 45 72 36 64Z" fill="#654DA6" fill-opacity=".10" stroke="#2B6FA8" stroke-width="2.4"/>
-  <path d="M64 72 99 91 64 110 29 91Z" fill="#17232D" stroke="#17232D" stroke-width="4.5" stroke-linejoin="round"/>
-  <path d="M41 85 76 104M52 79 87 98M41 97 76 78M52 103 87 84" fill="none" stroke="#7E93B4" stroke-width="1.6" opacity=".92"/>
-  <path d="M64 21V104" stroke="#D17B2F" stroke-width="4.5" stroke-linecap="round"/>
-  <path d="M64 27 71 34 64 41 57 34ZM64 57 71 64 64 71 57 64ZM64 84 71 91 64 98 57 91Z" fill="#F0AD3D" stroke="#FFF8ED" stroke-width="2"/>
-  <path d="M64 91C56 87 51 82 48 76M64 91C72 87 77 82 80 76" fill="none" stroke="#5E9A68" stroke-width="2.5" stroke-linecap="round"/>
-  <circle cx="48" cy="76" r="2.8" fill="#5E9A68"/><circle cx="80" cy="76" r="2.8" fill="#5E9A68"/>
-</svg>
+<svg role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><title id="title">FokoLab</title><desc id="desc">An F-shaped model path in ink blue, with a copper branch and observed endpoint.</desc><path d="M14 51V16a5 5 0 0 1 5-5h31" fill="none" stroke="#1f4557" stroke-width="8" stroke-linecap="round"/><path d="M14 51c0-14 9-23 24-23h6" fill="none" stroke="#a44b31" stroke-width="8" stroke-linecap="round"/><circle cx="49" cy="28" r="5" fill="#a44b31"/></svg>

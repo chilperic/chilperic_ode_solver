@@ -37,7 +37,10 @@
   });
 
   const LAB_IDENTITIES = Object.freeze({
-    home: ['platform', 'Workspace'],
+    home: ['platform', 'Overview'],
+    workspace: ['model-engineering', 'Connected experiment'],
+    learn: ['resources', 'Learn & practice'],
+    library: ['resources', 'Model library'],
     studio: ['model-engineering', 'Model Studio'],
     workbench: ['model-engineering', 'Workbench'],
     ode: ['dynamical-systems', 'ODE Lab'],
@@ -103,16 +106,7 @@
 
   function adaptiveBrandMarkup() {
     const identity = currentIdentity();
-    return `<span class="foko-brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" focusable="false">
-      <path d="M32 4 57 17 32 30 7 17Z" class="foko-brand-observe-top"/>
-      <path d="M12 18C18 14 23 16 28 13C33 9 36 14 41 11C46 8 51 13 55 15" class="foko-brand-manifold"/>
-      <path d="M32 21 53 32 32 43 11 32Z" class="foko-brand-observe-mid"/>
-      <path d="M18 32C23 28 28 28 32 30C36 28 41 28 46 32C41 36 36 36 32 34C28 36 23 36 18 32Z" class="foko-brand-inference"/>
-      <path d="M32 36 50 46 32 56 14 46Z" class="foko-brand-observe-bottom"/>
-      <path d="M20 43 38 53M26 40 44 50M20 49 38 39M26 52 44 42" class="foko-brand-lattice"/>
-      <path d="M32 11V53" class="foko-brand-state-axis"/>
-      <path d="M32 14 36 18 32 22 28 18ZM32 28 36 32 32 36 28 32ZM32 42 36 46 32 50 28 46Z" class="foko-brand-state"/>
-    </svg></span><span class="foko-brand-copy"><span class="foko-brand-name">Foko <b>Lab</b></span><span class="foko-brand-context"><span>${identity.subjectLabel}</span><i></i><em>${identity.labLabel}</em></span></span>`;
+    return `<span class="foko-brand-mark" aria-hidden="true"><img src="${route('assets/brand/foko-lab-micro.svg')}" width="38" height="38" alt=""></span><span class="foko-brand-copy"><span class="foko-brand-name">Foko <b>Lab</b></span><span class="foko-brand-context"><span>${identity.subjectLabel}</span><i></i><em>${identity.labLabel}</em></span></span>`;
   }
 
   const GROUPS = {
@@ -179,9 +173,12 @@
         {
           title: 'Model project',
           items: [
+            ['→', 'Connected experiment', 'One model: simulate, fit, test robustness and compare learned approximations.', 'workspace.html?resume=last'],
+            ['+', 'Create a connected model', 'Start an empty, reproducible experiment.', 'workspace.html?new=1'],
+            ['▤', 'Model library', 'Four research paths, the full catalogue and every specialist lab.', 'library.html'],
             ['+', 'New model', 'Create an editable model from an empty project.', 'studio.html?new=1'],
             ['↗', 'Open Model Studio', 'Continue editing model and experiment settings.', 'studio.html'],
-            ['▦', 'Start from template', 'Load a validated model as an editable project.', 'examples.html'],
+            ['▦', 'Start from template', 'Open a documented example; inspect its assumptions before use.', 'examples.html'],
             ['⇩', 'Import model', 'Open Model Studio and import TXT/ODE, JSON, a data-only dictionary, YAML, CSV or the validated SBML subset.', 'studio.html#import']
           ]
         }
@@ -194,6 +191,8 @@
         {
           title: 'Help and provenance',
           items: [
+            ['↗', 'Career programme', 'Book chapters, evidence gates and research transfer.', 'programme.html'],
+            ['▤', 'Learn & practice', 'Worked scientific-ML lessons, exercises and runnable investigations.', 'learn.html'],
             ['?', 'Documentation', 'Inputs, outputs, diagnostics and boundaries.', 'docs.html'],
             ['✓', 'Trust and validation', 'Capability matrix, tests and limitations.', 'trust.html'],
             ['⌁', 'Research', 'Scientific projects behind the platform.', 'research.html'],
@@ -205,7 +204,7 @@
           items: [
             ['▣', 'Modeling guides', 'Failure-driven workflows for modelers.', 'tutorial.html'],
             ['∞', 'Mathematical beauty', 'Interactive mathematical structures.', 'beauty.html'],
-            ['GH', 'Source repository', 'Inspect the public Foko Lab source.', 'https://github.com/chilperic/FokoLab']
+            ['GH', 'Source repository', 'Inspect the public Foko Lab source.', 'https://github.com/chilperic/chilperic_ode_solver']
           ]
         }
       ]
@@ -275,7 +274,7 @@
   function itemMarkup(item) {
     const [icon, label, note, href] = item;
     const external = /^https?:/i.test(href);
-    return `<a href="${route(href)}"${external ? ' target="_blank" rel="noopener"' : ''} role="menuitem"${identityAttributes(href)}><span class="v76-popover-icon">${icon}</span><span><b>${label}</b><small>${note}</small></span></a>`;
+    return `<a href="${route(href)}"${external ? ' target="_blank" rel="noopener"' : ''}${identityAttributes(href)}><span class="v76-popover-icon">${icon}</span><span><b>${label}</b><small>${note}</small></span></a>`;
   }
 
   function popoverMarkup(key, group) {
@@ -293,19 +292,19 @@
       </a>
       <nav class="v76-primary-nav" aria-label="Primary navigation">
         <a class="v76-nav-link" href="${route('index.html')}"${active === 'home' ? ' aria-current="page"' : ''}>Home</a>
-        <a class="v76-nav-link" href="${route('studio.html')}"${active === 'model' ? ' aria-current="page"' : ''}>Model Studio</a>
+        <a class="v76-nav-link" href="${route('workspace.html?resume=last')}">Workspace</a>
         <button class="v76-nav-trigger" type="button" data-v76-trigger="experiment" aria-expanded="false" aria-controls="v76-experiment-menu"${active === 'experiment' ? ' data-active="true"' : ''}>Simulate ${chevron}</button>
         <button class="v76-nav-trigger" type="button" data-v76-trigger="analyze" aria-expanded="false" aria-controls="v76-analyze-menu"${active === 'analyze' ? ' data-active="true"' : ''}>Analyze ${chevron}</button>
-        <a class="v76-nav-link" href="${route('examples.html')}"${active === 'atlas' ? ' aria-current="page"' : ''}>Atlas</a>
-        <a class="v76-nav-link" href="${route('workbench.html')}"${active === 'evidence' ? ' aria-current="page"' : ''}>Evidence</a>
+        <a class="v76-nav-link" href="${route('library.html')}"${active === 'atlas' ? ' aria-current="page"' : ''}>Library</a>
+        <a class="v76-nav-link" href="${route('learn.html')}">Learn</a>
       </nav>
       <div class="v76-app-actions">
-        <button class="v76-command" type="button" data-v76-command aria-label="Find a model or method"><span aria-hidden="true">⌘</span> Find</button>
-        <button class="v76-run-action" type="button" data-v76-run>Run</button>
-        <button class="v76-profile" type="button" data-v76-trigger="profile" aria-expanded="false" aria-label="Open creator, help and trust menu">
-          <img src="${route('assets/profile-chilperic.webp')}" alt="Creator profile"/>
+        <button class="v76-command" type="button" data-v76-command aria-label="Search models, labs and help"><span aria-hidden="true">⌕</span> Find</button>
+        <button class="v76-run-action" type="button" data-v76-run>${doc.body.dataset.v72Shell === 'true' ? 'Run' : 'Open Studio'}</button>
+        <button class="v76-profile" type="button" data-v76-trigger="profile" aria-expanded="false" aria-label="Help, appearance and creator" aria-controls="v76-profile-menu">
+          <img src="${route('assets/profile-chilperic.webp')}" alt=""/>
         </button>
-        <button class="v76-mobile-trigger" type="button" data-v76-mobile-open aria-label="Open navigation">${icons.menu}</button>
+        <button class="v76-mobile-trigger" type="button" data-v76-mobile-open aria-expanded="false" aria-controls="v76MobileSheet" aria-label="Open navigation">${icons.menu}</button>
       </div>`;
   }
 
@@ -316,7 +315,7 @@
       ['Analysis', GROUPS.analyze.sections.flatMap(section => section.items)],
       ['Help and provenance', GROUPS.profile.sections.flatMap(section => section.items)]
     ];
-    return `<section class="v76-mobile-sheet" data-v76-mobile-sheet data-open="false" aria-label="Foko Lab navigation" aria-hidden="true">
+    return `<section class="v76-mobile-sheet" id="v76MobileSheet" role="dialog" aria-modal="true" tabindex="-1" data-v76-mobile-sheet data-open="false" aria-label="Foko Lab navigation" aria-hidden="true">
       <header class="v76-mobile-sheet-head"><a class="v76-brand" href="${route('index.html')}" aria-label="Foko Lab home">${adaptiveBrandMarkup()}</a><button class="v76-mobile-close" data-v76-mobile-close type="button" aria-label="Close navigation">×</button></header>
       <div class="v76-mobile-sheet-body">
         <a class="v76-mobile-home" href="${route('index.html')}">${icons.home}<span>Home</span></a>
@@ -324,23 +323,26 @@
         ${navSections.map(([title, items]) => `<section class="v76-mobile-nav-section"><h2>${title}</h2><nav>${items.map(item => `<a href="${route(item[3])}"${identityAttributes(item[3])}>${item[1]}</a>`).join('')}</nav></section>`).join('')}
       </div>
     </section>
-    <nav class="v76-bottom-nav" aria-label="Mobile primary navigation">
-      <a href="${route('index.html')}"${activeFamily() === 'home' ? ' aria-current="page"' : ''}>${icons.home}<span>Home</span></a>
+    ${doc.body.dataset.v72Shell === 'true' ? '' : `<nav class="v76-bottom-nav v77-public-bottom" aria-label="Mobile primary navigation">
+      <a href="${route('index.html')}">${icons.home}<span>Home</span></a>
       <a href="${route('studio.html')}">${icons.model}<span>Model</span></a>
-      <button type="button" data-v76-mobile-open>${icons.experiment}<span>Experiment</span></button>
-      <button class="v76-bottom-run" type="button" data-v76-run>${icons.experiment}<span>Run</span></button>
-      <a href="${route('workbench.html')}">${icons.evidence}<span>Evidence</span></a>
-    </nav>`;
+      <button type="button" data-v76-command>${icons.menu}<span>Find</span></button>
+      <a href="${route('docs.html#quick-start')}">${icons.evidence}<span>Help</span></a>
+    </nav>`}`;
   }
 
+  function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   function commandMarkup() {
     const entries = Object.values(GROUPS).flatMap(group => group.sections.flatMap(section => section.items));
-    const unique = new Map(entries.map(item => [item[3], item]));
-    return `<section class="v76-command-dialog" data-v76-command-dialog hidden aria-label="Find models and methods">
+    for(const item of root.FokoSearchIndex||[])entries.push(['∿',item.title,item.note,item.href,item.search]);
+    const unique=new Map(entries.map(item=>[item[3],item]));
+    return `<section class="v76-command-dialog" data-v76-command-dialog hidden aria-label="Search models and methods">
       <button class="v76-command-backdrop" type="button" data-v76-command-close tabindex="-1" aria-label="Close search"></button>
-      <div class="v76-command-panel" role="dialog" aria-modal="true" aria-labelledby="v76CommandTitle">
-        <div class="v76-command-search"><span aria-hidden="true">⌕</span><label class="sr-only" for="v76CommandInput" id="v76CommandTitle">Find a model or method</label><input id="v76CommandInput" data-v76-command-input type="search" placeholder="Find a model, experiment or analysis…" autocomplete="off"/><button class="v76-command-close-button" type="button" data-v76-command-close aria-label="Close search">Esc ×</button></div>
-        <div class="v76-command-results" data-v76-command-results>${Array.from(unique.values()).map(item => `<a href="${route(item[3])}" data-command-text="${(item[1] + ' ' + item[2]).toLowerCase()}"${identityAttributes(item[3])}><span class="v76-popover-icon">${item[0]}</span><span><b>${item[1]}</b><small>${item[2]}</small></span></a>`).join('')}</div>
+      <div class="v76-command-panel" role="dialog" aria-modal="true" aria-labelledby="v76CommandTitle" tabindex="-1">
+        <div class="v76-command-search"><span aria-hidden="true">⌕</span><label class="sr-only" for="v76CommandInput" id="v76CommandTitle">Search models, labs and help</label><input id="v76CommandInput" data-v76-command-input type="search" placeholder="Try logistic growth, fatty acids, or sensitivity…" autocomplete="off"/><button class="v76-command-close-button" type="button" data-v76-command-close aria-label="Close search">Close ×</button></div>
+        <p class="v77-search-summary" id="v77SearchSummary" role="status">Search by model name, scientific topic, or method.</p>
+        <p class="v77-search-empty" data-command-empty hidden>No matching models or methods. Try a broader term, or open Documentation from Help.</p>
+        <div class="v76-command-results" data-v76-command-results>${Array.from(unique.values()).map(item=>`<a href="${escapeHtml(route(item[3]))}" data-command-text="${escapeHtml((item[1]+' '+item[2]+' '+(item[4]||'')).toLowerCase())}"${identityAttributes(item[3])}><span class="v76-popover-icon" aria-hidden="true">${item[0]}</span><span><b>${escapeHtml(item[1])}</b><small>${escapeHtml(item[2])}</small></span></a>`).join('')}</div>
       </div>
     </section>`;
   }
@@ -408,27 +410,62 @@
     root.location.href = route('studio.html');
   }
 
-  function setMobile(open) {
-    const sheet = doc.querySelector('[data-v76-mobile-sheet]');
-    if (!sheet) return;
-    sheet.dataset.open = open ? 'true' : 'false';
-    sheet.setAttribute('aria-hidden', open ? 'false' : 'true');
-    doc.body.dataset.v76MenuOpen = open ? 'true' : 'false';
-    if (open) sheet.querySelector('[data-v76-mobile-close]').focus();
+  let modal=null;
+  function endModal(restore=true){
+    if(!modal)return;
+    const previous=modal;modal=null;
+    previous.inert.forEach(([node,wasInert])=>{node.inert=wasInert;});
+    if(restore&&previous.opener?.isConnected)previous.opener.focus();
+    doc.body.dataset.v76MenuOpen='false';
   }
-
-  function setCommand(open) {
-    const dialog = doc.querySelector('[data-v76-command-dialog]');
-    if (!dialog) return;
-    dialog.hidden = !open;
-    dialog.style.display = open ? '' : 'none';
-    doc.body.dataset.v76MenuOpen = open ? 'true' : 'false';
-    if (open) {
-      const input = dialog.querySelector('[data-v76-command-input]');
-      input.value = '';
-      dialog.querySelectorAll('[data-command-text]').forEach(node => { node.hidden = false; });
-      root.setTimeout(() => input.focus(), 0);
+  function beginModal(node,first){
+    if(modal?.node===node)return;
+    endModal(false);
+    const opener=doc.activeElement,inert=[];
+    for(let branch=node;branch&&branch!==doc.body;branch=branch.parentElement){
+      for(const sibling of branch.parentElement?.children||[]){
+        if(sibling===branch||['SCRIPT','STYLE','LINK'].includes(sibling.tagName))continue;
+        inert.push([sibling,sibling.inert]);sibling.inert=true;
+      }
     }
+    modal={node,opener,inert};doc.body.dataset.v76MenuOpen='true';(first||node).focus();
+  }
+  function modalFocusables(){return modal?Array.from(modal.node.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')).filter(node=>node.tabIndex>=0&&node.getClientRects().length&&!node.closest('[hidden],[inert]')):[];}
+  function setMobile(open) {
+    const sheet = doc.querySelector('[data-v76-mobile-sheet]');if(!sheet)return;
+    if(open){setCommand(false);closePopovers();}
+    const wasOpen=sheet.dataset.open==='true';
+    sheet.dataset.open=open?'true':'false';sheet.setAttribute('aria-hidden',String(!open));
+    doc.querySelectorAll('[data-v76-mobile-open]').forEach(button=>button.setAttribute('aria-expanded',String(open)));
+    if(open)beginModal(sheet,sheet.querySelector('[data-v76-mobile-close]'));else if(wasOpen&&modal?.node===sheet)endModal();
+  }
+  function setCommand(open) {
+    const dialog=doc.querySelector('[data-v76-command-dialog]');if(!dialog)return;
+    if(open){setMobile(false);closePopovers();}
+    const wasOpen=!dialog.hidden;
+    dialog.hidden=!open;
+    if(open){
+      const input=dialog.querySelector('[data-v76-command-input]');input.value='';
+      dialog.querySelectorAll('[data-command-text]').forEach(node=>{node.hidden=false;});
+      dialog.querySelector('[data-command-empty]').hidden=true;
+      doc.getElementById('v77SearchSummary').textContent='Search by model name, scientific topic, or method.';
+      beginModal(dialog,input);
+    }else if(wasOpen&&modal?.node===dialog)endModal();
+  }
+  function appearanceMarkup(){return '<div class="v77-appearance" role="group" aria-label="Appearance"><span>Appearance</span><button type="button" data-appearance="light">Light</button><button type="button" data-appearance="dark">Dark</button><button type="button" data-appearance="contrast">High contrast</button></div>';}
+  function setAppearance(value){
+    const mode=['light','dark','contrast'].includes(value)?value:'light';
+    doc.documentElement.dataset.appearance=mode;
+    doc.querySelectorAll('button[data-appearance]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.appearance===mode)));
+    root.FokoStorage?.local.setItem('fokolab:appearance',mode);
+    root.dispatchEvent(new CustomEvent('foko:appearance',{detail:{mode}}));root.dispatchEvent(new Event('resize'));
+  }
+  function adoptTaskNavigation(){
+    const bar=doc.querySelector('.v72-mobile-taskbar');if(!bar)return;
+    bar.classList.add('v76-bottom-nav');bar.setAttribute('aria-label','Current lab navigation');
+    const home=doc.createElement('a');home.href=route('index.html');home.innerHTML=icons.home+'<span>Home</span>';bar.prepend(home);
+    for(const button of bar.querySelectorAll('[data-mobile-panel-target]')){const label=button.textContent;button.innerHTML=(label==='Setup'?icons.model:icons.evidence)+'<span>'+label+'</span>';}
+    const run=doc.createElement('button');run.type='button';run.className='v76-bottom-run';run.dataset.v76Run='';run.innerHTML=icons.experiment+'<span>Run</span>';run.addEventListener('click',runActiveModel);bar.append(run);
   }
 
   function bind() {
@@ -441,19 +478,37 @@
     doc.querySelectorAll('[data-v76-run]').forEach(button => button.addEventListener('click', runActiveModel));
     doc.querySelectorAll('[data-v76-mobile-open]').forEach(button => button.addEventListener('click', () => setMobile(true)));
     doc.querySelector('[data-v76-mobile-close]')?.addEventListener('click', () => setMobile(false));
-    doc.querySelector('[data-v76-command]')?.addEventListener('click', () => setCommand(true));
+    doc.querySelectorAll('[data-v76-command]').forEach(button=>button.addEventListener('click', () => setCommand(true)));
+    doc.querySelectorAll('button[data-appearance]').forEach(button=>button.addEventListener('click',()=>setAppearance(button.dataset.appearance)));
     doc.querySelectorAll('[data-v76-command-close]').forEach(button => button.addEventListener('click', () => setCommand(false)));
     const commandInput = doc.querySelector('[data-v76-command-input]');
     commandInput?.addEventListener('input', () => {
       const query = commandInput.value.trim().toLowerCase();
+      let matches=0;
+      const terms=query.split(/\s+/).filter(Boolean);
       doc.querySelectorAll('[data-command-text]').forEach(node => {
-        node.hidden = query && !node.dataset.commandText.includes(query);
+        node.hidden = !terms.every(term=>node.dataset.commandText.includes(term));if(!node.hidden)matches+=1;
       });
+      doc.querySelector('[data-command-empty]').hidden=matches>0;doc.getElementById('v77SearchSummary').textContent=matches+' matching destinations';
     });
     doc.addEventListener('click', event => {
       if (!event.target.closest('.v76-popover') && !event.target.closest('[data-v76-trigger]')) closePopovers();
     });
+    doc.addEventListener('focusin',event=>{if(modal&&!modal.node.contains(event.target)){const targets=modalFocusables();(targets[0]||modal.node).focus();}});
     doc.addEventListener('keydown', event => {
+      if(modal&&event.key==='Tab'){
+        const targets=modalFocusables(),first=targets[0],last=targets.at(-1);
+        if(!first){event.preventDefault();modal.node.focus();}
+        else if(event.shiftKey&&(doc.activeElement===first||!modal.node.contains(doc.activeElement))){event.preventDefault();last.focus();}
+        else if(!event.shiftKey&&doc.activeElement===last){event.preventDefault();first.focus();}
+      }
+      const trigger=event.target.closest('[data-v76-trigger]');
+      if(trigger&&event.key==='ArrowDown'){event.preventDefault();if(trigger.getAttribute('aria-expanded')!=='true')togglePopover(trigger);popovers.get(trigger.dataset.v76Trigger)?.querySelector('a')?.focus();}
+      const menu=event.target.closest('.v76-popover');
+      if(menu&&['ArrowDown','ArrowUp','Home','End'].includes(event.key)){
+        const entries=Array.from(menu.querySelectorAll('a,button')),index=entries.indexOf(doc.activeElement);
+        event.preventDefault();entries[event.key==='Home'?0:event.key==='End'?entries.length-1:(index+(event.key==='ArrowDown'?1:-1)+entries.length)%entries.length]?.focus();
+      }
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         setCommand(true);
@@ -469,7 +524,7 @@
         const popover = popovers.get(openTrigger.dataset.v76Trigger);
         if (popover) positionPopover(openTrigger, popover);
       }
-      if (root.innerWidth > 780) setMobile(false);
+      if (root.innerWidth > 1100) setMobile(false);
     }, { passive: true });
     root.addEventListener('scroll', () => {
       if (openTrigger) {
@@ -516,7 +571,7 @@
         else if (root.Plotly?.Plots) { try { root.Plotly.Plots.resize(node); } catch (_) { /* geometry can still be settling */ } }
       });
     }
-    let width = clamp(localStorage.getItem(key) || defaultWidth), frame = 0;
+    let width = clamp(root.FokoStorage?.local.getItem(key) || defaultWidth), frame = 0;
     function apply(value, persist) {
       width = clamp(value);
       layout.style.setProperty('--v76-input-width', `${width}px`);
@@ -527,7 +582,7 @@
       toolbar.querySelector('[data-panel-width="min"]').setAttribute('aria-pressed', String(width === minimum));
       toolbar.querySelector('[data-panel-width="reset"]').setAttribute('aria-pressed', String(width === defaultWidth));
       toolbar.querySelector('[data-panel-width="max"]').setAttribute('aria-pressed', String(width === maximum));
-      if (persist) localStorage.setItem(key, String(width));
+      if (persist) root.FokoStorage?.local.setItem(key, String(width));
       if (frame) root.cancelAnimationFrame(frame);
       frame = root.requestAnimationFrame(notifyPlots);
     }
@@ -573,9 +628,17 @@
     root.FokoWorkspaceSizing = Object.freeze({ get width() { return width; }, set: value => apply(value, true), reset: () => apply(defaultWidth, true) });
   }
 
+  function prepareReadingNavigation(){
+    doc.querySelectorAll('.guide-toc,.guide-lab-links').forEach(node=>{
+      const disclosure=doc.createElement('details'),summary=doc.createElement('summary');
+      disclosure.className='v77-reading-navigation';summary.textContent=node.classList.contains('guide-toc')?'On this page':'Open a scientific workspace';
+      node.before(disclosure);disclosure.append(summary,node);
+      const media=root.matchMedia('(max-width: 900px)');disclosure.open=!media.matches;
+      media.addEventListener('change',()=>{disclosure.open=!media.matches;});
+    });
+  }
   function install() {
     if (doc.body.dataset.v76Ready === 'true') return;
-    doc.body.dataset.v76Ready = 'true';
     doc.body.dataset.v76Shell = 'true';
     const identity = currentIdentity();
     if (!doc.body.dataset.lab) doc.body.dataset.lab = identity.lab;
@@ -597,7 +660,7 @@
       const catalogue = doc.getElementById('catalogueBlock');
       if (controls && catalogue) controls.appendChild(catalogue);
       const catalogueTitle = catalogue?.querySelector('h2');
-      if (catalogueTitle) catalogueTitle.textContent = 'Validated model templates';
+      if (catalogueTitle) catalogueTitle.textContent = 'Editable example models';
       const loadTemplate = doc.getElementById('loadStudioPreset');
       if (loadTemplate) loadTemplate.textContent = 'Use as editable model';
     }
@@ -611,8 +674,14 @@
       popovers.set(node.dataset.v76Popover, node);
     });
 
+    portal.querySelector('[data-v76-popover="profile"]').insertAdjacentHTML('beforeend',appearanceMarkup());
+    portal.querySelector('.v76-mobile-sheet-body').insertAdjacentHTML('beforeend',appearanceMarkup());
     bind();
+    adoptTaskNavigation();
     installWorkspaceSizing();
+    setAppearance(root.FokoStorage?.local.getItem('fokolab:appearance')||'light');
+    prepareReadingNavigation();
+    doc.body.dataset.v76Ready = 'true';
     doc.dispatchEvent(new CustomEvent('foko:v76-shell-ready'));
   }
 

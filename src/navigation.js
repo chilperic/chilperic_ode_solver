@@ -162,7 +162,7 @@
     link.href = pathPrefix() + 'cv.html';
     link.setAttribute('aria-label', 'About the creator — Dr. Chilperic Armel Foko Kuate');
     link.title = 'About the creator';
-    link.innerHTML = '<img alt="Dr. Chilperic Armel Foko Kuate, creator of Foko Lab" decoding="async" src="' + pathPrefix() + 'assets/profile-chilperic.webp?v=77.4.1">';
+    link.innerHTML = '<img alt="Dr. Chilperic Armel Foko Kuate, creator of Foko Lab" decoding="async" src="' + pathPrefix() + 'assets/profile-chilperic.webp?v=78.2.0">';
     actions.appendChild(link);
   }
 

@@ -111,9 +111,9 @@
   function ensure(){
     if(promise)return promise;
     promise=(async function(){
-      await load('src/core/scipy-verification.js?v=77.4.1');
-      await load('src/core/model-report-card.js?v=77.4.1');
-      await load('src/v72/scipy-verifier.js?v=77.4.1');
+      await load('src/core/scipy-verification.js?v=78.2.0');
+      await load('src/core/model-report-card.js?v=78.2.0');
+      await load('src/v72/scipy-verifier.js?v=78.2.0');
       if(!root.FokoSciPyVerifier||!root.FokoModelReportCard)throw new Error('Optional trust modules did not initialize.');
       return {verifier:root.FokoSciPyVerifier,report:root.FokoModelReportCard};
     })().catch(function(error){promise=null;throw error;});

@@ -8,7 +8,7 @@
   const INPUT = root.FokoNumericalInputs;
   const CORE = root.FokoSensitivityCore;
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '77.4.1';
+  const RELEASE = '78.2.0';
   const STORAGE_KEY = 'fokolab:v72.44:sensitivity-config';
   if (!INPUT || !CORE || !PLOT) throw new Error('Sensitivity Lab requires FokoNumericalInputs, FokoSensitivityCore and FokoPlotLifecycle.');
 
@@ -338,7 +338,7 @@
     const analysis = analysisFromInputs(); const checkedAnalysis = INPUT.validateSensitivity(analysis);
     if (checkedAnalysis.capacity && checkedAnalysis.capacity.blocked) throw new Error(checkedAnalysis.capacity.message);
     state.runToken += 1; const token = state.runToken;
-    state.worker = new Worker('src/v72/sensitivity-worker.js?v=77.4.1'); syncRunAvailability();
+    state.worker = new Worker('src/v72/sensitivity-worker.js?v=78.2.0'); syncRunAvailability();
     $('sensitivityProgress').style.width = '4%'; setText('sensitivityStatus', `Starting about ${checkedAnalysis.expectedEvaluations.toLocaleString()} ODE solves in a worker…`);
     setText('sensitivityTopStatus', 'Running'); document.querySelector('.results-card')?.classList.add('stale-results');
     state.worker.onmessage = function (event) {

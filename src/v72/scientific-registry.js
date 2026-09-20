@@ -1,4 +1,4 @@
-/* Foko Lab v77.4.1 central scientific example and plot compatibility registry.
+/* Foko Lab v78.2.0 central scientific example and plot compatibility registry.
  *
  * Goals:
  * - one source of truth for example provenance and plot compatibility;

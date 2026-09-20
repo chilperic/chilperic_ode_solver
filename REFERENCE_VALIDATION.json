@@ -1,5 +1,5 @@
 {
-  "release": "77.4.1",
+  "release": "78.2.0",
   "libraries": {
     "numpy": "2.3.5",
     "scipy": "1.17.0",
@@ -67,7 +67,7 @@
       "status": "pass",
       "got": 1.6325378566106608e-05,
       "expected": 1.6325378566141695e-05,
-      "absoluteError": 3.508749280736214e-17,
+      "absoluteError": 3.508749280706214e-17,
       "tolerance": 0.0005
     },
     {
@@ -171,8 +171,8 @@
       "name": "Ridge coefficient 0",
       "status": "pass",
       "got": 1.2725903614457852,
-      "expected": 1.272590361445784,
-      "absoluteError": 1.1102230246251565e-15,
+      "expected": 1.2725903614457836,
+      "absoluteError": 1.5543122344752192e-15,
       "tolerance": 2e-09
     },
     {
@@ -187,8 +187,8 @@
       "name": "Ridge coefficient 2",
       "status": "pass",
       "got": -0.39088170865279187,
-      "expected": -0.390881708652793,
-      "absoluteError": 1.1102230246251565e-15,
+      "expected": -0.3908817086527928,
+      "absoluteError": 9.43689570931383e-16,
       "tolerance": 2e-09
     },
     {
@@ -204,7 +204,7 @@
       "status": "pass",
       "got": 0.0004673841324842416,
       "expected": 0.00046738413248428694,
-      "absoluteError": 4.5319650809994086e-17,
+      "absoluteError": 4.5319650809894085e-17,
       "tolerance": 2e-05
     },
     {

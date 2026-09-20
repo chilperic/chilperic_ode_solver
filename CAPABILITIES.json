@@ -1,5 +1,5 @@
 {
-  "release": "77.4.1",
+  "release": "78.2.0",
   "statusDefinitions": {
     "reference": "Uses the v72 authored shell and active release contracts.",
     "browser-computed": "The visible result is computed locally from the current input in browser code.",
@@ -53,8 +53,8 @@
         "self_contained_model_report_card": "browser-computed",
         "editable_initial_conditions_parameters_time_span_and_tolerances": "browser-computed",
         "numerical_settings_session_share_and_model_json_roundtrip": "browser-computed",
-        "stale_result_export_guard": "browser-computed"
-        ,"shared_strict_declarative_model_import": "browser-computed"
+        "stale_result_export_guard": "browser-computed",
+        "shared_strict_declarative_model_import": "browser-computed"
       },
       "limitations": [
         "Requested tolerances constrain the numerical solve; they do not quantify model-form, parameter, measurement or biological uncertainty.",
@@ -179,8 +179,8 @@
         "ten_frequency_deme_path_phase_diversity_absorption_and_endpoint_plots": "browser-computed"
       },
       "limitations": [
-        "The engine is a constant-size, non-overlapping, two-deme Wright–Fisher teaching model at one biallelic locus.",
-        "The elementary two-deme FST ratio is not a Weir–Cockerham estimator or historical-demography inference.",
+        "The engine is a constant-size, non-overlapping, two-deme Wright\u2013Fisher teaching model at one biallelic locus.",
+        "The elementary two-deme FST ratio is not a Weir\u2013Cockerham estimator or historical-demography inference.",
         "No VCF/PLINK ingestion, linkage, recombination, coalescent inference, ancestry, GWAS, relatedness or genomic quality-control pipeline is implemented in this lab."
       ]
     },
@@ -202,10 +202,10 @@
         "causal_inference_and_external_validity": "unavailable",
         "large_specialized_or_clustered_inference": "export-only",
         "curated_stress_test_example_library": "browser-computed",
-        "standardized_pca_scores_loadings_and_explained_variance": "limited-browser"
-        ,"empirical_cdf_violin_and_density_contour_views": "browser-computed"
-        ,"regression_scale_location_leverage_qq_acf_and_error_distribution_views": "browser-computed"
-        ,"bootstrap_convergence_group_ecdf_moving_range_and_process_acf_views": "limited-browser"
+        "standardized_pca_scores_loadings_and_explained_variance": "limited-browser",
+        "empirical_cdf_violin_and_density_contour_views": "browser-computed",
+        "regression_scale_location_leverage_qq_acf_and_error_distribution_views": "browser-computed",
+        "bootstrap_convergence_group_ecdf_moving_range_and_process_acf_views": "limited-browser"
       },
       "limitations": [
         "Inference remains conditional on sampling, measurement quality, model assumptions, multiplicity decisions, and the analysis plan.",
@@ -418,8 +418,8 @@
         "live_representative_population_stream": "browser-computed",
         "manual_non_looping_recorded_frame_replay": "browser-computed",
         "incremental_paced_numerical_runner": "browser-computed",
-        "live_pause_resume_control": "browser-computed"
-        ,"live_rotatable_lattice_time_scene_from_representative_frames": "browser-computed"
+        "live_pause_resume_control": "browser-computed",
+        "live_rotatable_lattice_time_scene_from_representative_frames": "browser-computed"
       },
       "limitations": [
         "Exact-count mode requires non-negative integer state counts summing exactly to N\u00b2. Fraction mode uses deterministic largest-remainder allocation and reports the exact counts actually simulated.",
@@ -528,10 +528,10 @@
         "sensitivity_documentation_tutorial_and_trust_sync": "browser-computed",
         "curated_17_model_library_across_13_scientific_families": "browser-computed",
         "searchable_model_library_and_method_dependent_plot_catalogue": "browser-computed",
-        "raw_range_scaled_and_elasticity_plot_views": "derived-browser"
-        ,"single_or_multiple_global_output_selection": "browser-computed"
-        ,"shared_saltelli_design_and_cached_trajectories_across_outputs": "browser-computed"
-        ,"per_output_ranking_uncertainty_plot_and_export_switching": "browser-computed"
+        "raw_range_scaled_and_elasticity_plot_views": "derived-browser",
+        "single_or_multiple_global_output_selection": "browser-computed",
+        "shared_saltelli_design_and_cached_trajectories_across_outputs": "browser-computed",
+        "per_output_ranking_uncertainty_plot_and_export_switching": "browser-computed"
       },
       "limitations": [
         "All results are conditional on the selected output, initial conditions, time window, parameter ranges, perturbation or sample count, solver and tolerances.",
@@ -607,6 +607,24 @@
         "The random-feature surrogate is not deep-network training and reports no predictive uncertainty.",
         "All displayed errors are in-sample; deployment requires held-out validation and domain assessment.",
         "The workspace is limited to browser-scale one-input regression."
+      ]
+    },
+    "workspace": {
+      "interface": "limited-browser",
+      "capabilities": {
+        "connected_ode_simulation_fit_sensitivity_ensemble_and_polynomial_surrogate": "limited-browser",
+        "chronological_training_and_heldout_baseline_comparison": "browser-computed",
+        "immutable_experiment_records_and_json_export": "browser-computed",
+        "python_simulation_and_node_experiment_replay": "export-only",
+        "review_brief_for_external_ai_assistance": "export-only",
+        "connected_neural_ode_training_or_language_model_service": "unavailable"
+      },
+      "limitations": [
+        "Up to 20 states and 30 parameters; fits one to three free parameters with bounded coordinate search.",
+        "Four domain pathways are transparent public reductions or benchmarks, not calibrated physiological models.",
+        "Ensembles assume independently uniform ranges; reported bands are not posterior or predictive intervals.",
+        "The residual hybrid learns a polynomial correction of time, not new ODE dynamics.",
+        "Specialist labs remain available; only explicit model transfer connects their different builders."
       ]
     }
   },
@@ -715,5 +733,28 @@
     "file": "ANALYSIS_TAXONOMY.json",
     "documentation": "ANALYSIS_TAXONOMY.md",
     "policy": "Only capabilities backed by current computed data appear in runtime plot menus; export-only and unavailable methods remain explicit reference entries."
+  },
+  "connectedResearch": {
+    "entryPoint": "workspace.html",
+    "contract": "foko.observations/2",
+    "implemented": [
+      "transactional structured model editor and native MathML preview",
+      "state/parameter labels and measurement operators",
+      "explicit CSV column mapping with retained row metadata",
+      "condition and replicate identities without aggregation",
+      "constant condition parameter and initial-state overrides",
+      "fixed-sigma multi-observable fitting",
+      "chronological, complete-condition and condition/replicate holdouts",
+      "undo/redo and immutable named scenarios",
+      "full experimental records attached to programme gates"
+    ],
+    "limits": [
+      "known independent fixed Gaussian sigma or same-unit unweighted least squares",
+      "one to three shared fitted parameters; three bounded coordinate-search starts",
+      "not full PEtab support, not a general likelihood engine",
+      "no automatic dimensional conversion, subject-level hierarchy or parameter confidence intervals",
+      "research-case dataset is synthetic; no new original-research validation"
+    ],
+    "validation": "See VALIDATION.md. Original-source rendered fixtures, numerical references and native HTTP/deployment gates are distinct. Native HTTP remains unexecuted in the release-building environment."
   }
 }

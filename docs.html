@@ -1,25 +1,26 @@
 <!DOCTYPE html>
+
 <html data-theme="aurora" lang="en"><head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="A complete workflow for turning a scientific question into equations, choosing a numerical method, checking evidence, and reporting limitations." name="description"/><title>Foko Lab modeling handbook · Foko Lab</title>
-<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
-<link href="styles/style.css?v=77.4.1" rel="stylesheet"/>
-<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=77.4.1" rel="stylesheet"/><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
-</head><body data-lab="docs"><div class="app-shell">
+<link href="assets/brand/foko-lab-micro.svg?v=78.2.0" rel="icon" type="image/svg+xml"/>
+<link href="styles/style.css?v=78.2.0" rel="stylesheet"/>
+<link href="styles/v72-tokens.css?v=78.2.0" rel="stylesheet"/><link href="styles/v72-public-shell.css?v=78.2.0" rel="stylesheet"/><link href="styles/v76-system.css?v=78.2.0" rel="stylesheet"/>
+</head><body data-lab="docs"><a class="skip-link" href="#main-content">Skip to main content</a><div class="app-shell">
 <progress aria-label="Reading progress" class="guide-reading-progress" id="guideReadingProgress" max="100" value="0"></progress>
-<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
-<main class="guide-page" id="main-content">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="guide-page" id="main-content" tabindex="-1">
 <header class="guide-hero"><p class="guide-eyebrow">Model with evidence</p><h1>Foko Lab modeling handbook</h1><p>A complete workflow for turning a scientific question into equations, choosing a numerical method, checking evidence, and reporting limitations.</p>
 <nav aria-label="Help sections" class="guide-sibling-links"><a href="docs.html">Modeling handbook</a><a href="tutorial.html">Practical curriculum</a><a href="trust.html">Trust and limitations</a></nav>
-<nav class="guide-lab-links" aria-label="Open a scientific workspace">
+<nav aria-label="Open a scientific workspace" class="guide-lab-links">
 <a href="studio.html">Model Studio</a><a href="examples.html">Model Atlas</a><a href="ode.html">ODE</a><a href="stochastic.html">Stochastic</a><a href="agent.html">Agent</a>
 <a href="population-genetics.html">Population Genetics</a><a href="bifurcation.html">Bifurcation</a><a href="sensitivity.html">Sensitivity</a><a href="optimization.html">Optimization</a>
 <a href="steady.html">Steady-State</a><a href="fitting.html">Fitting</a><a href="statistics.html">Statistics</a><a href="advanced-methods.html">Advanced</a>
 <a href="ai-modeling.html">AI Modeling</a><a href="linear-algebra.html">Linear Algebra</a><a href="ml.html">ML</a><a href="sciml.html">SciML</a>
 </nav><div class="guide-start-card"><strong>Recommended order</strong><span>Question → assumptions → equations → numerical checks → interpretation → limitations.</span></div><div class="guide-start-card" id="analysisTaxonomyDocs"><strong>Capability taxonomy</strong><span>Check which requested methods and plots are browser-computed, derived, limited, export-only, or unavailable. <a href="ANALYSIS_TAXONOMY.json">Open ANALYSIS_TAXONOMY.json</a> or <a href="ANALYSIS_TAXONOMY.md">read the annotated matrix</a>.</span></div></header>
-<div class="guide-tools"><label for="guideSearch">Search this page</label><input id="guideSearch" type="search" placeholder="solver tolerance, Sobol, identifiability, PCA…"/><span aria-live="polite" id="guideSearchCount">29 sections</span></div>
-<p class="guide-search-empty" id="guideSearchEmpty" hidden>No section matches this search. Try a method, lab, diagnostic or modeling term.</p>
-<div class="guide-layout"><aside class="guide-toc"><strong>On this page</strong><a class="guide-toc-level-2" href="#a-complete-modeling-workflow">A complete modeling workflow</a><a class="guide-toc-level-2" href="#choose-the-right-lab">Choose the right lab</a><a class="guide-toc-level-2" href="#current-platform-depth-and-the-master-feature-list">Current platform depth and the master feature list</a><a class="guide-toc-level-3" href="#why-some-requested-labs-are-integrated-rather-than-separate">Why some requested labs are integrated rather than separate</a><a class="guide-toc-level-3" href="#capability-decision-rule">Capability decision rule</a><a class="guide-toc-level-2" href="#formulate-a-model-before-entering-it">Formulate a model before entering it</a><a class="guide-toc-level-3" href="#define-the-question-and-output">Define the question and output</a><a class="guide-toc-level-3" href="#define-the-system-boundary">Define the system boundary</a><a class="guide-toc-level-3" href="#choose-states-rather-than-merely-labels">Choose states rather than merely labels</a><a class="guide-toc-level-3" href="#separate-parameters-from-states">Separate parameters from states</a><a class="guide-toc-level-3" href="#check-dimensions">Check dimensions</a><a class="guide-toc-level-2" href="#model-studio-in-detail">Model Studio in detail</a><a class="guide-toc-level-2" href="#model-interchange-and-community-standards">Model interchange and community standards</a><a class="guide-toc-level-3" href="#plain-text-example">Plain-text example</a><a class="guide-toc-level-3" href="#python-dictionary-example">Python dictionary example</a><a class="guide-toc-level-2" href="#author-equations-safely">Author equations safely</a><a class="guide-toc-level-3" href="#build-equations-from-mechanisms">Build equations from mechanisms</a><a class="guide-toc-level-3" href="#check-limiting-cases">Check limiting cases</a><a class="guide-toc-level-2" href="#numerical-controls-and-solver-choice">Numerical controls and solver choice</a><a class="guide-toc-level-3" href="#time-span">Time span</a><a class="guide-toc-level-3" href="#reported-points">Reported points</a><a class="guide-toc-level-3" href="#adaptive-tolerances">Adaptive tolerances</a><a class="guide-toc-level-3" href="#fixed-step-methods">Fixed-step methods</a><a class="guide-toc-level-3" href="#stiffness">Stiffness</a><a class="guide-toc-level-2" href="#read-every-result-in-the-same-order">Read every result in the same order</a><a class="guide-toc-level-3" href="#1-status">1. Status</a><a class="guide-toc-level-3" href="#2-diagnostics">2. Diagnostics</a><a class="guide-toc-level-3" href="#3-plot">3. Plot</a><a class="guide-toc-level-3" href="#4-provenance">4. Provenance</a><a class="guide-toc-level-3" href="#5-non-claims">5. Non-claims</a><a class="guide-toc-level-2" href="#capability-labels">Capability labels</a><a class="guide-toc-level-2" href="#ode-lab-in-detail">ODE Lab in detail</a><a class="guide-toc-level-3" href="#use-it-for">Use it for</a><a class="guide-toc-level-3" href="#enter-a-model">Enter a model</a><a class="guide-toc-level-3" href="#interpret-common-plots">Interpret common plots</a><a class="guide-toc-level-3" href="#do-not-claim">Do not claim</a><a class="guide-toc-level-2" href="#sensitivity-analysis-lab-in-detail">Sensitivity Analysis Lab in detail</a><a class="guide-toc-level-3" href="#curated-library">Curated library</a><a class="guide-toc-level-3" href="#editable-scientific-inputs">Editable scientific inputs</a><a class="guide-toc-level-3" href="#local-finite-differences">Local finite differences</a><a class="guide-toc-level-3" href="#morris-screening">Morris screening</a><a class="guide-toc-level-3" href="#global-variance-analysis">Global variance analysis</a><a class="guide-toc-level-3" href="#fisher-information-approximation">Fisher information approximation</a><a class="guide-toc-level-3" href="#browser-capacity">Browser capacity</a><a class="guide-toc-level-3" href="#not-implemented">Not implemented</a><a class="guide-toc-level-2" href="#optimization-and-multi-objective-analysis">Optimization and multi-objective analysis</a><a class="guide-toc-level-3" href="#what-is-computed">What is computed</a><a class="guide-toc-level-3" href="#how-to-formulate-a-problem">How to formulate a problem</a><a class="guide-toc-level-3" href="#multi-objective-evidence">Multi-objective evidence</a><a class="guide-toc-level-3" href="#unavailable-optimization-claims">Unavailable optimization claims</a><a class="guide-toc-level-2" href="#steady-state-algebraic-lab">Steady-State / Algebraic Lab</a><a class="guide-toc-level-3" href="#formulate-residuals">Formulate residuals</a><a class="guide-toc-level-3" href="#evidence">Evidence</a><a class="guide-toc-level-3" href="#boundaries">Boundaries</a><a class="guide-toc-level-2" href="#stochastic-lab">Stochastic Lab</a><a class="guide-toc-level-3" href="#maintained-model-class">Maintained model class</a><a class="guide-toc-level-3" href="#inputs">Inputs</a><a class="guide-toc-level-3" href="#evidence-2">Evidence</a><a class="guide-toc-level-3" href="#boundaries-2">Boundaries</a><a class="guide-toc-level-2" href="#curve-fitting">Curve Fitting</a><a class="guide-toc-level-3" href="#workflow">Workflow</a><a class="guide-toc-level-3" href="#identifiability">Identifiability</a><a class="guide-toc-level-2" href="#statistics-lab">Statistics Lab</a><a class="guide-toc-level-2" href="#machine-learning-toolkit">Machine Learning Toolkit</a><a class="guide-toc-level-2" href="#linear-algebra-lab">Linear Algebra Lab</a><a class="guide-toc-level-2" href="#symbolic-lab">Symbolic Lab</a><a class="guide-toc-level-2" href="#sciml-lab">SciML Lab</a><a class="guide-toc-level-3" href="#browser-computed-or-limited-workflows">Browser-computed or limited workflows</a><a class="guide-toc-level-3" href="#export-only-examples">Export-only examples</a><a class="guide-toc-level-2" href="#agent-lab">Agent Lab</a><a class="guide-toc-level-2" href="#workbench">Workbench</a><a class="guide-toc-level-2" href="#plot-interpretation-reference">Plot interpretation reference</a><a class="guide-toc-level-2" href="#verification-validation-and-uncertainty">Verification, validation and uncertainty</a><a class="guide-toc-level-3" href="#verification">Verification</a><a class="guide-toc-level-3" href="#validation">Validation</a><a class="guide-toc-level-3" href="#uncertainty">Uncertainty</a><a class="guide-toc-level-2" href="#save-share-and-export">Save, share and export</a><a class="guide-toc-level-2" href="#troubleshooting">Troubleshooting</a><a class="guide-toc-level-3" href="#run-is-disabled">Run is disabled</a><a class="guide-toc-level-3" href="#a-plot-option-is-absent">A plot option is absent</a><a class="guide-toc-level-3" href="#a-plot-is-blank">A plot is blank</a><a class="guide-toc-level-3" href="#the-result-changes-when-tolerances-tighten">The result changes when tolerances tighten</a><a class="guide-toc-level-3" href="#a-sensitivity-ranking-changes-with-the-range">A sensitivity ranking changes with the range</a><a class="guide-toc-level-3" href="#the-browser-refuses-a-large-model">The browser refuses a large model</a><a class="guide-toc-level-3" href="#a-stochastic-run-is-censored">A stochastic run is censored</a><a class="guide-toc-level-3" href="#an-optimization-candidate-is-infeasible">An optimization candidate is infeasible</a><a class="guide-toc-level-2" href="#reporting-checklist">Reporting checklist</a><a class="guide-toc-level-2" href="#research-provenance">Research provenance</a></aside><article class="guide-document"><p>Foko Lab is a browser-native scientific modeling platform. It is designed for four connected activities:</p>
+<div class="guide-tools"><label for="guideSearch">Search this page</label><input id="guideSearch" placeholder="solver tolerance, Sobol, identifiability, PCA…" type="search"/><span aria-live="polite" id="guideSearchCount">29 sections</span></div>
+<p class="guide-search-empty" hidden="" id="guideSearchEmpty">No section matches this search. Try a method, lab, diagnostic or modeling term.</p>
+<div class="guide-layout"><aside class="guide-toc"><a href="#quick-start">First model · five steps</a><strong>On this page</strong><a class="guide-toc-level-2" href="#a-complete-modeling-workflow">A complete modeling workflow</a><a class="guide-toc-level-2" href="#choose-the-right-lab">Choose the right lab</a><a class="guide-toc-level-2" href="#current-platform-depth-and-the-master-feature-list">Current platform depth and the master feature list</a><a class="guide-toc-level-3" href="#why-some-requested-labs-are-integrated-rather-than-separate">Why some requested labs are integrated rather than separate</a><a class="guide-toc-level-3" href="#capability-decision-rule">Capability decision rule</a><a class="guide-toc-level-2" href="#formulate-a-model-before-entering-it">Formulate a model before entering it</a><a class="guide-toc-level-3" href="#define-the-question-and-output">Define the question and output</a><a class="guide-toc-level-3" href="#define-the-system-boundary">Define the system boundary</a><a class="guide-toc-level-3" href="#choose-states-rather-than-merely-labels">Choose states rather than merely labels</a><a class="guide-toc-level-3" href="#separate-parameters-from-states">Separate parameters from states</a><a class="guide-toc-level-3" href="#check-dimensions">Check dimensions</a><a class="guide-toc-level-2" href="#model-studio-in-detail">Model Studio in detail</a><a class="guide-toc-level-2" href="#model-interchange-and-community-standards">Model interchange and community standards</a><a class="guide-toc-level-3" href="#plain-text-example">Plain-text example</a><a class="guide-toc-level-3" href="#python-dictionary-example">Python dictionary example</a><a class="guide-toc-level-2" href="#author-equations-safely">Author equations safely</a><a class="guide-toc-level-3" href="#build-equations-from-mechanisms">Build equations from mechanisms</a><a class="guide-toc-level-3" href="#check-limiting-cases">Check limiting cases</a><a class="guide-toc-level-2" href="#numerical-controls-and-solver-choice">Numerical controls and solver choice</a><a class="guide-toc-level-3" href="#time-span">Time span</a><a class="guide-toc-level-3" href="#reported-points">Reported points</a><a class="guide-toc-level-3" href="#adaptive-tolerances">Adaptive tolerances</a><a class="guide-toc-level-3" href="#fixed-step-methods">Fixed-step methods</a><a class="guide-toc-level-3" href="#stiffness">Stiffness</a><a class="guide-toc-level-2" href="#read-every-result-in-the-same-order">Read every result in the same order</a><a class="guide-toc-level-3" href="#1-status">1. Status</a><a class="guide-toc-level-3" href="#2-diagnostics">2. Diagnostics</a><a class="guide-toc-level-3" href="#3-plot">3. Plot</a><a class="guide-toc-level-3" href="#4-provenance">4. Provenance</a><a class="guide-toc-level-3" href="#5-non-claims">5. Non-claims</a><a class="guide-toc-level-2" href="#capability-labels">Capability labels</a><a class="guide-toc-level-2" href="#ode-lab-in-detail">ODE Lab in detail</a><a class="guide-toc-level-3" href="#use-it-for">Use it for</a><a class="guide-toc-level-3" href="#enter-a-model">Enter a model</a><a class="guide-toc-level-3" href="#interpret-common-plots">Interpret common plots</a><a class="guide-toc-level-3" href="#do-not-claim">Do not claim</a><a class="guide-toc-level-2" href="#sensitivity-analysis-lab-in-detail">Sensitivity Analysis Lab in detail</a><a class="guide-toc-level-3" href="#curated-library">Curated library</a><a class="guide-toc-level-3" href="#editable-scientific-inputs">Editable scientific inputs</a><a class="guide-toc-level-3" href="#local-finite-differences">Local finite differences</a><a class="guide-toc-level-3" href="#morris-screening">Morris screening</a><a class="guide-toc-level-3" href="#global-variance-analysis">Global variance analysis</a><a class="guide-toc-level-3" href="#fisher-information-approximation">Fisher information approximation</a><a class="guide-toc-level-3" href="#browser-capacity">Browser capacity</a><a class="guide-toc-level-3" href="#not-implemented">Not implemented</a><a class="guide-toc-level-2" href="#optimization-and-multi-objective-analysis">Optimization and multi-objective analysis</a><a class="guide-toc-level-3" href="#what-is-computed">What is computed</a><a class="guide-toc-level-3" href="#how-to-formulate-a-problem">How to formulate a problem</a><a class="guide-toc-level-3" href="#multi-objective-evidence">Multi-objective evidence</a><a class="guide-toc-level-3" href="#unavailable-optimization-claims">Unavailable optimization claims</a><a class="guide-toc-level-2" href="#steady-state-algebraic-lab">Steady-State / Algebraic Lab</a><a class="guide-toc-level-3" href="#formulate-residuals">Formulate residuals</a><a class="guide-toc-level-3" href="#evidence">Evidence</a><a class="guide-toc-level-3" href="#boundaries">Boundaries</a><a class="guide-toc-level-2" href="#stochastic-lab">Stochastic Lab</a><a class="guide-toc-level-3" href="#maintained-model-class">Maintained model class</a><a class="guide-toc-level-3" href="#inputs">Inputs</a><a class="guide-toc-level-3" href="#evidence-2">Evidence</a><a class="guide-toc-level-3" href="#boundaries-2">Boundaries</a><a class="guide-toc-level-2" href="#curve-fitting">Curve Fitting</a><a class="guide-toc-level-3" href="#workflow">Workflow</a><a class="guide-toc-level-3" href="#identifiability">Identifiability</a><a class="guide-toc-level-2" href="#statistics-lab">Statistics Lab</a><a class="guide-toc-level-2" href="#machine-learning-toolkit">Machine Learning Toolkit</a><a class="guide-toc-level-2" href="#linear-algebra-lab">Linear Algebra Lab</a><a class="guide-toc-level-2" href="#symbolic-lab">Symbolic Lab</a><a class="guide-toc-level-2" href="#sciml-lab">SciML Lab</a><a class="guide-toc-level-3" href="#browser-computed-or-limited-workflows">Browser-computed or limited workflows</a><a class="guide-toc-level-3" href="#export-only-examples">Export-only examples</a><a class="guide-toc-level-2" href="#agent-lab">Agent Lab</a><a class="guide-toc-level-2" href="#workbench">Workbench</a><a class="guide-toc-level-2" href="#plot-interpretation-reference">Plot interpretation reference</a><a class="guide-toc-level-2" href="#verification-validation-and-uncertainty">Verification, validation and uncertainty</a><a class="guide-toc-level-3" href="#verification">Verification</a><a class="guide-toc-level-3" href="#validation">Validation</a><a class="guide-toc-level-3" href="#uncertainty">Uncertainty</a><a class="guide-toc-level-2" href="#save-share-and-export">Save, share and export</a><a class="guide-toc-level-2" href="#troubleshooting">Troubleshooting</a><a class="guide-toc-level-3" href="#run-is-disabled">Run is disabled</a><a class="guide-toc-level-3" href="#a-plot-option-is-absent">A plot option is absent</a><a class="guide-toc-level-3" href="#a-plot-is-blank">A plot is blank</a><a class="guide-toc-level-3" href="#the-result-changes-when-tolerances-tighten">The result changes when tolerances tighten</a><a class="guide-toc-level-3" href="#a-sensitivity-ranking-changes-with-the-range">A sensitivity ranking changes with the range</a><a class="guide-toc-level-3" href="#the-browser-refuses-a-large-model">The browser refuses a large model</a><a class="guide-toc-level-3" href="#a-stochastic-run-is-censored">A stochastic run is censored</a><a class="guide-toc-level-3" href="#an-optimization-candidate-is-infeasible">An optimization candidate is infeasible</a><a class="guide-toc-level-2" href="#reporting-checklist">Reporting checklist</a><a class="guide-toc-level-2" href="#research-provenance">Research provenance</a></aside><article class="guide-document"><section class="guide-section v77-quick-start" id="quick-start"><p class="v72-eyebrow">First visit</p><h2>Your first model in five steps</h2><ol><li><b>Create or import.</b> Open <a href="studio.html?new=1">a new Studio project</a>. The editor starts with a one-state equation that you can replace. Use “Import or paste a model” for TXT, JSON, supported dictionaries, model-table CSV, or the documented SBML subset.</li><li><b>State your experiment.</b> Set equations, parameter values and initial conditions. Choose a time interval. Time and state units are descriptive labels, not a dimensional checker.</li><li><b>Run explicitly.</b> Select Run simulation. Studio uses a worker when available; Cancel stops it. Editing inputs cancels a running calculation and removes obsolete current results.</li><li><b>Inspect, do not just admire.</b> Compare trajectories with a second plot. Read diagnostics and warnings. Expand Result data for keyboard-accessible values. A smooth curve does not establish biological validity.</li><li><b>Keep an exact copy.</b> Download Project JSON. The run ledger stores the model and experiment settings used for each new run. Select a ledger entry to restore and rerun it. CSV contains numerical output, not the complete experiment.</li></ol><h3>Keyboard, devices, and saving</h3><p>Use Tab to move between controls. Enter activates buttons; Escape closes navigation and search. Find searches labs, examples, and help. On a phone, the single bottom bar switches between Setup, Results and Evidence. Appearance controls are in the creator/help menu.</p><p>Valid Studio edits are saved locally when browser storage is available. When it is blocked or full, FokoLab falls back to this tab’s memory and tells you to export. Closing a memory-only session loses unsaved work. Download Project JSON before clearing browser data.</p><p>Core browser calculations use local code. The optional SciPy verifier fetches a Python runtime and packages. Legacy KaTeX mathematical typefaces are version-pinned network dependencies; the primary research interface uses native fonts. First-time offline use is not supported. The static host may log connection metadata; “computed locally” does not mean “no network traffic.”</p></section><p>Foko Lab is a browser-native scientific modeling platform. It is designed for four connected activities:</p>
 <ol>
 <li>translating a scientific question into an explicit mathematical model;</li>
 <li>computing a result with visible numerical settings;</li>
@@ -27,7 +28,7 @@
 <li>exporting enough information for another person or external tool to reproduce the work.</li>
 </ol>
 <p>The platform is not a substitute for domain validation, experimental design, specialist continuation software, large-scale optimization, finite-element simulation, or a production machine-learning stack. Its role is to make small and medium scientific workflows inspectable before they are scaled up.</p>
-<section class="guide-module" data-guide-section data-guide-search="a complete modeling workflow
+<section class="guide-module" data-guide-id="a-complete-modeling-workflow" data-guide-search="a complete modeling workflow
 a defensible model is not produced by pressing run. use the following sequence.
 
 
@@ -100,81 +101,81 @@ a defensible model is not produced by pressing run. use the following sequence.
 
 
 
-do not skip directly from equations to a plot. the intermediate numerical and scientific checks are part of the result." data-guide-id="a-complete-modeling-workflow"><div class="guide-module-heading"><h2 id="a-complete-modeling-workflow">A complete modeling workflow</h2><a class="guide-deep-link" href="#a-complete-modeling-workflow" aria-label="Copy link to A complete modeling workflow">#</a></div>
+do not skip directly from equations to a plot. the intermediate numerical and scientific checks are part of the result." data-guide-section=""><div class="guide-module-heading"><h2 id="a-complete-modeling-workflow">A complete modeling workflow</h2><a aria-label="Copy link to A complete modeling workflow" class="guide-deep-link" href="#a-complete-modeling-workflow">#</a></div>
 <p>A defensible model is not produced by pressing <strong>Run</strong>. Use the following sequence.</p>
 <table>
 <thead>
 <tr>
-  <th>Stage</th>
-  <th>Question</th>
-  <th>Evidence to retain</th>
+<th>Stage</th>
+<th>Question</th>
+<th>Evidence to retain</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>1. Purpose</td>
-  <td>What decision, mechanism, or hypothesis is the model meant to examine?</td>
-  <td>One primary question and one measurable output.</td>
+<td>1. Purpose</td>
+<td>What decision, mechanism, or hypothesis is the model meant to examine?</td>
+<td>One primary question and one measurable output.</td>
 </tr>
 <tr>
-  <td>2. Boundary</td>
-  <td>What is inside and outside the system?</td>
-  <td>Included states, excluded processes, forcing assumptions.</td>
+<td>2. Boundary</td>
+<td>What is inside and outside the system?</td>
+<td>Included states, excluded processes, forcing assumptions.</td>
 </tr>
 <tr>
-  <td>3. Variables</td>
-  <td>What quantities change with time or iteration?</td>
-  <td>Names, meanings, units, admissible ranges.</td>
+<td>3. Variables</td>
+<td>What quantities change with time or iteration?</td>
+<td>Names, meanings, units, admissible ranges.</td>
 </tr>
 <tr>
-  <td>4. Parameters</td>
-  <td>What controls rates, scales, or constraints?</td>
-  <td>Nominal values, units, plausible ranges, provenance.</td>
+<td>4. Parameters</td>
+<td>What controls rates, scales, or constraints?</td>
+<td>Nominal values, units, plausible ranges, provenance.</td>
 </tr>
 <tr>
-  <td>5. Initial or boundary conditions</td>
-  <td>Where does the computation begin?</td>
-  <td>Values, units, uncertainty, and why they are appropriate.</td>
+<td>5. Initial or boundary conditions</td>
+<td>Where does the computation begin?</td>
+<td>Values, units, uncertainty, and why they are appropriate.</td>
 </tr>
 <tr>
-  <td>6. Equations or rules</td>
-  <td>How do mechanisms change the states?</td>
-  <td>Explicit equations, reactions, residuals, objective, or transition rules.</td>
+<td>6. Equations or rules</td>
+<td>How do mechanisms change the states?</td>
+<td>Explicit equations, reactions, residuals, objective, or transition rules.</td>
 </tr>
 <tr>
-  <td>7. Numerical method</td>
-  <td>How will the mathematical problem be approximated?</td>
-  <td>Solver, tolerances, step controls, seed, sample count.</td>
+<td>7. Numerical method</td>
+<td>How will the mathematical problem be approximated?</td>
+<td>Solver, tolerances, step controls, seed, sample count.</td>
 </tr>
 <tr>
-  <td>8. Verification</td>
-  <td>Is the implementation numerically consistent?</td>
-  <td>Refinement, independent reference, conservation, residual or feasibility checks.</td>
+<td>8. Verification</td>
+<td>Is the implementation numerically consistent?</td>
+<td>Refinement, independent reference, conservation, residual or feasibility checks.</td>
 </tr>
 <tr>
-  <td>9. Validation</td>
-  <td>Is the model adequate for the scientific purpose?</td>
-  <td>Data comparison, withheld observations, known limiting cases.</td>
+<td>9. Validation</td>
+<td>Is the model adequate for the scientific purpose?</td>
+<td>Data comparison, withheld observations, known limiting cases.</td>
 </tr>
 <tr>
-  <td>10. Sensitivity and uncertainty</td>
-  <td>Which assumptions control the conclusion?</td>
-  <td>Ranges, perturbations, sampling design, rank stability, confidence evidence.</td>
+<td>10. Sensitivity and uncertainty</td>
+<td>Which assumptions control the conclusion?</td>
+<td>Ranges, perturbations, sampling design, rank stability, confidence evidence.</td>
 </tr>
 <tr>
-  <td>11. Reproducibility</td>
-  <td>Can the run be recreated?</td>
-  <td>Model file, settings, version, seed, exported result and limitations.</td>
+<td>11. Reproducibility</td>
+<td>Can the run be recreated?</td>
+<td>Model file, settings, version, seed, exported result and limitations.</td>
 </tr>
 <tr>
-  <td>12. Claim boundary</td>
-  <td>What has not been established?</td>
-  <td>Explicit non-claims and external work still required.</td>
+<td>12. Claim boundary</td>
+<td>What has not been established?</td>
+<td>Explicit non-claims and external work still required.</td>
 </tr>
 </tbody>
 </table>
 <p>Do not skip directly from equations to a plot. The intermediate numerical and scientific checks are part of the result.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="choose the right lab
+</section><section class="guide-module" data-guide-id="choose-the-right-lab" data-guide-search="choose the right lab
 start from the mathematical task rather than from the plot you hope to obtain.
 
 
@@ -256,7 +257,7 @@ start from the mathematical task rather than from the plot you hope to obtain.
   describe, compare, or test tabular data
   statistics
   ecdf/violin/contour views, tests, regression diagnostics, pca, roc/pr, survival, spc and acf
-  assumptions, missingness and multiplicity remain the user&#x27;s responsibility
+  assumptions, missingness and multiplicity remain the user's responsibility
 
 
   build small predictive baselines
@@ -298,135 +299,135 @@ start from the mathematical task rather than from the plot you hope to obtain.
   apply several tools to one configuration
   workbench
   shared model, multiple lab adapters
-  each adapter retains the limitations of its underlying lab" data-guide-id="choose-the-right-lab"><div class="guide-module-heading"><h2 id="choose-the-right-lab">Choose the right lab</h2><a class="guide-deep-link" href="#choose-the-right-lab" aria-label="Copy link to Choose the right lab">#</a></div>
+  each adapter retains the limitations of its underlying lab" data-guide-section=""><div class="guide-module-heading"><h2 id="choose-the-right-lab">Choose the right lab</h2><a aria-label="Copy link to Choose the right lab" class="guide-deep-link" href="#choose-the-right-lab">#</a></div>
 <p>Start from the mathematical task rather than from the plot you hope to obtain.</p>
 <table>
 <thead>
 <tr>
-  <th>Scientific task</th>
-  <th>Primary lab</th>
-  <th>Typical evidence</th>
-  <th>Important boundary</th>
+<th>Scientific task</th>
+<th>Primary lab</th>
+<th>Typical evidence</th>
+<th>Important boundary</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>Create and manage an editable ODE project</td>
-  <td><strong>Model Studio</strong></td>
-  <td>equations, initial conditions, parameter ranges, solver diagnostics, run ledger, trajectories and response surfaces</td>
-  <td>two-parameter sweeps are not global sensitivity; explicit browser solvers are exploratory for stiff systems</td>
+<td>Create and manage an editable ODE project</td>
+<td><strong>Model Studio</strong></td>
+<td>equations, initial conditions, parameter ranges, solver diagnostics, run ledger, trajectories and response surfaces</td>
+<td>two-parameter sweeps are not global sensitivity; explicit browser solvers are exploratory for stiff systems</td>
 </tr>
 <tr>
-  <td>Time evolution governed by differential equations</td>
-  <td><strong>ODE</strong></td>
-  <td>trajectories, phase views, solver work, conservation, stiffness evidence</td>
-  <td>explicit browser solvers are not a general stiff/DAE/PDE solution</td>
+<td>Time evolution governed by differential equations</td>
+<td><strong>ODE</strong></td>
+<td>trajectories, phase views, solver work, conservation, stiffness evidence</td>
+<td>explicit browser solvers are not a general stiff/DAE/PDE solution</td>
 </tr>
 <tr>
-  <td>Parameter influence in an ODE model</td>
-  <td><strong>Sensitivity</strong></td>
-  <td>local derivatives, Morris, single/multiple-output Jansen/Saltelli, FIM, convergence</td>
-  <td>rankings depend on every selected output, ranges, initial conditions, time window and estimator</td>
+<td>Parameter influence in an ODE model</td>
+<td><strong>Sensitivity</strong></td>
+<td>local derivatives, Morris, single/multiple-output Jansen/Saltelli, FIM, convergence</td>
+<td>rankings depend on every selected output, ranges, initial conditions, time window and estimator</td>
 </tr>
 <tr>
-  <td>Solve nonlinear equations or equilibria</td>
-  <td><strong>Steady-State</strong></td>
-  <td>residual history, roots, Jacobian, local eigenvalues, scans</td>
-  <td>finite searches do not prove completeness; scans are not certified continuation</td>
+<td>Solve nonlinear equations or equilibria</td>
+<td><strong>Steady-State</strong></td>
+<td>residual history, roots, Jacobian, local eigenvalues, scans</td>
+<td>finite searches do not prove completeness; scans are not certified continuation</td>
 </tr>
 <tr>
-  <td>Random reaction or jump dynamics</td>
-  <td><strong>Stochastic</strong></td>
-  <td>seeded SSA paths, empirical intervals, extinction and event evidence</td>
-  <td>only time-homogeneous CTMC/Gillespie direct SSA is maintained</td>
+<td>Random reaction or jump dynamics</td>
+<td><strong>Stochastic</strong></td>
+<td>seeded SSA paths, empirical intervals, extinction and event evidence</td>
+<td>only time-homogeneous CTMC/Gillespie direct SSA is maintained</td>
 </tr>
 <tr>
-  <td>Minimize or maximize an explicit function</td>
-  <td><strong>Optimization</strong></td>
-  <td>objective history, feasibility, candidates, finite Pareto evidence</td>
-  <td>heuristic candidates are not certificates of global optimality</td>
+<td>Minimize or maximize an explicit function</td>
+<td><strong>Optimization</strong></td>
+<td>objective history, feasibility, candidates, finite Pareto evidence</td>
+<td>heuristic candidates are not certificates of global optimality</td>
 </tr>
 <tr>
-  <td>Explore drift, selection, mutation and migration</td>
-  <td><strong>Population Genetics</strong></td>
-  <td>seeded frequency bands, diversity, elementary FST, fixation/loss</td>
-  <td>a two-deme one-locus simulation is not genomic-history inference</td>
+<td>Explore drift, selection, mutation and migration</td>
+<td><strong>Population Genetics</strong></td>
+<td>seeded frequency bands, diversity, elementary FST, fixation/loss</td>
+<td>a two-deme one-locus simulation is not genomic-history inference</td>
 </tr>
 <tr>
-  <td>Analyse equilibrium branches and tipping structure</td>
-  <td><strong>Bifurcation</strong></td>
-  <td>stable/unstable branches, local eigenvalue, root count, vector field, potential</td>
-  <td>finite scalar scans are not certified continuation or Hopf analysis</td>
+<td>Analyse equilibrium branches and tipping structure</td>
+<td><strong>Bifurcation</strong></td>
+<td>stable/unstable branches, local eigenvalue, root count, vector field, potential</td>
+<td>finite scalar scans are not certified continuation or Hopf analysis</td>
 </tr>
 <tr>
-  <td>Simulate adaptation on a declared fitness landscape</td>
-  <td><strong>Evolution Landscape</strong></td>
-  <td>mean/best fitness, diversity, Hamming distance, occupancy and endpoints</td>
-  <td>fixed haploid asexual landscapes are not genomic inference</td>
+<td>Simulate adaptation on a declared fitness landscape</td>
+<td><strong>Evolution Landscape</strong></td>
+<td>mean/best fitness, diversity, Hamming distance, occupancy and endpoints</td>
+<td>fixed haploid asexual landscapes are not genomic inference</td>
 </tr>
 <tr>
-  <td>Run bounded advanced reference methods</td>
-  <td><strong>Advanced Methods</strong></td>
-  <td>Bayesian posterior/predictive geometry, Fisher design, branches, 3D PDE and sweep surfaces, SDE and genomic summaries</td>
-  <td>compact references do not replace specialist production packages</td>
+<td>Run bounded advanced reference methods</td>
+<td><strong>Advanced Methods</strong></td>
+<td>Bayesian posterior/predictive geometry, Fisher design, branches, 3D PDE and sweep surfaces, SDE and genomic summaries</td>
+<td>compact references do not replace specialist production packages</td>
 </tr>
 <tr>
-  <td>Estimate parameters from data</td>
-  <td><strong>Curve Fitting</strong></td>
-  <td>residuals, uncertainty, bootstrap, correlation, profiles</td>
-  <td>a good fit does not imply identifiable parameters or valid model structure</td>
+<td>Estimate parameters from data</td>
+<td><strong>Curve Fitting</strong></td>
+<td>residuals, uncertainty, bootstrap, correlation, profiles</td>
+<td>a good fit does not imply identifiable parameters or valid model structure</td>
 </tr>
 <tr>
-  <td>Describe, compare, or test tabular data</td>
-  <td><strong>Statistics</strong></td>
-  <td>ECDF/violin/contour views, tests, regression diagnostics, PCA, ROC/PR, survival, SPC and ACF</td>
-  <td>assumptions, missingness and multiplicity remain the user's responsibility</td>
+<td>Describe, compare, or test tabular data</td>
+<td><strong>Statistics</strong></td>
+<td>ECDF/violin/contour views, tests, regression diagnostics, PCA, ROC/PR, survival, SPC and ACF</td>
+<td>assumptions, missingness and multiplicity remain the user's responsibility</td>
 </tr>
 <tr>
-  <td>Build small predictive baselines</td>
-  <td><strong>Machine Learning</strong></td>
-  <td>fold-safe predictions, CV, calibration, importance, clustering, PCA</td>
-  <td>not a deep-learning or deployment platform; leakage checks remain essential</td>
+<td>Build small predictive baselines</td>
+<td><strong>Machine Learning</strong></td>
+<td>fold-safe predictions, CV, calibration, importance, clustering, PCA</td>
+<td>not a deep-learning or deployment platform; leakage checks remain essential</td>
 </tr>
 <tr>
-  <td>Emulate a simulation or response with transparent AI</td>
-  <td><strong>AI Modeling</strong></td>
-  <td>GP fit/uncertainty, active sampling, random features, residual Q–Q/ACF, derivative, coverage and cumulative-error views</td>
-  <td>one-input browser surrogates and in-sample diagnostics are not deployment validation</td>
+<td>Emulate a simulation or response with transparent AI</td>
+<td><strong>AI Modeling</strong></td>
+<td>GP fit/uncertainty, active sampling, random features, residual Q–Q/ACF, derivative, coverage and cumulative-error views</td>
+<td>one-input browser surrogates and in-sample diagnostics are not deployment validation</td>
 </tr>
 <tr>
-  <td>Analyse a matrix problem</td>
-  <td><strong>Linear Algebra</strong></td>
-  <td>structure, singular values, eigenvalues, residuals, conditioning</td>
-  <td>small dense educational workflows, not sparse/HPC linear algebra</td>
+<td>Analyse a matrix problem</td>
+<td><strong>Linear Algebra</strong></td>
+<td>structure, singular values, eigenvalues, residuals, conditioning</td>
+<td>small dense educational workflows, not sparse/HPC linear algebra</td>
 </tr>
 <tr>
-  <td>Analyse graph structure</td>
-  <td><strong>Networks</strong></td>
-  <td>paths, components, centrality and spanning-tree evidence</td>
-  <td>graph measures do not imply causal or biological importance</td>
+<td>Analyse graph structure</td>
+<td><strong>Networks</strong></td>
+<td>paths, components, centrality and spanning-tree evidence</td>
+<td>graph measures do not imply causal or biological importance</td>
 </tr>
 <tr>
-  <td>Discover or compare compact scientific ML representations</td>
-  <td><strong>SciML</strong></td>
-  <td>SINDy, inverse and surrogate diagnostics where computed</td>
-  <td>PINN, neural-operator and Neural ODE examples are export-only unless a real engine is shown</td>
+<td>Discover or compare compact scientific ML representations</td>
+<td><strong>SciML</strong></td>
+<td>SINDy, inverse and surrogate diagnostics where computed</td>
+<td>PINN, neural-operator and Neural ODE examples are export-only unless a real engine is shown</td>
 </tr>
 <tr>
-  <td>Simulate individual or lattice rules</td>
-  <td><strong>Agent</strong></td>
-  <td>live realization, ensemble summaries, reproducibility</td>
-  <td>an animation is one realization, not a calibrated biological movie</td>
+<td>Simulate individual or lattice rules</td>
+<td><strong>Agent</strong></td>
+<td>live realization, ensemble summaries, reproducibility</td>
+<td>an animation is one realization, not a calibrated biological movie</td>
 </tr>
 <tr>
-  <td>Apply several tools to one configuration</td>
-  <td><strong>Workbench</strong></td>
-  <td>shared model, multiple lab adapters</td>
-  <td>each adapter retains the limitations of its underlying lab</td>
+<td>Apply several tools to one configuration</td>
+<td><strong>Workbench</strong></td>
+<td>shared model, multiple lab adapters</td>
+<td>each adapter retains the limitations of its underlying lab</td>
 </tr>
 </tbody>
 </table>
-</section><section class="guide-module" data-guide-section data-guide-search="current platform depth and the master feature list
+</section><section class="guide-module" data-guide-id="current-platform-depth-and-the-master-feature-list" data-guide-search="current platform depth and the master feature list
 the long feature catalogue is a useful roadmap, but it mixes working browser computations, derived plots, external workflows and research topics. foko lab therefore exposes a smaller verified core rather than displaying every requested name in a dropdown.
 
 
@@ -551,113 +552,113 @@ a real browser or external computation path;
 numerical and failure tests;
 an interpretation boundary beside the result.
 
-names without these four parts remain in the trust roadmap rather than becoming decorative controls." data-guide-id="current-platform-depth-and-the-master-feature-list"><div class="guide-module-heading"><h2 id="current-platform-depth-and-the-master-feature-list">Current platform depth and the master feature list</h2><a class="guide-deep-link" href="#current-platform-depth-and-the-master-feature-list" aria-label="Copy link to Current platform depth and the master feature list">#</a></div>
+names without these four parts remain in the trust roadmap rather than becoming decorative controls." data-guide-section=""><div class="guide-module-heading"><h2 id="current-platform-depth-and-the-master-feature-list">Current platform depth and the master feature list</h2><a aria-label="Copy link to Current platform depth and the master feature list" class="guide-deep-link" href="#current-platform-depth-and-the-master-feature-list">#</a></div>
 <p>The long feature catalogue is a useful roadmap, but it mixes working browser computations, derived plots, external workflows and research topics. Foko Lab therefore exposes a smaller verified core rather than displaying every requested name in a dropdown.</p>
 <table>
 <thead>
 <tr>
-  <th>Workspace</th>
-  <th style="text-align:right">Maintained example library</th>
-  <th style="text-align:right">Maintained computed plot library</th>
-  <th>What is deliberately not claimed</th>
+<th>Workspace</th>
+<th style="text-align:right">Maintained example library</th>
+<th style="text-align:right">Maintained computed plot library</th>
+<th>What is deliberately not claimed</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>Model Studio</td>
-  <td style="text-align:right">21 editable ODE starters across biological, physical and nonlinear systems</td>
-  <td style="text-align:right">15 trajectory, phase, multivariate, solver and 2-parameter surface views</td>
-  <td>no calibration certificate, general stiff solver, or replacement for specialist stochastic/agent/genomic builders</td>
+<td>Model Studio</td>
+<td style="text-align:right">21 editable ODE starters across biological, physical and nonlinear systems</td>
+<td style="text-align:right">15 trajectory, phase, multivariate, solver and 2-parameter surface views</td>
+<td>no calibration certificate, general stiff solver, or replacement for specialist stochastic/agent/genomic builders</td>
 </tr>
 <tr>
-  <td>Optimization, including finite multi-objective evidence and CMA-ES</td>
-  <td style="text-align:right">32 problems, including 15 CMA-ES application surrogates</td>
-  <td style="text-align:right">39 views</td>
-  <td>no Bayesian optimization, topology/CFD solver, nonlinear MPC certificate or complete ZDT/DTLZ MOEA</td>
+<td>Optimization, including finite multi-objective evidence and CMA-ES</td>
+<td style="text-align:right">32 problems, including 15 CMA-ES application surrogates</td>
+<td style="text-align:right">39 views</td>
+<td>no Bayesian optimization, topology/CFD solver, nonlinear MPC certificate or complete ZDT/DTLZ MOEA</td>
 </tr>
 <tr>
-  <td>Population Genetics</td>
-  <td style="text-align:right">13 finite-ensemble configurations</td>
-  <td style="text-align:right">10 views</td>
-  <td>no linkage, coalescent/demography inference, VCF/PLINK or genomic QC</td>
+<td>Population Genetics</td>
+<td style="text-align:right">13 finite-ensemble configurations</td>
+<td style="text-align:right">10 views</td>
+<td>no linkage, coalescent/demography inference, VCF/PLINK or genomic QC</td>
 </tr>
 <tr>
-  <td>Bifurcation</td>
-  <td style="text-align:right">6 editable scalar systems</td>
-  <td style="text-align:right">6 views</td>
-  <td>finite root scan, not pseudo-arclength, multidimensional, Hopf or periodic-orbit continuation</td>
+<td>Bifurcation</td>
+<td style="text-align:right">6 editable scalar systems</td>
+<td style="text-align:right">6 views</td>
+<td>finite root scan, not pseudo-arclength, multidimensional, Hopf or periodic-orbit continuation</td>
 </tr>
 <tr>
-  <td>Evolution Landscapes</td>
-  <td style="text-align:right">12 editable starters plus custom tables</td>
-  <td style="text-align:right">10 views, including heatmap, contour, 3D and live time/frequency landscape</td>
-  <td>fixed haploid asexual landscapes, not evolutionary-history inference</td>
+<td>Evolution Landscapes</td>
+<td style="text-align:right">12 editable starters plus custom tables</td>
+<td style="text-align:right">10 views, including heatmap, contour, 3D and live time/frequency landscape</td>
+<td>fixed haploid asexual landscapes, not evolutionary-history inference</td>
 </tr>
 <tr>
-  <td>AI Modeling</td>
-  <td style="text-align:right">12 editable scientific datasets plus user CSV</td>
-  <td style="text-align:right">13 views</td>
-  <td>browser-scale GP/random-feature surrogates, not deep training or deployment</td>
+<td>AI Modeling</td>
+<td style="text-align:right">12 editable scientific datasets plus user CSV</td>
+<td style="text-align:right">13 views</td>
+<td>browser-scale GP/random-feature surrogates, not deep training or deployment</td>
 </tr>
 <tr>
-  <td>Advanced Methods</td>
-  <td style="text-align:right">14 examples across 8 method families</td>
-  <td style="text-align:right">5 Bayesian views; at least 3 for every other module</td>
-  <td>bounded references, not general MCMC, continuation, FEM/SPDE, genomic or workflow infrastructure</td>
+<td>Advanced Methods</td>
+<td style="text-align:right">14 examples across 8 method families</td>
+<td style="text-align:right">5 Bayesian views; at least 3 for every other module</td>
+<td>bounded references, not general MCMC, continuation, FEM/SPDE, genomic or workflow infrastructure</td>
 </tr>
 <tr>
-  <td>Steady-State / Algebraic</td>
-  <td style="text-align:right">26 systems</td>
-  <td style="text-align:right">18 views</td>
-  <td>no certified continuation, complete root proof or generic limit-cycle computation</td>
+<td>Steady-State / Algebraic</td>
+<td style="text-align:right">26 systems</td>
+<td style="text-align:right">18 views</td>
+<td>no certified continuation, complete root proof or generic limit-cycle computation</td>
 </tr>
 <tr>
-  <td>Stochastic</td>
-  <td style="text-align:right">13 jump-process models</td>
-  <td style="text-align:right">12 views</td>
-  <td>no generic SDE/SPDE engine, stochastic bifurcation certificate or Lyapunov analysis</td>
+<td>Stochastic</td>
+<td style="text-align:right">13 jump-process models</td>
+<td style="text-align:right">12 views</td>
+<td>no generic SDE/SPDE engine, stochastic bifurcation certificate or Lyapunov analysis</td>
 </tr>
 <tr>
-  <td>Linear Algebra</td>
-  <td style="text-align:right">8 curated tasks</td>
-  <td style="text-align:right">11 views</td>
-  <td>no sparse large-scale GMRES/Krylov suite, pseudospectrum or general Schur/Sylvester/Lyapunov solver</td>
+<td>Linear Algebra</td>
+<td style="text-align:right">8 curated tasks</td>
+<td style="text-align:right">11 views</td>
+<td>no sparse large-scale GMRES/Krylov suite, pseudospectrum or general Schur/Sylvester/Lyapunov solver</td>
 </tr>
 <tr>
-  <td>Statistics</td>
-  <td style="text-align:right">22 curated datasets</td>
-  <td style="text-align:right">analysis-dependent ECDF, violin, contour, regression, resampling, classification, survival and process views</td>
-  <td>no general Bayesian engine, automatic causal inference or unrestricted time-series forecasting</td>
+<td>Statistics</td>
+<td style="text-align:right">22 curated datasets</td>
+<td style="text-align:right">analysis-dependent ECDF, violin, contour, regression, resampling, classification, survival and process views</td>
+<td>no general Bayesian engine, automatic causal inference or unrestricted time-series forecasting</td>
 </tr>
 <tr>
-  <td>Machine Learning</td>
-  <td style="text-align:right">14 small-data tasks</td>
-  <td style="text-align:right">18 views</td>
-  <td>no SHAP, UMAP/t-SNE, deep training, reinforcement learning or production monitoring</td>
+<td>Machine Learning</td>
+<td style="text-align:right">14 small-data tasks</td>
+<td style="text-align:right">18 views</td>
+<td>no SHAP, UMAP/t-SNE, deep training, reinforcement learning or production monitoring</td>
 </tr>
 <tr>
-  <td>Sensitivity</td>
-  <td style="text-align:right">17 editable ODE models across 13 families</td>
-  <td style="text-align:right">35 method-dependent views with one or multiple global outputs</td>
-  <td>no adjoints, FAST/eFAST, Shapley effects or dependent-input Sobol analysis</td>
+<td>Sensitivity</td>
+<td style="text-align:right">17 editable ODE models across 13 families</td>
+<td style="text-align:right">35 method-dependent views with one or multiple global outputs</td>
+<td>no adjoints, FAST/eFAST, Shapley effects or dependent-input Sobol analysis</td>
 </tr>
 <tr>
-  <td>Curve Fitting</td>
-  <td style="text-align:right">7 datasets</td>
-  <td style="text-align:right">14 views</td>
-  <td>no structural-identifiability proof or Bayesian posterior sampler</td>
+<td>Curve Fitting</td>
+<td style="text-align:right">7 datasets</td>
+<td style="text-align:right">14 views</td>
+<td>no structural-identifiability proof or Bayesian posterior sampler</td>
 </tr>
 <tr>
-  <td>Networks</td>
-  <td style="text-align:right">7 graphs</td>
-  <td style="text-align:right">12 views</td>
-  <td>no large distributed graph engine or exact community ground truth</td>
+<td>Networks</td>
+<td style="text-align:right">7 graphs</td>
+<td style="text-align:right">12 views</td>
+<td>no large distributed graph engine or exact community ground truth</td>
 </tr>
 <tr>
-  <td>Symbolic</td>
-  <td style="text-align:right">20 systems</td>
-  <td style="text-align:right">exact/derived views</td>
-  <td>no unrestricted computer algebra system</td>
+<td>Symbolic</td>
+<td style="text-align:right">20 systems</td>
+<td style="text-align:right">exact/derived views</td>
+<td>no unrestricted computer algebra system</td>
 </tr>
 </tbody>
 </table>
@@ -677,7 +678,7 @@ names without these four parts remain in the trust roadmap rather than becoming 
 <li>an interpretation boundary beside the result.</li>
 </ol>
 <p>Names without these four parts remain in the Trust roadmap rather than becoming decorative controls.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="formulate a model before entering it
+</section><section class="guide-module" data-guide-id="formulate-a-model-before-entering-it" data-guide-search="formulate a model before entering it
 define the question and output
 a model can have many states but should begin with one precise question. examples:
 
@@ -710,7 +711,7 @@ every additive term in an equation must have the same units. if x has units of c
 for a mass-action term:
 rate = k*a*b
 
-k must carry the units needed to make the rate dimensionally correct. foko lab evaluates numbers and expressions; it does not certify units automatically." data-guide-id="formulate-a-model-before-entering-it"><div class="guide-module-heading"><h2 id="formulate-a-model-before-entering-it">Formulate a model before entering it</h2><a class="guide-deep-link" href="#formulate-a-model-before-entering-it" aria-label="Copy link to Formulate a model before entering it">#</a></div>
+k must carry the units needed to make the rate dimensionally correct. foko lab evaluates numbers and expressions; it does not certify units automatically." data-guide-section=""><div class="guide-module-heading"><h2 id="formulate-a-model-before-entering-it">Formulate a model before entering it</h2><a aria-label="Copy link to Formulate a model before entering it" class="guide-deep-link" href="#formulate-a-model-before-entering-it">#</a></div>
 <h3 id="define-the-question-and-output">Define the question and output</h3>
 <p>A model can have many states but should begin with one precise question. Examples:</p>
 <ul>
@@ -744,20 +745,20 @@ k must carry the units needed to make the rate dimensionally correct. foko lab e
 <pre><code class="language-text">rate = k*A*B
 </code></pre>
 <p><code>k</code> must carry the units needed to make the rate dimensionally correct. Foko Lab evaluates numbers and expressions; it does not certify units automatically.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="model studio in detail
+</section><section class="guide-module" data-guide-id="model-studio-in-detail" data-guide-search="model studio in detail
 use model studio when you want the model—not an example page—to be the durable object of the workflow. a studio project keeps the scientific question, state names, one right-hand side per state, initial conditions, parameter values and ranges, time span, solver settings, a compact run ledger, and compatible experiment routes together.
 on a desktop or large tablet, drag the separator between the model panel and the plotting canvas to make equation entry wider or to give more room to plots. the −, reset, and ＋ controls provide the same operation without dragging. the separator is keyboard accessible: left/right changes the width, shift changes it in larger steps, home/end selects the compact/wide limit, and enter restores the default. width is saved separately for each lab. on phones, foko lab intentionally uses the setup, results and evidence task views instead of a narrow drag target.
 the starter catalogue contains 21 editable ode systems, including epidemiology, ecology, enzyme kinetics, gene regulation, physiology, oscillators, lorenz and rössler dynamics, and a five-state lorenz–96 benchmark. the full 259-entry model atlas remains a separate searchable catalogue and is linked directly from the studio.
 after a trajectory run, the studio offers trajectories, range-normalized trajectories, a state–time heatmap, 2d and 3d phase portraits, phase points colored by time, parallel coordinates, a final-state radar view, derivative and correlation heatmaps, and adaptive-step/error evidence. each view states its axes and interpretation boundary.
 the two-parameter experiment varies two declared parameter ranges over a finite rectangular grid. heatmap, labeled contour and 3d surface views display the same scalar output. this is useful for response geometry, interactions and thresholds, but it is not morris screening, sobol decomposition, uncertainty propagation or proof of a global optimum. send the current model directly to sensitivity for local, morris, sobol or fim analysis, or to steady-state for roots and stability evidence.
-project json preserves the editable project and compact run metadata. model ir export preserves the direct ode definition in foko.model-ir/1. result csv contains the current trajectory arrays. a restored or imported configuration must be rerun; saved metadata is not presented as fresh computed evidence." data-guide-id="model-studio-in-detail"><div class="guide-module-heading"><h2 id="model-studio-in-detail">Model Studio in detail</h2><a class="guide-deep-link" href="#model-studio-in-detail" aria-label="Copy link to Model Studio in detail">#</a></div>
+project json preserves the editable project and compact run metadata. model ir export preserves the direct ode definition in foko.model-ir/1. result csv contains the current trajectory arrays. a restored or imported configuration must be rerun; saved metadata is not presented as fresh computed evidence." data-guide-section=""><div class="guide-module-heading"><h2 id="model-studio-in-detail">Model Studio in detail</h2><a aria-label="Copy link to Model Studio in detail" class="guide-deep-link" href="#model-studio-in-detail">#</a></div>
 <p>Use <strong>Model Studio</strong> when you want the model—not an example page—to be the durable object of the workflow. A Studio project keeps the scientific question, state names, one right-hand side per state, initial conditions, parameter values and ranges, time span, solver settings, a compact run ledger, and compatible experiment routes together.</p>
 <p>On a desktop or large tablet, drag the separator between the model panel and the plotting canvas to make equation entry wider or to give more room to plots. The <strong>−</strong>, <strong>Reset</strong>, and <strong>＋</strong> controls provide the same operation without dragging. The separator is keyboard accessible: Left/Right changes the width, Shift changes it in larger steps, Home/End selects the compact/wide limit, and Enter restores the default. Width is saved separately for each lab. On phones, Foko Lab intentionally uses the Setup, Results and Evidence task views instead of a narrow drag target.</p>
 <p>The starter catalogue contains 21 editable ODE systems, including epidemiology, ecology, enzyme kinetics, gene regulation, physiology, oscillators, Lorenz and Rössler dynamics, and a five-state Lorenz–96 benchmark. The full 259-entry <strong>Model Atlas</strong> remains a separate searchable catalogue and is linked directly from the Studio.</p>
 <p>After a trajectory run, the Studio offers trajectories, range-normalized trajectories, a state–time heatmap, 2D and 3D phase portraits, phase points colored by time, parallel coordinates, a final-state radar view, derivative and correlation heatmaps, and adaptive-step/error evidence. Each view states its axes and interpretation boundary.</p>
 <p>The two-parameter experiment varies two declared parameter ranges over a finite rectangular grid. Heatmap, labeled contour and 3D surface views display the same scalar output. This is useful for response geometry, interactions and thresholds, but it is not Morris screening, Sobol decomposition, uncertainty propagation or proof of a global optimum. Send the current model directly to <strong>Sensitivity</strong> for local, Morris, Sobol or FIM analysis, or to <strong>Steady-State</strong> for roots and stability evidence.</p>
 <p>Project JSON preserves the editable project and compact run metadata. Model IR export preserves the direct ODE definition in <code>foko.model-ir/1</code>. Result CSV contains the current trajectory arrays. A restored or imported configuration must be rerun; saved metadata is not presented as fresh computed evidence.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="model interchange and community standards
+</section><section class="guide-module" data-guide-id="model-interchange-and-community-standards" data-guide-search="model interchange and community standards
 model studio accepts several local, declarative inputs. import never executes the supplied python or javascript.
 
 
@@ -823,66 +824,66 @@ method: rk45
 
 python dictionary example
 foko_model = {
-    &#x27;name&#x27;: &#x27;logistic growth&#x27;,
-    &#x27;vars&#x27;: [&#x27;x&#x27;],
-    &#x27;eqs&#x27;: [&#x27;r*x*(1-x/k)&#x27;],
-    &#x27;y0&#x27;: [2],
-    &#x27;params&#x27;: {&#x27;r&#x27;: [0.6, 0.1, 1.2], &#x27;k&#x27;: [100, 40, 180]},
-    &#x27;t0&#x27;: 0,
-    &#x27;t1&#x27;: 15,
-    &#x27;points&#x27;: 400
+    'name': 'logistic growth',
+    'vars': ['x'],
+    'eqs': ['r*x*(1-x/k)'],
+    'y0': [2],
+    'params': {'r': [0.6, 0.1, 1.2], 'k': [100, 40, 180]},
+    't0': 0,
+    't1': 15,
+    'points': 400
 }
 
-after import, inspect the rendered equations, every initial value, every parameter/range and the time/numerical settings. format validity is not scientific validity." data-guide-id="model-interchange-and-community-standards"><div class="guide-module-heading"><h2 id="model-interchange-and-community-standards">Model interchange and community standards</h2><a class="guide-deep-link" href="#model-interchange-and-community-standards" aria-label="Copy link to Model interchange and community standards">#</a></div>
+after import, inspect the rendered equations, every initial value, every parameter/range and the time/numerical settings. format validity is not scientific validity." data-guide-section=""><div class="guide-module-heading"><h2 id="model-interchange-and-community-standards">Model interchange and community standards</h2><a aria-label="Copy link to Model interchange and community standards" class="guide-deep-link" href="#model-interchange-and-community-standards">#</a></div>
 <p>Model Studio accepts several local, declarative inputs. Import never executes the supplied Python or JavaScript.</p>
 <table>
 <thead>
 <tr>
-  <th>Input</th>
-  <th>What Foko Lab accepts</th>
-  <th>Scientific boundary</th>
+<th>Input</th>
+<th>What Foko Lab accepts</th>
+<th>Scientific boundary</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>Foko Project JSON</td>
-  <td>model, scientific question, experiment settings and compact run ledger</td>
-  <td>imported runs are metadata; computed evidence must be regenerated</td>
+<td>Foko Project JSON</td>
+<td>model, scientific question, experiment settings and compact run ledger</td>
+<td>imported runs are metadata; computed evidence must be regenerated</td>
 </tr>
 <tr>
-  <td><code>foko.model-ir/1</code> JSON</td>
-  <td>direct ODEs or reaction networks lowered through stoichiometry</td>
-  <td>no units, events, delays, rules, compartments or DAEs</td>
+<td><code>foko.model-ir/1</code> JSON</td>
+<td>direct ODEs or reaction networks lowered through stoichiometry</td>
+<td>no units, events, delays, rules, compartments or DAEs</td>
 </tr>
 <tr>
-  <td>Plain TXT / ODE</td>
-  <td>one <code>dstate/dt = expression</code> line per state, initial values, parameters, ranges, time and method</td>
-  <td>a small explicit grammar, not arbitrary source code</td>
+<td>Plain TXT / ODE</td>
+<td>one <code>dstate/dt = expression</code> line per state, initial values, parameters, ranges, time and method</td>
+<td>a small explicit grammar, not arbitrary source code</td>
 </tr>
 <tr>
-  <td>Python dictionary</td>
-  <td><code>FOKO_MODEL = {...}</code> or <code>FOKO_PROJECT = {...}</code> containing data literals</td>
-  <td>Python functions, imports and expressions are rejected and never evaluated</td>
+<td>Python dictionary</td>
+<td><code>FOKO_MODEL = {...}</code> or <code>FOKO_PROJECT = {...}</code> containing data literals</td>
+<td>Python functions, imports and expressions are rejected and never evaluated</td>
 </tr>
 <tr>
-  <td>JavaScript object</td>
-  <td><code>const FOKO_MODEL = {...}</code> containing data literals</td>
-  <td>executable JavaScript is rejected and never evaluated</td>
+<td>JavaScript object</td>
+<td><code>const FOKO_MODEL = {...}</code> containing data literals</td>
+<td>executable JavaScript is rejected and never evaluated</td>
 </tr>
 <tr>
-  <td>YAML</td>
-  <td>nested mappings with inline arrays/objects</td>
-  <td>a documented dependency-free subset, not the complete YAML specification</td>
+<td>YAML</td>
+<td>nested mappings with inline arrays/objects</td>
+<td>a documented dependency-free subset, not the complete YAML specification</td>
 </tr>
 <tr>
-  <td>Model-table CSV</td>
-  <td>equation, parameter, time and solver rows</td>
-  <td>intended for simple deterministic ODE exchange</td>
+<td>Model-table CSV</td>
+<td>equation, parameter, time and solver rows</td>
+<td>intended for simple deterministic ODE exchange</td>
 </tr>
 <tr>
-  <td>SBML/XML</td>
-  <td>species, reactions, numeric stoichiometry, global/local parameters and a restricted MathML kinetic-law subset</td>
-  <td>events, rules, initial assignments, function definitions, packages, piecewise logic, non-unit compartments and unsupported MathML are rejected as a whole</td>
+<td>SBML/XML</td>
+<td>species, reactions, numeric stoichiometry, global/local parameters and a restricted MathML kinetic-law subset</td>
+<td>events, rules, initial assignments, function definitions, packages, piecewise logic, non-unit compartments and unsupported MathML are rejected as a whole</td>
 </tr>
 </tbody>
 </table>
@@ -910,7 +911,7 @@ method: rk45
 }
 </code></pre>
 <p>After import, inspect the rendered equations, every initial value, every parameter/range and the time/numerical settings. Format validity is not scientific validity.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="author equations safely
+</section><section class="guide-module" data-guide-id="author-equations-safely" data-guide-search="author equations safely
 use explicit multiplication:
 beta*s*i/n
 
@@ -943,7 +944,7 @@ the initial population is zero;
 time approaches zero;
 the system approaches a known equilibrium.
 
-a model that fails an analytically obvious limiting case should not be trusted because its plot looks plausible." data-guide-id="author-equations-safely"><div class="guide-module-heading"><h2 id="author-equations-safely">Author equations safely</h2><a class="guide-deep-link" href="#author-equations-safely" aria-label="Copy link to Author equations safely">#</a></div>
+a model that fails an analytically obvious limiting case should not be trusted because its plot looks plausible." data-guide-section=""><div class="guide-module-heading"><h2 id="author-equations-safely">Author equations safely</h2><a aria-label="Copy link to Author equations safely" class="guide-deep-link" href="#author-equations-safely">#</a></div>
 <p>Use explicit multiplication:</p>
 <pre><code class="language-text">beta*S*I/N
 </code></pre>
@@ -977,7 +978,7 @@ dP/dt =       v2
 <li>the system approaches a known equilibrium.</li>
 </ul>
 <p>A model that fails an analytically obvious limiting case should not be trusted because its plot looks plausible.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="numerical controls and solver choice
+</section><section class="guide-module" data-guide-id="numerical-controls-and-solver-choice" data-guide-search="numerical controls and solver choice
 time span
 choose a time window long enough to contain the phenomenon of interest but not so long that irrelevant late-time behavior dominates the output metric.
 for oscillatory models, changing the end time can change maxima, means, ranges, phase relations, and sensitivity rankings. report the exact interval.
@@ -1003,7 +1004,7 @@ large local timescale separation;
 a fixed-step result that changes dramatically under refinement;
 disagreement with an implicit reference solver.
 
-use the scipy verification export or an external radau/bdf/lsoda workflow for important stiff problems." data-guide-id="numerical-controls-and-solver-choice"><div class="guide-module-heading"><h2 id="numerical-controls-and-solver-choice">Numerical controls and solver choice</h2><a class="guide-deep-link" href="#numerical-controls-and-solver-choice" aria-label="Copy link to Numerical controls and solver choice">#</a></div>
+use the scipy verification export or an external radau/bdf/lsoda workflow for important stiff problems." data-guide-section=""><div class="guide-module-heading"><h2 id="numerical-controls-and-solver-choice">Numerical controls and solver choice</h2><a aria-label="Copy link to Numerical controls and solver choice" class="guide-deep-link" href="#numerical-controls-and-solver-choice">#</a></div>
 <h3 id="time-span">Time span</h3>
 <p>Choose a time window long enough to contain the phenomenon of interest but not so long that irrelevant late-time behavior dominates the output metric.</p>
 <p>For oscillatory models, changing the end time can change maxima, means, ranges, phase relations, and sensitivity rankings. Report the exact interval.</p>
@@ -1030,7 +1031,7 @@ use the scipy verification export or an external radau/bdf/lsoda workflow for im
 <li>disagreement with an implicit reference solver.</li>
 </ul>
 <p>Use the SciPy verification export or an external Radau/BDF/LSODA workflow for important stiff problems.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="read every result in the same order
+</section><section class="guide-module" data-guide-id="read-every-result-in-the-same-order" data-guide-search="read every result in the same order
 1. status
 
 ready: inputs exist but no current result has been computed.
@@ -1051,7 +1052,7 @@ state what the computation did not establish. examples:
 “the finite multi-start search did not prove that all roots were found.”
 “the pareto front is a finite sampled approximation.”
 “the sobol estimates assume independent uniform ranges.”
-“the pinn example was exported but not trained in the browser.”" data-guide-id="read-every-result-in-the-same-order"><div class="guide-module-heading"><h2 id="read-every-result-in-the-same-order">Read every result in the same order</h2><a class="guide-deep-link" href="#read-every-result-in-the-same-order" aria-label="Copy link to Read every result in the same order">#</a></div>
+“the pinn example was exported but not trained in the browser.”" data-guide-section=""><div class="guide-module-heading"><h2 id="read-every-result-in-the-same-order">Read every result in the same order</h2><a aria-label="Copy link to Read every result in the same order" class="guide-deep-link" href="#read-every-result-in-the-same-order">#</a></div>
 <h3 id="1-status">1. Status</h3>
 <ul>
 <li><strong>Ready</strong>: inputs exist but no current result has been computed.</li>
@@ -1074,7 +1075,7 @@ state what the computation did not establish. examples:
 <li>“The Sobol estimates assume independent uniform ranges.”</li>
 <li>“The PINN example was exported but not trained in the browser.”</li>
 </ul>
-</section><section class="guide-module" data-guide-section data-guide-search="capability labels
+</section><section class="guide-module" data-guide-id="capability-labels" data-guide-search="capability labels
 
 
 
@@ -1105,39 +1106,39 @@ state what the computation did not establish. examples:
 
 
 
-these labels describe the computation boundary, not the truth of the scientific model." data-guide-id="capability-labels"><div class="guide-module-heading"><h2 id="capability-labels">Capability labels</h2><a class="guide-deep-link" href="#capability-labels" aria-label="Copy link to Capability labels">#</a></div>
+these labels describe the computation boundary, not the truth of the scientific model." data-guide-section=""><div class="guide-module-heading"><h2 id="capability-labels">Capability labels</h2><a aria-label="Copy link to Capability labels" class="guide-deep-link" href="#capability-labels">#</a></div>
 <table>
 <thead>
 <tr>
-  <th>Label</th>
-  <th>Meaning</th>
+<th>Label</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td><strong>Browser-computed</strong></td>
-  <td>The maintained browser core computed the visible result from the current input.</td>
+<td><strong>Browser-computed</strong></td>
+<td>The maintained browser core computed the visible result from the current input.</td>
 </tr>
 <tr>
-  <td><strong>Derived in browser</strong></td>
-  <td>The plot or metric was derived from a computed finite result.</td>
+<td><strong>Derived in browser</strong></td>
+<td>The plot or metric was derived from a computed finite result.</td>
 </tr>
 <tr>
-  <td><strong>Limited</strong></td>
-  <td>A genuine bounded, heuristic, reduced, or finite-sample method was used.</td>
+<td><strong>Limited</strong></td>
+<td>A genuine bounded, heuristic, reduced, or finite-sample method was used.</td>
 </tr>
 <tr>
-  <td><strong>Export-only</strong></td>
-  <td>Foko Lab prepares a configuration or external workflow but does not claim browser computation.</td>
+<td><strong>Export-only</strong></td>
+<td>Foko Lab prepares a configuration or external workflow but does not claim browser computation.</td>
 </tr>
 <tr>
-  <td><strong>Unavailable</strong></td>
-  <td>The numerical method is absent and no substitute result is displayed.</td>
+<td><strong>Unavailable</strong></td>
+<td>The numerical method is absent and no substitute result is displayed.</td>
 </tr>
 </tbody>
 </table>
 <p>These labels describe the computation boundary, not the truth of the scientific model.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="ode lab in detail
+</section><section class="guide-module" data-guide-id="ode-lab-in-detail" data-guide-search="ode lab in detail
 use it for
 
 autonomous or time-dependent ordinary differential equations;
@@ -1169,7 +1170,7 @@ do not claim
 that an explicit browser solver is suitable for every system;
 that agreement between two explicit methods validates the mechanism;
 that a visually smooth trajectory is accurate;
-that a parameter sweep is a probability distribution." data-guide-id="ode-lab-in-detail"><div class="guide-module-heading"><h2 id="ode-lab-in-detail">ODE Lab in detail</h2><a class="guide-deep-link" href="#ode-lab-in-detail" aria-label="Copy link to ODE Lab in detail">#</a></div>
+that a parameter sweep is a probability distribution." data-guide-section=""><div class="guide-module-heading"><h2 id="ode-lab-in-detail">ODE Lab in detail</h2><a aria-label="Copy link to ODE Lab in detail" class="guide-deep-link" href="#ode-lab-in-detail">#</a></div>
 <h3 id="use-it-for">Use it for</h3>
 <ul>
 <li>autonomous or time-dependent ordinary differential equations;</li>
@@ -1203,7 +1204,7 @@ that a parameter sweep is a probability distribution." data-guide-id="ode-lab-in
 <li>that a visually smooth trajectory is accurate;</li>
 <li>that a parameter sweep is a probability distribution.</li>
 </ul>
-</section><section class="guide-module" data-guide-section data-guide-search="sensitivity analysis lab in detail
+</section><section class="guide-module" data-guide-id="sensitivity-analysis-lab-in-detail" data-guide-search="sensitivity analysis lab in detail
 sensitivity analysis asks how a declared model output changes when assumptions change. the answer is conditional on the model, initial conditions, time window, output definition, parameter domain, numerical solver, and estimator.
 curated library
 the library contains smooth verification models, growth models, epidemic systems, ecological oscillators, enzyme kinetics, gene circuits, signalling, physiology, mechanics, and nonlinear dynamics. use the search and family filters. each card states the scientific question, model family, difficulty, and main caution.
@@ -1278,7 +1279,7 @@ browser capacity
 the lab estimates ode solves and state-time storage before starting. large state dimension, many varied parameters, second-order interactions, long output grids, or dense response surfaces may be refused.
 do not bypass the guard. export the model and use python/salib, a server workflow, or hpc.
 not implemented
-adjoint sensitivities, fast/efast, shapley effects, dependent-input sobol analysis, bayesian sensitivity, symbolic identifiability, generic residual-component sensitivity, certified bifurcation sensitivity, and pde/pinn adjoints remain unavailable or export-only." data-guide-id="sensitivity-analysis-lab-in-detail"><div class="guide-module-heading"><h2 id="sensitivity-analysis-lab-in-detail">Sensitivity Analysis Lab in detail</h2><a class="guide-deep-link" href="#sensitivity-analysis-lab-in-detail" aria-label="Copy link to Sensitivity Analysis Lab in detail">#</a></div>
+adjoint sensitivities, fast/efast, shapley effects, dependent-input sobol analysis, bayesian sensitivity, symbolic identifiability, generic residual-component sensitivity, certified bifurcation sensitivity, and pde/pinn adjoints remain unavailable or export-only." data-guide-section=""><div class="guide-module-heading"><h2 id="sensitivity-analysis-lab-in-detail">Sensitivity Analysis Lab in detail</h2><a aria-label="Copy link to Sensitivity Analysis Lab in detail" class="guide-deep-link" href="#sensitivity-analysis-lab-in-detail">#</a></div>
 <p>Sensitivity analysis asks how a declared model output changes when assumptions change. The answer is conditional on the model, initial conditions, time window, output definition, parameter domain, numerical solver, and estimator.</p>
 <h3 id="curated-library">Curated library</h3>
 <p>The library contains smooth verification models, growth models, epidemic systems, ecological oscillators, enzyme kinetics, gene circuits, signalling, physiology, mechanics, and nonlinear dynamics. Use the search and family filters. Each card states the scientific question, model family, difficulty, and main caution.</p>
@@ -1354,7 +1355,7 @@ adjoint sensitivities, fast/efast, shapley effects, dependent-input sobol analys
 <p>Do not bypass the guard. Export the model and use Python/SALib, a server workflow, or HPC.</p>
 <h3 id="not-implemented">Not implemented</h3>
 <p>Adjoint sensitivities, FAST/eFAST, Shapley effects, dependent-input Sobol analysis, Bayesian sensitivity, symbolic identifiability, generic residual-component sensitivity, certified bifurcation sensitivity, and PDE/PINN adjoints remain unavailable or export-only.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="optimization and multi-objective analysis
+</section><section class="guide-module" data-guide-id="optimization-and-multi-objective-analysis" data-guide-search="optimization and multi-objective analysis
 what is computed
 optimization lab supports bounded coordinate search, projected finite-difference penalty descent, seeded differential evolution, deterministic multi-start search, and random search. the plot library includes objective and penalized landscapes, violation maps, feasible regions, convergence, variable paths, step lengths, finite-difference gradient and hessian diagnostics, candidate distributions, parallel coordinates, feasibility evidence, and finite-sample pareto diagnostics.
 how to formulate a problem
@@ -1371,7 +1372,7 @@ multi-objective evidence
 for problems with two objectives, foko lab can derive a finite sampled pareto front, dominance matrix, crowding distance, hypervolume progression, objective correlation and a geometric knee candidate.
 these plots describe the sampled candidate set. they are not an exact pareto set and are not a replacement for a validated moea.
 unavailable optimization claims
-trust-region radius, momentum evolution, bayesian optimization, topology optimization, cfd shape optimization, full nonlinear mpc, and benchmark-complete zdt/dtlz evolutionary optimization are not computed by the browser core." data-guide-id="optimization-and-multi-objective-analysis"><div class="guide-module-heading"><h2 id="optimization-and-multi-objective-analysis">Optimization and multi-objective analysis</h2><a class="guide-deep-link" href="#optimization-and-multi-objective-analysis" aria-label="Copy link to Optimization and multi-objective analysis">#</a></div>
+trust-region radius, momentum evolution, bayesian optimization, topology optimization, cfd shape optimization, full nonlinear mpc, and benchmark-complete zdt/dtlz evolutionary optimization are not computed by the browser core." data-guide-section=""><div class="guide-module-heading"><h2 id="optimization-and-multi-objective-analysis">Optimization and multi-objective analysis</h2><a aria-label="Copy link to Optimization and multi-objective analysis" class="guide-deep-link" href="#optimization-and-multi-objective-analysis">#</a></div>
 <h3 id="what-is-computed">What is computed</h3>
 <p>Optimization Lab supports bounded coordinate search, projected finite-difference penalty descent, seeded differential evolution, deterministic multi-start search, and random search. The plot library includes objective and penalized landscapes, violation maps, feasible regions, convergence, variable paths, step lengths, finite-difference gradient and Hessian diagnostics, candidate distributions, parallel coordinates, feasibility evidence, and finite-sample Pareto diagnostics.</p>
 <h3 id="how-to-formulate-a-problem">How to formulate a problem</h3>
@@ -1389,7 +1390,7 @@ trust-region radius, momentum evolution, bayesian optimization, topology optimiz
 <p>These plots describe the sampled candidate set. They are not an exact Pareto set and are not a replacement for a validated MOEA.</p>
 <h3 id="unavailable-optimization-claims">Unavailable optimization claims</h3>
 <p>Trust-region radius, momentum evolution, Bayesian optimization, topology optimization, CFD shape optimization, full nonlinear MPC, and benchmark-complete ZDT/DTLZ evolutionary optimization are not computed by the browser core.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="steady-state / algebraic lab
+</section><section class="guide-module" data-guide-id="steady-state-algebraic-lab" data-guide-search="steady-state / algebraic lab
 formulate residuals
 enter equations in the form:
 f1(x,p) = 0
@@ -1410,7 +1411,7 @@ scan residual and stability margin;
 jacobian sign structure, stiffness indicator and implicit local sensitivity.
 
 boundaries
-a multi-start search is finite. a sequential branch scan is not pseudo-arclength continuation. a sign crossing on a finite grid is a candidate, not a certified bifurcation. limit cycles require trajectory analysis and are not inferred from a fixed-point solve alone." data-guide-id="steady-state-algebraic-lab"><div class="guide-module-heading"><h2 id="steady-state-algebraic-lab">Steady-State / Algebraic Lab</h2><a class="guide-deep-link" href="#steady-state-algebraic-lab" aria-label="Copy link to Steady-State / Algebraic Lab">#</a></div>
+a multi-start search is finite. a sequential branch scan is not pseudo-arclength continuation. a sign crossing on a finite grid is a candidate, not a certified bifurcation. limit cycles require trajectory analysis and are not inferred from a fixed-point solve alone." data-guide-section=""><div class="guide-module-heading"><h2 id="steady-state-algebraic-lab">Steady-State / Algebraic Lab</h2><a aria-label="Copy link to Steady-State / Algebraic Lab" class="guide-deep-link" href="#steady-state-algebraic-lab">#</a></div>
 <h3 id="formulate-residuals">Formulate residuals</h3>
 <p>Enter equations in the form:</p>
 <pre><code class="language-text">f1(x,p) = 0
@@ -1432,7 +1433,7 @@ f2(x,p) = 0
 </ul>
 <h3 id="boundaries">Boundaries</h3>
 <p>A multi-start search is finite. A sequential branch scan is not pseudo-arclength continuation. A sign crossing on a finite grid is a candidate, not a certified bifurcation. Limit cycles require trajectory analysis and are not inferred from a fixed-point solve alone.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="stochastic lab
+</section><section class="guide-module" data-guide-id="stochastic-lab" data-guide-search="stochastic lab
 maintained model class
 the maintained computation is gillespie’s direct stochastic simulation algorithm for time-homogeneous continuous-time markov chains with explicit states, stoichiometry and propensities.
 inputs
@@ -1458,7 +1459,7 @@ zero-state risk and first-passage evidence;
 event counts and path-deviation heatmaps.
 
 boundaries
-the empirical interval represents a finite ensemble. it is not parameter uncertainty or a confidence interval for model truth. censored trajectories must be reported. tau-leaping, generic sde integration, stochastic pdes, stochastic bifurcations and stochastic lyapunov analysis are not maintained browser computations." data-guide-id="stochastic-lab"><div class="guide-module-heading"><h2 id="stochastic-lab">Stochastic Lab</h2><a class="guide-deep-link" href="#stochastic-lab" aria-label="Copy link to Stochastic Lab">#</a></div>
+the empirical interval represents a finite ensemble. it is not parameter uncertainty or a confidence interval for model truth. censored trajectories must be reported. tau-leaping, generic sde integration, stochastic pdes, stochastic bifurcations and stochastic lyapunov analysis are not maintained browser computations." data-guide-section=""><div class="guide-module-heading"><h2 id="stochastic-lab">Stochastic Lab</h2><a aria-label="Copy link to Stochastic Lab" class="guide-deep-link" href="#stochastic-lab">#</a></div>
 <h3 id="maintained-model-class">Maintained model class</h3>
 <p>The maintained computation is Gillespie’s direct stochastic simulation algorithm for time-homogeneous continuous-time Markov chains with explicit states, stoichiometry and propensities.</p>
 <h3 id="inputs">Inputs</h3>
@@ -1485,7 +1486,7 @@ the empirical interval represents a finite ensemble. it is not parameter uncerta
 </ul>
 <h3 id="boundaries-2">Boundaries</h3>
 <p>The empirical interval represents a finite ensemble. It is not parameter uncertainty or a confidence interval for model truth. Censored trajectories must be reported. Tau-leaping, generic SDE integration, stochastic PDEs, stochastic bifurcations and stochastic Lyapunov analysis are not maintained browser computations.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="curve fitting
+</section><section class="guide-module" data-guide-id="curve-fitting" data-guide-search="curve fitting
 workflow
 
 inspect data, units, missingness and experimental design.
@@ -1497,7 +1498,7 @@ inspect parameter uncertainty, bootstrap results, correlation and profile scans.
 test predictions on withheld or new data where possible.
 
 identifiability
-strong parameter correlation, flat profile curves, broad bootstrap distributions or dependence on starting values indicate practical non-identifiability. more optimizer iterations do not create information absent from the data." data-guide-id="curve-fitting"><div class="guide-module-heading"><h2 id="curve-fitting">Curve Fitting</h2><a class="guide-deep-link" href="#curve-fitting" aria-label="Copy link to Curve Fitting">#</a></div>
+strong parameter correlation, flat profile curves, broad bootstrap distributions or dependence on starting values indicate practical non-identifiability. more optimizer iterations do not create information absent from the data." data-guide-section=""><div class="guide-module-heading"><h2 id="curve-fitting">Curve Fitting</h2><a aria-label="Copy link to Curve Fitting" class="guide-deep-link" href="#curve-fitting">#</a></div>
 <h3 id="workflow">Workflow</h3>
 <ol>
 <li>Inspect data, units, missingness and experimental design.</li>
@@ -1510,7 +1511,7 @@ strong parameter correlation, flat profile curves, broad bootstrap distributions
 </ol>
 <h3 id="identifiability">Identifiability</h3>
 <p>Strong parameter correlation, flat profile curves, broad bootstrap distributions or dependence on starting values indicate practical non-identifiability. More optimizer iterations do not create information absent from the data.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="statistics lab
+</section><section class="guide-module" data-guide-id="statistics-lab" data-guide-search="statistics lab
 the statistics lab provides descriptive summaries, pca, ols regression, correlation, welch comparison, one-way anova with nonparametric evidence, bootstrap mean intervals, roc/precision-recall analysis, kaplan–meier/log-rank analysis, benjamini–hochberg fdr, and shewhart process charts.
 before running:
 
@@ -1520,7 +1521,7 @@ define the missing-data policy;
 check sample size and dependence;
 decide whether multiplicity correction is needed.
 
-mean imputation is displayed as a warning because it can distort variance and correlation." data-guide-id="statistics-lab"><div class="guide-module-heading"><h2 id="statistics-lab">Statistics Lab</h2><a class="guide-deep-link" href="#statistics-lab" aria-label="Copy link to Statistics Lab">#</a></div>
+mean imputation is displayed as a warning because it can distort variance and correlation." data-guide-section=""><div class="guide-module-heading"><h2 id="statistics-lab">Statistics Lab</h2><a aria-label="Copy link to Statistics Lab" class="guide-deep-link" href="#statistics-lab">#</a></div>
 <p>The Statistics Lab provides descriptive summaries, PCA, OLS regression, correlation, Welch comparison, one-way ANOVA with nonparametric evidence, bootstrap mean intervals, ROC/precision-recall analysis, Kaplan–Meier/log-rank analysis, Benjamini–Hochberg FDR, and Shewhart process charts.</p>
 <p>Before running:</p>
 <ul>
@@ -1531,7 +1532,7 @@ mean imputation is displayed as a warning because it can distort variance and co
 <li>decide whether multiplicity correction is needed.</li>
 </ul>
 <p>Mean imputation is displayed as a warning because it can distort variance and correlation.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="machine learning toolkit
+</section><section class="guide-module" data-guide-id="machine-learning-toolkit" data-guide-search="machine learning toolkit
 the maintained scope is small-data baseline modeling:
 
 linear and ridge-style regression baselines;
@@ -1543,7 +1544,7 @@ k-means clustering with silhouette and elbow evidence;
 pca scores, variance and loadings;
 leakage and extrapolation warnings.
 
-shap, umap, t-sne, deep neural networks, transfer learning, federated learning, reinforcement learning, architecture search and production monitoring are not computed. do not label permutation importance as shap." data-guide-id="machine-learning-toolkit"><div class="guide-module-heading"><h2 id="machine-learning-toolkit">Machine Learning Toolkit</h2><a class="guide-deep-link" href="#machine-learning-toolkit" aria-label="Copy link to Machine Learning Toolkit">#</a></div>
+shap, umap, t-sne, deep neural networks, transfer learning, federated learning, reinforcement learning, architecture search and production monitoring are not computed. do not label permutation importance as shap." data-guide-section=""><div class="guide-module-heading"><h2 id="machine-learning-toolkit">Machine Learning Toolkit</h2><a aria-label="Copy link to Machine Learning Toolkit" class="guide-deep-link" href="#machine-learning-toolkit">#</a></div>
 <p>The maintained scope is small-data baseline modeling:</p>
 <ul>
 <li>linear and ridge-style regression baselines;</li>
@@ -1556,21 +1557,21 @@ shap, umap, t-sne, deep neural networks, transfer learning, federated learning, 
 <li>leakage and extrapolation warnings.</li>
 </ul>
 <p>SHAP, UMAP, t-SNE, deep neural networks, transfer learning, federated learning, reinforcement learning, architecture search and production monitoring are not computed. Do not label permutation importance as SHAP.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="linear algebra lab
+</section><section class="guide-module" data-guide-id="linear-algebra-lab" data-guide-search="linear algebra lab
 use the lab for small dense matrices. available operations include matrix diagnostics, solving ax=b, inverse with reconstruction residual, qr least squares, symmetric eigensystems, rref/null space, pca and a stationary-distribution candidate.
 common evidence includes matrix heatmaps, singular and eigenvalue spectra, residuals, solution vectors, transformations, pca scores/loadings and reconstruction checks.
 a large condition number means small input errors may be strongly amplified. a small residual does not guarantee a small solution error in an ill-conditioned system.
-pseudospectra, sparse direct solvers, gmres, full krylov tooling, schur decomposition, sylvester equations and lyapunov equations remain external workflows." data-guide-id="linear-algebra-lab"><div class="guide-module-heading"><h2 id="linear-algebra-lab">Linear Algebra Lab</h2><a class="guide-deep-link" href="#linear-algebra-lab" aria-label="Copy link to Linear Algebra Lab">#</a></div>
+pseudospectra, sparse direct solvers, gmres, full krylov tooling, schur decomposition, sylvester equations and lyapunov equations remain external workflows." data-guide-section=""><div class="guide-module-heading"><h2 id="linear-algebra-lab">Linear Algebra Lab</h2><a aria-label="Copy link to Linear Algebra Lab" class="guide-deep-link" href="#linear-algebra-lab">#</a></div>
 <p>Use the lab for small dense matrices. Available operations include matrix diagnostics, solving <code>Ax=b</code>, inverse with reconstruction residual, QR least squares, symmetric eigensystems, RREF/null space, PCA and a stationary-distribution candidate.</p>
 <p>Common evidence includes matrix heatmaps, singular and eigenvalue spectra, residuals, solution vectors, transformations, PCA scores/loadings and reconstruction checks.</p>
 <p>A large condition number means small input errors may be strongly amplified. A small residual does not guarantee a small solution error in an ill-conditioned system.</p>
 <p>Pseudospectra, sparse direct solvers, GMRES, full Krylov tooling, Schur decomposition, Sylvester equations and Lyapunov equations remain external workflows.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="symbolic lab
+</section><section class="guide-module" data-guide-id="symbolic-lab" data-guide-search="symbolic lab
 use symbolic lab to inspect explicit expressions, compute supported exact derivatives, jacobians, hessians, equilibria and local linearizations, and export bounded algebraic results. enter explicit multiplication rather than relying on ambiguous implicit notation.
-the maintained parser and algebra routines cover a controlled expression subset. symbolic lab is not a complete computer algebra system: it does not promise unrestricted simplification, arbitrary special functions, differential algebra, theorem proving or structural-identifiability analysis. verify exported expressions in a specialist cas when the research claim depends on them." data-guide-id="symbolic-lab"><div class="guide-module-heading"><h2 id="symbolic-lab">Symbolic Lab</h2><a class="guide-deep-link" href="#symbolic-lab" aria-label="Copy link to Symbolic Lab">#</a></div>
+the maintained parser and algebra routines cover a controlled expression subset. symbolic lab is not a complete computer algebra system: it does not promise unrestricted simplification, arbitrary special functions, differential algebra, theorem proving or structural-identifiability analysis. verify exported expressions in a specialist cas when the research claim depends on them." data-guide-section=""><div class="guide-module-heading"><h2 id="symbolic-lab">Symbolic Lab</h2><a aria-label="Copy link to Symbolic Lab" class="guide-deep-link" href="#symbolic-lab">#</a></div>
 <p>Use Symbolic Lab to inspect explicit expressions, compute supported exact derivatives, Jacobians, Hessians, equilibria and local linearizations, and export bounded algebraic results. Enter explicit multiplication rather than relying on ambiguous implicit notation.</p>
 <p>The maintained parser and algebra routines cover a controlled expression subset. Symbolic Lab is <strong>not a complete computer algebra system</strong>: it does not promise unrestricted simplification, arbitrary special functions, differential algebra, theorem proving or structural-identifiability analysis. Verify exported expressions in a specialist CAS when the research claim depends on them.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="sciml lab
+</section><section class="guide-module" data-guide-id="sciml-lab" data-guide-search="sciml lab
 sciml combines computed and export-only workflows. read the capability label before interpreting any example.
 browser-computed or limited workflows
 
@@ -1582,7 +1583,7 @@ small surrogate comparisons;
 trajectory phase and pca views where dimensions permit.
 
 export-only examples
-pinns, neural operators, deeponet, neural ode training, large inverse pde problems and high-dimensional hybrid models require external training and validation. their cards are templates and scientific problem statements, not fabricated neural results." data-guide-id="sciml-lab"><div class="guide-module-heading"><h2 id="sciml-lab">SciML Lab</h2><a class="guide-deep-link" href="#sciml-lab" aria-label="Copy link to SciML Lab">#</a></div>
+pinns, neural operators, deeponet, neural ode training, large inverse pde problems and high-dimensional hybrid models require external training and validation. their cards are templates and scientific problem statements, not fabricated neural results." data-guide-section=""><div class="guide-module-heading"><h2 id="sciml-lab">SciML Lab</h2><a aria-label="Copy link to SciML Lab" class="guide-deep-link" href="#sciml-lab">#</a></div>
 <p>SciML combines computed and export-only workflows. Read the capability label before interpreting any example.</p>
 <h3 id="browser-computed-or-limited-workflows">Browser-computed or limited workflows</h3>
 <ul>
@@ -1595,15 +1596,15 @@ pinns, neural operators, deeponet, neural ode training, large inverse pde proble
 </ul>
 <h3 id="export-only-examples">Export-only examples</h3>
 <p>PINNs, neural operators, DeepONet, Neural ODE training, large inverse PDE problems and high-dimensional hybrid models require external training and validation. Their cards are templates and scientific problem statements, not fabricated neural results.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="agent lab
+</section><section class="guide-module" data-guide-id="agent-lab" data-guide-search="agent lab
 specify initial populations, grid or network structure, rules, seed, step count and ensemble size. the live plot displays one representative computed realization; the population and endpoint panels summarize the finite ensemble.
-check that the visible lattice, step counter and population curves advance consistently. pause/resume and repeated-seed behavior are part of the reproducibility evidence." data-guide-id="agent-lab"><div class="guide-module-heading"><h2 id="agent-lab">Agent Lab</h2><a class="guide-deep-link" href="#agent-lab" aria-label="Copy link to Agent Lab">#</a></div>
+check that the visible lattice, step counter and population curves advance consistently. pause/resume and repeated-seed behavior are part of the reproducibility evidence." data-guide-section=""><div class="guide-module-heading"><h2 id="agent-lab">Agent Lab</h2><a aria-label="Copy link to Agent Lab" class="guide-deep-link" href="#agent-lab">#</a></div>
 <p>Specify initial populations, grid or network structure, rules, seed, step count and ensemble size. The live plot displays one representative computed realization; the population and endpoint panels summarize the finite ensemble.</p>
 <p>Check that the visible lattice, step counter and population curves advance consistently. Pause/resume and repeated-seed behavior are part of the reproducibility evidence.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="workbench
-workbench lets several lab adapters use one model configuration. switching adapters must not create a second hidden ode engine. a successful adapter run retains the limitations of the underlying lab; workbench does not convert a limited method into a certified one." data-guide-id="workbench"><div class="guide-module-heading"><h2 id="workbench">Workbench</h2><a class="guide-deep-link" href="#workbench" aria-label="Copy link to Workbench">#</a></div>
+</section><section class="guide-module" data-guide-id="workbench" data-guide-search="workbench
+workbench lets several lab adapters use one model configuration. switching adapters must not create a second hidden ode engine. a successful adapter run retains the limitations of the underlying lab; workbench does not convert a limited method into a certified one." data-guide-section=""><div class="guide-module-heading"><h2 id="workbench">Workbench</h2><a aria-label="Copy link to Workbench" class="guide-deep-link" href="#workbench">#</a></div>
 <p>Workbench lets several lab adapters use one model configuration. Switching adapters must not create a second hidden ODE engine. A successful adapter run retains the limitations of the underlying lab; Workbench does not convert a limited method into a certified one.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="plot interpretation reference
+</section><section class="guide-module" data-guide-id="plot-interpretation-reference" data-guide-search="plot interpretation reference
 
 
 
@@ -1661,69 +1662,69 @@ workbench lets several lab adapters use one model configuration. switching adapt
 
   correlation heatmap
   which sampled variables co-vary?
-  inferring causality." data-guide-id="plot-interpretation-reference"><div class="guide-module-heading"><h2 id="plot-interpretation-reference">Plot interpretation reference</h2><a class="guide-deep-link" href="#plot-interpretation-reference" aria-label="Copy link to Plot interpretation reference">#</a></div>
+  inferring causality." data-guide-section=""><div class="guide-module-heading"><h2 id="plot-interpretation-reference">Plot interpretation reference</h2><a aria-label="Copy link to Plot interpretation reference" class="guide-deep-link" href="#plot-interpretation-reference">#</a></div>
 <table>
 <thead>
 <tr>
-  <th>Plot</th>
-  <th>Useful question</th>
-  <th>Common misuse</th>
+<th>Plot</th>
+<th>Useful question</th>
+<th>Common misuse</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-  <td>Trajectory</td>
-  <td>How do states evolve on the output grid?</td>
-  <td>Treating smoothness as accuracy.</td>
+<td>Trajectory</td>
+<td>How do states evolve on the output grid?</td>
+<td>Treating smoothness as accuracy.</td>
 </tr>
 <tr>
-  <td>Phase portrait</td>
-  <td>What geometric relation exists between states?</td>
-  <td>Ignoring time direction or projection loss.</td>
+<td>Phase portrait</td>
+<td>What geometric relation exists between states?</td>
+<td>Ignoring time direction or projection loss.</td>
 </tr>
 <tr>
-  <td>Heatmap</td>
-  <td>Where are large or structured values?</td>
-  <td>Comparing cells with incompatible scales.</td>
+<td>Heatmap</td>
+<td>Where are large or structured values?</td>
+<td>Comparing cells with incompatible scales.</td>
 </tr>
 <tr>
-  <td>Contour or response surface</td>
-  <td>How does an output vary over two selected inputs?</td>
-  <td>Calling a conditional slice a full global analysis.</td>
+<td>Contour or response surface</td>
+<td>How does an output vary over two selected inputs?</td>
+<td>Calling a conditional slice a full global analysis.</td>
 </tr>
 <tr>
-  <td>Histogram/KDE</td>
-  <td>What is the observed or sampled distribution?</td>
-  <td>Inferring probability outside the sampled design.</td>
+<td>Histogram/KDE</td>
+<td>What is the observed or sampled distribution?</td>
+<td>Inferring probability outside the sampled design.</td>
 </tr>
 <tr>
-  <td>Convergence curve</td>
-  <td>Does the numerical procedure stabilize?</td>
-  <td>Assuming a flat curve proves global optimality or estimator convergence.</td>
+<td>Convergence curve</td>
+<td>Does the numerical procedure stabilize?</td>
+<td>Assuming a flat curve proves global optimality or estimator convergence.</td>
 </tr>
 <tr>
-  <td>Jacobian spectrum</td>
-  <td>What local linear directions exist?</td>
-  <td>Claiming global stability from local evidence.</td>
+<td>Jacobian spectrum</td>
+<td>What local linear directions exist?</td>
+<td>Claiming global stability from local evidence.</td>
 </tr>
 <tr>
-  <td>Pareto front</td>
-  <td>What sampled trade-offs are nondominated?</td>
-  <td>Claiming exact or complete frontier coverage.</td>
+<td>Pareto front</td>
+<td>What sampled trade-offs are nondominated?</td>
+<td>Claiming exact or complete frontier coverage.</td>
 </tr>
 <tr>
-  <td>Sensitivity bar</td>
-  <td>Which inputs appear influential for the chosen output?</td>
-  <td>Ignoring ranges, uncertainty, interactions and estimator assumptions.</td>
+<td>Sensitivity bar</td>
+<td>Which inputs appear influential for the chosen output?</td>
+<td>Ignoring ranges, uncertainty, interactions and estimator assumptions.</td>
 </tr>
 <tr>
-  <td>Correlation heatmap</td>
-  <td>Which sampled variables co-vary?</td>
-  <td>Inferring causality.</td>
+<td>Correlation heatmap</td>
+<td>Which sampled variables co-vary?</td>
+<td>Inferring causality.</td>
 </tr>
 </tbody>
 </table>
-</section><section class="guide-module" data-guide-section data-guide-search="verification, validation and uncertainty
+</section><section class="guide-module" data-guide-id="verification-validation-and-uncertainty" data-guide-search="verification, validation and uncertainty
 verification
 verification asks whether the equations were solved correctly enough. use:
 
@@ -1746,7 +1747,7 @@ measurement uncertainty;
 model-form uncertainty;
 scenario uncertainty.
 
-a solver tolerance addresses only numerical integration error. a bootstrap addresses only the resampling design that produced it. a sensitivity range is not automatically a probability distribution." data-guide-id="verification-validation-and-uncertainty"><div class="guide-module-heading"><h2 id="verification-validation-and-uncertainty">Verification, validation and uncertainty</h2><a class="guide-deep-link" href="#verification-validation-and-uncertainty" aria-label="Copy link to Verification, validation and uncertainty">#</a></div>
+a solver tolerance addresses only numerical integration error. a bootstrap addresses only the resampling design that produced it. a sensitivity range is not automatically a probability distribution." data-guide-section=""><div class="guide-module-heading"><h2 id="verification-validation-and-uncertainty">Verification, validation and uncertainty</h2><a aria-label="Copy link to Verification, validation and uncertainty" class="guide-deep-link" href="#verification-validation-and-uncertainty">#</a></div>
 <h3 id="verification">Verification</h3>
 <p>Verification asks whether the equations were solved correctly enough. Use:</p>
 <ul>
@@ -1770,7 +1771,7 @@ a solver tolerance addresses only numerical integration error. a bootstrap addre
 <li>scenario uncertainty.</li>
 </ul>
 <p>A solver tolerance addresses only numerical integration error. A bootstrap addresses only the resampling design that produced it. A sensitivity range is not automatically a probability distribution.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="save, share and export
+</section><section class="guide-module" data-guide-id="save-share-and-export" data-guide-search="save, share and export
 
 save session stores configuration locally. computed evidence must be rerun.
 share url stores a bounded configuration in the url. recompute after opening it.
@@ -1779,7 +1780,7 @@ result json/csv preserves computed evidence when the result is current.
 python validation provides an external scaffold. it must recompute rather than treating the browser result as ground truth.
 plot export is disabled when evidence is stale.
 
-for publication, regulatory work, clinical decisions, safety-critical engineering, or expensive decisions, use an independent validated workflow and retain software environment information." data-guide-id="save-share-and-export"><div class="guide-module-heading"><h2 id="save-share-and-export">Save, share and export</h2><a class="guide-deep-link" href="#save-share-and-export" aria-label="Copy link to Save, share and export">#</a></div>
+for publication, regulatory work, clinical decisions, safety-critical engineering, or expensive decisions, use an independent validated workflow and retain software environment information." data-guide-section=""><div class="guide-module-heading"><h2 id="save-share-and-export">Save, share and export</h2><a aria-label="Copy link to Save, share and export" class="guide-deep-link" href="#save-share-and-export">#</a></div>
 <ul>
 <li><strong>Save session</strong> stores configuration locally. Computed evidence must be rerun.</li>
 <li><strong>Share URL</strong> stores a bounded configuration in the URL. Recompute after opening it.</li>
@@ -1789,7 +1790,7 @@ for publication, regulatory work, clinical decisions, safety-critical engineerin
 <li><strong>Plot export</strong> is disabled when evidence is stale.</li>
 </ul>
 <p>For publication, regulatory work, clinical decisions, safety-critical engineering, or expensive decisions, use an independent validated workflow and retain software environment information.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="troubleshooting
+</section><section class="guide-module" data-guide-id="troubleshooting" data-guide-search="troubleshooting
 run is disabled
 read the capacity or validation message. common causes are invalid parameter ranges, nonpositive tolerances, incompatible settings, or an oversized sensitivity workload.
 a plot option is absent
@@ -1805,7 +1806,7 @@ reduce states, parameters, output points, samples, pairwise interactions, or res
 a stochastic run is censored
 increase the event cap only after checking why event counts are large. report the censored fraction; do not silently discard those trajectories.
 an optimization candidate is infeasible
-do not label it an optimum. inspect constraint violation, penalty settings, bounds and alternative starts or algorithms." data-guide-id="troubleshooting"><div class="guide-module-heading"><h2 id="troubleshooting">Troubleshooting</h2><a class="guide-deep-link" href="#troubleshooting" aria-label="Copy link to Troubleshooting">#</a></div>
+do not label it an optimum. inspect constraint violation, penalty settings, bounds and alternative starts or algorithms." data-guide-section=""><div class="guide-module-heading"><h2 id="troubleshooting">Troubleshooting</h2><a aria-label="Copy link to Troubleshooting" class="guide-deep-link" href="#troubleshooting">#</a></div>
 <h3 id="run-is-disabled">Run is disabled</h3>
 <p>Read the capacity or validation message. Common causes are invalid parameter ranges, nonpositive tolerances, incompatible settings, or an oversized sensitivity workload.</p>
 <h3 id="a-plot-option-is-absent">A plot option is absent</h3>
@@ -1822,7 +1823,7 @@ do not label it an optimum. inspect constraint violation, penalty settings, boun
 <p>Increase the event cap only after checking why event counts are large. Report the censored fraction; do not silently discard those trajectories.</p>
 <h3 id="an-optimization-candidate-is-infeasible">An optimization candidate is infeasible</h3>
 <p>Do not label it an optimum. Inspect constraint violation, penalty settings, bounds and alternative starts or algorithms.</p>
-</section><section class="guide-module" data-guide-section data-guide-search="reporting checklist
+</section><section class="guide-module" data-guide-id="reporting-checklist" data-guide-search="reporting checklist
 a complete report should include:
 
 scientific question and output;
@@ -1835,7 +1836,7 @@ numerical method, tolerances, steps, seed and sample budget;
 diagnostics and verification;
 sensitivity or uncertainty evidence;
 software version and exported configuration;
-explicit limitations and non-claims." data-guide-id="reporting-checklist"><div class="guide-module-heading"><h2 id="reporting-checklist">Reporting checklist</h2><a class="guide-deep-link" href="#reporting-checklist" aria-label="Copy link to Reporting checklist">#</a></div>
+explicit limitations and non-claims." data-guide-section=""><div class="guide-module-heading"><h2 id="reporting-checklist">Reporting checklist</h2><a aria-label="Copy link to Reporting checklist" class="guide-deep-link" href="#reporting-checklist">#</a></div>
 <p>A complete report should include:</p>
 <ul>
 <li>scientific question and output;</li>
@@ -1850,15 +1851,15 @@ explicit limitations and non-claims." data-guide-id="reporting-checklist"><div c
 <li>software version and exported configuration;</li>
 <li>explicit limitations and non-claims.</li>
 </ul>
-</section><section class="guide-module" data-guide-section data-guide-search="research provenance
+</section><section class="guide-module" data-guide-id="research-provenance" data-guide-search="research provenance
 some public examples are reduced teaching versions inspired by research on fatty-acid metabolism, de novo fatty-acid synthesis, t-cell proliferation, photosynthesis and plant adaptation. they are not complete calibrated reproductions of the research repositories.
-use trust and limitations for the authoritative capability boundary. use the model atlas and research pages for provenance. a successful run demonstrates that the declared reduced model was computed; it does not transfer validation from a publication to an edited browser configuration." data-guide-id="research-provenance"><div class="guide-module-heading"><h2 id="research-provenance">Research provenance</h2><a class="guide-deep-link" href="#research-provenance" aria-label="Copy link to Research provenance">#</a></div>
+use trust and limitations for the authoritative capability boundary. use the model atlas and research pages for provenance. a successful run demonstrates that the declared reduced model was computed; it does not transfer validation from a publication to an edited browser configuration." data-guide-section=""><div class="guide-module-heading"><h2 id="research-provenance">Research provenance</h2><a aria-label="Copy link to Research provenance" class="guide-deep-link" href="#research-provenance">#</a></div>
 <p>Some public examples are reduced teaching versions inspired by research on fatty-acid metabolism, de novo fatty-acid synthesis, T-cell proliferation, photosynthesis and plant adaptation. They are not complete calibrated reproductions of the research repositories.</p>
 <p>Use <strong>Trust and limitations</strong> for the authoritative capability boundary. Use the Model Atlas and research pages for provenance. A successful run demonstrates that the declared reduced model was computed; it does not transfer validation from a publication to an edited browser configuration.</p>
 </section></article></div>
 </main>
 <footer class="v70-footer foko-product-footer compact-public-footer">
-<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=77.4.1"/><p><b>Foko Lab</b><br/>Scientific modeling with visible evidence boundaries.</p></div>
+<div><img alt="Foko Lab" src="assets/brand/foko-lab-mark.svg?v=78.2.0"/><p><b>Foko Lab</b><br/>Scientific modeling with visible evidence boundaries.</p></div>
 <nav aria-label="Footer navigation"><a href="examples.html">Model Atlas</a><a href="tutorial.html">Tutorials</a><a href="docs.html">Modeling handbook</a><a href="trust.html">Trust</a><a href="research.html">Research</a></nav>
 <div class="foko-footer-meta"><p><a href="https://chilperic.github.io/" rel="noopener" target="_blank">Dr. Chilperic Armel Foko Kuate</a> · <a href="https://orcid.org/0000-0002-0140-7588" rel="noopener" target="_blank">ORCID</a></p></div>
 </footer>
@@ -1919,4 +1920,5 @@ use trust and limitations for the authoritative capability boundary. use the mod
   }
   addEventListener('scroll',updateReading,{passive:true});updateReading();
 })();
-</script><script defer src="src/v76/app-shell.js?v=77.4.1"></script></body></html>
+</script><script defer="" src="src/platform/storage.js?v=78.2.0"></script><script defer="" src="src/models/search-index.js?v=78.2.0"></script><script defer="" src="src/v76/app-shell.js?v=78.2.0"></script></body></html>
+

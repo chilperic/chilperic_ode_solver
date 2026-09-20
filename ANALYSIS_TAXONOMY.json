@@ -1,6 +1,6 @@
 {
   "schema": "fokolab-analysis-taxonomy-v1",
-  "release": "77.4.1",
+  "release": "78.2.0",
   "statusDefinitions": {
     "browser-computed": "Computed directly in the browser by a maintained Foko Lab numerical core.",
     "derived-browser": "Derived in the browser from a computed finite result; interpretation remains conditional on that result.",
@@ -179,7 +179,7 @@
         "id": "cfd-drag-minimization",
         "label": "CFD Drag Minimization",
         "status": "export-only",
-        "reason": "The browser does not solve Navier–Stokes or shape derivatives."
+        "reason": "The browser does not solve Navier\u2013Stokes or shape derivatives."
       },
       {
         "id": "neural-network-loss-surface",
@@ -306,9 +306,9 @@
     "problems": [
       {
         "id": "bi-objective-rosenbrock-rastrigin",
-        "label": "Bi-objective Rosenbrock–Rastrigin",
+        "label": "Bi-objective Rosenbrock\u2013Rastrigin",
         "status": "limited-browser",
-        "preset": "Bi-objective Rosenbrock–Rastrigin"
+        "preset": "Bi-objective Rosenbrock\u2013Rastrigin"
       },
       {
         "id": "zdt1",
@@ -348,7 +348,7 @@
       },
       {
         "id": "portfolio-risk-return",
-        "label": "Portfolio Risk–Return",
+        "label": "Portfolio Risk\u2013Return",
         "status": "limited-browser",
         "preset": "Portfolio equality toy"
       },
@@ -360,13 +360,13 @@
       },
       {
         "id": "cfd-lift-drag",
-        "label": "CFD Lift–Drag Optimization",
+        "label": "CFD Lift\u2013Drag Optimization",
         "status": "export-only",
         "reason": "Requires a dedicated external numerical workflow; the browser does not present a substitute computation."
       },
       {
         "id": "structural-weight-stiffness",
-        "label": "Structural Weight–Stiffness",
+        "label": "Structural Weight\u2013Stiffness",
         "status": "export-only",
         "reason": "Requires a dedicated external numerical workflow; the browser does not present a substitute computation."
       },
@@ -416,7 +416,7 @@
         "label": "Jacobian Spectrum Plot",
         "status": "limited-browser",
         "runtimeId": "eigenvalues",
-        "scope": "Dynamic interpretation; analytic 1×1 or 2×2 eigenspectrum."
+        "scope": "Dynamic interpretation; analytic 1\u00d71 or 2\u00d72 eigenspectrum."
       },
       {
         "id": "continuation-curve",
@@ -527,7 +527,7 @@
         "id": "van-der-pol-steady-states",
         "label": "Van der Pol Steady States",
         "status": "limited-browser",
-        "preset": "FitzHugh–Nagumo resting equilibrium",
+        "preset": "FitzHugh\u2013Nagumo resting equilibrium",
         "reason": "Use ODE Lab for Van der Pol trajectories; Steady-State provides analogous fixed-point diagnostics only."
       },
       {
@@ -538,9 +538,9 @@
       },
       {
         "id": "lotka-volterra-fixed-points",
-        "label": "Lotka–Volterra Fixed Points",
+        "label": "Lotka\u2013Volterra Fixed Points",
         "status": "browser-computed",
-        "preset": "Predator–prey coexistence"
+        "preset": "Predator\u2013prey coexistence"
       },
       {
         "id": "hydraulic-jump",
@@ -570,11 +570,11 @@
         "id": "mass-action-equilibrium",
         "label": "Mass Action Equilibrium",
         "status": "browser-computed",
-        "preset": "Michaelis–Menten complex balance"
+        "preset": "Michaelis\u2013Menten complex balance"
       },
       {
         "id": "reaction-diffusion-steady-states",
-        "label": "Reaction–Diffusion Steady States",
+        "label": "Reaction\u2013Diffusion Steady States",
         "status": "export-only",
         "reason": "Requires a dedicated external numerical workflow; the browser does not present a substitute computation."
       },
@@ -605,7 +605,7 @@
           "id": "local-jacobian-sensitivity",
           "label": "Local Jacobian Sensitivity",
           "status": "browser-computed",
-          "runtime": "Finite-difference state Jacobian ∂f/∂x, parameter Jacobian ∂f/∂p, and parameter-to-state trajectory influence along the nominal solution."
+          "runtime": "Finite-difference state Jacobian \u2202f/\u2202x, parameter Jacobian \u2202f/\u2202p, and parameter-to-state trajectory influence along the nominal solution."
         },
         {
           "id": "ofat-sensitivity",
@@ -644,25 +644,25 @@
           "label": "Parameter Jacobian Heatmap",
           "status": "browser-computed",
           "runtimeId": "parameter-jacobian",
-          "scope": "Mean absolute right-hand-side derivative ∂fᵢ/∂pⱼ along the nominal trajectory; not propagated trajectory sensitivity."
+          "scope": "Mean absolute right-hand-side derivative \u2202f\u1d62/\u2202p\u2c7c along the nominal trajectory; not propagated trajectory sensitivity."
         },
         {
           "id": "state-jacobian-heatmap",
           "label": "State Jacobian Heatmap",
           "status": "browser-computed",
           "runtimeId": "state-jacobian",
-          "scope": "Mean absolute right-hand-side derivative ∂fᵢ/∂xⱼ along the nominal trajectory; not a stability certificate."
+          "scope": "Mean absolute right-hand-side derivative \u2202f\u1d62/\u2202x\u2c7c along the nominal trajectory; not a stability certificate."
         },
         {
           "id": "trajectory-sensitivity-heatmap",
           "label": "Trajectory Sensitivity Heatmap",
           "status": "browser-computed",
           "runtimeId": "heatmap",
-          "scope": "Finite-difference ∂x(t)/∂p for the selected output trajectory."
+          "scope": "Finite-difference \u2202x(t)/\u2202p for the selected output trajectory."
         },
         {
           "id": "parameter-state-influence-map",
-          "label": "Parameter × State Influence Map",
+          "label": "Parameter \u00d7 State Influence Map",
           "status": "derived-browser",
           "runtimeId": "influence-map"
         },
@@ -804,7 +804,7 @@
         },
         {
           "id": "parameter-output-scatter-matrix",
-          "label": "Parameter–Output Relationship Matrix",
+          "label": "Parameter\u2013Output Relationship Matrix",
           "status": "derived-browser",
           "runtimeId": "global-scatter",
           "scope": "Bounded subset of the actual global sample design; visual relationship diagnostic, not an index estimator."
@@ -823,7 +823,7 @@
         },
         {
           "id": "morris-mu-star-sigma",
-          "label": "Morris μ*–σ Map",
+          "label": "Morris \u03bc*\u2013\u03c3 Map",
           "status": "limited-browser",
           "runtimeId": "morris"
         },
@@ -878,14 +878,14 @@
         },
         {
           "id": "state-total-effect-heatmap",
-          "label": "Parameter × State Total-Effect Heatmap",
+          "label": "Parameter \u00d7 State Total-Effect Heatmap",
           "status": "derived-browser",
           "runtimeId": "sobol-state-total",
           "scope": "Selected scalar metric applied to each state using the same seeded Jansen design."
         },
         {
           "id": "state-first-effect-heatmap",
-          "label": "Parameter × State First-Order Heatmap",
+          "label": "Parameter \u00d7 State First-Order Heatmap",
           "status": "derived-browser",
           "runtimeId": "sobol-state-first",
           "scope": "Selected scalar metric applied to each state using the same seeded Jansen design."

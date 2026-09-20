@@ -9,21 +9,21 @@
 <meta content="Browser-computed sensitivity diagnostics with editable equations, initial conditions, parameter ranges, time span and solver tolerances." property="og:description"/>
 <meta content="website" property="og:type"/>
 <title>Sensitivity Analysis Lab · Foko Lab</title>
-<link href="assets/vendor/katex/katex-0.16.47.min.css?v=77.4.1" rel="stylesheet"/>
-<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=77.4.1"></script>
-<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=77.4.1"></script>
-<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=77.4.1"></script>
-<link href="assets/brand/foko-lab-micro.svg?v=77.4.1" rel="icon" type="image/svg+xml"/>
-<link href="assets/brand/favicon-32.png?v=77.4.1" rel="icon" sizes="32x32" type="image/png"/>
-<link href="favicon.ico?v=77.4.1" rel="icon" sizes="any"/>
-<link href="assets/brand/apple-touch-icon.png?v=77.4.1" rel="apple-touch-icon"/>
-<link href="styles/v72-tokens.css?v=77.4.1" rel="stylesheet"/>
-<link href="styles/v72-lab-shell.css?v=77.4.1" rel="stylesheet"/>
-<link href="styles/v72-accessibility-performance.css?v=77.4.1" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=77.4.1"></script><link href="styles/v76-system.css?v=77.4.1" rel="stylesheet"/>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=78.2.0" rel="stylesheet"/>
+<script defer="" src="src/platform/storage.js?v=78.2.0"></script><script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=78.2.0"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=78.2.0"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=78.2.0"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=78.2.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=78.2.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=78.2.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=78.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=78.2.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=78.2.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=78.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=78.2.0"></script><link href="styles/v76-system.css?v=78.2.0" rel="stylesheet"/>
 </head>
 <body data-lab="sensitivity" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
 <div class="app-shell">
-<header class="topbar v76-appbar" data-v76-appbar="true"><a class="v76-brand" href="index.html" aria-label="Foko Lab home"><img src="assets/brand/foko-lab-logo.svg" alt="Foko Lab"/></a></header>
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
 <main class="layout" id="workbench" tabindex="-1">
 <aside aria-label="Sensitivity workflow" class="side-nav">
 <button class="nav-item active" data-jump="modelBlock" type="button"><span>∂</span><b>Model</b></button>
@@ -92,7 +92,7 @@
 <label><span>Method</span><select id="sensitivityMethod"><option value="local">Local central finite differences</option><option value="morris">Morris screening</option><option value="sobol">Global variance: Jansen + Saltelli</option><option value="fim">Fisher information approximation</option></select></label>
 <label><span>Output scope</span><select id="sensitivityOutputMode"><option value="single">One output variable</option><option value="multiple">Multiple output variables</option></select></label>
 <label id="sensitivitySingleOutputField"><span>Output variable</span><select id="sensitivityOutputVar"></select></label>
-<fieldset class="sensitivity-output-picker" hidden id="sensitivityOutputVarsField"><legend>Output variables</legend><div class="sensitivity-output-options" id="sensitivityOutputVars"></div><p class="field-help">Sobol uses one shared seeded parameter design and cached ODE trajectories, then computes a separate variance decomposition for every checked state.</p></fieldset>
+<fieldset class="sensitivity-output-picker" hidden="" id="sensitivityOutputVarsField"><legend>Output variables</legend><div class="sensitivity-output-options" id="sensitivityOutputVars"></div><p class="field-help">Sobol uses one shared seeded parameter design and cached ODE trajectories, then computes a separate variance decomposition for every checked state.</p></fieldset>
 <label><span>Output metric</span><select id="sensitivityOutputMetric"><option value="final">Final value</option><option value="max">Maximum</option><option value="min">Minimum</option><option value="mean">Time mean</option><option value="range">Range</option><option value="integral">Time integral</option><option value="time_of_max">Time of maximum</option></select></label>
 <label><span>Relative perturbation</span><input id="sensitivityRelativeStep" max="0.25" min="1e-8" step="any" type="number" value="0.001"/></label>
 <label><span>Global base samples</span><input id="sensitivitySamples" max="4096" min="16" step="1" type="number" value="128"/></label>
@@ -138,7 +138,7 @@
 </aside>
 <section aria-label="Sensitivity plots" class="workspace-area results-card">
 <section class="workspace-card v72-results-workspace">
-<header class="v72-workspace-head"><div><p class="v72-eyebrow">Results</p><h1>Parameter influence and numerical stability</h1><p>Both panels derive from the same validated model and analysis request. Changing any scientific input marks the current result stale.</p></div><div class="sensitivity-result-tools"><label hidden id="sensitivityResultOutputField"><span>Displayed output</span><select id="sensitivityResultOutput"></select></label><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div><div class="export-row"><button class="secondary" disabled="" id="exportSensitivityPng" type="button">Current PNG</button><button class="secondary" disabled="" id="exportSensitivitySvg" type="button">Current SVG</button></div></div></header>
+<header class="v72-workspace-head"><div><p class="v72-eyebrow">Results</p><h1>Parameter influence and numerical stability</h1><p>Both panels derive from the same validated model and analysis request. Changing any scientific input marks the current result stale.</p></div><div class="sensitivity-result-tools"><label hidden="" id="sensitivityResultOutputField"><span>Displayed output</span><select id="sensitivityResultOutput"></select></label><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div><div class="export-row"><button class="secondary" disabled="" id="exportSensitivityPng" type="button">Current PNG</button><button class="secondary" disabled="" id="exportSensitivitySvg" type="button">Current SVG</button></div></div></header>
 <div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
 <article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="leftPlotTitle">Sensitivity ranking</h3><select aria-label="Primary sensitivity plot" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button></div><div class="plot" id="leftPlot"></div><details class="plot-evidence"><summary>Analysis info</summary><p id="leftPlotEvidence">Run an analysis to generate evidence.</p></details></article>
 <article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="rightPlotTitle">Numerical diagnostic</h3><select aria-label="Secondary sensitivity plot" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button></div><div class="plot" id="rightPlot"></div><details class="plot-evidence"><summary>Analysis info</summary><p id="rightPlotEvidence">Run an analysis to generate evidence.</p></details></article>
@@ -151,10 +151,11 @@
 <section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div><div class="export-row"><button class="secondary" id="saveSensitivitySession" type="button">Save session</button><button class="secondary" id="restoreSensitivitySession" type="button">Restore session</button><button class="secondary" id="copySensitivityShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportSensitivityCsv" type="button">Summary CSV</button><button class="secondary" id="exportSensitivityJson" type="button">Result JSON</button><button class="secondary" id="exportSensitivityModel" type="button">Model JSON</button><button class="secondary" id="exportSensitivityPython" type="button">Python validation</button></div><p class="note">Sessions store model and numerical settings, not cached evidence. Restored configurations must be rerun.</p></section>
 </aside>
 </main></div>
-<script defer="" src="src/core/numerical-inputs.js?v=77.4.1"></script>
-<script defer="" src="src/models/sensitivity-presets.js?v=77.4.1"></script>
-<script defer="" src="src/core/sensitivity.js?v=77.4.1"></script>
-<script defer="" src="src/v72/sensitivity-workspace.js?v=77.4.1"></script>
-<script defer="" src="src/v72/scientific-registry.js?v=77.4.1"></script>
-<script defer src="src/v76/app-shell.js?v=77.4.1"></script>
+<script defer="" src="src/core/numerical-inputs.js?v=78.2.0"></script>
+<script defer="" src="src/models/sensitivity-presets.js?v=78.2.0"></script>
+<script defer="" src="src/core/sensitivity.js?v=78.2.0"></script>
+<script defer="" src="src/v72/sensitivity-workspace.js?v=78.2.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=78.2.0"></script>
+<script defer="" src="src/models/search-index.js?v=78.2.0"></script><script defer="" src="src/v76/app-shell.js?v=78.2.0"></script>
 </body></html>
+

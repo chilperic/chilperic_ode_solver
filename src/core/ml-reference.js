@@ -177,8 +177,15 @@
     const ybar = mean(y); const ssTot = y.reduce(function (s, v) { return s + (v - ybar) * (v - ybar); }, 0); const ssRes = residuals.reduce(function (s, v) { return s + v * v; }, 0);
     return { rmse: Math.sqrt(mse), mae: mae, r2: 1 - ssRes / Math.max(1e-15, ssTot), residuals: residuals };
   }
+  function validateProbabilities(y, prob) {
+    if (!Array.isArray(y) || !y.length || !Array.isArray(prob) || y.length !== prob.length) fail('labels and probabilities must have the same nonzero length.');
+    if (y.some(v => v !== 0 && v !== 1)) fail('binary labels must be 0 or 1.');
+    if (prob.some(p => typeof p !== 'number' || !Number.isFinite(p) || p < 0 || p > 1)) fail('probabilities must be finite numbers in [0,1].');
+  }
   function classificationMetrics(y, prob, threshold) {
-    threshold = Number.isFinite(Number(threshold)) ? Number(threshold) : 0.5;
+    validateProbabilities(y, prob);
+    threshold = threshold === undefined ? 0.5 : Number(threshold);
+    if (Number.isNaN(threshold)) fail('classification threshold must be numeric.');
     const pred = prob.map(function (p) { return p >= threshold ? 1 : 0; });
     let tp = 0, tn = 0, fp = 0, fn = 0;
     y.forEach(function (v, i) { if (v === 1 && pred[i] === 1) tp += 1; else if (v === 0 && pred[i] === 0) tn += 1; else if (v === 0) fp += 1; else fn += 1; });
@@ -188,7 +195,9 @@
     return { tp: tp, tn: tn, fp: fp, fn: fn, accuracy: (tp + tn) / y.length, balancedAccuracy: 0.5 * (recall + specificity), precision: precision, recall: recall, specificity: specificity, f1: 2 * precision * recall / Math.max(1e-12, precision + recall), logLoss: logLoss, brier: brier, pred: pred };
   }
   function rocCurve(y, prob) {
-    const thresholds = Array.from(new Set([1].concat(prob.slice().sort(function (a, b) { return b - a; }), [0])));
+    validateProbabilities(y, prob);
+    if (!y.includes(0) || !y.includes(1)) fail('ROC AUC is undefined without both classes.');
+    const thresholds = [Infinity].concat(Array.from(new Set(prob)).sort((a,b) => b-a));
     const points = thresholds.map(function (th) { const m = classificationMetrics(y, prob, th); return { threshold: th, tpr: m.recall, fpr: 1 - m.specificity, precision: m.precision, recall: m.recall }; }).sort(function (a, b) { return a.fpr - b.fpr || a.tpr - b.tpr; });
     let auc = 0; for (let i = 1; i < points.length; i += 1) auc += (points[i].fpr - points[i - 1].fpr) * (points[i].tpr + points[i - 1].tpr) / 2;
     return { points: points, auc: Math.max(0, Math.min(1, auc)) };
@@ -212,8 +221,10 @@
 
   function fitModel(name, task, X, y, options) {
     const o = options || {};
-    if (task === 'regression') return ridgeFit(X, y, name === 'linear' ? 0 : Math.max(0, Number(o.lambda) || 1));
-    if (name === 'logistic') return logisticFit(X, y, { lambda: Math.max(0, Number(o.lambda) || 0.01) });
+    const lambda = o.lambda === undefined ? (task === 'regression' ? 1 : 0.01) : Number(o.lambda);
+    if (o.lambda === null || o.lambda === '' || !Number.isFinite(lambda) || lambda < 0) fail('regularization lambda must be a finite nonnegative number.');
+    if (task === 'regression') return ridgeFit(X, y, name === 'linear' ? 0 : lambda);
+    if (name === 'logistic') return logisticFit(X, y, { lambda: lambda });
     if (name === 'knn') return knnFit(X, y, o.neighbors);
     if (name === 'gaussian-nb') return gaussianNbFit(X, y);
     fail('unsupported model ' + name + ' for task ' + task + '.');
@@ -370,13 +381,15 @@
     return { labels: labels, centroids: centroids, inertia: inertia, iterations: iterations + 1 };
   }
   function silhouette(X, labels) {
-    requireMatrix(X); const classes = unique(labels); if (classes.length < 2) return { mean: NaN, values: Array(X.length).fill(NaN) };
+    requireMatrix(X); if (!Array.isArray(labels) || labels.length !== X.length) fail('silhouette requires one label per sample.'); const classes = unique(labels);
+    if (classes.length < 2 || classes.length >= X.length) return { mean: NaN, values: Array(X.length).fill(NaN), defined:false, warning:'Silhouette requires at least two clusters and fewer clusters than samples.' };
     const values = X.map(function (row, i) {
       const own = String(labels[i]); const same = []; const other = {};
       X.forEach(function (q, j) { if (i === j) return; const d = distance(row, q); const key = String(labels[j]); if (key === own) same.push(d); else (other[key] = other[key] || []).push(d); });
-      const a = same.length ? mean(same) : 0; const b = Math.min.apply(null, Object.keys(other).map(function (key) { return mean(other[key]); })); return (b - a) / Math.max(a, b, 1e-12);
+      if (!same.length) return 0;
+      const a = mean(same); const b = Math.min.apply(null, Object.keys(other).map(function (key) { return mean(other[key]); })); return (b - a) / Math.max(a, b, 1e-12);
     });
-    return { mean: mean(values), values: values };
+    return { mean: mean(values), values: values, defined:true, singletonClusters:classes.filter(label => labels.filter(v => String(v) === String(label)).length === 1).length };
   }
   function kmeansElbow(X, maxK, seed) { return Array.from({ length: Math.max(1, Math.min(maxK || 8, X.length - 1)) - 1 }, function (_, i) { const k = i + 2; const fit = kmeans(X, k, (seed || 1) + k); return { k: k, inertia: fit.inertia, silhouette: silhouette(X, fit.labels).mean }; }); }
 

@@ -26,3 +26,10 @@ Plot hosts are stable DOM nodes for the life of the page. A workspace sets layou
 `CAPABILITIES.json` is the source of truth for claim classes. Protected research may be documented but not exposed as a runnable public reduction without an explicit research contract. Visual polish cannot imply a stronger numerical or empirical claim than the underlying computation supports.
 
 Before shipping, run syntax and engine-boundary checks, core tests, active contracts, page-quality audits, lifecycle checks, differential references, and Playwright. A valid numerical result with a blank, stale, duplicated, or layout-corrupted visible plot is a failed release.
+
+
+## v78 connected research layer
+
+`src/research/engine.js` is a pure task dispatcher over existing Project/Compute/ODE. `worker.js` runs the identical engine in a dedicated worker; `executor.js` owns timeout, cancellation and explicitly labelled fallback. `workspace.js` owns the canonical experiment state, revisions, immutable results, guarded imports and export. `charts.js` renders computed values and accessible tables; it does not simulate. `shell.js` owns the four-page navigation, native modals, themes and storage fallback. `paths.js` owns reduced model dossiers; `lessons.js` owns worked teaching content. `styles/research.css` is the only stylesheet on the four research pages. Legacy specialist lab boundaries remain in place.
+
+Do not infer capability from a lesson or link. The connected engine supports only the task contracts in CAPABILITIES.json and LIMITATIONS-v78.0.0.md. Inputs/runs use `foko.research/1`; schema versions and configuration fingerprints are identities, not signatures. Imported results remain unverified. Historical snapshots include complete model, data, method settings and seeds. Mutable application state must not be attached to an in-flight request by reference. CLI replay uses the same engine, while the separate Python template uses SciPy RK45 for a deliberately independent trajectory check.

@@ -103,7 +103,7 @@
           y: 1.035,
           yanchor: 'bottom',
           traceorder: 'normal',
-          font: Object.assign({ size: 10 }, source.legend && source.legend.font || {})
+          font: Object.assign({ size: 12 }, source.legend && source.legend.font || {})
         });
       }
     } else {
@@ -148,6 +148,7 @@
         if (mounted(node)) {
           result = await root.Plotly.react(node, traces, layout, config || {});
         } else {
+          node.replaceChildren(); // Remove empty-state messages before mounting a real plot.
           result = await root.Plotly.newPlot(node, traces, layout, config || {});
         }
         if (generation !== state.requested) return { stale: true, result: result };
@@ -215,7 +216,7 @@
  */
 (function (root) {
   'use strict';
-  const RELEASE = '77.4.1';
+  const RELEASE = '78.2.0';
   const telemetry = {
     release: RELEASE,
     startedAt: typeof performance !== 'undefined' ? performance.now() : 0,
@@ -391,7 +392,7 @@
     function apply(panel, manual) {
       if (!panels.some(function (item) { return item.id === panel; })) panel = 'setup';
       document.body.dataset.mobilePanel = panel;
-      bar.querySelectorAll('button').forEach(function (button) {
+      bar.querySelectorAll('[data-mobile-panel-target]').forEach(function (button) {
         const active = button.dataset.mobilePanelTarget === panel;
         button.classList.toggle('active', active);
         button.setAttribute('aria-pressed', active ? 'true' : 'false');
@@ -575,6 +576,7 @@
     document.querySelectorAll('.js-plotly-plot').forEach(relayout);
   }
   root.addEventListener('foko-theme-change', function () { root.requestAnimationFrame(refresh); });
+  root.addEventListener('foko:appearance', function () { root.requestAnimationFrame(refresh); });
   document.addEventListener('foko:plot-rendered', function (event) {
     const node = event.target && event.target.closest ? event.target.closest('.js-plotly-plot') : null;
     if (node) root.requestAnimationFrame(function () { relayout(node); });

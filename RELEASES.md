@@ -679,7 +679,7 @@
 - Preserved the static header/nav structure; no generated chrome rewrite.
 - Preserved the V71.38 lab color identity baseline.
 - Added regression tests for analysis, focused, SciML and creator/learn/explore active-state mappings.
-- Cache token normalized to `?v=77.4.1`.
+- Cache token normalized to `?v=78.2.0`.
 
 
 ## V71.32 — Functional cockpit boxes and plot palettes
@@ -743,7 +743,7 @@
 - Added Playwright browser smoke tests for home, focused labs, descriptor analysis labs, and reproducibility controls.
 - Added `package.json`, `playwright.config.js`, and `tests/e2e/main-labs-smoke.spec.js`.
 - Added pytest structural checks so the e2e gate itself is protected.
-- Cache token normalized to `?v=77.4.1`.
+- Cache token normalized to `?v=78.2.0`.
 
 # Foko Lab release history
 ## V71.11 — ML Toolkit descriptor shell and focused-lab noise cleanup
@@ -757,7 +757,7 @@
 
 ## v70.20 — Cache-token normalization
 
-- One cache token across the whole tree: `?v=77.4.1`.
+- One cache token across the whole tree: `?v=78.2.0`.
 - Legacy asset tokens removed.
 - Added `tests/test_v70_20_token_normalization.py`.
 - Audit: `release-audits/AUDIT-v70-20-token-normalization.md`.

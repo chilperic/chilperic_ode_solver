@@ -5,7 +5,7 @@
 (function (root) {
   'use strict';
 
-  const RELEASE = '77.4.1';
+  const RELEASE = '78.2.0';
   const scriptPromises = new Map();
   const demoRuns = new Map();
   const demoAttempts = new Map();

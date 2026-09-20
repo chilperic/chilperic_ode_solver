@@ -1,26 +1,12 @@
-# Differential scientific validation — v72.36.0
+# Differential scientific validation — v78.2.0
 
-A representative cross-language suite compares Foko Lab outputs with independent scientific Python libraries.
+A freshly executed cross-language suite compares representative FokoLab algorithms with independent scientific Python implementations. The recorded run passed **32 / 32 comparisons**. See `REFERENCE_VALIDATION.json` for exact inputs, outputs, tolerances and dependency versions.
 
-## Result
-
-- **32 / 32 checks passed**
-- NumPy 2.3.5
-- SciPy 1.17.0
-- scikit-learn 1.8.0
-- NetworkX 3.6.1
-- SymPy 1.14.0
-- Node v22.16.0
-
-Covered comparisons include ODE integration, parametric tests, linear solves, symmetric eigenvalues, singular values, shortest paths, minimum spanning trees, ridge coefficients, PCA explained variance, symbolic derivatives, stochastic first moments and bounded optimization.
-
-The suite is representative, not exhaustive certification. It does not validate every model preset, browser renderer, hardware configuration or scientific interpretation.
-
-Run it with:
+Covered comparisons include ODE integration, parametric tests, linear solves, symmetric eigenvalues, singular values, shortest paths, minimum spanning trees, ridge coefficients, PCA explained variance, symbolic derivatives, stochastic first moments and bounded optimization. The suite is representative, not exhaustive model, browser or physiological validation.
 
 ```bash
-python -m pip install -r requirements-validation.txt
-python scripts/run-reference-validation.py --json REFERENCE_VALIDATION.local.json
+python3 -m pip install -r requirements-validation.txt
+python3 scripts/run-reference-validation.py --json REFERENCE_VALIDATION.json
 ```
 
-The committed `REFERENCE_VALIDATION.json` records the exact checks used for this release.
+The additional fluorescence measurement reference is separate: `research/measurement-case/reproduce.py`, with executed results in `validation-v78.2.0/independent-measurement.json`.

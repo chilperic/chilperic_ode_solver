@@ -7,7 +7,7 @@
   const CORE = root.FokoNetworksReference;
   const PRESETS = root.FokoNetworksPresets || {};
   const PLOT = root.FokoPlotLifecycle;
-  const RELEASE = '77.4.1';
+  const RELEASE = '78.2.0';
   const STORAGE_KEY = 'fokolab:v72.7:networks-config';
   if (!CORE || !PLOT) throw new Error('Network Lab requires FokoNetworksReference and FokoPlotLifecycle.');
 

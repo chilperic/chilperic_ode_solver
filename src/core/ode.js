@@ -12,6 +12,7 @@
     if (!condition) throw new Error(message);
   }
   function finiteNumber(value, name) {
+    assert(value != null && typeof value !== 'boolean' && typeof value !== 'object' && !(typeof value === 'string' && !value.trim()), `${name} must be a number, not blank or null.`);
     const n = Number(value);
     assert(Number.isFinite(n), `${name} must be finite (got ${value}).`);
     return n;
@@ -33,8 +34,7 @@
   }
   function validateDerivative(k, n, context) {
     assert(Array.isArray(k) && k.length === n, `${context} returned ${Array.isArray(k) ? k.length : 'non-array'} values; expected ${n}.`);
-    k.forEach((value, i) => assert(Number.isFinite(Number(value)), `${context} returned a non-finite derivative at index ${i}.`));
-    return k.map(Number);
+    return k.map((value, i) => finiteNumber(value, `${context} derivative at index ${i}`));
   }
   function callRhs(rhs, t, y, params) {
     return validateDerivative(rhs(t, y.slice(), params), y.length, 'ODE right-hand side');
@@ -255,6 +255,18 @@
     const direction = Math.sign(t1 - t0);
     const span = Math.abs(t1 - t0);
     let points = Math.max(2, Math.min(20000, Math.floor(Number(cfg.points) || 800)));
+    let explicitTimes = null;
+    if (cfg.outputTimes !== undefined) {
+      assert(Array.isArray(cfg.outputTimes) && cfg.outputTimes.length >= 2 && cfg.outputTimes.length <= 20000,
+        'outputTimes must contain 2–20,000 values including both endpoints.');
+      explicitTimes = cfg.outputTimes.slice();
+      assert(explicitTimes.every(Number.isFinite), 'outputTimes must contain finite numbers, not coerced strings or nulls.');
+      assert(explicitTimes[0] === t0 && explicitTimes[explicitTimes.length - 1] === t1,
+        'outputTimes must include the exact start and end times.');
+      assert(explicitTimes.every((v, i) => i === 0 || direction * (v - explicitTimes[i - 1]) > 0),
+        'outputTimes must be strictly ordered in the integration direction, without duplicates.');
+      points = explicitTimes.length;
+    }
     const params = cfg.params && typeof cfg.params === 'object' ? cfg.params : {};
     const rtol = positiveNumber(cfg.rtol, 1e-6, 'rtol');
     const atol = positiveNumber(cfg.atol, 1e-9, 'atol');
@@ -263,9 +275,17 @@
     const fixedStepSize = optionalPositive(cfg.stepSize, null, 'stepSize');
     const safety = Math.min(0.98, Math.max(0.2, positiveNumber(cfg.safety, 0.9, 'safety')));
     const adaptive = valid.method === 'rk45' || valid.method === 'rk45_adaptive' || valid.method === 'heun_adaptive';
-    if (fixedStepSize && !adaptive) points = Math.max(2, Math.min(20000, Math.ceil(span / fixedStepSize) + 1));
+    // Internal integration and output sampling have independent resolutions.
+    const explicitMax = cfg.maxStep != null && String(cfg.maxStep).trim() !== '' && String(cfg.maxStep).toLowerCase() !== 'auto';
+    const fixedLimit = Math.min(fixedStepSize || Infinity, explicitMax ? maxStep : Infinity);
+    const stepBudget = cfg.stepBudget === undefined ? 200000 : Math.min(200000, finiteNumber(cfg.stepBudget, 'step budget'));
+    assert(Number.isInteger(stepBudget) && stepBudget >= 1, 'Step budget must be a positive integer.');
+    if (!adaptive && Number.isFinite(fixedLimit)) {
+      assert(Math.ceil(span / fixedLimit) + points - 1 <= stepBudget,
+        `Requested fixed step exceeds the browser capacity of ${stepBudget.toLocaleString()} integration steps. Increase the step or shorten the interval; the solver will not silently coarsen it.`);
+    }
 
-    const targetTimes = Array.from({ length: points }, (_, i) => t0 + (t1 - t0) * i / (points - 1));
+    const targetTimes = explicitTimes || Array.from({ length: points }, (_, i) => t0 + (t1 - t0) * i / (points - 1));
     const T = [];
     const Y = Array.from({ length: valid.y0.length }, () => []);
     let t = t0;
@@ -307,13 +327,14 @@
         while ((direction > 0 && t < target) || (direction < 0 && t > target)) {
           if (cancelled()) return { ok: false, cancelled: true, error: 'Cancelled' };
           guard += 1;
-          assert(guard <= 200000, 'Adaptive step limit reached. The problem may be stiff or unstable.');
+          assert(guard <= stepBudget && accepted + rejected < stepBudget, 'Adaptive step limit reached. The problem may be stiff or unstable.');
           if (Math.abs(h) > Math.abs(target - t)) h = target - t;
+          assert(t + h !== t && Number.isFinite(h), 'Step underflow: cannot advance time while satisfying the requested tolerance. Rescale time or use an independent solver.');
           const step = valid.method === 'heun_adaptive'
             ? heunAdaptiveStep(rhs, t, y, h, params, rtol, atol)
             : rk45Step(rhs, t, y, h, params, rtol, atol);
           functionEvaluations += step.evaluations;
-          const acceptedStep = step.error <= 1 || Math.abs(h) < 1e-14;
+          const acceptedStep = Number.isFinite(step.error) && step.error <= 1;
           recordStep(t, h, step.error, acceptedStep);
           if (acceptedStep) {
             t += h;
@@ -327,7 +348,7 @@
             h = Math.sign(h || direction) * Math.min(Math.abs(h), maxStep);
           } else {
             rejected += 1;
-            h *= Math.max(0.1, 0.85 * Math.pow(1 / step.error, 0.25));
+            h *= Number.isFinite(step.error) ? Math.max(0.1, 0.85 * Math.pow(1 / step.error, 0.25)) : 0.1;
           }
         }
         pushSample(target, y);
@@ -336,16 +357,27 @@
     } else {
       for (let index = 1; index < targetTimes.length; index += 1) {
         if (cancelled()) return { ok: false, cancelled: true, error: 'Cancelled' };
-        const h = targetTimes[index] - targetTimes[index - 1];
-        const step = fixedStep(rhs, valid.method, targetTimes[index - 1], y, h, params);
-        y = step.y;
-        functionEvaluations += step.evaluations;
-        recordStep(targetTimes[index - 1], h, NaN, true);
-        validateState(y);
-        accepted += 1;
-        minStep = Math.min(minStep, Math.abs(h));
-        maxUsed = Math.max(maxUsed, Math.abs(h));
-        pushSample(targetTimes[index], y);
+        const target = targetTimes[index];
+        const interval = target - t;
+        const count = Number.isFinite(fixedLimit) ? Math.max(1, Math.ceil(Math.abs(interval) / fixedLimit)) : 1;
+        assert(accepted + count <= stepBudget, 'Fixed-step browser capacity limit reached; requested steps were not coarsened.');
+        const h = interval / count;
+        const start = t;
+        for (let sub = 0; sub < count; sub += 1) {
+          if (cancelled()) return { ok: false, cancelled: true, error: 'Cancelled' };
+          const at = start + sub * h;
+          assert(at + h !== at, 'Fixed step underflow: cannot advance time at this scale.');
+          const step = fixedStep(rhs, valid.method, at, y, h, params);
+          y = step.y;
+          functionEvaluations += step.evaluations;
+          recordStep(at, h, NaN, true);
+          validateState(y);
+          accepted += 1;
+          minStep = Math.min(minStep, Math.abs(h));
+          maxUsed = Math.max(maxUsed, Math.abs(h));
+        }
+        t = target;
+        pushSample(target, y);
         if (index % 100 === 0) progress(index / (targetTimes.length - 1), 'Solving');
       }
     }
@@ -378,6 +410,12 @@
         runtime,
         minStep: Number.isFinite(minStep) ? minStep : 0,
         maxStep: maxUsed,
+        requestedMaxStep: cfg.maxStep == null ? 'auto' : cfg.maxStep,
+        requestedFixedStep: fixedStepSize,
+        errorControlled: adaptive,
+        outputPoints: points,
+        outputGrid: explicitTimes ? 'explicit measurement times' : 'uniform output grid',
+        stepBudget,
         rtol,
         atol,
         maxStateNorm,

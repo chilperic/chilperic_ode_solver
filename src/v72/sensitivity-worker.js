@@ -2,10 +2,10 @@
  * is implemented by terminating the worker from the workspace controller.
  */
 'use strict';
-importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=77.4.1');
-importScripts('../core/ode.js?v=77.4.1');
-importScripts('../core/sensitivity.js?v=77.4.1');
-importScripts('../core/numerical-inputs.js?v=77.4.1');
+importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=78.2.0');
+importScripts('../core/ode.js?v=78.2.0');
+importScripts('../core/sensitivity.js?v=78.2.0');
+importScripts('../core/numerical-inputs.js?v=78.2.0');
 
 function stableParameterKey(params) {
   return Object.keys(params).sort().map(name => `${name}:${Number(params[name]).toPrecision(17)}`).join('|');
@@ -279,7 +279,7 @@ self.onmessage = function (event) {
     const solverSummary = compiled.summary();
     self.postMessage({ type: 'progress', progress: 0.96, text: 'Preparing diagnostics and plots' });
     self.postMessage({
-      type: 'result', ok: true, release: '77.4.1', method: methodConfig.method, outputVar: outputVars.includes(outputVar) ? outputVar : outputVars[0], outputVars, outputMetric,
+      type: 'result', ok: true, release: '78.2.0', method: methodConfig.method, outputVar: outputVars.includes(outputVar) ? outputVar : outputVars[0], outputVars, outputMetric,
       model: compiled.checked, analysis, solverSummary, estimatedOdeSolves: expectedSolves,
       analysesByOutput,
       runtime: performance.now() - started, warnings: (compiled.checked.warnings || []).concat(methodConfig.warnings || []),
