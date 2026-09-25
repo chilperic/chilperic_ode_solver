@@ -1,0 +1,9 @@
+import fs from 'node:fs';import path from 'node:path';import vm from 'node:vm';import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),site=path.join(root,'site');
+function context(files){const c={console};c.globalThis=c;c.window=c;vm.createContext(c);for(const f of files)vm.runInContext(fs.readFileSync(path.join(site,f),'utf8'),c);return c;}
+const cat=context(['src/upgrade/registry.js','src/models/scientific-example-catalog.js']);
+const catalog=cat.FokoScientificExampleCatalog,old=catalog.filter(x=>!String(x.id||'').startsWith('u792-'));
+const c=context(['src/models/sensitivity-presets.js','src/models/model-studio-presets.js','src/upgrade/preserved-models.js','src/upgrade/studio-presets.js']);
+const book=JSON.parse(fs.readFileSync(path.join(site,'materials/book-manifest.json'),'utf8'));
+const counts={catalogueRecords:catalog.length,uniqueCatalogueDestinations:new Set(catalog.map(x=>x.href)).size,preservedOriginalCatalogueRecords:old.length,preservedOriginalUniqueDestinations:new Set(old.map(x=>x.href)).size,addedConfigurations:cat.FokoUpgradeCatalogue.length,addedLaboratories:cat.FokoUpgrade.labs.length,studioStarters:Object.keys(c.FokoModelStudioPresets).length,originalSourceModelSpecifications:Object.keys(c.FokoPreservedModels).length,bookChapters:book.chapters.length,bookSections:book.chapters.reduce((s,c)=>s+c.sections.length,0),bookPracticeDestinations:book.chapters.reduce((s,c)=>s+c.practices.length,0),bookAppendices:book.appendices.length};
+fs.writeFileSync(path.join(root,'evidence/inventory.json'),JSON.stringify({counts,originalDestinations:old.map(x=>x.href),newDestinations:cat.FokoUpgradeCatalogue.map(x=>x.href),studioStarterIds:Object.keys(c.FokoModelStudioPresets)},null,2));console.log(JSON.stringify(counts,null,2));

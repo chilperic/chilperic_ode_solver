@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "van_der_pol",
+  "title": "Van der Pol oscillator",
+  "vars": [
+    "x",
+    "v"
+  ],
+  "params": {
+    "mu": 1
+  },
+  "init": {
+    "x": 2,
+    "v": 0
+  },
+  "eqs": {
+    "x": "v",
+    "v": "mu*(1-x^2)*v-x"
+  },
+  "tspan": [
+    0,
+    40
+  ],
+  "reference": "van der Pol oscillator"
+}

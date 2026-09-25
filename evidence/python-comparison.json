@@ -1,0 +1,302 @@
+{
+  "scope": "Fresh native Python reference vs JS tables. ODE and thermal reference use independent SciPy DOP853. Other algorithms are separate implementations of the same declared equations. Not empirical validation.",
+  "results": [
+    {
+      "case": "adaptation-arid",
+      "status": "passed",
+      "maxAbsoluteDifference": 2.4868995751603507e-14,
+      "maxScaledDifference": 1.3314169613806946e-14,
+      "seconds": 0.1114190849998522,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "adaptation-cool",
+      "status": "passed",
+      "maxAbsoluteDifference": 7.105427357601002e-15,
+      "maxScaledDifference": 5.239203301220715e-15,
+      "seconds": 0.12328794999984893,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "adaptation-neutral",
+      "status": "passed",
+      "maxAbsoluteDifference": 3.552713678800501e-15,
+      "maxScaledDifference": 1.4243200640409447e-16,
+      "seconds": 0.12207740099984221,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "adaptation-reference",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.4210854715202004e-14,
+      "maxScaledDifference": 7.305714803269719e-15,
+      "seconds": 0.11717648299963912,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "adaptation-warming",
+      "status": "passed",
+      "maxAbsoluteDifference": 4.263256414560601e-14,
+      "maxScaledDifference": 1.921448349469824e-14,
+      "seconds": 0.1625992680001218,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "branching-critical",
+      "status": "passed",
+      "maxAbsoluteDifference": 0.0,
+      "maxScaledDifference": 0.0,
+      "seconds": 0.02245228899982976,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "branching-subcritical",
+      "status": "passed",
+      "maxAbsoluteDifference": 8.881784197001252e-16,
+      "maxScaledDifference": 1.2905792726403003e-16,
+      "seconds": 0.015432054000029893,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "branching-supercritical",
+      "status": "passed",
+      "maxAbsoluteDifference": 3.552713678800501e-15,
+      "maxScaledDifference": 2.4576049244607784e-16,
+      "seconds": 0.05908294900018518,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "diffusion-closed",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.1102230246251565e-16,
+      "maxScaledDifference": 8.83571060382156e-17,
+      "seconds": 0.01650025800017829,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "diffusion-constant",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.1102230246251565e-16,
+      "maxScaledDifference": 7.320151810715318e-17,
+      "seconds": 0.016027189000396902,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "diffusion-open",
+      "status": "passed",
+      "maxAbsoluteDifference": 2.220446049250313e-16,
+      "maxScaledDifference": 1.463002449313157e-16,
+      "seconds": 0.015864683000017976,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "diffusion-periodic",
+      "status": "passed",
+      "maxAbsoluteDifference": 4.440892098500626e-16,
+      "maxScaledDifference": 2.2142741046468601e-16,
+      "seconds": 0.01722732099960922,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "fractals-fern",
+      "status": "passed",
+      "maxAbsoluteDifference": 0.0,
+      "maxScaledDifference": 0.0,
+      "seconds": 0.02585046499962118,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "fractals-mandelbrot",
+      "status": "passed",
+      "maxAbsoluteDifference": 4.440892098500626e-16,
+      "maxScaledDifference": 4.3762759436282626e-16,
+      "seconds": 0.6959194900000512,
+      "exactEscapeFraction": 1.0,
+      "criterion": "Coordinates within 1e-12; >=99.5% identical finite escape counts. Floating-point sensitivity near the boundary is recorded."
+    },
+    {
+      "case": "fractals-triangle",
+      "status": "passed",
+      "maxAbsoluteDifference": 0.0,
+      "maxScaledDifference": 0.0,
+      "seconds": 0.02668358500022805,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "leaf-dark",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.1368683772161603e-13,
+      "maxScaledDifference": 6.638011355614238e-16,
+      "seconds": 0.004528819999904954,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "leaf-dry-leaf",
+      "status": "passed",
+      "maxAbsoluteDifference": 7.193057803078773e-05,
+      "maxScaledDifference": 1.0026475376454526e-05,
+      "seconds": 0.00368756600028064,
+      "scaledErrorBound": 2e-05
+    },
+    {
+      "case": "leaf-heat",
+      "status": "passed",
+      "maxAbsoluteDifference": 6.0414067917236025e-05,
+      "maxScaledDifference": 9.313608124772426e-06,
+      "seconds": 0.0028238790000614244,
+      "scaledErrorBound": 2e-05
+    },
+    {
+      "case": "leaf-low-light",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.1368683772161603e-13,
+      "maxScaledDifference": 6.638011355614238e-16,
+      "seconds": 0.0009275709999201354,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "leaf-reference",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.1368683772161603e-13,
+      "maxScaledDifference": 7.254190357316627e-16,
+      "seconds": 0.001313023999955476,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "lipids-fadns",
+      "status": "passed",
+      "maxAbsoluteDifference": 2.7404189695268144e-08,
+      "maxScaledDifference": 2.6022441252846473e-08,
+      "seconds": 0.07459002799987502,
+      "scaledErrorBound": 2e-05
+    },
+    {
+      "case": "lipids-metabolism",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.0273661998905226e-06,
+      "maxScaledDifference": 4.686231183278096e-07,
+      "seconds": 0.009147457999915787,
+      "scaledErrorBound": 2e-05
+    },
+    {
+      "case": "plant-c4",
+      "status": "passed",
+      "maxAbsoluteDifference": 2.5579538487363607e-13,
+      "maxScaledDifference": 2.557953848735779e-13,
+      "seconds": 0.012081739000223024,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "plant-cam",
+      "status": "passed",
+      "maxAbsoluteDifference": 7.105427357601002e-14,
+      "maxScaledDifference": 5.329070518200685e-14,
+      "seconds": 0.013753307000115456,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "plant-dry",
+      "status": "passed",
+      "maxAbsoluteDifference": 7.105427357601002e-14,
+      "maxScaledDifference": 7.105427357601002e-14,
+      "seconds": 0.01168947299993306,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "plant-irrigated",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.4779288903810084e-12,
+      "maxScaledDifference": 1.3642420526488458e-12,
+      "seconds": 0.01144379699962883,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "plant-nitrogen",
+      "status": "passed",
+      "maxAbsoluteDifference": 3.410605131648481e-13,
+      "maxScaledDifference": 3.410605131648287e-13,
+      "seconds": 0.011967888999606657,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "plant-perennial",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.1368683772161603e-12,
+      "maxScaledDifference": 9.379164112026925e-13,
+      "seconds": 0.02944284900013372,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "plant-reference",
+      "status": "passed",
+      "maxAbsoluteDifference": 2.2737367544323206e-13,
+      "maxScaledDifference": 1.4210854715200792e-13,
+      "seconds": 0.01121882799998275,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "plant-reseed",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.4210854715202004e-14,
+      "maxScaledDifference": 1.4210854715201095e-14,
+      "seconds": 0.03968522000013763,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "randomness-birthdeath",
+      "status": "passed",
+      "maxAbsoluteDifference": 3.552713678800501e-15,
+      "maxScaledDifference": 3.10720461095617e-16,
+      "seconds": 0.0063610820002395485,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "randomness-brownian",
+      "status": "passed",
+      "maxAbsoluteDifference": 5.034861416675085e-14,
+      "maxScaledDifference": 4.6731657488669927e-14,
+      "seconds": 0.019069503000082477,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "randomness-dice",
+      "status": "passed",
+      "maxAbsoluteDifference": 0.0,
+      "maxScaledDifference": 0.0,
+      "seconds": 0.0034720989997367724,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "randomness-ou",
+      "status": "passed",
+      "maxAbsoluteDifference": 3.552713678800501e-14,
+      "maxScaledDifference": 1.5982402567233206e-14,
+      "seconds": 0.02503119399989373,
+      "scaledErrorBound": 2e-09
+    },
+    {
+      "case": "tcell-death",
+      "status": "passed",
+      "maxAbsoluteDifference": 2.58263604990816e-06,
+      "maxScaledDifference": 1.2763969572694387e-07,
+      "seconds": 0.011375896999652468,
+      "scaledErrorBound": 2e-05
+    },
+    {
+      "case": "tcell-reference",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.5046677219743287e-05,
+      "maxScaledDifference": 1.3402278197708314e-07,
+      "seconds": 0.008069846000125835,
+      "scaledErrorBound": 2e-05
+    },
+    {
+      "case": "tcell-slow",
+      "status": "passed",
+      "maxAbsoluteDifference": 1.4306011095754911e-06,
+      "maxScaledDifference": 7.499047802125395e-08,
+      "seconds": 0.006328638000013598,
+      "scaledErrorBound": 2e-05
+    }
+  ]
+}

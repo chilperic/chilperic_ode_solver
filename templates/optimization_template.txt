@@ -1,8 +1,0 @@
-module: opt
-sense: minimize
-var x = 1 [0, 10]
-var y = 1 [0, 10]
-objective: (x-3)^2 + (y-2)^2
-ineq: x + y - 4
-ineq: -x
-ineq: -y

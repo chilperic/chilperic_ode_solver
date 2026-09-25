@@ -1,0 +1,5 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 170' role='img' aria-label='Autonomous vehicles anti-tech backlash illustration'><rect width='360' height='170' rx='22' fill='#f8fafc'/><rect x='1' y='1' width='358' height='168' rx='22' fill='none' stroke='#d7e2f0'/><style>text{font-family:Inter,Arial,sans-serif;font-size:12px;fill:#334155;font-weight:700}.small{font-size:10px;fill:#64748b;font-weight:650}.line{stroke:#94a3b8;stroke-width:2;fill:none;stroke-linecap:round}.dash{stroke:#94a3b8;stroke-width:2;fill:none;stroke-dasharray:5 5}.node{stroke:#fff;stroke-width:2}</style>
+<text x='18' y='24'>autonomous vehicle trust backlash</text>
+<rect x='42' y='80' width='74' height='32' rx='16' fill='#2563eb'/><circle cx='58' cy='116' r='8' fill='#0f172a'/><circle cx='100' cy='116' r='8' fill='#0f172a'/><text x='60' y='101' fill='white'>AV</text>
+<path class='line' d='M128 94 H210'/><path class='dash' d='M210 94 C244 44 282 44 318 74'/><circle cx='260' cy='62' r='14' fill='#ef4444'/><text class='small' x='226' y='142'>rumor triggers local blockade</text>
+</svg>

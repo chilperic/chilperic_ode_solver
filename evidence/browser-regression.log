@@ -1,0 +1,80 @@
+PASS Homepage has direct original Studio and Atlas access
+PASS Homepage mobile has no horizontal document overflow
+PASS plant-growth default computation through real worker and UI
+PASS New Two-up preserves separate selections and exactly two cards
+PASS Pin, edit, stale-result export refusal, recompute comparison
+PASS Play reveals results without another computation
+PASS Cancel terminates a launched worker and prevents publication
+PASS Local mathematical equations render as real SVG
+PASS Executed browser JSON download
+PASS Executed browser CSV download
+PASS Executed browser native Python download
+PASS Executed browser interactive HTML download
+PASS Input save uses declared storage path
+PASS Executed browser SVG plot download
+PASS Executed browser PNG plot download
+PASS Plant mobile document has no horizontal overflow
+PASS leaf-physiology default computation through real worker and UI
+PASS adaptation default computation through real worker and UI
+PASS lipids default computation through real worker and UI
+PASS Original FADNS runs with all eighteen states
+PASS tcell default computation through real worker and UI
+PASS randomness default computation through real worker and UI
+PASS branching default computation through real worker and UI
+PASS diffusion default computation through real worker and UI
+PASS fractals default computation through real worker and UI
+PASS Preserved optimization interface controls
+PASS Preserved sensitivity interface controls
+PASS Preserved statistics interface controls
+PASS Preserved fitting interface controls
+PASS Preserved ml interface controls
+PASS Preserved agent interface controls
+PASS Original agent example configurations retained
+PASS Preserved studio interface controls
+PASS Structured Studio retains original starters plus exact source models
+PASS Original Studio independent Two-up remains working
+PASS Original FADNS can be selected in structured Studio
+PASS Preserved workspace interface controls
+PASS Book retains 27 chapter destinations
+PASS Book chapter activates section and worked-practice navigation
+PASS Book local source-text search
+PASS Book uses the explicitly redacted public companion
+PASS index source load has no JavaScript exceptions
+PASS index local assets load without failure
+PASS plant-growth source load has no JavaScript exceptions
+PASS plant-growth local assets load without failure
+PASS leaf-physiology source load has no JavaScript exceptions
+PASS leaf-physiology local assets load without failure
+PASS adaptation source load has no JavaScript exceptions
+PASS adaptation local assets load without failure
+PASS lipids source load has no JavaScript exceptions
+PASS lipids local assets load without failure
+PASS tcell source load has no JavaScript exceptions
+PASS tcell local assets load without failure
+PASS randomness source load has no JavaScript exceptions
+PASS randomness local assets load without failure
+PASS branching source load has no JavaScript exceptions
+PASS branching local assets load without failure
+PASS diffusion source load has no JavaScript exceptions
+PASS diffusion local assets load without failure
+PASS fractals source load has no JavaScript exceptions
+PASS fractals local assets load without failure
+PASS optimization source load has no JavaScript exceptions
+PASS optimization local assets load without failure
+PASS sensitivity source load has no JavaScript exceptions
+PASS sensitivity local assets load without failure
+PASS statistics source load has no JavaScript exceptions
+PASS statistics local assets load without failure
+PASS fitting source load has no JavaScript exceptions
+PASS fitting local assets load without failure
+PASS ml source load has no JavaScript exceptions
+PASS ml local assets load without failure
+PASS agent source load has no JavaScript exceptions
+PASS agent local assets load without failure
+PASS studio source load has no JavaScript exceptions
+PASS studio local assets load without failure
+PASS workspace source load has no JavaScript exceptions
+PASS workspace local assets load without failure
+PASS book source load has no JavaScript exceptions
+PASS book local assets load without failure
+TOTAL 79 FAILED 0

@@ -1,0 +1,33 @@
+{
+  "scope": "Additional controlled browser checks: fresh mobile initialization, WebGL fallback, diagnostic UI.",
+  "results": [
+    {
+      "name": "Fresh mobile initialization and native computation fixture",
+      "status": "passed",
+      "scope": "390px controlled Chromium, real Blob worker, in-memory storage."
+    },
+    {
+      "name": "3D selection renders or explicitly projects without unsupported overlay",
+      "status": "passed",
+      "traceType": "contour"
+    },
+    {
+      "name": "User-run installation diagnostics execute all eleven checks in controlled fixture",
+      "status": "passed",
+      "rows": [
+        "Same-origin public release metadata\tpassed\t79.2.0",
+        "Native browser local storage roundtrip\tpassed\tWrite/read/remove succeeded in this session.",
+        "Book manifest and scientific navigation\tpassed\t27 chapter destinations loaded.",
+        "plant native computation worker\tpassed\t81 finite result rows; 8 plot specifications.",
+        "leaf native computation worker\tpassed\t81 finite result rows; 2 plot specifications.",
+        "adaptation native computation worker\tpassed\t351 finite result rows; 5 plot specifications.",
+        "lipids native computation worker\tpassed\t81 finite result rows; 6 plot specifications.",
+        "randomness native computation worker\tpassed\t501 finite result rows; 2 plot specifications.",
+        "branching native computation worker\tpassed\t26 finite result rows; 2 plot specifications.",
+        "diffusion native computation worker\tpassed\t81 finite result rows; 4 plot specifications.",
+        "fractals native computation worker\tpassed\t12000 finite result rows; 1 plot specifications."
+      ],
+      "scope": "The fixture storage/worker context is not evidence of normal-origin persistence."
+    }
+  ]
+}

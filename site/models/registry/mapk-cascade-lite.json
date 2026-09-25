@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "mapk_lite",
+  "title": "MAPK cascade lite",
+  "vars": [
+    "M",
+    "K",
+    "P"
+  ],
+  "params": {
+    "a": 1,
+    "b": 0.6,
+    "c": 0.5,
+    "d": 0.4
+  },
+  "init": {
+    "M": 0.2,
+    "K": 0.1,
+    "P": 0.05
+  },
+  "eqs": {
+    "M": "a*(1-M)-b*M",
+    "K": "M*(1-K)-c*K",
+    "P": "K*(1-P)-d*P"
+  },
+  "tspan": [
+    0,
+    40
+  ],
+  "note": "Reduced teaching cascade."
+}

@@ -1,0 +1,5 @@
+# Optional developer verification beyond browser use; not a claim of a locked environment.
+-r requirements-reference.txt
+playwright>=1.50,<2
+PyMuPDF>=1.24,<2
+beautifulsoup4>=4.12,<5

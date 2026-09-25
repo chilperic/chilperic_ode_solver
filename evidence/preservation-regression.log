@@ -1,0 +1,36 @@
+PASS Original optimization coordinate
+PASS Original optimization projected_gradient
+PASS Original optimization differential_evolution
+PASS Original optimization cma_es
+PASS Original optimization multi_start
+PASS Original optimization random_search
+PASS Original Morris independent linear analytic response
+PASS Original FIM retains vector observations
+PASS Weighted fitting matches independent weighted normal equations
+PASS Invalid known noise refused
+PASS Original FDR correction analytic case
+PASS ROC perfect ranking includes first precision-recall step
+PASS ROC tied scores are order-invariant threshold groups
+PASS Original ML out-of-fold regression
+PASS Original ML classification cross-validation
+PASS Original PCA and clustering remain executable
+PASS Original 18-state FADNS parser and solver
+PASS Original four-state metabolism is retained separately
+PASS Original structured model importer accepts source FADNS JSON
+PASS Run-state rejects obsolete completion after input edit
+PASS Run-state cancellation terminates worker
+PASS Pinned comparison is an immutable deep copy
+PASS Dry plant has no hidden replenishment over annual boundaries
+PASS Water, carbon, nitrogen balances across reseeding
+PASS Zero-carbon zero-seed annual plant does not manufacture founders
+PASS Invalid water capacity refused
+PASS Weather coverage rejected rather than silently extended
+PASS Moran neutral limit and adverse-selection bounds
+PASS Season window changes trait-specific selection
+PASS Closed diffusion conserves integrated mass
+PASS Fixed diffusion records nonzero external flux
+PASS Diffusion spatial refinement against analytic sine
+PASS Quoted numeric CSV and escaped header are parsed
+PASS Invalid CSV scalar refused
+PASS Custom negative horizon refused
+PASS Invalid numeric input remains a refusal after JSON roundtrip

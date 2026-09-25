@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "missingHTMLTargets": [],
+  "javascriptSyntax": "all added JS/MJS modules checked",
+  "note": "External links were not recursively audited."
+}

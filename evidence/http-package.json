@@ -1,0 +1,2785 @@
+{
+  "scope": "Real standard-library HTTP requests to the delivered local launcher, not native browser navigation or live deployment.",
+  "results": [
+    {
+      "path": "preservation.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "leaf-physiology.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "VERSION.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "fractals.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "adaptation.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "practice.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "acknowledgement.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "evolution.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "diffusion.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "tutorial.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "release-evidence.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "networks.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "publication.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "population-genetics.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "identity.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "optimization.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "contact.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "model.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "labs.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "cv.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "CAPABILITIES.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "linear-algebra.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "docs.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "research.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "book-observations.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "release.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "agent.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "randomness.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "book.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "advanced-methods.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "trust.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "ANALYSIS_TAXONOMY.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "platform.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "studio.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "programme.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "examples.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "ml.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "ode.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "symbolic.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "ai-modeling.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "verify.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "bifurcation.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "sciml.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "beauty.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "plant-growth.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "learn.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "build-manifest.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "sensitivity.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "lipids.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "tcell.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "fitting.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "favicon.ico",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/vnd.microsoft.icon"
+    },
+    {
+      "path": "branching.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "index.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "stochastic.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "library.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "workbench.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "statistics.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "steady.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "workspace.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "models/registry.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "src/worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform-shell.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/home-demo-worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/home-live-research.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/sciml-lab.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/analysis-plot-registry.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/fokokit.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/surrogate.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/sindy.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v71-worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/continuation-analysis.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/stochastic-advanced.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/app.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/agent-lab.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v71-platform.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/math-beauty.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/model-session.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform-data-engine.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/steady-state-lab.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/analysis-taxonomy-docs.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/agent-rule-worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/home-demo-reel.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v71-workbench-science.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/dynamical-fitting.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/inverse.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/optimization-lab.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/basin-analysis.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/navigation.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/model-validator.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "templates/optimization_template.txt",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/plain"
+    },
+    {
+      "path": "templates/optimization_quadratic.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "templates/ode_lorenz.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "templates/parametric_sir_sweep.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "research/tcell-proliferation.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "research/fatty-acid-metabolism.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "research/photosynthesis.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "research/CURRICULUM_MAP.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "research/software.html",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/html"
+    },
+    {
+      "path": "styles/v72-profile-shell.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-tokens.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-sciml.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/research.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/lab-identity.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-workbench.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-accessibility-performance.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/identity.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v76-system.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-public-shell.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/upgrade.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-atlas.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/style.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-symbolic.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/symbolic-beauty.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v72-lab-shell.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "styles/v70-10-modeling-logic.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "assets/profile-chilperic.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/homepage-preview.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "materials/Scientific_Mastery_V6_17_Public_Companion.pdf",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/pdf"
+    },
+    {
+      "path": "materials/scientific-mastery-cover.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "materials/book-search.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "materials/book-manifest.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "materials/publication-status.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "assets/lab-logos/book.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/docs.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/ai-modeling.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/studio.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/population-genetics.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/steady-state-lab.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/lab-logos/optimization.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/programme.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/bifurcation.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/sciml.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/evolution.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/networks.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/model-atlas.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/lab-logos/ode.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/symbolic.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/workspace.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/ode-lab.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/lab-logos/fitting.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/steady.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/linear-algebra.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/statistics.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/optimization-lab.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/lab-logos/examples.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/advanced-methods.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/sensitivity.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/labs.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/stochastic.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/ml.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/workbench.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/home.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/research.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/agent.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/learn.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/stochastic-lab.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/lab-logos/beauty.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/cv/industry_cv_german.pdf",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/pdf"
+    },
+    {
+      "path": "assets/cv/industry_cv.pdf",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/pdf"
+    },
+    {
+      "path": "assets/cv/academic_cv.pdf",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/pdf"
+    },
+    {
+      "path": "assets/sciml-atlas/drug-schedule.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/microbiome.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/virtual-patients.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/drug-penetration.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/seir.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/metabolic-stress.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/signaling-network.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/gene-knockout.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/tumor-microenv.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/protein-design.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/sciml-atlas/allosteric.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/institutions/hhu.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/institutions/university-yaounde-i.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/institutions/polimer.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/institutions/aims.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/phd-fadns-coa-extracted.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/calvin.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/lotka.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/phd-fa-metabolism-extracted.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/michaelis.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/sir-seir.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/romeo-juliet.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/lorenz.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/braess.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/model-atlas/vanderpol.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/brand/foko-lab-mark-mono.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/favicon-32.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/brand/foko-lab-mark-reversed.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/foko-lab-logo.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/apple-touch-icon.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/brand/favicon-16.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/brand/foko-lab-emblem.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/foko-lab-mark-dark.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/foko-lab-logo-dark.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/foko-lab-mark-monochrome.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/foko-lab-micro.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/icon-512.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/brand/brand-system.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "assets/brand/social-card.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/brand/foko-lab-logo-display.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/icon-192.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/brand/foko-lab-mark.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/foko-lab-wordmark.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/brand/foko-lab-icon-512.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/agent-atlas/deepfake_polarization.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/predprey.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/av_backlash.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/gentrification_hype.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/life.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/ancient_cult.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/evacuation_panic.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/poaching_market.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/fadns_particle.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/plant.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/forest.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/cancer_myth.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/smart_grid_boycott.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/meme_stock.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/tcell.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/agent-atlas/vax_hesitancy.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/vanderpol.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/lorenz.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/michaelis.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/calvin.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/romeo-juliet.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/sir-seir.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/braess.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/model-atlas/schemes/lotka.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/schemes/tcell_smith_martin.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/schemes/fa_fadns_cycle.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/schemes/fa_fitting_pipeline.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/schemes/tcell_pipeline.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/schemes/fa_bistability.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/schemes/plant_architecture.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/schemes/tcell_cyton.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/research/tcell/generation-cascade.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/tcell/tcell_scheme.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/tcell/branching_process.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/thumbs/fatty-acid.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/thumbs/tcell.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/thumbs/photosynthesis.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/photosynthesis/plant_abstract_figure.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_pareto_niger.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/objective_landscape_with_optimal.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c4_plant_distribution.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_delta13c_sudan.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_3d_evolution_sudan.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_3d_evolution_canada.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/thermoplants-graphical-abstract.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_sobol_interactions.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_pareto_sudan.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_delta13c_brazil.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_3d_evolution_niger.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/thermo-hydraulic-transport-architecture.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_local_sensitivity.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_3d_evolution_germany.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/environment-plant-physiology-integration.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/plant_project_hero.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_pareto_germany.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/fitness_trajectory.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_sobol_indices.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_pareto_canada.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_3d_evolution_brazil.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/moisture_retention_curves.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/objective_landscape_bio_full_3d.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/photosynthesis/c3c4_pareto_brazil.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/fatty-acid/coarse-grained-network.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/research/fatty-acid/denovo_scheme.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/fatty-acid/coarse_grained.webp",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/webp"
+    },
+    {
+      "path": "assets/research/fatty-acid/denovo-full.png",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/png"
+    },
+    {
+      "path": "assets/vendor/mathjs/math-15.2.0.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "assets/vendor/katex/katex-0.16.47.min.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "assets/vendor/katex/katex-0.16.47.min.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "assets/vendor/plotly/plotly-2.35.2.min.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "assets/vendor/mathjax/tex-svg.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "assets/vendor/mathjax/LICENSE.txt",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/plain"
+    },
+    {
+      "path": "assets/lab-logos/dark/book.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/docs.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/ai-modeling.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/studio.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/population-genetics.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/optimization.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/programme.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/bifurcation.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/sciml.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/evolution.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/networks.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/ode.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/symbolic.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/workspace.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/fitting.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/steady.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/linear-algebra.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/statistics.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/examples.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/advanced-methods.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/sensitivity.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/labs.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/stochastic.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/ml.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/workbench.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/home.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/research.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/agent.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/learn.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "assets/lab-logos/dark/beauty.svg",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "image/svg+xml"
+    },
+    {
+      "path": "research/measurement-case/reference.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "research-models/photosynthesis-climate-adaptation/model.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "src/workbench/adapters.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/live-3d.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/ai-modeling.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/cmaes.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/bifurcation.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/linalg-reference.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/statistics.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/numerical-inputs.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/ode.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/fitting.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/surrogate.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/model-import.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/sindy.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/steady.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/advanced-methods.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/symbolic-reference.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/continuation-analysis.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/linalg.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/model-ir.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/project.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/stochastic-advanced.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/model-report-card.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/population-genetics.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/optimization.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/studio-compute.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/networks-reference.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/stochastic.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/ml-lite.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/pca.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/networks.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/sensitivity.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/evolution-landscape.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/index.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/agent-reference.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/data.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/dynamical-fitting.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/inverse.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/basin-analysis.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/scipy-verification.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/core/ml-reference.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/analysis-taxonomy.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/model-studio-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/optimization-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/ml-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/stochastic-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/steady-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/symbolic-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/population-genetics-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/search-index.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/networks-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/agent-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/scientific-example-catalog.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/linalg-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/sensitivity-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/fitting-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/statistics-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/models/home-research-models.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/engine.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/executor.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/curriculum-data.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/fit-experiment.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/paths.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/book.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/programme.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/lessons.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/identity.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/shell.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/authoring.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/authoring-ui.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/python-template.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/measurement-case.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/charts.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/labs-directory.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/experiment-data.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/book-data.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/self-check.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/publication.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/physiology.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/python-reference.txt",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/plain"
+    },
+    {
+      "path": "src/upgrade/studio-presets.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/lessons.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/numerics.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/common.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/registry.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/preserved-models.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/run-state.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/practice.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/kernel.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/preserved-models.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "src/upgrade/biology.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/expression.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/lab-ui.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/upgrade/home.mjs",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v76/app-shell.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v76/home-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/sensitivity-worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/stochastic-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/ode-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/scipy-verifier.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/optimization-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/agent-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/accessibility-performance.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/steady-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/ml-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/statistics-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/ai-modeling-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/scientific-registry.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/symbolic-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/sensitivity-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/example-atlas.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/population-genetics-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/evolution-landscape-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/advanced-methods-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/workbench-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/linalg-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/networks-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/bifurcation-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/agent-worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v72/fitting-workspace.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/labs/statistics.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/labs/fitting.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/labs/ml.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/labs/linalg.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/labs/networks.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/storage.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/discovery-index.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/visual-identity.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/identity-map.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/compute-bus.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/shell.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/lab-method-index.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/platform/shell.css",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/css"
+    },
+    {
+      "path": "src/v73/model-studio.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v73/studio-worker.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/v73/studio-executor.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/generated/authoring-runtime.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/generated/observation-runtime.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "src/research/generated/workspace-search.js",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "text/javascript"
+    },
+    {
+      "path": "models/registry/lorenz.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/van-der-pol.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/hodgkin-huxley-lite.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/mapk-cascade-lite.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/goodwin-oscillator.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/repressilator.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/sir.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/chemostat.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/fitzhugh-nagumo.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "models/registry/lotka-volterra.json",
+      "status": "passed",
+      "httpStatus": 200,
+      "mime": "application/json"
+    },
+    {
+      "path": "private-reference/Scientific_Mastery_V6_17_Design_Revision.pdf",
+      "status": "passed",
+      "httpStatus": 404
+    },
+    {
+      "path": "../private-reference/Scientific_Mastery_V6_17_Design_Revision.pdf",
+      "status": "passed",
+      "httpStatus": 404
+    },
+    {
+      "path": "rollback/FokoLab-79.1-original.zip",
+      "status": "passed",
+      "httpStatus": 404
+    },
+    {
+      "path": "materials/Scientific_Mastery_V6_17_Design_Revision.pdf",
+      "status": "passed",
+      "httpStatus": 404
+    }
+  ]
+}

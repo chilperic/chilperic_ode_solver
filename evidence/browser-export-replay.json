@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "export": "FokoLab-plant-reference.py",
+  "sha256": "b6e1ce079d3406796aec66e5dc4b87340f7670626181c4e596c8ab0c222b0035",
+  "rows": 241,
+  "scaledError": 7.105427357600901e-14,
+  "scope": "Actual Python download executed without Node; compared to actual corresponding browser experiment JSON."
+}

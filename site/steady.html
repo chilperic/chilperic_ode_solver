@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html data-color-family="dynamics" data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab Steady-State Lab solves algebraic systems, reports residual evidence, and performs explicitly limited parameter scans." name="description"/>
+<meta content="Foko Lab Steady-State Lab" property="og:title"/>
+<meta content="Browser-computed Newton solves, residual diagnostics, local Jacobians, and transparent parameter scans." property="og:description"/>
+<meta content="website" property="og:type"/>
+<title>Steady-State Lab · Foko Lab</title>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=79.2.0" rel="stylesheet"/>
+<script defer="" src="src/platform/storage.js?v=79.2.0"></script><script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=79.2.0"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=79.2.0"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=79.2.0"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=79.2.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=79.2.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=79.2.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=79.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
+<link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link rel="stylesheet" href="styles/upgrade.css">
+<script src="src/upgrade/registry.js"></script>
+</head>
+<body data-color-family="dynamics" data-lab="steady" data-page-key="steady" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<div class="app-shell">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="layout" id="workbench" tabindex="-1">
+<aside aria-label="Steady-state workflow" class="side-nav">
+<button class="nav-item active" data-jump="modelBlock" type="button"><span>f=0</span><b>Model</b></button>
+<button class="nav-item" data-jump="numericsBlock" type="button"><span>Δ</span><b>Solve</b></button>
+<button class="nav-item" data-jump="scanBlock" type="button"><span>λ</span><b>Scan</b></button>
+<button class="nav-item" data-jump="steadyCapabilityBlock" type="button"><span>≡</span><b>Scope</b></button>
+<button class="nav-item" data-jump="exportsBlock" type="button"><span>⇩</span><b>Export</b></button>
+</aside>
+<aside aria-label="Steady-state controls" class="work-panel controls">
+<section class="intro-card hero-with-mark">
+<div><p class="v72-eyebrow">Algebraic systems · equilibria · parameter scans</p><h2>Steady-State Lab</h2><p class="note">Solve <b>f(x,p)=0</b>, inspect residual evidence, and separate algebraic convergence from dynamical stability.</p></div>
+<img alt="Steady-State Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/steady-state-lab.webp?v=79.2.0"/>
+</section>
+<section aria-label="Run controls" class="actionbar">
+<button class="primary run-button" id="solveSteady" type="button">▶ Solve root</button>
+<button class="secondary" id="runMultiStart" type="button">Multi-start</button>
+<button class="secondary" id="runScan1D" type="button">1D parameter scan</button>
+<button class="secondary" id="runScan2D" type="button">2D scan</button>
+<button class="ghost" id="resetSteady" type="button">Reset</button>
+<label class="ghost file-label"><input accept="application/json,.json" hidden="" id="steadyImport" type="file"/>Import JSON</label>
+<div aria-hidden="true" class="progress"><div id="steadyProgress"></div></div>
+<div class="status" id="steadyStatus" role="status">Ready. No result has been computed.</div>
+</section>
+<section class="examples-section" id="examplesBlock">
+<div class="section-title"><h2>Model example</h2><button class="secondary subtle" id="loadSteady" type="button">Load &amp; solve</button></div>
+<select aria-label="Steady-state example" id="steadySelect"></select>
+<div class="steady-example-filters">
+<label><span>Search examples</span><input id="steadyExampleSearch" placeholder="model, field or mechanism" type="search"/></label>
+<label><span>Family</span><select id="steadyFamilyFilter"><option value="all">All families</option></select></label>
+</div>
+<p class="example-count" id="steadyExampleCount">0 examples</p>
+<p class="narrative" id="steadyNarrative"></p>
+<details class="example-browser" open=""><summary>Browse example families</summary><div class="model-deck steady-example-deck" id="steadyDeck"></div></details>
+</section>
+<section class="card" id="modelBlock">
+<div class="card-head"><div><p class="v72-eyebrow" id="steadyFamily">Model</p><h2 id="steadyTitle">Algebraic model</h2></div><button class="icon-btn" id="addSteadyVar" type="button">＋ variable</button></div>
+<label><span>Interpretation</span><select id="steadyInterpretation"><option value="dynamic">Equilibrium of dx/dt = f(x,p)</option><option value="algebraic">Algebraic constraints only</option></select></label>
+<p class="field-help" id="interpretationHelp">Local stability is reported only for a declared dynamical interpretation and only when the browser core supports the eigenspectrum.</p>
+<div class="small-title">Variables and initial guesses</div>
+<div class="editable-grid" id="steadyVars"></div>
+<label><span>Equations f(x,p)=0 — one per variable</span><textarea id="steadyEquations" rows="7" spellcheck="false"></textarea></label>
+<div class="math-preview inline-math" id="steadyPreview">Equation preview.</div>
+<details open=""><summary>Parameters</summary><div class="card-head compact-head"><span class="field-help">Values used by the current solve.</span><button class="icon-btn" id="addSteadyParam" type="button">＋ parameter</button></div><div class="editable-grid" id="steadyParams"></div></details>
+</section>
+<section class="card" id="numericsBlock">
+<details open=""><summary>Newton and validation settings</summary>
+<div class="advanced-grid steady-settings">
+<label><span>Residual tolerance</span><input id="steadyTol" min="1e-14" step="any" type="number" value="1e-9"/></label>
+<label><span>Maximum iterations</span><input id="steadyMaxIter" max="500" min="1" type="number" value="80"/></label>
+<label><span>Initial damping</span><input id="steadyDamping" max="1" min="0.01" step="0.05" type="number" value="1"/></label>
+<label><span>Multi-start scale</span><input id="steadyStartScale" min="0.01" step="any" type="number" value="1"/></label>
+</div>
+<p class="field-help">The browser uses finite-difference Jacobians, partial-pivot Gaussian elimination, and residual-decreasing backtracking. Convergence is not claimed unless the final residual meets the requested tolerance.</p>
+</details>
+</section>
+<section class="card" id="scanBlock">
+<details open=""><summary>Parameter scan settings</summary>
+<div class="advanced-grid steady-settings">
+<label><span>Primary parameter</span><select id="steadyScanParam"></select></label>
+<label><span>From</span><input id="steadyScanMin" step="any" type="number" value="0"/></label>
+<label><span>To</span><input id="steadyScanMax" step="any" type="number" value="4"/></label>
+<label><span>Points</span><input id="steadyScanN" max="160" min="3" type="number" value="30"/></label>
+<label><span>Second parameter</span><select id="steadyScanParam2"></select></label>
+<label><span>Second from</span><input id="steadyScan2Min" step="any" type="number" value="0"/></label>
+<label><span>Second to</span><input id="steadyScan2Max" step="any" type="number" value="4"/></label>
+<label><span>Second points</span><input id="steadyScan2N" max="50" min="3" type="number" value="16"/></label>
+</div>
+<p class="scientific-boundary">These are sequential parameter scans using the previous converged root as the next initial guess. They are <b>not</b> pseudo-arclength continuation and do not prove folds or Hopf bifurcations. Any crossing or turning marker is a grid-dependent candidate only.</p>
+</details>
+</section>
+<section class="card" id="steadyCapabilityBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Capability taxonomy</p><h2>Steady-state and sensitivity scope</h2></div></div>
+<p class="field-help" id="steadyTaxonomySummary">Loading the analysis taxonomy…</p>
+<div class="capability-catalog" id="steadyTaxonomyCatalog"></div>
+<p class="scientific-boundary">Sequential scans, finite multi-start sets, and local numerical Jacobians are explicitly limited evidence. Pseudo-arclength continuation, periodic-orbit analysis, adjoints, Sobol indices, and bifurcation certification remain external workflows.</p>
+<p class="field-help"><a href="ANALYSIS_TAXONOMY.json">Machine-readable JSON</a> · <a href="ANALYSIS_TAXONOMY.md">hierarchical reference</a></p>
+</section>
+</aside>
+<section aria-label="Steady-state results" class="workspace v72-workspace">
+<section aria-label="Numerical results" class="results-card" role="region">
+<header class="v72-workspace-head">
+<div><p class="v72-eyebrow">Results</p><h1>Roots, residuals and parameter scans</h1><p>Compare two views generated from the current solve or scan. Unavailable views are removed rather than replaced by decorative output.</p></div>
+<div aria-label="Plot layout" class="v72-layout-switch" role="group">
+<button class="active" data-layout-mode="two" type="button">2-up</button>
+<button data-layout-mode="focus" type="button">Focus</button>
+</div>
+</header>
+<div class="plot-toolbar-v2">
+<span class="result-kind" id="resultKind">No computed result</span>
+<button class="ghost" id="exportSteadyPng" type="button">Current PNG</button>
+<button class="ghost" id="exportSteadySvg" type="button">Current SVG</button>
+</div>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
+<article class="chart-card" data-plot-card="left">
+<div class="chart-title"><h3 id="leftPlotTitle">Primary view</h3><select aria-label="Primary plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="leftPlot"><div class="diagnostics empty">Solve a model to create a plot.</div></div>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details>
+</article>
+<article class="chart-card" data-plot-card="right">
+<div class="chart-title"><h3 id="rightPlotTitle">Diagnostic view</h3><select aria-label="Secondary plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="rightPlot"><div class="diagnostics empty">Solve a model to create a diagnostic plot.</div></div>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details>
+</article>
+</div>
+<p class="info-strip" id="plotHint">Root convergence and dynamical stability are distinct claims. Read the evidence panel before interpreting a result.</p>
+</section>
+</section>
+<aside aria-label="Run diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card">
+<p class="v72-eyebrow">Run status</p>
+<div class="status-strip">
+<div class="status-ok"><span>●</span><b id="steadyTopStatus">Ready</b></div>
+<div><span>Runtime</span><b id="steadyRuntime">—</b></div>
+<div><span>Iterations</span><b id="steadyIterations">—</b></div>
+<div><span>Residual norm</span><b id="steadyResidual">—</b></div>
+<div><span>Termination</span><b id="steadyTermination">—</b></div>
+</div>
+<div class="metrics-grid">
+<article class="metric-card"><small>Root claim</small><b id="steadyMetricConverged">—</b><em>tolerance gate</em></article>
+<article class="metric-card"><small>Stability</small><b id="steadyMetricStability">—</b><em>declared dynamics</em></article>
+<article class="metric-card"><small>Dimension</small><b id="steadyMetricVars">—</b><em>unknowns</em></article>
+<article class="metric-card"><small>Distinct roots</small><b id="steadyMetricAlt">—</b><em>deterministic starts</em></article>
+</div>
+</section>
+<section class="v72-inspector-card">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Numerical diagnostics</p><h2>Evidence</h2></div></div>
+<div class="diagnostics empty" id="steadyDiagnostics">Solve a model to see residual history, termination evidence, Jacobian scope, and interpretation limits.</div>
+</section>
+<section class="v72-inspector-card" id="provenanceCard">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div>
+<dl class="v72-provenance">
+<div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div>
+<div><dt>Engine</dt><dd id="provenanceEngine">FokoSteadyCore</dd></div>
+<div><dt>Method</dt><dd id="provenanceMethod">Damped Newton</dd></div>
+<div><dt>Scope</dt><dd id="provenanceScope">Browser-computed root finding</dd></div>
+<div><dt>Meaning</dt><dd id="provenanceInterpretation">—</dd></div>
+</dl>
+<p class="v72-warning" id="provenanceWarning">Run an analysis to create results.</p>
+</section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div>
+<div class="export-row">
+<button class="secondary" id="saveSteadySession" type="button">Save session</button>
+<button class="secondary" id="restoreSteadySession" type="button">Restore session</button>
+<button class="secondary" id="copySteadyShareUrl" type="button">Copy share URL</button>
+<button class="secondary" id="exportSteadyWide" type="button">Wide CSV</button>
+<button class="secondary" id="exportSteadyLong" type="button">Long CSV</button>
+<button class="secondary" id="exportSteadyJson" type="button">Result JSON</button>
+<button class="secondary" id="exportSteadyModel" type="button">Model JSON</button>
+<button class="secondary" id="exportSteadyPython" type="button">Python validation</button>
+</div>
+<p class="note">Session and share controls preserve configuration only. Computed evidence must be regenerated after restore.</p>
+</section>
+</aside>
+</main>
+</div>
+<script defer="" src="src/models/analysis-taxonomy.js?v=79.2.0"></script>
+<script defer="" src="src/models/steady-presets.js?v=79.2.0"></script>
+<script defer="" src="src/core/steady.js?v=79.2.0"></script>
+<script defer="" src="src/v72/steady-workspace.js?v=79.2.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=79.2.0"></script>
+<script defer="" src="src/models/search-index.js?v=79.2.0"></script><script defer="" src="src/v76/app-shell.js?v=79.2.0&amp;core-access=1"></script>
+<script src="src/upgrade/publication.js"></script><script src="src/upgrade/common.js"></script>
+</body>
+</html>

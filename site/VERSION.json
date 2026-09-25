@@ -1,0 +1,9 @@
+{
+  "version": "79.2.0",
+  "token": "79.2.0",
+  "release": "79.2.0",
+  "name": "FokoLab 79.2.0 Integrated Update",
+  "basedOn": "79.1",
+  "build": "79.2.0-integrated",
+  "validationScope": "See release-evidence.json. Source preservation and executed tests are separate from empirical validation."
+}

@@ -1,0 +1,595 @@
+{
+  "generatedAt": "2026-09-25T16:48:07Z",
+  "scope": "Execute delivered UI code in a controlled local-source Chromium fixture.\nNative address navigation is blocked in the authoring environment. New labs use\nreal Blob workers and local delivered modules; old Studio uses its existing\nbounded no-worker fallback. Storage is an explicit in-memory fixture.\n",
+  "results": [
+    {
+      "name": "Homepage has direct original Studio and Atlas access",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "Homepage mobile has no horizontal document overflow",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "plant-growth default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 241,
+        "plots": 8
+      }
+    },
+    {
+      "name": "New Two-up preserves separate selections and exactly two cards",
+      "status": "passed",
+      "detail": {
+        "left": "phase",
+        "right": "water"
+      }
+    },
+    {
+      "name": "Pin, edit, stale-result export refusal, recompute comparison",
+      "status": "passed",
+      "detail": {
+        "pinnedRain": 1.8,
+        "newRain": 0
+      }
+    },
+    {
+      "name": "Play reveals results without another computation",
+      "status": "passed",
+      "detail": {
+        "computationSerialUnchanged": true
+      }
+    },
+    {
+      "name": "Cancel terminates a launched worker and prevents publication",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "Local mathematical equations render as real SVG",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "Executed browser JSON download",
+      "status": "passed",
+      "detail": {
+        "filename": "FokoLab-plant-experiment.json",
+        "bytes": 1151632
+      }
+    },
+    {
+      "name": "Executed browser CSV download",
+      "status": "passed",
+      "detail": {
+        "filename": "FokoLab-plant.csv",
+        "bytes": 74655
+      }
+    },
+    {
+      "name": "Executed browser native Python download",
+      "status": "passed",
+      "detail": {
+        "filename": "FokoLab-plant-reference.py",
+        "bytes": 23428
+      }
+    },
+    {
+      "name": "Executed browser interactive HTML download",
+      "status": "passed",
+      "detail": {
+        "filename": "FokoLab-plant-figure.html",
+        "bytes": 4584822
+      }
+    },
+    {
+      "name": "Input save uses declared storage path",
+      "status": "passed",
+      "detail": {
+        "scope": "in-memory browser-storage fixture only"
+      }
+    },
+    {
+      "name": "Executed browser SVG plot download",
+      "status": "passed",
+      "detail": {
+        "filename": "FokoLab-plant-phase.svg",
+        "bytes": 111995
+      }
+    },
+    {
+      "name": "Executed browser PNG plot download",
+      "status": "passed",
+      "detail": {
+        "filename": "FokoLab-plant-phase.png",
+        "bytes": 288490
+      }
+    },
+    {
+      "name": "Plant mobile document has no horizontal overflow",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "leaf-physiology default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 241,
+        "plots": 2
+      }
+    },
+    {
+      "name": "adaptation default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 351,
+        "plots": 5
+      }
+    },
+    {
+      "name": "lipids default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 241,
+        "plots": 6
+      }
+    },
+    {
+      "name": "Original FADNS runs with all eighteen states",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "tcell default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 241,
+        "plots": 6
+      }
+    },
+    {
+      "name": "randomness default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 501,
+        "plots": 2
+      }
+    },
+    {
+      "name": "branching default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 26,
+        "plots": 2
+      }
+    },
+    {
+      "name": "diffusion default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 241,
+        "plots": 4
+      }
+    },
+    {
+      "name": "fractals default computation through real worker and UI",
+      "status": "passed",
+      "detail": {
+        "rows": 12000,
+        "plots": 1
+      }
+    },
+    {
+      "name": "Preserved optimization interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 6
+      }
+    },
+    {
+      "name": "Preserved sensitivity interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 4
+      }
+    },
+    {
+      "name": "Preserved statistics interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 11
+      }
+    },
+    {
+      "name": "Preserved fitting interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 6
+      }
+    },
+    {
+      "name": "Preserved ml interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 4
+      }
+    },
+    {
+      "name": "Preserved agent interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 11
+      }
+    },
+    {
+      "name": "Original agent example configurations retained",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "Preserved studio interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 8
+      }
+    },
+    {
+      "name": "Structured Studio retains original starters plus exact source models",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "Original Studio independent Two-up remains working",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "Original FADNS can be selected in structured Studio",
+      "status": "passed",
+      "detail": {
+        "modelStates": 18
+      }
+    },
+    {
+      "name": "Preserved workspace interface controls",
+      "status": "passed",
+      "detail": {
+        "options": 3
+      }
+    },
+    {
+      "name": "Book retains 27 chapter destinations",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "Book chapter activates section and worked-practice navigation",
+      "status": "passed",
+      "detail": {
+        "chapter1Sections": 10,
+        "practice": 2
+      }
+    },
+    {
+      "name": "Book local source-text search",
+      "status": "passed",
+      "detail": {
+        "matchesShown": 20
+      }
+    },
+    {
+      "name": "Book uses the explicitly redacted public companion",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "index source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "index local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "plant-growth source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "plant-growth local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "leaf-physiology source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "leaf-physiology local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "adaptation source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "adaptation local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "lipids source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "lipids local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "tcell source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "tcell local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "randomness source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "randomness local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "branching source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "branching local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "diffusion source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "diffusion local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "fractals source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "fractals local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "optimization source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "optimization local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "sensitivity source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "sensitivity local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "statistics source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "statistics local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "fitting source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "fitting local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "ml source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "ml local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "agent source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "agent local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "studio source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "studio local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "workspace source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "workspace local assets load without failure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "book source load has no JavaScript exceptions",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "name": "book local assets load without failure",
+      "status": "passed",
+      "detail": null
+    }
+  ],
+  "pages": [
+    {
+      "page": "index",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "plant-growth",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "leaf-physiology",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "adaptation",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "lipids",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "tcell",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "randomness",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "branching",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "diffusion",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "fractals",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "real Blob worker/source fixture"
+    },
+    {
+      "page": "optimization",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "sensitivity",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "statistics",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "fitting",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "ml",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "agent",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "studio",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "workspace",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    },
+    {
+      "page": "book",
+      "errors": [],
+      "failedRequests": [],
+      "worker": "original bounded fallback"
+    }
+  ]
+}

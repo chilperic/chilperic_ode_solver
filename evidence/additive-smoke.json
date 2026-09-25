@@ -1,0 +1,573 @@
+{
+  "generatedAt": "2026-09-25T16:45:15.803Z",
+  "scope": "All declared additive example configurations, pure numerical kernels in Node; not UI or empirical validation.",
+  "results": [
+    {
+      "lab": "plant",
+      "example": "reference",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 13,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 0.021423169154351225,
+        "Seed carbon (g C m⁻²)": 7.122489152646973,
+        "Final water (mm)": 139.95253062359268,
+        "Final mineral N (g N m⁻²)": 2.573808799198167,
+        "Max water residual": 3.979039320256561e-13,
+        "Max carbon residual": 7.460698725481052e-14,
+        "Max nitrogen residual": 2.503552920529728e-14,
+        "Germination events": 0,
+        "Substeps": 1201
+      }
+    },
+    {
+      "lab": "plant",
+      "example": "dry",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 7,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 0.011942942180425964,
+        "Seed carbon (g C m⁻²)": 1.545109561364759,
+        "Final water (mm)": 1.0821668233917694,
+        "Final mineral N (g N m⁻²)": 4.110601899275697,
+        "Max water residual": 6.039613253960852e-14,
+        "Max carbon residual": 2.1316282072803006e-14,
+        "Max nitrogen residual": 4.013456234019941e-14,
+        "Germination events": 0,
+        "Substeps": 1200
+      }
+    },
+    {
+      "lab": "plant",
+      "example": "irrigated",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 7,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 0.02066094831138701,
+        "Seed carbon (g C m⁻²)": 6.448863157984521,
+        "Final water (mm)": 139.9525310706907,
+        "Final mineral N (g N m⁻²)": 1.4746172314397255,
+        "Max water residual": 8.412825991399586e-12,
+        "Max carbon residual": 3.552713678800501e-14,
+        "Max nitrogen residual": 4.8128168117500536e-14,
+        "Germination events": 0,
+        "Substeps": 1201
+      }
+    },
+    {
+      "lab": "plant",
+      "example": "nitrogen",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 5,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 0.005975038174774589,
+        "Seed carbon (g C m⁻²)": 0.37532211175375274,
+        "Final water (mm)": 139.95253925883267,
+        "Final mineral N (g N m⁻²)": 0.20267449510006355,
+        "Max water residual": 4.263256414560601e-13,
+        "Max carbon residual": 1.199040866595169e-14,
+        "Max nitrogen residual": 6.661338147750939e-16,
+        "Germination events": 0,
+        "Substeps": 1201
+      }
+    },
+    {
+      "lab": "plant",
+      "example": "perennial",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 21,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 60.388964066591626,
+        "Seed carbon (g C m⁻²)": 0,
+        "Final water (mm)": 82.36671346661888,
+        "Final mineral N (g N m⁻²)": 0.27489226614446405,
+        "Max water residual": 4.320099833421409e-12,
+        "Max carbon residual": 5.400124791776761e-13,
+        "Max nitrogen residual": 7.860379014346108e-14,
+        "Germination events": 0,
+        "Substeps": 3840
+      }
+    },
+    {
+      "lab": "plant",
+      "example": "reseed",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 56,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 3.512481643322435,
+        "Seed carbon (g C m⁻²)": 14.049926466817144,
+        "Final water (mm)": 139.93389830508505,
+        "Final mineral N (g N m⁻²)": 1.9832158342785786,
+        "Max water residual": 5.002220859751105e-12,
+        "Max carbon residual": 2.4158453015843406e-13,
+        "Max nitrogen residual": 8.08242361927114e-14,
+        "Germination events": 3,
+        "Substeps": 5521
+      }
+    },
+    {
+      "lab": "plant",
+      "example": "c4",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 12,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 0.02575767551050209,
+        "Seed carbon (g C m⁻²)": 9.277500653457862,
+        "Final water (mm)": 139.9667697295983,
+        "Final mineral N (g N m⁻²)": 2.1966138780498814,
+        "Max water residual": 2.8421709430404007e-13,
+        "Max carbon residual": 2.842170943040401e-14,
+        "Max nitrogen residual": 3.469446951953614e-14,
+        "Germination events": 0,
+        "Substeps": 1201
+      }
+    },
+    {
+      "lab": "plant",
+      "example": "cam",
+      "status": "passed",
+      "rows": 241,
+      "plots": 8,
+      "ms": 38,
+      "metrics": {
+        "Final live carbon (g C m⁻²)": 0.009881319855603478,
+        "Seed carbon (g C m⁻²)": 1.9029103113953023,
+        "Final water (mm)": 90.75226204030179,
+        "Final mineral N (g N m⁻²)": 4.208592707833288,
+        "Max water residual": 1.3500311979441904e-13,
+        "Max carbon residual": 1.4210854715202004e-14,
+        "Max nitrogen residual": 5.789813073420191e-14,
+        "Germination events": 0,
+        "Substeps": 1201
+      }
+    },
+    {
+      "lab": "leaf",
+      "example": "reference",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 9,
+      "metrics": {
+        "Net A at selected Ci": 17.752293046199156,
+        "Electron transport J": 116.78926210134107,
+        "Day respiration": 1.2
+      }
+    },
+    {
+      "lab": "leaf",
+      "example": "dark",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 4,
+      "metrics": {
+        "Net A at selected Ci": -1.2,
+        "Electron transport J": 0,
+        "Day respiration": 1.2
+      }
+    },
+    {
+      "lab": "leaf",
+      "example": "low-light",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 5,
+      "metrics": {
+        "Net A at selected Ci": 3.184605688837082,
+        "Electron transport J": 27.01915075692229,
+        "Day respiration": 1.2
+      }
+    },
+    {
+      "lab": "leaf",
+      "example": "heat",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 60,
+      "metrics": {
+        "Final leaf temperature (°C)": 30.431033628087523,
+        "Final heat storage (W m⁻²)": 0.015097520926673269
+      }
+    },
+    {
+      "lab": "leaf",
+      "example": "dry-leaf",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 19,
+      "metrics": {
+        "Final leaf temperature (°C)": 34.65869693352795,
+        "Final heat storage (W m⁻²)": 0.025161874571182352
+      }
+    },
+    {
+      "lab": "adaptation",
+      "example": "reference",
+      "status": "passed",
+      "rows": 351,
+      "plots": 5,
+      "ms": 36,
+      "metrics": {
+        "Accepted substitutions": 13,
+        "Mutation attempts": 350,
+        "Neutral fixation probability": 0.03333333333333333,
+        "Final concentrating trait": 0.9926761612136557,
+        "Final fitness proxy": 37.8384929929858,
+        "Initial-grid maximum": 37.961325430118585
+      }
+    },
+    {
+      "lab": "adaptation",
+      "example": "cool",
+      "status": "passed",
+      "rows": 351,
+      "plots": 5,
+      "ms": 16,
+      "metrics": {
+        "Accepted substitutions": 5,
+        "Mutation attempts": 350,
+        "Neutral fixation probability": 0.03333333333333333,
+        "Final concentrating trait": 0.16109731644649905,
+        "Final fitness proxy": 61.82622891170411,
+        "Initial-grid maximum": 61.97590647622045
+      }
+    },
+    {
+      "lab": "adaptation",
+      "example": "arid",
+      "status": "passed",
+      "rows": 351,
+      "plots": 5,
+      "ms": 19,
+      "metrics": {
+        "Accepted substitutions": 18,
+        "Mutation attempts": 350,
+        "Neutral fixation probability": 0.03333333333333333,
+        "Final concentrating trait": 0.9949303256690416,
+        "Final fitness proxy": 25.501657385664217,
+        "Initial-grid maximum": 25.674683431174838
+      }
+    },
+    {
+      "lab": "adaptation",
+      "example": "neutral",
+      "status": "passed",
+      "rows": 351,
+      "plots": 5,
+      "ms": 13,
+      "metrics": {
+        "Accepted substitutions": 6,
+        "Mutation attempts": 350,
+        "Neutral fixation probability": 0.03333333333333333,
+        "Final concentrating trait": 0.6399332662672332,
+        "Final fitness proxy": 31.7639978825349,
+        "Initial-grid maximum": 37.961325430118585
+      }
+    },
+    {
+      "lab": "adaptation",
+      "example": "warming",
+      "status": "passed",
+      "rows": 501,
+      "plots": 5,
+      "ms": 23,
+      "metrics": {
+        "Accepted substitutions": 13,
+        "Mutation attempts": 500,
+        "Neutral fixation probability": 0.03333333333333333,
+        "Final concentrating trait": 0.9926761612136557,
+        "Final fitness proxy": 17.2118993236074,
+        "Initial-grid maximum": 37.961325430118585
+      }
+    },
+    {
+      "lab": "lipids",
+      "example": "fadns",
+      "status": "passed",
+      "rows": 241,
+      "plots": 6,
+      "ms": 358,
+      "metrics": {
+        "States": 18,
+        "Function evaluations": 1812,
+        "Accepted steps": 302,
+        "Rejected steps": 0,
+        "Max enzyme-pool deviation": 6.661338147750939e-16
+      }
+    },
+    {
+      "lab": "lipids",
+      "example": "metabolism",
+      "status": "passed",
+      "rows": 241,
+      "plots": 5,
+      "ms": 217,
+      "metrics": {
+        "States": 4,
+        "Function evaluations": 1500,
+        "Accepted steps": 250,
+        "Rejected steps": 0
+      }
+    },
+    {
+      "lab": "tcell",
+      "example": "reference",
+      "status": "passed",
+      "rows": 241,
+      "plots": 6,
+      "ms": 82,
+      "metrics": {
+        "States": 7,
+        "Function evaluations": 1638,
+        "Accepted steps": 272,
+        "Rejected steps": 1
+      }
+    },
+    {
+      "lab": "tcell",
+      "example": "death",
+      "status": "passed",
+      "rows": 241,
+      "plots": 6,
+      "ms": 85,
+      "metrics": {
+        "States": 7,
+        "Function evaluations": 1596,
+        "Accepted steps": 265,
+        "Rejected steps": 1
+      }
+    },
+    {
+      "lab": "tcell",
+      "example": "slow",
+      "status": "passed",
+      "rows": 241,
+      "plots": 6,
+      "ms": 71,
+      "metrics": {
+        "States": 7,
+        "Function evaluations": 1446,
+        "Accepted steps": 241,
+        "Rejected steps": 0
+      }
+    },
+    {
+      "lab": "randomness",
+      "example": "dice",
+      "status": "passed",
+      "rows": 501,
+      "plots": 2,
+      "ms": 3,
+      "metrics": {
+        "Rolls": 2000,
+        "Sample mean": 3.5145,
+        "Expected mean": 3.5,
+        "Pearson χ² statistic": 5.446,
+        "Degrees of freedom": 5
+      }
+    },
+    {
+      "lab": "randomness",
+      "example": "brownian",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 24,
+      "metrics": {
+        "Replicates": 30,
+        "Final ensemble mean": 0.3846588459999361,
+        "Final ensemble median": 0.163475956987965,
+        "Extinct fraction at horizon": "Not a population model"
+      }
+    },
+    {
+      "lab": "randomness",
+      "example": "ou",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 36,
+      "metrics": {
+        "Replicates": 30,
+        "Final ensemble mean": -0.06102703266479071,
+        "Final ensemble median": -0.2443054639937375,
+        "Extinct fraction at horizon": "Not a population model"
+      }
+    },
+    {
+      "lab": "randomness",
+      "example": "birthdeath",
+      "status": "passed",
+      "rows": 241,
+      "plots": 2,
+      "ms": 14,
+      "metrics": {
+        "Replicates": 30,
+        "Final ensemble mean": 7.166666666666667,
+        "Final ensemble median": 7.5,
+        "Extinct fraction at horizon": 0.03333333333333333
+      }
+    },
+    {
+      "lab": "branching",
+      "example": "subcritical",
+      "status": "passed",
+      "rows": 26,
+      "plots": 2,
+      "ms": 10,
+      "metrics": {
+        "Replicates": 80,
+        "Final ensemble mean": 3.225,
+        "Final ensemble median": 0,
+        "Extinct at horizon": 0.7125,
+        "Theoretical eventual extinction": 1
+      }
+    },
+    {
+      "lab": "branching",
+      "example": "critical",
+      "status": "passed",
+      "rows": 26,
+      "plots": 2,
+      "ms": 7,
+      "metrics": {
+        "Replicates": 80,
+        "Final ensemble mean": 8.5,
+        "Final ensemble median": 0,
+        "Extinct at horizon": 0.5125,
+        "Theoretical eventual extinction": 1
+      }
+    },
+    {
+      "lab": "branching",
+      "example": "supercritical",
+      "status": "passed",
+      "rows": 19,
+      "plots": 2,
+      "ms": 6,
+      "metrics": {
+        "Replicates": 80,
+        "Final ensemble mean": 127.5,
+        "Final ensemble median": 119,
+        "Extinct at horizon": 0.05,
+        "Theoretical eventual extinction": 0.039647240783946505
+      }
+    },
+    {
+      "lab": "diffusion",
+      "example": "periodic",
+      "status": "passed",
+      "rows": 241,
+      "plots": 4,
+      "ms": 28,
+      "metrics": {
+        "Cells": 60,
+        "Substeps": 1200,
+        "Maximum stable substep": 0.0025,
+        "Maximum balance error": 7.771561172376096e-16,
+        "Boundary transfer": 0,
+        "Analytic final max error": 0.000005482814575463735
+      }
+    },
+    {
+      "lab": "diffusion",
+      "example": "closed",
+      "status": "passed",
+      "rows": 241,
+      "plots": 4,
+      "ms": 21,
+      "metrics": {
+        "Cells": 60,
+        "Substeps": 1200,
+        "Maximum stable substep": 0.0025,
+        "Maximum balance error": 1.3877787807814457e-16,
+        "Boundary transfer": 0
+      }
+    },
+    {
+      "lab": "diffusion",
+      "example": "open",
+      "status": "passed",
+      "rows": 241,
+      "plots": 4,
+      "ms": 25,
+      "metrics": {
+        "Cells": 60,
+        "Substeps": 1200,
+        "Maximum stable substep": 0.0016666666666666666,
+        "Maximum balance error": 4.996003610813204e-16,
+        "Boundary transfer": 0.21335716510771913
+      }
+    },
+    {
+      "lab": "diffusion",
+      "example": "constant",
+      "status": "passed",
+      "rows": 241,
+      "plots": 4,
+      "ms": 18,
+      "metrics": {
+        "Cells": 60,
+        "Substeps": 1200,
+        "Maximum stable substep": 0.0025,
+        "Maximum balance error": 0,
+        "Boundary transfer": 0
+      }
+    },
+    {
+      "lab": "fractals",
+      "example": "triangle",
+      "status": "passed",
+      "rows": 12000,
+      "plots": 1,
+      "ms": 27,
+      "metrics": {
+        "Computed points": 12000,
+        "Discarded burn-in": 30,
+        "Seed": 42
+      }
+    },
+    {
+      "lab": "fractals",
+      "example": "fern",
+      "status": "passed",
+      "rows": 12000,
+      "plots": 1,
+      "ms": 26,
+      "metrics": {
+        "Computed points": 12000,
+        "Discarded burn-in": 30,
+        "Seed": 42
+      }
+    },
+    {
+      "lab": "fractals",
+      "example": "mandelbrot",
+      "status": "passed",
+      "rows": 22500,
+      "plots": 1,
+      "ms": 42,
+      "metrics": {
+        "Grid points": 22500,
+        "Iteration limit": 240
+      }
+    }
+  ]
+}

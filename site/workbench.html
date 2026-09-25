@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html data-color-family="foundation" data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Compare two analyses on one model or dataset, with methods, diagnostics, and export options kept together." name="description"/>
+<title>Scientific Workbench · Foko Lab</title>
+<script defer="" src="src/platform/storage.js?v=79.2.0"></script><script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=79.2.0"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=79.2.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=79.2.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=79.2.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=79.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-workbench.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
+<link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link rel="stylesheet" href="styles/upgrade.css">
+<script src="src/upgrade/registry.js"></script>
+</head>
+<body data-color-family="foundation" data-lab="workbench" data-page-key="workbench" data-v72-shell="true"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
+<div class="app-shell wb-app">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="wb-page" id="main-content" tabindex="-1">
+<section aria-labelledby="workbenchTitle" class="wb-context">
+<div>
+<p class="eyebrow">MULTI-LAB WORKSPACE</p>
+<h1 id="workbenchTitle">Compare analyses in one workspace.</h1>
+<p>Choose a worked example, adjust its settings, and compare two complementary views of the result.</p>
+</div>
+<div class="wb-context-actions">
+<button class="primary" id="wbRun" type="button">Run analysis</button>
+<a class="secondary-link" href="ode.html" id="wbOpenFocused">Open focused lab</a>
+</div>
+</section>
+<section class="wb-layout">
+<aside aria-label="Model and settings" class="wb-left">
+<section class="wb-panel wb-selector-panel">
+<p class="panel-kicker">WORKFLOW</p>
+<label for="wbAdapter">Analysis type</label>
+<select id="wbAdapter"></select>
+<label for="wbPreset">Example</label>
+<select id="wbPreset"></select>
+<div class="wb-adapter-identity" id="wbAdapterIdentity"></div>
+</section>
+<section class="wb-panel">
+<div class="wb-panel-head"><div><p class="panel-kicker">QUICK CONTROLS</p><h2>Configuration</h2></div><button class="mini-button" id="wbReset" type="button">Reset</button></div>
+<div class="wb-control-grid" id="wbQuickControls"></div>
+<details class="wb-json-details">
+<summary>Advanced configuration</summary>
+<textarea aria-label="Advanced configuration" id="wbConfigJson" rows="16" spellcheck="false"></textarea>
+<button class="secondary" id="wbApplyJson" type="button">Apply JSON</button>
+<label class="upload-drop"><span>Import configuration</span><input accept="application/json,.json" id="wbImportJson" type="file"/></label>
+</details>
+</section>
+<section class="wb-panel wb-scope-panel">
+<p class="panel-kicker">SCOPE</p>
+<h2>When to use this workspace</h2>
+<p>Use this workspace to compare views quickly. Open the dedicated lab when you need full model editing or advanced controls.</p>
+</section>
+</aside>
+<section aria-label="Results" class="wb-center">
+<header class="wb-workspace-head">
+<div><p class="panel-kicker">RESULTS</p><h2 id="wbWorkspaceTitle">Compare two views of the result</h2><p id="wbWorkspaceSubtitle">Choose an example and run the analysis.</p></div>
+<div aria-label="Plot layout" class="wb-layout-switch" role="group">
+<button class="active" data-layout-mode="two" data-wb-layout="two" type="button">2-up</button>
+<button data-layout-mode="focus" data-wb-layout="focus" type="button">Focus</button>
+</div>
+</header>
+<div class="wb-export-row"><button id="wbCurrentPng" type="button">Current PNG</button><button id="wbCurrentSvg" type="button">Current SVG</button></div>
+<div aria-live="polite" class="wb-plot-grid layout-two" data-focus-side="left" data-layout="two" data-layout-reason="user-two" data-preferred-layout="two" id="wbPlotGrid">
+<article class="wb-plot-card" data-card="0" data-plot-card="left"><header><h3 id="wbPlotTitle0">Primary plot</h3><div class="wb-card-controls"><select aria-label="Primary plot" id="wbPlotSelect0"></select><button data-wb-focus="0" type="button">Focus</button><button aria-label="Download primary plot" data-wb-download="0" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot0"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Interpretation &amp; limits</summary><p id="wbMeaning0"></p></details></article>
+<article class="wb-plot-card" data-card="1" data-plot-card="right"><header><h3 id="wbPlotTitle1">Diagnostic plot</h3><div class="wb-card-controls"><select aria-label="Diagnostic plot" id="wbPlotSelect1"></select><button data-wb-focus="1" type="button">Focus</button><button aria-label="Download diagnostic plot" data-wb-download="1" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot1"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Interpretation &amp; limits</summary><p id="wbMeaning1"></p></details></article>
+</div>
+</section>
+<aside aria-label="Run evidence and provenance" class="wb-right">
+<section class="wb-panel">
+<p class="panel-kicker">RUN STATUS</p>
+<div class="wb-status ready" id="wbStatus"><span></span><strong>Ready</strong></div>
+<div class="wb-metrics" id="wbMetrics"></div>
+</section>
+<section class="wb-panel">
+<p class="panel-kicker">NUMERICAL EVIDENCE</p>
+<h2>Diagnostics</h2>
+<div class="wb-message-list" id="wbWarnings"><p>Run the analysis to view diagnostics and warnings.</p></div>
+</section>
+<section class="wb-panel">
+<p class="panel-kicker">METHOD</p>
+<h2>How this result was produced</h2>
+<ul class="wb-provenance" id="wbProvenance"><li>Run an analysis to view method details.</li></ul>
+</section>
+<section class="wb-panel">
+<p class="panel-kicker">PROJECT</p>
+<div class="wb-project-actions">
+<button id="wbSave" type="button">Save configuration</button>
+<button id="wbRestore" type="button">Restore configuration</button>
+<button id="wbShare" type="button">Copy share URL</button>
+<button id="wbExport" type="button">Export result bundle</button>
+</div>
+</section>
+</aside>
+</section>
+</main>
+<div aria-live="polite" class="wb-toast" id="wbToast" role="status"></div>
+</div>
+<script defer="" src="src/core/ode.js?v=79.2.0"></script>
+<script defer="" src="src/core/steady.js?v=79.2.0"></script>
+<script defer="" src="src/core/stochastic.js?v=79.2.0"></script>
+<script defer="" src="src/core/optimization.js?v=79.2.0"></script>
+<script defer="" src="src/core/data.js?v=79.2.0"></script>
+<script defer="" src="src/core/statistics.js?v=79.2.0"></script>
+<script defer="" src="src/core/fitting.js?v=79.2.0"></script>
+<script defer="" src="src/core/linalg-reference.js?v=79.2.0"></script>
+<script defer="" src="src/core/networks-reference.js?v=79.2.0"></script>
+<script defer="" src="src/core/ml-reference.js?v=79.2.0"></script>
+<script defer="" src="src/core/sindy.js?v=79.2.0"></script>
+<script defer="" src="src/core/agent-reference.js?v=79.2.0"></script>
+<script defer="" src="src/models/agent-presets.js?v=79.2.0"></script>
+<script defer="" src="src/workbench/adapters.js?v=79.2.0"></script>
+<script defer="" src="src/v72/workbench-workspace.js?v=79.2.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=79.2.0"></script>
+<script defer="" src="src/models/search-index.js?v=79.2.0"></script><script defer="" src="src/v76/app-shell.js?v=79.2.0&amp;core-access=1"></script>
+<script src="src/upgrade/publication.js"></script><script src="src/upgrade/common.js"></script>
+</body>
+</html>

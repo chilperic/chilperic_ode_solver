@@ -1,0 +1,21 @@
+{
+  "schema": "foko.publication/1",
+  "version": "79.2.0",
+  "book": "materials/Scientific_Mastery_V6_17_Public_Companion.pdf",
+  "sourceVersion": "V6.17 Design Revision",
+  "sourceSHA256": "24476aa28700e014693ea2ca8b21d55719dd6e4980fac32c781973cdfa2a6690",
+  "publicSHA256": "82e8e71a1cdf1ce6fb66f62399bcb50130e1250edeb9261549b71679c1b844b7",
+  "publicPageCount": 439,
+  "omittedPhysicalPages": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "chapters": 27,
+  "sections": 255,
+  "workedPracticeDestinations": 54,
+  "appendices": 5,
+  "notebooksDistributed": false,
+  "fullAuthorPDFPublic": false
+}

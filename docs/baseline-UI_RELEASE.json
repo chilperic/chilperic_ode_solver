@@ -1,0 +1,8 @@
+{
+  "uiVersion": "79.1.0-design",
+  "numericalBaseline": "78.2.0 / core-access recovery",
+  "sourceBaselineArchive": "FokoLab-core-access-recovery-source.zip",
+  "unavailablePriorCandidate": "The v79.0.0 archive named in an earlier reply was not present in the runtime or recovered by Files search. No unverified v79 changes are assumed.",
+  "bookEdition": "V6.17 Design Revision",
+  "status": "release candidate"
+}

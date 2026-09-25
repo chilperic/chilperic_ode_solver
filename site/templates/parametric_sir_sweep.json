@@ -1,0 +1,18 @@
+{
+  "module": "param",
+  "model": {
+    "vars": ["S", "I", "R"],
+    "eqs": ["-beta*S*I/N", "beta*S*I/N-gamma*I", "gamma*I"],
+    "y0": [990, 10, 0],
+    "params": {
+      "beta": [0.35, 0.05, 1.1],
+      "gamma": [0.1, 0.03, 0.4],
+      "N": [1000, 1000, 1000]
+    },
+    "t0": 0,
+    "t1": 120,
+    "points": 900,
+    "method": "rk45",
+    "sweep": ["beta", "gamma", "I", "max"]
+  }
+}

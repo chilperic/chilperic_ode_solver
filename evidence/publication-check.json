@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "name": "Physical page positions retained and text equality outside four omitted pages",
+      "status": "passed",
+      "unchangedScientificAndOtherPublicPages": 435
+    },
+    {
+      "name": "Representative unchanged page raster comparisons",
+      "status": "passed",
+      "physicalPages": [
+        1,
+        28,
+        71,
+        401
+      ]
+    }
+  ],
+  "scope": "Full text equality outside omitted pages; representative visual equality, not a new scientific audit of the book."
+}

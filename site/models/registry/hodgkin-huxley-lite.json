@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "kind": "ode",
+  "id": "hodgkin_huxley_lite",
+  "title": "Hodgkin\u2013Huxley placeholder",
+  "vars": [
+    "V",
+    "n"
+  ],
+  "params": {
+    "I": 10,
+    "g": 1,
+    "E": -65
+  },
+  "init": {
+    "V": -65,
+    "n": 0.3
+  },
+  "eqs": {
+    "V": "I-g*(V-E)-n",
+    "n": "0.01*(V+55)*(1-n)-0.125*n"
+  },
+  "tspan": [
+    0,
+    50
+  ],
+  "note": "Reduced teaching model, not full HH system."
+}

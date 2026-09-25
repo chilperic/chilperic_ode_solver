@@ -1,0 +1,325 @@
+{
+  "generatedAt": "2026-09-25T16:31:44.968Z",
+  "scope": "Executed retained-core analytic microcases and new resource/state contracts. Not exhaustive empirical validation.",
+  "results": [
+    {
+      "name": "Original optimization coordinate",
+      "status": "passed",
+      "detail": {
+        "objective": 0,
+        "termination": "local_step_tolerance"
+      }
+    },
+    {
+      "name": "Original optimization projected_gradient",
+      "status": "passed",
+      "detail": {
+        "objective": 1.8925281104919383e-15,
+        "termination": "penalized_gradient_tolerance"
+      }
+    },
+    {
+      "name": "Original optimization differential_evolution",
+      "status": "passed",
+      "detail": {
+        "objective": 9.397505706900003e-25,
+        "termination": "max_generations"
+      }
+    },
+    {
+      "name": "Original optimization cma_es",
+      "status": "passed",
+      "detail": {
+        "objective": 1.2530184930421013e-14,
+        "termination": "distribution_step_tolerance"
+      }
+    },
+    {
+      "name": "Original optimization multi_start",
+      "status": "passed",
+      "detail": {
+        "objective": 0,
+        "termination": "declared_starts_completed"
+      }
+    },
+    {
+      "name": "Original optimization random_search",
+      "status": "passed",
+      "detail": {
+        "objective": 0.5247519647280645,
+        "termination": "sample_budget_exhausted",
+        "note": "Feasible improvement, not certified minimization."
+      }
+    },
+    {
+      "name": "Original Morris independent linear analytic response",
+      "status": "passed",
+      "detail": [
+        0.9999999999999999,
+        2
+      ]
+    },
+    {
+      "name": "Original FIM retains vector observations",
+      "status": "passed",
+      "detail": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Weighted fitting matches independent weighted normal equations",
+      "status": "passed",
+      "detail": {
+        "coefficients": [
+          1.0000000000000009,
+          2.0071123755334277
+        ],
+        "expected": [
+          1,
+          2.007112375533428
+        ]
+      }
+    },
+    {
+      "name": "Invalid known noise refused",
+      "status": "passed"
+    },
+    {
+      "name": "Original FDR correction analytic case",
+      "status": "passed",
+      "detail": [
+        0.04,
+        0.05333333333333334,
+        0.05333333333333334,
+        0.2
+      ]
+    },
+    {
+      "name": "ROC perfect ranking includes first precision-recall step",
+      "status": "passed",
+      "detail": {
+        "auc": 1,
+        "averagePrecision": 1
+      }
+    },
+    {
+      "name": "ROC tied scores are order-invariant threshold groups",
+      "status": "passed"
+    },
+    {
+      "name": "Original ML out-of-fold regression",
+      "status": "passed",
+      "detail": {
+        "rmse": 6.661338147750939e-16,
+        "mae": 5.477100254817439e-16,
+        "r2": 1,
+        "residuals": [
+          -8.881784197001252e-16,
+          -1.1102230246251565e-15,
+          -4.440892098500626e-16,
+          -8.881784197001252e-16,
+          -6.661338147750939e-16,
+          -4.440892098500626e-16,
+          8.881784197001252e-16,
+          4.440892098500626e-16,
+          4.440892098500626e-16,
+          0,
+          -4.440892098500626e-16,
+          0,
+          0,
+          -4.440892098500626e-16,
+          0,
+          4.440892098500626e-16,
+          -8.881784197001252e-16,
+          8.881784197001252e-16,
+          0,
+          0,
+          -8.881784197001252e-16,
+          8.881784197001252e-16,
+          0,
+          0,
+          8.881784197001252e-16,
+          8.881784197001252e-16,
+          8.881784197001252e-16,
+          8.881784197001252e-16,
+          8.881784197001252e-16,
+          8.881784197001252e-16
+        ]
+      }
+    },
+    {
+      "name": "Original ML classification cross-validation",
+      "status": "passed",
+      "detail": {
+        "accuracy": 1,
+        "folds": 4
+      }
+    },
+    {
+      "name": "Original PCA and clustering remain executable",
+      "status": "passed",
+      "detail": {
+        "inertia": 0.02666666666666658,
+        "firstExplained": 0.9997334281144483
+      }
+    },
+    {
+      "name": "Original 18-state FADNS parser and solver",
+      "status": "passed",
+      "detail": {
+        "states": 18,
+        "enzymeResidual": 6.661338147750939e-16
+      }
+    },
+    {
+      "name": "Original four-state metabolism is retained separately",
+      "status": "passed",
+      "detail": {
+        "states": [
+          "S1",
+          "S2",
+          "S3",
+          "S4"
+        ],
+        "note": "Does not resolve the original bistability interpretation."
+      }
+    },
+    {
+      "name": "Original structured model importer accepts source FADNS JSON",
+      "status": "passed",
+      "detail": {
+        "states": 18
+      }
+    },
+    {
+      "name": "Run-state rejects obsolete completion after input edit",
+      "status": "passed"
+    },
+    {
+      "name": "Run-state cancellation terminates worker",
+      "status": "passed"
+    },
+    {
+      "name": "Pinned comparison is an immutable deep copy",
+      "status": "passed"
+    },
+    {
+      "name": "Dry plant has no hidden replenishment over annual boundaries",
+      "status": "passed",
+      "detail": {
+        "initial": 30,
+        "final": 0.000004105618425874991,
+        "metrics": {
+          "Final live carbon (g C m⁻²)": 0.17161142660970974,
+          "Seed carbon (g C m⁻²)": 0.8834824272164864,
+          "Final water (mm)": 0.000004105618425874991,
+          "Final mineral N (g N m⁻²)": 4.367651545099407,
+          "Max water residual": 4.263256414560601e-14,
+          "Max carbon residual": 5.950795411990839e-14,
+          "Max nitrogen residual": 2.6645352591003757e-14,
+          "Germination events": 2,
+          "Substeps": 4083
+        }
+      }
+    },
+    {
+      "name": "Water, carbon, nitrogen balances across reseeding",
+      "status": "passed",
+      "detail": {
+        "Final live carbon (g C m⁻²)": 2.7613241791427536,
+        "Seed carbon (g C m⁻²)": 5.587187692064517,
+        "Final water (mm)": 139.93671018589302,
+        "Final mineral N (g N m⁻²)": 2.0647324013006476,
+        "Max water residual": 7.958078640513122e-12,
+        "Max carbon residual": 1.5631940186722204e-13,
+        "Max nitrogen residual": 5.850875339774575e-14,
+        "Germination events": 2,
+        "Substeps": 4083
+      }
+    },
+    {
+      "name": "Zero-carbon zero-seed annual plant does not manufacture founders",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid water capacity refused",
+      "status": "passed"
+    },
+    {
+      "name": "Weather coverage rejected rather than silently extended",
+      "status": "passed"
+    },
+    {
+      "name": "Moran neutral limit and adverse-selection bounds",
+      "status": "passed",
+      "detail": {
+        "neutralN100": 0.01
+      }
+    },
+    {
+      "name": "Season window changes trait-specific selection",
+      "status": "passed",
+      "detail": {
+        "ratioDefault": 1.5855380463260387,
+        "ratioShort": 1.4063859969851378
+      }
+    },
+    {
+      "name": "Closed diffusion conserves integrated mass",
+      "status": "passed",
+      "detail": {
+        "Cells": 60,
+        "Substeps": 1200,
+        "Maximum stable substep": 0.0025,
+        "Maximum balance error": 1.3877787807814457e-16,
+        "Boundary transfer": 0
+      }
+    },
+    {
+      "name": "Fixed diffusion records nonzero external flux",
+      "status": "passed",
+      "detail": {
+        "Cells": 60,
+        "Substeps": 1200,
+        "Maximum stable substep": 0.0016666666666666666,
+        "Maximum balance error": 4.996003610813204e-16,
+        "Boundary transfer": 0.21335716510771913
+      }
+    },
+    {
+      "name": "Diffusion spatial refinement against analytic sine",
+      "status": "passed",
+      "detail": {
+        "errors": [
+          0.0006557259735413545,
+          0.00016517713358155106,
+          0.00004081332358241152
+        ],
+        "note": "Time step fixed small; measured spatial refinement, not validation of arbitrary PDEs."
+      }
+    },
+    {
+      "name": "Quoted numeric CSV and escaped header are parsed",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid CSV scalar refused",
+      "status": "passed"
+    },
+    {
+      "name": "Custom negative horizon refused",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid numeric input remains a refusal after JSON roundtrip",
+      "status": "passed"
+    }
+  ]
+}

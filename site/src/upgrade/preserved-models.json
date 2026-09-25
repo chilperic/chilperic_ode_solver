@@ -1,0 +1,1785 @@
+{
+  "Lotka–Volterra": {
+    "narrative": "Predator–prey cycles. Increase beta to make predators suppress prey faster.",
+    "vars": [
+      "x",
+      "y"
+    ],
+    "eqs": [
+      "alpha*x - beta*x*y",
+      "delta*x*y - gamma*y"
+    ],
+    "y0": [
+      10,
+      5
+    ],
+    "params": {
+      "alpha": [
+        1.1,
+        0.2,
+        3
+      ],
+      "beta": [
+        0.4,
+        0.05,
+        1
+      ],
+      "delta": [
+        0.1,
+        0.01,
+        0.4
+      ],
+      "gamma": [
+        0.4,
+        0.05,
+        1
+      ]
+    },
+    "t0": 0,
+    "t1": 40,
+    "points": 1200,
+    "method": "rk45"
+  },
+  "Lorenz": {
+    "narrative": "Chaotic 3D dynamics. Try rho near 24–30 and inspect 3D phase portraits or Poincaré sections.",
+    "vars": [
+      "x",
+      "y",
+      "z"
+    ],
+    "eqs": [
+      "sigma*(y-x)",
+      "x*(rho-z)-y",
+      "x*y-beta*z"
+    ],
+    "y0": [
+      1,
+      1,
+      1
+    ],
+    "params": {
+      "sigma": [
+        10,
+        6,
+        16
+      ],
+      "rho": [
+        28,
+        12,
+        40
+      ],
+      "beta": [
+        2.6666666666666665,
+        2,
+        3
+      ]
+    },
+    "t0": 0,
+    "t1": 35,
+    "points": 2500,
+    "method": "rk45",
+    "sectionVar": "x",
+    "sectionValue": 0
+  },
+  "Rössler": {
+    "narrative": "Three-state chaos with a ribbon-like attractor. Use the 3D phase view, Poincaré section, step-size trace, and local eigenvalue locus together.",
+    "vars": [
+      "x",
+      "y",
+      "z"
+    ],
+    "eqs": [
+      "-y-z",
+      "x+a*y",
+      "b+z*(x-c)"
+    ],
+    "y0": [
+      0.1,
+      0,
+      0
+    ],
+    "params": {
+      "a": [
+        0.2,
+        0.05,
+        0.5
+      ],
+      "b": [
+        0.2,
+        0.05,
+        0.5
+      ],
+      "c": [
+        5.7,
+        3,
+        8
+      ]
+    },
+    "t0": 0,
+    "t1": 120,
+    "points": 3200,
+    "method": "rk45",
+    "sectionVar": "x",
+    "sectionValue": 0
+  },
+  "FitzHugh–Nagumo": {
+    "narrative": "Reduced excitable-neuron dynamics. Vary the input current and inspect the phase portrait, vector field, extrema, and local stability evidence.",
+    "vars": [
+      "v",
+      "w"
+    ],
+    "eqs": [
+      "v-v^3/3-w+I",
+      "(v+a-b*w)/tau"
+    ],
+    "y0": [
+      -1,
+      1
+    ],
+    "params": {
+      "a": [
+        0.7,
+        0.2,
+        1.2
+      ],
+      "b": [
+        0.8,
+        0.2,
+        1.5
+      ],
+      "tau": [
+        12.5,
+        2,
+        30
+      ],
+      "I": [
+        0.5,
+        0,
+        1.2
+      ]
+    },
+    "t0": 0,
+    "t1": 120,
+    "points": 2200,
+    "method": "rk45"
+  },
+  "Hodgkin–Huxley lite": {
+    "narrative": "A deliberately reduced two-state excitability model inspired by Hodgkin–Huxley. It is useful for voltage–gate coupling but is not the full four-variable conductance model.",
+    "vars": [
+      "V",
+      "n"
+    ],
+    "eqs": [
+      "I-g*(V-E)-n",
+      "0.01*(V+55)*(1-n)-0.125*n"
+    ],
+    "y0": [
+      -65,
+      0.3
+    ],
+    "params": {
+      "I": [
+        10,
+        0,
+        25
+      ],
+      "g": [
+        1,
+        0.1,
+        4
+      ],
+      "E": [
+        -65,
+        -90,
+        -40
+      ]
+    },
+    "t0": 0,
+    "t1": 50,
+    "points": 1600,
+    "method": "rk45"
+  },
+  "Duffing oscillator": {
+    "narrative": "Forced nonlinear resonance with jumps, hysteresis, and possible chaos. Inspect time traces, phase geometry, Poincaré points, and adaptive-step evidence.",
+    "vars": [
+      "x",
+      "v"
+    ],
+    "eqs": [
+      "v",
+      "gamma*cos(omega*t)-delta*v-alpha*x-beta*x^3"
+    ],
+    "y0": [
+      0.2,
+      0
+    ],
+    "params": {
+      "alpha": [
+        -1,
+        -2,
+        1
+      ],
+      "beta": [
+        1,
+        0.1,
+        3
+      ],
+      "delta": [
+        0.25,
+        0.02,
+        0.8
+      ],
+      "gamma": [
+        0.32,
+        0,
+        1
+      ],
+      "omega": [
+        1.2,
+        0.2,
+        3
+      ]
+    },
+    "t0": 0,
+    "t1": 180,
+    "points": 4200,
+    "method": "rk45",
+    "sectionVar": "x",
+    "sectionValue": 0
+  },
+  "Brusselator": {
+    "narrative": "Autocatalytic chemical oscillator. Change B across the oscillatory threshold and compare temporal, phase, vector-field, and eigenvalue views.",
+    "vars": [
+      "x",
+      "y"
+    ],
+    "eqs": [
+      "A-(B+1)*x+x^2*y",
+      "B*x-x^2*y"
+    ],
+    "y0": [
+      1.2,
+      2.8
+    ],
+    "params": {
+      "A": [
+        1,
+        0.2,
+        3
+      ],
+      "B": [
+        3,
+        1,
+        6
+      ]
+    },
+    "t0": 0,
+    "t1": 60,
+    "points": 1800,
+    "method": "rk45"
+  },
+  "Oregonator": {
+    "narrative": "Reduced Oregonator representation of Belousov–Zhabotinsky chemistry. This browser preset is qualitative and not a calibrated reaction mechanism.",
+    "vars": [
+      "x",
+      "y",
+      "z"
+    ],
+    "eqs": [
+      "s*(y+x*(1-q*x)-x*y)",
+      "(-y-x*(1-q*x)+f*z)/s",
+      "w*(x-z)"
+    ],
+    "y0": [
+      0.5,
+      0.8,
+      0.2
+    ],
+    "params": {
+      "s": [
+        8,
+        1,
+        30
+      ],
+      "q": [
+        0.02,
+        0.002,
+        0.08
+      ],
+      "f": [
+        1.4,
+        0.5,
+        3
+      ],
+      "w": [
+        0.4,
+        0.05,
+        2
+      ]
+    },
+    "t0": 0,
+    "t1": 80,
+    "points": 2600,
+    "method": "rk45"
+  },
+  "Double pendulum": {
+    "narrative": "Hamiltonian two-link pendulum written as four first-order equations. It is sensitive to initial conditions; numerical energy conservation is not certified by this explicit adaptive solve.",
+    "vars": [
+      "theta1",
+      "omega1",
+      "theta2",
+      "omega2"
+    ],
+    "eqs": [
+      "omega1",
+      "(-g*(2*m1+m2)*sin(theta1)-m2*g*sin(theta1-2*theta2)-2*sin(theta1-theta2)*m2*(omega2^2*L2+omega1^2*L1*cos(theta1-theta2)))/(L1*(2*m1+m2-m2*cos(2*theta1-2*theta2)))",
+      "omega2",
+      "(2*sin(theta1-theta2)*(omega1^2*L1*(m1+m2)+g*(m1+m2)*cos(theta1)+omega2^2*L2*m2*cos(theta1-theta2)))/(L2*(2*m1+m2-m2*cos(2*theta1-2*theta2)))"
+    ],
+    "y0": [
+      1.2,
+      0,
+      1.7,
+      0
+    ],
+    "params": {
+      "m1": [
+        1,
+        0.2,
+        3
+      ],
+      "m2": [
+        1,
+        0.2,
+        3
+      ],
+      "L1": [
+        1,
+        0.3,
+        3
+      ],
+      "L2": [
+        1,
+        0.3,
+        3
+      ],
+      "g": [
+        9.81,
+        1,
+        15
+      ]
+    },
+    "t0": 0,
+    "t1": 45,
+    "points": 3200,
+    "method": "rk45"
+  },
+  "Chemostat": {
+    "narrative": "Substrate–biomass reactor dynamics with dilution-driven washout. Compare trajectories, phase geometry, extrema, and local eigenvalues near operating states.",
+    "vars": [
+      "S",
+      "X"
+    ],
+    "eqs": [
+      "D*(Sin-S)-(mumax*S/(Ks+S))*X/Y",
+      "((mumax*S/(Ks+S))-D)*X"
+    ],
+    "y0": [
+      5,
+      1
+    ],
+    "params": {
+      "D": [
+        0.3,
+        0.02,
+        1.2
+      ],
+      "Sin": [
+        10,
+        2,
+        25
+      ],
+      "mumax": [
+        1,
+        0.2,
+        2
+      ],
+      "Ks": [
+        1,
+        0.05,
+        5
+      ],
+      "Y": [
+        0.5,
+        0.1,
+        1
+      ]
+    },
+    "t0": 0,
+    "t1": 60,
+    "points": 1600,
+    "method": "rk45"
+  },
+  "Glucose–insulin minimal model": {
+    "narrative": "A compact glucose–insulin regulation model with remote insulin action. It is a teaching reduction, not a patient-calibrated clinical model.",
+    "vars": [
+      "G",
+      "X",
+      "I"
+    ],
+    "eqs": [
+      "-p1*(G-Gb)-X*G+D",
+      "-p2*X+p3*(I-Ib)",
+      "-n*(I-Ib)+u"
+    ],
+    "y0": [
+      180,
+      0,
+      18
+    ],
+    "params": {
+      "p1": [
+        0.025,
+        0.005,
+        0.08
+      ],
+      "p2": [
+        0.04,
+        0.005,
+        0.2
+      ],
+      "p3": [
+        0.0005,
+        0.00005,
+        0.003
+      ],
+      "n": [
+        0.12,
+        0.02,
+        0.4
+      ],
+      "Gb": [
+        90,
+        60,
+        130
+      ],
+      "Ib": [
+        10,
+        2,
+        25
+      ],
+      "D": [
+        2.5,
+        0,
+        8
+      ],
+      "u": [
+        1.2,
+        0,
+        5
+      ]
+    },
+    "t0": 0,
+    "t1": 180,
+    "points": 1800,
+    "method": "rk45"
+  },
+  "Kuramoto network": {
+    "narrative": "Four coupled phase oscillators. The model exposes synchronization through phase trajectories and the state-norm proxy; a dedicated circular order-parameter plot remains future work.",
+    "vars": [
+      "theta1",
+      "theta2",
+      "theta3",
+      "theta4"
+    ],
+    "eqs": [
+      "w1+K*(sin(theta2-theta1)+sin(theta3-theta1)+sin(theta4-theta1))/4",
+      "w2+K*(sin(theta1-theta2)+sin(theta3-theta2)+sin(theta4-theta2))/4",
+      "w3+K*(sin(theta1-theta3)+sin(theta2-theta3)+sin(theta4-theta3))/4",
+      "w4+K*(sin(theta1-theta4)+sin(theta2-theta4)+sin(theta3-theta4))/4"
+    ],
+    "y0": [
+      0,
+      0.7,
+      1.5,
+      2.6
+    ],
+    "params": {
+      "w1": [
+        0.8,
+        0.2,
+        1.5
+      ],
+      "w2": [
+        0.95,
+        0.2,
+        1.5
+      ],
+      "w3": [
+        1.08,
+        0.2,
+        1.8
+      ],
+      "w4": [
+        1.25,
+        0.2,
+        2
+      ],
+      "K": [
+        1.4,
+        0,
+        5
+      ]
+    },
+    "t0": 0,
+    "t1": 80,
+    "points": 1800,
+    "method": "rk45"
+  },
+  "Goodwin oscillator": {
+    "narrative": "Three-stage negative-feedback oscillator for gene regulation. High Hill exponent creates sustained oscillatory regimes in this reduced model.",
+    "vars": [
+      "x",
+      "y",
+      "z"
+    ],
+    "eqs": [
+      "a/(1+z^n)-b*x",
+      "c*x-d*y",
+      "e*y-f*z"
+    ],
+    "y0": [
+      1,
+      0.5,
+      0.5
+    ],
+    "params": {
+      "a": [
+        1,
+        0.2,
+        4
+      ],
+      "b": [
+        1,
+        0.2,
+        3
+      ],
+      "c": [
+        1,
+        0.2,
+        3
+      ],
+      "d": [
+        1,
+        0.2,
+        3
+      ],
+      "e": [
+        1,
+        0.2,
+        3
+      ],
+      "f": [
+        1,
+        0.2,
+        3
+      ],
+      "n": [
+        8,
+        2,
+        14
+      ]
+    },
+    "t0": 0,
+    "t1": 100,
+    "points": 2200,
+    "method": "rk45"
+  },
+  "Repressilator": {
+    "narrative": "Three-gene cyclic repression model. Inspect temporal phase shifts, 3D phase geometry, extrema, and local stability evidence.",
+    "vars": [
+      "x",
+      "y",
+      "z"
+    ],
+    "eqs": [
+      "alpha/(1+z^n)-delta*x",
+      "alpha/(1+x^n)-delta*y",
+      "alpha/(1+y^n)-delta*z"
+    ],
+    "y0": [
+      1,
+      0,
+      0
+    ],
+    "params": {
+      "alpha": [
+        10,
+        2,
+        30
+      ],
+      "n": [
+        2,
+        1,
+        6
+      ],
+      "delta": [
+        1,
+        0.1,
+        3
+      ]
+    },
+    "t0": 0,
+    "t1": 80,
+    "points": 2200,
+    "method": "rk45"
+  },
+  "SIR": {
+    "narrative": "Epidemic model with susceptible, infected, and recovered compartments. Increase beta to accelerate transmission.",
+    "vars": [
+      "S",
+      "I",
+      "R"
+    ],
+    "eqs": [
+      "-beta*S*I/N",
+      "beta*S*I/N-gamma*I",
+      "gamma*I"
+    ],
+    "y0": [
+      990,
+      10,
+      0
+    ],
+    "params": {
+      "beta": [
+        0.35,
+        0.05,
+        1.1
+      ],
+      "gamma": [
+        0.1,
+        0.03,
+        0.4
+      ],
+      "N": [
+        1000,
+        1000,
+        1000
+      ]
+    },
+    "t0": 0,
+    "t1": 120,
+    "points": 900,
+    "method": "rk45"
+  },
+  "SEIR": {
+    "narrative": "Adds an exposed compartment before infection. Increase sigma to shorten incubation.",
+    "vars": [
+      "S",
+      "E",
+      "I",
+      "R"
+    ],
+    "eqs": [
+      "-beta*S*I/N",
+      "beta*S*I/N-sigma*E",
+      "sigma*E-gamma*I",
+      "gamma*I"
+    ],
+    "y0": [
+      990,
+      0,
+      10,
+      0
+    ],
+    "params": {
+      "beta": [
+        0.42,
+        0.05,
+        1.1
+      ],
+      "sigma": [
+        0.2,
+        0.05,
+        0.8
+      ],
+      "gamma": [
+        0.1,
+        0.03,
+        0.4
+      ],
+      "N": [
+        1000,
+        1000,
+        1000
+      ]
+    },
+    "t0": 0,
+    "t1": 160,
+    "points": 1000,
+    "method": "rk45"
+  },
+  "Robertson": {
+    "narrative": "Canonical stiff chemistry benchmark. Browser RK methods are exploratory; export Python with Radau or BDF for reliable results.",
+    "vars": [
+      "A",
+      "B",
+      "C"
+    ],
+    "eqs": [
+      "-k1*A + k3*B*C",
+      "k1*A - k2*B^2 - k3*B*C",
+      "k2*B^2"
+    ],
+    "y0": [
+      1,
+      0,
+      0
+    ],
+    "params": {
+      "k1": [
+        0.04,
+        0.01,
+        0.2
+      ],
+      "k2": [
+        10000,
+        1000,
+        50000
+      ],
+      "k3": [
+        30000000,
+        1000000,
+        50000000
+      ]
+    },
+    "t0": 0,
+    "t1": 1,
+    "points": 1200,
+    "method": "rk45"
+  },
+  "Enzyme kinetics": {
+    "narrative": "Michaelis–Menten style conversion of substrate to product. Vary Km to change saturation.",
+    "vars": [
+      "S",
+      "P"
+    ],
+    "eqs": [
+      "-vmax*S/(Km+S)",
+      "vmax*S/(Km+S)"
+    ],
+    "y0": [
+      10,
+      0
+    ],
+    "params": {
+      "vmax": [
+        1,
+        0.2,
+        3
+      ],
+      "Km": [
+        2,
+        0.2,
+        8
+      ]
+    },
+    "t0": 0,
+    "t1": 25,
+    "points": 600,
+    "method": "rk45"
+  },
+  "Van der Pol": {
+    "narrative": "Limit cycle oscillator. Large mu creates stiffness; export Python with Radau for serious stiff runs.",
+    "vars": [
+      "x",
+      "v"
+    ],
+    "eqs": [
+      "v",
+      "mu*(1-x^2)*v-x"
+    ],
+    "y0": [
+      2,
+      0
+    ],
+    "params": {
+      "mu": [
+        2,
+        0.1,
+        12
+      ]
+    },
+    "t0": 0,
+    "t1": 40,
+    "points": 1200,
+    "method": "rk45"
+  },
+  "FA metabolism bistability": {
+    "narrative": "Research-derived reduced public model of liver fatty-acid metabolism with acetyl-CoA, malonyl-CoA, fatty acids and triglycerides. It explores synthesis/oxidation switching and candidate bistable regimes, but this browser parameterization does not certify bistability or root completeness.",
+    "vars": [
+      "S1",
+      "S2",
+      "S3",
+      "S4"
+    ],
+    "eqs": [
+      "k1 - V1*S1/((Km1+S1)*(1+q1*S3)) + V4*S3/((Km4+S3)*(1+q4*S2)) - alpha*S1",
+      "V1*S1/((Km1+S1)*(1+q1*S3)) - V2*S2/(Km2+S2)",
+      "k2 + V2*S2/(Km2+S2) - V3*S3/(Km3+S3) - V4*S3/((Km4+S3)*(1+q4*S2)) + V5*S4/(Km5+S4) - beta*S3",
+      "k3 + V3*S3/(Km3+S3) - V5*S4/(Km5+S4) - gamma*S4"
+    ],
+    "y0": [
+      1.2,
+      0.55,
+      1,
+      0.8
+    ],
+    "params": {
+      "k1": [
+        0.55,
+        0.1,
+        1.2
+      ],
+      "k2": [
+        0.25,
+        0.02,
+        0.8
+      ],
+      "k3": [
+        0.18,
+        0.01,
+        0.7
+      ],
+      "alpha": [
+        0.2,
+        0.03,
+        0.6
+      ],
+      "beta": [
+        0.18,
+        0.03,
+        0.6
+      ],
+      "gamma": [
+        0.14,
+        0.02,
+        0.5
+      ],
+      "V1": [
+        1.2,
+        0.2,
+        3
+      ],
+      "Km1": [
+        0.6,
+        0.1,
+        2
+      ],
+      "q1": [
+        1.1,
+        0.1,
+        4
+      ],
+      "V2": [
+        0.9,
+        0.1,
+        3
+      ],
+      "Km2": [
+        0.45,
+        0.05,
+        2
+      ],
+      "V3": [
+        0.7,
+        0.1,
+        3
+      ],
+      "Km3": [
+        0.5,
+        0.05,
+        2
+      ],
+      "V4": [
+        0.8,
+        0.1,
+        3
+      ],
+      "Km4": [
+        0.55,
+        0.05,
+        2
+      ],
+      "q4": [
+        1,
+        0.1,
+        4
+      ],
+      "V5": [
+        0.55,
+        0.05,
+        2
+      ],
+      "Km5": [
+        0.5,
+        0.05,
+        2
+      ]
+    },
+    "t0": 0,
+    "t1": 80,
+    "points": 1600,
+    "method": "rk45"
+  },
+  "FADNS semi-mechanistic": {
+    "narrative": "Research-derived reduced public FADNS model with substrate pools, FAS-bound elongation states, CoA sequestration and C14/C16/C18 products. It preserves the semi-mechanistic pathway architecture but is not the complete calibrated thesis implementation.",
+    "vars": [
+      "AcetCoA",
+      "MalCoA",
+      "NADPH",
+      "CoA",
+      "E",
+      "ECoA",
+      "EC2",
+      "EC4",
+      "EC6",
+      "EC8",
+      "EC10",
+      "EC12",
+      "EC14",
+      "EC16",
+      "EC18",
+      "C14",
+      "C16",
+      "C18"
+    ],
+    "plotPriority": [
+      "C14",
+      "C16",
+      "C18",
+      "CoA",
+      "ECoA",
+      "AcetCoA",
+      "MalCoA",
+      "NADPH"
+    ],
+    "eqs": [
+      "-kon*E*AcetCoA + koff*EC2",
+      "-(kappa*EC2*MalCoA*NADPH + kappa*EC4*MalCoA*NADPH + kappa*EC6*MalCoA*NADPH + kappa*EC8*MalCoA*NADPH + kappa*EC10*MalCoA*NADPH + kappa*EC12*MalCoA*NADPH + kappa*EC14*MalCoA*NADPH + kappa*EC16*MalCoA*NADPH)",
+      "-2*(kappa*EC2*MalCoA*NADPH + kappa*EC4*MalCoA*NADPH + kappa*EC6*MalCoA*NADPH + kappa*EC8*MalCoA*NADPH + kappa*EC10*MalCoA*NADPH + kappa*EC12*MalCoA*NADPH + kappa*EC14*MalCoA*NADPH + kappa*EC16*MalCoA*NADPH)",
+      "(kappa*EC2*MalCoA*NADPH + kappa*EC4*MalCoA*NADPH + kappa*EC6*MalCoA*NADPH + kappa*EC8*MalCoA*NADPH + kappa*EC10*MalCoA*NADPH + kappa*EC12*MalCoA*NADPH + kappa*EC14*MalCoA*NADPH + kappa*EC16*MalCoA*NADPH) + delta14*EC14 + delta16*EC16 + delta18*EC18 - kinhib*E*CoA + krelease*ECoA",
+      "-kon*E*AcetCoA + koff*EC2 + delta14*EC14 + delta16*EC16 + delta18*EC18 - kinhib*E*CoA + krelease*ECoA",
+      "kinhib*E*CoA - krelease*ECoA",
+      "kon*E*AcetCoA - koff*EC2 - kappa*EC2*MalCoA*NADPH",
+      "kappa*EC2*MalCoA*NADPH - kappa*EC4*MalCoA*NADPH",
+      "kappa*EC4*MalCoA*NADPH - kappa*EC6*MalCoA*NADPH",
+      "kappa*EC6*MalCoA*NADPH - kappa*EC8*MalCoA*NADPH",
+      "kappa*EC8*MalCoA*NADPH - kappa*EC10*MalCoA*NADPH",
+      "kappa*EC10*MalCoA*NADPH - kappa*EC12*MalCoA*NADPH",
+      "kappa*EC12*MalCoA*NADPH - kappa*EC14*MalCoA*NADPH - delta14*EC14",
+      "kappa*EC14*MalCoA*NADPH - kappa*EC16*MalCoA*NADPH - delta16*EC16",
+      "kappa*EC16*MalCoA*NADPH - delta18*EC18",
+      "delta14*EC14",
+      "delta16*EC16",
+      "delta18*EC18"
+    ],
+    "y0": [
+      120,
+      18,
+      160,
+      0.01,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "params": {
+      "kon": [
+        0.018,
+        0.002,
+        0.08
+      ],
+      "koff": [
+        0.008,
+        0,
+        0.06
+      ],
+      "kappa": [
+        0.00002,
+        0.000002,
+        0.00008
+      ],
+      "delta14": [
+        0.01,
+        0.001,
+        0.05
+      ],
+      "delta16": [
+        0.026,
+        0.002,
+        0.09
+      ],
+      "delta18": [
+        0.012,
+        0.001,
+        0.06
+      ],
+      "kinhib": [
+        0.008,
+        0.001,
+        0.04
+      ],
+      "krelease": [
+        0.001,
+        0,
+        0.015
+      ]
+    },
+    "t0": 0,
+    "t1": 120,
+    "points": 900,
+    "method": "rk45"
+  },
+  "Love–hate oscillator": {
+    "narrative": "Strogatz-style Romeo–Juliet model. Romeo responds positively to Juliet, while Juliet responds oppositely to Romeo, producing a simple interpretable oscillator.",
+    "vars": [
+      "R",
+      "J"
+    ],
+    "eqs": [
+      "a*J",
+      "-b*R"
+    ],
+    "y0": [
+      1,
+      0
+    ],
+    "params": {
+      "a": [
+        1,
+        0.2,
+        3
+      ],
+      "b": [
+        1,
+        0.2,
+        3
+      ]
+    },
+    "t0": 0,
+    "t1": 25,
+    "points": 900,
+    "method": "rk45"
+  },
+  "Braess routing dynamics": {
+    "narrative": "Braess-inspired route-choice model. In this simplified teaching system the shortcut parameter changes private incentives and typically lowers the aggregate travel-cost proxy; it illustrates route-choice feedback rather than the full Braess paradox.",
+    "vars": [
+      "x"
+    ],
+    "eqs": [
+      "eta*x*(1-x)*((22 + 10*(1-x) - shortcut) - (10 + 30*x))"
+    ],
+    "y0": [
+      0.25
+    ],
+    "params": {
+      "eta": [
+        0.8,
+        0.1,
+        2
+      ],
+      "shortcut": [
+        0,
+        0,
+        18
+      ]
+    },
+    "t0": 0,
+    "t1": 35,
+    "points": 700,
+    "method": "rk45"
+  },
+  "Ziegler destabilization": {
+    "narrative": "Ziegler-inspired non-conservative structural model. Increasing stiffness or follower load can destabilize oscillations instead of calming them.",
+    "vars": [
+      "q1",
+      "q2",
+      "v1",
+      "v2"
+    ],
+    "eqs": [
+      "v1",
+      "v2",
+      "-(k1+k2)*q1 + k2*q2 + P*q2 - c*v1",
+      "k2*q1 - (k2+k3)*q2 - P*q1 - c*v2"
+    ],
+    "y0": [
+      0.1,
+      0,
+      0,
+      0.05
+    ],
+    "params": {
+      "k1": [
+        2,
+        0.5,
+        8
+      ],
+      "k2": [
+        4,
+        0.5,
+        12
+      ],
+      "k3": [
+        2,
+        0.5,
+        8
+      ],
+      "P": [
+        3,
+        0,
+        10
+      ],
+      "c": [
+        0.05,
+        0,
+        0.4
+      ]
+    },
+    "t0": 0,
+    "t1": 40,
+    "points": 1600,
+    "method": "rk45"
+  },
+  "Calvin cycle mini-model": {
+    "narrative": "Minimal photosynthesis-inspired ODE for PGA and RuBP pools. It follows carbon fixation, photorespiration, and regeneration terms.",
+    "vars": [
+      "PGA",
+      "RuBP"
+    ],
+    "eqs": [
+      "Vcmax*RuBP/(Kc+RuBP) - Vo*RuBP/(Ko+RuBP) - Vregen*PGA/(Kr+PGA)",
+      "Vregen*PGA/(Kr+PGA) - Vcmax*RuBP/(Kc+RuBP) - Vo*RuBP/(Ko+RuBP)"
+    ],
+    "y0": [
+      2,
+      1
+    ],
+    "params": {
+      "Vcmax": [
+        1.2,
+        0.2,
+        3
+      ],
+      "Vo": [
+        0.2,
+        0.01,
+        0.8
+      ],
+      "Vregen": [
+        1,
+        0.2,
+        3
+      ],
+      "Kc": [
+        0.8,
+        0.1,
+        3
+      ],
+      "Ko": [
+        1.2,
+        0.2,
+        4
+      ],
+      "Kr": [
+        0.9,
+        0.1,
+        3
+      ]
+    },
+    "t0": 0,
+    "t1": 30,
+    "points": 800,
+    "method": "rk45"
+  },
+  "Lotka–Volterra sweep": {
+    "narrative": "Run default parameters, or sweep alpha and beta to inspect predator–prey outcomes.",
+    "vars": [
+      "x",
+      "y"
+    ],
+    "eqs": [
+      "alpha*x - beta*x*y",
+      "delta*x*y - gamma*y"
+    ],
+    "y0": [
+      10,
+      5
+    ],
+    "params": {
+      "alpha": [
+        1.1,
+        0.2,
+        3
+      ],
+      "beta": [
+        0.4,
+        0.05,
+        1
+      ],
+      "delta": [
+        0.1,
+        0.01,
+        0.4
+      ],
+      "gamma": [
+        0.4,
+        0.05,
+        1
+      ]
+    },
+    "t0": 0,
+    "t1": 40,
+    "points": 1000,
+    "method": "rk45",
+    "sweep": [
+      "alpha",
+      "beta",
+      "x",
+      "max"
+    ]
+  },
+  "Lorenz rho–sigma": {
+    "narrative": "Sweep sigma and rho to inspect chaotic amplitude changes.",
+    "vars": [
+      "x",
+      "y",
+      "z"
+    ],
+    "eqs": [
+      "sigma*(y-x)",
+      "x*(rho-z)-y",
+      "x*y-beta*z"
+    ],
+    "y0": [
+      1,
+      1,
+      1
+    ],
+    "params": {
+      "sigma": [
+        10,
+        6,
+        16
+      ],
+      "rho": [
+        28,
+        12,
+        40
+      ],
+      "beta": [
+        2.6666666666666665,
+        2,
+        3
+      ]
+    },
+    "t0": 0,
+    "t1": 28,
+    "points": 1600,
+    "method": "rk45",
+    "sweep": [
+      "sigma",
+      "rho",
+      "z",
+      "max"
+    ],
+    "sectionVar": "x",
+    "sectionValue": 0
+  },
+  "SIR beta–gamma": {
+    "narrative": "Sweep infection and recovery rates. Heatmaps show peak infected population.",
+    "vars": [
+      "S",
+      "I",
+      "R"
+    ],
+    "eqs": [
+      "-beta*S*I/N",
+      "beta*S*I/N-gamma*I",
+      "gamma*I"
+    ],
+    "y0": [
+      990,
+      10,
+      0
+    ],
+    "params": {
+      "beta": [
+        0.35,
+        0.05,
+        1.1
+      ],
+      "gamma": [
+        0.1,
+        0.03,
+        0.4
+      ],
+      "N": [
+        1000,
+        1000,
+        1000
+      ]
+    },
+    "t0": 0,
+    "t1": 120,
+    "points": 800,
+    "method": "rk45",
+    "sweep": [
+      "beta",
+      "gamma",
+      "I",
+      "max"
+    ]
+  },
+  "SEIR incubation": {
+    "narrative": "Sweep exposure and recovery timescales.",
+    "vars": [
+      "S",
+      "E",
+      "I",
+      "R"
+    ],
+    "eqs": [
+      "-beta*S*I/N",
+      "beta*S*I/N-sigma*E",
+      "sigma*E-gamma*I",
+      "gamma*I"
+    ],
+    "y0": [
+      990,
+      0,
+      10,
+      0
+    ],
+    "params": {
+      "beta": [
+        0.42,
+        0.1,
+        1.2
+      ],
+      "sigma": [
+        0.2,
+        0.04,
+        0.8
+      ],
+      "gamma": [
+        0.1,
+        0.03,
+        0.4
+      ],
+      "N": [
+        1000,
+        1000,
+        1000
+      ]
+    },
+    "t0": 0,
+    "t1": 160,
+    "points": 900,
+    "method": "rk45",
+    "sweep": [
+      "sigma",
+      "gamma",
+      "I",
+      "max"
+    ]
+  },
+  "Enzyme kinetics sweep": {
+    "narrative": "Sweep vmax and Km to inspect substrate depletion.",
+    "vars": [
+      "S",
+      "P"
+    ],
+    "eqs": [
+      "-vmax*S/(Km+S)",
+      "vmax*S/(Km+S)"
+    ],
+    "y0": [
+      10,
+      0
+    ],
+    "params": {
+      "vmax": [
+        1,
+        0.2,
+        3
+      ],
+      "Km": [
+        2,
+        0.2,
+        8
+      ]
+    },
+    "t0": 0,
+    "t1": 25,
+    "points": 500,
+    "method": "rk45",
+    "sweep": [
+      "vmax",
+      "Km",
+      "P",
+      "final"
+    ]
+  },
+  "FA metabolism parameter sweep": {
+    "narrative": "Sweep inhibition strengths in the research-derived reduced fatty-acid metabolism model. The heatmap is finite-grid numerical evidence, not certified continuation or proof of bistability.",
+    "vars": [
+      "S1",
+      "S2",
+      "S3",
+      "S4"
+    ],
+    "eqs": [
+      "k1 - V1*S1/((Km1+S1)*(1+q1*S3)) + V4*S3/((Km4+S3)*(1+q4*S2)) - alpha*S1",
+      "V1*S1/((Km1+S1)*(1+q1*S3)) - V2*S2/(Km2+S2)",
+      "k2 + V2*S2/(Km2+S2) - V3*S3/(Km3+S3) - V4*S3/((Km4+S3)*(1+q4*S2)) + V5*S4/(Km5+S4) - beta*S3",
+      "k3 + V3*S3/(Km3+S3) - V5*S4/(Km5+S4) - gamma*S4"
+    ],
+    "y0": [
+      1.2,
+      0.55,
+      1,
+      0.8
+    ],
+    "params": {
+      "k1": [
+        0.55,
+        0.1,
+        1.2
+      ],
+      "k2": [
+        0.25,
+        0.02,
+        0.8
+      ],
+      "k3": [
+        0.18,
+        0.01,
+        0.7
+      ],
+      "alpha": [
+        0.2,
+        0.03,
+        0.6
+      ],
+      "beta": [
+        0.18,
+        0.03,
+        0.6
+      ],
+      "gamma": [
+        0.14,
+        0.02,
+        0.5
+      ],
+      "V1": [
+        1.2,
+        0.2,
+        3
+      ],
+      "Km1": [
+        0.6,
+        0.1,
+        2
+      ],
+      "q1": [
+        1.1,
+        0.1,
+        4
+      ],
+      "V2": [
+        0.9,
+        0.1,
+        3
+      ],
+      "Km2": [
+        0.45,
+        0.05,
+        2
+      ],
+      "V3": [
+        0.7,
+        0.1,
+        3
+      ],
+      "Km3": [
+        0.5,
+        0.05,
+        2
+      ],
+      "V4": [
+        0.8,
+        0.1,
+        3
+      ],
+      "Km4": [
+        0.55,
+        0.05,
+        2
+      ],
+      "q4": [
+        1,
+        0.1,
+        4
+      ],
+      "V5": [
+        0.55,
+        0.05,
+        2
+      ],
+      "Km5": [
+        0.5,
+        0.05,
+        2
+      ]
+    },
+    "t0": 0,
+    "t1": 80,
+    "points": 1200,
+    "method": "rk45",
+    "sweep": [
+      "q1",
+      "q4",
+      "S3",
+      "final"
+    ]
+  },
+  "FADNS semi-mechanistic sweep": {
+    "narrative": "Sweep the reduced FADNS CoA-sequestration model to inspect product output and ECoA formation. Results are conditional on fixed public-model parameters and are not a new parameter fit.",
+    "vars": [
+      "AcetCoA",
+      "MalCoA",
+      "NADPH",
+      "CoA",
+      "E",
+      "ECoA",
+      "EC2",
+      "EC4",
+      "EC6",
+      "EC8",
+      "EC10",
+      "EC12",
+      "EC14",
+      "EC16",
+      "EC18",
+      "C14",
+      "C16",
+      "C18"
+    ],
+    "plotPriority": [
+      "C14",
+      "C16",
+      "C18",
+      "CoA",
+      "ECoA",
+      "AcetCoA",
+      "MalCoA",
+      "NADPH"
+    ],
+    "eqs": [
+      "-kon*E*AcetCoA + koff*EC2",
+      "-(kappa*EC2*MalCoA*NADPH + kappa*EC4*MalCoA*NADPH + kappa*EC6*MalCoA*NADPH + kappa*EC8*MalCoA*NADPH + kappa*EC10*MalCoA*NADPH + kappa*EC12*MalCoA*NADPH + kappa*EC14*MalCoA*NADPH + kappa*EC16*MalCoA*NADPH)",
+      "-2*(kappa*EC2*MalCoA*NADPH + kappa*EC4*MalCoA*NADPH + kappa*EC6*MalCoA*NADPH + kappa*EC8*MalCoA*NADPH + kappa*EC10*MalCoA*NADPH + kappa*EC12*MalCoA*NADPH + kappa*EC14*MalCoA*NADPH + kappa*EC16*MalCoA*NADPH)",
+      "(kappa*EC2*MalCoA*NADPH + kappa*EC4*MalCoA*NADPH + kappa*EC6*MalCoA*NADPH + kappa*EC8*MalCoA*NADPH + kappa*EC10*MalCoA*NADPH + kappa*EC12*MalCoA*NADPH + kappa*EC14*MalCoA*NADPH + kappa*EC16*MalCoA*NADPH) + delta14*EC14 + delta16*EC16 + delta18*EC18 - kinhib*E*CoA + krelease*ECoA",
+      "-kon*E*AcetCoA + koff*EC2 + delta14*EC14 + delta16*EC16 + delta18*EC18 - kinhib*E*CoA + krelease*ECoA",
+      "kinhib*E*CoA - krelease*ECoA",
+      "kon*E*AcetCoA - koff*EC2 - kappa*EC2*MalCoA*NADPH",
+      "kappa*EC2*MalCoA*NADPH - kappa*EC4*MalCoA*NADPH",
+      "kappa*EC4*MalCoA*NADPH - kappa*EC6*MalCoA*NADPH",
+      "kappa*EC6*MalCoA*NADPH - kappa*EC8*MalCoA*NADPH",
+      "kappa*EC8*MalCoA*NADPH - kappa*EC10*MalCoA*NADPH",
+      "kappa*EC10*MalCoA*NADPH - kappa*EC12*MalCoA*NADPH",
+      "kappa*EC12*MalCoA*NADPH - kappa*EC14*MalCoA*NADPH - delta14*EC14",
+      "kappa*EC14*MalCoA*NADPH - kappa*EC16*MalCoA*NADPH - delta16*EC16",
+      "kappa*EC16*MalCoA*NADPH - delta18*EC18",
+      "delta14*EC14",
+      "delta16*EC16",
+      "delta18*EC18"
+    ],
+    "y0": [
+      120,
+      18,
+      160,
+      0.01,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "params": {
+      "kon": [
+        0.018,
+        0.002,
+        0.08
+      ],
+      "koff": [
+        0.008,
+        0,
+        0.06
+      ],
+      "kappa": [
+        0.00002,
+        0.000002,
+        0.00008
+      ],
+      "delta14": [
+        0.01,
+        0.001,
+        0.05
+      ],
+      "delta16": [
+        0.026,
+        0.002,
+        0.09
+      ],
+      "delta18": [
+        0.012,
+        0.001,
+        0.06
+      ],
+      "kinhib": [
+        0.008,
+        0.001,
+        0.04
+      ],
+      "krelease": [
+        0.001,
+        0,
+        0.015
+      ]
+    },
+    "t0": 0,
+    "t1": 120,
+    "points": 650,
+    "method": "rk45",
+    "sweep": [
+      "kappa",
+      "kinhib",
+      "C16",
+      "final"
+    ]
+  },
+  "Braess shortcut sweep": {
+    "narrative": "Sweep shortcut strength and adaptation rate in the simplified Braess-inspired route-choice model. This version is a congestion-feedback example, not a validated paradox instance.",
+    "vars": [
+      "x"
+    ],
+    "eqs": [
+      "eta*x*(1-x)*((22 + 10*(1-x) - shortcut) - (10 + 30*x))"
+    ],
+    "y0": [
+      0.25
+    ],
+    "params": {
+      "eta": [
+        0.8,
+        0.1,
+        2
+      ],
+      "shortcut": [
+        0,
+        0,
+        18
+      ]
+    },
+    "t0": 0,
+    "t1": 35,
+    "points": 600,
+    "method": "rk45",
+    "sweep": [
+      "shortcut",
+      "eta",
+      "x",
+      "final"
+    ]
+  },
+  "Calvin regeneration sweep": {
+    "narrative": "Sweep regeneration and carboxylation strengths in the photosynthesis mini-model.",
+    "vars": [
+      "PGA",
+      "RuBP"
+    ],
+    "eqs": [
+      "Vcmax*RuBP/(Kc+RuBP) - Vo*RuBP/(Ko+RuBP) - Vregen*PGA/(Kr+PGA)",
+      "Vregen*PGA/(Kr+PGA) - Vcmax*RuBP/(Kc+RuBP) - Vo*RuBP/(Ko+RuBP)"
+    ],
+    "y0": [
+      2,
+      1
+    ],
+    "params": {
+      "Vcmax": [
+        1.2,
+        0.2,
+        3
+      ],
+      "Vo": [
+        0.2,
+        0.01,
+        0.8
+      ],
+      "Vregen": [
+        1,
+        0.2,
+        3
+      ],
+      "Kc": [
+        0.8,
+        0.1,
+        3
+      ],
+      "Ko": [
+        1.2,
+        0.2,
+        4
+      ],
+      "Kr": [
+        0.9,
+        0.1,
+        3
+      ]
+    },
+    "t0": 0,
+    "t1": 30,
+    "points": 700,
+    "method": "rk45",
+    "sweep": [
+      "Vcmax",
+      "Vregen",
+      "RuBP",
+      "final"
+    ]
+  }
+}
