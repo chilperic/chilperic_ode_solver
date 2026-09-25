@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html data-color-family="living" data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab Agent Lab provides worker-backed seeded browser-scale individual-based simulations, ensemble summaries, spatial diagnostics, cancellation and reproducible exports." name="description"/>
+<meta content="Foko Lab Agent Lab" property="og:title"/>
+<meta content="Worker-backed lattice agent models with explicit update schedules, initialization, random seeds, finite ensembles, spatial diagnostics and scientific boundaries." property="og:description"/>
+<meta content="website" property="og:type"/>
+<title>Agent Lab · Foko Lab</title>
+<script defer="" src="src/platform/storage.js?v=79.2.0"></script><script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=79.2.0"></script>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=79.2.0" rel="stylesheet"/>
+<script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=79.2.0"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=79.2.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=79.2.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=79.2.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=79.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
+<link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link rel="stylesheet" href="styles/upgrade.css">
+<script src="src/upgrade/registry.js"></script>
+</head>
+<body data-color-family="living" data-lab="agent" data-page-key="agent" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<div class="app-shell">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="layout" id="workbench" tabindex="-1">
+<aside aria-label="Agent workflow" class="side-nav">
+<button class="nav-item active" data-jump="#agentExamplesBlock" type="button">Examples</button>
+<button class="nav-item" data-jump="#agentModelBlock" type="button">Model</button>
+<button class="nav-item" data-jump="#agentSimulationBlock" type="button">Simulation</button>
+<button class="nav-item" data-jump="#agentExportsBlock" type="button">Export</button>
+</aside>
+<aside aria-label="Agent model controls" class="work-panel controls">
+<section class="intro-card hero-with-mark">
+<div><p class="v72-eyebrow">Individual-based models · spatial rules · finite ensembles</p><h1>Agent Lab</h1><p>Run seeded lattice models, inspect population and spatial evidence, and retain the exact rules, topology and initialization used.</p></div>
+<div aria-hidden="true" class="lab-mark agent-lab-mark">♙</div>
+</section>
+<section class="examples-section" id="agentExamplesBlock">
+<div class="section-title"><div><p class="v72-eyebrow">Curated models</p><h2>Scientific stress tests</h2></div><button class="subtle" id="loadAgentPreset" type="button">Load</button></div>
+<label><span>Example</span><select id="agentPresetSelect"></select></label>
+<div class="model-deck agent-preset-deck" id="agentPresetDeck"></div>
+<div class="narrative" id="agentPresetQuestion"></div>
+<p class="scientific-boundary" id="agentPresetNote">Examples are qualitative mechanisms, not calibrated empirical evidence.</p>
+</section>
+<section class="card" id="agentModelBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Model definition</p><h2>Rules and initialization</h2></div></div>
+<label><span>Agent model</span><select id="agentModel"></select></label>
+<div class="data-summary-strip" id="agentModelSummary">Select a model.</div>
+<div class="small-title">Transition probabilities per selected-site update attempt</div>
+<div class="agent-parameter-grid" id="agentParamGrid"></div>
+<section aria-label="Rendered Agent model contract" class="equation-preview-card"><div class="equation-preview-head"><span>Mathematical contract</span><small>conditional transition model</small></div><div aria-live="polite" class="foko-math-output" id="agentEquationPreview">Select an Agent model to render its update contract.</div></section>
+<div class="small-title">Initial population</div>
+<div class="two-col small-gap"><label><span>Population input</span><select id="agentInitialMode"><option value="counts">Exact state counts</option><option value="fractions">Fractions</option></select></label><div class="data-summary-strip" id="agentPopulationSummary">Initial population has not been validated.</div></div>
+<div class="agent-fraction-grid" id="agentCountGrid"></div>
+<div class="agent-fraction-grid" hidden="" id="agentFractionGrid"></div>
+<p class="field-help">Count mode requires integer state counts that sum exactly to grid size². Fraction mode uses deterministic largest-remainder allocation and records the resulting exact counts.</p>
+<details hidden="" id="agentCustomModelBlock"><summary>Custom local transition model</summary>
+<label class="upload-drop"><span>Import custom Agent JSON</span><input accept="application/json,.json" id="agentCustomModelFile" type="file"/></label>
+<label><span>Custom model JSON</span><textarea id="agentCustomModelJson" rows="15" spellcheck="false"></textarea></label>
+<div class="export-row"><button class="secondary" id="validateAgentCustomModel" type="button">Validate model</button><button class="secondary" id="downloadAgentModelTemplate" type="button">Download template</button></div>
+<p class="scientific-boundary">Custom models use ordered first-success local transitions. Supported rule kinds are spontaneous, neighbour-contact and neighbour-threshold. Arbitrary JavaScript is not executed.</p>
+</details>
+<p class="field-help">Probabilities are per selected-site update attempt under the chosen schedule, not calibrated physical rates.</p>
+</section>
+<section class="card" id="agentSimulationBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Numerical experiment</p><h2>Grid, topology and ensemble</h2></div></div>
+<div class="advanced-grid">
+<label><span>Grid size</span><input id="agentSize" max="80" min="8" type="number" value="34"/></label>
+<label><span>Steps</span><input id="agentSteps" max="1200" min="1" type="number" value="120"/></label>
+<label><span>Independent runs</span><input id="agentRuns" max="200" min="1" type="number" value="24"/></label>
+<label><span>Master seed</span><input id="agentSeed" max="4294967295" min="0" type="number" value="202610"/></label>
+<label><span>Record every</span><input id="agentRecordEvery" max="100" min="1" type="number" value="2"/></label>
+<label><span>Live updates / replay frames</span><input id="agentSnapshotCount" max="80" min="4" step="1" type="number" value="24"/></label>
+<label><span>Live simulation speed</span><select id="agentLiveSpeed"><option value="180">Slow</option><option selected="" value="90">Normal</option><option value="45">Fast</option><option value="24">Maximum visible</option></select></label>
+<label><span>Neighbourhood</span><select id="agentNeighborhood"><option value="von-neumann">von Neumann (4)</option><option value="moore">Moore (8)</option></select></label>
+<label><span>Boundary</span><select id="agentBoundary"><option value="toroidal">Toroidal</option><option value="fixed">Fixed</option></select></label>
+<label><span>Update schedule</span><select id="agentUpdateSchedule"><option value="random-with-replacement">Random attempts with replacement</option><option value="shuffled-sweep">Shuffled one-attempt-per-site sweep</option></select></label>
+<label><span>Initialization</span><select id="agentInitialization"><option value="random">Random spatial assignment</option><option value="split">Spatially split state blocks</option><option value="central-patch">Rare states in a central patch</option></select></label>
+</div>
+<p class="scientific-boundary"><b>Random-sequential lattice updates.</b> One simulation step is one lattice sweep: grid-size² update attempts under the selected schedule. It is an algorithmic clock, not automatically biological, social or physical time.</p>
+</section>
+<section class="actionbar agent-actionbar">
+<button class="secondary" id="resetAgent" type="button">Reset example</button>
+<button class="primary" id="runAgent" type="button">Run live ensemble</button>
+<button class="secondary agent-pause" hidden="" id="pauseAgent" type="button">Pause live run</button>
+<button class="danger agent-cancel" hidden="" id="cancelAgent" type="button">Cancel run</button>
+<div class="progress"><div id="agentProgress"></div></div>
+<p class="status" id="agentStatus">Ready.</p>
+</section>
+</aside>
+<section aria-label="Agent results" class="workspace v72-workspace">
+<section aria-label="Computed agent results" class="results-card" role="region">
+<header class="v72-workspace-head"><div><p class="v72-eyebrow">Results</p><h2>Spatial state, population dynamics and stochastic evidence</h2><p>Each visible panel is derived from the same seeded ensemble. Use two readable views or focus one panel without discarding provenance.</p></div><div aria-label="Plot layout" class="v72-layout-switch" role="group"><button class="active" data-layout-mode="two" type="button">2-up</button><button data-layout-mode="focus" type="button">Focus</button></div></header>
+<div class="plot-toolbar-v2"><span class="result-kind" id="agentResultKind">No computed agent result</span><div aria-label="Live 3D Agent playback" class="live3d-controls" hidden="" id="agent3dControls"><button aria-pressed="false" class="secondary small" disabled="" id="agent3dPlay" type="button">▶ Play 3D</button><label><span>3D frame</span><input aria-label="Agent 3D frame" disabled="" id="agent3dFrame" max="0" min="0" step="1" type="range" value="0"/></label><output aria-live="polite" id="agent3dLabel">Waiting for frame</output><label><span>Speed</span><select id="agent3dSpeed"><option value="760">0.6×</option><option selected="" value="420">1×</option><option value="230">1.8×</option><option value="120">3.5×</option></select></label><label><span>Trail</span><select id="agent3dTrail"><option value="6">6 frames</option><option selected="" value="12">12 frames</option><option value="20">20 frames</option></select></label></div><button class="ghost" id="exportAgentPng" type="button">Current PNG</button><button class="ghost" id="exportAgentSvg" type="button">Current SVG</button></div>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="agentPlotGrid">
+<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="leftAgentPlotTitle">Spatial dynamics</h3><select aria-label="Primary Agent plot" id="leftAgentPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div><div class="plot" id="leftAgentPlot"><div class="diagnostics empty">Run the ensemble to create spatial evidence.</div></div><div aria-label="Agent state legend" class="agent-state-legend" id="leftAgentPlotLegend"></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftAgentPlotEvidence">Available after a run.</p></details></article>
+<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="rightAgentPlotTitle">Population dynamics</h3><select aria-label="Secondary Agent plot" id="rightAgentPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div><div class="plot" id="rightAgentPlot"><div class="diagnostics empty">Run the ensemble to create temporal evidence.</div></div><div aria-label="Agent state legend" class="agent-state-legend" id="rightAgentPlotLegend"></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightAgentPlotEvidence">Available after a run.</p></details></article>
+</div>
+<p class="info-strip"><b>Visualization follows the model.</b> The computed live lattice is the default for agent simulations. A 3D space–time view is offered only for curated fronts, invasion, coarsening, or wave models where lattice column, lattice row, and algorithmic step form an interpretable geometry. Pause or cancel without publishing a partial ensemble; completed replays are manual.</p>
+</section>
+</section>
+<aside aria-label="Agent diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card"><p class="v72-eyebrow">Run status</p><div class="status-strip"><div class="status-ok"><span>●</span><b id="agentTopStatus">Ready</b></div><div><span>Runtime</span><b id="agentRuntime">—</b></div><div><span>Model</span><b id="agentResultModel">—</b></div><div><span>Runs</span><b id="agentResultRuns">—</b></div><div><span>Grid</span><b id="agentResultGrid">—</b></div></div><div class="metrics-grid"><article class="metric-card"><small>Final occupied</small><b id="agentOccupied">—</b><em>representative run</em></article><article class="metric-card"><small>Spatial agreement</small><b id="agentAgreement">—</b><em>neighbour-pair fraction</em></article><article class="metric-card"><small>Spatial autocorrelation</small><b id="agentAutocorrelation">—</b><em>composition-adjusted categorical index</em></article><article class="metric-card"><small>Diversity</small><b id="agentDiversity">—</b><em>normalized entropy</em></article><article class="metric-card"><small>Update attempts</small><b id="agentAttempts">—</b><em>per run</em></article><article class="metric-card"><small>Terminal runs</small><b id="agentAbsorbed">—</b><em>irreversible condition by horizon</em></article><article class="metric-card"><small>Largest cluster</small><b id="agentLargestCluster">—</b><em>fraction of occupied sites</em></article></div></section>
+<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Numerical evidence</p><h2>Diagnostics</h2></div></div><div class="diagnostics empty" id="agentDiagnostics">Run an ensemble to inspect state totals, event counts, variability and limitations.</div></section>
+<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Simulation contract</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="agentBoundaryStatus">Not computed</dd></div><div><dt>Algorithm</dt><dd id="agentBoundaryAlgorithm">Random-sequential lattice updates</dd></div><div><dt>Topology</dt><dd id="agentBoundaryTopology">Not configured</dd></div><div><dt>Seeds</dt><dd id="agentBoundarySeeds">Not generated</dd></div><div><dt>Claim</dt><dd id="agentBoundaryClaim">No scientific result yet</dd></div></dl><p class="v72-warning" id="agentBoundaryText">A finite stochastic ensemble is conditional on the stated rules, topology, initialization and random seeds.</p></section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="agentExportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Configuration and result export</h2></div></div><div class="export-row"><label class="secondary button-link">Import model/config JSON<input accept="application/json,.json" hidden="" id="importAgentConfig" type="file"/></label><button class="secondary" id="saveAgentSession" type="button">Save session</button><button class="secondary" id="restoreAgentSession" type="button">Restore session</button><button class="secondary" id="copyAgentShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportAgentModel" type="button">Model JSON</button><button class="secondary" id="exportAgentCsv" type="button">Population CSV</button><button class="secondary" id="exportAgentJson" type="button">Result JSON</button><button class="secondary" id="exportAgentPython" type="button">Python scaffold</button><a class="secondary button-link" href="AGENT_MODEL_SPEC.md" rel="noopener" target="_blank">Model specification</a></div><p class="note">Saved and shared states preserve model configuration only. Computed evidence is regenerated from the stored master seed.</p></section>
+</aside>
+</main>
+<script defer="" src="src/core/agent-reference.js?v=79.2.0"></script>
+<script defer="" src="src/core/live-3d.js?v=79.2.0"></script>
+<script defer="" src="src/models/agent-presets.js?v=79.2.0"></script>
+<script defer="" src="src/v72/agent-workspace.js?v=79.2.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=79.2.0"></script>
+</div><script defer="" src="src/models/search-index.js?v=79.2.0"></script><script defer="" src="src/v76/app-shell.js?v=79.2.0&amp;core-access=1"></script>
+<script src="src/upgrade/publication.js"></script><script src="src/upgrade/common.js"></script>
+</body>
+</html>

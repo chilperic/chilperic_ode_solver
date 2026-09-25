@@ -1,0 +1,147 @@
+{
+  "release": "79.2.0",
+  "name": "FokoLab 79.2.0 Integrated Update",
+  "applicationBuildSHA256": "2c842d6324cc5840676d9ab7e1c31cade57cbc36eb585f421380abd86b18ad1d",
+  "generatedAt": "2026-09-25T16:49:23.020846+00:00",
+  "deployment": "Not deployed. The existing hosted website is unchanged.",
+  "baseline": "Actual user-supplied 79.1 Pages archive; not inaccessible newer hosted source.",
+  "inventory": {
+    "catalogueRecords": 296,
+    "uniqueCatalogueDestinations": 286,
+    "preservedOriginalCatalogueRecords": 259,
+    "preservedOriginalUniqueDestinations": 249,
+    "addedConfigurations": 37,
+    "addedLaboratories": 9,
+    "studioStarters": 23,
+    "originalSourceModelSpecifications": 34,
+    "bookChapters": 27,
+    "bookSections": 255,
+    "bookPracticeDestinations": 54,
+    "bookAppendices": 5
+  },
+  "preservation": {
+    "baselineArchiveSHA256": "a9c82c7c0856a21112676f595361f66083eefc1146b3154a96d82ffa956bd816",
+    "identityFilesChecked": 85,
+    "identityFilesUnchanged": 85,
+    "originalCoreFiles": 39,
+    "originalCoreFilesUnchanged": 38,
+    "originalAppAndModelDefinitionsUnchanged": true,
+    "numericalCorrection": {
+      "path": "src/core/statistics.js",
+      "change": "ROC ties are aggregated at one threshold; average precision includes the first recall jump; invalid or single-class inputs are refused.",
+      "evidence": "evidence/pre-fix-roc-regression.log and evidence/preservation-regression.json"
+    }
+  },
+  "executedSuites": [
+    {
+      "name": "Retained numerical methods and resource/run-state contracts",
+      "passed": 36,
+      "failed": 0,
+      "evidenceFile": "evidence/preservation-regression.json",
+      "scope": "Executed retained-core analytic microcases and new resource/state contracts. Not exhaustive empirical validation."
+    },
+    {
+      "name": "Every registered additive example",
+      "passed": 37,
+      "failed": 0,
+      "evidenceFile": "evidence/additive-smoke.json",
+      "scope": "All declared additive example configurations, pure numerical kernels in Node; not UI or empirical validation."
+    },
+    {
+      "name": "Native Python versus JavaScript reference comparisons",
+      "passed": 37,
+      "failed": 0,
+      "evidenceFile": "evidence/python-comparison.json",
+      "scope": "Fresh native Python reference vs JS tables. ODE and thermal reference use independent SciPy DOP853. Other algorithms are separate implementations of the same declared equations. Not empirical validation."
+    },
+    {
+      "name": "Controlled browser workflows and source loading",
+      "passed": 79,
+      "failed": 0,
+      "evidenceFile": "evidence/browser-regression.json",
+      "scope": "Execute delivered UI code in a controlled local-source Chromium fixture.\nNative address navigation is blocked in the authoring environment. New labs use\nreal Blob workers and local delivered modules; old Studio uses its existing\nbounded no-worker fallback. Storage is an explicit in-memory fixture.\n"
+    },
+    {
+      "name": "Additional browser/mobile/fallback checks",
+      "passed": 3,
+      "failed": 0,
+      "evidenceFile": "evidence/browser-edges.json",
+      "scope": "Additional controlled browser checks: fresh mobile initialization, WebGL fallback, diagnostic UI."
+    },
+    {
+      "name": "Real loopback HTTP assets and public/private boundary",
+      "passed": 464,
+      "failed": 0,
+      "evidenceFile": "evidence/http-package.json",
+      "scope": "Real standard-library HTTP requests to the delivered local launcher, not native browser navigation or live deployment."
+    },
+    {
+      "name": "Public PDF source preservation",
+      "passed": 2,
+      "failed": 0,
+      "evidenceFile": "evidence/publication-check.json",
+      "scope": "Full text equality outside omitted pages; representative visual equality, not a new scientific audit of the book."
+    },
+    {
+      "name": "Actual browser-downloaded native Python replay",
+      "passed": 1,
+      "failed": 0,
+      "scope": "Actual Python download executed without Node; compared to actual corresponding browser experiment JSON.",
+      "evidenceFile": "evidence/browser-export-replay.json"
+    }
+  ],
+  "notAnIndependentGrandTotal": "The suites overlap. Counts identify executed checks, not independent scientific validations.",
+  "blocked": [
+    {
+      "check": "Native browser address navigation in the authoring environment",
+      "reason": "ERR_BLOCKED_BY_ADMINISTRATOR. Local-source controlled fixtures used instead; real HTTP serving tested separately."
+    }
+  ],
+  "notRun": [
+    "Live deployment and original hosted-site modification",
+    "Real-device mobile tests",
+    "Safari and Firefox compatibility",
+    "Persistence across a full browser restart",
+    "Exhaustive verification of every original example and method combination",
+    "Empirical validation of the newly authored teaching reductions",
+    "Human unfamiliar-user study and formal accessibility-conformance audit",
+    "Reconciliation against unavailable full research implementations"
+  ],
+  "scientificLimits": [
+    "Original public FADNS/metabolism equations are retained, not certified as complete calibrated research. The bistability/uniqueness source comparison remains unresolved.",
+    "New plant/leaf/adaptation/T-cell reductions have their explicit model scopes in the interface. Colored pathway landmarks are not empirical boundaries.",
+    "Independent Python agreement verifies the declared calculations, not observational adequacy or every stochastic inference."
+  ],
+  "publication": {
+    "schema": "foko.publication/1",
+    "version": "79.2.0",
+    "book": "materials/Scientific_Mastery_V6_17_Public_Companion.pdf",
+    "sourceVersion": "V6.17 Design Revision",
+    "sourceSHA256": "24476aa28700e014693ea2ca8b21d55719dd6e4980fac32c781973cdfa2a6690",
+    "publicSHA256": "82e8e71a1cdf1ce6fb66f62399bcb50130e1250edeb9261549b71679c1b844b7",
+    "publicPageCount": 439,
+    "omittedPhysicalPages": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "chapters": 27,
+    "sections": 255,
+    "workedPracticeDestinations": 54,
+    "appendices": 5,
+    "notebooksDistributed": false,
+    "fullAuthorPDFPublic": false
+  },
+  "environment": {
+    "Python": "3.13.5",
+    "Node": "v22.16.0",
+    "Chromium": "Chromium 144.0.7559.96 built on Debian GNU/Linux 13 (trixie)",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "playwright": "1.57.0",
+    "PyMuPDF": "1.26.7"
+  },
+  "runInYourBrowser": "verify.html"
+}

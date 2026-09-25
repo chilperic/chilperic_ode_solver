@@ -1,0 +1,8 @@
+/** Deterministic RK4 illustration calculated locally, not a pre-rendered attractor. */
+const el=document.getElementById('homeDynamics');let running=false,frame=0,x=[],z=[],y=[],t=[];
+function rhs(v){return[10*(v[1]-v[0]),v[0]*(28-v[2])-v[1],v[0]*v[1]-(8/3)*v[2]];}
+let state=[1,1,1],h=.005;for(let i=0;i<=6000;i++){if(i%5===0){x.push(state[0]);y.push(state[1]);z.push(state[2]);t.push(i*h);}let a=rhs(state),b=rhs(state.map((v,j)=>v+h*a[j]/2)),c=rhs(state.map((v,j)=>v+h*b[j]/2)),d=rhs(state.map((v,j)=>v+h*c[j]));state=state.map((v,j)=>v+h*(a[j]+2*b[j]+2*c[j]+d[j])/6);}
+function draw(n=x.length){const dark=document.documentElement.dataset.appearance==='dark';return Plotly.react(el,[{type:'scatter',mode:'lines',x:x.slice(0,n),y:z.slice(0,n),line:{width:1.3,color:dark?'#a8d6ce':'#346d7a'},name:'Lorenz x–z'},{type:'scatter',mode:'markers',x:[x[n-1]],y:[z[n-1]],marker:{size:6,color:'#b7744e'},name:'Current point'}],{margin:{l:42,r:20,t:10,b:36},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{family:'system-ui',size:10,color:dark?'#cfdbde':'#60777e'},xaxis:{title:'x · dimensionless',showgrid:false,zeroline:false,range:[-23,23]},yaxis:{title:'z · dimensionless',showgrid:false,zeroline:false,range:[0,52]},showlegend:false},{responsive:true,displayModeBar:false});}
+draw();document.getElementById('homePlay').onclick=()=>{running=!running;document.getElementById('homePlay').textContent=running?'Pause':'Replay';if(running){frame=0;step();}};
+function step(){if(!running)return;frame=Math.min(frame+24,x.length);draw(Math.max(1,frame));if(frame>=x.length){running=false;document.getElementById('homePlay').textContent='Replay';return;}setTimeout(step,55);}
+document.addEventListener('foko:appearance',()=>draw());

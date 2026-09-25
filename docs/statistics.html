@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html data-color-family="inference" data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab Statistics Lab provides local data ingestion, assumption-aware inference, uncertainty diagnostics, and reproducible exports without decorative analysis." name="description"/>
+<meta content="Foko Lab Statistics Lab" property="og:title"/>
+<meta content="Browser-computed descriptive statistics, regression, group comparisons, bootstrap uncertainty, ROC/PR, survival, FDR and process diagnostics with explicit assumptions." property="og:description"/>
+<meta content="website" property="og:type"/>
+<title>Statistics Lab · Foko Lab</title>
+<script defer="" src="src/platform/storage.js?v=79.2.0"></script><script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=79.2.0"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=79.2.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=79.2.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=79.2.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=79.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
+<link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link rel="stylesheet" href="styles/upgrade.css">
+<script src="src/upgrade/registry.js"></script>
+</head>
+<body data-color-family="inference" data-lab="statistics" data-page-key="statistics" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<div class="app-shell">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="layout" id="workbench" tabindex="-1">
+<aside aria-label="Statistics workflow" class="side-nav">
+<button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
+<button class="nav-item" data-jump="#dataBlock" type="button">Data</button>
+<button class="nav-item" data-jump="#analysisBlock" type="button">Analysis</button>
+<button class="nav-item" data-jump="#exportsBlock" type="button">Export</button>
+</aside>
+<aside aria-label="Statistics controls" class="work-panel controls">
+<section class="card intro-card hero-with-mark">
+<div><p class="v72-eyebrow">Local data · assumption-aware inference · explicit uncertainty</p><h2>Statistics Lab</h2><p class="note">Inspect data quality and compute bounded statistical analyses without reducing scientific evidence to a p-value or a decorative plot.</p></div>
+<div aria-hidden="true" class="lab-mark data-lab-mark">σ</div>
+</section>
+<section aria-label="Run statistics" class="actionbar card">
+<button class="primary" id="runStatistics" type="button">Run analysis</button>
+<button class="secondary" id="resetStatistics" type="button">Reset example</button>
+<div class="status" id="statisticsStatus">Ready. No statistical result exists yet.</div>
+<div class="progress"><div id="statisticsProgress"></div></div>
+</section>
+<section class="card statistics-example-library" id="examplesBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Curated datasets</p><h2>Scientific example library</h2></div><span class="example-count" id="statisticsExampleCount">0 examples</span></div>
+<div class="two-col small-gap statistics-example-filters">
+<label><span>Question family</span><select id="statisticsFamilyFilter"><option value="all">All families</option></select></label>
+<label><span>Example</span><select id="statisticsSelect"></select></label>
+</div>
+<button class="secondary small statistics-load-selected" id="loadStatistics" type="button">Load selected example</button>
+<div class="model-deck statistics-example-deck" id="statisticsDeck"></div>
+<div class="statistics-example-brief"><p class="narrative" id="statisticsNarrative">Select a dataset and analysis.</p><p class="field-help" id="statisticsScientificNote"></p></div>
+</section>
+<section class="card" id="dataBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Data contract</p><h2>Input and missingness</h2></div></div>
+<label class="upload-drop"><span>Load local CSV, TSV or semicolon-delimited file</span><input accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values" id="statisticsFile" type="file"/></label>
+<div class="two-col small-gap">
+<label><span>Delimiter</span><select id="statisticsDelimiter"><option value="auto">Auto-detect</option><option value=",">Comma</option><option value="\t">Tab</option><option value=";">Semicolon</option><option value="whitespace">Whitespace</option></select></label>
+<label><span>Missing-data policy</span><select id="statisticsMissingPolicy"><option value="analysis-complete">Analysis-specific complete cases</option><option value="mean-impute">Mean-impute selected numeric columns</option></select></label>
+</div>
+<label><span>Dataset</span><textarea id="statisticsData" rows="14" spellcheck="false"></textarea></label>
+<div class="data-summary-strip" id="statisticsDataSummary">Data have not been parsed.</div>
+<p class="scientific-boundary">Analysis-specific complete cases remove rows only for variables required by the chosen analysis. Mean imputation is provided only as a transparent sensitivity tool; it understates uncertainty and must not be treated as principled missing-data inference.</p>
+</section>
+<section class="card" id="analysisBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Analysis specification</p><h2>Method and column roles</h2></div></div>
+<label><span>Analysis</span><select id="statisticsMode">
+<option value="descriptive">Descriptive statistics</option>
+<option value="pca">PCA / multivariate structure</option>
+<option value="regression">Simple OLS regression</option>
+<option value="correlation">Pearson correlation</option>
+<option value="welch">Welch two-group comparison</option>
+<option value="anova">One-way ANOVA + Kruskal–Wallis</option>
+<option value="bootstrap">Bootstrap mean interval</option>
+<option value="classification">ROC and precision–recall</option>
+<option value="survival">Kaplan–Meier + two-group log-rank</option>
+<option value="fdr">Benjamini–Hochberg FDR</option>
+<option value="spc">Shewhart process chart</option>
+</select></label>
+<div class="two-col small-gap">
+<label><span>X / score / time / p-value</span><select id="statisticsX"></select></label>
+<label><span>Y / response / event / measurement</span><select id="statisticsY"></select></label>
+<label><span>Group</span><select id="statisticsGroup"></select></label>
+<label><span>Event indicator</span><select id="statisticsEvent"></select></label>
+</div>
+<details open=""><summary>Inference and reproducibility settings</summary>
+<div class="advanced-grid">
+<label><span>Significance α</span><input id="statisticsAlpha" max="0.25" min="0.0001" step="0.001" type="number" value="0.05"/></label>
+<label><span>Bootstrap resamples</span><input id="statisticsBootstrapReps" max="20000" min="100" step="100" type="number" value="2000"/></label>
+<label><span>Random seed</span><input id="statisticsSeed" step="1" type="number" value="1234"/></label>
+<label><span>Histogram bins</span><input id="statisticsBins" max="100" min="5" step="1" type="number" value="18"/></label>
+</div>
+</details>
+<p class="scientific-boundary" id="statisticsBoundary">Statistical conclusions remain conditional on sampling, measurement quality, model assumptions, multiplicity decisions and the analysis plan. The browser does not infer causal identification or external validity.</p>
+</section>
+</aside>
+<section aria-label="Statistics results" class="workspace v72-workspace">
+<section aria-label="Numerical results" class="results-card" role="region">
+<header class="v72-workspace-head">
+<div><p class="v72-eyebrow">Results</p><h1>Data quality, inference and uncertainty</h1><p>Compare two computed views from the same parsed dataset and analysis. Plot cards are available only when their required numerical results exist.</p></div>
+<div aria-label="Plot layout" class="v72-layout-switch" role="group">
+<button class="active" data-layout-mode="two" type="button">2-up</button>
+<button data-layout-mode="focus" type="button">Focus</button>
+</div>
+</header>
+<div class="plot-toolbar-v2">
+<span class="result-kind" id="statisticsResultKind">No computed result</span>
+<button class="ghost" id="exportStatisticsPng" type="button">Current PNG</button>
+<button class="ghost" id="exportStatisticsSvg" type="button">Current SVG</button>
+</div>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
+<article class="chart-card" data-plot-card="left">
+<div class="chart-title"><h3 id="leftPlotTitle">Distribution</h3><select aria-label="Primary statistics plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="leftPlot"><div class="diagnostics empty">Run the analysis to create a plot.</div></div>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details>
+</article>
+<article class="chart-card" data-plot-card="right">
+<div class="chart-title"><h3 id="rightPlotTitle">Diagnostic</h3><select aria-label="Secondary statistics plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="rightPlot"><div class="diagnostics empty">Run the analysis to create a plot.</div></div>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details>
+</article>
+</div>
+<p class="info-strip" id="plotHint">A p-value, effect size, confidence interval and diagnostic plot answer different questions. None establishes causality or model adequacy by itself.</p>
+</section>
+</section>
+<aside aria-label="Statistical diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card">
+<p class="v72-eyebrow">Run status</p>
+<div class="status-strip">
+<div class="status-ok"><span>●</span><b id="statisticsTopStatus">Ready</b></div>
+<div><span>Runtime</span><b id="statisticsRuntime">—</b></div>
+<div><span>Usable rows</span><b id="statisticsUsableRows">—</b></div>
+<div><span>Analysis</span><b id="statisticsMethodMetric">—</b></div>
+<div><span>Missing action</span><b id="statisticsMissingMetric">—</b></div>
+</div>
+<div class="metrics-grid">
+<article class="metric-card"><small>Primary estimate</small><b id="statisticsPrimaryEstimate">—</b><em id="statisticsPrimaryLabel">not computed</em></article>
+<article class="metric-card"><small>Uncertainty / p</small><b id="statisticsUncertainty">—</b><em id="statisticsUncertaintyLabel">not computed</em></article>
+<article class="metric-card"><small>Effect / fit</small><b id="statisticsEffect">—</b><em id="statisticsEffectLabel">not computed</em></article>
+<article class="metric-card"><small>Data quality</small><b id="statisticsQuality">—</b><em>missing cells</em></article>
+</div>
+</section>
+<section class="v72-inspector-card">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Statistical evidence</p><h2>Result and assumptions</h2></div></div>
+<div class="diagnostics empty" id="statisticsDiagnostics">Run an analysis to see estimates, uncertainty, assumptions and warnings.</div>
+</section>
+<section class="v72-inspector-card" id="provenanceCard">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div>
+<dl class="v72-provenance">
+<div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div>
+<div><dt>Engine</dt><dd id="provenanceEngine">FokoDataCore + FokoStatistics</dd></div>
+<div><dt>Method</dt><dd id="provenanceMethod">Not run</dd></div>
+<div><dt>Data</dt><dd id="provenanceData">Not parsed</dd></div>
+<div><dt>Assumptions</dt><dd id="provenanceAssumptions">Not assessed</dd></div>
+<div><dt>Reproducibility</dt><dd id="provenanceReproducibility">Configuration only</dd></div>
+</dl>
+<p class="v72-warning" id="provenanceWarning">Run an analysis to create results.</p>
+</section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div>
+<div class="export-row">
+<button class="secondary" id="saveStatisticsSession" type="button">Save session</button>
+<button class="secondary" id="restoreStatisticsSession" type="button">Restore session</button>
+<button class="secondary" id="copyStatisticsShareUrl" type="button">Copy share URL</button>
+<button class="secondary" id="exportStatisticsSummary" type="button">Summary CSV</button>
+<button class="secondary" id="exportStatisticsData" type="button">Clean data CSV</button>
+<button class="secondary" id="exportStatisticsJson" type="button">Result JSON</button>
+<button class="secondary" id="exportStatisticsR" type="button">R validation script</button>
+<button class="secondary" id="exportStatisticsPython" type="button">Python validation script</button>
+</div>
+<p class="note">Session and share controls preserve the input text and configuration. Computed estimates and plots must be regenerated after restore.</p>
+</section>
+</aside>
+</main>
+</div>
+<script defer="" src="src/models/statistics-presets.js?v=79.2.0"></script>
+<script defer="" src="src/core/data.js?v=79.2.0"></script>
+<script defer="" src="src/core/statistics.js?v=79.2.0"></script>
+<script defer="" src="src/core/pca.js?v=79.2.0"></script>
+<script defer="" src="src/v72/statistics-workspace.js?v=79.2.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=79.2.0"></script>
+<script defer="" src="src/models/search-index.js?v=79.2.0"></script><script defer="" src="src/v76/app-shell.js?v=79.2.0&amp;core-access=1"></script>
+<script src="src/upgrade/publication.js"></script><script src="src/upgrade/common.js"></script>
+</body>
+</html>

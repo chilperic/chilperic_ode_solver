@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html data-color-family="foundation" data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab Symbolic Lab provides a deliberately limited browser grammar for transparent simplification, differentiation, Jacobians, numerical evaluation and SymPy export." name="description"/>
+<meta content="Foko Lab Symbolic Lab" property="og:title"/>
+<meta content="Tested browser parsing, rule differentiation, Jacobians and finite numerical checks with explicit computer-algebra limits." property="og:description"/>
+<meta content="website" property="og:type"/>
+<title>Symbolic Lab · Foko Lab</title>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=79.2.0" rel="stylesheet"/>
+<script defer="" src="src/platform/storage.js?v=79.2.0"></script><script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=79.2.0"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=79.2.0"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=79.2.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=79.2.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=79.2.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=79.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-symbolic.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
+<link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link rel="stylesheet" href="styles/upgrade.css">
+<script src="src/upgrade/registry.js"></script>
+</head>
+<body data-color-family="foundation" data-lab="symbolic" data-page-key="symbolic" data-v72-shell="true"><a class="skip-link" href="#symbolicLab">Skip to scientific workspace</a>
+<div class="app-shell">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="layout" id="symbolicLab" tabindex="-1">
+<aside aria-label="Symbolic workflow" class="side-nav">
+<button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
+<button class="nav-item" data-jump="#modelBlock" type="button">Model</button>
+<button class="nav-item" data-jump="#scopeBlock" type="button">Scope</button>
+<button class="nav-item" data-jump="#operationBlock" type="button">Analysis</button>
+<button class="nav-item" data-jump="#exportsBlock" type="button">Export</button>
+</aside>
+<aside aria-label="Symbolic inputs" class="controls-panel">
+<section class="lab-intro card">
+<div><p class="v72-eyebrow">Limited algebra · derivatives · Jacobians · numerical checks</p><h2>Symbolic Lab</h2><p class="note">Use a deliberately narrow browser grammar for transparent transformations. Export to SymPy when the question requires a general computer algebra system.</p></div>
+<div aria-hidden="true" class="lab-mark symbolic-lab-mark">Σ</div>
+</section>
+<section aria-label="Run symbolic analysis" class="actionbar card">
+<button class="primary" id="runSymbolic" type="button">Analyze</button>
+<button class="secondary" id="resetSymbolic" type="button">Reset example</button>
+<div class="status" id="symbolicStatus">Ready. No symbolic result exists yet.</div>
+<div class="progress"><div id="symbolicProgress"></div></div>
+</section>
+<section class="card" id="examplesBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Curated systems</p><h2>Examples</h2></div><button class="secondary small" id="loadSymbolic" type="button">Load &amp; analyze</button></div>
+<label><span>Example</span><select id="symbolicSelect"></select></label>
+<div class="symbolic-example-filters">
+<label><span>Search examples</span><input id="symbolicExampleSearch" placeholder="system, field or operation" type="search"/></label>
+<label><span>Family</span><select id="symbolicFamilyFilter"><option value="all">All families</option></select></label>
+</div>
+<p class="example-count" id="symbolicExampleCount">0 examples</p>
+<div class="model-deck symbolic-deck" id="symbolicDeck"></div>
+<p class="narrative" id="symbolicNarrative">Select an example.</p>
+<p class="field-help" id="symbolicScientificNote"></p>
+</section>
+<section class="card" id="modelBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Expression contract</p><h2>Variables, parameters and expressions</h2></div></div>
+<label class="upload-drop"><span>Import expression text or symbolic configuration JSON</span><input accept=".json,.txt,.eqn,.ode,application/json,text/plain" id="symbolicImport" type="file"/></label>
+<div class="two-col small-gap">
+<label><span>Variables</span><input id="symbolicVariables" spellcheck="false" value="x"/></label>
+<label><span>Parameters</span><input id="symbolicParameters" spellcheck="false" value="r, K"/></label>
+</div>
+<label><span>Expressions · one per line</span><textarea id="symbolicExpressions" rows="9" spellcheck="false">x' = r*x*(1-x/K)</textarea></label>
+<p class="field-help">Use explicit multiplication. A left-hand label before = is optional and ignored by the parser.</p>
+<p class="scientific-boundary"><b>Capability boundary:</b> Browser-computed: parsing, rule simplification, differentiation, Jacobians and finite numerical checks. Export-only: general integration, exact algebra, exact solving, factorization, special functions, complex branch analysis and general ODE solving.</p>
+</section>
+<section class="card" id="scopeBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Numerical scope</p><h2>Values and finite range</h2></div></div>
+<label><span>Numeric values · name=value</span><textarea id="symbolicScope" rows="8" spellcheck="false">x=1
+r=1
+K=10</textarea></label>
+<div class="two-col small-gap">
+<label><span>Range minimum</span><input id="symbolicXMin" step="any" type="number" value="-1"/></label>
+<label><span>Range maximum</span><input id="symbolicXMax" step="any" type="number" value="12"/></label>
+<label><span>Plot / root samples</span><input id="symbolicSamples" max="1200" min="60" step="20" type="number" value="320"/></label>
+<label><span>Root tolerance</span><input id="symbolicRootTolerance" max="1e-3" min="1e-12" step="1e-9" type="number" value="1e-8"/></label>
+</div>
+<p class="scientific-boundary">The finite range and deterministic start set are search choices. They do not prove that all roots or equilibria were found.</p>
+</section>
+<section class="card" id="operationBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Requested evidence</p><h2>Selection and operation</h2></div></div>
+<label><span>Selected expression</span><select id="symbolicSelectedExpression"></select></label>
+<label><span>Differentiation variable</span><select id="symbolicDerivativeVariable"></select></label>
+<label><span>Primary operation</span><select id="symbolicOperation">
+<option value="differentiate">Differentiate selected expression</option>
+<option value="simplify">Simplify all expressions</option>
+<option value="jacobian">Build symbolic Jacobian</option>
+<option value="evaluate">Evaluate at numeric scope</option>
+<option value="equilibria">Finite numeric equilibrium search</option>
+</select></label>
+<p class="field-help">All listed browser operations are run together so the plots and diagnostics derive from one consistent parsed result.</p>
+</section>
+</aside>
+<section aria-label="Symbolic results" class="workspace v72-workspace">
+<section aria-label="Computed symbolic results" class="results-card" role="region">
+<header class="v72-workspace-head">
+<div><p class="v72-eyebrow">Results</p><h1>Limited transformations and numerical evidence</h1><p>Exact rule-based derivatives and Jacobians are separated from finite root searches and local numerical stability checks.</p></div>
+<div aria-label="Plot layout" class="v72-layout-switch" role="group">
+<button class="active" data-layout-mode="two" type="button">2-up</button>
+<button data-layout-mode="focus" type="button">Focus</button>
+</div>
+</header>
+<div class="plot-toolbar-v2">
+<span class="result-kind" id="symbolicResultKind">No computed symbolic result</span>
+<button class="ghost" id="exportSymbolicPng" type="button">Current PNG</button>
+<button class="ghost" id="exportSymbolicSvg" type="button">Current SVG</button>
+</div>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
+<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="leftPlotTitle">Expression</h3><div class="chart-controls"><select aria-label="Primary symbolic plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div></div><div class="plot" id="leftPlot"><div class="diagnostics empty">Compute to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details></article>
+<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="rightPlotTitle">Derivative</h3><div class="chart-controls"><select aria-label="Secondary symbolic plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div></div><div class="plot" id="rightPlot"><div class="diagnostics empty">Compute to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details></article>
+</div>
+<p class="info-strip" id="plotHint">A symbolic transformation and a numerical root search answer different questions. The interface reports their boundaries separately.</p>
+</section>
+<section aria-label="Symbolic equations" class="results-card symbolic-equation-card">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Transformation evidence</p><h2>Expressions, derivative and Jacobian</h2></div></div>
+<div id="symbolicEquations"><div class="diagnostics empty">Compute to see simplified expressions, derivatives and the Jacobian.</div></div>
+</section>
+</section>
+<aside aria-label="Symbolic diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card"><p class="v72-eyebrow">Run status</p><div class="status-strip"><div class="status-ok"><span>●</span><b id="symbolicTopStatus">Ready</b></div><div><span>Runtime</span><b id="symbolicRuntime">—</b></div><div><span>System shape</span><b id="symbolicDimension">—</b></div><div><span>Requested operation</span><b id="symbolicOperationMetric">—</b></div><div><span>Roots / equilibria</span><b id="symbolicRootMetric">—</b></div></div><div class="metrics-grid"><article class="metric-card"><small>Expressions</small><b id="symbolicExpressionCount">—</b><em>parsed lines</em></article><article class="metric-card"><small>Symbols</small><b id="symbolicSymbolCount">—</b><em>free names</em></article><article class="metric-card"><small>Jacobian</small><b id="symbolicJacobianShape">—</b><em>rows × columns</em></article><article class="metric-card"><small>Scope values</small><b id="symbolicScopeMetric">—</b><em>numeric assignments</em></article></div></section>
+<section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Mathematical evidence</p><h2>Result and limitations</h2></div></div><div class="diagnostics empty" id="symbolicDiagnostics">Compute to see transformations, numeric checks and limitations.</div></section>
+<section class="v72-inspector-card" id="provenanceCard"><div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div><div><dt>Engine</dt><dd id="provenanceEngine">FokoSymbolicReference</dd></div><div><dt>Method</dt><dd id="provenanceMethod">Not run</dd></div><div><dt>Data</dt><dd id="provenanceData">Not parsed</dd></div><div><dt>Assumptions</dt><dd id="provenanceAssumptions">Not assessed</dd></div><div><dt>Reproducibility</dt><dd id="provenanceReproducibility">Configuration only</dd></div></dl><p class="v72-warning" id="provenanceWarning">This browser page is not a general computer algebra system.</p></section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility and extension</p><h2>Export</h2></div></div><div class="export-row"><button class="secondary" id="saveSymbolicSession" type="button">Save session</button><button class="secondary" id="restoreSymbolicSession" type="button">Restore session</button><button class="secondary" id="copySymbolicShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportSymbolicCsv" type="button">Jacobian CSV</button><button class="secondary" id="exportSymbolicJson" type="button">Result JSON</button><button class="secondary" id="exportSymbolicPython" type="button">SymPy validation script</button></div><p class="note">Session and share controls preserve configuration only. The SymPy script is the explicit route for exact solving, integration and broader CAS operations.</p></section>
+</aside>
+</main>
+</div>
+<script defer="" src="src/core/steady.js?v=79.2.0"></script>
+<script defer="" src="src/core/symbolic-reference.js?v=79.2.0"></script>
+<script defer="" src="src/models/symbolic-presets.js?v=79.2.0"></script>
+<script defer="" src="src/v72/symbolic-workspace.js?v=79.2.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=79.2.0"></script>
+<script defer="" src="src/models/search-index.js?v=79.2.0"></script><script defer="" src="src/v76/app-shell.js?v=79.2.0&amp;core-access=1"></script>
+<script src="src/upgrade/publication.js"></script><script src="src/upgrade/common.js"></script>
+</body>
+</html>

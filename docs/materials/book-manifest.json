@@ -1,0 +1,3104 @@
+{
+  "schema": "foko.book/1",
+  "edition": "V6.17 · Public companion",
+  "title": "Scientific Modelling, AI & Research Software Engineering",
+  "author": "Chilperic Armel Foko Kuate",
+  "sha256": "82e8e71a1cdf1ce6fb66f62399bcb50130e1250edeb9261549b71679c1b844b7",
+  "bytes": 9954017,
+  "physicalPageCount": 439,
+  "pdf": "materials/Scientific_Mastery_V6_17_Public_Companion.pdf",
+  "cover": "materials/scientific-mastery-cover.webp",
+  "index": "materials/book-search.json",
+  "parts": [
+    {
+      "number": "I",
+      "title": "Scientific Representation and Numerical Trust",
+      "chapters": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "number": "II",
+      "title": "Scientific Python Fluency",
+      "chapters": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "number": "III",
+      "title": "Inference, Uncertainty, and Stochastic Evidence",
+      "chapters": [
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "number": "IV",
+      "title": "Multiscale Systems, Optimization, and Decisions",
+      "chapters": [
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "number": "V",
+      "title": "Machine Learning and Scientific Machine Learning",
+      "chapters": [
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "number": "VI",
+      "title": "AI for Science and Research Software",
+      "chapters": [
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "number": "VII",
+      "title": "Integration, Portfolio, and Technical Defense",
+      "chapters": [
+        26,
+        27
+      ]
+    }
+  ],
+  "editionNotice": "Public derivative of the V6.17 Design Revision. Private author-planning physical pages 6–9 are withheld; all scientific source-page destinations retain their original physical numbering.",
+  "materialNotice": "The full author PDF is available only in private-reference in the complete author package. Book references to notebooks do not imply that those notebook files are distributed in this website.",
+  "sourceVersion": "6.17-design",
+  "printedPageOffset": 26,
+  "pageLabels": [
+    "i",
+    "ii",
+    "iii",
+    "iv",
+    "v",
+    "vi",
+    "vii",
+    "viii",
+    "ix",
+    "x",
+    "xi",
+    "xii",
+    "xiii",
+    "xiv",
+    "xv",
+    "xvi",
+    "xvii",
+    "xviii",
+    "xix",
+    "xx",
+    "xxi",
+    "xxii",
+    "xxiii",
+    "xxiv",
+    "xxv",
+    "xxvi",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "41",
+    "42",
+    "43",
+    "44",
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+    "51",
+    "52",
+    "53",
+    "54",
+    "55",
+    "56",
+    "57",
+    "58",
+    "59",
+    "60",
+    "61",
+    "62",
+    "63",
+    "64",
+    "65",
+    "66",
+    "67",
+    "68",
+    "69",
+    "70",
+    "71",
+    "72",
+    "73",
+    "74",
+    "75",
+    "76",
+    "77",
+    "78",
+    "79",
+    "80",
+    "81",
+    "82",
+    "83",
+    "84",
+    "85",
+    "86",
+    "87",
+    "88",
+    "89",
+    "90",
+    "91",
+    "92",
+    "93",
+    "94",
+    "95",
+    "96",
+    "97",
+    "98",
+    "99",
+    "100",
+    "101",
+    "102",
+    "103",
+    "104",
+    "105",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "111",
+    "112",
+    "113",
+    "114",
+    "115",
+    "116",
+    "117",
+    "118",
+    "119",
+    "120",
+    "121",
+    "122",
+    "123",
+    "124",
+    "125",
+    "126",
+    "127",
+    "128",
+    "129",
+    "130",
+    "131",
+    "132",
+    "133",
+    "134",
+    "135",
+    "136",
+    "137",
+    "138",
+    "139",
+    "140",
+    "141",
+    "142",
+    "143",
+    "144",
+    "145",
+    "146",
+    "147",
+    "148",
+    "149",
+    "150",
+    "151",
+    "152",
+    "153",
+    "154",
+    "155",
+    "156",
+    "157",
+    "158",
+    "159",
+    "160",
+    "161",
+    "162",
+    "163",
+    "164",
+    "165",
+    "166",
+    "167",
+    "168",
+    "169",
+    "170",
+    "171",
+    "172",
+    "173",
+    "174",
+    "175",
+    "176",
+    "177",
+    "178",
+    "179",
+    "180",
+    "181",
+    "182",
+    "183",
+    "184",
+    "185",
+    "186",
+    "187",
+    "188",
+    "189",
+    "190",
+    "191",
+    "192",
+    "193",
+    "194",
+    "195",
+    "196",
+    "197",
+    "198",
+    "199",
+    "200",
+    "201",
+    "202",
+    "203",
+    "204",
+    "205",
+    "206",
+    "207",
+    "208",
+    "209",
+    "210",
+    "211",
+    "212",
+    "213",
+    "214",
+    "215",
+    "216",
+    "217",
+    "218",
+    "219",
+    "220",
+    "221",
+    "222",
+    "223",
+    "224",
+    "225",
+    "226",
+    "227",
+    "228",
+    "229",
+    "230",
+    "231",
+    "232",
+    "233",
+    "234",
+    "235",
+    "236",
+    "237",
+    "238",
+    "239",
+    "240",
+    "241",
+    "242",
+    "243",
+    "244",
+    "245",
+    "246",
+    "247",
+    "248",
+    "249",
+    "250",
+    "251",
+    "252",
+    "253",
+    "254",
+    "255",
+    "256",
+    "257",
+    "258",
+    "259",
+    "260",
+    "261",
+    "262",
+    "263",
+    "264",
+    "265",
+    "266",
+    "267",
+    "268",
+    "269",
+    "270",
+    "271",
+    "272",
+    "273",
+    "274",
+    "275",
+    "276",
+    "277",
+    "278",
+    "279",
+    "280",
+    "281",
+    "282",
+    "283",
+    "284",
+    "285",
+    "286",
+    "287",
+    "288",
+    "289",
+    "290",
+    "291",
+    "292",
+    "293",
+    "294",
+    "295",
+    "296",
+    "297",
+    "298",
+    "299",
+    "300",
+    "301",
+    "302",
+    "303",
+    "304",
+    "305",
+    "306",
+    "307",
+    "308",
+    "309",
+    "310",
+    "311",
+    "312",
+    "313",
+    "314",
+    "315",
+    "316",
+    "317",
+    "318",
+    "319",
+    "320",
+    "321",
+    "322",
+    "323",
+    "324",
+    "325",
+    "326",
+    "327",
+    "328",
+    "329",
+    "330",
+    "331",
+    "332",
+    "333",
+    "334",
+    "335",
+    "336",
+    "337",
+    "338",
+    "339",
+    "340",
+    "341",
+    "342",
+    "343",
+    "344",
+    "345",
+    "346",
+    "347",
+    "348",
+    "349",
+    "350",
+    "351",
+    "352",
+    "353",
+    "354",
+    "355",
+    "356",
+    "357",
+    "358",
+    "359",
+    "360",
+    "361",
+    "362",
+    "363",
+    "364",
+    "365",
+    "366",
+    "367",
+    "368",
+    "369",
+    "370",
+    "371",
+    "372",
+    "373",
+    "374",
+    "375",
+    "376",
+    "377",
+    "378",
+    "379",
+    "380",
+    "381",
+    "382",
+    "383",
+    "384",
+    "385",
+    "386",
+    "387",
+    "388",
+    "389",
+    "390",
+    "391",
+    "392",
+    "393",
+    "394",
+    "395",
+    "396",
+    "397",
+    "398",
+    "399",
+    "400",
+    "401",
+    "402",
+    "403",
+    "404",
+    "405",
+    "406",
+    "407",
+    "408",
+    "409",
+    "410",
+    "411",
+    "412",
+    "413"
+  ],
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Scientific Models as Executable Arguments",
+      "printedPage": 2,
+      "pdfPage": 28,
+      "endPdfPage": 39,
+      "sections": [
+        {
+          "title": "From a physical question to an equation you can check",
+          "pdfPage": 28,
+          "printedPage": 2,
+          "number": "1.1"
+        },
+        {
+          "title": "A model is an executable scientific argument",
+          "pdfPage": 31,
+          "printedPage": 5,
+          "number": "1.2"
+        },
+        {
+          "title": "A model is a controlled abstraction",
+          "pdfPage": 31,
+          "printedPage": 5,
+          "number": "1.3"
+        },
+        {
+          "title": "Conservation laws before equations",
+          "pdfPage": 32,
+          "printedPage": 6,
+          "number": "1.4"
+        },
+        {
+          "title": "The five contracts",
+          "pdfPage": 35,
+          "printedPage": 9,
+          "number": "1.5"
+        },
+        {
+          "title": "Observation models change what can be inferred",
+          "pdfPage": 36,
+          "printedPage": 10,
+          "number": "1.6"
+        },
+        {
+          "title": "Worked thread: Reconstructing a tumor–immune–chemotherapy model from biological statements",
+          "pdfPage": 37,
+          "printedPage": 11,
+          "number": "1.7"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 37,
+          "printedPage": 11,
+          "number": "1.8"
+        },
+        {
+          "title": "Reconstruct a published model before extending it",
+          "pdfPage": 38,
+          "printedPage": 12,
+          "number": "1.9"
+        },
+        {
+          "title": "Source criticism precedes reproduction",
+          "pdfPage": 39,
+          "printedPage": 13,
+          "number": "1.10"
+        }
+      ],
+      "related": [
+        {
+          "label": "Fluorescence measurement case",
+          "href": "workspace.html?case=fluorescence",
+          "relation": "Bounded synthetic companion; not experimental validation"
+        },
+        {
+          "label": "From the instrument to a defensible fit",
+          "href": "learn.html?lesson=measurement",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        },
+        {
+          "label": "From a biological question to an observable",
+          "href": "learn.html?lesson=question",
+          "relation": "Related FokoLab lesson; not a full chapter reproduction"
+        },
+        {
+          "label": "Flux balances, dimensions and invariants",
+          "href": "learn.html?lesson=balance",
+          "relation": "Related FokoLab lesson; not a full chapter reproduction"
+        }
+      ],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "1A",
+          "title": "equilibrium and transient",
+          "pdfPage": 401,
+          "printedPage": 375,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "1B",
+          "title": "dilution without removal",
+          "pdfPage": 401,
+          "printedPage": 375,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch01.py",
+      "sourceArchiveIncluded": false,
+      "part": "I"
+    },
+    {
+      "id": 2,
+      "title": "Linear Algebra, Information Geometry, and Inverse Problems",
+      "printedPage": 14,
+      "pdfPage": 40,
+      "endPdfPage": 55,
+      "sections": [
+        {
+          "title": "Learn the inverse problem through two measurements",
+          "pdfPage": 40,
+          "printedPage": 14,
+          "number": "2.1"
+        },
+        {
+          "title": "Information geometry rather than matrix manipulation",
+          "pdfPage": 43,
+          "printedPage": 17,
+          "number": "2.2"
+        },
+        {
+          "title": "Matrices as maps",
+          "pdfPage": 44,
+          "printedPage": 18,
+          "number": "2.3"
+        },
+        {
+          "title": "Rank, null spaces and identifiability",
+          "pdfPage": 46,
+          "printedPage": 20,
+          "number": "2.4"
+        },
+        {
+          "title": "Worked thread: Reading identifiability from the sensitivity matrix of a mechanistic model",
+          "pdfPage": 47,
+          "printedPage": 21,
+          "number": "2.5"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 47,
+          "printedPage": 21,
+          "number": "2.6"
+        },
+        {
+          "title": "SVD: the central diagnostic decomposition",
+          "pdfPage": 48,
+          "printedPage": 22,
+          "number": "2.7"
+        },
+        {
+          "title": "Well-posedness",
+          "pdfPage": 51,
+          "printedPage": 25,
+          "number": "2.8"
+        },
+        {
+          "title": "Tikhonov regularization",
+          "pdfPage": 52,
+          "printedPage": 26,
+          "number": "2.9"
+        },
+        {
+          "title": "General L: encode structure",
+          "pdfPage": 52,
+          "printedPage": 26,
+          "number": "2.10"
+        },
+        {
+          "title": "Choosing regularization strength",
+          "pdfPage": 54,
+          "printedPage": 28,
+          "number": "2.11"
+        },
+        {
+          "title": "A weak subspace is not always one weak vector",
+          "pdfPage": 54,
+          "printedPage": 28,
+          "number": "2.12"
+        }
+      ],
+      "related": [
+        {
+          "label": "Parameter fitting is not parameter identification",
+          "href": "learn.html?lesson=inverse",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "2A",
+          "title": "a weak measurement and a penalty",
+          "pdfPage": 401,
+          "printedPage": 375,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "2B",
+          "title": "a new row is not always new information",
+          "pdfPage": 401,
+          "printedPage": 375,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch02.py",
+      "sourceArchiveIncluded": false,
+      "part": "I"
+    },
+    {
+      "id": 3,
+      "title": "Krylov Solvers, Sparse Systems, and Numerical Evidence",
+      "printedPage": 30,
+      "pdfPage": 56,
+      "endPdfPage": 66,
+      "sections": [
+        {
+          "title": "Solve a small linear system before trusting a large one",
+          "pdfPage": 56,
+          "printedPage": 30,
+          "number": "3.1"
+        },
+        {
+          "title": "External studio: leave manufactured matrices behind",
+          "pdfPage": 58,
+          "printedPage": 32,
+          "number": "3.2"
+        },
+        {
+          "title": "Start with the residual",
+          "pdfPage": 59,
+          "printedPage": 33,
+          "number": "3.3"
+        },
+        {
+          "title": "Conjugate gradient: geometry for SPD systems",
+          "pdfPage": 60,
+          "printedPage": 34,
+          "number": "3.4"
+        },
+        {
+          "title": "Arnoldi iteration: an orthonormal basis for a Krylov space",
+          "pdfPage": 62,
+          "printedPage": 36,
+          "number": "3.5"
+        },
+        {
+          "title": "GMRES: minimize the residual in the Krylov space",
+          "pdfPage": 63,
+          "printedPage": 37,
+          "number": "3.6"
+        },
+        {
+          "title": "Preconditioning: solve an equivalent but easier problem",
+          "pdfPage": 63,
+          "printedPage": 37,
+          "number": "3.7"
+        },
+        {
+          "title": "Worked thread: A diffusion-reaction PDE that becomes a sparse linear solve",
+          "pdfPage": 64,
+          "printedPage": 38,
+          "number": "3.8"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 64,
+          "printedPage": 38,
+          "number": "3.9"
+        },
+        {
+          "title": "Worked scientific example: 2-D Poisson equation",
+          "pdfPage": 65,
+          "printedPage": 39,
+          "number": "3.10"
+        },
+        {
+          "title": "Matrix-free Newton–Krylov",
+          "pdfPage": 66,
+          "printedPage": 40,
+          "number": "3.11"
+        },
+        {
+          "title": "An easy eigenmode is a verification case, not a convergence study",
+          "pdfPage": 66,
+          "printedPage": 40,
+          "number": "3.12"
+        }
+      ],
+      "related": [],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "3A",
+          "title": "one CG step need not finish",
+          "pdfPage": 402,
+          "printedPage": 376,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "3B",
+          "title": "observed convergence order",
+          "pdfPage": 402,
+          "printedPage": 376,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch03.py",
+      "sourceArchiveIncluded": false,
+      "part": "I"
+    },
+    {
+      "id": 4,
+      "title": "Differentiation, Automatic Differentiation, and Sensitivity",
+      "printedPage": 41,
+      "pdfPage": 67,
+      "endPdfPage": 79,
+      "sections": [
+        {
+          "title": "Follow every path by which an input affects an output",
+          "pdfPage": 67,
+          "printedPage": 41,
+          "number": "4.1"
+        },
+        {
+          "title": "Differentiate computations, then verify the derivative",
+          "pdfPage": 69,
+          "printedPage": 43,
+          "number": "4.2"
+        },
+        {
+          "title": "Finite differences and why step size matters",
+          "pdfPage": 71,
+          "printedPage": 45,
+          "number": "4.3"
+        },
+        {
+          "title": "Worked thread: Forward sensitivities of the chemotherapy model",
+          "pdfPage": 75,
+          "printedPage": 49,
+          "number": "4.4"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 75,
+          "printedPage": 49,
+          "number": "4.5"
+        },
+        {
+          "title": "Forward sensitivities for ODEs",
+          "pdfPage": 76,
+          "printedPage": 50,
+          "number": "4.6"
+        },
+        {
+          "title": "Adjoint idea",
+          "pdfPage": 77,
+          "printedPage": 51,
+          "number": "4.7"
+        },
+        {
+          "title": "Implicit differentiation",
+          "pdfPage": 77,
+          "printedPage": 51,
+          "number": "4.8"
+        },
+        {
+          "title": "Derivative objects have a computational cost model",
+          "pdfPage": 77,
+          "printedPage": 51,
+          "number": "4.9"
+        },
+        {
+          "title": "A complete sensitivity system for tumour killing",
+          "pdfPage": 79,
+          "printedPage": 53,
+          "number": "4.10"
+        }
+      ],
+      "related": [
+        {
+          "label": "When should you trust a numerical trajectory?",
+          "href": "learn.html?lesson=solver",
+          "relation": "Related FokoLab lesson; not a full chapter reproduction"
+        }
+      ],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "4A",
+          "title": "both substrate paths",
+          "pdfPage": 402,
+          "printedPage": 376,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "4B",
+          "title": "a shared intermediate",
+          "pdfPage": 402,
+          "printedPage": 376,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch04.py",
+      "sourceArchiveIncluded": false,
+      "part": "I"
+    },
+    {
+      "id": 5,
+      "title": "Dynamical Systems, ODE/DAE/PDE Solvers, and Verification",
+      "printedPage": 54,
+      "pdfPage": 80,
+      "endPdfPage": 97,
+      "sections": [
+        {
+          "title": "Distinguish a differential equation from its numerical approximation",
+          "pdfPage": 80,
+          "printedPage": 54,
+          "number": "5.1"
+        },
+        {
+          "title": "Verification is a scientific activity, not a software afterthought",
+          "pdfPage": 82,
+          "printedPage": 56,
+          "number": "5.2"
+        },
+        {
+          "title": "Consistency, stability and convergence",
+          "pdfPage": 83,
+          "printedPage": 57,
+          "number": "5.3"
+        },
+        {
+          "title": "DAEs and consistency",
+          "pdfPage": 84,
+          "printedPage": 58,
+          "number": "5.4"
+        },
+        {
+          "title": "Method of manufactured solutions",
+          "pdfPage": 85,
+          "printedPage": 59,
+          "number": "5.5"
+        },
+        {
+          "title": "Solver tolerances and scientific accuracy",
+          "pdfPage": 85,
+          "printedPage": 59,
+          "number": "5.6"
+        },
+        {
+          "title": "Worked thread: Reproducing stable tumor-free and tumor-present regimes",
+          "pdfPage": 86,
+          "printedPage": 60,
+          "number": "5.7"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 86,
+          "printedPage": 60,
+          "number": "5.8"
+        },
+        {
+          "title": "ODEs represent state evolution",
+          "pdfPage": 87,
+          "printedPage": 61,
+          "number": "5.9"
+        },
+        {
+          "title": "Stiffness",
+          "pdfPage": 89,
+          "printedPage": 63,
+          "number": "5.10"
+        },
+        {
+          "title": "From compartment balances to fields",
+          "pdfPage": 93,
+          "printedPage": 67,
+          "number": "5.11"
+        },
+        {
+          "title": "Output-time contracts and endpoint preservation",
+          "pdfPage": 96,
+          "printedPage": 70,
+          "number": "5.12"
+        }
+      ],
+      "related": [
+        {
+          "label": "When should you trust a numerical trajectory?",
+          "href": "learn.html?lesson=solver",
+          "relation": "Related FokoLab lesson; not a full chapter reproduction"
+        }
+      ],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "5A",
+          "title": "stability and positivity",
+          "pdfPage": 402,
+          "printedPage": 376,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "5B",
+          "title": "the final partial interval",
+          "pdfPage": 402,
+          "printedPage": 376,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch05.py",
+      "sourceArchiveIncluded": false,
+      "part": "I"
+    },
+    {
+      "id": 6,
+      "title": "Scientific Python I: Contracts, State, and Diagnostic Testing",
+      "printedPage": 73,
+      "pdfPage": 99,
+      "endPdfPage": 104,
+      "sections": [
+        {
+          "title": "Make a scientific expectation executable",
+          "pdfPage": 99,
+          "printedPage": 73,
+          "number": "6.1"
+        },
+        {
+          "title": "make scientific contracts explicit with dataclasses",
+          "pdfPage": 101,
+          "printedPage": 75,
+          "number": "6.2"
+        },
+        {
+          "title": "pytest as an experimental language",
+          "pdfPage": 102,
+          "printedPage": 76,
+          "number": "6.3"
+        },
+        {
+          "title": "Practice pathway",
+          "pdfPage": 104,
+          "printedPage": 78,
+          "number": "6.4"
+        }
+      ],
+      "related": [],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "6A",
+          "title": "a weak test suite",
+          "pdfPage": 402,
+          "printedPage": 376,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "6B",
+          "title": "two endpoint structures",
+          "pdfPage": 403,
+          "printedPage": 377,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch06.py",
+      "sourceArchiveIncluded": false,
+      "part": "II"
+    },
+    {
+      "id": 7,
+      "title": "Scientific Python II: Interfaces, Types, and Trust Boundaries",
+      "printedPage": 79,
+      "pdfPage": 105,
+      "endPdfPage": 110,
+      "sections": [
+        {
+          "title": "Explain what a component needs, then validate what it receives",
+          "pdfPage": 105,
+          "printedPage": 79,
+          "number": "7.1"
+        },
+        {
+          "title": "express swappable scientific interfaces with Protocol",
+          "pdfPage": 107,
+          "printedPage": 81,
+          "number": "7.2"
+        },
+        {
+          "title": "validate trust boundaries with Pydantic",
+          "pdfPage": 108,
+          "printedPage": 82,
+          "number": "7.3"
+        },
+        {
+          "title": "Practice pathway",
+          "pdfPage": 109,
+          "printedPage": 83,
+          "number": "7.4"
+        },
+        {
+          "title": "Covariance validation closes a scientific trust boundary",
+          "pdfPage": 110,
+          "printedPage": 84,
+          "number": "7.5"
+        }
+      ],
+      "related": [],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "7A",
+          "title": "singular covariance",
+          "pdfPage": 403,
+          "printedPage": 377,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "7B",
+          "title": "a valid float can be an invalid request",
+          "pdfPage": 403,
+          "printedPage": 377,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch07.py",
+      "sourceArchiveIncluded": false,
+      "part": "II"
+    },
+    {
+      "id": 8,
+      "title": "Scientific Python III: Array Thinking, Vectorization, and Numerical Types",
+      "printedPage": 85,
+      "pdfPage": 111,
+      "endPdfPage": 116,
+      "sections": [
+        {
+          "title": "Treat array axes as part of the model",
+          "pdfPage": 111,
+          "printedPage": 85,
+          "number": "8.1"
+        },
+        {
+          "title": "shape algebra, broadcasting, and vectorization",
+          "pdfPage": 113,
+          "printedPage": 87,
+          "number": "8.2"
+        },
+        {
+          "title": "type numerical code without lying to the checker",
+          "pdfPage": 114,
+          "printedPage": 88,
+          "number": "8.3"
+        },
+        {
+          "title": "Practice pathway",
+          "pdfPage": 115,
+          "printedPage": 89,
+          "number": "8.4"
+        }
+      ],
+      "related": [],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "8A",
+          "title": "reductions remove an axis",
+          "pdfPage": 403,
+          "printedPage": 377,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "8B",
+          "title": "matched noise weights",
+          "pdfPage": 403,
+          "printedPage": 377,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch08.py",
+      "sourceArchiveIncluded": false,
+      "part": "II"
+    },
+    {
+      "id": 9,
+      "title": "Scientific Python IV: Reproducible Experiments, Failures, and Randomness",
+      "printedPage": 91,
+      "pdfPage": 117,
+      "endPdfPage": 123,
+      "sections": [
+        {
+          "title": "Make a stochastic experiment repeatable without repeating its samples",
+          "pdfPage": 117,
+          "printedPage": 91,
+          "number": "9.1"
+        },
+        {
+          "title": "generators and context managers for reproducible experiments",
+          "pdfPage": 119,
+          "printedPage": 93,
+          "number": "9.2"
+        },
+        {
+          "title": "exception chaining, logging, packaging, and command-line boundaries",
+          "pdfPage": 120,
+          "printedPage": 94,
+          "number": "9.3"
+        },
+        {
+          "title": "reproducible randomness is an API design problem",
+          "pdfPage": 121,
+          "printedPage": 95,
+          "number": "9.4"
+        },
+        {
+          "title": "Practice pathway",
+          "pdfPage": 122,
+          "printedPage": 96,
+          "number": "9.5"
+        }
+      ],
+      "related": [],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "9A",
+          "title": "sample size for a mean",
+          "pdfPage": 403,
+          "printedPage": 377,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "9B",
+          "title": "repeated copies are not extra replication",
+          "pdfPage": 403,
+          "printedPage": 377,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch09.py",
+      "sourceArchiveIncluded": false,
+      "part": "II"
+    },
+    {
+      "id": 10,
+      "title": "Scientific Python V: Callables, Packaging, and the Project Bridge",
+      "printedPage": 98,
+      "pdfPage": 124,
+      "endPdfPage": 129,
+      "sections": [
+        {
+          "title": "Turn one verified calculation into a small usable package",
+          "pdfPage": 124,
+          "printedPage": 98,
+          "number": "10.1"
+        },
+        {
+          "title": "higher-order functions, partial application, and callbacks",
+          "pdfPage": 126,
+          "printedPage": 100,
+          "number": "10.2"
+        },
+        {
+          "title": "Practice pathway",
+          "pdfPage": 128,
+          "printedPage": 102,
+          "number": "10.3"
+        }
+      ],
+      "related": [],
+      "gate": "verify",
+      "practices": [
+        {
+          "id": "10A",
+          "title": "a reproducible CLI result",
+          "pdfPage": 404,
+          "printedPage": 378,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "10B",
+          "title": "import success is environment-dependent",
+          "pdfPage": 404,
+          "printedPage": 378,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch10.py",
+      "sourceArchiveIncluded": false,
+      "part": "II"
+    },
+    {
+      "id": 11,
+      "title": "Parameter Estimation, Identifiability, and PEtab Workflows",
+      "printedPage": 105,
+      "pdfPage": 131,
+      "endPdfPage": 142,
+      "sections": [
+        {
+          "title": "Fit a model, then ask what the data actually identify",
+          "pdfPage": 131,
+          "printedPage": 105,
+          "number": "11.1"
+        },
+        {
+          "title": "External studio: parameter estimation as a complete data contract",
+          "pdfPage": 134,
+          "printedPage": 108,
+          "number": "11.2"
+        },
+        {
+          "title": "Forward and inverse problems",
+          "pdfPage": 134,
+          "printedPage": 108,
+          "number": "11.3"
+        },
+        {
+          "title": "Structural identifiability",
+          "pdfPage": 135,
+          "printedPage": 109,
+          "number": "11.4"
+        },
+        {
+          "title": "Sensitivity matrix and Fisher information",
+          "pdfPage": 135,
+          "printedPage": 109,
+          "number": "11.5"
+        },
+        {
+          "title": "Worked thread: From synthetic tumor data to a traceable PEtab-style estimation problem",
+          "pdfPage": 138,
+          "printedPage": 112,
+          "number": "11.6"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 139,
+          "printedPage": 113,
+          "number": "11.7"
+        },
+        {
+          "title": "Profile likelihood",
+          "pdfPage": 140,
+          "printedPage": 114,
+          "number": "11.8"
+        },
+        {
+          "title": "Validation is not residual minimization",
+          "pdfPage": 141,
+          "printedPage": 115,
+          "number": "11.9"
+        },
+        {
+          "title": "A complete estimation workflow: fit is only one line in the evidence chain",
+          "pdfPage": 141,
+          "printedPage": 115,
+          "number": "11.10"
+        }
+      ],
+      "related": [
+        {
+          "label": "Fluorescence measurement case",
+          "href": "workspace.html?case=fluorescence",
+          "relation": "Bounded synthetic companion; not experimental validation"
+        },
+        {
+          "label": "From the instrument to a defensible fit",
+          "href": "learn.html?lesson=measurement",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        },
+        {
+          "label": "Parameter fitting is not parameter identification",
+          "href": "learn.html?lesson=inverse",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "11A",
+          "title": "ideal exponential recovery",
+          "pdfPage": 404,
+          "printedPage": 378,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "11B",
+          "title": "repeats at zero do not observe the rate",
+          "pdfPage": 404,
+          "printedPage": 378,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch11.py",
+      "sourceArchiveIncluded": false,
+      "part": "III"
+    },
+    {
+      "id": 12,
+      "title": "Global Sensitivity, Uncertainty Quantification, and Experimental Design",
+      "printedPage": 117,
+      "pdfPage": 143,
+      "endPdfPage": 153,
+      "sections": [
+        {
+          "title": "Explain sensitivity with a model whose variance can be calculated",
+          "pdfPage": 143,
+          "printedPage": 117,
+          "number": "12.1"
+        },
+        {
+          "title": "External studio: verify Sobol machinery before trusting it",
+          "pdfPage": 145,
+          "printedPage": 119,
+          "number": "12.2"
+        },
+        {
+          "title": "Experimental design from information geometry",
+          "pdfPage": 147,
+          "printedPage": 121,
+          "number": "12.3"
+        },
+        {
+          "title": "Global sensitivity is conditional on a probability model",
+          "pdfPage": 150,
+          "printedPage": 124,
+          "number": "12.4"
+        },
+        {
+          "title": "Worked thread: From Ishigami verification to global sensitivity of treatment outcome",
+          "pdfPage": 151,
+          "printedPage": 125,
+          "number": "12.5"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 152,
+          "printedPage": 126,
+          "number": "12.6"
+        },
+        {
+          "title": "Experimental design turns sensitivity into action",
+          "pdfPage": 153,
+          "printedPage": 127,
+          "number": "12.7"
+        }
+      ],
+      "related": [
+        {
+          "label": "Sensitivity: specify the question before ranking parameters",
+          "href": "learn.html?lesson=sensitivity",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        },
+        {
+          "label": "What an uncertainty band actually means",
+          "href": "learn.html?lesson=uncertainty",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "12A",
+          "title": "no interaction",
+          "pdfPage": 404,
+          "printedPage": 378,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "12B",
+          "title": "timing and heteroscedastic noise",
+          "pdfPage": 404,
+          "printedPage": 378,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch12.py",
+      "sourceArchiveIncluded": false,
+      "part": "III"
+    },
+    {
+      "id": 13,
+      "title": "Bayesian Workflow, State Estimation, and Simulation-Based Inference",
+      "printedPage": 128,
+      "pdfPage": 154,
+      "endPdfPage": 167,
+      "sections": [
+        {
+          "title": "Build Bayesian inference from an update you can calculate",
+          "pdfPage": 154,
+          "printedPage": 128,
+          "number": "13.1"
+        },
+        {
+          "title": "Bayesian workflow: fitting is the middle, not the end",
+          "pdfPage": 158,
+          "printedPage": 132,
+          "number": "13.2"
+        },
+        {
+          "title": "MCMC geometry",
+          "pdfPage": 159,
+          "printedPage": 133,
+          "number": "13.3"
+        },
+        {
+          "title": "Hierarchical models",
+          "pdfPage": 160,
+          "printedPage": 134,
+          "number": "13.4"
+        },
+        {
+          "title": "Simulation-based inference",
+          "pdfPage": 161,
+          "printedPage": 135,
+          "number": "13.5"
+        },
+        {
+          "title": "Worked thread: A Bayesian workflow for tumor-growth parameters with posterior predictive criticism",
+          "pdfPage": 165,
+          "printedPage": 139,
+          "number": "13.6"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 165,
+          "printedPage": 139,
+          "number": "13.7"
+        },
+        {
+          "title": "Posterior predictive checking",
+          "pdfPage": 166,
+          "printedPage": 140,
+          "number": "13.8"
+        },
+        {
+          "title": "State estimation: hidden dynamics plus noisy measurements",
+          "pdfPage": 166,
+          "printedPage": 140,
+          "number": "13.9"
+        },
+        {
+          "title": "When the likelihood is unavailable: SBI",
+          "pdfPage": 167,
+          "printedPage": 141,
+          "number": "13.10"
+        }
+      ],
+      "related": [],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "13A",
+          "title": "a beta update",
+          "pdfPage": 404,
+          "printedPage": 378,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "13B",
+          "title": "trust the noisier observation less",
+          "pdfPage": 405,
+          "printedPage": 379,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch13.py",
+      "sourceArchiveIncluded": false,
+      "part": "III"
+    },
+    {
+      "id": 14,
+      "title": "Stochastic Processes from CTMCs to SDEs",
+      "printedPage": 142,
+      "pdfPage": 168,
+      "endPdfPage": 184,
+      "sections": [
+        {
+          "title": "Derive a stochastic event from its rate",
+          "pdfPage": 168,
+          "printedPage": 142,
+          "number": "14.1"
+        },
+        {
+          "title": "Continuous-time Markov chains",
+          "pdfPage": 172,
+          "printedPage": 146,
+          "number": "14.2"
+        },
+        {
+          "title": "Worked thread: Gene-expression noise: exact jump process, tau-leap, and diffusion approximation",
+          "pdfPage": 173,
+          "printedPage": 147,
+          "number": "14.3"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 174,
+          "printedPage": 148,
+          "number": "14.4"
+        },
+        {
+          "title": "Deriving the direct SSA",
+          "pdfPage": 175,
+          "printedPage": 149,
+          "number": "14.5"
+        },
+        {
+          "title": "Fokker–Planck equation",
+          "pdfPage": 178,
+          "printedPage": 152,
+          "number": "14.6"
+        },
+        {
+          "title": "Tau-leaping",
+          "pdfPage": 182,
+          "printedPage": 156,
+          "number": "14.7"
+        },
+        {
+          "title": "First-passage time distributions",
+          "pdfPage": 183,
+          "printedPage": 157,
+          "number": "14.8"
+        },
+        {
+          "title": "Absorbing states and the final partial step",
+          "pdfPage": 184,
+          "printedPage": 158,
+          "number": "14.9"
+        }
+      ],
+      "related": [],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "14A",
+          "title": "extinction with three individuals",
+          "pdfPage": 405,
+          "printedPage": 379,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "14B",
+          "title": "stationarity is distributional",
+          "pdfPage": 405,
+          "printedPage": 379,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch14.py",
+      "sourceArchiveIncluded": false,
+      "part": "III"
+    },
+    {
+      "id": 15,
+      "title": "Agent-Based Models, Temporal Networks, and Calibration",
+      "printedPage": 159,
+      "pdfPage": 185,
+      "endPdfPage": 203,
+      "sections": [
+        {
+          "title": "Make the local rule and the update clock explicit",
+          "pdfPage": 185,
+          "printedPage": 159,
+          "number": "15.1"
+        },
+        {
+          "title": "External studio: empirical contacts force modelling choices",
+          "pdfPage": 187,
+          "printedPage": 161,
+          "number": "15.2"
+        },
+        {
+          "title": "Worked thread: Why update scheduling and temporal contact structure are scientific assumptions",
+          "pdfPage": 189,
+          "printedPage": 163,
+          "number": "15.3"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 189,
+          "printedPage": 163,
+          "number": "15.4"
+        },
+        {
+          "title": "Scheduling is part of the model",
+          "pdfPage": 190,
+          "printedPage": 164,
+          "number": "15.5"
+        },
+        {
+          "title": "Networks",
+          "pdfPage": 193,
+          "printedPage": 167,
+          "number": "15.6"
+        },
+        {
+          "title": "Verification and validation are different",
+          "pdfPage": 195,
+          "printedPage": 169,
+          "number": "15.7"
+        },
+        {
+          "title": "Summary-statistic calibration",
+          "pdfPage": 197,
+          "printedPage": 171,
+          "number": "15.8"
+        },
+        {
+          "title": "Micro-to-macro consistency",
+          "pdfPage": 199,
+          "printedPage": 173,
+          "number": "15.9"
+        },
+        {
+          "title": "The ABM specification contract",
+          "pdfPage": 201,
+          "printedPage": 175,
+          "number": "15.10"
+        }
+      ],
+      "related": [],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "15A",
+          "title": "a case that does not distinguish implementations",
+          "pdfPage": 405,
+          "printedPage": 379,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "15B",
+          "title": "finite-interval probability",
+          "pdfPage": 405,
+          "printedPage": 379,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch15.py",
+      "sourceArchiveIncluded": false,
+      "part": "III"
+    },
+    {
+      "id": 16,
+      "title": "Multiscale Modelling, Reduction, and Scientific Digital Twins",
+      "printedPage": 179,
+      "pdfPage": 205,
+      "endPdfPage": 219,
+      "sections": [
+        {
+          "title": "Learn coupling through an energy balance with an exact solution",
+          "pdfPage": 205,
+          "printedPage": 179,
+          "number": "16.1"
+        },
+        {
+          "title": "Multiscale models need an error budget for the coupling itself",
+          "pdfPage": 208,
+          "printedPage": 182,
+          "number": "16.2"
+        },
+        {
+          "title": "A general two-scale formulation",
+          "pdfPage": 209,
+          "printedPage": 183,
+          "number": "16.3"
+        },
+        {
+          "title": "Conservation across scales",
+          "pdfPage": 211,
+          "printedPage": 185,
+          "number": "16.4"
+        },
+        {
+          "title": "Worked thread: Coupling a fast drug compartment to slower tumor–immune dynamics",
+          "pdfPage": 211,
+          "printedPage": 185,
+          "number": "16.5"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 211,
+          "printedPage": 185,
+          "number": "16.6"
+        },
+        {
+          "title": "Why reduction matters",
+          "pdfPage": 214,
+          "printedPage": 188,
+          "number": "16.7"
+        },
+        {
+          "title": "Proper Orthogonal Decomposition",
+          "pdfPage": 214,
+          "printedPage": 188,
+          "number": "16.8"
+        },
+        {
+          "title": "Decision-aware validation",
+          "pdfPage": 216,
+          "printedPage": 190,
+          "number": "16.9"
+        },
+        {
+          "title": "What qualifies as a digital twin?",
+          "pdfPage": 219,
+          "printedPage": 193,
+          "number": "16.10"
+        }
+      ],
+      "related": [],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "16A",
+          "title": "capacity-weighted equilibrium",
+          "pdfPage": 405,
+          "printedPage": 379,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "16B",
+          "title": "a steady leaf balance",
+          "pdfPage": 405,
+          "printedPage": 379,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch16.py",
+      "sourceArchiveIncluded": false,
+      "part": "IV"
+    },
+    {
+      "id": 17,
+      "title": "Optimization Geometry, Constraints, and Reliable Algorithms",
+      "printedPage": 194,
+      "pdfPage": 220,
+      "endPdfPage": 233,
+      "sections": [
+        {
+          "title": "Know what an optimizer is permitted to change",
+          "pdfPage": 220,
+          "printedPage": 194,
+          "number": "17.1"
+        },
+        {
+          "title": "Worked thread: Optimizing a chemotherapy schedule without rewarding numerical failure",
+          "pdfPage": 222,
+          "printedPage": 196,
+          "number": "17.2"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 222,
+          "printedPage": 196,
+          "number": "17.3"
+        },
+        {
+          "title": "Optimization begins with a decision, not an algorithm",
+          "pdfPage": 223,
+          "printedPage": 197,
+          "number": "17.4"
+        },
+        {
+          "title": "First-order optimality",
+          "pdfPage": 224,
+          "printedPage": 198,
+          "number": "17.5"
+        },
+        {
+          "title": "Equality constraints and Lagrange multipliers",
+          "pdfPage": 225,
+          "printedPage": 199,
+          "number": "17.6"
+        },
+        {
+          "title": "Convexity",
+          "pdfPage": 226,
+          "printedPage": 200,
+          "number": "17.7"
+        },
+        {
+          "title": "Proximal operators",
+          "pdfPage": 227,
+          "printedPage": 201,
+          "number": "17.8"
+        },
+        {
+          "title": "Nonlinear least squares",
+          "pdfPage": 230,
+          "printedPage": 204,
+          "number": "17.9"
+        },
+        {
+          "title": "Optimization landscape diagnostics",
+          "pdfPage": 232,
+          "printedPage": 206,
+          "number": "17.10"
+        }
+      ],
+      "related": [],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "17A",
+          "title": "a nonzero gradient at a constrained optimum",
+          "pdfPage": 406,
+          "printedPage": 380,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "17B",
+          "title": "curvature controls the step interval",
+          "pdfPage": 406,
+          "printedPage": 380,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch17.py",
+      "sourceArchiveIncluded": false,
+      "part": "IV"
+    },
+    {
+      "id": 18,
+      "title": "Robust Decisions, Multiobjective Design, Optimal Control, and MPC",
+      "printedPage": 208,
+      "pdfPage": 234,
+      "endPdfPage": 245,
+      "sections": [
+        {
+          "title": "Expose a trade-off before choosing a preferred solution",
+          "pdfPage": 234,
+          "printedPage": 208,
+          "number": "18.1"
+        },
+        {
+          "title": "Multistart as a scientific baseline",
+          "pdfPage": 237,
+          "printedPage": 211,
+          "number": "18.2"
+        },
+        {
+          "title": "Pareto dominance",
+          "pdfPage": 238,
+          "printedPage": 212,
+          "number": "18.3"
+        },
+        {
+          "title": "Uncertain parameters",
+          "pdfPage": 239,
+          "printedPage": 213,
+          "number": "18.4"
+        },
+        {
+          "title": "Optimal-control problem",
+          "pdfPage": 239,
+          "printedPage": 213,
+          "number": "18.5"
+        },
+        {
+          "title": "Model predictive control",
+          "pdfPage": 240,
+          "printedPage": 214,
+          "number": "18.6"
+        },
+        {
+          "title": "Gaussian-process surrogate",
+          "pdfPage": 241,
+          "printedPage": 215,
+          "number": "18.7"
+        },
+        {
+          "title": "Fisher-information design",
+          "pdfPage": 242,
+          "printedPage": 216,
+          "number": "18.8"
+        },
+        {
+          "title": "Worked thread: Trade-offs between tumor control and treatment burden",
+          "pdfPage": 243,
+          "printedPage": 217,
+          "number": "18.9"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 243,
+          "printedPage": 217,
+          "number": "18.10"
+        },
+        {
+          "title": "Robust optimization begins by separating uncertainty from choice",
+          "pdfPage": 244,
+          "printedPage": 218,
+          "number": "18.11"
+        },
+        {
+          "title": "Optimal control and MPC are closed-loop evidence problems",
+          "pdfPage": 245,
+          "printedPage": 219,
+          "number": "18.12"
+        }
+      ],
+      "related": [],
+      "gate": "infer",
+      "practices": [
+        {
+          "id": "18A",
+          "title": "weights depend on scale",
+          "pdfPage": 406,
+          "printedPage": 380,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "18B",
+          "title": "improvement from uncertainty",
+          "pdfPage": 406,
+          "printedPage": 380,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch18.py",
+      "sourceArchiveIncluded": false,
+      "part": "IV"
+    },
+    {
+      "id": 19,
+      "title": "Statistical Machine Learning on Real and Biological Data",
+      "printedPage": 221,
+      "pdfPage": 247,
+      "endPdfPage": 257,
+      "sections": [
+        {
+          "title": "Define the future prediction before splitting the data",
+          "pdfPage": 247,
+          "printedPage": 221,
+          "number": "19.1"
+        },
+        {
+          "title": "External studio: real-data resistance is the curriculum",
+          "pdfPage": 249,
+          "printedPage": 223,
+          "number": "19.2"
+        },
+        {
+          "title": "Worked thread: Leakage-safe biological prediction with grouped validation",
+          "pdfPage": 252,
+          "printedPage": 226,
+          "number": "19.3"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 252,
+          "printedPage": 226,
+          "number": "19.4"
+        },
+        {
+          "title": "Grouped and structured cross-validation",
+          "pdfPage": 253,
+          "printedPage": 227,
+          "number": "19.5"
+        },
+        {
+          "title": "Prediction is an experimental protocol",
+          "pdfPage": 254,
+          "printedPage": 228,
+          "number": "19.6"
+        },
+        {
+          "title": "Calibration and decision thresholds",
+          "pdfPage": 255,
+          "printedPage": 229,
+          "number": "19.7"
+        },
+        {
+          "title": "High-dimensional small-n biology",
+          "pdfPage": 256,
+          "printedPage": 230,
+          "number": "19.8"
+        },
+        {
+          "title": "Validation design is the first model",
+          "pdfPage": 256,
+          "printedPage": 230,
+          "number": "19.9"
+        },
+        {
+          "title": "Real data resists preprocessing assumptions",
+          "pdfPage": 256,
+          "printedPage": 230,
+          "number": "19.10"
+        }
+      ],
+      "related": [
+        {
+          "label": "Validation without leaking the answer",
+          "href": "learn.html?lesson=validation",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "compare",
+      "practices": [
+        {
+          "id": "19A",
+          "title": "preserve the grouping unit",
+          "pdfPage": 406,
+          "printedPage": 380,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "19B",
+          "title": "costs determine the threshold",
+          "pdfPage": 406,
+          "printedPage": 380,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch19.py",
+      "sourceArchiveIncluded": false,
+      "part": "V"
+    },
+    {
+      "id": 20,
+      "title": "Deep Learning as Differentiable Computation",
+      "printedPage": 232,
+      "pdfPage": 258,
+      "endPdfPage": 269,
+      "sections": [
+        {
+          "title": "Build and differentiate one neuron before training many",
+          "pdfPage": 258,
+          "printedPage": 232,
+          "number": "20.1"
+        },
+        {
+          "title": "Deep learning should expose its computational graph",
+          "pdfPage": 262,
+          "printedPage": 236,
+          "number": "20.2"
+        },
+        {
+          "title": "Chain rule and backpropagation",
+          "pdfPage": 263,
+          "printedPage": 237,
+          "number": "20.3"
+        },
+        {
+          "title": "Activation functions",
+          "pdfPage": 264,
+          "printedPage": 238,
+          "number": "20.4"
+        },
+        {
+          "title": "Overfitting and regularization",
+          "pdfPage": 264,
+          "printedPage": 238,
+          "number": "20.5"
+        },
+        {
+          "title": "Gradient pathologies",
+          "pdfPage": 264,
+          "printedPage": 238,
+          "number": "20.6"
+        },
+        {
+          "title": "Autodiff through scientific code",
+          "pdfPage": 265,
+          "printedPage": 239,
+          "number": "20.7"
+        },
+        {
+          "title": "Worked thread: Training a surrogate whose derivatives must also be scientifically correct",
+          "pdfPage": 265,
+          "printedPage": 239,
+          "number": "20.8"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 266,
+          "printedPage": 240,
+          "number": "20.9"
+        },
+        {
+          "title": "Training a network is an experiment, not an incantation",
+          "pdfPage": 267,
+          "printedPage": 241,
+          "number": "20.10"
+        },
+        {
+          "title": "Optimization dynamics are part of model behavior",
+          "pdfPage": 268,
+          "printedPage": 242,
+          "number": "20.11"
+        },
+        {
+          "title": "Strict out-of-domain evaluation and paired comparisons",
+          "pdfPage": 269,
+          "printedPage": 243,
+          "number": "20.12"
+        }
+      ],
+      "related": [
+        {
+          "label": "A surrogate must beat a baseline and survive a challenge",
+          "href": "learn.html?lesson=surrogate",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "compare",
+      "practices": [
+        {
+          "id": "20A",
+          "title": "a full gradient at zero activation",
+          "pdfPage": 406,
+          "printedPage": 380,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "20B",
+          "title": "derivative errors amplify frequency",
+          "pdfPage": 407,
+          "printedPage": 381,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch20.py",
+      "sourceArchiveIncluded": false,
+      "part": "V"
+    },
+    {
+      "id": 21,
+      "title": "Scientific Machine Learning and Hybrid Mechanistic-Neural Models",
+      "printedPage": 244,
+      "pdfPage": 270,
+      "endPdfPage": 284,
+      "sections": [
+        {
+          "title": "Give the learned component a precise scientific role",
+          "pdfPage": 270,
+          "printedPage": 244,
+          "number": "21.1"
+        },
+        {
+          "title": "Scientific ML: learn the missing mechanism, not the entire universe",
+          "pdfPage": 272,
+          "printedPage": 246,
+          "number": "21.2"
+        },
+        {
+          "title": "From simulation to differentiable program",
+          "pdfPage": 272,
+          "printedPage": 246,
+          "number": "21.3"
+        },
+        {
+          "title": "Hybrid differential equations",
+          "pdfPage": 274,
+          "printedPage": 248,
+          "number": "21.4"
+        },
+        {
+          "title": "Worked thread: Learning only the missing drug-response function",
+          "pdfPage": 275,
+          "printedPage": 249,
+          "number": "21.5"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 275,
+          "printedPage": 249,
+          "number": "21.6"
+        },
+        {
+          "title": "Mechanistic parameter–network confounding",
+          "pdfPage": 276,
+          "printedPage": 250,
+          "number": "21.7"
+        },
+        {
+          "title": "What exactly are you emulating?",
+          "pdfPage": 277,
+          "printedPage": 251,
+          "number": "21.8"
+        },
+        {
+          "title": "Physics-informed neural networks",
+          "pdfPage": 279,
+          "printedPage": 253,
+          "number": "21.9"
+        },
+        {
+          "title": "Neural differential equations",
+          "pdfPage": 282,
+          "printedPage": 256,
+          "number": "21.10"
+        },
+        {
+          "title": "A scientific validation matrix",
+          "pdfPage": 283,
+          "printedPage": 257,
+          "number": "21.11"
+        },
+        {
+          "title": "Removing oracle information from the fitting interface",
+          "pdfPage": 283,
+          "printedPage": 257,
+          "number": "21.12"
+        }
+      ],
+      "related": [
+        {
+          "label": "What should a learned correction be allowed to change?",
+          "href": "learn.html?lesson=hybrid",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "compare",
+      "practices": [
+        {
+          "id": "21A",
+          "title": "identical net dynamics",
+          "pdfPage": 407,
+          "printedPage": 381,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "21B",
+          "title": "one flux, two balance entries",
+          "pdfPage": 407,
+          "printedPage": 381,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch21.py",
+      "sourceArchiveIncluded": false,
+      "part": "V"
+    },
+    {
+      "id": 22,
+      "title": "Equation Discovery, Model Discrimination, and Causal Reasoning",
+      "printedPage": 259,
+      "pdfPage": 285,
+      "endPdfPage": 295,
+      "sections": [
+        {
+          "title": "Recover an equation whose generating mechanism is known first",
+          "pdfPage": 285,
+          "printedPage": 259,
+          "number": "22.1"
+        },
+        {
+          "title": "Discovery and causality require adversarial alternatives",
+          "pdfPage": 287,
+          "printedPage": 261,
+          "number": "22.2"
+        },
+        {
+          "title": "Derivative estimation is often the bottleneck",
+          "pdfPage": 289,
+          "printedPage": 263,
+          "number": "22.3"
+        },
+        {
+          "title": "Model discrimination",
+          "pdfPage": 290,
+          "printedPage": 264,
+          "number": "22.4"
+        },
+        {
+          "title": "Prediction is not intervention",
+          "pdfPage": 291,
+          "printedPage": 265,
+          "number": "22.5"
+        },
+        {
+          "title": "Worked thread: Can sparse regression rediscover a known ODE term under noise?",
+          "pdfPage": 293,
+          "printedPage": 267,
+          "number": "22.6"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 293,
+          "printedPage": 267,
+          "number": "22.7"
+        },
+        {
+          "title": "Equation discovery is a model-selection problem with a dangerous derivative operator",
+          "pdfPage": 294,
+          "printedPage": 268,
+          "number": "22.8"
+        },
+        {
+          "title": "Support stability matters more than one pretty equation",
+          "pdfPage": 294,
+          "printedPage": 268,
+          "number": "22.9"
+        }
+      ],
+      "related": [
+        {
+          "label": "Equation discovery: the library is a hypothesis",
+          "href": "learn.html?lesson=discovery",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "compare",
+      "practices": [
+        {
+          "id": "22A",
+          "title": "recover carrying capacity from coefficients",
+          "pdfPage": 407,
+          "printedPage": 381,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "22B",
+          "title": "differentiation magnifies noise",
+          "pdfPage": 407,
+          "printedPage": 381,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch22.py",
+      "sourceArchiveIncluded": false,
+      "part": "V"
+    },
+    {
+      "id": 23,
+      "title": "Transformers, Retrieval, and Verifiable Scientific Agents",
+      "printedPage": 271,
+      "pdfPage": 297,
+      "endPdfPage": 312,
+      "sections": [
+        {
+          "title": "Separate finding evidence from calculating an answer",
+          "pdfPage": 297,
+          "printedPage": 271,
+          "number": "23.1"
+        },
+        {
+          "title": "AI for science must be evaluated as a bounded system",
+          "pdfPage": 299,
+          "printedPage": 273,
+          "number": "23.2"
+        },
+        {
+          "title": "Attention derived from adaptive kernel regression",
+          "pdfPage": 300,
+          "printedPage": 274,
+          "number": "23.3"
+        },
+        {
+          "title": "Worked thread: A scientific RAG pipeline whose retrieval can be falsified before generation",
+          "pdfPage": 304,
+          "printedPage": 278,
+          "number": "23.4"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 305,
+          "printedPage": 279,
+          "number": "23.5"
+        },
+        {
+          "title": "RAG as a composed system",
+          "pdfPage": 306,
+          "printedPage": 280,
+          "number": "23.6"
+        },
+        {
+          "title": "Retrieval metrics",
+          "pdfPage": 307,
+          "printedPage": 281,
+          "number": "23.7"
+        },
+        {
+          "title": "An agent is a controller with state",
+          "pdfPage": 308,
+          "printedPage": 282,
+          "number": "23.8"
+        },
+        {
+          "title": "Typed tools",
+          "pdfPage": 308,
+          "printedPage": 282,
+          "number": "23.9"
+        },
+        {
+          "title": "Agent evaluation decomposes into measurable tasks",
+          "pdfPage": 309,
+          "printedPage": 283,
+          "number": "23.10"
+        },
+        {
+          "title": "Human-in-the-loop boundaries",
+          "pdfPage": 309,
+          "printedPage": 283,
+          "number": "23.11"
+        },
+        {
+          "title": "Retrieval metrics",
+          "pdfPage": 310,
+          "printedPage": 284,
+          "number": "23.12"
+        },
+        {
+          "title": "Metrics and arguments must survive adversarial examples",
+          "pdfPage": 311,
+          "printedPage": 285,
+          "number": "23.13"
+        }
+      ],
+      "related": [],
+      "gate": "release",
+      "practices": [
+        {
+          "id": "23A",
+          "title": "three distinct retrieval metrics",
+          "pdfPage": 407,
+          "printedPage": 381,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "23B",
+          "title": "preserve the requested calculation",
+          "pdfPage": 407,
+          "printedPage": 381,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch23.py",
+      "sourceArchiveIncluded": false,
+      "part": "VI"
+    },
+    {
+      "id": 24,
+      "title": "Scientific Software Architecture, Contracts, and Testing",
+      "printedPage": 287,
+      "pdfPage": 313,
+      "endPdfPage": 341,
+      "sections": [
+        {
+          "title": "Organize software around scientific responsibilities",
+          "pdfPage": 313,
+          "printedPage": 287,
+          "number": "24.1"
+        },
+        {
+          "title": "Scientific software architecture follows scientific change vectors",
+          "pdfPage": 315,
+          "printedPage": 289,
+          "number": "24.2"
+        },
+        {
+          "title": "Architecture begins with scientific responsibilities",
+          "pdfPage": 315,
+          "printedPage": 289,
+          "number": "24.3"
+        },
+        {
+          "title": "Installable packages and pyproject.toml",
+          "pdfPage": 320,
+          "printedPage": 294,
+          "number": "24.4"
+        },
+        {
+          "title": "Types communicate model semantics",
+          "pdfPage": 321,
+          "printedPage": 295,
+          "number": "24.5"
+        },
+        {
+          "title": "Errors should explain the violated assumption",
+          "pdfPage": 324,
+          "printedPage": 298,
+          "number": "24.6"
+        },
+        {
+          "title": "Worked thread: Turning the tumor model into a scientific software package",
+          "pdfPage": 326,
+          "printedPage": 300,
+          "number": "24.7"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 327,
+          "printedPage": 301,
+          "number": "24.8"
+        },
+        {
+          "title": "The testing pyramid needs a scientific layer",
+          "pdfPage": 328,
+          "printedPage": 302,
+          "number": "24.9"
+        },
+        {
+          "title": "A public function is a contract, not only an implementation",
+          "pdfPage": 333,
+          "printedPage": 307,
+          "number": "24.10"
+        },
+        {
+          "title": "Tests should exercise the scientific contract",
+          "pdfPage": 338,
+          "printedPage": 312,
+          "number": "24.11"
+        },
+        {
+          "title": "A complete example: solver wrapper with failure contracts",
+          "pdfPage": 340,
+          "printedPage": 314,
+          "number": "24.12"
+        }
+      ],
+      "related": [
+        {
+          "label": "Build an evidence trail that another person can challenge",
+          "href": "learn.html?lesson=reproducibility",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "release",
+      "practices": [
+        {
+          "id": "24A",
+          "title": "different tests for different layers",
+          "pdfPage": 408,
+          "printedPage": 382,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "24B",
+          "title": "stale state versus wrong parameters",
+          "pdfPage": 408,
+          "printedPage": 382,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch24.py",
+      "sourceArchiveIncluded": false,
+      "part": "VI"
+    },
+    {
+      "id": 25,
+      "title": "Performance, HPC, Reproducibility, FAIR, and Deployment",
+      "printedPage": 316,
+      "pdfPage": 342,
+      "endPdfPage": 376,
+      "sections": [
+        {
+          "title": "Reproduce a calculation, then measure its computational cost",
+          "pdfPage": 342,
+          "printedPage": 316,
+          "number": "25.1"
+        },
+        {
+          "title": "External studio: reproducibility is an executable claim",
+          "pdfPage": 344,
+          "printedPage": 318,
+          "number": "25.2"
+        },
+        {
+          "title": "Reproducibility has multiple meanings",
+          "pdfPage": 344,
+          "printedPage": 318,
+          "number": "25.3"
+        },
+        {
+          "title": "Git is a reasoning tool",
+          "pdfPage": 349,
+          "printedPage": 323,
+          "number": "25.4"
+        },
+        {
+          "title": "Worked thread: Scaling a sensitivity study without losing provenance",
+          "pdfPage": 350,
+          "printedPage": 324,
+          "number": "25.5"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 350,
+          "printedPage": 324,
+          "number": "25.6"
+        },
+        {
+          "title": "Continuous integration as an automated reviewer",
+          "pdfPage": 351,
+          "printedPage": 325,
+          "number": "25.7"
+        },
+        {
+          "title": "Performance is a scientific capability",
+          "pdfPage": 354,
+          "printedPage": 328,
+          "number": "25.8"
+        },
+        {
+          "title": "Parallelism is a property of the computation",
+          "pdfPage": 356,
+          "printedPage": 330,
+          "number": "25.9"
+        },
+        {
+          "title": "Data structures are part of the model",
+          "pdfPage": 360,
+          "printedPage": 334,
+          "number": "25.10"
+        },
+        {
+          "title": "Documentation is part of correctness",
+          "pdfPage": 364,
+          "printedPage": 338,
+          "number": "25.11"
+        },
+        {
+          "title": "Why expose computation as a service?",
+          "pdfPage": 368,
+          "printedPage": 342,
+          "number": "25.12"
+        },
+        {
+          "title": "FAIR4RS operational checklist",
+          "pdfPage": 373,
+          "printedPage": 347,
+          "number": "25.13"
+        },
+        {
+          "title": "Reference release workflow",
+          "pdfPage": 374,
+          "printedPage": 348,
+          "number": "25.14"
+        }
+      ],
+      "related": [
+        {
+          "label": "Build an evidence trail that another person can challenge",
+          "href": "learn.html?lesson=reproducibility",
+          "relation": "Related FokoLab lesson; not a reproduction of every chapter exercise"
+        }
+      ],
+      "gate": "release",
+      "practices": [
+        {
+          "id": "25A",
+          "title": "a serial fraction remains",
+          "pdfPage": 408,
+          "printedPage": 382,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "25B",
+          "title": "source identity is not run identity",
+          "pdfPage": 408,
+          "printedPage": 382,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch25.py",
+      "sourceArchiveIncluded": false,
+      "part": "VI"
+    },
+    {
+      "id": 26,
+      "title": "Integrated Scientific Cases: From Evidence to Decision",
+      "printedPage": 352,
+      "pdfPage": 378,
+      "endPdfPage": 393,
+      "sections": [
+        {
+          "title": "Complete an investigation rather than collect disconnected methods",
+          "pdfPage": 378,
+          "printedPage": 352,
+          "number": "26.1"
+        },
+        {
+          "title": "Two integrated case studies: from model to decision",
+          "pdfPage": 381,
+          "printedPage": 355,
+          "number": "26.2"
+        },
+        {
+          "title": "Scientific question and model boundary",
+          "pdfPage": 381,
+          "printedPage": 355,
+          "number": "26.3"
+        },
+        {
+          "title": "System decomposition",
+          "pdfPage": 383,
+          "printedPage": 357,
+          "number": "26.4"
+        },
+        {
+          "title": "Two-stage expression model",
+          "pdfPage": 385,
+          "printedPage": 359,
+          "number": "26.5"
+        },
+        {
+          "title": "PK model",
+          "pdfPage": 386,
+          "printedPage": 360,
+          "number": "26.6"
+        },
+        {
+          "title": "Prediction question",
+          "pdfPage": 387,
+          "printedPage": 361,
+          "number": "26.7"
+        },
+        {
+          "title": "Worked thread: TumorTherapyTwin: carrying one system through the entire evidence chain",
+          "pdfPage": 388,
+          "printedPage": 362,
+          "number": "26.8"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 388,
+          "printedPage": 362,
+          "number": "26.9"
+        },
+        {
+          "title": "How to read the cases",
+          "pdfPage": 389,
+          "printedPage": 363,
+          "number": "26.10"
+        },
+        {
+          "title": "A complete four-stage reference investigation",
+          "pdfPage": 390,
+          "printedPage": 364,
+          "number": "26.11"
+        }
+      ],
+      "related": [],
+      "gate": "release",
+      "practices": [
+        {
+          "id": "26A",
+          "title": "the observation map changes the number",
+          "pdfPage": 408,
+          "printedPage": 382,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "26B",
+          "title": "the product is identified, not its factors",
+          "pdfPage": 408,
+          "printedPage": 382,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch26.py",
+      "sourceArchiveIncluded": false,
+      "part": "VII"
+    },
+    {
+      "id": 27,
+      "title": "Portfolio Integration and Technical Defense",
+      "printedPage": 368,
+      "pdfPage": 394,
+      "endPdfPage": 400,
+      "sections": [
+        {
+          "title": "Write a scientific claim that another person can interrogate",
+          "pdfPage": 394,
+          "printedPage": 368,
+          "number": "27.1"
+        },
+        {
+          "title": "Portfolio synthesis: four products, one scientific identity",
+          "pdfPage": 396,
+          "printedPage": 370,
+          "number": "27.2"
+        },
+        {
+          "title": "One portfolio lifecycle, instantiated four ways",
+          "pdfPage": 397,
+          "printedPage": 371,
+          "number": "27.3"
+        },
+        {
+          "title": "Worked thread: From chapter artifacts to four defensible portfolio products",
+          "pdfPage": 398,
+          "printedPage": 372,
+          "number": "27.4"
+        },
+        {
+          "title": "Cumulative project investigations",
+          "pdfPage": 398,
+          "printedPage": 372,
+          "number": "27.5"
+        },
+        {
+          "title": "The evidence dossier",
+          "pdfPage": 399,
+          "printedPage": 373,
+          "number": "27.6"
+        },
+        {
+          "title": "Technical defense: answer from artifacts, not memory",
+          "pdfPage": 400,
+          "printedPage": 374,
+          "number": "27.7"
+        }
+      ],
+      "related": [],
+      "gate": "release",
+      "practices": [
+        {
+          "id": "27A",
+          "title": "narrow the claim to the evidence",
+          "pdfPage": 408,
+          "printedPage": 382,
+          "role": "Worked solution in Appendix A"
+        },
+        {
+          "id": "27B",
+          "title": "distinguish tested from untested",
+          "pdfPage": 409,
+          "printedPage": 383,
+          "role": "Worked solution in Appendix A"
+        }
+      ],
+      "teachingSource": "teaching/examples/ch27.py",
+      "sourceArchiveIncluded": false,
+      "part": "VII"
+    }
+  ],
+  "appendices": [
+    {
+      "letter": "A",
+      "title": "Worked solutions to the teaching-path practice problems",
+      "pdfPage": 401,
+      "printedPage": 375
+    },
+    {
+      "letter": "B",
+      "title": "Research investigations: diagnostic guidance",
+      "pdfPage": 410,
+      "printedPage": 384
+    },
+    {
+      "letter": "C",
+      "title": "Worked Resolutions: Scientific Python Fluency",
+      "pdfPage": 429,
+      "printedPage": 403
+    },
+    {
+      "letter": "D",
+      "title": "Field resources and canonical next hops",
+      "pdfPage": 435,
+      "printedPage": 409
+    },
+    {
+      "letter": "E",
+      "title": "Final competence standard",
+      "pdfPage": 437,
+      "printedPage": 411
+    }
+  ],
+  "frontMatter": [
+    {
+      "title": "Graphical abstract",
+      "pdfPage": 2,
+      "pageLabel": "ii"
+    },
+    {
+      "title": "The big picture: one evidence loop",
+      "pdfPage": 3,
+      "pageLabel": "iii"
+    },
+    {
+      "title": "How examples, exercises, hints, and solutions work",
+      "pdfPage": 10,
+      "pageLabel": "x"
+    },
+    {
+      "title": "Executable studios",
+      "pdfPage": 11,
+      "pageLabel": "xi"
+    },
+    {
+      "title": "How to use the examples",
+      "pdfPage": 12,
+      "pageLabel": "xii"
+    },
+    {
+      "title": "Reading the figures",
+      "pdfPage": 13,
+      "pageLabel": "xiii"
+    }
+  ],
+  "practiceCount": 54,
+  "visualIdentity": {
+    "source": "Chapter-opening heading colors in the supplied PDF",
+    "parts": {
+      "I": {
+        "source": "#2374a6",
+        "color": "#21668e",
+        "dark": "#99cfee",
+        "soft": "#edf4f8",
+        "sourcePage": 28
+      },
+      "II": {
+        "source": "#4055a8",
+        "color": "#4055a8",
+        "dark": "#b8c6ff",
+        "soft": "#eff1fb",
+        "sourcePage": 99
+      },
+      "III": {
+        "source": "#2f7d4a",
+        "color": "#286e40",
+        "dark": "#ace0bc",
+        "soft": "#edf6ef",
+        "sourcePage": 131
+      },
+      "IV": {
+        "source": "#c56a1a",
+        "color": "#8e4810",
+        "dark": "#f0c29b",
+        "soft": "#faf0e7",
+        "sourcePage": 205
+      },
+      "V": {
+        "source": "#6842a6",
+        "color": "#6842a6",
+        "dark": "#d1baf4",
+        "soft": "#f3eef9",
+        "sourcePage": 247
+      },
+      "VI": {
+        "source": "#a63c3c",
+        "color": "#a03939",
+        "dark": "#f0b7b7",
+        "soft": "#fbefef",
+        "sourcePage": 297
+      },
+      "VII": {
+        "source": "#b3861b",
+        "color": "#7b5b12",
+        "dark": "#eed29d",
+        "soft": "#f8f2e6",
+        "sourcePage": 378
+      }
+    },
+    "webAdaptation": "Warm source hues are darkened for readable text. Part labels and Roman numerals remain the primary identifiers; application-area colors are a separate classification."
+  },
+  "navigationProvenance": "PDF outline checked against actual section and practice headings; page-break destinations follow the physical heading page, not a preceding outline anchor.",
+  "sourceSha256": "24476aa28700e014693ea2ca8b21d55719dd6e4980fac32c781973cdfa2a6690",
+  "publication": {
+    "omittedPhysicalPages": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "unmodifiedAuthorPDFPublic": false,
+    "scientificChaptersRetained": true
+  }
+}

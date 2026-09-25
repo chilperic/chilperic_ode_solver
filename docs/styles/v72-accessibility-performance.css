@@ -1,0 +1,142 @@
+/* Foko Lab v72.17 — accessibility and performance contract.
+   This file adds no layout reconstruction and no override escalation. */
+.skip-link {
+  position: fixed;
+  z-index: 5000;
+  top: 8px;
+  left: 8px;
+  transform: translateY(-160%);
+  padding: 10px 14px;
+  color: #fff;
+  background: #062f3a;
+  border: 2px solid #7ce5df;
+  border-radius: 10px;
+  font-weight: 850;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 36, 45, .32);
+  transition: transform .12s ease;
+}
+.skip-link:focus { transform: translateY(0); }
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+:where(button, input, select, textarea):disabled {
+  cursor: not-allowed;
+  opacity: .62;
+}
+
+/* WCAG AA text contrast for controls and status labels. */
+.primary, .run-button, .sweep-button {
+  background: linear-gradient(100deg, #006d73, #075fbd);
+}
+.status-strip .status-ok,
+.status-ok,
+[data-status="success"] { color: #007a4d; }
+.v72-eyebrow { color: #006d73; }
+
+/* A plot is a focusable scientific figure, not an anonymous empty div. */
+.plot[role="img"] { position: relative; }
+.plot[aria-busy="true"]::after {
+  content: "Rendering computed view…";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, .92);
+  text-align: center;
+  font-weight: 750;
+}
+.plot[data-render-state="failed"] { border: 2px solid #b42318; }
+.plot[data-render-state="rendered"] { border-color: transparent; }
+
+/* Prevent dense tables from forcing the whole document sideways. */
+.table-scroll,
+.diagnostics:has(table),
+.v72-inspector-card:has(table) {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+}
+.clean-table th { white-space: normal; }
+
+/* Stable scrollbars make the two sticky scientific rails less jumpy. */
+.work-panel.controls,
+.v72-inspector {
+  scrollbar-gutter: stable;
+}
+
+/* Native target sizes on touch devices without inflating the desktop UI. */
+@media (pointer: coarse) {
+  button,
+  select,
+  input:not([type="checkbox"]):not([type="radio"]),
+  summary,
+  .topnav > a { min-height: 44px; }
+  .focus-card,
+  .kebab,
+  .icon-btn { min-width: 44px; min-height: 44px; }
+}
+
+/* Avoid needless animation and blurred transparency for users who request it. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto;
+    animation-duration: .001ms;
+    animation-iteration-count: 1;
+    transition-duration: .001ms;
+  }
+  .topbar,
+  .mode-strip { backdrop-filter: none; }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --line: #6f8797;
+    --line-strong: #3f596a;
+    --muted: #354b5d;
+  }
+  .chart-card,
+  .card,
+  .v72-inspector-card,
+  input,
+  select,
+  textarea { border-width: 2px; }
+}
+
+@media (forced-colors: active) {
+  .primary,
+  .run-button,
+  .sweep-button,
+  .mode-tab.active,
+  .v72-layout-switch button.active { forced-color-adjust: auto; }
+  .plot[aria-busy="true"]::after { background: Canvas; color: CanvasText; }
+}
+
+/* 2-up is permitted only when the central workspace can preserve legible plots. */
+@container v72workspace (max-width: 760px) {
+  .chart-grid[data-layout="two"] { grid-template-columns: minmax(0, 1fr); }
+}
+.v72-workspace { container-name: v72workspace; container-type: inline-size; }
+
+/* Improve print/export inspection: controls disappear, evidence stays. */
+@media print {
+  .topbar,
+  .side-nav,
+  .work-panel.controls,
+  .v72-layout-switch,
+  .plot-toolbar-v2,
+  .focus-card,
+  .kebab,
+  .canvas-mode-toggle { display: none; }
+  body[data-v72-shell="true"] main.layout { display: block; padding: 0; }
+  .v72-workspace,
+  .v72-inspector { display: block; max-height: none; overflow: visible; }
+  .chart-grid { grid-template-columns: 1fr; }
+  .chart-card { break-inside: avoid; margin-bottom: 12px; }
+}

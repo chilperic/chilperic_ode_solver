@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html data-color-family="dynamics" data-theme="aurora" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Foko Lab Stochastic Lab simulates time-homogeneous continuous-time Markov chains with Gillespie direct SSA, seeded ensembles, empirical uncertainty, and reproducible export." name="description"/>
+<meta content="Foko Lab Stochastic Lab" property="og:title"/>
+<meta content="Browser-computed Gillespie direct SSA, seeded ensembles, empirical quantiles, final-state distributions, and explicit Monte Carlo limits." property="og:description"/>
+<meta content="website" property="og:type"/>
+<title>Stochastic Lab · Foko Lab</title>
+<link href="assets/vendor/katex/katex-0.16.47.min.css?v=79.2.0" rel="stylesheet"/>
+<script defer="" src="src/platform/storage.js?v=79.2.0"></script><script defer="" src="assets/vendor/katex/katex-0.16.47.min.js?v=79.2.0"></script>
+<script defer="" src="assets/vendor/mathjs/math-15.2.0.js?v=79.2.0"></script>
+<script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=79.2.0"></script>
+<link href="assets/brand/foko-lab-micro.svg?v=79.2.0" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=79.2.0" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=79.2.0" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=79.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
+<link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link rel="stylesheet" href="styles/upgrade.css">
+<script src="src/upgrade/registry.js"></script>
+</head>
+<body data-color-family="dynamics" data-lab="stochastic" data-page-key="stochastic" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<div class="app-shell">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="layout" id="workbench" tabindex="-1">
+<aside aria-label="Stochastic workflow" class="side-nav">
+<button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
+<button class="nav-item" data-jump="#modelBlock" type="button">Model</button>
+<button class="nav-item" data-jump="#simulationBlock" type="button">Simulation</button>
+<button class="nav-item" data-jump="#exportsBlock" type="button">Export</button>
+</aside>
+<aside aria-label="Stochastic controls" class="work-panel controls">
+<section class="card intro-card hero-with-mark">
+<div><p class="v72-eyebrow">CTMC · Gillespie direct SSA · seeded ensembles</p><h2>Stochastic Lab</h2><p class="note">Simulate discrete reaction events, compare independent paths, and report empirical Monte Carlo uncertainty without confusing it with deterministic confidence intervals.</p></div>
+<img alt="Stochastic Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/stochastic-lab.webp?v=79.2.0"/>
+</section>
+<section aria-label="Run stochastic ensemble" class="actionbar card">
+<button class="primary" id="runStochastic" type="button">Run ensemble</button>
+<button class="secondary" id="resetStochastic" type="button">Reset example</button>
+<div class="status" id="stochasticStatus">Ready. No stochastic result exists yet.</div>
+<div class="progress"><div id="stochasticProgress"></div></div>
+</section>
+<section class="card" id="examplesBlock">
+<div class="card-head"><div><p class="v72-eyebrow">Curated models</p><h2>Examples</h2></div><button class="secondary small" id="loadStochastic" type="button">Load selected</button></div>
+<label><span>Example</span><select id="stochasticSelect"></select></label>
+<div class="model-deck" id="stochasticDeck"></div>
+<p class="narrative" id="stochasticNarrative">Select a CTMC example.</p>
+<p class="field-help" id="stochasticScientificNote"></p>
+</section>
+<section class="card" id="modelBlock">
+<div class="card-head"><div><p class="v72-eyebrow" id="stochasticFamily">Model</p><h2 id="stochasticTitle">Time-homogeneous CTMC</h2></div></div>
+<label class="upload-drop"><span>Import stochastic model or session JSON</span><input accept="application/json,.json" id="stochasticImport" type="file"/></label>
+<p class="field-help">Propensities may use state and parameter symbols only. Explicit time dependence is rejected because the direct algorithm below does not implement integrated time-varying hazards.</p>
+<div class="card-head compact-head"><span class="small-title">States and initial molecule counts</span><button class="icon-btn" id="addStochasticState" type="button">＋ state</button></div>
+<div class="editable-grid" id="stochasticStates"></div>
+<details open=""><summary>Parameters</summary><div class="card-head compact-head"><span class="field-help">Finite numeric values used by every trajectory.</span><button class="icon-btn" id="addStochasticParam" type="button">＋ parameter</button></div><div class="editable-grid" id="stochasticParams"></div></details>
+<details open=""><summary>Reaction events</summary><div class="card-head compact-head"><span class="field-help">Each event has a non-negative propensity and an integer state-change vector.</span><button class="icon-btn" id="addStochasticReaction" type="button">＋ reaction</button></div><div class="reaction-grid" id="stochasticReactions"></div></details>
+<div class="math-preview inline-math" id="stochasticPreview">Reaction preview.</div>
+</section>
+<section class="card" id="simulationBlock">
+<details open=""><summary>Ensemble and observation settings</summary>
+<div class="advanced-grid">
+<label><span>t start</span><input id="stochasticT0" step="any" type="number" value="0"/></label>
+<label><span>t end</span><input id="stochasticT1" step="any" type="number" value="40"/></label>
+<label><span>Observation points</span><input id="stochasticPoints" max="1200" min="20" type="number" value="240"/></label>
+<label><span>Independent runs</span><input id="stochasticRuns" max="2000" min="1" type="number" value="250"/></label>
+<label><span>Base seed</span><input id="stochasticSeed" step="1" type="number" value="1729"/></label>
+<label><span>Event cap / trajectory</span><input id="stochasticMaxEvents" max="10000000" min="100" step="100" type="number" value="200000"/></label>
+<label><span>Observed state</span><select id="stochasticVariable"></select></label>
+<label><span>Algorithm</span><select id="stochasticMethod"><option value="ssa">Gillespie direct SSA</option><option disabled="" value="tau">Tau-leaping — not in reference gate</option><option disabled="" value="sde">SDE integration — migration pending</option></select></label>
+</div>
+<p class="scientific-boundary">The browser computes exact event-time trajectories for the declared <b>time-homogeneous CTMC</b>. Ensemble means, quantiles, histograms, and Monte Carlo intervals are finite-sample estimates. They are not analytical distributions, confidence intervals for fitted parameters, or evidence of convergence to stationarity.</p>
+</details>
+</section>
+</aside>
+<section aria-label="Stochastic results" class="workspace v72-workspace">
+<section aria-label="Numerical results" class="results-card" role="region">
+<header class="v72-workspace-head">
+<div><p class="v72-eyebrow">Results</p><h1>Trajectories, uncertainty and final-state distributions</h1><p>Compare two views from the same seeded ensemble. Every visible panel is derived from the current simulation; unavailable claims are omitted rather than replaced with decorative output.</p></div>
+<div aria-label="Plot layout" class="v72-layout-switch" role="group">
+<button class="active" data-layout-mode="two" type="button">2-up</button>
+<button data-layout-mode="focus" type="button">Focus</button>
+</div>
+</header>
+<div class="plot-toolbar-v2">
+<span class="result-kind" id="stochasticResultKind">No computed result</span>
+<label><span>Observed state</span><select id="stochasticVariableMirror"></select></label>
+<button class="ghost" id="exportStochasticPng" type="button">Current PNG</button>
+<button class="ghost" id="exportStochasticSvg" type="button">Current SVG</button>
+</div>
+<div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
+<article class="chart-card" data-plot-card="left">
+<div class="chart-title"><h3 id="leftPlotTitle">Ensemble paths</h3><select aria-label="Primary stochastic plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="leftPlot"><div class="diagnostics empty">Run an ensemble to create a plot.</div></div>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details>
+</article>
+<article class="chart-card" data-plot-card="right">
+<div class="chart-title"><h3 id="rightPlotTitle">Empirical uncertainty</h3><select aria-label="Secondary stochastic plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div>
+<div class="plot" id="rightPlot"><div class="diagnostics empty">Run an ensemble to create a diagnostic plot.</div></div>
+<details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details>
+</article>
+</div>
+<p class="info-strip" id="plotHint">A single trajectory is one realization. Ensemble summaries require the run count, seed, event cap, and algorithm shown in the evidence panel.</p>
+</section>
+</section>
+<aside aria-label="Run diagnostics and exports" class="v72-inspector">
+<section class="v72-inspector-card">
+<p class="v72-eyebrow">Run status</p>
+<div class="status-strip">
+<div class="status-ok"><span>●</span><b id="stochasticTopStatus">Ready</b></div>
+<div><span>Runtime</span><b id="stochasticRuntime">—</b></div>
+<div><span>Runs</span><b id="stochasticRunsMetric">—</b></div>
+<div><span>Mean events</span><b id="stochasticEvents">—</b></div>
+<div><span>Truncated</span><b id="stochasticTruncated">—</b></div>
+</div>
+<div class="metrics-grid">
+<article class="metric-card"><small>Final mean</small><b id="stochasticFinalMean">—</b><em>selected state</em></article>
+<article class="metric-card"><small>Final SD</small><b id="stochasticFinalSd">—</b><em>between trajectories</em></article>
+<article class="metric-card"><small>Absorbing runs</small><b id="stochasticAbsorbing">—</b><em>zero total propensity</em></article>
+<article class="metric-card"><small>Seed</small><b id="stochasticSeedMetric">—</b><em>reproducible base</em></article>
+</div>
+</section>
+<section class="v72-inspector-card">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Numerical diagnostics</p><h2>Evidence</h2></div></div>
+<div class="diagnostics empty" id="stochasticDiagnostics">Run an ensemble to see algorithm, event-count, uncertainty, and censoring evidence.</div>
+</section>
+<section class="v72-inspector-card" id="provenanceCard">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div>
+<dl class="v72-provenance">
+<div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div>
+<div><dt>Engine</dt><dd id="provenanceEngine">FokoStochasticCore</dd></div>
+<div><dt>Method</dt><dd id="provenanceMethod">Gillespie direct SSA</dd></div>
+<div><dt>Scope</dt><dd id="provenanceScope">Time-homogeneous CTMC</dd></div>
+<div><dt>Randomness</dt><dd id="provenanceRandomness">Seeded xorshift32 streams</dd></div>
+<div><dt>Uncertainty</dt><dd id="provenanceUncertainty">Not computed</dd></div>
+</dl>
+<p class="v72-warning" id="provenanceWarning">Run an analysis to create results.</p>
+</section>
+<section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region">
+<div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div>
+<div class="export-row">
+<button class="secondary" id="saveStochasticSession" type="button">Save session</button>
+<button class="secondary" id="restoreStochasticSession" type="button">Restore session</button>
+<button class="secondary" id="copyStochasticShareUrl" type="button">Copy share URL</button>
+<button class="secondary" id="exportStochasticSummary" type="button">Summary CSV</button>
+<button class="secondary" id="exportStochasticFinal" type="button">Final states CSV</button>
+<button class="secondary" id="exportStochasticJson" type="button">Result JSON</button>
+<button class="secondary" id="exportStochasticModel" type="button">Model JSON</button>
+<button class="secondary" id="exportStochasticPython" type="button">Python validation</button>
+</div>
+<p class="note">Session and share controls preserve configuration only. Computed trajectories and uncertainty evidence must be regenerated after restore.</p>
+</section>
+</aside>
+</main>
+</div>
+<script defer="" src="src/models/stochastic-presets.js?v=79.2.0"></script>
+<script defer="" src="src/core/ode.js?v=79.2.0"></script>
+<script defer="" src="src/core/stochastic.js?v=79.2.0"></script>
+<script defer="" src="src/v72/stochastic-workspace.js?v=79.2.0"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=79.2.0"></script>
+<script defer="" src="src/models/search-index.js?v=79.2.0"></script><script defer="" src="src/v76/app-shell.js?v=79.2.0&amp;core-access=1"></script>
+<script src="src/upgrade/publication.js"></script><script src="src/upgrade/common.js"></script>
+</body>
+</html>

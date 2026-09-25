@@ -1,0 +1,17 @@
+{
+  "module": "ode",
+  "model": {
+    "vars": ["x", "y", "z"],
+    "eqs": ["sigma*(y-x)", "x*(rho-z)-y", "x*y-beta*z"],
+    "y0": [1, 1, 1],
+    "params": {
+      "sigma": {"value": 10, "min": 6, "max": 16},
+      "rho": {"value": 28, "min": 12, "max": 40},
+      "beta": {"value": 2.6666666667, "min": 2, "max": 3}
+    },
+    "t0": 0,
+    "t1": 35,
+    "points": 2500,
+    "method": "rk45"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "id": "photosynthesis-climate-adaptation",
+  "title": "Photosynthesis Climate Adaptation Model",
+  "positioning": "Flagship research model led and designed by Chilperic Armel Foko Kuate: multiscale mechanistic modeling across biology, environment, heat transfer, hydraulics, optimization, sensitivity analysis and evolutionary adaptation.",
+  "browser_scope": "Reduced educational and portfolio surrogates only. Full scientific runs require the Python repository.",
+  "workbench_models": [
+    "leaf-thermal-steady",
+    "leaf-thermal-opt",
+    "hydraulic-carbon-opt",
+    "c3c4-trait-opt"
+  ],
+  "legacy_lab_presets": [
+    "Leaf heat-balance optimal control",
+    "Hydraulic-carbon trade-off",
+    "C3-C4 trait allocation"
+  ],
+  "process_layers": [
+    "C3/C4 biochemical assimilation",
+    "PEPC and Rubisco kinetics",
+    "mesophyll and bundle-sheath compartment structure",
+    "leaf heat balance",
+    "hydraulic limitation and transpiration cooling",
+    "local and Sobol-style sensitivity analysis",
+    "CMA-ES evolutionary trait exploration across climates"
+  ],
+  "outputs_to_show": [
+    "3D evolutionary trajectories across climates",
+    "local sensitivity ranking",
+    "Sobol first-order and total-order indices",
+    "second-order Sobol interaction heatmap",
+    "Pareto front: mesophyll vs bundle-sheath assimilation",
+    "trait trajectories and climate comparison panels",
+    "reduced Workbench objective landscapes and constraint diagnostics"
+  ],
+  "limitations": [
+    "Browser models are not calibrated physiological predictions.",
+    "The full model is high-dimensional and solver-dependent.",
+    "Use Python/CasADi/SALib/CMA workflows for claims about real climates or crops."
+  ],
+  "attribution": {
+    "project_design_core_code_and_leadership": "Chilperic Armel Foko Kuate",
+    "bachelor_thesis_implementation_execution_validation_analysis": "Yvonne Danisch",
+    "scientific_guidance_and_technical_discussion": "Jérémie Muller-Prokob",
+    "pi_supervision_research_environment_and_funding": "Martin Lercher",
+    "additional_paper_level_contribution": "Antonio Rigueiro",
+    "institutional_context": "Institute for Computational Cell Biology, HHU Düsseldorf / CEPLAS"
+  }
+}
