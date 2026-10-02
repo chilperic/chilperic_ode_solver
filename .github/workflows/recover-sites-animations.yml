@@ -1,0 +1,46 @@
+name: Recover original Sites animation source
+on:
+  push:
+    branches: [recovery/sites-animations-2026-10-02]
+    paths:
+      - .github/workflows/recover-sites-animations.yml
+      - tools/recover_public_site.py
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sites-animation-source-recovery
+  cancel-in-progress: false
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the isolated recovery branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Recover same-origin public resources without executing them
+        run: python3 tools/recover_public_site.py
+      - name: Save snapshot and retrieval evidence only on the recovery branch
+        if: always()
+        env:
+          RECOVERY_BRANCH: recovery/sites-animations-2026-10-02
+        run: |
+          test "$GITHUB_REF_NAME" = "$RECOVERY_BRANCH"
+          if test -f recovery/retrieval.json; then
+            git config user.name 'FokoLab source recovery'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -- recovery/sites-snapshot recovery/retrieval.json recovery/RECOVERY-NOTE.md
+            if ! git diff --cached --quiet; then
+              git commit -m 'Record original public Sites executable source and retrieval manifest'
+              git push origin "HEAD:$RECOVERY_BRANCH"
+            fi
+          fi
+      - name: Upload source snapshot with provenance
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fokolab-original-sites-source
+          path: recovery/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 9
