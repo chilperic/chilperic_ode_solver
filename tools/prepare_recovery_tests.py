@@ -3,8 +3,7 @@ from pathlib import Path
 p=Path('tests/recovery_browser.py');s=p.read_text()
 a="def export(pg,id,name):\n  with pg.expect_download(timeout=15000) as d:pg.locator('#'+id).click()"
 b="""def export(pg,id,name):
-  # Exports are deliberately inside a source <details> disclosure. Open the
-  # actual summary before using the visible control, rather than force-clicking.
+  # Open original disclosure summaries before using their native visible controls.
   closed=pg.locator('#'+id).locator('xpath=ancestor::details[not(@open)]')
   for i in range(closed.count()-1,-1,-1):
    closed.nth(i).locator(':scope > summary').click()
@@ -22,11 +21,10 @@ b="""check('Cell full native JSON export',lambda:export(pg,'download','cell-nati
   pg.locator('#replay').click();pg.wait_for_timeout(400);a=float(pg.input_value('#timeline'));ensure(a>0,'Replay did not advance actual clock');pg.locator('#play').click();b=float(pg.input_value('#timeline'));pg.wait_for_timeout(220);c=float(pg.input_value('#timeline'));ensure(abs(c-b)<1e-9,'Pause did not hold time');return {'playing_time':a,'paused_time':b}
  check('Cell replay and pause control the recorded event clock',pause_replay)
  def storage():
-  return pg.evaluate('async()=>{const r=ResearchRecords.create(ResearchExperiments.getLatest().lab,ResearchExperiments.getLatest().result,{title:"Browser verification cell record"});await ResearchStorage.put(r);return {id:r.id,revision:r.revision};}')
- check('Original native record schema can be saved to IndexedDB',storage)
+  return pg.evaluate('async()=>{const r=ResearchRecords.create(ResearchExperiments.getLatest().lab,ResearchExperiments.getLatest().result,"Browser verification cell record");await ExperimentStore.put(r);const loaded=await ExperimentStore.get(r.id);if(!loaded||loaded.id!==r.id)throw Error("Saved record could not be read back");return {id:r.id,revision:r.revision,read_back:true};}')
+ check('Original native record schema saves and restores through IndexedDB',storage)
  pg.close()"""
 assert a in s;s=s.replace(a,b)
-# Capture filmstrip views of the real recovered scenes. No synthetic frames.
 a="check('Lipid mechanism rendered',lambda:snap(pg,'04-lipid-chain','#molecularA'));"
 b="""check('Lipid mechanism rendered',lambda:snap(pg,'04-lipid-chain','#molecularA'));
  def lipid_frames():
@@ -37,4 +35,4 @@ b="""check('Lipid mechanism rendered',lambda:snap(pg,'04-lipid-chain','#molecula
  check('Lipid source filmstrip at declared physical times',lipid_frames);"""
 assert a in s;s=s.replace(a,b)
 p.write_text(s)
-print('Browser tests now reveal original export disclosures and inspect event clock, resource comparison and persistent records.')
+print('Probes cover source disclosure navigation, exact event clocks, paired resource states and native persistent records.')
