@@ -1,17 +1,16 @@
 {
-  "version": "79.1.0-design",
+  "version": "80.0.0",
   "name": "FokoLab",
-  "mark": "Phase-space aperture: two offset trajectories and an observation point. Editorial identity, not computed evidence.",
-  "paletteSource": "src/platform/identity-map.js",
-  "families": 7,
-  "laboratories": 20,
-  "typography": "Native system sans for interface; Georgia for editorial emphasis. No font binaries included.",
-  "principle": "Page identity, computation status and scientific plot colors are independent. Every lab is identified in words and with a dedicated pictogram.",
-  "scope": "All authored page identities and navigation; numerical models and method selectors retained.",
+  "concept": "coupled trajectories across scales",
+  "principle": "Master mark encodes dynamical trajectories, branching interactions and multiple scientific scales; laboratory emblems encode the actual scientific operation.",
   "palette": {
-    "ink": "#1c3f52",
-    "teal": "#147278",
-    "copper": "#ac5934"
+    "ink": "#19373f",
+    "teal": "#1c6672",
+    "rust": "#a85c35",
+    "leaf": "#6f8f5c",
+    "violet": "#725f95",
+    "gold": "#d7a35f",
+    "paper": "#f7f6f2"
   },
-  "bookPartPalette": "materials/book-manifest.json#/visualIdentity"
+  "status": "Visual identity only; color never encodes validation status."
 }

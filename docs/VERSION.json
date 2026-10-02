@@ -1,9 +1,8 @@
 {
-  "version": "79.2.0",
-  "token": "79.2.0",
-  "release": "79.2.0",
-  "name": "FokoLab 79.2.0 Integrated Update",
-  "basedOn": "79.1",
-  "build": "79.2.0-integrated",
-  "validationScope": "See release-evidence.json. Source preservation and executed tests are separate from empirical validation."
+  "version": "80.0.0",
+  "release": "Unified FokoLab",
+  "date": "2026-10-02",
+  "identity": "dynamic-systems",
+  "experiment_library": true,
+  "notes": "Unifies preserved FokoLab workspaces with expanded biological, seasonal, stochastic, spatial and mathematical experiment laboratories."
 }

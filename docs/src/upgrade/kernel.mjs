@@ -42,5 +42,5 @@ export async function compute(raw){
  const q=validateRequest(raw),started=performance.now();let r;
  switch(q.lab){case'plant':r=plantBalance(q);break;case'leaf':r=leafExperiment(q);break;case'adaptation':r=adaptation(q);break;case'lipids':case'tcell':r=await originalODE(q);break;case'randomness':r=q.method==='dice'?dice(q):stochastic(q);break;case'branching':r=branching(q);break;case'diffusion':r=diffusion(q);break;case'fractals':r=fractals(q);break;default:throw Error('Unknown computation.');}
  if(!Array.isArray(r.rows)||!r.rows.length||r.rows.some(row=>row.some(x=>typeof x!=='number'||!Number.isFinite(x))))throw Error('The computation produced an invalid result table. No result was published.');
- r.request=q;r.version='79.2.0';r.runtimeMs=performance.now()-started;r.createdAt=new Date().toISOString();return r;
+ r.request=q;r.version='80.0.0';r.runtimeMs=performance.now()-started;r.createdAt=new Date().toISOString();return r;
 }

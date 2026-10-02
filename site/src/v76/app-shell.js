@@ -38,6 +38,7 @@
 
   const LAB_IDENTITIES = Object.freeze({
     home: ['platform', 'Overview'],
+    experiments: ['model-engineering', 'Experiment library'],
     'plant-growth': ['model-engineering', 'Plant growth'],
     'leaf-physiology': ['model-engineering', 'Leaf physiology'],
     adaptation: ['populations-evolution', 'Seasonal adaptation'],
@@ -47,6 +48,7 @@
     branching: ['populations-evolution', 'Branching processes'],
     diffusion: ['dynamical-systems', 'Spatial diffusion'],
     fractals: ['mathematical-structure', 'Fractals'],
+    experiments: ['model-engineering', 'Experiment library'],
     practice: ['resources', 'Worked companions'],
     workspace: ['model-engineering', 'Connected experiment'],
     learn: ['resources', 'Learn & practice'],
@@ -223,6 +225,7 @@
   };
 
   // Additive 79.2 routes. Original menu items and destinations remain unchanged.
+  GROUPS.experiment.sections.unshift({title:'Unified experiment library',items:[['◉','Experiment library','Search original and expanded scenarios in one catalogue.','experiments.html']]});
   GROUPS.experiment.sections.unshift({title:'Living systems & seasonal environments',items:[
     ['↟','Plant growth','Finite carbon, water and nitrogen budgets; explicit seasons.','plant-growth.html'],
     ['☼','Leaf physiology','C3 gas exchange and dynamic leaf energy balance.','leaf-physiology.html'],
@@ -238,7 +241,7 @@
   ]});
   GROUPS.profile.sections[0].items.splice(4,0,['∑','Worked companions','Additional calculations; original book/practice links retained.','practice.html']);
   const ACTIVE_FAMILIES = {
-    'plant-growth':'experiment','leaf-physiology':'experiment',adaptation:'experiment',lipids:'experiment',tcell:'experiment',randomness:'experiment',branching:'experiment',diffusion:'experiment',fractals:'experiment',
+    experiments:'experiment','plant-growth':'experiment','leaf-physiology':'experiment',adaptation:'experiment',lipids:'experiment',tcell:'experiment',randomness:'experiment',branching:'experiment',diffusion:'experiment',fractals:'experiment',
     studio: 'model',
     ode: 'experiment',
     stochastic: 'experiment',
@@ -692,6 +695,7 @@
   }
   function install() {
     if (doc.body.dataset.v76Ready === 'true') return;
+    if(!doc.querySelector('link[data-foko-unified]')){const l=doc.createElement('link');l.rel='stylesheet';l.href=route('styles/unified.css');l.dataset.fokoUnified='true';doc.head.append(l);}
     doc.body.dataset.v76Shell = 'true';
     const identity = currentIdentity();
     if (!doc.body.dataset.lab) doc.body.dataset.lab = identity.lab;
@@ -748,7 +752,7 @@
 if(typeof window!=='undefined'){
 /* source: src/platform/identity-map.js */
 /* Canonical presentation identities; colors never confer scientific status. */
-(function(r){const d={"families":{"foundation":{"label":"Model & mathematics","color":"#245e7b","dark":"#96cdea","soft":"#eaf2f7","icon":"structure"},"dynamics":{"label":"Dynamical systems","color":"#166d79","dark":"#87d5dc","soft":"#e6f3f4","icon":"trajectory"},"living":{"label":"Populations & living systems","color":"#486b44","dark":"#b2d3a8","soft":"#edf3e9","icon":"population"},"inference":{"label":"Inference & uncertainty","color":"#655198","dark":"#cbbbed","soft":"#f0edf7","icon":"inference"},"decisions":{"label":"Optimization & decisions","color":"#9e4928","dark":"#f0b69a","soft":"#f9eee7","icon":"optimization"},"intelligence":{"label":"Machine learning & scientific AI","color":"#435ca0","dark":"#b3c6ff","soft":"#edf1fc","icon":"intelligence"},"learning":{"label":"Book, learning & research","color":"#7c5b24","dark":"#e4cd9b","soft":"#f5f0e4","icon":"book"}},"pages":{"index":"foundation","studio":"foundation","workbench":"foundation","workspace":"foundation","linear-algebra":"foundation","symbolic":"foundation","beauty":"foundation","ode":"dynamics","stochastic":"dynamics","steady":"dynamics","bifurcation":"dynamics","networks":"living","agent":"living","population-genetics":"living","evolution":"living","photosynthesis":"living","fatty-acid-metabolism":"living","tcell-proliferation":"living","sensitivity":"inference","statistics":"inference","fitting":"inference","advanced-methods":"inference","optimization":"decisions","ml":"intelligence","sciml":"intelligence","ai-modeling":"intelligence","book":"learning","book-observations":"learning","learn":"learning","programme":"learning","docs":"learning","tutorial":"learning","research":"learning","examples":"foundation","library":"foundation","labs":"foundation"},"parts":{"I":"foundation","II":"dynamics","III":"inference","IV":"decisions","V":"intelligence","VI":"living","VII":"learning"},"icons":["home","studio","workbench","ode","stochastic","steady","bifurcation","agent","population-genetics","evolution","sensitivity","optimization","fitting","statistics","advanced-methods","ai-modeling","sciml","ml","linear-algebra","networks","symbolic","examples","book","programme","learn","research","docs","workspace","labs","beauty"],"bookParts":{"I":{"source":"#2374a6","color":"#21668e","dark":"#99cfee","soft":"#edf4f8","sourcePage":28},"II":{"source":"#4055a8","color":"#4055a8","dark":"#b8c6ff","soft":"#eff1fb","sourcePage":99},"III":{"source":"#2f7d4a","color":"#286e40","dark":"#ace0bc","soft":"#edf6ef","sourcePage":131},"IV":{"source":"#c56a1a","color":"#8e4810","dark":"#f0c29b","soft":"#faf0e7","sourcePage":205},"V":{"source":"#6842a6","color":"#6842a6","dark":"#d1baf4","soft":"#f3eef9","sourcePage":247},"VI":{"source":"#a63c3c","color":"#a03939","dark":"#f0b7b7","soft":"#fbefef","sourcePage":297},"VII":{"source":"#b3861b","color":"#7b5b12","dark":"#eed29d","soft":"#f8f2e6","sourcePage":378}}};if(typeof module!=="undefined"&&module.exports)module.exports=d;if(r)r.FokoIdentityMap=d;})(typeof window!=="undefined"?window:globalThis);
+(function(r){const d={"families":{"foundation":{"label":"Model & mathematics","color":"#245e7b","dark":"#96cdea","soft":"#eaf2f7","icon":"structure"},"dynamics":{"label":"Dynamical systems","color":"#166d79","dark":"#87d5dc","soft":"#e6f3f4","icon":"trajectory"},"living":{"label":"Populations & living systems","color":"#486b44","dark":"#b2d3a8","soft":"#edf3e9","icon":"population"},"inference":{"label":"Inference & uncertainty","color":"#655198","dark":"#cbbbed","soft":"#f0edf7","icon":"inference"},"decisions":{"label":"Optimization & decisions","color":"#9e4928","dark":"#f0b69a","soft":"#f9eee7","icon":"optimization"},"intelligence":{"label":"Machine learning & scientific AI","color":"#435ca0","dark":"#b3c6ff","soft":"#edf1fc","icon":"intelligence"},"learning":{"label":"Book, learning & research","color":"#7c5b24","dark":"#e4cd9b","soft":"#f5f0e4","icon":"book"}},"pages":{"index":"foundation","experiments":"foundation","plant-growth":"living","leaf-physiology":"living","adaptation":"living","lipids":"living","tcell":"living","randomness":"dynamics","branching":"living","diffusion":"dynamics","fractals":"foundation","studio":"foundation","workbench":"foundation","workspace":"foundation","linear-algebra":"foundation","symbolic":"foundation","beauty":"foundation","ode":"dynamics","stochastic":"dynamics","steady":"dynamics","bifurcation":"dynamics","networks":"living","agent":"living","population-genetics":"living","evolution":"living","photosynthesis":"living","fatty-acid-metabolism":"living","tcell-proliferation":"living","sensitivity":"inference","statistics":"inference","fitting":"inference","advanced-methods":"inference","optimization":"decisions","ml":"intelligence","sciml":"intelligence","ai-modeling":"intelligence","book":"learning","book-observations":"learning","learn":"learning","programme":"learning","docs":"learning","tutorial":"learning","research":"learning","examples":"foundation","library":"foundation","labs":"foundation"},"parts":{"I":"foundation","II":"dynamics","III":"inference","IV":"decisions","V":"intelligence","VI":"living","VII":"learning"},"icons":["home","experiments","plant-growth","leaf-physiology","adaptation","lipids","tcell","randomness","branching","diffusion","fractals","studio","workbench","ode","stochastic","steady","bifurcation","agent","population-genetics","evolution","sensitivity","optimization","fitting","statistics","advanced-methods","ai-modeling","sciml","ml","linear-algebra","networks","symbolic","examples","book","programme","learn","research","docs","workspace","labs","beauty"],"bookParts":{"I":{"source":"#2374a6","color":"#21668e","dark":"#99cfee","soft":"#edf4f8","sourcePage":28},"II":{"source":"#4055a8","color":"#4055a8","dark":"#b8c6ff","soft":"#eff1fb","sourcePage":99},"III":{"source":"#2f7d4a","color":"#286e40","dark":"#ace0bc","soft":"#edf6ef","sourcePage":131},"IV":{"source":"#c56a1a","color":"#8e4810","dark":"#f0c29b","soft":"#faf0e7","sourcePage":205},"V":{"source":"#6842a6","color":"#6842a6","dark":"#d1baf4","soft":"#f3eef9","sourcePage":247},"VI":{"source":"#a63c3c","color":"#a03939","dark":"#f0b7b7","soft":"#fbefef","sourcePage":297},"VII":{"source":"#b3861b","color":"#7b5b12","dark":"#eed29d","soft":"#f8f2e6","sourcePage":378}}};if(typeof module!=="undefined"&&module.exports)module.exports=d;if(r)r.FokoIdentityMap=d;})(typeof window!=="undefined"?window:globalThis);
 
 ;
 /* source: src/platform/visual-identity.js */
@@ -763,7 +767,7 @@ if(typeof window!=='undefined'){
  const safeHref=h=>h&&!/^(?:https?:|mailto:|#|data:)/i.test(h);
  const routeKey=h=>String(h||'').split('?')[0].split('#')[0].split('/').pop().replace(/\.html$/,'');
  const iconKey=k=>I.icons.includes(k)?k:(k==='index'?'home':k==='library'?'examples':'docs');
- function icon(key,size=40){const image=doc.createElement('img');image.className='identity-icon';image.src=base+'assets/lab-logos/'+(doc.documentElement.dataset.appearance==='dark'?'dark/':'')+iconKey(key)+'.svg';image.alt='';image.width=size;image.height=size;image.setAttribute('aria-hidden','true');return image;}
+ function icon(key,size=40){const image=doc.createElement('img');image.className='identity-icon';image.src=base+'assets/lab-logos/'+iconKey(key)+'.svg';image.alt='';image.width=size;image.height=size;image.setAttribute('aria-hidden','true');return image;}
  function decorate(scope=doc){
   scope.querySelectorAll('.directory-item:not([data-identity-ready])').forEach(card=>{
    const key=routeKey(card.querySelector('a')?.getAttribute('href'));card.dataset.colorFamily=I.pages[key]||'learning';card.dataset.identityReady='true';
@@ -795,7 +799,7 @@ if(typeof window!=='undefined'){
   const mode=doc.documentElement.dataset.appearance||'light';
   const img=mode==='dark'?'foko-lab-mark-reversed.svg':'foko-lab-micro.svg';
   doc.querySelectorAll('.brand>img,.foko-brand-mark>img').forEach(x=>{const src=base+'assets/brand/'+img;if(!x.getAttribute('src')?.endsWith(img))x.src=src;});
-  doc.querySelectorAll('img[src*="assets/lab-logos/"]').forEach(x=>{const name=x.getAttribute('src').split('/').pop();x.src=base+'assets/lab-logos/'+(mode==='dark'?'dark/':'')+name;});
+  doc.querySelectorAll('img[src*="assets/lab-logos/"]').forEach(x=>{const name=x.getAttribute('src').split('/').pop();x.src=base+'assets/lab-logos/'+name;});
   doc.querySelectorAll('.identity-guide-mark>img').forEach(x=>{const name=x.getAttribute('src').split('/').pop().replace('-dark','');x.src=base+'assets/brand/'+name.replace('.svg',(mode==='dark'?'-dark':'')+'.svg');});
   // Keep appearance usable when storage is denied.
 
@@ -811,7 +815,7 @@ if(typeof window!=='undefined'){
  // Observe only collections / overlays, never the numerical chart subtree.
  ['labDirectory','atlasGridV72','libraryResults','commandResults','v76-shell-portal'].forEach(id=>{const el=doc.getElementById(id);if(el)observer.observe(el,{subtree:true,childList:true});});
  // Small, explicit page helpers; do not alter run callbacks or interpretation.
- root.FokoVisualIdentity={version:'79.1.0-design',family,decorate};
+ root.FokoVisualIdentity={version:'80.0.0-unified',family,decorate};
 })(window);
 
 }
