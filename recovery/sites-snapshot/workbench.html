@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html data-color-family="foundation" data-theme="aurora" lang="en">
+<head><script data-foko-integrated-asset="true" src="src/integration/registry.js?v=a51aee3fc8e0"></script><script data-foko-integrated-asset="true" src="src/integration/transfer.js?v=e34e8b4ca1f9"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Compare two analyses on one model or dataset, with methods, diagnostics, and export options kept together." name="description"/>
+<title>Scientific Workbench · Foko Lab</title>
+<script defer="" src="src/platform/storage.js?v=10eaaa8f2208"></script><script defer="" src="assets/vendor/plotly/plotly-2.35.2.min.js?v=ba0e286571a1"></script>
+<link href="assets/brand/foko-symbol.png?v=dcc9db6a522f" rel="icon" type="image/svg+xml"/>
+<link href="assets/brand/favicon-32.png?v=875eee871418" rel="icon" sizes="32x32" type="image/png"/>
+<link href="favicon.ico?v=4bc3365224a8" rel="icon" sizes="any"/>
+<link href="assets/brand/apple-touch-icon.png?v=78.2.0" rel="apple-touch-icon"/>
+<link href="styles/v72-tokens.css?v=a0355d1a4064" rel="stylesheet"/>
+<link href="styles/v72-lab-shell.css?v=a5b88ebc1629" rel="stylesheet"/>
+<link href="styles/v72-workbench.css?v=6896fad0d309" rel="stylesheet"/>
+<link href="styles/v72-accessibility-performance.css?v=10264aaa1691" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=7b3f25016434"></script><link href="styles/v76-system.css?v=85328be331b5" rel="stylesheet"/>
+<link data-foko-integrated-asset="true" href="styles/identity.css?v=1307b285f3de" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link data-foko-integrated-asset="true" href="styles/instrument.css?v=3dafd6d5482b" rel="stylesheet"/><script data-foko-integrated-asset="true" defer="" src="src/integration/shell.js?v=f869b1aa75ba"></script><script data-foko-integrated-asset="true" defer="" src="src/integration/connect.js?v=7c35d206ff5b"></script><script data-foko-integrated-asset="true" defer="" src="src/integration/controls.js?v=2cfa4ed86740"></script><script data-foko-integrated-asset="true" defer="" src="src/integration/workbench.js?v=f352ec63ecf5"></script><script data-foko-integrated-asset="true" defer="" src="src/integration/figure-tools.js?v=75d831156b2e"></script><script data-foko-integrated-asset="true" defer="" src="src/integration/model-export.js?v=3753847749e0"></script><script data-foko-integrated-asset="true" defer="" src="src/integration/run-feedback.js?v=69aa518dee9b"></script></head>
+<body data-color-family="foundation" data-foko-integrated="true" data-lab="workbench" data-page-key="workbench" data-v72-shell="true"><a class="skip-link" href="#main-content">Skip to scientific workspace</a>
+<div class="app-shell wb-app">
+<header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
+<main class="wb-page" id="main-content" tabindex="-1">
+<section aria-labelledby="workbenchTitle" class="wb-context">
+<div>
+<p class="eyebrow">MULTI-LAB WORKSPACE</p>
+<h1 id="workbenchTitle">Compare analyses in one workspace.</h1>
+<p>Choose a worked example, adjust its settings, and compare two complementary views of the result.</p>
+</div>
+<div class="wb-context-actions">
+<button class="primary" id="wbRun" type="button">Run analysis</button>
+<a class="secondary-link" href="ode.html" id="wbOpenFocused">Open focused lab</a>
+</div>
+</section>
+<section class="wb-layout">
+<aside aria-label="Model and settings" class="wb-left">
+<section class="wb-panel wb-selector-panel">
+<p class="panel-kicker">WORKFLOW</p>
+<label for="wbAdapter">Analysis type</label>
+<select id="wbAdapter"></select>
+<label for="wbPreset">Example</label>
+<select id="wbPreset"></select>
+<div class="wb-adapter-identity" id="wbAdapterIdentity"></div>
+</section>
+<section class="wb-panel">
+<div class="wb-panel-head"><div><p class="panel-kicker">QUICK CONTROLS</p><h2>Configuration</h2></div><button class="mini-button" id="wbReset" type="button">Reset</button></div>
+<div class="wb-control-grid" id="wbQuickControls"></div>
+<details class="wb-json-details">
+<summary>Advanced configuration</summary>
+<textarea aria-label="Advanced configuration" id="wbConfigJson" rows="16" spellcheck="false"></textarea>
+<button class="secondary" id="wbApplyJson" type="button">Apply JSON</button>
+<label class="upload-drop"><span>Import configuration</span><input accept="application/json,.json" id="wbImportJson" type="file"/></label>
+</details>
+</section>
+<section class="wb-panel wb-scope-panel">
+<p class="panel-kicker">SCOPE</p>
+<h2>When to use this workspace</h2>
+<p>Use this workspace to compare views quickly. Open the dedicated lab when you need full model editing or advanced controls.</p>
+</section>
+</aside>
+<section aria-label="Results" class="wb-center">
+<header class="wb-workspace-head">
+<div><p class="panel-kicker">RESULTS</p><h2 id="wbWorkspaceTitle">Compare two views of the result</h2><p id="wbWorkspaceSubtitle">Choose an example and run the analysis.</p></div>
+<div aria-label="Plot layout" class="wb-layout-switch" role="group">
+<button class="active" data-layout-mode="two" data-wb-layout="two" type="button">2-up</button>
+<button data-layout-mode="focus" data-wb-layout="focus" type="button">Focus</button>
+</div>
+</header>
+<div class="wb-export-row"><button id="wbCurrentPng" type="button">Current PNG</button><button id="wbCurrentSvg" type="button">Current SVG</button></div>
+<div aria-live="polite" class="wb-plot-grid layout-two" data-focus-side="left" data-layout="two" data-layout-reason="user-two" data-preferred-layout="two" id="wbPlotGrid">
+<article class="wb-plot-card" data-card="0" data-plot-card="left"><header><h3 id="wbPlotTitle0">Primary plot</h3><div class="wb-card-controls"><select aria-label="Primary plot" id="wbPlotSelect0"></select><button data-wb-focus="0" type="button">Focus</button><button aria-label="Download primary plot" data-wb-download="0" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot0"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Interpretation &amp; limits</summary><p id="wbMeaning0"></p></details></article>
+<article class="wb-plot-card" data-card="1" data-plot-card="right"><header><h3 id="wbPlotTitle1">Diagnostic plot</h3><div class="wb-card-controls"><select aria-label="Diagnostic plot" id="wbPlotSelect1"></select><button data-wb-focus="1" type="button">Focus</button><button aria-label="Download diagnostic plot" data-wb-download="1" type="button">⇩</button></div></header><div class="wb-plot" id="wbPlot1"><div class="wb-empty">Run the analysis to create a plot.</div></div><details><summary>Interpretation &amp; limits</summary><p id="wbMeaning1"></p></details></article>
+</div>
+</section>
+<aside aria-label="Run evidence and provenance" class="wb-right">
+<section class="wb-panel">
+<p class="panel-kicker">RUN STATUS</p>
+<div class="wb-status ready" id="wbStatus"><span></span><strong>Ready</strong></div>
+<div class="wb-metrics" id="wbMetrics"></div>
+</section>
+<section class="wb-panel">
+<p class="panel-kicker">NUMERICAL EVIDENCE</p>
+<h2>Diagnostics</h2>
+<div class="wb-message-list" id="wbWarnings"><p>Run the analysis to view diagnostics and warnings.</p></div>
+</section>
+<section class="wb-panel">
+<p class="panel-kicker">METHOD</p>
+<h2>How this result was produced</h2>
+<ul class="wb-provenance" id="wbProvenance"><li>Run an analysis to view method details.</li></ul>
+</section>
+<section class="wb-panel">
+<p class="panel-kicker">PROJECT</p>
+<div class="wb-project-actions">
+<button id="wbSave" type="button">Save configuration</button>
+<button id="wbRestore" type="button">Restore configuration</button>
+<button id="wbShare" type="button">Copy share URL</button>
+<button id="wbExport" type="button">Export result bundle</button>
+</div>
+</section>
+</aside>
+</section>
+</main>
+<div aria-live="polite" class="wb-toast" id="wbToast" role="status"></div>
+</div>
+<script defer="" src="src/core/ode.js?v=3369d853c144"></script>
+<script defer="" src="src/core/steady.js?v=df7ac49877b3"></script>
+<script defer="" src="src/core/stochastic.js?v=026ffeff03ee"></script>
+<script defer="" src="src/core/optimization.js?v=5ae65105eea3"></script>
+<script defer="" src="src/core/data.js?v=bc085b9a00c8"></script>
+<script defer="" src="src/core/statistics.js?v=54bee036431d"></script>
+<script defer="" src="src/core/fitting.js?v=612e45ab1c83"></script>
+<script defer="" src="src/core/linalg-reference.js?v=7f3cfc325920"></script>
+<script defer="" src="src/core/networks-reference.js?v=dbb3a193cde3"></script>
+<script defer="" src="src/core/ml-reference.js?v=23167dde6f29"></script>
+<script defer="" src="src/core/sindy.js?v=d03a20bc08c4"></script>
+<script defer="" src="src/core/agent-reference.js?v=260dd5a4b962"></script>
+<script defer="" src="src/models/agent-presets.js?v=8beac351a5eb"></script>
+<script defer="" src="src/workbench/adapters.js?v=00614acabc20"></script>
+<script defer="" src="src/v72/workbench-workspace.js?v=cbd9cd400376"></script>
+<script defer="" src="src/v72/scientific-registry.js?v=2f6af94280d2"></script>
+<script defer="" src="src/models/search-index.js?v=ce660202569e"></script><script defer="" src="src/v76/app-shell.js?v=b186a6f863f1"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4437e3b3fa5b296',t:'MTc5MDk0MTg2NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,13 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 170' role='img' aria-label='Fatty-acid de novo synthesis particle-state tracker illustration'><rect width='360' height='170' rx='22' fill='#f8fafc'/><rect x='1' y='1' width='358' height='168' rx='22' fill='none' stroke='#d7e2f0'/><style>text{font-family:Inter,Arial,sans-serif;font-size:12px;fill:#334155;font-weight:700}.small{font-size:10px;fill:#64748b;font-weight:650}.line{stroke:#94a3b8;stroke-width:2;fill:none;stroke-linecap:round}.dash{stroke:#94a3b8;stroke-width:2;fill:none;stroke-dasharray:5 5}.node{stroke:#fff;stroke-width:2}</style>
+<text x='18' y='24'>FADNS particle-state tracker</text>
+<g transform='translate(18 44)'>
+<rect x='0' y='34' width='60' height='32' rx='14' fill='#2563eb'/><text x='7' y='55' fill='white'>Acetyl</text>
+<rect x='78' y='34' width='64' height='32' rx='14' fill='#0f766e'/><text x='85' y='55' fill='white'>Malonyl</text>
+<path class='line' d='M62 50 H76M144 50 H184'/><circle cx='212' cy='50' r='19' fill='#f59e0b'/><text class='small' x='184' y='87'>intermediate</text>
+<path class='line' d='M234 50 C260 18 286 18 310 32'/><path class='line' d='M236 50 H314'/><path class='line' d='M234 50 C260 84 286 84 310 68'/>
+<circle cx='322' cy='30' r='13' fill='#ef4444'/><text class='small' x='306' y='18'>C14</text>
+<circle cx='322' cy='50' r='13' fill='#db2777'/><text class='small' x='306' y='92'>C16</text>
+<circle cx='322' cy='70' r='13' fill='#7c3aed'/><text class='small' x='306' y='122'>C18</text>
+<text class='small' x='20' y='112'>CoA released after chain-transfer steps</text>
+</g>
+</svg>
