@@ -2,10 +2,10 @@
  * is implemented by terminating the worker from the workspace controller.
  */
 'use strict';
-importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=79.2.0');
-importScripts('../core/ode.js?v=79.2.0');
-importScripts('../core/sensitivity.js?v=79.2.0');
-importScripts('../core/numerical-inputs.js?v=79.2.0');
+importScripts('../../assets/vendor/mathjs/math-15.2.0.js?v=78.2.0');
+importScripts('../core/ode.js?v=81.1');
+importScripts('../core/sensitivity.js?v=78.2.0');
+importScripts('../core/numerical-inputs.js?v=78.2.0');
 
 function stableParameterKey(params) {
   return Object.keys(params).sort().map(name => `${name}:${Number(params[name]).toPrecision(17)}`).join('|');
@@ -25,7 +25,9 @@ function compileModel(model, progress) {
       const zeros = Object.entries(scope).filter(([, entry]) => Number.isFinite(Number(entry)) && Math.abs(Number(entry)) <= Number.EPSILON).map(([name]) => name);
       const denominator = zeros.find(name => new RegExp(`/\\s*(?:\\([^)]*)?\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(source));
       const context = Object.entries(scope).slice(0, 12).map(([name, entry]) => `${name}=${Number(entry).toPrecision(5)}`).join(', ');
-      throw new Error(`Equation ${index + 1} became non-finite during sensitivity analysis at t=${Number(t).toPrecision(6)}: “${source}”.${denominator ? ` Likely division by zero: ${denominator}=0.` : ' Check the model domain, parameter ranges and state scaling.'} Current values: ${context}.`);
+      const error = new Error(`Equation ${index + 1} became non-finite during sensitivity analysis at t=${Number(t).toPrecision(6)}: “${source}”.${denominator ? ` Likely division by zero: ${denominator}=0.` : ' Check the model domain, parameter ranges and state scaling.'} Current values: ${context}.`);
+      error.code = 'FOKO_RHS_DOMAIN';
+      throw error;
     });
     return values;
   }

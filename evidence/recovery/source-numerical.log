@@ -1,0 +1,24 @@
+PASS Original activation: exact cell-history/event accounting
+PASS Original birthdeath: exact cell-history/event accounting
+PASS Original age: exact cell-history/event accounting
+PASS Original cyton: exact cell-history/event accounting
+PASS Original kimmel: exact cell-history/event accounting
+PASS Original lipid synthesis: source solver and mass audit
+PASS Original lipid metabolism: source solver and mass audit
+PASS Original plant: pathway resource ledgers and seeded forcing
+PASS Original plant: no hidden water inflow without rain or irrigation
+PASS Original coupled leaf: finite source response, immutable inputs
+PASS Original Kimura neutral fixation probability
+PASS Original accepted substitutions: times, transitions and seed replay
+PASS Source Morris: independent analytic linear response
+PASS Source Sobol: independent analytic variance fractions
+PASS Source PCA: normalized variance and orthonormal components
+PASS Original random tree: seeded event/frame replay
+PASS Original random chaos: seeded event/frame replay
+PASS Original random colony: seeded event/frame replay
+PASS Original random walk: seeded event/frame replay
+PASS Original random brownian: seeded event/frame replay
+PASS Original random branching: seeded event/frame replay
+PASS Original random birthdeath: seeded event/frame replay
+PASS Preservation manifest: all original scientific source hashes match
+{"passed":23,"failed":0}

@@ -292,6 +292,8 @@
     let y = valid.y0.slice();
     let accepted = 0;
     let rejected = 0;
+    let domainRejections = 0;
+    let consecutiveDomainRejections = 0;
     let functionEvaluations = 0;
     let minStep = Infinity;
     let maxUsed = 0;
@@ -330,10 +332,24 @@
           assert(guard <= stepBudget && accepted + rejected < stepBudget, 'Adaptive step limit reached. The problem may be stiff or unstable.');
           if (Math.abs(h) > Math.abs(target - t)) h = target - t;
           assert(t + h !== t && Number.isFinite(h), 'Step underflow: cannot advance time while satisfying the requested tolerance. Rescale time or use an independent solver.');
-          const step = valid.method === 'heun_adaptive'
-            ? heunAdaptiveStep(rhs, t, y, h, params, rtol, atol)
-            : rk45Step(rhs, t, y, h, params, rtol, atol);
-          functionEvaluations += step.evaluations;
+          let step, trialEvaluations = 0;
+          const trialRhs = (at, state, parameters) => { trialEvaluations += 1; return rhs(at, state, parameters); };
+          try {
+            step = valid.method === 'heun_adaptive'
+              ? heunAdaptiveStep(trialRhs, t, y, h, params, rtol, atol)
+              : rk45Step(trialRhs, t, y, h, params, rtol, atol);
+          } catch (error) {
+            functionEvaluations += trialEvaluations;
+            // A valid resident state can have an invalid intermediate RK stage.
+            // Only explicitly typed numeric-domain errors after stage one are retryable.
+            // Syntax errors, invalid initial states and fixed-step methods still fail.
+            if (error.code !== 'FOKO_RHS_DOMAIN' || trialEvaluations <= 1 || consecutiveDomainRejections >= 32) throw error;
+            consecutiveDomainRejections += 1; domainRejections += 1; rejected += 1;
+            recordStep(t, h, Infinity, false);
+            h *= 0.2;
+            continue;
+          }
+          functionEvaluations += trialEvaluations;
           const acceptedStep = Number.isFinite(step.error) && step.error <= 1;
           recordStep(t, h, step.error, acceptedStep);
           if (acceptedStep) {
@@ -341,6 +357,7 @@
             y = step.y;
             validateState(y);
             accepted += 1;
+            consecutiveDomainRejections = 0;
             minStep = Math.min(minStep, Math.abs(h));
             maxUsed = Math.max(maxUsed, Math.abs(h));
             const factor = Math.min(4, Math.max(0.15, safety * Math.pow(1 / Math.max(step.error, 1e-12), 0.2)));
@@ -405,6 +422,7 @@
         method: valid.method,
         accepted,
         rejected,
+        domainRejections,
         rejectionRatio,
         functionEvaluations,
         runtime,

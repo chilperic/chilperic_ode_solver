@@ -188,6 +188,7 @@
   }
 
   function loadPreset(name, recompute) {
+    root.FokoTransfer?.clear();
     const preset = PRESETS[name] || PRESETS[Object.keys(PRESETS)[0]];
     if (!preset) throw new Error('No Statistics preset is available.');
     state.currentName = Object.keys(PRESETS).find(function (key) { return PRESETS[key] === preset; }) || name;
@@ -208,6 +209,7 @@
       version: '78.2.0',
       example: state.currentName,
       data: $('statisticsData').value,
+      provenance: root.FokoTransfer?.provenanceFor($('statisticsData').value) || null,
       delimiter: $('statisticsDelimiter').value,
       missingPolicy: $('statisticsMissingPolicy').value,
       mode: $('statisticsMode').value,
@@ -429,6 +431,7 @@
         validateSettings(config);
         const dataset = parseDatasetFromEditor(false);
         state.result = computeResult(dataset, config);
+        state.computedConfiguration = clone(config);
         $('statisticsProgress').style.width = '100%';
         updatePlotSelectors();
         renderAllPlots();
@@ -819,6 +822,7 @@
     if (!config || typeof config.data !== 'string') throw new Error('Saved Statistics configuration is invalid.');
     state.currentName = config.example && PRESETS[config.example] ? config.example : 'Custom data';
     $('statisticsData').value = config.data;
+    root.FokoTransfer?.adopt(config.provenance, config.data);
     $('statisticsDelimiter').value = config.delimiter || 'auto';
     $('statisticsMissingPolicy').value = config.missingPolicy || 'analysis-complete';
     $('statisticsMode').value = config.mode || 'descriptive';
@@ -862,7 +866,7 @@
     const compact = clone(result);
     delete compact.dataset.sourceText;
     if (compact.bootstrapMeans && compact.bootstrapMeans.length > 5000) compact.bootstrapMeans = compact.bootstrapMeans.slice(0, 5000);
-    return { release: '78.2.0', computedAt: new Date().toISOString(), result: compact, warning: 'Inference remains conditional on data quality, sampling and model assumptions.' };
+    return { release: '78.2.0', configuration: clone(state.computedConfiguration), computedAt: new Date().toISOString(), result: compact, warning: 'Inference remains conditional on data quality, sampling and model assumptions.' };
   }
   function exportValidation(language) {
     const config = currentConfig(); const dataset = state.dataset || parseDatasetFromEditor(false); const x = dataset.names[config.x]; const y = dataset.names[config.y]; const group = dataset.names[config.group]; const event = dataset.names[config.event];
@@ -885,7 +889,7 @@
     $('statisticsFile').addEventListener('change', function () {
       const file = this.files && this.files[0]; if (!file) return;
       const reader = new FileReader();
-      reader.onload = function () { $('statisticsData').value = String(reader.result || ''); state.currentName = 'Uploaded data'; try { parseDatasetFromEditor(true); clearComputedEvidence(`Loaded ${file.name}. Run the analysis to compute evidence.`); } catch (error) { showError(error); } };
+      reader.onload = function () { root.FokoTransfer?.clear(); $('statisticsData').value = String(reader.result || ''); state.currentName = 'Uploaded data'; try { parseDatasetFromEditor(true); clearComputedEvidence(`Loaded ${file.name}. Run the analysis to compute evidence.`); } catch (error) { showError(error); } };
       reader.onerror = function () { showError(new Error(`Could not read ${file.name}.`)); };
       reader.readAsText(file);
     });
@@ -914,6 +918,12 @@
     if (storedLayout && LAYOUTS.has(storedLayout.layout)) state.layout = storedLayout.layout;
     if (storedLayout && PLOT_SIDES.includes(storedLayout.focusSide)) state.focusSide = storedLayout.focusSide;
     bindEvents();
+    const transferId = new URLSearchParams(location.search).get('transfer');
+    if (transferId) {
+      try { const payload = root.FokoTransfer.read(transferId); restoreConfiguration(root.FokoTransfer.config(payload, 'statistics'), 'Simulated observable'); applyLayout(); }
+      catch (error) { showError(error); }
+      return; // A failed handoff must never silently run a preset.
+    }
     const url = new URL(location.href); const shared = decodeState(url.searchParams.get('state'));
     if (shared) { try { restoreConfiguration(shared, 'Shared configuration'); } catch (_) { loadPreset(url.searchParams.get('example'), false); } }
     else loadPreset(url.searchParams.get('example'), false);

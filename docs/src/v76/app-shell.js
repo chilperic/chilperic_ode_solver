@@ -703,6 +703,13 @@
     doc.body.dataset.identityLab = identity.lab;
     doc.documentElement.dataset.theme = 'woven-state';
 
+    if (root.FokoUnifiedShell) {
+      doc.querySelector('header.topbar, header.public-topbar')?.remove();
+      adoptTaskNavigation(); installWorkspaceSizing(); prepareReadingNavigation();
+      doc.body.dataset.v76Ready = 'true';
+      doc.dispatchEvent(new CustomEvent('foko:v76-shell-ready'));
+      return;
+    }
     let header = doc.querySelector('header.topbar, header.public-topbar');
     if (!header) {
       header = doc.createElement('header');

@@ -1,0 +1,57 @@
+PASS Homepage navigation and recovered routes
+PASS Catalogue preserves original IDs and complete pagination
+PASS Cell family activation completes in original worker
+PASS Cell family birthdeath completes in original worker
+PASS Cell family age completes in original worker
+PASS Cell family cyton completes in original worker
+PASS Cell family kimmel completes in original worker
+PASS Cell count event accounting
+PASS Cell population scene follows recorded timeline
+PASS Cell next/previous actual event controls
+PASS Cell lineage rendered
+PASS Cell full native JSON export
+PASS Cell replay and pause control the recorded event clock
+PASS Original native record schema saves and restores through IndexedDB
+PASS Source 18-state lipid model
+PASS Lipid molecular scene follows physical clock
+PASS Lipid reaction and product-release stepping
+PASS Lipid mechanism rendered
+PASS Lipid source filmstrip at declared physical times
+PASS Lipid native CSV export
+PASS Source four-pool lipid model remains available
+PASS Original plant default computation
+PASS Plant finite resource ledgers
+PASS All three original plant scenes follow their recorded states
+PASS Plant scene snapshot
+PASS Original sowing-to-reproduction experiment
+PASS Plant native result JSON export
+PASS Paired circulation controls and rotation canvas retained
+PASS Random process tree
+PASS Random process colony
+PASS Random process chaos
+PASS Random process walk
+PASS Random process brownian
+PASS Random process branching
+PASS Random process birthdeath
+PASS Random-process event playback changes scene
+PASS Random process snapshot
+PASS Original Kimura allocation model runs
+PASS Evolution advances on accepted substitutions
+PASS Evolution native event CSV export
+PASS Population evolution comparison runs
+PASS Generation-linked population view
+PASS Evolution/search screenshot
+PASS Original haploid evolution runs
+PASS Source coupled leaf physiology
+PASS Leaf source response plot
+PASS Retained route studio.html
+PASS Retained route optimization.html
+PASS Retained route sensitivity.html
+PASS Retained route statistics.html
+PASS Retained route fitting.html
+PASS Retained route agent.html
+PASS Retained route population-genetics.html
+PASS Retained route book.html
+PASS Retained route saved-experiments.html
+PASS Mobile recovered T-cell reflow
+{"passed": 56, "failed": 0}

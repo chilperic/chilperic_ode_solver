@@ -1,0 +1,1895 @@
+{
+  "version": "80.1.0",
+  "baseline_commit": "fd0024659cb3a7f887360c69419be84754848e02",
+  "source_origin": "https://dice-branch-fractal.chilpericarmel.chatgpt.site/",
+  "source_version": "82.0-instrument",
+  "recovered_paths": 342,
+  "new_paths": [
+    "living.html",
+    "evolution-hub.html",
+    "analysis.html",
+    "integration-notes.html",
+    "engine.js",
+    "random.html",
+    "app.js",
+    "style.css",
+    "plants/plant-renderer.js",
+    "plants/plant-ui.js",
+    "plants/water-circuit.js",
+    "plants/worker.js",
+    "plants/plant-engine.js",
+    "plants/experiment-ui.js",
+    "plants/climate.js",
+    "plants/index.html",
+    "plants/c4-engine.js",
+    "plants/circulation-ui.js",
+    "plants/development.js",
+    "plants/energy-ui.js",
+    "plants/metric-guide.js",
+    "plants/electron-engine.js",
+    "plants/scenario-engine.js",
+    "plants/plant.css",
+    "templates/lipid-model.py",
+    "shared/ode.js",
+    "shared/bio-scenes.js",
+    "shared/model-motion.js",
+    "shared/climate-catalog.js",
+    "shared/analysis-plots.js",
+    "shared/soil-thermal.js",
+    "shared/leaf-scan.js",
+    "shared/linear-network.js",
+    "tcells/tcell-engine.js",
+    "tcells/worker.js",
+    "tcells/index.html",
+    "tcells/tcell.css",
+    "tcells/age-engine.js",
+    "tcells/tcell-ui.js",
+    "lipids/worker.js",
+    "lipids/lipid-ui.js",
+    "lipids/lipid.css",
+    "lipids/index.html",
+    "lipids/lipid-engine.js",
+    "design/investigations.js",
+    "design/workspace.css",
+    "design/lab-themes.css",
+    "design/examples.json",
+    "design/scene-controls.js",
+    "design/quick-conditions.js",
+    "design/leaf-scan-ui.js",
+    "design/atelier.css",
+    "design/workspace.js",
+    "design/analysis-workspace.js",
+    "leaf/leaf-updated.js",
+    "leaf/leaf-engine.js",
+    "leaf/worker.js",
+    "leaf/index.html",
+    "leaf/leaf-ui.js",
+    "leaf/leaf.css",
+    "leaf/presets.json",
+    "styles/instrument.css",
+    "research/storage.js",
+    "research/records.js",
+    "research/engine-hashes.js",
+    "research/index.html",
+    "research/bridge.js",
+    "research/runner.js",
+    "research/evidence.json",
+    "research/research.css",
+    "research/workspace.js",
+    "continuum/evolution-dashboard.js",
+    "continuum/observatory.css",
+    "continuum/studio-renderer.js",
+    "continuum/advanced-ui.js",
+    "continuum/approaches.html",
+    "continuum/strategy-regions.js",
+    "continuum/seasonal-forcing.js",
+    "continuum/worker.js",
+    "continuum/approaches-worker.js",
+    "continuum/landscape.js",
+    "continuum/fokolab-cmaes.js",
+    "continuum/studio.css",
+    "continuum/engine.js",
+    "continuum/index.html",
+    "continuum/landscape-3d.js",
+    "continuum/advanced.html",
+    "continuum/approaches-ui.js",
+    "continuum/advanced-worker.js",
+    "continuum/advanced-engine.js",
+    "continuum/location-forcing.js",
+    "continuum/ui.js",
+    "continuum/style.css",
+    "continuum/journey.js",
+    "continuum/approaches.js",
+    "assets/brand/foko-symbol.png",
+    "src/integration/catalog.js",
+    "src/integration/model-export.js",
+    "src/integration/shell.js",
+    "src/integration/registry.js",
+    "src/integration/examples.json",
+    "src/integration/controls.js",
+    "src/integration/archive.js",
+    "src/integration/figure-tools.js",
+    "src/integration/run-feedback.js",
+    "src/integration/workbench.js",
+    "src/integration/transfer.js",
+    "src/integration/connect.js"
+  ],
+  "scientific_source_checks": [
+    {
+      "path": "engine.js",
+      "source_sha256": "a7d77c4583ebf7a23d80a2903ff1e7e07f166e18676fb88a9edb06f37b7cdece",
+      "integrated_sha256": "a7d77c4583ebf7a23d80a2903ff1e7e07f166e18676fb88a9edb06f37b7cdece",
+      "byte_identical": true
+    },
+    {
+      "path": "app.js",
+      "source_sha256": "b6b088e91d0c4b50f2fd678abf32a000b7a150434b42dd379b2fcf5184658ab6",
+      "integrated_sha256": "b6b088e91d0c4b50f2fd678abf32a000b7a150434b42dd379b2fcf5184658ab6",
+      "byte_identical": true
+    },
+    {
+      "path": "style.css",
+      "source_sha256": "b576818986429de39dd27a719d113a70208222102e8df7d19105097d45bfb63c",
+      "integrated_sha256": "b576818986429de39dd27a719d113a70208222102e8df7d19105097d45bfb63c",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/plant-renderer.js",
+      "source_sha256": "e7633d6a529cbdc93cc9522aeb3babf97cf8a2f409343f22651b59abe151eb15",
+      "integrated_sha256": "e7633d6a529cbdc93cc9522aeb3babf97cf8a2f409343f22651b59abe151eb15",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/plant-ui.js",
+      "source_sha256": "e84838009721f26ce0d06c69c45be52673e3d47ee3ae7e6ffc23b843ef9db618",
+      "integrated_sha256": "e84838009721f26ce0d06c69c45be52673e3d47ee3ae7e6ffc23b843ef9db618",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/water-circuit.js",
+      "source_sha256": "d3878cef26f7a5acdab2d8a8ebccc282f61b87bb0bb30f66280fb2a14231c415",
+      "integrated_sha256": "d3878cef26f7a5acdab2d8a8ebccc282f61b87bb0bb30f66280fb2a14231c415",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/worker.js",
+      "source_sha256": "10433e42094ee2bc0f89b34150ea538eddfa35366b1b409653770895048e1681",
+      "integrated_sha256": "10433e42094ee2bc0f89b34150ea538eddfa35366b1b409653770895048e1681",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/plant-engine.js",
+      "source_sha256": "afc7a86179dbb2584cd1e7978ef92995090432360302773e483fb4d896864e70",
+      "integrated_sha256": "afc7a86179dbb2584cd1e7978ef92995090432360302773e483fb4d896864e70",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/experiment-ui.js",
+      "source_sha256": "083dfd7b330c11557a6be21bb2f0dde084403eade781c59a7ebcf9bf0f488431",
+      "integrated_sha256": "083dfd7b330c11557a6be21bb2f0dde084403eade781c59a7ebcf9bf0f488431",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/climate.js",
+      "source_sha256": "d8affee84bfa1548311c109c30d1c18bb0f09ef66ea224572e7760a8099f5983",
+      "integrated_sha256": "d8affee84bfa1548311c109c30d1c18bb0f09ef66ea224572e7760a8099f5983",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/c4-engine.js",
+      "source_sha256": "e55d0ab1f80fb7dd48eda1ba8d9742e994726c31bfed60f2f79016dfcc90bbb6",
+      "integrated_sha256": "e55d0ab1f80fb7dd48eda1ba8d9742e994726c31bfed60f2f79016dfcc90bbb6",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/circulation-ui.js",
+      "source_sha256": "f9ee89d6e2cc18ff51b4ae7d5abe9a24237a97bc95123c8a3e8298c275fda3d0",
+      "integrated_sha256": "f9ee89d6e2cc18ff51b4ae7d5abe9a24237a97bc95123c8a3e8298c275fda3d0",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/development.js",
+      "source_sha256": "c306d2389b4df1aec1457d57db20f03e269d3f82f9905659deda4efeaef2657c",
+      "integrated_sha256": "c306d2389b4df1aec1457d57db20f03e269d3f82f9905659deda4efeaef2657c",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/energy-ui.js",
+      "source_sha256": "f6b0cc7d06048b098cdbb1629b2dd7860fa5e6aaac0fbaa0d4d2f3e02ee6c536",
+      "integrated_sha256": "f6b0cc7d06048b098cdbb1629b2dd7860fa5e6aaac0fbaa0d4d2f3e02ee6c536",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/metric-guide.js",
+      "source_sha256": "039bd8cafad8e77f8f78a373c0c57e216ee0ad35e9538310bd38174b2cb5d6ce",
+      "integrated_sha256": "039bd8cafad8e77f8f78a373c0c57e216ee0ad35e9538310bd38174b2cb5d6ce",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/electron-engine.js",
+      "source_sha256": "72437cbe5edb4b5bbbf44a0056ed8da1b48468ddafa6afe89cf863150ff34edc",
+      "integrated_sha256": "72437cbe5edb4b5bbbf44a0056ed8da1b48468ddafa6afe89cf863150ff34edc",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/scenario-engine.js",
+      "source_sha256": "0c28e1c453948e0888045fc1e87e0f23d52936d11579be0c04033bde49a2b0ba",
+      "integrated_sha256": "0c28e1c453948e0888045fc1e87e0f23d52936d11579be0c04033bde49a2b0ba",
+      "byte_identical": true
+    },
+    {
+      "path": "plants/plant.css",
+      "source_sha256": "cf6f76a7d47b2fd59d4590a2862a84e7af9247be58eb4c6a75d94acbf7d8851d",
+      "integrated_sha256": "cf6f76a7d47b2fd59d4590a2862a84e7af9247be58eb4c6a75d94acbf7d8851d",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/ode.js",
+      "source_sha256": "58588e2c3a1e0e8c0d6917be8d9b4360e7cb01ec155f2c313a3956b41a0b98fe",
+      "integrated_sha256": "58588e2c3a1e0e8c0d6917be8d9b4360e7cb01ec155f2c313a3956b41a0b98fe",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/bio-scenes.js",
+      "source_sha256": "baa731a35585b57600727aef339223eafb4ecc16be3c24e726c0b6892bd494a8",
+      "integrated_sha256": "baa731a35585b57600727aef339223eafb4ecc16be3c24e726c0b6892bd494a8",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/model-motion.js",
+      "source_sha256": "a8cb6bb7a5a8eec01639a257924a5adc3978dda67aff8a9e8ea991b4920734c5",
+      "integrated_sha256": "a8cb6bb7a5a8eec01639a257924a5adc3978dda67aff8a9e8ea991b4920734c5",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/climate-catalog.js",
+      "source_sha256": "ff1e438caf08f8ec0ec457d99772236089745e33ed74288a27853eb30c0b97dd",
+      "integrated_sha256": "ff1e438caf08f8ec0ec457d99772236089745e33ed74288a27853eb30c0b97dd",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/analysis-plots.js",
+      "source_sha256": "0286ce8e61a6b0b4b034670450ef1aa0b46ef99ff562c3b19b584f6fb25f3678",
+      "integrated_sha256": "0286ce8e61a6b0b4b034670450ef1aa0b46ef99ff562c3b19b584f6fb25f3678",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/soil-thermal.js",
+      "source_sha256": "4b254db362e10eb649b6a1f504a3f36ad884382592721c37f012d2823ef8240b",
+      "integrated_sha256": "4b254db362e10eb649b6a1f504a3f36ad884382592721c37f012d2823ef8240b",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/leaf-scan.js",
+      "source_sha256": "9b3d91b253456e225b81a4be86c31ffd32a7efacc18fd342a61e32b5af7bc4b1",
+      "integrated_sha256": "9b3d91b253456e225b81a4be86c31ffd32a7efacc18fd342a61e32b5af7bc4b1",
+      "byte_identical": true
+    },
+    {
+      "path": "shared/linear-network.js",
+      "source_sha256": "06787613009c1830b51d8670df739da587f3d70db74e8e6f396ef40649c7ee62",
+      "integrated_sha256": "06787613009c1830b51d8670df739da587f3d70db74e8e6f396ef40649c7ee62",
+      "byte_identical": true
+    },
+    {
+      "path": "tcells/tcell-engine.js",
+      "source_sha256": "c7ebd93aaa5f20bbd461039ae56d8c9dbeaef8d04e86d3bffd0118cf6eccd64b",
+      "integrated_sha256": "c7ebd93aaa5f20bbd461039ae56d8c9dbeaef8d04e86d3bffd0118cf6eccd64b",
+      "byte_identical": true
+    },
+    {
+      "path": "tcells/worker.js",
+      "source_sha256": "75af03079794700ec71e16e25cb555aff3ad4bde6871fb6f6276f810a20aec14",
+      "integrated_sha256": "75af03079794700ec71e16e25cb555aff3ad4bde6871fb6f6276f810a20aec14",
+      "byte_identical": true
+    },
+    {
+      "path": "tcells/tcell.css",
+      "source_sha256": "d07d5843af92f5943a84ffbb906e5c5da3ec53bab2fa8d7d25299c8cc9db4419",
+      "integrated_sha256": "d07d5843af92f5943a84ffbb906e5c5da3ec53bab2fa8d7d25299c8cc9db4419",
+      "byte_identical": true
+    },
+    {
+      "path": "tcells/age-engine.js",
+      "source_sha256": "3ae0270787fac8664ec60c5aad16cb2db73e36e3a96ccaa49d52a5706cf2a5e1",
+      "integrated_sha256": "3ae0270787fac8664ec60c5aad16cb2db73e36e3a96ccaa49d52a5706cf2a5e1",
+      "byte_identical": true
+    },
+    {
+      "path": "tcells/tcell-ui.js",
+      "source_sha256": "0ac64b49422adf17720f02d49d71ba481f469c1bf081034c5a34bc7cd8fe08be",
+      "integrated_sha256": "0ac64b49422adf17720f02d49d71ba481f469c1bf081034c5a34bc7cd8fe08be",
+      "byte_identical": true
+    },
+    {
+      "path": "lipids/worker.js",
+      "source_sha256": "38d4e877dc469302ea0ab1b9056294a5992bd9e91e7deac46a6ec26f996f76cf",
+      "integrated_sha256": "38d4e877dc469302ea0ab1b9056294a5992bd9e91e7deac46a6ec26f996f76cf",
+      "byte_identical": true
+    },
+    {
+      "path": "lipids/lipid-ui.js",
+      "source_sha256": "8296b0ec3f3cbc5fc184db445e094b835f00ea02b1a857eceef611eab6b216e6",
+      "integrated_sha256": "8296b0ec3f3cbc5fc184db445e094b835f00ea02b1a857eceef611eab6b216e6",
+      "byte_identical": true
+    },
+    {
+      "path": "lipids/lipid.css",
+      "source_sha256": "0bbff3e066d683caccd330bc4f6cf46bfeaa2a833a166bf1d27767329c4a8b47",
+      "integrated_sha256": "0bbff3e066d683caccd330bc4f6cf46bfeaa2a833a166bf1d27767329c4a8b47",
+      "byte_identical": true
+    },
+    {
+      "path": "lipids/lipid-engine.js",
+      "source_sha256": "efb775761e0c4d878b314207be0b674aeb84fbd08803d25a7c8d850239566c73",
+      "integrated_sha256": "efb775761e0c4d878b314207be0b674aeb84fbd08803d25a7c8d850239566c73",
+      "byte_identical": true
+    },
+    {
+      "path": "leaf/leaf-updated.js",
+      "source_sha256": "f0a006ed02407ef42f2d872d62a0419e89efdd6392539ab3b6fa6a6404e481b3",
+      "integrated_sha256": "f0a006ed02407ef42f2d872d62a0419e89efdd6392539ab3b6fa6a6404e481b3",
+      "byte_identical": true
+    },
+    {
+      "path": "leaf/leaf-engine.js",
+      "source_sha256": "4d68a842035db8f587a2ec3700009f1eebd132377197b62c0f9239f24117ce31",
+      "integrated_sha256": "4d68a842035db8f587a2ec3700009f1eebd132377197b62c0f9239f24117ce31",
+      "byte_identical": true
+    },
+    {
+      "path": "leaf/worker.js",
+      "source_sha256": "820478a77a11780f1fc75c2be96e77fd449f36544227d5cd4f8fbe0df80f977b",
+      "integrated_sha256": "820478a77a11780f1fc75c2be96e77fd449f36544227d5cd4f8fbe0df80f977b",
+      "byte_identical": true
+    },
+    {
+      "path": "leaf/leaf-ui.js",
+      "source_sha256": "86206cc92dbf3da192e63b5685d2bb6f260e7116653c1fb844be82c836ae3fd5",
+      "integrated_sha256": "86206cc92dbf3da192e63b5685d2bb6f260e7116653c1fb844be82c836ae3fd5",
+      "byte_identical": true
+    },
+    {
+      "path": "leaf/leaf.css",
+      "source_sha256": "4200a194497305d41f5bd9844cfec959eb3952c31bef67ac82146d2eeaa32fdd",
+      "integrated_sha256": "4200a194497305d41f5bd9844cfec959eb3952c31bef67ac82146d2eeaa32fdd",
+      "byte_identical": true
+    },
+    {
+      "path": "leaf/presets.json",
+      "source_sha256": "0ea1f38c50f6a1c45a9cd2a22b850a47f2309d7eb2f0f3188669dbb8aefe3e0d",
+      "integrated_sha256": "0ea1f38c50f6a1c45a9cd2a22b850a47f2309d7eb2f0f3188669dbb8aefe3e0d",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/evolution-dashboard.js",
+      "source_sha256": "99125c969d2fa5029a4cea6210b87b81a9f9e58e709ac0476ae96040c3dc58e2",
+      "integrated_sha256": "99125c969d2fa5029a4cea6210b87b81a9f9e58e709ac0476ae96040c3dc58e2",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/observatory.css",
+      "source_sha256": "c22eede1952f30285ed7e4e8f4a6d4994f670f9a6aa2f9701823ce1151d2ec13",
+      "integrated_sha256": "c22eede1952f30285ed7e4e8f4a6d4994f670f9a6aa2f9701823ce1151d2ec13",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/studio-renderer.js",
+      "source_sha256": "f2a7978f360584d016e6b8ec7096c527848b548fd391faa80851eeb1784d53bb",
+      "integrated_sha256": "f2a7978f360584d016e6b8ec7096c527848b548fd391faa80851eeb1784d53bb",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/advanced-ui.js",
+      "source_sha256": "44e2c1789abf1535a4d95c598476d1a00cf48725757eb1d9fb86a60e582210c9",
+      "integrated_sha256": "44e2c1789abf1535a4d95c598476d1a00cf48725757eb1d9fb86a60e582210c9",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/strategy-regions.js",
+      "source_sha256": "97b1ddcc29760e34be66b2efdd0ab6f8646d056d6bb830e5d7434c476f71173e",
+      "integrated_sha256": "97b1ddcc29760e34be66b2efdd0ab6f8646d056d6bb830e5d7434c476f71173e",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/seasonal-forcing.js",
+      "source_sha256": "ec8b6734c361f19e768ba22bd746a5c2ac06792de6fbda6a4f584c9486530fb3",
+      "integrated_sha256": "ec8b6734c361f19e768ba22bd746a5c2ac06792de6fbda6a4f584c9486530fb3",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/worker.js",
+      "source_sha256": "f6a950f368d3f1c0908fbab9452ce8ba93d23ab2dbce9a9b6246fa46eeb2df92",
+      "integrated_sha256": "f6a950f368d3f1c0908fbab9452ce8ba93d23ab2dbce9a9b6246fa46eeb2df92",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/approaches-worker.js",
+      "source_sha256": "bddadf58202271b03e334ef312763c22d2df401b47427b11dbaeb2f237df4e97",
+      "integrated_sha256": "bddadf58202271b03e334ef312763c22d2df401b47427b11dbaeb2f237df4e97",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/landscape.js",
+      "source_sha256": "1ccd85353a3b95637bc1882eef97a1ca09032891420e8cd055e9f8691b135648",
+      "integrated_sha256": "1ccd85353a3b95637bc1882eef97a1ca09032891420e8cd055e9f8691b135648",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/fokolab-cmaes.js",
+      "source_sha256": "f9af923599e22f7d3f7ade81e1ed7498bfabadebdcd2abf6a6f5abe1e9f1d231",
+      "integrated_sha256": "f9af923599e22f7d3f7ade81e1ed7498bfabadebdcd2abf6a6f5abe1e9f1d231",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/studio.css",
+      "source_sha256": "0b48d68a583190b658f4fcf028a78c28b9555f98e7f4748e68f4acba884d1f30",
+      "integrated_sha256": "0b48d68a583190b658f4fcf028a78c28b9555f98e7f4748e68f4acba884d1f30",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/engine.js",
+      "source_sha256": "23c980b25d43ecce1eb90787dc2f044c906cc331d02bb7106f6ca5c9098e69f5",
+      "integrated_sha256": "23c980b25d43ecce1eb90787dc2f044c906cc331d02bb7106f6ca5c9098e69f5",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/landscape-3d.js",
+      "source_sha256": "317217db33214cef91d88deacb9f6ac40fc2bf3ddac1de17d13daacb8d0d67f3",
+      "integrated_sha256": "317217db33214cef91d88deacb9f6ac40fc2bf3ddac1de17d13daacb8d0d67f3",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/approaches-ui.js",
+      "source_sha256": "9d90632e8d60c97a5f27b929f2a114055fe8fcce47cb236bb37a0977159344d1",
+      "integrated_sha256": "9d90632e8d60c97a5f27b929f2a114055fe8fcce47cb236bb37a0977159344d1",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/advanced-worker.js",
+      "source_sha256": "082fcc352d9033ccca02080a0c6fa5692b58aa6f5d16c7995efb2c4ab6ea44bb",
+      "integrated_sha256": "082fcc352d9033ccca02080a0c6fa5692b58aa6f5d16c7995efb2c4ab6ea44bb",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/advanced-engine.js",
+      "source_sha256": "525148af6c02bbcf3a81f38359dd7016638605865e396f81b1eb8720145de396",
+      "integrated_sha256": "525148af6c02bbcf3a81f38359dd7016638605865e396f81b1eb8720145de396",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/location-forcing.js",
+      "source_sha256": "3a43677780439ca01d9f34bf437d2626decf3de33cf68cefca650889064437b6",
+      "integrated_sha256": "3a43677780439ca01d9f34bf437d2626decf3de33cf68cefca650889064437b6",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/ui.js",
+      "source_sha256": "deca9ea7c1ca16438b0e9bf258eeba5380fd38f38a8d234e582343ee58c3a820",
+      "integrated_sha256": "deca9ea7c1ca16438b0e9bf258eeba5380fd38f38a8d234e582343ee58c3a820",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/style.css",
+      "source_sha256": "8a4584071d5f5ce336769c3683c7336fddbe6198ded2c8298c34897a84d87c68",
+      "integrated_sha256": "8a4584071d5f5ce336769c3683c7336fddbe6198ded2c8298c34897a84d87c68",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/journey.js",
+      "source_sha256": "af028198591c7aa1818fa71a9c954b5c849c2a6ace9e102026ad1b2e7b451a40",
+      "integrated_sha256": "af028198591c7aa1818fa71a9c954b5c849c2a6ace9e102026ad1b2e7b451a40",
+      "byte_identical": true
+    },
+    {
+      "path": "continuum/approaches.js",
+      "source_sha256": "6cd021f75e74346d328912bbde8aff00b69d730027263edc5ce967c9eaa87811",
+      "integrated_sha256": "6cd021f75e74346d328912bbde8aff00b69d730027263edc5ce967c9eaa87811",
+      "byte_identical": true
+    }
+  ],
+  "selected_source_runtime_corrections": [
+    {
+      "path": "src/core/ode.js",
+      "reason": "Preserve served typed-domain adaptive-stage retry, stale-result or observable-transfer contract; source bytes copied exactly."
+    },
+    {
+      "path": "src/v72/statistics-workspace.js",
+      "reason": "Preserve served typed-domain adaptive-stage retry, stale-result or observable-transfer contract; source bytes copied exactly."
+    },
+    {
+      "path": "src/v72/fitting-workspace.js",
+      "reason": "Preserve served typed-domain adaptive-stage retry, stale-result or observable-transfer contract; source bytes copied exactly."
+    },
+    {
+      "path": "src/v72/sensitivity-workspace.js",
+      "reason": "Preserve served typed-domain adaptive-stage retry, stale-result or observable-transfer contract; source bytes copied exactly."
+    },
+    {
+      "path": "src/v72/sensitivity-worker.js",
+      "reason": "Preserve served typed-domain adaptive-stage retry, stale-result or observable-transfer contract; source bytes copied exactly."
+    }
+  ],
+  "retained_roc_fix": true,
+  "all_changed_paths": [
+    {
+      "path": "examples.html",
+      "before_sha256": "aaf88f8c2a25e7daaaf0d29ed93c282e3eedd6a74fdccbcb82e61af2d24d1687",
+      "after_sha256": "37d51ea31bfb20227ea09e5dade692f80acda0558cd11330effa852fec87572b"
+    },
+    {
+      "path": "plant-growth.html",
+      "before_sha256": "a898282aad411b655a31aa1afb9e71f241995b48e171fdae4be490bcc1ea2a7b",
+      "after_sha256": "b93a00645144910d9a878e9b4765090de8635b6021d40255502eef9030b86c39"
+    },
+    {
+      "path": "model.html",
+      "before_sha256": "6038a513bfe2f09ad37b4815bccd87da4b4b781612d5f5af850123945298008b",
+      "after_sha256": "ba6a60543ff6b1a79d6b33ad95251e0206a71aabab141fca4eb9c872198b0b59"
+    },
+    {
+      "path": "contact.html",
+      "before_sha256": "04916460357ca754be9a1931f9cb2a1e5aa0ac9c935da30cde5fe9254f193e17",
+      "after_sha256": "da1b01b6476fbae65496277a0724960f39c2ad641f8fdb4916734282dd169665"
+    },
+    {
+      "path": "advanced-methods.html",
+      "before_sha256": "5184e697834c7cc60e066a7553a80e88525b69b12c34e00f1b6f7c54e9e0a349",
+      "after_sha256": "b67abe5e87552ec24bf57f26a7e3e3e0c9898d8853e115dd7220488f6626f252"
+    },
+    {
+      "path": "identity.html",
+      "before_sha256": "0090774f56b2ce7ae500cc18dc1258f290c801d040cfd31a3f4e2e662e23b719",
+      "after_sha256": "3ffe4d8180197382caae1325982b0d51bbbba59078e8e02efeddc1e8588e13ee"
+    },
+    {
+      "path": "workbench.html",
+      "before_sha256": "2b218c39266da24013fd10db5c38fff18fe2fe33f0e8c4a61a80b11aca265c9e",
+      "after_sha256": "01a36bea1f33952e49030763b576abaddffe887c5d05ba956f5367d35fbb4300"
+    },
+    {
+      "path": "beauty.html",
+      "before_sha256": "197b332ca8f406c0a865f444468f773e1996cf9295d737a92d8410eaf619af86",
+      "after_sha256": "004d36293f9d56db32e4dc1121a8da7aec0aa73b1582896121e08d2db1617315"
+    },
+    {
+      "path": "networks.html",
+      "before_sha256": "185e2fcb9a400a117dc49e4a1232cc2b595bea031ffe418421f8a29ba0c8de73",
+      "after_sha256": "034787f9d5d62c3d3b7ff8dd7aacd63928cd57dc5564958444b1fdc59b8f561c"
+    },
+    {
+      "path": "diffusion.html",
+      "before_sha256": "1228ad849ae53193e8c0fd09e45ae3f1467bae8d3ecc278ba0b895c1889d5bed",
+      "after_sha256": "1b722d9340f921cd32abd6d6c1077272c801a303d3bb52dbc0fc28bea867bd32"
+    },
+    {
+      "path": "ml.html",
+      "before_sha256": "053040a01ded68ce958a04d533e08cde790504c7aedebb4c7bd9fc1d36e113d5",
+      "after_sha256": "d18e74f58924b916d715799c9601c87506f32d03214b656e73dced1aa10c8c0b"
+    },
+    {
+      "path": "agent.html",
+      "before_sha256": "785f86404bd9b21ba7942f638057577d7099d5d0fcf7c2b1e6c60371010bfb9b",
+      "after_sha256": "2763cc6721d838465f83989a6cfa8a91b443b06bd655ba69c89371fab08f28c6"
+    },
+    {
+      "path": "programme.html",
+      "before_sha256": "e2650f7c0266fdc28d50e612905abdecafac3148eb4f460dfcfc6583274a242f",
+      "after_sha256": "2acde503882c96a3109335191767e6a947347538bdd2d95d4f8c8e4bbf60bc5a"
+    },
+    {
+      "path": "practice.html",
+      "before_sha256": "6eead2125789ef9f1adae300cce9f2775e6ce1cab47b4de31ff9f45170d4f4e0",
+      "after_sha256": "3fd8bc08efd68573a79120cbbb59f14fb2c54f0b6a3b1ea25d713678ab6fa939"
+    },
+    {
+      "path": "sciml.html",
+      "before_sha256": "ecb3e72f23deb5e5cb3b37cc81618c6a107f344c73ce112bfe2d4e263eadd25e",
+      "after_sha256": "b5e2e8bfd8f99bb81028c62708d89dc1b00a4a29e90fed74cfd261eb3cf7a399"
+    },
+    {
+      "path": "learn.html",
+      "before_sha256": "db54a869278d74ba50318f87aea4ca9a860e9a9fdba5048a3162bce4d6d2152d",
+      "after_sha256": "1c18bf249eb652c152e4466ee7e3b2d70a7cf83f67c3eb607ba28129d3614383"
+    },
+    {
+      "path": "fitting.html",
+      "before_sha256": "c90694e4ef3660251b0d20bc34c0b7b2dde0cec4fe1f3efd008309eba43c9603",
+      "after_sha256": "de9ae75c2de3b2846fbc3ff9b9a9ea054c167170586301d9d6f8596f933f6d1d"
+    },
+    {
+      "path": "library.html",
+      "before_sha256": "b6f508b9d6ea33cab88a078858bcceb4251a0da2af95320c410e793fafb476bf",
+      "after_sha256": "b46d472d9c68cfb199eee2fc48bcfe5ee37d81dc7b2885cbec77436de7a8d452"
+    },
+    {
+      "path": "cv.html",
+      "before_sha256": "3f892f023bdeda5958d0eeb077b9ebea77db0bb9b27ac95ce7e6c161e5f4f54b",
+      "after_sha256": "8130b3a6389f410a2c2eb8378e6841f429f48c973390c00140bff37ab5e11a80"
+    },
+    {
+      "path": "workspace.html",
+      "before_sha256": "246dcd8ff240b94108913e54af0819a2fe5347ce82eb64c94c94ab3a4a77520e",
+      "after_sha256": "12aae5506ba14637c06dea19875d3e4f6c2caae62c72453ffa5b36748ec52454"
+    },
+    {
+      "path": "docs.html",
+      "before_sha256": "5c18650515b6c81a90ac46c96e3ee6f93d2d2c77909bdbe281a0b96f85835b4d",
+      "after_sha256": "4f44ba0bd0aa173c790cb7fccf1f5b7106344f0dcac984db497d2857643558be"
+    },
+    {
+      "path": "living.html",
+      "before_sha256": null,
+      "after_sha256": "820d95513af59a06926a9e76518f05aaeab53a5fa100ff7899669548f363413e"
+    },
+    {
+      "path": "tcell.html",
+      "before_sha256": "5d0430bc67e21488b26086a8628524f880580a44235ddbc741e4baf157e9b72f",
+      "after_sha256": "ec86a10d228e89587bcb14c3673dadc135d91371f90dd2abf30d64d3bd25b70d"
+    },
+    {
+      "path": "evolution-hub.html",
+      "before_sha256": null,
+      "after_sha256": "23b629e1af860b05a1f0ce5c14270434b33225839d3578f2bed99d30c8f3024f"
+    },
+    {
+      "path": "leaf-physiology.html",
+      "before_sha256": "f0197ebeb9e0a87c732a7ea802855ffaa95c8682fabecbd0cdb0f196c1a8bb72",
+      "after_sha256": "98f48aad435020e0915657542d0528466c1ee961af2adc157843a4f77347209f"
+    },
+    {
+      "path": "evolution.html",
+      "before_sha256": "594973f3b57efb38994f0fbf62abf2a7d4a2997783352b676e2d0105c7c3e1cb",
+      "after_sha256": "cf0ea145a10961615cf50dd0bbadbbbaaf1c346ceb2c220a64e872471bab7308"
+    },
+    {
+      "path": "research.html",
+      "before_sha256": "b1bed75d67f2f224f0f5888671c5255e771c6615184eacb48ffab9a7482084f1",
+      "after_sha256": "f47dcf4dd010b9ed001827f0bdff3310e6ce922518ec70b4893cb1195be9140c"
+    },
+    {
+      "path": "experiments.html",
+      "before_sha256": "623f970de757a3673a543c297b8c8b3fc81f37cdbaede528ff078fd51ffd3171",
+      "after_sha256": "fbb5a8c5466754d3722357fd87c68336991d457d903684ff5210449b72eef2be"
+    },
+    {
+      "path": "stochastic.html",
+      "before_sha256": "b23f3e2c43d34926e49d215b7e0b8db0a81362cdfa182e4929ac3ede28729335",
+      "after_sha256": "d3a2bc8d6b469ff7c3221aa915fbea563c3440e081ff657172deb96c0197e6fb"
+    },
+    {
+      "path": "analysis.html",
+      "before_sha256": null,
+      "after_sha256": "37f3f973a3d2e140abdce91d57c7f0c1cfc683b03d1be0f900c68f73cf777fb8"
+    },
+    {
+      "path": "integration-notes.html",
+      "before_sha256": null,
+      "after_sha256": "5055f1240d0fd5de160396015746507b05ad04301905c7d32a0875c11b36703c"
+    },
+    {
+      "path": "publication.html",
+      "before_sha256": "84ddcf60529b1e7a20f51dc0df25408f2853c50e23f6f544e1a652e4e9f45c51",
+      "after_sha256": "75997a6839123249c743da9a57c4ccb225291b524c29fbef96c1073649530e16"
+    },
+    {
+      "path": "acknowledgement.html",
+      "before_sha256": "ce67b7bf1a7e482db24a93aeb25266713b396c58361f363c4417624d4b0afa6a",
+      "after_sha256": "018a8eb8d7789ad954b89b667ad5105fded29763a994a4a573534a457afee36c"
+    },
+    {
+      "path": "engine.js",
+      "before_sha256": null,
+      "after_sha256": "a7d77c4583ebf7a23d80a2903ff1e7e07f166e18676fb88a9edb06f37b7cdece"
+    },
+    {
+      "path": "index.html",
+      "before_sha256": "e39aa3e797324df24b7344a14189de0d7a1db6c2e987af55eb5cb2fc893f3c57",
+      "after_sha256": "6938b2334d524be397d3a35b78a8f93f3ef89e73bb7bbefd77ad06f50c61fd36"
+    },
+    {
+      "path": "bifurcation.html",
+      "before_sha256": "bed14b92c57869c977e1c000c72d5ed46cc00a9d73a90b89709d937a5e1313dd",
+      "after_sha256": "9b49601dfa14430fa8e8edc0fb46f491dc573365d0b19f48065c5617dc7b1df9"
+    },
+    {
+      "path": "symbolic.html",
+      "before_sha256": "2cdd21f4388a01ee5a27cd1f7515e1bb40cb9997f56086a668660b57b4a63181",
+      "after_sha256": "b8d70c65a709a18d55c68d28532d8a32325e936290c77916314eedd8198d7c68"
+    },
+    {
+      "path": "trust.html",
+      "before_sha256": "5ea6e53201e0af13d2ae28e158aec141782de5e02ab75486c17e5a9a45fe0525",
+      "after_sha256": "012b8c71754b35c019243b6e168d6dbdc9b1fd9ba00308a02870391dbe87adf2"
+    },
+    {
+      "path": "optimization.html",
+      "before_sha256": "bf6cab7277766d06057ae66ae364f8be5d95c6b2d0cb01fedfb833b29209ba12",
+      "after_sha256": "77004ceabff738b28a9d4c25a302978e87d687ec9bb7155734dd3652e70cb9ab"
+    },
+    {
+      "path": "branching.html",
+      "before_sha256": "50c6f62d27e115ca6650afd5cdee4abe8afa6db8e059292d24fa29366dfd0d13",
+      "after_sha256": "58413394123c3917eb8a38dcb84e90529f4105392229a08ec89530a3071ef5fc"
+    },
+    {
+      "path": "saved-experiments.html",
+      "before_sha256": null,
+      "after_sha256": "33f159b08f34a36f5c0768571f90547bcd75648857d27bfae169c65028889c7b"
+    },
+    {
+      "path": "steady.html",
+      "before_sha256": "2c52dc1192e24da801cb2fc9ccd7442efd814272376e89ac263142b038f094ad",
+      "after_sha256": "6867152725cc18f774e4d8fa4dfe83f2a205456cd22f6f2d13069506eefe6cc0"
+    },
+    {
+      "path": "studio.html",
+      "before_sha256": "2136950af732168a74f75ceb012ff012a2147367d8d156da2cca203385e86f97",
+      "after_sha256": "190f7a764fb30f2f7694699166125a69d36ac3fe349073bc7865677b54e40dd5"
+    },
+    {
+      "path": "release.html",
+      "before_sha256": "170d18d3d5677f2b6c194e8de6173c338038f2ccbd6337781c3b87d117635d18",
+      "after_sha256": "582645cd170df5d8cd22ebe353e756bf47cb8f42d5f4fcba2ce016f5f92f0f80"
+    },
+    {
+      "path": "book-observations.html",
+      "before_sha256": "a08f767c86c613f6b4c7cfde1b3d0dd67240c91a89fe48c5e0e0617418ba50e3",
+      "after_sha256": "b0db7ca17a8a9a7f4027bcb15d814318575f82d7d55c8ac39be8dca87233c8d3"
+    },
+    {
+      "path": "random.html",
+      "before_sha256": null,
+      "after_sha256": "1a84a383bb7ac6739b1253b12ee2f96b62c86ab1f177182ff8ff5e7663d7293c"
+    },
+    {
+      "path": "labs.html",
+      "before_sha256": "c2802cb2de1bbfa38e53e6372977ff120485125d4c5f72c0b58e06517d297a66",
+      "after_sha256": "dcd023e83ae72e40803e8ced398fce987b9f9622b6373ba38b9680a1934ca67d"
+    },
+    {
+      "path": "platform.html",
+      "before_sha256": "5eb1206a3d068365d224f92e826ee26041bd61a880bbeb2f4b8d350a4920a087",
+      "after_sha256": "1a09c9a9f111dbb0929ff268976101605a41d51fbbcfda97921a384543a5714d"
+    },
+    {
+      "path": "app.js",
+      "before_sha256": null,
+      "after_sha256": "b6b088e91d0c4b50f2fd678abf32a000b7a150434b42dd379b2fcf5184658ab6"
+    },
+    {
+      "path": "ode.html",
+      "before_sha256": "60440c8bed46de7bc77f488fa8a50d7176e8a4c99443e97e6a3ff1e5d4bab5c4",
+      "after_sha256": "9d80ad1cbc34e360420baab064cf21a7a30895553875ac5da88a2b4fa29023cd"
+    },
+    {
+      "path": "book.html",
+      "before_sha256": "5522e14eff9557ad689d3511b68331418d4ce4dd314bbab27ac49c7e6c7d9768",
+      "after_sha256": "d352522536ca51d4fc2b534c60a8dd965564dbc172411f9813092e5d33de875d"
+    },
+    {
+      "path": "lipids.html",
+      "before_sha256": "ad4da12d844ab0b82c0125e028e1f705f08818f91f78c9ba98f38f592536ad95",
+      "after_sha256": "ede979a07ea1f37cda5d71f2aba94b424b8dbd67bece06769390d1d7c99db4a9"
+    },
+    {
+      "path": "statistics.html",
+      "before_sha256": "55156572e615135181b873165bf2a0c19b0d5e8b2d511c472d2bfa1adb0d36b5",
+      "after_sha256": "50fcc3b11e707b0b9e6d5685fee1166f87a4552393b6e5527022e3d6c1e3c843"
+    },
+    {
+      "path": "verify.html",
+      "before_sha256": "a6719da5051d2ceb88c4aceb2be9928dd3ec6c61dcffa38d13526d6f19845d8a",
+      "after_sha256": "dad915bb48bac5ba33f05df15d1564a22edc50d6d48181c59b6282f1513a5abb"
+    },
+    {
+      "path": "style.css",
+      "before_sha256": null,
+      "after_sha256": "b576818986429de39dd27a719d113a70208222102e8df7d19105097d45bfb63c"
+    },
+    {
+      "path": "ai-modeling.html",
+      "before_sha256": "842525276bcba77c9bc0185becdf0df867b5669ec0fef2a96937342349f3e033",
+      "after_sha256": "93b519602940e09a2626c79fa28c2e8e9ebd5f58cdbb8613baf7c2f19d3e1209"
+    },
+    {
+      "path": "fractals.html",
+      "before_sha256": "1171cc2a23cb6c438c077cc5746577d492cd2cb9bb74015b217b1a53759cb400",
+      "after_sha256": "9c296b6c63e79c8da58ddd51f26f9fa8d664986201ce3e834ff096bd503538f7"
+    },
+    {
+      "path": "sensitivity.html",
+      "before_sha256": "9b482c7b0764334c2bda51198c9bf3cdd8eb80f10aa94e8b3aa1b6d571e8a6a8",
+      "after_sha256": "24897b473322c190916d6817b8b0209013c4a5482a61c4c9f65c445fb4ead136"
+    },
+    {
+      "path": "population-genetics.html",
+      "before_sha256": "a2874cb442cca6bff96ee4c9f1e38c3347ebb37736a90c834b69b1bb12fda052",
+      "after_sha256": "c3763a7135f074e4e72f6d39dc2295424f9b82db86dc09d39cb755e72162bdef"
+    },
+    {
+      "path": "tutorial.html",
+      "before_sha256": "e9c39b8fc335216ec8a4bb423369171443394272e3847645396109c946d0012e",
+      "after_sha256": "3f37e3060c9e1d7334686a61f9ab1f03364790558a3602173dced17c7e5376d9"
+    },
+    {
+      "path": "adaptation.html",
+      "before_sha256": "49fb55db29efc573717b3fc116a922f1b93d8067b99ee34372b36d8c7710e443",
+      "after_sha256": "79c71af5c31547b89236fbf732b7678e09dfe2f8d14078cc351faf9260e67a73"
+    },
+    {
+      "path": "randomness.html",
+      "before_sha256": "b988204f987353625ba8ead9ad1f4e9a642a8532b365ee5d9b4f6cf6c74070db",
+      "after_sha256": "b7563589168b5838cf1e1897f260f1f4f4062256504a262ebf18a1ec197a1ec2"
+    },
+    {
+      "path": "linear-algebra.html",
+      "before_sha256": "5f13562046448b4545ca3c630e595b980c7e1f86a0c3f4f2faaff52f0155ddbc",
+      "after_sha256": "0aef3137fc4b431911e94c4def1c050fa223db5ed9e9dbb48d939544f5d4ce1b"
+    },
+    {
+      "path": "plants/plant-renderer.js",
+      "before_sha256": null,
+      "after_sha256": "e7633d6a529cbdc93cc9522aeb3babf97cf8a2f409343f22651b59abe151eb15"
+    },
+    {
+      "path": "plants/plant-ui.js",
+      "before_sha256": null,
+      "after_sha256": "e84838009721f26ce0d06c69c45be52673e3d47ee3ae7e6ffc23b843ef9db618"
+    },
+    {
+      "path": "plants/water-circuit.js",
+      "before_sha256": null,
+      "after_sha256": "d3878cef26f7a5acdab2d8a8ebccc282f61b87bb0bb30f66280fb2a14231c415"
+    },
+    {
+      "path": "plants/worker.js",
+      "before_sha256": null,
+      "after_sha256": "10433e42094ee2bc0f89b34150ea538eddfa35366b1b409653770895048e1681"
+    },
+    {
+      "path": "plants/plant-engine.js",
+      "before_sha256": null,
+      "after_sha256": "afc7a86179dbb2584cd1e7978ef92995090432360302773e483fb4d896864e70"
+    },
+    {
+      "path": "plants/experiment-ui.js",
+      "before_sha256": null,
+      "after_sha256": "083dfd7b330c11557a6be21bb2f0dde084403eade781c59a7ebcf9bf0f488431"
+    },
+    {
+      "path": "plants/climate.js",
+      "before_sha256": null,
+      "after_sha256": "d8affee84bfa1548311c109c30d1c18bb0f09ef66ea224572e7760a8099f5983"
+    },
+    {
+      "path": "plants/index.html",
+      "before_sha256": null,
+      "after_sha256": "25c4a64903bc5dfdd4db12e258ebf876bc8c1dd1f1feca43ce5dceb3d09333f4"
+    },
+    {
+      "path": "plants/c4-engine.js",
+      "before_sha256": null,
+      "after_sha256": "e55d0ab1f80fb7dd48eda1ba8d9742e994726c31bfed60f2f79016dfcc90bbb6"
+    },
+    {
+      "path": "plants/circulation-ui.js",
+      "before_sha256": null,
+      "after_sha256": "f9ee89d6e2cc18ff51b4ae7d5abe9a24237a97bc95123c8a3e8298c275fda3d0"
+    },
+    {
+      "path": "plants/development.js",
+      "before_sha256": null,
+      "after_sha256": "c306d2389b4df1aec1457d57db20f03e269d3f82f9905659deda4efeaef2657c"
+    },
+    {
+      "path": "plants/energy-ui.js",
+      "before_sha256": null,
+      "after_sha256": "f6b0cc7d06048b098cdbb1629b2dd7860fa5e6aaac0fbaa0d4d2f3e02ee6c536"
+    },
+    {
+      "path": "plants/metric-guide.js",
+      "before_sha256": null,
+      "after_sha256": "039bd8cafad8e77f8f78a373c0c57e216ee0ad35e9538310bd38174b2cb5d6ce"
+    },
+    {
+      "path": "plants/electron-engine.js",
+      "before_sha256": null,
+      "after_sha256": "72437cbe5edb4b5bbbf44a0056ed8da1b48468ddafa6afe89cf863150ff34edc"
+    },
+    {
+      "path": "plants/scenario-engine.js",
+      "before_sha256": null,
+      "after_sha256": "0c28e1c453948e0888045fc1e87e0f23d52936d11579be0c04033bde49a2b0ba"
+    },
+    {
+      "path": "plants/plant.css",
+      "before_sha256": null,
+      "after_sha256": "cf6f76a7d47b2fd59d4590a2862a84e7af9247be58eb4c6a75d94acbf7d8851d"
+    },
+    {
+      "path": "templates/lipid-model.py",
+      "before_sha256": null,
+      "after_sha256": "a3e79bb647c08dddbce2f65467d31190f0b04392c11d0d527edada906e279b9f"
+    },
+    {
+      "path": "shared/ode.js",
+      "before_sha256": null,
+      "after_sha256": "58588e2c3a1e0e8c0d6917be8d9b4360e7cb01ec155f2c313a3956b41a0b98fe"
+    },
+    {
+      "path": "shared/bio-scenes.js",
+      "before_sha256": null,
+      "after_sha256": "baa731a35585b57600727aef339223eafb4ecc16be3c24e726c0b6892bd494a8"
+    },
+    {
+      "path": "shared/model-motion.js",
+      "before_sha256": null,
+      "after_sha256": "a8cb6bb7a5a8eec01639a257924a5adc3978dda67aff8a9e8ea991b4920734c5"
+    },
+    {
+      "path": "shared/climate-catalog.js",
+      "before_sha256": null,
+      "after_sha256": "ff1e438caf08f8ec0ec457d99772236089745e33ed74288a27853eb30c0b97dd"
+    },
+    {
+      "path": "shared/analysis-plots.js",
+      "before_sha256": null,
+      "after_sha256": "0286ce8e61a6b0b4b034670450ef1aa0b46ef99ff562c3b19b584f6fb25f3678"
+    },
+    {
+      "path": "shared/soil-thermal.js",
+      "before_sha256": null,
+      "after_sha256": "4b254db362e10eb649b6a1f504a3f36ad884382592721c37f012d2823ef8240b"
+    },
+    {
+      "path": "shared/leaf-scan.js",
+      "before_sha256": null,
+      "after_sha256": "9b3d91b253456e225b81a4be86c31ffd32a7efacc18fd342a61e32b5af7bc4b1"
+    },
+    {
+      "path": "shared/linear-network.js",
+      "before_sha256": null,
+      "after_sha256": "06787613009c1830b51d8670df739da587f3d70db74e8e6f396ef40649c7ee62"
+    },
+    {
+      "path": "tcells/tcell-engine.js",
+      "before_sha256": null,
+      "after_sha256": "c7ebd93aaa5f20bbd461039ae56d8c9dbeaef8d04e86d3bffd0118cf6eccd64b"
+    },
+    {
+      "path": "tcells/worker.js",
+      "before_sha256": null,
+      "after_sha256": "75af03079794700ec71e16e25cb555aff3ad4bde6871fb6f6276f810a20aec14"
+    },
+    {
+      "path": "tcells/index.html",
+      "before_sha256": null,
+      "after_sha256": "954cc4f4f20d750cd747f977eff4af17447e0c7b73d64ab1af28a04f11647b3a"
+    },
+    {
+      "path": "tcells/tcell.css",
+      "before_sha256": null,
+      "after_sha256": "d07d5843af92f5943a84ffbb906e5c5da3ec53bab2fa8d7d25299c8cc9db4419"
+    },
+    {
+      "path": "tcells/age-engine.js",
+      "before_sha256": null,
+      "after_sha256": "3ae0270787fac8664ec60c5aad16cb2db73e36e3a96ccaa49d52a5706cf2a5e1"
+    },
+    {
+      "path": "tcells/tcell-ui.js",
+      "before_sha256": null,
+      "after_sha256": "0ac64b49422adf17720f02d49d71ba481f469c1bf081034c5a34bc7cd8fe08be"
+    },
+    {
+      "path": "lipids/worker.js",
+      "before_sha256": null,
+      "after_sha256": "38d4e877dc469302ea0ab1b9056294a5992bd9e91e7deac46a6ec26f996f76cf"
+    },
+    {
+      "path": "lipids/lipid-ui.js",
+      "before_sha256": null,
+      "after_sha256": "8296b0ec3f3cbc5fc184db445e094b835f00ea02b1a857eceef611eab6b216e6"
+    },
+    {
+      "path": "lipids/lipid.css",
+      "before_sha256": null,
+      "after_sha256": "0bbff3e066d683caccd330bc4f6cf46bfeaa2a833a166bf1d27767329c4a8b47"
+    },
+    {
+      "path": "lipids/index.html",
+      "before_sha256": null,
+      "after_sha256": "07a1402a1e93a440b1e5297ef83659a5470fecc5efb7153c9bc9d6f6286434a8"
+    },
+    {
+      "path": "lipids/lipid-engine.js",
+      "before_sha256": null,
+      "after_sha256": "efb775761e0c4d878b314207be0b674aeb84fbd08803d25a7c8d850239566c73"
+    },
+    {
+      "path": "design/investigations.js",
+      "before_sha256": null,
+      "after_sha256": "e1363a8faecfa799c612597a78bfcb5e49608c3b5adeacb331312969fff9a24b"
+    },
+    {
+      "path": "design/workspace.css",
+      "before_sha256": null,
+      "after_sha256": "8c4d1ac5f32266709595c9ee3751493e7ba9358e8f599ad1d92d8bf832233fe2"
+    },
+    {
+      "path": "design/lab-themes.css",
+      "before_sha256": null,
+      "after_sha256": "7460e2c00162b71659782c34138e69e196bc59cbf90d4fcf6222768faa9dfbc1"
+    },
+    {
+      "path": "design/examples.json",
+      "before_sha256": null,
+      "after_sha256": "59a92b8b81ee552137c2eab226fdaac06beb09d42eeace80cd26a3ae580cab0c"
+    },
+    {
+      "path": "design/scene-controls.js",
+      "before_sha256": null,
+      "after_sha256": "f60ddaa65c45466266d69d99b58b1709c6f2cebc38d4bbd89e16b08ab86f91c0"
+    },
+    {
+      "path": "design/quick-conditions.js",
+      "before_sha256": null,
+      "after_sha256": "f16abd5e7c77fb83f5fb2ca1e7bfdcbc55f787f0c834bd18181543aa8a1cabc8"
+    },
+    {
+      "path": "design/leaf-scan-ui.js",
+      "before_sha256": null,
+      "after_sha256": "42e5e1b635a4e7e1110dd04b3caf1c97dd96dfc0a4d702f255b28b30819e03a0"
+    },
+    {
+      "path": "design/atelier.css",
+      "before_sha256": null,
+      "after_sha256": "2921c18563402ea05c0d27059153146269cfe4137e8779b5391ee2c26a851959"
+    },
+    {
+      "path": "design/workspace.js",
+      "before_sha256": null,
+      "after_sha256": "c63926e2130077838bd41dea481a7002c7ab912d63648583ad27caebbec06ce9"
+    },
+    {
+      "path": "design/analysis-workspace.js",
+      "before_sha256": null,
+      "after_sha256": "54fa098749096de2d9dfe2ef51e3691208cdd61d67b601b7ee2da79fa5eb3819"
+    },
+    {
+      "path": "leaf/leaf-updated.js",
+      "before_sha256": null,
+      "after_sha256": "f0a006ed02407ef42f2d872d62a0419e89efdd6392539ab3b6fa6a6404e481b3"
+    },
+    {
+      "path": "leaf/leaf-engine.js",
+      "before_sha256": null,
+      "after_sha256": "4d68a842035db8f587a2ec3700009f1eebd132377197b62c0f9239f24117ce31"
+    },
+    {
+      "path": "leaf/worker.js",
+      "before_sha256": null,
+      "after_sha256": "820478a77a11780f1fc75c2be96e77fd449f36544227d5cd4f8fbe0df80f977b"
+    },
+    {
+      "path": "leaf/index.html",
+      "before_sha256": null,
+      "after_sha256": "e3271929659327ede83790ebacff200299b7fcff6ababc438bd9773ec652ce01"
+    },
+    {
+      "path": "leaf/leaf-ui.js",
+      "before_sha256": null,
+      "after_sha256": "86206cc92dbf3da192e63b5685d2bb6f260e7116653c1fb844be82c836ae3fd5"
+    },
+    {
+      "path": "leaf/leaf.css",
+      "before_sha256": null,
+      "after_sha256": "4200a194497305d41f5bd9844cfec959eb3952c31bef67ac82146d2eeaa32fdd"
+    },
+    {
+      "path": "leaf/presets.json",
+      "before_sha256": null,
+      "after_sha256": "0ea1f38c50f6a1c45a9cd2a22b850a47f2309d7eb2f0f3188669dbb8aefe3e0d"
+    },
+    {
+      "path": "styles/source-observatory.css",
+      "before_sha256": null,
+      "after_sha256": "1307b285f3defd47e4897517b7edfd52d1325f2b93ce243a4b51c1da6351fdf4"
+    },
+    {
+      "path": "styles/recovery.css",
+      "before_sha256": null,
+      "after_sha256": "068211356951e141b11beeba7b0420f8a2440245b2df37a367236a69747fb31e"
+    },
+    {
+      "path": "styles/instrument.css",
+      "before_sha256": null,
+      "after_sha256": "3dafd6d5482b8a8bd2b78d568a08787fc1427378bb995067e1da49834f4125cc"
+    },
+    {
+      "path": "research/storage.js",
+      "before_sha256": null,
+      "after_sha256": "c0923c618c2e4eecefcde3899dc6cbf7f515628222048fcc194ac14567e4d494"
+    },
+    {
+      "path": "research/records.js",
+      "before_sha256": null,
+      "after_sha256": "215dc0a77e002245a23d6e1671e5572b7fc126a57e43492ab21d507f13f208a4"
+    },
+    {
+      "path": "research/tcell-proliferation.html",
+      "before_sha256": "8d71ffb4959c565c7c6de6ea8b0e6b949d74949acf6b70d2e212355245e9509c",
+      "after_sha256": "9576f62fa45ee8a271e186cd89a8c169e72dc8ae2e8f3880c1440e063832bab3"
+    },
+    {
+      "path": "research/fatty-acid-metabolism.html",
+      "before_sha256": "79196dd47d990a62d85c830885e199bff8878685e1c384378d54a4bad52e36ef",
+      "after_sha256": "2a107b2586da11032b3229794049c7f90d3a83536965557c482244a4617007bc"
+    },
+    {
+      "path": "research/software.html",
+      "before_sha256": "73f1e50c41962d6cbfed0b009b1b17f7d4b628b6c5c67b9bd827e6dd66de89b2",
+      "after_sha256": "656cba778ebb9d3ab876e4aff7af0d7b0cc6a368d797aa302a61fd8829b168ae"
+    },
+    {
+      "path": "research/engine-hashes.js",
+      "before_sha256": null,
+      "after_sha256": "096e7d48f578598d36ac6525216cae0f63a74b9f91f0668a0099e131ba280383"
+    },
+    {
+      "path": "research/index.html",
+      "before_sha256": null,
+      "after_sha256": "029127dc29c9e66f839793d7dd7c5ca87d3b17a7b32521b211274b37f4c84e01"
+    },
+    {
+      "path": "research/bridge.js",
+      "before_sha256": null,
+      "after_sha256": "bc2937284c59f9a085a14c523e26e44262eb1cd9a9b87926c11c9c3f786582c7"
+    },
+    {
+      "path": "research/runner.js",
+      "before_sha256": null,
+      "after_sha256": "39cde8f54a320fd071abb73225bdd040935b8bf86f5301524e2af6bfc63bf45e"
+    },
+    {
+      "path": "research/evidence.json",
+      "before_sha256": null,
+      "after_sha256": "5352beddd129bb3f236f7e9323bc83423bcd543eacecc399c2d8a703dea66444"
+    },
+    {
+      "path": "research/research.css",
+      "before_sha256": null,
+      "after_sha256": "dc7ba28185722becea150e4482f9db6021e2c5a84cd03435ae8a0f79d768d6bc"
+    },
+    {
+      "path": "research/workspace.js",
+      "before_sha256": null,
+      "after_sha256": "2c518610bbcbb515dba4507d8e20deaffa85db59a6553842647d07b84fae194b"
+    },
+    {
+      "path": "research/photosynthesis.html",
+      "before_sha256": "7dcba38e890f73b6dfe8679072b1bda49b30ad7bc83705692387563c625ce399",
+      "after_sha256": "4081c9a315ffefd8331c47ce06c3ba7e87f468cca100aa07bbb1418893082ad9"
+    },
+    {
+      "path": "continuum/evolution-dashboard.js",
+      "before_sha256": null,
+      "after_sha256": "99125c969d2fa5029a4cea6210b87b81a9f9e58e709ac0476ae96040c3dc58e2"
+    },
+    {
+      "path": "continuum/observatory.css",
+      "before_sha256": null,
+      "after_sha256": "c22eede1952f30285ed7e4e8f4a6d4994f670f9a6aa2f9701823ce1151d2ec13"
+    },
+    {
+      "path": "continuum/studio-renderer.js",
+      "before_sha256": null,
+      "after_sha256": "f2a7978f360584d016e6b8ec7096c527848b548fd391faa80851eeb1784d53bb"
+    },
+    {
+      "path": "continuum/advanced-ui.js",
+      "before_sha256": null,
+      "after_sha256": "44e2c1789abf1535a4d95c598476d1a00cf48725757eb1d9fb86a60e582210c9"
+    },
+    {
+      "path": "continuum/approaches.html",
+      "before_sha256": null,
+      "after_sha256": "7a9f26176cc7ec1c8329eb9e75e0f2c5076f52363ab5c46458ac12e09c6185d9"
+    },
+    {
+      "path": "continuum/strategy-regions.js",
+      "before_sha256": null,
+      "after_sha256": "97b1ddcc29760e34be66b2efdd0ab6f8646d056d6bb830e5d7434c476f71173e"
+    },
+    {
+      "path": "continuum/seasonal-forcing.js",
+      "before_sha256": null,
+      "after_sha256": "ec8b6734c361f19e768ba22bd746a5c2ac06792de6fbda6a4f584c9486530fb3"
+    },
+    {
+      "path": "continuum/worker.js",
+      "before_sha256": null,
+      "after_sha256": "f6a950f368d3f1c0908fbab9452ce8ba93d23ab2dbce9a9b6246fa46eeb2df92"
+    },
+    {
+      "path": "continuum/approaches-worker.js",
+      "before_sha256": null,
+      "after_sha256": "bddadf58202271b03e334ef312763c22d2df401b47427b11dbaeb2f237df4e97"
+    },
+    {
+      "path": "continuum/landscape.js",
+      "before_sha256": null,
+      "after_sha256": "1ccd85353a3b95637bc1882eef97a1ca09032891420e8cd055e9f8691b135648"
+    },
+    {
+      "path": "continuum/fokolab-cmaes.js",
+      "before_sha256": null,
+      "after_sha256": "f9af923599e22f7d3f7ade81e1ed7498bfabadebdcd2abf6a6f5abe1e9f1d231"
+    },
+    {
+      "path": "continuum/studio.css",
+      "before_sha256": null,
+      "after_sha256": "0b48d68a583190b658f4fcf028a78c28b9555f98e7f4748e68f4acba884d1f30"
+    },
+    {
+      "path": "continuum/engine.js",
+      "before_sha256": null,
+      "after_sha256": "23c980b25d43ecce1eb90787dc2f044c906cc331d02bb7106f6ca5c9098e69f5"
+    },
+    {
+      "path": "continuum/index.html",
+      "before_sha256": null,
+      "after_sha256": "63f400c8276f81b5f6ade4e045e332fcaeaa867225737d667ba1a244a9359337"
+    },
+    {
+      "path": "continuum/landscape-3d.js",
+      "before_sha256": null,
+      "after_sha256": "317217db33214cef91d88deacb9f6ac40fc2bf3ddac1de17d13daacb8d0d67f3"
+    },
+    {
+      "path": "continuum/advanced.html",
+      "before_sha256": null,
+      "after_sha256": "4c640114e28c6e3c50e3461aea48b32b61657ba745a732e2fd547f3bb8fbe2eb"
+    },
+    {
+      "path": "continuum/approaches-ui.js",
+      "before_sha256": null,
+      "after_sha256": "9d90632e8d60c97a5f27b929f2a114055fe8fcce47cb236bb37a0977159344d1"
+    },
+    {
+      "path": "continuum/advanced-worker.js",
+      "before_sha256": null,
+      "after_sha256": "082fcc352d9033ccca02080a0c6fa5692b58aa6f5d16c7995efb2c4ab6ea44bb"
+    },
+    {
+      "path": "continuum/advanced-engine.js",
+      "before_sha256": null,
+      "after_sha256": "525148af6c02bbcf3a81f38359dd7016638605865e396f81b1eb8720145de396"
+    },
+    {
+      "path": "continuum/location-forcing.js",
+      "before_sha256": null,
+      "after_sha256": "3a43677780439ca01d9f34bf437d2626decf3de33cf68cefca650889064437b6"
+    },
+    {
+      "path": "continuum/ui.js",
+      "before_sha256": null,
+      "after_sha256": "deca9ea7c1ca16438b0e9bf258eeba5380fd38f38a8d234e582343ee58c3a820"
+    },
+    {
+      "path": "continuum/style.css",
+      "before_sha256": null,
+      "after_sha256": "8a4584071d5f5ce336769c3683c7336fddbe6198ded2c8298c34897a84d87c68"
+    },
+    {
+      "path": "continuum/journey.js",
+      "before_sha256": null,
+      "after_sha256": "af028198591c7aa1818fa71a9c954b5c849c2a6ace9e102026ad1b2e7b451a40"
+    },
+    {
+      "path": "continuum/approaches.js",
+      "before_sha256": null,
+      "after_sha256": "6cd021f75e74346d328912bbde8aff00b69d730027263edc5ce967c9eaa87811"
+    },
+    {
+      "path": "assets/brand/foko-symbol.png",
+      "before_sha256": null,
+      "after_sha256": "dcc9db6a522f4280467cbd97fde852662a9eeee7f3a485cd5055527066b865f4"
+    },
+    {
+      "path": "src/upgrade/experiments-hub.js",
+      "before_sha256": "a25d9fe7e34c41fd7ced555d879522f0954e2f4353948b0e395ea8ec91970e67",
+      "after_sha256": "5f41ba0c120f8e10ebc8bbbe032c1792286be843e23e00754c6b1b384d633df8"
+    },
+    {
+      "path": "src/v72/statistics-workspace.js",
+      "before_sha256": "7f5d88c9e15a2d1815982e556ec308c2f85735fbd95cd210d82f66545de7982c",
+      "after_sha256": "197914542939cbb0b65d5cb4e4514cf6141c8f8739c69b70fdd7a961b55538d0"
+    },
+    {
+      "path": "src/v72/sensitivity-workspace.js",
+      "before_sha256": "1244aa1e3422838ac33dfeef5821d6e71142bd7ea44f04b3304fe98e5aef0b05",
+      "after_sha256": "936f92effeba5cb45ccf54be5e10293827a2cd882eefd2ca56e9f0c6d105da6d"
+    },
+    {
+      "path": "src/v72/sensitivity-worker.js",
+      "before_sha256": "e32b04fe2f22bdf15059f8cc3171be19cbfcf664b23e880e1c2429298087c90f",
+      "after_sha256": "80a0bfaf004c67a19e6f601d37d7c4601bfd6f291c7e8dd2d783b73467464d1b"
+    },
+    {
+      "path": "src/v72/fitting-workspace.js",
+      "before_sha256": "a82f7825fd94ac7dc60f2639a4da305ff96b2ab0265d9bdae08abc91fd5532dc",
+      "after_sha256": "2bba10ef39e02b0079d5622d2f4abc2092d84e81c76f705478fdf33b775ce21d"
+    },
+    {
+      "path": "src/models/scientific-example-catalog.js",
+      "before_sha256": "888f410bca8f39cf4210e75ff1ff45a2abfe484b0b5aae59da9d2311887e659e",
+      "after_sha256": "b8c26d66c86169edb03d6a85cb43e426f825a567acdb11271cfbac5058e4cd2d"
+    },
+    {
+      "path": "src/integration/catalog.js",
+      "before_sha256": null,
+      "after_sha256": "68d4a4c27766c179cb2934be570570500c41557e477aeb544bc43678d185ad12"
+    },
+    {
+      "path": "src/integration/model-export.js",
+      "before_sha256": null,
+      "after_sha256": "3753847749e09a513ac11be294a5974c4afbc39b0b183dde92680a612241d0ee"
+    },
+    {
+      "path": "src/integration/shell.js",
+      "before_sha256": null,
+      "after_sha256": "cdbe355a11b5cef3cb0d91902998e310cd0f22dd30d1310abc3808a94820e492"
+    },
+    {
+      "path": "src/integration/registry.js",
+      "before_sha256": null,
+      "after_sha256": "ed6b1252a66baaa6a20e5159f3a16fb8f233149576791030e51d288f08177ed4"
+    },
+    {
+      "path": "src/integration/examples.json",
+      "before_sha256": null,
+      "after_sha256": "59a92b8b81ee552137c2eab226fdaac06beb09d42eeace80cd26a3ae580cab0c"
+    },
+    {
+      "path": "src/integration/controls.js",
+      "before_sha256": null,
+      "after_sha256": "2cfa4ed86740eb060455447d5bd9ed269549baa6174960777c365aaba88909ff"
+    },
+    {
+      "path": "src/integration/archive.js",
+      "before_sha256": null,
+      "after_sha256": "444c40d6ab25072cece87df27dc764516ea8f59e851e5dee4f8c5df4fdc51c98"
+    },
+    {
+      "path": "src/integration/figure-tools.js",
+      "before_sha256": null,
+      "after_sha256": "75d831156b2eace0bce81b2d1b2646f3d10d2919fd1ce9f868629e60cc1afd6a"
+    },
+    {
+      "path": "src/integration/run-feedback.js",
+      "before_sha256": null,
+      "after_sha256": "69aa518dee9bcd6ae9ab4a83a7ddfe845e7c998a9ba34e7f2f02b6b1edad4a50"
+    },
+    {
+      "path": "src/integration/workbench.js",
+      "before_sha256": null,
+      "after_sha256": "f352ec63ecf5bc64ba052acce4adb606fc6adaa885968d5e107cb130e096b223"
+    },
+    {
+      "path": "src/integration/transfer.js",
+      "before_sha256": null,
+      "after_sha256": "e34e8b4ca1f92fbb3d89130f2e327044a2b5c2abbb939e1b96cfd60be78abdaf"
+    },
+    {
+      "path": "src/integration/connect.js",
+      "before_sha256": null,
+      "after_sha256": "7c35d206ff5bbcae1f5e8d2f7d9ead112a5c6d7b06ff5bdcc674004b7a0be75a"
+    },
+    {
+      "path": "src/recovery/runtime.js",
+      "before_sha256": null,
+      "after_sha256": "afcaed56a29f6dc5fd35d929e72af443caa3edabf1bf524e3dc7f2a6b0763e30"
+    },
+    {
+      "path": "src/recovery/catalog-bridge.js",
+      "before_sha256": null,
+      "after_sha256": "a8ae48dc1c1eb5a6e5872fc8990c4e85a2e1636e1a370b151b40c0287d7864fc"
+    },
+    {
+      "path": "src/core/ode.js",
+      "before_sha256": "d91ecc619bc56f6894668a6a191f7067c3a029a31b732fbac82abd6bca5636e0",
+      "after_sha256": "3369d853c14488bf208230bf403642148c50d744c9166064ce8ecceb727f8158"
+    },
+    {
+      "path": "src/v76/app-shell.js",
+      "before_sha256": "8ad0c7abd5b7695db5a0fa08574cad4c888c065ac3aaf083f3c27e57e7879eda",
+      "after_sha256": "50a177c218efe52f91e54efc94a9e3c74b3405b31c2c64b8af9928b6237cbb44"
+    },
+    {
+      "path": "src/research/shell.js",
+      "before_sha256": "f7161ad57a4c8fad281f4a3d6e63277cc618003fbccaf9046106cb16141e22b9",
+      "after_sha256": "45923a20333ab5bacb95e6873f43957e243e7d8d801c0b946ff5c9f7b2777697"
+    },
+    {
+      "path": "src/research/labs-directory.js",
+      "before_sha256": "4e7b3a38744b08006dc6fa3a664effdcb42a9b188bf8cf8adf8a9314cdc49fa5",
+      "after_sha256": "242de83881042d65808afad9f41c023f276bf32dc2483f3a3b59b7b413e82d0c"
+    }
+  ],
+  "unavailable_source_exports": [
+    {
+      "path": "downloads/FokoLab-public-site.zip",
+      "status": "HTTP403 from original host; not replaced by guessed Python code"
+    },
+    {
+      "path": "plants/python/plant_lab_python.zip",
+      "status": "HTTP403 from original host; not replaced by guessed Python code"
+    },
+    {
+      "path": "leaf/python/research_leaf_python.zip",
+      "status": "HTTP403 from original host; not replaced by guessed Python code"
+    }
+  ],
+  "verification_status": "Source checks executed; see recovery-tests.json for numerical and browser scope; no blanket certification.",
+  "integration_corrections": [
+    {
+      "path": "src/recovery/catalog-bridge.js",
+      "before_sha256": "a8ae48dc1c1eb5a6e5872fc8990c4e85a2e1636e1a370b151b40c0287d7864fc",
+      "after_sha256": "32d1f9e8071ff1062bdd970cbe2755558fcc721da8e01760a17a9534421586a4",
+      "reason": "Keep distinct source records sharing a destination; deduplicate only identical catalogue identities."
+    },
+    {
+      "path": "src/upgrade/experiments-hub.js",
+      "before_sha256": "5f41ba0c120f8e10ebc8bbbe032c1792286be843e23e00754c6b1b384d633df8",
+      "after_sha256": "e214aa5aefc7d7065ebc7bcdbf1d1d7fc7b8a0d7d9afdc3566902facb10d75bc",
+      "reason": "Match the union catalogue identity key."
+    },
+    {
+      "path": "examples.html",
+      "before_sha256": "37d51ea31bfb20227ea09e5dade692f80acda0558cd11330effa852fec87572b",
+      "after_sha256": "063d7176213f55cf2dbf57e55cbd29c1706ce6826549e2ac2d6b5f4b59b67742",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "plant-growth.html",
+      "before_sha256": "b93a00645144910d9a878e9b4765090de8635b6021d40255502eef9030b86c39",
+      "after_sha256": "f0e7faf81cf3a9d7f66a025a80c8dcbefdb2dcec86a9a00c2d9d835242419d1b",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "model.html",
+      "before_sha256": "ba6a60543ff6b1a79d6b33ad95251e0206a71aabab141fca4eb9c872198b0b59",
+      "after_sha256": "5549c16cf78edc94aa1e1f882529a962d8d04527b7e22c94071aa67c2490e9a1",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "contact.html",
+      "before_sha256": "da1b01b6476fbae65496277a0724960f39c2ad641f8fdb4916734282dd169665",
+      "after_sha256": "a9af1f4afec1de0c570e12b6b150726ee9bc5e76a5ba7e2d035299f1af2ea579",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "advanced-methods.html",
+      "before_sha256": "b67abe5e87552ec24bf57f26a7e3e3e0c9898d8853e115dd7220488f6626f252",
+      "after_sha256": "68725faa08a8277c2b02e0cfaac63da8ca7169c3059e854b08b9c64d793877d4",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "identity.html",
+      "before_sha256": "3ffe4d8180197382caae1325982b0d51bbbba59078e8e02efeddc1e8588e13ee",
+      "after_sha256": "827690f6885b177fe9824a6425012923bdc707168cbf0922a1f2b35484d988d1",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "workbench.html",
+      "before_sha256": "01a36bea1f33952e49030763b576abaddffe887c5d05ba956f5367d35fbb4300",
+      "after_sha256": "8cc9d8662dc2d5f3a706af67243a4b487a078f68fb6ea0ed03c3b2b351f6b950",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "beauty.html",
+      "before_sha256": "004d36293f9d56db32e4dc1121a8da7aec0aa73b1582896121e08d2db1617315",
+      "after_sha256": "13daac22167316f8f0e8a80f39488d78a9a063d6fe21a0370c17f879afba8dea",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "networks.html",
+      "before_sha256": "034787f9d5d62c3d3b7ff8dd7aacd63928cd57dc5564958444b1fdc59b8f561c",
+      "after_sha256": "a394d34b62044b32eed1694f66877bc0fc936e218c60e715c87cf2ed5707ad58",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "diffusion.html",
+      "before_sha256": "1b722d9340f921cd32abd6d6c1077272c801a303d3bb52dbc0fc28bea867bd32",
+      "after_sha256": "eb76a107a384ce9eac43fd5bb69d91f2a62e1da0f4512b47fcaaf3e4fc3ba6ee",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "ml.html",
+      "before_sha256": "d18e74f58924b916d715799c9601c87506f32d03214b656e73dced1aa10c8c0b",
+      "after_sha256": "4672c47906281d240db1e77d51067f22b293e1de533c340e8886996b3cacfde2",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "agent.html",
+      "before_sha256": "2763cc6721d838465f83989a6cfa8a91b443b06bd655ba69c89371fab08f28c6",
+      "after_sha256": "59e71734cd9da5ba0854af14c0d81627d565c0777a2fed66addda160d15973cf",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "programme.html",
+      "before_sha256": "2acde503882c96a3109335191767e6a947347538bdd2d95d4f8c8e4bbf60bc5a",
+      "after_sha256": "d0a5d03a58f5f09521e3a6984430c42677d5adc03e9a40e5d7507d8725f1f7c5",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "practice.html",
+      "before_sha256": "3fd8bc08efd68573a79120cbbb59f14fb2c54f0b6a3b1ea25d713678ab6fa939",
+      "after_sha256": "314fa218defd03a5c2464191d38366ee36f9031f2a281ab6580988b9992cc103",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "sciml.html",
+      "before_sha256": "b5e2e8bfd8f99bb81028c62708d89dc1b00a4a29e90fed74cfd261eb3cf7a399",
+      "after_sha256": "ebbac7d83db67d289474239833807b61fc942aa24abb81f61e1da9f079aa87c5",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "learn.html",
+      "before_sha256": "1c18bf249eb652c152e4466ee7e3b2d70a7cf83f67c3eb607ba28129d3614383",
+      "after_sha256": "b63907cb751613bbab8077fbd135a353e027e0488cfd98eceacb098e7fe8e7f8",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "fitting.html",
+      "before_sha256": "de9ae75c2de3b2846fbc3ff9b9a9ea054c167170586301d9d6f8596f933f6d1d",
+      "after_sha256": "cfd8669da34326f1c3e1c5e7c5ed714b2cb8c5a4d98235ab80c9f3280081efb4",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "library.html",
+      "before_sha256": "b46d472d9c68cfb199eee2fc48bcfe5ee37d81dc7b2885cbec77436de7a8d452",
+      "after_sha256": "c6f990f8a8630f95522fbb44feefc4642b3d28cdcd41f5ebda1f4962dce231f8",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "cv.html",
+      "before_sha256": "8130b3a6389f410a2c2eb8378e6841f429f48c973390c00140bff37ab5e11a80",
+      "after_sha256": "ef86ad45fc9dd2ca66612dc67289fd9291d90eab7c975c6474cc91d8e3787d7a",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "workspace.html",
+      "before_sha256": "12aae5506ba14637c06dea19875d3e4f6c2caae62c72453ffa5b36748ec52454",
+      "after_sha256": "4a2fa975eb6094e25448222f2ef469de3b74156a05cb5614591b8079f8812aa4",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "docs.html",
+      "before_sha256": "4f44ba0bd0aa173c790cb7fccf1f5b7106344f0dcac984db497d2857643558be",
+      "after_sha256": "7f1ea9a68f22449f08b51eb1974023929febeeab0c9b920d4e81634cbfcca31a",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "living.html",
+      "before_sha256": "820d95513af59a06926a9e76518f05aaeab53a5fa100ff7899669548f363413e",
+      "after_sha256": "7d5728ac1f768b3bb5c32d0a494486354f10441c2791f413c1d2af9424bd5f69",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "tcell.html",
+      "before_sha256": "ec86a10d228e89587bcb14c3673dadc135d91371f90dd2abf30d64d3bd25b70d",
+      "after_sha256": "89db0c3383d38e750e77f6caa12c889bd6b273cab300e51aeb541aba50f28750",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "evolution-hub.html",
+      "before_sha256": "23b629e1af860b05a1f0ce5c14270434b33225839d3578f2bed99d30c8f3024f",
+      "after_sha256": "390d6a05a1e5a8ad8e26fa9a8dec4e901694515675ca303e7a974489084e36d9",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "leaf-physiology.html",
+      "before_sha256": "98f48aad435020e0915657542d0528466c1ee961af2adc157843a4f77347209f",
+      "after_sha256": "5b786b4b8e9230ef4b4c2221926221d0259dd6f0b31f58a8876222220c41b784",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "evolution.html",
+      "before_sha256": "cf0ea145a10961615cf50dd0bbadbbbaaf1c346ceb2c220a64e872471bab7308",
+      "after_sha256": "99cf9ccaa14338da880386dd850734ee6c84c437176bd70a7a3acde28c392f01",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "research.html",
+      "before_sha256": "f47dcf4dd010b9ed001827f0bdff3310e6ce922518ec70b4893cb1195be9140c",
+      "after_sha256": "0cfef06cea34617f3f02b5146483bb80b86512c0bbf4b9e58ad25678f318356b",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "experiments.html",
+      "before_sha256": "fbb5a8c5466754d3722357fd87c68336991d457d903684ff5210449b72eef2be",
+      "after_sha256": "f74f317834d88dafa274b4c7064ca120be2bdbafec122979979a62fc3686faff",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "stochastic.html",
+      "before_sha256": "d3a2bc8d6b469ff7c3221aa915fbea563c3440e081ff657172deb96c0197e6fb",
+      "after_sha256": "29d175992f9a3e8ee73d902f1014bd7cb166afb32b2fa62d26f5149b081129d6",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "analysis.html",
+      "before_sha256": "37f3f973a3d2e140abdce91d57c7f0c1cfc683b03d1be0f900c68f73cf777fb8",
+      "after_sha256": "f6f2409a969a373b0d676c387bd9dbd9816d4df890299b8bac1ed0ca11fa78fe",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "integration-notes.html",
+      "before_sha256": "5055f1240d0fd5de160396015746507b05ad04301905c7d32a0875c11b36703c",
+      "after_sha256": "81052b6890b5ae8a6cfedf42ed5e29fe863b2358869a5b52fffead4e2698716e",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "publication.html",
+      "before_sha256": "75997a6839123249c743da9a57c4ccb225291b524c29fbef96c1073649530e16",
+      "after_sha256": "07bbe608a2c37a711b57b1e6ad7b8e51152dd3f532a8571fec5fdfce89e72414",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "acknowledgement.html",
+      "before_sha256": "018a8eb8d7789ad954b89b667ad5105fded29763a994a4a573534a457afee36c",
+      "after_sha256": "6770690a7b60f423f6cd6d340d815a362c75289f8c20b21efcbfcf2d3c5dae5b",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "index.html",
+      "before_sha256": "6938b2334d524be397d3a35b78a8f93f3ef89e73bb7bbefd77ad06f50c61fd36",
+      "after_sha256": "b314bc5f7a81f0f91e6d394510c6ae5080d3419b8414847071274d65f03b46bb",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "bifurcation.html",
+      "before_sha256": "9b49601dfa14430fa8e8edc0fb46f491dc573365d0b19f48065c5617dc7b1df9",
+      "after_sha256": "5a434ae7261a01f59d8aa29733b1c9261793ee777eb64c4d8caa71b09ca47a08",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "symbolic.html",
+      "before_sha256": "b8d70c65a709a18d55c68d28532d8a32325e936290c77916314eedd8198d7c68",
+      "after_sha256": "091808204edf92962450cf7bc16cf8b3fa756ac9958245fe107ca6baf40bc97d",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "trust.html",
+      "before_sha256": "012b8c71754b35c019243b6e168d6dbdc9b1fd9ba00308a02870391dbe87adf2",
+      "after_sha256": "03f7842e4bb544a387bfc0e6952f45edd7f0cdf8b9c68cc55e11f3cd60dbd49c",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "optimization.html",
+      "before_sha256": "77004ceabff738b28a9d4c25a302978e87d687ec9bb7155734dd3652e70cb9ab",
+      "after_sha256": "0d8ee7c970535c88e38a546c477325c46d5345c37e3468a512f2ac05d127dee5",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "branching.html",
+      "before_sha256": "58413394123c3917eb8a38dcb84e90529f4105392229a08ec89530a3071ef5fc",
+      "after_sha256": "c7dde9e94f1ba91b2ec91ad8da32abc3e5085e8156d3d8dba6aec1d23b78f11f",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "saved-experiments.html",
+      "before_sha256": "33f159b08f34a36f5c0768571f90547bcd75648857d27bfae169c65028889c7b",
+      "after_sha256": "06916615c7fd851167506d197c4859142b0942566d4c4570c7f695d3ed54eec6",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "steady.html",
+      "before_sha256": "6867152725cc18f774e4d8fa4dfe83f2a205456cd22f6f2d13069506eefe6cc0",
+      "after_sha256": "2d00c2bd835cdfdbe4baa52c7f790dc0f7495639a5d7c2cf8ee98f7f7a631b7b",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "studio.html",
+      "before_sha256": "190f7a764fb30f2f7694699166125a69d36ac3fe349073bc7865677b54e40dd5",
+      "after_sha256": "57df9cfcf990aec984d906c729d9a5b6a947822da228528eaa5c20533eebb17f",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "book-observations.html",
+      "before_sha256": "b0db7ca17a8a9a7f4027bcb15d814318575f82d7d55c8ac39be8dca87233c8d3",
+      "after_sha256": "0d07be90345d2bb7c65c0d2b49eebb844f5e5dfcace2b5a092c173e4b5423d37",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "random.html",
+      "before_sha256": "1a84a383bb7ac6739b1253b12ee2f96b62c86ab1f177182ff8ff5e7663d7293c",
+      "after_sha256": "5dc0512330ddbb2519947324d7bbc6b133df727d17afb19ff153ba3f867f337e",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "labs.html",
+      "before_sha256": "dcd023e83ae72e40803e8ced398fce987b9f9622b6373ba38b9680a1934ca67d",
+      "after_sha256": "8d7d1eb82aa727f411019096679ef9b6a9051455b99673415daace621909df8b",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "platform.html",
+      "before_sha256": "1a09c9a9f111dbb0929ff268976101605a41d51fbbcfda97921a384543a5714d",
+      "after_sha256": "20725ad8a48842dee095f7dc2ac6decd36250d5a818a7edafc47af1fa555cb22",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "ode.html",
+      "before_sha256": "9d80ad1cbc34e360420baab064cf21a7a30895553875ac5da88a2b4fa29023cd",
+      "after_sha256": "80a2b7765a8518f5cdf7c33505ff8f889804335cd9d38a18d75949d921d1e127",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "book.html",
+      "before_sha256": "d352522536ca51d4fc2b534c60a8dd965564dbc172411f9813092e5d33de875d",
+      "after_sha256": "9014f18573e1d7268b99a29c59a17eb52a0cef3d1feefae9ff60f98c439bfd69",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "lipids.html",
+      "before_sha256": "ede979a07ea1f37cda5d71f2aba94b424b8dbd67bece06769390d1d7c99db4a9",
+      "after_sha256": "a5dceb7be0a55d5804dfa0ab43ab7b87302b6c702165e5d79ada471281427cb0",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "statistics.html",
+      "before_sha256": "50fcc3b11e707b0b9e6d5685fee1166f87a4552393b6e5527022e3d6c1e3c843",
+      "after_sha256": "456721ba9970377758e7fc255eaf8418429a8e828b31b69b0fc18706bc17d5fd",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "verify.html",
+      "before_sha256": "dad915bb48bac5ba33f05df15d1564a22edc50d6d48181c59b6282f1513a5abb",
+      "after_sha256": "dad915bb48bac5ba33f05df15d1564a22edc50d6d48181c59b6282f1513a5abb",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "ai-modeling.html",
+      "before_sha256": "93b519602940e09a2626c79fa28c2e8e9ebd5f58cdbb8613baf7c2f19d3e1209",
+      "after_sha256": "aa062be295874ea453e0ac8941f48082dfeb8fa8bce4d63fae9a5b6d825f0021",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "fractals.html",
+      "before_sha256": "9c296b6c63e79c8da58ddd51f26f9fa8d664986201ce3e834ff096bd503538f7",
+      "after_sha256": "fe0267a3c1fa997de421097118c7ec832c033f6cb7a59a4b0a9ac811e382e522",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "sensitivity.html",
+      "before_sha256": "24897b473322c190916d6817b8b0209013c4a5482a61c4c9f65c445fb4ead136",
+      "after_sha256": "8db7bbcf90390cb809417aedfef2ea657178eb859648404c1ceea9fa590b34de",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "population-genetics.html",
+      "before_sha256": "c3763a7135f074e4e72f6d39dc2295424f9b82db86dc09d39cb755e72162bdef",
+      "after_sha256": "96e791366b27c29bdc5b87f8351db94e392b4059f0c1aedd2853c2979fbb192c",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "tutorial.html",
+      "before_sha256": "3f37e3060c9e1d7334686a61f9ab1f03364790558a3602173dced17c7e5376d9",
+      "after_sha256": "fd243d97948c10ebca620264b7634e9c0a945f70723d9ddd14c2c3814dd059a1",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "adaptation.html",
+      "before_sha256": "79c71af5c31547b89236fbf732b7678e09dfe2f8d14078cc351faf9260e67a73",
+      "after_sha256": "57363c5c0fd6219e6438b1ed03f1df7168d29711bc3e8c66142556811977c974",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "randomness.html",
+      "before_sha256": "b7563589168b5838cf1e1897f260f1f4f4062256504a262ebf18a1ec197a1ec2",
+      "after_sha256": "0c30df391a47ff45a059b70f58332d3211ac151dadaf3f72b9eb22f50f265390",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "linear-algebra.html",
+      "before_sha256": "0aef3137fc4b431911e94c4def1c050fa223db5ed9e9dbb48d939544f5d4ce1b",
+      "after_sha256": "2dccbd66745a512d9e64955e586b1b64abcf201db32b87d0ccba90a2fab63384",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "plants/index.html",
+      "before_sha256": "25c4a64903bc5dfdd4db12e258ebf876bc8c1dd1f1feca43ce5dceb3d09333f4",
+      "after_sha256": "a768b2ac3534a246808a09fdfcedb0efe46c2e4fd26b729e3bbc09ea6e5fb1b8",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "tcells/index.html",
+      "before_sha256": "954cc4f4f20d750cd747f977eff4af17447e0c7b73d64ab1af28a04f11647b3a",
+      "after_sha256": "d0234062b03e9c77b12e3570deb23d5c46c6a3672b52fcb720feadb95e9f8d42",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "lipids/index.html",
+      "before_sha256": "07a1402a1e93a440b1e5297ef83659a5470fecc5efb7153c9bc9d6f6286434a8",
+      "after_sha256": "95769f44115548da57daec288fd669820661b4db1d6abbd701469350d85b810f",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "leaf/index.html",
+      "before_sha256": "e3271929659327ede83790ebacff200299b7fcff6ababc438bd9773ec652ce01",
+      "after_sha256": "0a2534e8132fd77a20a926fe68a3de3b6940f8bec431bf45c2b4522aa60cc92c",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "research/tcell-proliferation.html",
+      "before_sha256": "9576f62fa45ee8a271e186cd89a8c169e72dc8ae2e8f3880c1440e063832bab3",
+      "after_sha256": "c2cccf4c998e4a3b0811faa291a599af0fc2ff4967c84430e4e6a27c618e1e38",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "research/fatty-acid-metabolism.html",
+      "before_sha256": "2a107b2586da11032b3229794049c7f90d3a83536965557c482244a4617007bc",
+      "after_sha256": "f968b172a695e7752436f0a52bf92367b09acdd9a69e5df7b32875ceb71db3dd",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "research/software.html",
+      "before_sha256": "656cba778ebb9d3ab876e4aff7af0d7b0cc6a368d797aa302a61fd8829b168ae",
+      "after_sha256": "a7773904cbfe39607f8f3675145f1a4afaa988c5f612187eb6f65bcc767b60ca",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "research/index.html",
+      "before_sha256": "029127dc29c9e66f839793d7dd7c5ca87d3b17a7b32521b211274b37f4c84e01",
+      "after_sha256": "b63b97e5e9b7a2897135f8899bb71222d678701f74cf9a64b8ba6750ef0cb067",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "research/photosynthesis.html",
+      "before_sha256": "4081c9a315ffefd8331c47ce06c3ba7e87f468cca100aa07bbb1418893082ad9",
+      "after_sha256": "593920f1142204ab948e2e9ccae96a94bba6ddb3bdde80d351b295ada62c83f2",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "continuum/approaches.html",
+      "before_sha256": "7a9f26176cc7ec1c8329eb9e75e0f2c5076f52363ab5c46458ac12e09c6185d9",
+      "after_sha256": "cebe7ea2c8371c6ea68b059193fcbbbfebb0c8e7c22e885fbd4bb34feb42e544",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "continuum/index.html",
+      "before_sha256": "63f400c8276f81b5f6ade4e045e332fcaeaa867225737d667ba1a244a9359337",
+      "after_sha256": "af268c5f37925fa7971d10dc461b7b2294f8e5c4f8f6969718f71844faae966c",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "continuum/advanced.html",
+      "before_sha256": "4c640114e28c6e3c50e3461aea48b32b61657ba745a732e2fd547f3bb8fbe2eb",
+      "after_sha256": "2685152fa7a1ec102b3f9663d088e2f998ba14a95b729e0bcbb1ff9ff013629a",
+      "reason": "Place the existing scenario registry before the combined catalogue; reaction-slider precision is unrestricted only on the lipid event view."
+    },
+    {
+      "path": "src/upgrade/common.js",
+      "before_sha256": "d9ab6269f0c65a362fdc92da97e33f29cfda908896d9dca2cdabb6e2f9145205",
+      "after_sha256": "2aa8a65712e585bb85e155fcd270a688d8430050403be326ffb785fd13f85fb3",
+      "reason": "Ensure shared UI reports this tested integration release, not its baseline."
+    },
+    {
+      "path": "src/recovery/runtime.js",
+      "before_sha256": "afcaed56a29f6dc5fd35d929e72af443caa3edabf1bf524e3dc7f2a6b0763e30",
+      "after_sha256": "aa0799d93d3507d76a21ae465126f3c76e547d1e83af96bb45d489b017393a20",
+      "reason": "Append final navigation/typography tokens after legacy runtime stylesheet injection."
+    },
+    {
+      "path": "styles/recovery-final.css",
+      "before_sha256": null,
+      "after_sha256": "b9207c845279a0f3fb3bfbcbe5439e30e895acae1aa990c1733a47da422e795a",
+      "reason": "Compact typography without changing computation or recorded-state diagrams."
+    }
+  ],
+  "font_binaries_excluded": []
+}

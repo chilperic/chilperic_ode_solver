@@ -1,0 +1,381 @@
+{
+  "release": "80.1.0",
+  "scope": "Original source engines and recorded-event invariants. Test seeds and numerical tolerances are explicit. This is not biological calibration.",
+  "checks": [
+    {
+      "name": "Original activation: exact cell-history/event accounting",
+      "status": "passed",
+      "milliseconds": 41.836265999999995,
+      "detail": {
+        "events": 66,
+        "cells": 50,
+        "distinct_realizations": true
+      }
+    },
+    {
+      "name": "Original birthdeath: exact cell-history/event accounting",
+      "status": "passed",
+      "milliseconds": 12.433305000000004,
+      "detail": {
+        "events": 28,
+        "cells": 38,
+        "distinct_realizations": true
+      }
+    },
+    {
+      "name": "Original age: exact cell-history/event accounting",
+      "status": "passed",
+      "milliseconds": 71.451486,
+      "detail": {
+        "events": 22,
+        "cells": 38,
+        "distinct_realizations": true
+      }
+    },
+    {
+      "name": "Original cyton: exact cell-history/event accounting",
+      "status": "passed",
+      "milliseconds": 47.784333000000004,
+      "detail": {
+        "events": 18,
+        "cells": 28,
+        "distinct_realizations": true
+      }
+    },
+    {
+      "name": "Original kimmel: exact cell-history/event accounting",
+      "status": "passed",
+      "milliseconds": 2.9196310000000096,
+      "detail": {
+        "events": 39,
+        "cells": 38,
+        "distinct_realizations": true
+      }
+    },
+    {
+      "name": "Original lipid synthesis: source solver and mass audit",
+      "status": "passed",
+      "milliseconds": 4665.862612,
+      "detail": {
+        "states": 18,
+        "rows": 201,
+        "tracer_events": 178,
+        "audit": {
+          "enzyme": 1.6653345369377348e-15,
+          "coa": 1.7905676941154525e-12,
+          "reducing": 4.291678123991005e-12,
+          "acylCarbon": 3.467448550509289e-12
+        },
+        "solver": {
+          "method": "Adaptive implicit Euler, accepted two-half-step solution",
+          "accepted": 30590,
+          "attempts": 30595,
+          "rtol": 2e-7,
+          "atol": 1e-11
+        }
+      }
+    },
+    {
+      "name": "Original lipid metabolism: source solver and mass audit",
+      "status": "passed",
+      "milliseconds": 155.90785499999947,
+      "detail": {
+        "states": 4,
+        "audit": {}
+      }
+    },
+    {
+      "name": "Original plant: pathway resource ledgers and seeded forcing",
+      "status": "passed",
+      "milliseconds": 218.3526440000005,
+      "detail": {
+        "pathways": [
+          "C3",
+          "C4",
+          "CAM"
+        ],
+        "days": 3
+      }
+    },
+    {
+      "name": "Original plant: no hidden water inflow without rain or irrigation",
+      "status": "passed",
+      "milliseconds": 112.57488799999919,
+      "detail": {
+        "days": 7
+      }
+    },
+    {
+      "name": "Original coupled leaf: finite source response, immutable inputs",
+      "status": "passed",
+      "milliseconds": 7.574094999999943,
+      "detail": {
+        "point": {
+          "valid": true,
+          "reason": "",
+          "physics": {
+            "leaf": [
+              299.9721112899784,
+              300.17259320388973
+            ],
+            "ts": 298.9163634463158,
+            "tr": 296.1699834833992,
+            "E": 0.0024548124633217185,
+            "vpd": 2736.0726013068042,
+            "Es": 0.00005423376917146352,
+            "radiation": [
+              11.27356476641163,
+              11.574581756289051
+            ],
+            "soilRadiation": [
+              1.5134429405394447,
+              1.8026506169629073
+            ],
+            "conv": 47.72740470063333,
+            "cond": -4.00963827822693,
+            "xylem": 0.7388893483209922,
+            "loopHeat": 0,
+            "loopGroundHeat": 0,
+            "groundLW": 3.3160935575023522,
+            "soilSky": 19.00079589707786,
+            "soilConv": 9.12436135579037,
+            "conduction": 7.2779069017289695,
+            "deep": 7.328605596899311,
+            "soilWaterHeat": 0.010080701621855565,
+            "rootWaterHeat": 0.05069869517012487,
+            "storageS": 0,
+            "storageR": 0,
+            "Cs": 80691,
+            "Cr": 726219,
+            "k": 0.6625000000000001,
+            "view": 0.5,
+            "soilAbsorbed": 34.50719999999999,
+            "leafResidual": [
+              6.253912943066098e-10,
+              2.001223631253879e-10
+            ],
+            "soilResidual": [
+              -6.965561183402968e-10,
+              -2.165559398470407e-13
+            ],
+            "residual": [
+              6.253912943066098e-10,
+              2.001223631253879e-10,
+              -6.965561183402968e-10,
+              -2.165559398470407e-13
+            ],
+            "heatResidual": 6.965561183402968e-10,
+            "valid": true,
+            "loopActualFlow": 0,
+            "loopActive": 0,
+            "leafWithoutLoop": 26.82211128997841,
+            "loopUnmet": 0,
+            "tm": 299.9721112899784,
+            "tb": 300.17259320388973,
+            "im": 165.59664000000004,
+            "ib": 18.125760000000003,
+            "ea": 792.2275080335532,
+            "effectiveGs": 0.09090909090909091,
+            "latent": 109.09186587001717,
+            "rm": 12.787007706951075,
+            "rb": 13.377232373251958,
+            "psiSatPa": -882.5985000000001,
+            "psiSoil": -113415.42599366965,
+            "supply": 0.0044329228700316515,
+            "hydraulicMargin": 0.001978110406709933
+          },
+          "carbon": {
+            "ci": 10348.294935985086,
+            "cmPressure": 256.5309381182069,
+            "cbsPressure": 1925.717204963743,
+            "mes": 7.48617447021707,
+            "bs": 0.5455718263434538,
+            "pep": 5.553130626880024,
+            "leak": 5.007558800536608,
+            "assimilation": 8.031746296560524,
+            "uptake": 8.03174629656038,
+            "residual": -1.4377388168895777e-13,
+            "sheathResidual": -3.808064974464287e-14,
+            "discriminantClipped": false,
+            "bsFloor": false,
+            "atpDemand": 81.75108470325321,
+            "nadphDemand": 44.27818094643991,
+            "vm": 128.41273613338433,
+            "vb": 7.197760232480037,
+            "vp": 7.502837679718285,
+            "rm": 0.7060111296744326,
+            "rb": 0.7186769574851103,
+            "energy": {
+              "absorbedPAR": 377.8251156000001,
+              "lef": 109.75814583278341,
+              "cef": 43.90325833311337,
+              "atp": 95.0191948209525,
+              "nadph": 54.879072916391706
+            },
+            "energyMesShare": 0.9473684210526315
+          },
+          "gs": 0.1,
+          "fractions": [
+            0.05,
+            0.9,
+            0.05
+          ],
+          "waterUseEfficiency": 3.271837020776896
+        }
+      }
+    },
+    {
+      "name": "Original Kimura neutral fixation probability",
+      "status": "passed",
+      "milliseconds": 0.13144800000009127,
+      "detail": {
+        "convention": "Diploid source formula 1/(2 Ne), not haploid Moran 1/N"
+      }
+    },
+    {
+      "name": "Original accepted substitutions: times, transitions and seed replay",
+      "status": "passed",
+      "milliseconds": 120.72231700000066,
+      "detail": {
+        "accepted": 8,
+        "convention": "Diploid pfix=(1−exp(−2s))/(1−exp(−4Ne s)); neutral 1/(2Ne); Qij=2N μ qij pfix. s=expm1(selectionScale × Δ log-performance)."
+      }
+    },
+    {
+      "name": "Source Morris: independent analytic linear response",
+      "status": "passed",
+      "milliseconds": 1.5231910000002244,
+      "detail": {
+        "muStar": [
+          1.9999999999999998,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "name": "Source Sobol: independent analytic variance fractions",
+      "status": "passed",
+      "milliseconds": 87.62294199999997,
+      "detail": {
+        "indices": [
+          {
+            "S1": 0.06848711114277163,
+            "ST": 0.0699177341349973
+          },
+          {
+            "S1": 0.2831819516359474,
+            "ST": 0.277678092841938
+          },
+          {
+            "S1": 0.6422612570797851,
+            "ST": 0.651869272139425
+          }
+        ],
+        "expected": [
+          0.07142857142857142,
+          0.2857142857142857,
+          0.6428571428571429
+        ],
+        "absolute_tolerances": {
+          "first_order": 0.065,
+          "total_order": 0.035
+        }
+      }
+    },
+    {
+      "name": "Source PCA: normalized variance and orthonormal components",
+      "status": "passed",
+      "milliseconds": 0.84881200000018,
+      "detail": {
+        "explained": [
+          0.4333662234854055,
+          0.33348732497918304,
+          0.23314645153541144
+        ]
+      }
+    },
+    {
+      "name": "Original random tree: seeded event/frame replay",
+      "status": "passed",
+      "milliseconds": 2.6694790000001376,
+      "detail": {
+        "frames": 40,
+        "edges": 317,
+        "limited": false
+      }
+    },
+    {
+      "name": "Original random chaos: seeded event/frame replay",
+      "status": "passed",
+      "milliseconds": 1.9128240000000005,
+      "detail": {
+        "frames": 40,
+        "edges": 320,
+        "limited": false
+      }
+    },
+    {
+      "name": "Original random colony: seeded event/frame replay",
+      "status": "passed",
+      "milliseconds": 10.195944000000054,
+      "detail": {
+        "frames": 40,
+        "edges": 718,
+        "limited": false
+      }
+    },
+    {
+      "name": "Original random walk: seeded event/frame replay",
+      "status": "passed",
+      "milliseconds": 2.8712720000003173,
+      "detail": {
+        "frames": 40,
+        "edges": 320,
+        "limited": false
+      }
+    },
+    {
+      "name": "Original random brownian: seeded event/frame replay",
+      "status": "passed",
+      "milliseconds": 0.95222399999966,
+      "detail": {
+        "frames": 40,
+        "edges": 320,
+        "limited": false
+      }
+    },
+    {
+      "name": "Original random branching: seeded event/frame replay",
+      "status": "passed",
+      "milliseconds": 0.44674399999985326,
+      "detail": {
+        "frames": 40,
+        "edges": 46,
+        "limited": false
+      }
+    },
+    {
+      "name": "Original random birthdeath: seeded event/frame replay",
+      "status": "passed",
+      "milliseconds": 1.120228999999199,
+      "detail": {
+        "frames": 40,
+        "edges": 505,
+        "limited": false
+      }
+    },
+    {
+      "name": "Preservation manifest: all original scientific source hashes match",
+      "status": "passed",
+      "milliseconds": 3.2697809999999663,
+      "detail": {
+        "exact_assets": 62
+      }
+    }
+  ],
+  "summary": {
+    "passed": 23,
+    "failed": 0
+  }
+}

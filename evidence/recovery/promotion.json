@@ -1,0 +1,22 @@
+{
+  "release": "80.1.0",
+  "candidate_sha256": "e967371be063f7871881568e80059b39b72ee844090bd7bd9d38a9d269905a5e",
+  "verified_source_commit": "4a0fa8e1a6496a47dc7160145b6d8c7850429229",
+  "verification_run": 37006084270,
+  "artifact_id": 11224764673,
+  "browser": {
+    "passed": 56,
+    "failed": 0
+  },
+  "source_numerical": {
+    "passed": 23,
+    "failed": 0
+  },
+  "retained_numerical": {
+    "passed": 36,
+    "failed": 0
+  },
+  "exact_scientific_assets": 62,
+  "staged_at": "2026-10-02T12:26:15.833584+00:00",
+  "publication_scope": "Only tested public site copied. Existing author/private root material is neither included in the public artifact nor newly published by this process."
+}

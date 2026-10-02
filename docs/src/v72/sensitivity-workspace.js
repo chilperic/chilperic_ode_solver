@@ -246,6 +246,7 @@
     ['exportSensitivityCsv', 'exportSensitivityJson', 'exportSensitivityPng', 'exportSensitivitySvg'].forEach(id => { if ($(id)) $(id).disabled = !computed; });
   }
   function markDirty(message) {
+    state.inputRevision = (state.inputRevision || 0) + 1;
     state.dirty = true;
     if (state.result) {
       document.querySelector('.results-card')?.classList.add('stale-results'); setText('sensitivityTopStatus', 'Stale');
@@ -338,7 +339,9 @@
     const analysis = analysisFromInputs(); const checkedAnalysis = INPUT.validateSensitivity(analysis);
     if (checkedAnalysis.capacity && checkedAnalysis.capacity.blocked) throw new Error(checkedAnalysis.capacity.message);
     state.runToken += 1; const token = state.runToken;
-    state.worker = new Worker('src/v72/sensitivity-worker.js?v=79.2.0'); syncRunAvailability();
+    state.submittedRevision = state.inputRevision || 0;
+    state.dirty = true; syncExportState();
+    state.worker = new Worker('src/v72/sensitivity-worker.js?v=81.1'); syncRunAvailability();
     $('sensitivityProgress').style.width = '4%'; setText('sensitivityStatus', `Starting about ${checkedAnalysis.expectedEvaluations.toLocaleString()} ODE solves in a worker…`);
     setText('sensitivityTopStatus', 'Running'); document.querySelector('.results-card')?.classList.add('stale-results');
     state.worker.onmessage = function (event) {
@@ -364,6 +367,7 @@
     syncResultOutputs();
     setText('sensitivityStatus', 'Sensitivity analysis completed. Inspect estimator and solver limitations before interpreting rankings.');
     updateEvidence(); updatePlotOptions(); applyLayout(state.layout); syncExportState();
+    if ((state.inputRevision || 0) !== state.submittedRevision) markDirty('Analysis completed for the submitted inputs. Inputs changed during calculation; rerun before exporting.');
   }
 
   function syncResultOutputs() {
@@ -551,7 +555,10 @@
     setText('provenanceStatus', 'Computed'); setText('provenanceMethod', state.result.method);
     setText('provenanceScope', `${state.result.outputMetric === 'trajectory' ? 'downsampled trajectory' : state.result.outputMetric} of ${state.result.outputVar} on t=[${number(state.result.model.t0)}, ${number(state.result.model.t1)}]`);
     setText('provenanceReliability', state.result.method === 'local' ? 'Local and perturbation-dependent' : state.result.method === 'fim' ? 'Local, scaled and noise-model-dependent' : 'Finite-sample screening estimate');
-    const combinedWarnings = [analysis.warning, warnings, ...(solver.warnings || [])].filter(Boolean).join(' '); setText('provenanceWarning', combinedWarnings);
+    const allSolverWarnings = solver.warnings || [];
+    const displayedSolverWarnings = allSolverWarnings.filter(w => !w.startsWith('Local Jacobian timescale separation is approximately'));
+    if (displayedSolverWarnings.length !== allSolverWarnings.length) displayedSolverWarnings.push('Local Jacobian tests flag disparate timescales (maximum ratio '+number(solver.maxTimescaleRatio)+'). This is a heuristic; verify the trajectory with an independent stiff solver. Per-solve warnings remain in the result export.');
+    const combinedWarnings = [analysis.warning, warnings, ...displayedSolverWarnings].filter(Boolean).join(' '); setText('provenanceWarning', combinedWarnings);
     const rows = rankingRows().sort((a, b) => b.value - a.value);
     const special = state.result.method === 'fim' ? `<p><b>Estimated rank:</b> ${analysis.rank}/${analysis.names.length}. <b>Condition:</b> ${Number.isFinite(analysis.condition) ? number(analysis.condition) : 'rank deficient / infinite'}.</p>`
       : state.result.method === 'sobol' ? `<p><b>Base samples:</b> ${number(analysis.samples, 0)}. <b>Bootstrap replicates:</b> ${number(analysis.bootstrapReplicates, 0)}. <b>Second-order pairs:</b> ${analysis.secondOrderEnabled ? number(analysis.secondOrder.length, 0) : 'disabled'}. <b>State summaries:</b> ${analysis.stateSensitivity ? analysis.stateSensitivity.states.length : 0}. <b>Response surface:</b> ${analysis.responseSurface ? `${analysis.responseSurface.points}×${analysis.responseSurface.points}` : 'disabled'}. <b>Dependence screening:</b> ${analysis.dependence ? `${analysis.dependence.sampleCount} samples / ${analysis.dependence.permutations} permutations` : 'disabled'}.</p>`

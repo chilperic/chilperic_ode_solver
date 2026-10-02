@@ -224,6 +224,7 @@
   }
 
   function loadPreset(name, recompute) {
+    root.FokoTransfer?.clear();
     const preset = PRESETS[name] || PRESETS[Object.keys(PRESETS)[0]];
     if (!preset) throw new Error('No Curve Fitting preset is available.');
     state.currentName = Object.keys(PRESETS).find(function (key) { return PRESETS[key] === preset; }) || name;
@@ -248,6 +249,7 @@
       version: RELEASE,
       example: state.currentName,
       data: $('fittingData').value,
+      provenance: root.FokoTransfer?.provenanceFor($('fittingData').value) || null,
       delimiter: $('fittingDelimiter').value,
       missingPolicy: $('fittingMissingPolicy').value,
       model: $('fittingModel').value,
@@ -659,6 +661,7 @@
   function restoreConfig(config, message) {
     if (!config || typeof config !== 'object') throw new Error('Stored fitting configuration is invalid.');
     $('fittingData').value = config.data || '';
+    root.FokoTransfer?.adopt(config.provenance, config.data || '');
     $('fittingDelimiter').value = config.delimiter || 'auto';
     $('fittingMissingPolicy').value = config.missingPolicy || 'analysis-complete';
     $('fittingModel').value = config.model || 'linear';
@@ -774,7 +777,7 @@
       const file = this.files && this.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = function () {
+      reader.onload = function () { root.FokoTransfer?.clear();
         $('fittingData').value = String(reader.result || '');
         state.currentName = '';
         try {
@@ -845,6 +848,12 @@
     renderPresetLibrary();
     bindEvents();
     const query = new URLSearchParams(window.location.search);
+    const transferId = query.get('transfer');
+    if (transferId) {
+      try { const payload = root.FokoTransfer.read(transferId); restoreConfig(root.FokoTransfer.config(payload, 'fitting'), 'Simulated observable loaded. Choose a descriptive fit; this does not calibrate the source model.'); }
+      catch (error) { $('fittingStatus').textContent = 'Transfer error: ' + error.message; }
+      return; // Never substitute or automatically fit unrelated preset data.
+    }
     const shared = query.get('state');
     if (shared) {
       try {

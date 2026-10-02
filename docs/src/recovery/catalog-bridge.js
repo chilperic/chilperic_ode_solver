@@ -1,0 +1,1 @@
+(function(r){'use strict';const seen=new Set();const key=x=>(x.id||[x.lab,x.title].join('|'))+'|'+x.href;r.FokoScientificExampleCatalog=[...(r.FokoScientificExampleCatalog||[]),...(r.FokoUpgradeCatalogue||[])].filter(x=>{const k=key(x);if(seen.has(k))return false;seen.add(k);return true;});})(globalThis);

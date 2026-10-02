@@ -1,8 +1,8 @@
 {
-  "version": "80.0.0",
-  "release": "Unified FokoLab",
+  "version": "80.1.0",
+  "release": "Original animation recovery & unified workspaces",
+  "source_version": "82.0-instrument",
+  "baseline": "80.0.0",
   "date": "2026-10-02",
-  "identity": "dynamic-systems",
-  "experiment_library": true,
-  "notes": "Unifies preserved FokoLab workspaces with expanded biological, seasonal, stochastic, spatial and mathematical experiment laboratories."
+  "manifest": "recovery-manifest.json"
 }

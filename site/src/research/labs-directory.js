@@ -6,6 +6,7 @@ if($('labDirectory')){
  const methods=root.FokoLabMethodIndex||{};
  const labsFor={'studio.html':[], 'workbench.html':[], 'ode.html':['ODE'], 'stochastic.html':['Stochastic'], 'steady.html':['Steady State'], 'bifurcation.html':['Bifurcation'], 'agent.html':['Agent'], 'population-genetics.html':['Population Genetics'], 'evolution.html':['Evolution Landscapes'], 'sensitivity.html':[], 'optimization.html':['Optimization'], 'fitting.html':['Fitting'], 'statistics.html':['Statistics'], 'advanced-methods.html':['Advanced Methods'], 'ai-modeling.html':['AI Modeling'], 'sciml.html':['SciML'], 'ml.html':['Machine Learning'], 'linear-algebra.html':['Linear Algebra'], 'networks.html':['Networks'], 'symbolic.html':['Symbolic']};
  for(const l of (root.FokoUpgrade?.labs||[]))labsFor[l.route]=[l.title];
+ for(const m of (root.FokoIntegration?.modules||[]))labsFor[m[1]]=[m[4]];
  const friendly={'ODE dynamics':'ODE Lab','Stochastic processes':'Stochastic Lab','Equilibria':'Steady-State Lab','Optimization':'Optimization Lab'};
  group.innerHTML='<option value="">All areas</option>'+[...new Set(TOOLS.map(t=>t[3]))].map(v=>`<option>${esc(v)}</option>`).join('');
  const params=new URLSearchParams(location.search);if(params.has('q'))query.value=params.get('q');if([...group.options].some(o=>o.value===params.get('area')))group.value=params.get('area');

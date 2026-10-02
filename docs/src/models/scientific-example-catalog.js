@@ -263,6 +263,3 @@
     {"title":"AI biphasic treatment response","lab":"AI Modeling","family":"Pharmacology","provenance":"Synthetic observations","status":"Browser-computed transparent surrogate","href":"ai-modeling.html?example=biphasic-dose","summary":"Fit activation followed by inhibition without imposing a monotonic-response claim."}
   ]);
 }(typeof window!=='undefined'?window:globalThis));
-
-/* 79.2 additive catalogue: original records are not rewritten or reindexed. */
-(function(r){const old=r.FokoScientificExampleCatalog||[];r.FokoScientificExampleCatalog=old.concat((r.FokoUpgradeCatalogue||[]).filter(x=>!old.some(y=>y.href===x.href)));})(typeof window!=="undefined"?window:globalThis);
