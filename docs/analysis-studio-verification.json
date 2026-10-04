@@ -1,0 +1,58 @@
+{
+  "release": "80.2.0",
+  "built": "2026-10-04",
+  "deployment": "not deployed",
+  "legacy_branch": "legacy/80.1.0-user-approved",
+  "baseline_commit": "39810f18526ea7eed1b02c3a30fffaddad490b57",
+  "checks": {
+    "independent_numerical_references": {
+      "passed": 839,
+      "failed": 0,
+      "guardsPassed": 15,
+      "guardsFailed": 0
+    },
+    "standalone_browser_workflows": {
+      "passed": 70,
+      "failed": 0
+    },
+    "python_export_workflows": {
+      "passed": 17,
+      "failed": 0
+    },
+    "source_transfer_contracts": {
+      "passed": 7,
+      "failed": 0
+    },
+    "leaf_failure_diagnosis": {
+      "passed": 5,
+      "failed": 0
+    },
+    "local_http_assets": {
+      "passed": 25,
+      "failed": 0
+    },
+    "retained_regressions": {
+      "passed": 36,
+      "failed": 0
+    },
+    "changed_js_syntax": {
+      "passed": 22,
+      "failed": 0
+    }
+  },
+  "scope": [
+    "Numerical comparisons execute SciPy/statsmodels independently of the JavaScript implementation. Assertion counts overlap and are not independent validations.",
+    "Standalone browser checks execute actual Blob workers, real Plotly and native exports in a controlled about:blank fixture. Address-based Chromium navigation was blocked.",
+    "HTTP MIME/byte tests are separate from browser execution. Full hosted-module-worker, cross-lab navigation and physical-device acceptance are not certified.",
+    "Legacy 59-page-state accessibility audit is historical baseline evidence, not a fresh WCAG assessment.",
+    "No biological calibration or proof of feasibility/optimality for arbitrary models is asserted."
+  ],
+  "files": {
+    "audit": "DEEP-AUDIT.html",
+    "source": "source-diff.json",
+    "browser": "browser/report.json",
+    "python": "python-exports/report.json",
+    "numerical": "independent-reference-results.json",
+    "leaf": "leaf-diagnostics.json"
+  }
+}

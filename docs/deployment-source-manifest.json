@@ -1,0 +1,3434 @@
+{
+  "release": "80.2.0",
+  "updated": "2026-10-05",
+  "authored_changes": 77,
+  "new_files": 22,
+  "protected_cv_editions": 6,
+  "protected_cv_hashes": {
+    "cv.html": "aef807a1a38c60998433e59ea3f30de188e69e89ebcc8eac1a293e6c9e13245e",
+    "cv/academic_cv.pdf": "fdcde6bbda9d647d7fedec33690bba8e83d02f738ade0799f323645c3b4727f6",
+    "cv/industry_cv_with_photo.pdf": "3134fd7f620563b3205bebbee872a6464fbe13e4a48b737cae1a9ce58204b658",
+    "cv/industry_cv_german.pdf": "0ddedc7caa350b845bc3be1eb7e017ad5950d584482c29fd2490e7d72f186a9c",
+    "cv/academic_cv_with_photo.pdf": "47f4d0602a6fdf7cedda8a0c96d64397d870813035a482ff559542157950459a",
+    "cv/downloads.json": "ad42366bbeec2b327d378ea0555c83872366daedd46c9085d450fc9f218425a2",
+    "cv/industry_cv.pdf": "0967efef5cce5b409c51109d1f39ccc3ecc3c107851c85c41037fd8784bae8b2",
+    "cv/industry_cv_german_with_photo.pdf": "1aa94a5960a61c15b38feae05e92d9201f25baa63455bd274cc6ad31a1241c34",
+    "cv/README.md": "884dbf87472307e1e2fce8aa3414eafdce20f413e0e1681d49c53957d710320a",
+    "cv/sources/industry_cv_german.tex": "ec385ac46ebe51e7551cd666f1f91c1ce6049c6c12b524b51b74f8ed6ecf66cd",
+    "cv/sources/industry_cv.tex": "9abce98b622bcccfbb76d6ca2655634b09c589b5c2a3aab5e0ed27eada5ba00a",
+    "cv/sources/academic_cv_with_photo.tex": "232b9a128715aa3f4f2ec297609e8dac1c80bd3cee99fb9b1476c8f8058825f8",
+    "cv/sources/academic_cv.tex": "d8c593abef40e97cedb68e2f33d4a92a19a802f61c2716425f2b93690915437c",
+    "cv/sources/industry_cv_german_with_photo.tex": "0cfc19242935262e2916338164f08bc1aae749571415f3901100157ed890d95e",
+    "cv/sources/industry_cv_with_photo.tex": "95209831f46737b0e2a494e5d0e866a414592eb5c177e61e917ea11fe72fc14c",
+    "cv/sources/profile_photo.png": "0992abd38c68c4578141a8513755fc47b66b2402f1d4032bfddf34a65dda4ceb",
+    "assets/cv/academic_cv.pdf": "fdcde6bbda9d647d7fedec33690bba8e83d02f738ade0799f323645c3b4727f6",
+    "assets/cv/industry_cv_with_photo.pdf": "3134fd7f620563b3205bebbee872a6464fbe13e4a48b737cae1a9ce58204b658",
+    "assets/cv/industry_cv_german.pdf": "0ddedc7caa350b845bc3be1eb7e017ad5950d584482c29fd2490e7d72f186a9c",
+    "assets/cv/industry_cv_german.tex": "ec385ac46ebe51e7551cd666f1f91c1ce6049c6c12b524b51b74f8ed6ecf66cd",
+    "assets/cv/industry_cv.tex": "9abce98b622bcccfbb76d6ca2655634b09c589b5c2a3aab5e0ed27eada5ba00a",
+    "assets/cv/academic_cv_with_photo.tex": "232b9a128715aa3f4f2ec297609e8dac1c80bd3cee99fb9b1476c8f8058825f8",
+    "assets/cv/academic_cv.tex": "d8c593abef40e97cedb68e2f33d4a92a19a802f61c2716425f2b93690915437c",
+    "assets/cv/academic_cv_with_photo.pdf": "47f4d0602a6fdf7cedda8a0c96d64397d870813035a482ff559542157950459a",
+    "assets/cv/industry_cv.pdf": "0967efef5cce5b409c51109d1f39ccc3ecc3c107851c85c41037fd8784bae8b2",
+    "assets/cv/industry_cv_german_with_photo.tex": "0cfc19242935262e2916338164f08bc1aae749571415f3901100157ed890d95e",
+    "assets/cv/industry_cv_german_with_photo.pdf": "1aa94a5960a61c15b38feae05e92d9201f25baa63455bd274cc6ad31a1241c34",
+    "assets/cv/industry_cv_with_photo.tex": "95209831f46737b0e2a494e5d0e866a414592eb5c177e61e917ea11fe72fc14c",
+    "assets/cv/profile_photo.png": "0992abd38c68c4578141a8513755fc47b66b2402f1d4032bfddf34a65dda4ceb"
+  },
+  "source_package_sha256": "dbfb1d9ea6b1cfefba481d2087afafd7248f52c418a6aa4f86ab775e7e2e5b7b",
+  "baseline_commit": "39810f18526ea7eed1b02c3a30fffaddad490b57",
+  "scope": "Exact authored application text restored, then publication metadata updated. This is source verification, not biological validation.",
+  "authored_expected": [
+    {
+      "path": "VERSION.json",
+      "before": "5a0a121d9b7c4c59d5d66e577cd6a9d6024f7fcac08f091012d1b408c5843849",
+      "after": "d5448b38ed44f9bc51e882afe20f651859853d67702b7ec106babb6afed0fc64",
+      "ops": [
+        [
+          0,
+          19
+        ],
+        "2",
+        [
+          20,
+          39
+        ],
+        "Sc",
+        [
+          41,
+          42
+        ],
+        "en",
+        "t",
+        [
+          43,
+          44
+        ],
+        "fic a",
+        [
+          44,
+          47
+        ],
+        "ysis",
+        [
+          47,
+          50
+        ],
+        "d v",
+        [
+          50,
+          51
+        ],
+        "s",
+        "u",
+        [
+          52,
+          53
+        ],
+        "l",
+        [
+          54,
+          55
+        ],
+        "sati",
+        [
+          61,
+          62
+        ],
+        "n\",\n",
+        [
+          66,
+          67
+        ],
+        " ",
+        "\"b",
+        [
+          69,
+          70
+        ],
+        [
+          71,
+          72
+        ],
+        "lt\":",
+        [
+          76,
+          77
+        ],
+        "\"",
+        "2026-10-04",
+        [
+          87,
+          93
+        ],
+        "ba",
+        [
+          93,
+          94
+        ],
+        "elin",
+        [
+          98,
+          100
+        ],
+        "comm",
+        [
+          104,
+          105
+        ],
+        "t",
+        [
+          107,
+          111
+        ],
+        "39",
+        [
+          111,
+          112
+        ],
+        "10f18526ea7",
+        [
+          123,
+          124
+        ],
+        "ed1b02c3a30fffaddad49",
+        [
+          145,
+          146
+        ],
+        "b57",
+        [
+          150,
+          157
+        ],
+        "eplo",
+        "ym",
+        [
+          159,
+          160
+        ],
+        "nt",
+        [
+          160,
+          164
+        ],
+        "not deployed in",
+        " this pass",
+        [
+          174,
+          180
+        ],
+        "le",
+        "g",
+        [
+          181,
+          182
+        ],
+        "cy_",
+        "branch",
+        [
+          188,
+          192
+        ],
+        "l",
+        [
+          193,
+          194
+        ],
+        "ga",
+        [
+          194,
+          195
+        ],
+        "y/80.1.0-us",
+        [
+          206,
+          207
+        ],
+        "r",
+        "-appr",
+        [
+          212,
+          213
+        ],
+        "ve",
+        "d",
+        [
+          214,
+          217
+        ]
+      ]
+    },
+    {
+      "path": "acknowledgement.html",
+      "before": "6770690a7b60f423f6cd6d340d815a362c75289f8c20b21efcbfcf2d3c5dae5b",
+      "after": "0cebedb34fcd2170668b3559ea522a8c1f9cb2b79d72ae5da704c8d5fe11e215",
+      "ops": [
+        [
+          0,
+          1487
+        ],
+        [
+          1488,
+          2352
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2352,
+          5405
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          5405,
+          5420
+        ]
+      ]
+    },
+    {
+      "path": "adaptation.html",
+      "before": "57363c5c0fd6219e6438b1ed03f1df7168d29711bc3e8c66142556811977c974",
+      "after": "93791f7a519856073343d826b0e7ddfdbd0bab677f0557242b669e47939a87ad",
+      "ops": [
+        [
+          0,
+          1601
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1601,
+          12407
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12407,
+          12432
+        ]
+      ]
+    },
+    {
+      "path": "advanced-methods.html",
+      "before": "68725faa08a8277c2b02e0cfaac63da8ca7169c3059e854b08b9c64d793877d4",
+      "after": "34e3fc7d398fbcbbe687efb4b9ed1d7282478b00375c07fff8d41cf4b13b9f0a",
+      "ops": [
+        [
+          0,
+          1310
+        ],
+        [
+          1311,
+          2175
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2175,
+          8738
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          8738,
+          8753
+        ]
+      ]
+    },
+    {
+      "path": "agent.html",
+      "before": "59e71734cd9da5ba0854af14c0d81627d565c0777a2fed66addda160d15973cf",
+      "after": "c02110b129b241fc9c7777ea8133d4cb36e9dea0f17dd5505c540d238ef15188",
+      "ops": [
+        [
+          0,
+          2039
+        ],
+        [
+          2040,
+          2904
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2904,
+          18211
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          18211,
+          18227
+        ]
+      ]
+    },
+    {
+      "path": "ai-modeling.html",
+      "before": "aa062be295874ea453e0ac8941f48082dfeb8fa8bce4d63fae9a5b6d825f0021",
+      "after": "6925b492c43c5e72be783c956c95ca28e203eed5f698593e4700703f5c25ec33",
+      "ops": [
+        [
+          0,
+          1456
+        ],
+        [
+          1457,
+          2321
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2321,
+          9901
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          9901,
+          9916
+        ]
+      ]
+    },
+    {
+      "path": "analysis.html",
+      "before": "f6f2409a969a373b0d676c387bd9dbd9816d4df890299b8bac1ed0ca11fa78fe",
+      "after": "71019e06052b0c0dcde705211103d6cb5a05b6139e9fdabed821178dd973e7e1",
+      "ops": [
+        [
+          0,
+          1998
+        ],
+        "link href=\"styles",
+        [
+          1998,
+          1999
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          1999,
+          2001
+        ],
+        "et\"/></he",
+        [
+          2001,
+          2343
+        ],
+        "><a class=\"studio-entry\" href=\"analysis-studio.html\">Analysis &amp; visualization studio →</a",
+        [
+          2343,
+          5421
+        ],
+        "><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script",
+        [
+          5421,
+          5436
+        ]
+      ]
+    },
+    {
+      "path": "beauty.html",
+      "before": "13daac22167316f8f0e8a80f39488d78a9a063d6fe21a0370c17f879afba8dea",
+      "after": "bbc962086958145d19de89794347a8880fff5a71d6b1a614a2dad642cd15b428",
+      "ops": [
+        [
+          0,
+          1437
+        ],
+        [
+          1438,
+          2302
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2302,
+          6134
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          6134,
+          6150
+        ]
+      ]
+    },
+    {
+      "path": "bifurcation.html",
+      "before": "5a434ae7261a01f59d8aa29733b1c9261793ee777eb64c4d8caa71b09ca47a08",
+      "after": "74ca43ee668910c47b294e8721eca640da93442c68e160745d21e41f60cb4a9c",
+      "ops": [
+        [
+          0,
+          1362
+        ],
+        [
+          1363,
+          2227
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2227,
+          9069
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          9069,
+          9084
+        ]
+      ]
+    },
+    {
+      "path": "book-observations.html",
+      "before": "0d07be90345d2bb7c65c0d2b49eebb844f5e5dfcace2b5a092c173e4b5423d37",
+      "after": "983a81e68bd780def2334964a09158de51e7dcedaeadcd18b89ee126269d8045",
+      "ops": [
+        [
+          0,
+          1032
+        ],
+        [
+          1033,
+          1897
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1897,
+          12357
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          12357,
+          12371
+        ]
+      ]
+    },
+    {
+      "path": "book.html",
+      "before": "9014f18573e1d7268b99a29c59a17eb52a0cef3d1feefae9ff60f98c439bfd69",
+      "after": "59917d9915b606b897822ef85618c931f49404b5816dff90966f88c549ec9499",
+      "ops": [
+        [
+          0,
+          1019
+        ],
+        [
+          1020,
+          1884
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1884,
+          25860
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          25860,
+          25874
+        ]
+      ]
+    },
+    {
+      "path": "branching.html",
+      "before": "c7dde9e94f1ba91b2ec91ad8da32abc3e5085e8156d3d8dba6aec1d23b78f11f",
+      "after": "39e5b13aa6d856ff1e394e5e317de69834f0ae427136ef494d4fd4d3b83cbe78",
+      "ops": [
+        [
+          0,
+          1589
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1589,
+          12189
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12189,
+          12214
+        ]
+      ]
+    },
+    {
+      "path": "contact.html",
+      "before": "a9af1f4afec1de0c570e12b6b150726ee9bc5e76a5ba7e2d035299f1af2ea579",
+      "after": "dc29ab629aab886a185fa3e2e7b2384e9acf53e1b1c5ef26f21f7c0d885c49d8",
+      "ops": [
+        [
+          0,
+          1445
+        ],
+        [
+          1446,
+          2310
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2310,
+          4214
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          4214,
+          4229
+        ]
+      ]
+    },
+    {
+      "path": "continuum/advanced.html",
+      "before": "2685152fa7a1ec102b3f9663d088e2f998ba14a95b729e0bcbb1ff9ff013629a",
+      "after": "ce81422356ecbe07a5d1898188caa4e9338773efba428f11f626663b7b8e2fef",
+      "ops": [
+        [
+          0,
+          3797
+        ],
+        "link href=\"../styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          3797,
+          33468
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js",
+        [
+          33468,
+          33493
+        ]
+      ]
+    },
+    {
+      "path": "continuum/approaches.html",
+      "before": "cebe7ea2c8371c6ea68b059193fcbbbfebb0c8e7c22e885fbd4bb34feb42e544",
+      "after": "71bd2e7a078b3e74ce41d8c42bf06fc0bdba78b1366230bcb064711b18b43e96",
+      "ops": [
+        [
+          0,
+          3440
+        ],
+        "link href=\"../styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          3440,
+          20737
+        ],
+        [
+          20741,
+          24931
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js",
+        [
+          24931,
+          24957
+        ]
+      ]
+    },
+    {
+      "path": "continuum/index.html",
+      "before": "af268c5f37925fa7971d10dc461b7b2294f8e5c4f8f6969718f71844faae966c",
+      "after": "9f68ef8473df2e70af4ceebf923386a2084bbd2c7b048566c40de253144e4316",
+      "ops": [
+        [
+          0,
+          2538
+        ],
+        "link href=\"..",
+        [
+          2538,
+          2539
+        ],
+        "styles/revision82.css\" rel=\"styles",
+        [
+          2539,
+          2541
+        ],
+        "et\"/></he",
+        [
+          2541,
+          3157
+        ],
+        "C3–C4",
+        [
+          3165,
+          3166
+        ],
+        "all",
+        [
+          3172,
+          3173
+        ],
+        "ca",
+        [
+          3175,
+          3180
+        ],
+        "&am",
+        [
+          3185,
+          3186
+        ],
+        "; ",
+        [
+          3188,
+          3189
+        ],
+        "v",
+        "olu",
+        [
+          3192,
+          3193
+        ],
+        "ion",
+        [
+          3196,
+          3197
+        ],
+        "ry",
+        [
+          3205,
+          3215
+        ],
+        [
+          3216,
+          7740
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js",
+        [
+          7740,
+          7766
+        ]
+      ]
+    },
+    {
+      "path": "diffusion.html",
+      "before": "eb76a107a384ce9eac43fd5bb69d91f2a62e1da0f4512b47fcaaf3e4fc3ba6ee",
+      "after": "e585fefdb6fe917bc9f814ebf7cd4788553b00c9e8f3f7281ed2ccc6be1d4406",
+      "ops": [
+        [
+          0,
+          1605
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1605,
+          12319
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12319,
+          12344
+        ]
+      ]
+    },
+    {
+      "path": "docs.html",
+      "before": "7f1ea9a68f22449f08b51eb1974023929febeeab0c9b920d4e81634cbfcca31a",
+      "after": "b6cc62df1ecf4f58180bfe8c9498dfb8289e978c58613737b2b3cdd673291649",
+      "ops": [
+        [
+          0,
+          1070
+        ],
+        [
+          1071,
+          1935
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1935,
+          120443
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          120443,
+          120458
+        ]
+      ]
+    },
+    {
+      "path": "evolution-hub.html",
+      "before": "390d6a05a1e5a8ad8e26fa9a8dec4e901694515675ca303e7a974489084e36d9",
+      "after": "313be4fdea2629067d1348aab28ac89bd256959014a672b94b69df3f35b8a588",
+      "ops": [
+        [
+          0,
+          2009
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          2009,
+          4419
+        ],
+        "><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script",
+        [
+          4419,
+          4434
+        ]
+      ]
+    },
+    {
+      "path": "evolution.html",
+      "before": "99cf9ccaa14338da880386dd850734ee6c84c437176bd70a7a3acde28c392f01",
+      "after": "398debd28bbede906c39c992bc0b6a11b5a49efc0e7da237a567fd5ac643454c",
+      "ops": [
+        [
+          0,
+          1456
+        ],
+        [
+          1457,
+          2321
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2321,
+          11331
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          11331,
+          11346
+        ]
+      ]
+    },
+    {
+      "path": "examples.html",
+      "before": "063d7176213f55cf2dbf57e55cbd29c1706ce6826549e2ac2d6b5f4b59b67742",
+      "after": "170a3b9355f760c8a4f5967c64f2f1878ad420fdf4293fa5ce4aa3c4c45dd369",
+      "ops": [
+        [
+          0,
+          1479
+        ],
+        [
+          1480,
+          2344
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2344,
+          5504
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          5504,
+          5520
+        ]
+      ]
+    },
+    {
+      "path": "experiments.html",
+      "before": "f74f317834d88dafa274b4c7064ca120be2bdbafec122979979a62fc3686faff",
+      "after": "77956d3df09b17a3e5c9ddd9662b8d22d751206db8514d46b53078cfc435ec27",
+      "ops": [
+        [
+          0,
+          1540
+        ],
+        "link href=\"styles",
+        [
+          1540,
+          1541
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          1541,
+          1543
+        ],
+        "et\"/></he",
+        [
+          1543,
+          3321
+        ],
+        ".js\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface",
+        [
+          3321,
+          3349
+        ]
+      ]
+    },
+    {
+      "path": "fitting.html",
+      "before": "cfd8669da34326f1c3e1c5e7c5ed714b2cb8c5a4d98235ab80c9f3280081efb4",
+      "after": "cc7814ba4936c53650f8322101c934386de3e656753d55146fd5747c9efda4eb",
+      "ops": [
+        [
+          0,
+          1877
+        ],
+        [
+          1878,
+          2742
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2742,
+          14714
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          14714,
+          14730
+        ]
+      ]
+    },
+    {
+      "path": "fractals.html",
+      "before": "fe0267a3c1fa997de421097118c7ec832c033f6cb7a59a4b0a9ac811e382e522",
+      "after": "66fda88ad0d19e060775a99aa369671233f4f599b3c0210c3b8a0b82b92ab6ec",
+      "ops": [
+        [
+          0,
+          1600
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1600,
+          12100
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12100,
+          12125
+        ]
+      ]
+    },
+    {
+      "path": "identity.html",
+      "before": "827690f6885b177fe9824a6425012923bdc707168cbf0922a1f2b35484d988d1",
+      "after": "bc2207a9d9c27655fefc276951f496d00a0f03eabed7e1de8c9568ed95e614bf",
+      "ops": [
+        [
+          0,
+          1014
+        ],
+        [
+          1015,
+          1879
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1879,
+          15502
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          15502,
+          15516
+        ]
+      ]
+    },
+    {
+      "path": "index.html",
+      "before": "b314bc5f7a81f0f91e6d394510c6ae5080d3419b8414847071274d65f03b46bb",
+      "after": "72d8935843b2be1809349d8319d392689c15c7dae6aed7bc4bd2820fd0293021",
+      "ops": [
+        [
+          0,
+          1654
+        ],
+        "link href=\"styles",
+        [
+          1654,
+          1655
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          1655,
+          1657
+        ],
+        "et\"/></he",
+        [
+          1657,
+          2099
+        ],
+        "><a class=\"foko-action primary\" href=\"analysis-studio.html\">Analyze data &amp; create figures</a",
+        [
+          2099,
+          8127
+        ],
+        "/sp",
+        [
+          8127,
+          8128
+        ],
+        "n></footer><script",
+        [
+          8128,
+          8129
+        ],
+        "s",
+        [
+          8130,
+          8131
+        ],
+        "c",
+        [
+          8133,
+          8135
+        ],
+        "s",
+        [
+          8135,
+          8136
+        ],
+        "c/v",
+        "76/",
+        [
+          8139,
+          8140
+        ],
+        "pp-",
+        [
+          8140,
+          8141
+        ],
+        "h",
+        [
+          8141,
+          8142
+        ],
+        "ll.js",
+        [
+          8147,
+          8149
+        ],
+        "</script",
+        "><script",
+        [
+          8157,
+          8158
+        ],
+        "s",
+        [
+          8158,
+          8159
+        ],
+        "c=\"src/upgrad",
+        [
+          8159,
+          8160
+        ],
+        "/",
+        [
+          8160,
+          8162
+        ],
+        "mmon.js\"></",
+        "sc",
+        [
+          8164,
+          8165
+        ],
+        "ipt>",
+        "<scri",
+        [
+          8170,
+          8171
+        ],
+        "t",
+        [
+          8172,
+          8173
+        ],
+        "src=\"src/rev",
+        [
+          8173,
+          8174
+        ],
+        "sio",
+        [
+          8174,
+          8175
+        ],
+        "82/run-in",
+        [
+          8175,
+          8179
+        ],
+        "i",
+        [
+          8180,
+          8181
+        ],
+        "y.j",
+        "s\">",
+        [
+          8184,
+          8186
+        ],
+        "scrip",
+        "t",
+        [
+          8187,
+          8189
+        ],
+        "script src=\"src",
+        [
+          8189,
+          8190
+        ],
+        "revi",
+        [
+          8190,
+          8191
+        ],
+        "ion82",
+        "/",
+        [
+          8192,
+          8194
+        ],
+        "alysis-bridge.js\"",
+        [
+          8194,
+          8197
+        ],
+        "script",
+        [
+          8203,
+          8221
+        ],
+        "re",
+        [
+          8221,
+          8222
+        ],
+        "ision",
+        "82",
+        [
+          8224,
+          8225
+        ],
+        "con",
+        "tributors",
+        [
+          8234,
+          8265
+        ],
+        "rev",
+        "ision82",
+        [
+          8272,
+          8273
+        ],
+        "int",
+        "erface",
+        [
+          8279,
+          8307
+        ]
+      ]
+    },
+    {
+      "path": "integration-notes.html",
+      "before": "81052b6890b5ae8a6cfedf42ed5e29fe863b2358869a5b52fffead4e2698716e",
+      "after": "7d5b9e03ba6d1f511040ce3f5a6d917a3801b6521428f95cf4457dc9b50d18cc",
+      "ops": [
+        [
+          0,
+          2009
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          2009,
+          4026
+        ],
+        "><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script",
+        [
+          4026,
+          4041
+        ]
+      ]
+    },
+    {
+      "path": "labs.html",
+      "before": "8d7d1eb82aa727f411019096679ef9b6a9051455b99673415daace621909df8b",
+      "after": "4664ee7df661ec8288e6643b45bec8a9b06fa639c78d22903c44d299ad1a19a4",
+      "ops": [
+        [
+          0,
+          1019
+        ],
+        [
+          1020,
+          1884
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1884,
+          11248
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          11248,
+          11262
+        ]
+      ]
+    },
+    {
+      "path": "leaf/index.html",
+      "before": "0a2534e8132fd77a20a926fe68a3de3b6940f8bec431bf45c2b4522aa60cc92c",
+      "after": "c3d786fd4e8e69db8e3bd20f5b1aa565bda0e02b6ff3da8f6a3c9285b2695d7b",
+      "ops": [
+        [
+          0,
+          3111
+        ],
+        "link href=\"../styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          3111,
+          50479
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js\"></script><script src=\"../shared/leaf-diagnostics.js\"></script><script src=\"../design/leaf-diagnostic-ui.js",
+        [
+          50479,
+          50504
+        ]
+      ]
+    },
+    {
+      "path": "leaf-physiology.html",
+      "before": "5b786b4b8e9230ef4b4c2221926221d0259dd6f0b31f58a8876222220c41b784",
+      "after": "ec203ce4f150df94ef9b192c7209e265252123e09e476a25908bf713c22ceb64",
+      "ops": [
+        [
+          0,
+          1590
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1590,
+          12299
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12299,
+          12324
+        ]
+      ]
+    },
+    {
+      "path": "learn.html",
+      "before": "b63907cb751613bbab8077fbd135a353e027e0488cfd98eceacb098e7fe8e7f8",
+      "after": "b214772c3ca7c9196dc679eee93b871a331c0f986fbb586e8608cba4acdc1686",
+      "ops": [
+        [
+          0,
+          1019
+        ],
+        [
+          1020,
+          1884
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1884,
+          9002
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          9002,
+          9016
+        ]
+      ]
+    },
+    {
+      "path": "library.html",
+      "before": "c6f990f8a8630f95522fbb44feefc4642b3d28cdcd41f5ebda1f4962dce231f8",
+      "after": "b26b5ac77dc8e1c21de2d9a7097440badba29b355714101d58f923e573845dff",
+      "ops": [
+        [
+          0,
+          1021
+        ],
+        [
+          1022,
+          1886
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1886,
+          10216
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          10216,
+          10230
+        ]
+      ]
+    },
+    {
+      "path": "linear-algebra.html",
+      "before": "2dccbd66745a512d9e64955e586b1b64abcf201db32b87d0ccba90a2fab63384",
+      "after": "d75c32804d96c63a787348ae0e4757628015e88be482ae04caa4a1d6689e8ccf",
+      "ops": [
+        [
+          0,
+          1857
+        ],
+        [
+          1858,
+          2722
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2722,
+          13279
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          13279,
+          13295
+        ]
+      ]
+    },
+    {
+      "path": "lipids/index.html",
+      "before": "95769f44115548da57daec288fd669820661b4db1d6abbd701469350d85b810f",
+      "after": "47f73b2d8fcca71c3770c359d27fb4c6e6678f39c9dcc6c58b21ae875343dc93",
+      "ops": [
+        [
+          0,
+          2980
+        ],
+        "link href=\"../styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          2980,
+          13504
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js",
+        [
+          13504,
+          13529
+        ]
+      ]
+    },
+    {
+      "path": "lipids.html",
+      "before": "a5dceb7be0a55d5804dfa0ab43ab7b87302b6c702165e5d79ada471281427cb0",
+      "after": "c60e861de2f5528812e1aa1abf7e2d8a39ae96591fad5c3462bb2520616fcb63",
+      "ops": [
+        [
+          0,
+          1601
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1601,
+          12387
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12387,
+          12412
+        ]
+      ]
+    },
+    {
+      "path": "living.html",
+      "before": "7d5728ac1f768b3bb5c32d0a494486354f10441c2791f413c1d2af9424bd5f69",
+      "after": "f0d6b64f0ea131b0fb42f8e97c9cba61730cc3e99184888031fe591d92cfcc0c",
+      "ops": [
+        [
+          0,
+          1990
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1990,
+          4964
+        ],
+        "><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script",
+        [
+          4964,
+          4979
+        ]
+      ]
+    },
+    {
+      "path": "ml.html",
+      "before": "4672c47906281d240db1e77d51067f22b293e1de533c340e8886996b3cacfde2",
+      "after": "c346a40ea88a73498a411f6c1485ae6f676290066469ce64317a7d873f556895",
+      "ops": [
+        [
+          0,
+          1841
+        ],
+        [
+          1842,
+          2706
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2706,
+          14845
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          14845,
+          14861
+        ]
+      ]
+    },
+    {
+      "path": "model.html",
+      "before": "5549c16cf78edc94aa1e1f882529a962d8d04527b7e22c94071aa67c2490e9a1",
+      "after": "829cd272b7c76263fc4be5d223129634ba01608a9104ea6f12b87346985cb2a7",
+      "ops": [
+        [
+          0,
+          828
+        ],
+        [
+          829,
+          1695
+        ],
+        "link href=\"styles",
+        [
+          1695,
+          1696
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          1696,
+          1698
+        ],
+        "et\"/></he",
+        [
+          1698,
+          2562
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          2562,
+          2577
+        ]
+      ]
+    },
+    {
+      "path": "networks.html",
+      "before": "a394d34b62044b32eed1694f66877bc0fc936e218c60e715c87cf2ed5707ad58",
+      "after": "033eb9684474674ff9d7b07d296744f36fa21fbc59f1ce8be53705ca4bf02573",
+      "ops": [
+        [
+          0,
+          1818
+        ],
+        [
+          1819,
+          2683
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2683,
+          13479
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          13479,
+          13495
+        ]
+      ]
+    },
+    {
+      "path": "ode.html",
+      "before": "80a2b7765a8518f5cdf7c33505ff8f889804335cd9d38a18d75949d921d1e127",
+      "after": "44f5ebb640854be3e358882fbb968e96ba70f86bc3943fce55b2fbb75bf62bd7",
+      "ops": [
+        [
+          0,
+          1971
+        ],
+        [
+          1972,
+          2836
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2836,
+          23172
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          23172,
+          23188
+        ]
+      ]
+    },
+    {
+      "path": "optimization.html",
+      "before": "0d8ee7c970535c88e38a546c477325c46d5345c37e3468a512f2ac05d127dee5",
+      "after": "c5230e4584cb13a1420b6be63e45f647dbc2fb6deff0f6d32d8a9e1cf9740784",
+      "ops": [
+        [
+          0,
+          2083
+        ],
+        [
+          2084,
+          2948
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2948,
+          17355
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          17355,
+          17371
+        ]
+      ]
+    },
+    {
+      "path": "plant-growth.html",
+      "before": "f0e7faf81cf3a9d7f66a025a80c8dcbefdb2dcec86a9a00c2d9d835242419d1b",
+      "after": "5793898b5f6c4e72cdfc416a3dfbe63144e71a2b0199e73a84289eb7f4eb378d",
+      "ops": [
+        [
+          0,
+          1597
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1597,
+          12266
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12266,
+          12291
+        ]
+      ]
+    },
+    {
+      "path": "plants/index.html",
+      "before": "a768b2ac3534a246808a09fdfcedb0efe46c2e4fd26b729e3bbc09ea6e5fb1b8",
+      "after": "3c7ca83b2128a6d82dec71254c664de0f8b61f3ec65fcfdad5e40999c89df30a",
+      "ops": [
+        [
+          0,
+          3061
+        ],
+        "link href=\"../styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          3061,
+          139352
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js",
+        [
+          139352,
+          139377
+        ]
+      ]
+    },
+    {
+      "path": "plants/water-circuit.js",
+      "before": "d3878cef26f7a5acdab2d8a8ebccc282f61b87bb0bb30f66280fb2a14231c415",
+      "after": "61c5c945bb38f448ec5ec1e3a35a72f1ba99be7ccbae05fc9d8dfc27f750ed91",
+      "ops": [
+        [
+          0,
+          1440
+        ],
+        "ax(0.01,Math.m",
+        [
+          1440,
+          1443
+        ],
+        "Math.max(1,",
+        [
+          1443,
+          1444
+        ],
+        ")",
+        [
+          1444,
+          1449
+        ],
+        "Math.max",
+        [
+          1449,
+          1450
+        ],
+        "1,",
+        [
+          1450,
+          1488
+        ],
+        "Math.max(.01,",
+        [
+          1488,
+          1497
+        ],
+        "))",
+        [
+          1497,
+          16758
+        ]
+      ]
+    },
+    {
+      "path": "platform.html",
+      "before": "20725ad8a48842dee095f7dc2ac6decd36250d5a818a7edafc47af1fa555cb22",
+      "after": "0973ce9bb52d907b5ee68b937c8c7f13837d2fcbaf5c386732d855ea968c6fe0",
+      "ops": [
+        [
+          0,
+          665
+        ],
+        [
+          666,
+          1532
+        ],
+        "link href=\"styles",
+        [
+          1532,
+          1533
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          1533,
+          1535
+        ],
+        "et\"/></he",
+        [
+          1535,
+          2411
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          2411,
+          2426
+        ]
+      ]
+    },
+    {
+      "path": "population-genetics.html",
+      "before": "96e791366b27c29bdc5b87f8351db94e392b4059f0c1aedd2853c2979fbb192c",
+      "after": "88433f42e052fa6904a1ef87acb14b4ba95d2c2199737a17665505af2e1a0770",
+      "ops": [
+        [
+          0,
+          1324
+        ],
+        [
+          1325,
+          2189
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2189,
+          12424
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          12424,
+          12440
+        ]
+      ]
+    },
+    {
+      "path": "practice.html",
+      "before": "314fa218defd03a5c2464191d38366ee36f9031f2a281ab6580988b9992cc103",
+      "after": "375a616fc7f25063d79cf8988c46656197fffdc58a613e7ec069010e74427685",
+      "ops": [
+        [
+          0,
+          1519
+        ],
+        "link href=\"styles",
+        [
+          1519,
+          1520
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          1520,
+          1522
+        ],
+        "et\"/></he",
+        [
+          1522,
+          2492
+        ],
+        "/footer><scrip",
+        "t",
+        [
+          2493,
+          2494
+        ],
+        "s",
+        [
+          2495,
+          2496
+        ],
+        "c",
+        [
+          2498,
+          2500
+        ],
+        "s",
+        [
+          2500,
+          2501
+        ],
+        "c/v",
+        "76/",
+        [
+          2504,
+          2505
+        ],
+        "pp-",
+        [
+          2505,
+          2506
+        ],
+        "h",
+        [
+          2506,
+          2507
+        ],
+        "ll.js",
+        [
+          2512,
+          2514
+        ],
+        "</script",
+        "><script",
+        [
+          2522,
+          2523
+        ],
+        "s",
+        [
+          2523,
+          2524
+        ],
+        "c=\"src/u",
+        "pgr",
+        [
+          2527,
+          2528
+        ],
+        "d",
+        [
+          2529,
+          2530
+        ],
+        "/publi",
+        [
+          2536,
+          2537
+        ],
+        "ati",
+        [
+          2537,
+          2538
+        ],
+        "n.js\"",
+        [
+          2543,
+          2546
+        ],
+        "script",
+        [
+          2552,
+          2570
+        ],
+        "upgr",
+        [
+          2574,
+          2575
+        ],
+        "d",
+        "e/common",
+        [
+          2583,
+          2623
+        ],
+        "r",
+        "act",
+        [
+          2626,
+          2628
+        ],
+        "e.mjs\"",
+        " ",
+        [
+          2629,
+          2630
+        ],
+        "ype=\"",
+        "m",
+        [
+          2631,
+          2632
+        ],
+        "dule",
+        [
+          2636,
+          2664
+        ],
+        "rev",
+        "ision82",
+        [
+          2671,
+          2672
+        ],
+        "run-i",
+        [
+          2677,
+          2678
+        ],
+        "tegrity",
+        [
+          2678,
+          2709
+        ],
+        "revision82/analysi",
+        "s-b",
+        [
+          2712,
+          2713
+        ],
+        "i",
+        [
+          2714,
+          2715
+        ],
+        "g",
+        [
+          2715,
+          2716
+        ],
+        ".js\"><",
+        [
+          2716,
+          2717
+        ],
+        "scri",
+        [
+          2717,
+          2718
+        ],
+        "t><sc",
+        [
+          2718,
+          2719
+        ],
+        "ipt s",
+        "r",
+        [
+          2720,
+          2721
+        ],
+        "=\"src/revision82/con",
+        [
+          2721,
+          2722
+        ],
+        "r",
+        [
+          2722,
+          2723
+        ],
+        "buto",
+        "rs",
+        [
+          2725,
+          2726
+        ],
+        [
+          2727,
+          2730
+        ],
+        "></scri",
+        "p",
+        [
+          2731,
+          2732
+        ],
+        "><scr",
+        "i",
+        [
+          2733,
+          2734
+        ],
+        "t sr",
+        "c",
+        [
+          2735,
+          2737
+        ],
+        "src/revis",
+        "i",
+        [
+          2738,
+          2739
+        ],
+        "n82/",
+        "int",
+        [
+          2742,
+          2743
+        ],
+        "rface.js",
+        [
+          2743,
+          2768
+        ]
+      ]
+    },
+    {
+      "path": "programme.html",
+      "before": "d0a5d03a58f5f09521e3a6984430c42677d5adc03e9a40e5d7507d8725f1f7c5",
+      "after": "96b4e5779af19d029599a8a27630c1c1c3cc48bd51f581ad40cb84eca4550928",
+      "ops": [
+        [
+          0,
+          1008
+        ],
+        [
+          1009,
+          1873
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1873,
+          12163
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          12163,
+          12177
+        ]
+      ]
+    },
+    {
+      "path": "random.html",
+      "before": "5dc0512330ddbb2519947324d7bbc6b133df727d17afb19ff153ba3f867f337e",
+      "after": "de2a3f4912c161ec79e74f7c9693b576ff296dcd7a57eee3cfbe328889aea83a",
+      "ops": [
+        [
+          0,
+          2962
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          2962,
+          19291
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          19291,
+          19316
+        ]
+      ]
+    },
+    {
+      "path": "randomness.html",
+      "before": "0c30df391a47ff45a059b70f58332d3211ac151dadaf3f72b9eb22f50f265390",
+      "after": "8640791692a37484ed07e884da6d15ab8685b4b0e349c236e15a6a6a3947de00",
+      "ops": [
+        [
+          0,
+          1601
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1601,
+          12244
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12244,
+          12269
+        ]
+      ]
+    },
+    {
+      "path": "research/fatty-acid-metabolism.html",
+      "before": "f968b172a695e7752436f0a52bf92367b09acdd9a69e5df7b32875ceb71db3dd",
+      "after": "b439b7f69bf720c7242fd40483a0f926ad7a6b90cbb35638bd99bd2e4f15ed41",
+      "ops": [
+        [
+          0,
+          1175
+        ],
+        [
+          1176,
+          2085
+        ],
+        "><link href=\"../styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2085,
+          11128
+        ],
+        "<script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js\"></script>",
+        [
+          11128,
+          11143
+        ]
+      ]
+    },
+    {
+      "path": "research/index.html",
+      "before": "b63b97e5e9b7a2897135f8899bb71222d678701f74cf9a64b8ba6750ef0cb067",
+      "after": "b641df711ce8ac4c35a862693da4a0dc66836647a4a0d9135e65e79fbf1f7c66",
+      "ops": [
+        [
+          0,
+          2184
+        ],
+        "link href=\"../styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          2184,
+          8561
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js",
+        [
+          8561,
+          8586
+        ]
+      ]
+    },
+    {
+      "path": "research/photosynthesis.html",
+      "before": "593920f1142204ab948e2e9ccae96a94bba6ddb3bdde80d351b295ada62c83f2",
+      "after": "5a20073a209d404c0618c8b4cec8cefd618f51ce5939737e2d524e729c950e2a",
+      "ops": [
+        [
+          0,
+          1208
+        ],
+        [
+          1209,
+          2118
+        ],
+        "><link href=\"../styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2118,
+          14998
+        ],
+        "<script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js\"></script>",
+        [
+          14998,
+          15013
+        ]
+      ]
+    },
+    {
+      "path": "research/software.html",
+      "before": "a7773904cbfe39607f8f3675145f1a4afaa988c5f612187eb6f65bcc767b60ca",
+      "after": "0f8fd09c012717f5152b5c59286d902b0a30697408bae202930248cd72e8c993",
+      "ops": [
+        [
+          0,
+          1182
+        ],
+        [
+          1183,
+          2092
+        ],
+        "><link href=\"../styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2092,
+          8227
+        ],
+        "<script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js\"></script>",
+        [
+          8227,
+          8242
+        ]
+      ]
+    },
+    {
+      "path": "research/tcell-proliferation.html",
+      "before": "c2cccf4c998e4a3b0811faa291a599af0fc2ff4967c84430e4e6a27c618e1e38",
+      "after": "7d0a6618483e22c98e87829ae73e91f2c357268b7f27b71d21a7060285d24620",
+      "ops": [
+        [
+          0,
+          1193
+        ],
+        [
+          1194,
+          2103
+        ],
+        "><link href=\"../styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2103,
+          11355
+        ],
+        "<script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js\"></script>",
+        [
+          11355,
+          11370
+        ]
+      ]
+    },
+    {
+      "path": "research.html",
+      "before": "0cfef06cea34617f3f02b5146483bb80b86512c0bbf4b9e58ad25678f318356b",
+      "after": "5509e90f39133a77cd711289bcb7ae90412d0c04da505831068daf31b446e838",
+      "ops": [
+        [
+          0,
+          1374
+        ],
+        [
+          1375,
+          2239
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2239,
+          7963
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          7963,
+          7978
+        ]
+      ]
+    },
+    {
+      "path": "saved-experiments.html",
+      "before": "06916615c7fd851167506d197c4859142b0942566d4c4570c7f695d3ed54eec6",
+      "after": "a119a36dfc2480c824078cdfb807caf0eb519d5147bd9af401c2b18f25459862",
+      "ops": [
+        [
+          0,
+          2003
+        ],
+        "link href=\"styles",
+        [
+          2003,
+          2004
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          2004,
+          2006
+        ],
+        "et\"/></he",
+        [
+          2006,
+          3445
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          3445,
+          3470
+        ]
+      ]
+    },
+    {
+      "path": "sciml.html",
+      "before": "ebbac7d83db67d289474239833807b61fc942aa24abb81f61e1da9f079aa87c5",
+      "after": "f4ab70a34368a798fa08a9da1d94ad6f4e37b363dbc86bc2bb2a7bc2fe1d451e",
+      "ops": [
+        [
+          0,
+          2087
+        ],
+        [
+          2088,
+          2952
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2952,
+          17859
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          17859,
+          17875
+        ]
+      ]
+    },
+    {
+      "path": "sensitivity.html",
+      "before": "8db7bbcf90390cb809417aedfef2ea657178eb859648404c1ceea9fa590b34de",
+      "after": "ce960807aec759b147f8adf140996d934c1f02e74c629ee75196aa2a3b658a21",
+      "ops": [
+        [
+          0,
+          2115
+        ],
+        [
+          2116,
+          2980
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2980,
+          22962
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          22962,
+          22977
+        ]
+      ]
+    },
+    {
+      "path": "shared/leaf-scan.js",
+      "before": "9b3d91b253456e225b81a4be86c31ffd32a7efacc18fd342a61e32b5af7bc4b1",
+      "after": "e6c1e0d2d44deef09d89d372579e03b9d4579ed9218f82470d142c952f09f022",
+      "ops": [
+        [
+          0,
+          1070
+        ],
+        "Fixed-trait",
+        [
+          1081,
+          1082
+        ],
+        "samp",
+        [
+          1086,
+          1087
+        ],
+        "e ",
+        [
+          1089,
+          1090
+        ],
+        "ejec",
+        "ted",
+        [
+          1093,
+          1136
+        ],
+        "Inspect th",
+        [
+          1146,
+          1148
+        ],
+        "con",
+        "str",
+        [
+          1151,
+          1154
+        ],
+        "t",
+        [
+          1155,
+          1156
+        ],
+        "dia",
+        "g",
+        [
+          1157,
+          1158
+        ],
+        "o",
+        "si",
+        [
+          1160,
+          1161
+        ],
+        " b",
+        "e",
+        [
+          1162,
+          1163
+        ],
+        "ow",
+        [
+          1166,
+          3225
+        ],
+        "Fixed-trait",
+        [
+          3236,
+          3237
+        ],
+        "samp",
+        [
+          3241,
+          3242
+        ],
+        "e ",
+        [
+          3244,
+          3245
+        ],
+        "ejec",
+        "ted",
+        [
+          3248,
+          4694
+        ]
+      ]
+    },
+    {
+      "path": "src/integration/connect.js",
+      "before": "7c35d206ff5bbcae1f5e8d2f7d9ead112a5c6d7b06ff5bdcc674004b7a0be75a",
+      "after": "1b9be3af11c503ee5fc43fb461a88b40b65930ecef51aabaa88f1f3e9b4ccc21",
+      "ops": [
+        [
+          0,
+          5235
+        ],
+        "D",
+        [
+          5240,
+          5242
+        ],
+        "a",
+        [
+          5245,
+          6064
+        ]
+      ]
+    },
+    {
+      "path": "src/integration/registry.js",
+      "before": "ed6b1252a66baaa6a20e5159f3a16fb8f233149576791030e51d288f08177ed4",
+      "after": "fe261d29f54b6112d5683d36960c2f348a1f8676de9426a1e524c10d1e8405f9",
+      "ops": [
+        [
+          0,
+          330
+        ],
+        "2",
+        [
+          331,
+          1275
+        ],
+        "\"], [\"Analysis & visualization\", \"analysis-studio.html\", \"Experimental design, statistical inference, linked plots and reproducible exports.\", \"Inference",
+        [
+          1275,
+          6673
+        ],
+        "Curat",
+        [
+          6678,
+          6679
+        ],
+        [
+          6681,
+          6684
+        ],
+        "c",
+        "ientifi",
+        [
+          6691,
+          6692
+        ],
+        " ",
+        [
+          6692,
+          6693
+        ],
+        "x",
+        [
+          6694,
+          6695
+        ],
+        "m",
+        "ple",
+        [
+          6698,
+          6699
+        ],
+        [
+          6700,
+          6702
+        ],
+        "cross",
+        [
+          6710,
+          6711
+        ],
+        "th",
+        [
+          6713,
+          6714
+        ],
+        " l",
+        [
+          6717,
+          6718
+        ],
+        "bo",
+        [
+          6721,
+          6722
+        ],
+        "a",
+        [
+          6723,
+          6724
+        ],
+        "o",
+        "ry coll",
+        [
+          6731,
+          6732
+        ],
+        [
+          6733,
+          6734
+        ],
+        "t",
+        [
+          6735,
+          6736
+        ],
+        [
+          6740,
+          6741
+        ],
+        "n",
+        [
+          6745,
+          7821
+        ],
+        "T",
+        [
+          7822,
+          7824
+        ],
+        "hnical",
+        [
+          7831,
+          7832
+        ],
+        "p",
+        [
+          7834,
+          7835
+        ],
+        "oven",
+        [
+          7839,
+          7840
+        ],
+        "nce",
+        [
+          7844,
+          7872
+        ],
+        "preser",
+        "v",
+        [
+          7873,
+          7874
+        ],
+        "tion and",
+        " ",
+        [
+          7875,
+          7876
+        ],
+        "i",
+        [
+          7877,
+          7878
+        ],
+        "torica",
+        "l",
+        [
+          7879,
+          7880
+        ],
+        "impl",
+        [
+          7880,
+          7881
+        ],
+        "men",
+        "t",
+        [
+          7882,
+          7883
+        ],
+        "tion eviden",
+        [
+          7883,
+          7884
+        ],
+        "e.\"",
+        ",",
+        [
+          7885,
+          7886
+        ],
+        "\"Learning\"], [\"",
+        "C",
+        [
+          7887,
+          7888
+        ],
+        "nt",
+        "r",
+        [
+          7889,
+          7890
+        ],
+        "butors & r",
+        [
+          7890,
+          7891
+        ],
+        "ference",
+        [
+          7891,
+          7892
+        ],
+        "\"",
+        [
+          7892,
+          7894
+        ],
+        "\"con",
+        [
+          7894,
+          7896
+        ],
+        "ibut",
+        [
+          7900,
+          7902
+        ],
+        "s.ht",
+        [
+          7902,
+          7903
+        ],
+        "l\", \"Proje",
+        "c",
+        [
+          7904,
+          7905
+        ],
+        " ",
+        "c",
+        [
+          7906,
+          7907
+        ],
+        "llaborato",
+        "r",
+        [
+          7908,
+          7911
+        ],
+        "su",
+        "p",
+        [
+          7912,
+          7913
+        ],
+        "rvi",
+        [
+          7913,
+          7914
+        ],
+        "ion, ins",
+        [
+          7914,
+          7915
+        ],
+        "itution",
+        [
+          7915,
+          7921
+        ],
+        "so",
+        [
+          7921,
+          7922
+        ],
+        "rc",
+        [
+          7924,
+          7925
+        ],
+        " lit",
+        [
+          7929,
+          7930
+        ],
+        "ratur",
+        [
+          7935,
+          7936
+        ],
+        [
+          7938,
+          7943
+        ],
+        "About",
+        [
+          7951,
+          8008
+        ]
+      ]
+    },
+    {
+      "path": "src/integration/transfer.js",
+      "before": "e34e8b4ca1f92fbb3d89130f2e327044a2b5c2abbb939e1b96cfd60be78abdaf",
+      "after": "0b163231009619e3551ba6f365df0d017c9cb680701358c5128d1855cd8f76e8",
+      "ops": [
+        [
+          0,
+          2425
+        ],
+        "!['simulated out",
+        [
+          2425,
+          2426
+        ],
+        "ut','user",
+        "-",
+        [
+          2427,
+          2431
+        ],
+        "id",
+        [
+          2431,
+          2432
+        ],
+        "d ",
+        "t",
+        [
+          2433,
+          2434
+        ],
+        "bl",
+        [
+          2436,
+          2437
+        ],
+        "','user-p",
+        "r",
+        [
+          2438,
+          2439
+        ],
+        "v",
+        [
+          2440,
+          2441
+        ],
+        "ded ",
+        "f",
+        [
+          2442,
+          2443
+        ],
+        "le',",
+        [
+          2447,
+          2449
+        ],
+        "ynthet",
+        [
+          2449,
+          2450
+        ],
+        "c",
+        " te",
+        [
+          2453,
+          2454
+        ],
+        "ching da",
+        [
+          2454,
+          2455
+        ],
+        "a','d",
+        [
+          2455,
+          2456
+        ],
+        "rive",
+        [
+          2456,
+          2458
+        ],
+        "analysis'].inc",
+        "l",
+        [
+          2459,
+          2460
+        ],
+        "des",
+        "(",
+        [
+          2461,
+          2462
+        ],
+        ".provenance.orig",
+        "in)",
+        [
+          2465,
+          4235
+        ]
+      ]
+    },
+    {
+      "path": "src/recovery/runtime.js",
+      "before": "aa0799d93d3507d76a21ae465126f3c76e547d1e83af96bb45d489b017393a20",
+      "after": "40b51eac2134ba678fb5f4f63358d3fa5fbe788666c614233ca8d8cbc895d1b1",
+      "ops": [
+        [
+          0,
+          174
+        ],
+        "2",
+        [
+          175,
+          387
+        ],
+        [
+          1109,
+          1511
+        ]
+      ]
+    },
+    {
+      "path": "src/upgrade/common.js",
+      "before": "2aa8a65712e585bb85e155fcd270a688d8430050403be326ffb785fd13f85fb3",
+      "after": "090d8ffddff0bc6b543afa3d82f56f9ee9b7328b1198aebb9fbed31cdb483f64",
+      "ops": [
+        [
+          0,
+          1966
+        ],
+        [
+          2545,
+          2546
+        ],
+        [
+          2586,
+          2587
+        ],
+        [
+          2622,
+          2623
+        ],
+        [
+          2720,
+          3398
+        ],
+        "2",
+        [
+          3399,
+          4354
+        ],
+        [
+          4368,
+          4552
+        ],
+        "2",
+        [
+          4553,
+          4729
+        ],
+        "P",
+        [
+          4737,
+          4738
+        ],
+        "b",
+        [
+          4749,
+          4750
+        ],
+        [
+          4755,
+          4756
+        ],
+        "c",
+        [
+          4764,
+          4765
+        ],
+        "h",
+        [
+          4766,
+          4767
+        ],
+        [
+          4771,
+          4772
+        ],
+        "d",
+        [
+          4776,
+          4778
+        ],
+        "s",
+        [
+          4782,
+          4783
+        ],
+        [
+          4802,
+          4805
+        ],
+        [
+          4806,
+          4807
+        ],
+        "a",
+        [
+          4841,
+          4842
+        ],
+        [
+          4891,
+          4892
+        ],
+        [
+          4894,
+          4895
+        ],
+        "n",
+        [
+          4898,
+          4899
+        ],
+        " i",
+        [
+          4912,
+          4914
+        ],
+        [
+          4930,
+          4931
+        ],
+        [
+          4935,
+          4936
+        ],
+        "n",
+        [
+          4939,
+          4940
+        ],
+        [
+          4965,
+          4966
+        ],
+        [
+          4998,
+          4999
+        ],
+        [
+          5001,
+          5009
+        ],
+        "ba",
+        [
+          5016,
+          5017
+        ],
+        "g",
+        [
+          5022,
+          5023
+        ],
+        "s",
+        [
+          5029,
+          5030
+        ],
+        [
+          5041,
+          5586
+        ]
+      ]
+    },
+    {
+      "path": "statistics.html",
+      "before": "456721ba9970377758e7fc255eaf8418429a8e828b31b69b0fc18706bc17d5fd",
+      "after": "2d9a1a2bffdf3d5bf8b47c5d44591f4c24cac24a0f923ee36106a873302f4d7b",
+      "ops": [
+        [
+          0,
+          1881
+        ],
+        [
+          1882,
+          2746
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2746,
+          9260
+        ],
+        "a class=\"studio-entry\" href=\"analysis-studio.html\">Analysis &am",
+        [
+          9260,
+          9261
+        ],
+        "; visualization studio →</a",
+        [
+          9261,
+          9262
+        ],
+        "<p>",
+        [
+          9262,
+          15538
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          15538,
+          15554
+        ]
+      ]
+    },
+    {
+      "path": "steady.html",
+      "before": "2d00c2bd835cdfdbe4baa52c7f790dc0f7495639a5d7c2cf8ee98f7f7a631b7b",
+      "after": "d9670c5048f77cb144cde610eadebd17c8816ca9f0c4b4681025d7029f685559",
+      "ops": [
+        [
+          0,
+          2030
+        ],
+        [
+          2031,
+          2895
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2895,
+          16376
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          16376,
+          16392
+        ]
+      ]
+    },
+    {
+      "path": "stochastic.html",
+      "before": "29d175992f9a3e8ee73d902f1014bd7cb166afb32b2fa62d26f5149b081129d6",
+      "after": "480ef8ebac81530bf72a42b79db5c48439fd303440a556d430b756539412b81a",
+      "ops": [
+        [
+          0,
+          2106
+        ],
+        [
+          2107,
+          2971
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2971,
+          15003
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          15003,
+          15019
+        ]
+      ]
+    },
+    {
+      "path": "studio.html",
+      "before": "57df9cfcf990aec984d906c729d9a5b6a947822da228528eaa5c20533eebb17f",
+      "after": "b903882da64e522af2fcb027581d9034989ddfa41d03fc1aebe56783a4fdf8e1",
+      "ops": [
+        [
+          0,
+          1539
+        ],
+        [
+          1540,
+          2404
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2404,
+          19693
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          19693,
+          19708
+        ]
+      ]
+    },
+    {
+      "path": "symbolic.html",
+      "before": "091808204edf92962450cf7bc16cf8b3fa756ac9958245fe107ca6baf40bc97d",
+      "after": "0c0b0b5e30cde0f9287940b59bc4881d5cf93e912108624230fea009812f4f0d",
+      "ops": [
+        [
+          0,
+          2071
+        ],
+        [
+          2072,
+          2936
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2936,
+          15324
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          15324,
+          15340
+        ]
+      ]
+    },
+    {
+      "path": "tcell.html",
+      "before": "89db0c3383d38e750e77f6caa12c889bd6b273cab300e51aeb541aba50f28750",
+      "after": "3859114b7ba1f64659d7d04951d1e1411c0928246a58b4f21aef17f9cab66ecf",
+      "ops": [
+        [
+          0,
+          1585
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1585,
+          12186
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          12186,
+          12211
+        ]
+      ]
+    },
+    {
+      "path": "tcells/index.html",
+      "before": "d0234062b03e9c77b12e3570deb23d5c46c6a3672b52fcb720feadb95e9f8d42",
+      "after": "0ef92a7b479ffc2220b68768ceae7aa47d95c90c87c4bb5adddd85fb78d82ed5",
+      "ops": [
+        [
+          0,
+          3072
+        ],
+        "link href=\"../styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          3072,
+          20381
+        ],
+        "\"></script><script src=\"../src/revision82/run-integrity.js\"></script><script src=\"../src/revision82/analysis-bridge.js\"></script><script src=\"../src/revision82/contributors.js\"></script><script src=\"../src/revision82/interface.js",
+        [
+          20381,
+          20406
+        ]
+      ]
+    },
+    {
+      "path": "trust.html",
+      "before": "03f7842e4bb544a387bfc0e6952f45edd7f0cdf8b9c68cc55e11f3cd60dbd49c",
+      "after": "1e842919a44d1ff043693be37e9be17cf18d15c4e35f4482241198b828bac219",
+      "ops": [
+        [
+          0,
+          1529
+        ],
+        "link href=\"styles/revision82.css\" rel=\"stylesheet\"/><",
+        [
+          1529,
+          4831
+        ],
+        "/footer><scrip",
+        "t",
+        [
+          4832,
+          4833
+        ],
+        "s",
+        [
+          4834,
+          4835
+        ],
+        "c",
+        [
+          4837,
+          4839
+        ],
+        "s",
+        [
+          4839,
+          4840
+        ],
+        "c/v",
+        "76/",
+        [
+          4843,
+          4844
+        ],
+        "pp-",
+        [
+          4844,
+          4845
+        ],
+        "h",
+        [
+          4845,
+          4846
+        ],
+        "ll.js",
+        [
+          4851,
+          4853
+        ],
+        "</script",
+        "><script",
+        [
+          4861,
+          4862
+        ],
+        "s",
+        [
+          4862,
+          4863
+        ],
+        "c=\"src/u",
+        "pgr",
+        [
+          4866,
+          4867
+        ],
+        "d",
+        [
+          4868,
+          4869
+        ],
+        "/publi",
+        "c",
+        [
+          4870,
+          4871
+        ],
+        "tio",
+        [
+          4871,
+          4872
+        ],
+        ".j",
+        [
+          4874,
+          4875
+        ],
+        "\"></s",
+        [
+          4875,
+          4876
+        ],
+        "r",
+        "i",
+        [
+          4877,
+          4878
+        ],
+        "t",
+        ">",
+        [
+          4879,
+          4880
+        ],
+        "script src=\"src",
+        [
+          4880,
+          4881
+        ],
+        "upgr",
+        [
+          4881,
+          4882
+        ],
+        "de",
+        [
+          4884,
+          4885
+        ],
+        "c",
+        [
+          4886,
+          4887
+        ],
+        "mm",
+        [
+          4887,
+          4888
+        ],
+        "n.js\"></",
+        "sc",
+        [
+          4890,
+          4891
+        ],
+        "ipt",
+        [
+          4891,
+          4909
+        ],
+        "re",
+        [
+          4909,
+          4910
+        ],
+        "ision",
+        "82",
+        [
+          4912,
+          4913
+        ],
+        "run",
+        [
+          4916,
+          4917
+        ],
+        "i",
+        "nt",
+        [
+          4919,
+          4920
+        ],
+        "gri",
+        "ty",
+        [
+          4922,
+          4953
+        ],
+        "revision82/analysi",
+        "s-b",
+        [
+          4956,
+          4957
+        ],
+        "i",
+        [
+          4958,
+          4959
+        ],
+        "g",
+        [
+          4959,
+          4960
+        ],
+        ".js\"><",
+        [
+          4960,
+          4961
+        ],
+        "scri",
+        [
+          4961,
+          4962
+        ],
+        "t><",
+        "scr",
+        [
+          4965,
+          4966
+        ],
+        "pt sr",
+        [
+          4966,
+          4967
+        ],
+        "=\"src/revision82/co",
+        "n",
+        [
+          4968,
+          4969
+        ],
+        "r",
+        [
+          4969,
+          4970
+        ],
+        "but",
+        [
+          4970,
+          4971
+        ],
+        "r",
+        "s",
+        [
+          4972,
+          5003
+        ],
+        "rev",
+        "ision82",
+        [
+          5010,
+          5011
+        ],
+        "int",
+        "erface",
+        [
+          5017,
+          5045
+        ]
+      ]
+    },
+    {
+      "path": "tutorial.html",
+      "before": "fd243d97948c10ebca620264b7634e9c0a945f70723d9ddd14c2c3814dd059a1",
+      "after": "0e5ed03f80d9d643d79e2e03117f5e4bde588cee083c75578f590c25d85f441c",
+      "ops": [
+        [
+          0,
+          1094
+        ],
+        [
+          1095,
+          1959
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1959,
+          57033
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          57033,
+          57048
+        ]
+      ]
+    },
+    {
+      "path": "verify.html",
+      "before": "dad915bb48bac5ba33f05df15d1564a22edc50d6d48181c59b6282f1513a5abb",
+      "after": "c2e5196ebe2daca5f2e1af6dd189da320a428c042dd6e9ed4c0d7f55cd663446",
+      "ops": [
+        [
+          0,
+          1516
+        ],
+        "link href=\"styles",
+        [
+          1516,
+          1517
+        ],
+        "revision82.css\" rel=\"styles",
+        [
+          1517,
+          1519
+        ],
+        "et\"/></he",
+        [
+          1519,
+          2750
+        ],
+        [
+          2799,
+          2800
+        ],
+        [
+          2804,
+          3058
+        ],
+        "\"></script><script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js",
+        [
+          3058,
+          3083
+        ]
+      ]
+    },
+    {
+      "path": "workbench.html",
+      "before": "8cc9d8662dc2d5f3a706af67243a4b487a078f68fb6ea0ed03c3b2b351f6b950",
+      "after": "af632b72772308d56a4788be19e7322bfc5401bfc2f5dfd9016b3c5c54bd3b64",
+      "ops": [
+        [
+          0,
+          1580
+        ],
+        [
+          1581,
+          2445
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          2445,
+          9259
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          9259,
+          9275
+        ]
+      ]
+    },
+    {
+      "path": "workspace.html",
+      "before": "4a2fa975eb6094e25448222f2ef469de3b74156a05cb5614591b8079f8812aa4",
+      "after": "d043f1eb5d6ac6a42164958db7d9f9e866d45f971e2e0a1ec85b41b36e32a9ab",
+      "ops": [
+        [
+          0,
+          1021
+        ],
+        [
+          1022,
+          1886
+        ],
+        "><link href=\"styles/revision82.css\" rel=\"stylesheet\"/",
+        [
+          1886,
+          33588
+        ],
+        "<script src=\"src/revision82/run-integrity.js\"></script><script src=\"src/revision82/analysis-bridge.js\"></script><script src=\"src/revision82/contributors.js\"></script><script src=\"src/revision82/interface.js\"></script>",
+        [
+          33588,
+          33602
+        ]
+      ]
+    }
+  ],
+  "new_expected": [
+    {
+      "path": "analysis-studio-verification.json",
+      "sha": "f0fb39ae001c6b4d84d2b7e5b1c685800d5442e2"
+    },
+    {
+      "path": "analysis-studio.html",
+      "sha": "939bd68ee059c2783a942f2d6b61d9ec3667b13d"
+    },
+    {
+      "path": "contributors.html",
+      "sha": "a0a9d19535dc1ba6163f9ad9b7b0c51af00fcb2c"
+    },
+    {
+      "path": "contributors.json",
+      "sha": "fa2889d83d6bb094ff12bcd8e4530a434762271c"
+    },
+    {
+      "path": "design/leaf-diagnostic-ui.js",
+      "sha": "e8c99ef158f7a5d205830794f77f0914833ee959"
+    },
+    {
+      "path": "leaf/diagnostic-worker.js",
+      "sha": "a4e487da1e65d36998575b8924c85712a552df79"
+    },
+    {
+      "path": "shared/leaf-diagnostics.js",
+      "sha": "598e643610360fa0fd0e8eb554b7b0bb5d25f6c7"
+    },
+    {
+      "path": "src/analysis-studio/compute.mjs",
+      "sha": "54665576f3d3a66730e94aec2499ac2b8a1d4ff5"
+    },
+    {
+      "path": "src/analysis-studio/demos.mjs",
+      "sha": "e95ea5b41e92995fdf05f61949d1bb59fc196464"
+    },
+    {
+      "path": "src/analysis-studio/explain.mjs",
+      "sha": "93bcfa5ed177099fa709d161a62b65d4b851c70f"
+    },
+    {
+      "path": "src/analysis-studio/methods.mjs",
+      "sha": "73e8ccb8f850cbdfacce80bdd1f45b10c39ec528"
+    },
+    {
+      "path": "src/analysis-studio/plots.mjs",
+      "sha": "6478fc338077e921b762ed8113717404a5c243a2"
+    },
+    {
+      "path": "src/analysis-studio/reproduce.py",
+      "sha": "d4e3e77a4979c38f41b23696218ed0bc9431d3e5"
+    },
+    {
+      "path": "src/analysis-studio/statistics.mjs",
+      "sha": "170be1a5bbb4e2111a6d1ebb4a1811cabf4ecabe"
+    },
+    {
+      "path": "src/analysis-studio/ui.mjs",
+      "sha": "0fb7859d82c6fad139b726e6e8680c9373614eea"
+    },
+    {
+      "path": "src/analysis-studio/worker.mjs",
+      "sha": "006de8fe898057e287e5617063f6e7a05bb5b413"
+    },
+    {
+      "path": "src/revision82/analysis-bridge.js",
+      "sha": "b32835ec41bf425129a0dfa35fd4c6fc97a29dfd"
+    },
+    {
+      "path": "src/revision82/contributors.js",
+      "sha": "5f9e4d1f9372bd48038f8a500818a8bad3dff805"
+    },
+    {
+      "path": "src/revision82/interface.js",
+      "sha": "8b148733f3983d2e641f8becb6f6e0f45c4db19a"
+    },
+    {
+      "path": "src/revision82/run-integrity.js",
+      "sha": "7e02b512343f5cccfdbcfd9b4a7422869a96c545"
+    },
+    {
+      "path": "styles/analysis-studio.css",
+      "sha": "fb28b342b86293f34bc703c98133e69359947235"
+    },
+    {
+      "path": "styles/revision82.css",
+      "sha": "be0be0ecc54fc4dfccfe350ce2c252cc395365f6"
+    }
+  ]
+}

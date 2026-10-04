@@ -1,0 +1,215 @@
+{
+  "release": "80.2.0",
+  "checkedAt": "2026-10-04T23:44:17Z",
+  "commit": "2615d92bb1ffc790ef8577b689180ceb989180c9",
+  "source": {
+    "release": "80.2.0",
+    "updated": "2026-10-05",
+    "authored_changes": 77,
+    "new_files": 22,
+    "protected_cv_editions": 6,
+    "source_package_sha256": "dbfb1d9ea6b1cfefba481d2087afafd7248f52c418a6aa4f86ab775e7e2e5b7b",
+    "baseline_commit": "39810f18526ea7eed1b02c3a30fffaddad490b57",
+    "scope": "Exact authored application text restored, then publication metadata updated. This is source verification, not biological validation."
+  },
+  "node": {
+    "methods": 17,
+    "figures": 171,
+    "distinctViews": 30,
+    "guards": 6,
+    "version": "80.2.0",
+    "node": "v22.23.3"
+  },
+  "native": {
+    "workflows": 17,
+    "referenceComparisons": 63,
+    "checks": [
+      "describe:mean",
+      "describe:median",
+      "describe:sd",
+      "describe:meanCI",
+      "one:estimate",
+      "one:p",
+      "one:se",
+      "one:df",
+      "one:ci",
+      "welch:estimate",
+      "welch:p",
+      "welch:se",
+      "welch:df",
+      "welch:ci",
+      "paired:estimate",
+      "paired:p",
+      "paired:se",
+      "paired:ci",
+      "welch-anova:p",
+      "welch-anova:F",
+      "welch-anova:df1",
+      "welch-anova:df2",
+      "welch-anova:contrast-0",
+      "welch-anova:contrast-1",
+      "welch-anova:contrast-2",
+      "kruskal:p",
+      "kruskal:H",
+      "kruskal:contrast-0",
+      "kruskal:contrast-1",
+      "kruskal:contrast-2",
+      "permutation:estimate",
+      "permutation:p",
+      "bootstrap:estimate",
+      "bootstrap:se",
+      "bootstrap:ci",
+      "correlation:p",
+      "correlation:r",
+      "correlation:ci",
+      "regression:r2",
+      "regression:coefficients",
+      "regression:se",
+      "regression:p",
+      "regression:ci",
+      "categorical:p",
+      "categorical:df",
+      "categorical:fisherP",
+      "categorical:riskDifference",
+      "categorical:riskDifferenceCI",
+      "categorical:logOddsRatioCI",
+      "survival:Control",
+      "survival:Treatment",
+      "logrank",
+      "series:mean",
+      "series:median",
+      "series:sd",
+      "series:area",
+      "block-bootstrap:estimate",
+      "block-bootstrap:se",
+      "block-bootstrap:ci",
+      "replicates:interval",
+      "endpoints:dry_mass_g",
+      "endpoints:leaf_area_cm2",
+      "planning:perGroup"
+    ]
+  },
+  "browser": {
+    "workflows": [
+      {
+        "method": "describe",
+        "units": 54
+      },
+      {
+        "method": "one",
+        "units": 54
+      },
+      {
+        "method": "welch",
+        "units": 36
+      },
+      {
+        "method": "paired",
+        "units": 18
+      },
+      {
+        "method": "welch-anova",
+        "units": 54
+      },
+      {
+        "method": "kruskal",
+        "units": 54
+      },
+      {
+        "method": "permutation",
+        "units": 18
+      },
+      {
+        "method": "bootstrap",
+        "units": 55
+      },
+      {
+        "method": "correlation",
+        "units": 65
+      },
+      {
+        "method": "regression",
+        "units": 65
+      },
+      {
+        "method": "categorical",
+        "units": 20
+      },
+      {
+        "method": "survival",
+        "units": 70
+      },
+      {
+        "method": "series",
+        "units": 120
+      },
+      {
+        "method": "block-bootstrap",
+        "units": 120
+      },
+      {
+        "method": "replicates",
+        "units": 15
+      },
+      {
+        "method": "endpoints",
+        "units": 54
+      },
+      {
+        "method": "planning",
+        "units": 54
+      }
+    ],
+    "routes": [
+      "index.html",
+      "plants/index.html",
+      "leaf/index.html",
+      "tcells/index.html",
+      "lipids/index.html",
+      "continuum/advanced.html",
+      "random.html",
+      "ode.html",
+      "statistics.html",
+      "cv.html"
+    ],
+    "exports": [
+      "svg",
+      "png",
+      "html",
+      "executed-python"
+    ],
+    "errors": [],
+    "staleGuard": true,
+    "mobile": {
+      "width": 390,
+      "document": 390
+    },
+    "leaf45": {
+      "code": "hydraulic_limit",
+      "title": "Hydraulic constraint violated",
+      "explanation": "The heat equations converged, but the prescribed stomatal conductance demands more transpiration than this soil\u2013leaf hydraulic supply permits. This rejects this fixed-trait state; it does not prove that no equilibrium exists at this air temperature.",
+      "heatConverged": true,
+      "heatResidual": 6.282015393987983e-09,
+      "transpiration_mmol": 5.385893823747323,
+      "supply_mmol": 4.432922870031652,
+      "deficit_mmol": 0.9529709537156715,
+      "excessPercent": 21.497575790414494,
+      "sourceReason": "Transpiration exceeds hydraulic supply.",
+      "units": {
+        "water": "mmol H2O m^-2 s^-1",
+        "heatResidual": "W m^-2"
+      },
+      "noSubstitution": true
+    },
+    "alternativeDidNotReplaceSample": true,
+    "cvLinks": [
+      "cv/industry_cv.pdf",
+      "cv/industry_cv_with_photo.pdf",
+      "cv/academic_cv.pdf",
+      "cv/academic_cv_with_photo.pdf",
+      "cv/industry_cv_german.pdf",
+      "cv/industry_cv_german_with_photo.pdf"
+    ]
+  },
+  "scope": "Release acceptance on Chromium desktop/mobile emulation and selected native labs; not complete accessibility conformance, physical-device testing, biological calibration or proof of arbitrary model feasibility."
+}
