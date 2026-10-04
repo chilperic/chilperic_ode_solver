@@ -1,19 +1,20 @@
 cff-version: 1.2.0
-title: "Foko Lab: Scientific Modeling Platform"
-message: "If you use Foko Lab in research, please cite this software."
+title: "FokoLab: Scientific Modelling, Analysis and Visualisation"
+message: "Please cite FokoLab and the applicable model and method references when using this software in research."
 type: software
 authors:
   - family-names: "Foko Kuate"
     given-names: "Chilperic Armel"
-repository-code: "https://github.com/chilperic/FokoLab"
-url: "https://chilperic.github.io/FokoLab/"
-version: "78.2.0"
-date-released: "2026-09-20"
+repository-code: "https://github.com/chilperic/chilperic_ode_solver"
+url: "https://chilperic.github.io/chilperic_ode_solver/"
+version: "80.2.0"
+date-released: "2026-10-05"
 keywords:
-  - mechanistic modeling
+  - mechanistic modelling
   - computational biology
-  - ODE
+  - dynamical systems
   - stochastic simulation
-  - scientific machine learning
-  - graph theory
+  - statistical analysis
+  - scientific visualisation
+  - reproducible scientific software
 license: MIT

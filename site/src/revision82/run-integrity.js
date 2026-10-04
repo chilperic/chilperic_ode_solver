@@ -1,0 +1,11 @@
+/** Observational guard: retain prior runs, but never export them as current inputs. */
+(function(root){'use strict';const d=root.document;if(!d||d.body.dataset.dynamicsWorkspace!=='true')return;let revision=0,submitted=0,accepted=-1,latest=null;
+const scienceForms=[...d.querySelectorAll('form')].filter(f=>['experiment','controls','advancedForm','approachForm'].includes(f.id));
+const presentation=/timeline|frame|advEvent|generationFrame|^view|^plot|speed|focus|camera|zoom|opacity|rotation|metricSelect|plotType/i;
+function exportButtons(){return[...d.querySelectorAll('button,a')].filter(x=>x.matches('.foko-result-link,[data-result-export]')||/^(download|export|csv)$/i.test(x.id)||/^(Download|Export|Use this result|Analyse|Analyze &)/.test(x.textContent.trim()));}
+function stale(){return latest!==null&&accepted!==revision;}
+function update(){root.FokoRunIntegrity={revision,submitted,accepted,isStale:stale};if(stale()){for(const b of exportButtons())if(b.tagName==='BUTTON'){b.disabled=true;b.dataset.staleBlocked='true';}let note=d.getElementById('foko-input-warning');if(!note){note=d.createElement('p');note.id='foko-input-warning';note.className='scientific-stale';note.setAttribute('role','status');(d.querySelector('.foko-context')||d.querySelector('main')||d.body).append(note);}note.textContent='Inputs changed: these figures belong to the previous run. Recalculate before using or exporting them as current results.';}else{d.getElementById('foko-input-warning')?.remove();for(const b of exportButtons())if(b.dataset.staleBlocked){b.disabled=false;delete b.dataset.staleBlocked;}}}
+for(const f of scienceForms){f.addEventListener('input',e=>{if(presentation.test(e.target.id))return;revision++;update();},true);f.addEventListener('change',e=>{if(presentation.test(e.target.id))return;revision++;update();},true);f.addEventListener('submit',()=>{submitted=revision;},true);}
+d.addEventListener('click',e=>{const b=e.target.closest('button,a');if(b&&stale()&&exportButtons().includes(b)){e.preventDefault();e.stopImmediatePropagation();update();}},true);
+root.addEventListener('lab-result',e=>{latest=e.detail;accepted=submitted;queueMicrotask(update);});const existing=root.ResearchExperiments?.getLatest();if(existing){latest=existing;accepted=0;}update();
+})(globalThis);
