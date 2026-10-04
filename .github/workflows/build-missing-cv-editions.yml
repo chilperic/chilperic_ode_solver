@@ -1,0 +1,45 @@
+name: Build missing CV editions
+on:
+  push:
+    branches: [deploy/80.2-science-and-cvs-2026-10-05]
+    paths:
+      - deployment/cv/**
+      - deployment/build_cv_editions.py
+      - .github/workflows/build-missing-cv-editions.yml
+permissions:
+  contents: write
+jobs:
+  cv:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Install document build tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-lang-german fonts-lato
+          python3 -m pip install Pillow PyMuPDF beautifulsoup4
+      - name: Build six source-verified editions
+        run: python3 deployment/build_cv_editions.py
+      - name: Record reviewed CV files on the deployment branch
+        env:
+          STAGING_BRANCH: deploy/80.2-science-and-cvs-2026-10-05
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = "$STAGING_BRANCH"
+          git config user.name 'FokoLab CV publication'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- site/cv.html site/cv site/assets/cv docs/cv.html docs/cv docs/assets/cv
+          git commit -m 'Publish six dated CV editions with explicit photo and no-photo downloads'
+          git push origin "HEAD:$STAGING_BRANCH"
+          echo "CV_STAGING_COMMIT=$(git rev-parse HEAD)"
+      - name: Retain document verification
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: cv-publication-verification
+          path: |
+            deployment/cv-build/*.pdf
+            deployment/cv-build/*.log
+            deployment/cv-build/verification.json
+          retention-days: 14
