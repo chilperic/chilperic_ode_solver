@@ -1,0 +1,56 @@
+{
+  "updated": "2026-10-04",
+  "portrait_source": "assets/profile-chilperic.webp",
+  "portrait_sha256": "82831d92a306952f303010b43faeeaee763f2ce283e443b40feeb1cbfded0fd3",
+  "portrait_changes": "Lossless format conversion and proportional PDF placement only; no retouching or cropping.",
+  "editions": [
+    {
+      "id": "industry_cv",
+      "photo": false,
+      "pages": 2,
+      "pdf_sha256": "0967efef5cce5b409c51109d1f39ccc3ecc3c107851c85c41037fd8784bae8b2",
+      "source_sha256": "9abce98b622bcccfbb76d6ca2655634b09c589b5c2a3aab5e0ed27eada5ba00a",
+      "href": "cv/industry_cv.pdf"
+    },
+    {
+      "id": "industry_cv_with_photo",
+      "photo": true,
+      "pages": 2,
+      "pdf_sha256": "3134fd7f620563b3205bebbee872a6464fbe13e4a48b737cae1a9ce58204b658",
+      "source_sha256": "95209831f46737b0e2a494e5d0e866a414592eb5c177e61e917ea11fe72fc14c",
+      "href": "cv/industry_cv_with_photo.pdf"
+    },
+    {
+      "id": "academic_cv",
+      "photo": false,
+      "pages": 3,
+      "pdf_sha256": "fdcde6bbda9d647d7fedec33690bba8e83d02f738ade0799f323645c3b4727f6",
+      "source_sha256": "d8c593abef40e97cedb68e2f33d4a92a19a802f61c2716425f2b93690915437c",
+      "href": "cv/academic_cv.pdf"
+    },
+    {
+      "id": "academic_cv_with_photo",
+      "photo": true,
+      "pages": 3,
+      "pdf_sha256": "47f4d0602a6fdf7cedda8a0c96d64397d870813035a482ff559542157950459a",
+      "source_sha256": "232b9a128715aa3f4f2ec297609e8dac1c80bd3cee99fb9b1476c8f8058825f8",
+      "href": "cv/academic_cv_with_photo.pdf"
+    },
+    {
+      "id": "industry_cv_german",
+      "photo": false,
+      "pages": 2,
+      "pdf_sha256": "0ddedc7caa350b845bc3be1eb7e017ad5950d584482c29fd2490e7d72f186a9c",
+      "source_sha256": "ec385ac46ebe51e7551cd666f1f91c1ce6049c6c12b524b51b74f8ed6ecf66cd",
+      "href": "cv/industry_cv_german.pdf"
+    },
+    {
+      "id": "industry_cv_german_with_photo",
+      "photo": true,
+      "pages": 2,
+      "pdf_sha256": "1aa94a5960a61c15b38feae05e92d9201f25baa63455bd274cc6ad31a1241c34",
+      "source_sha256": "0cfc19242935262e2916338164f08bc1aae749571415f3901100157ed890d95e",
+      "href": "cv/industry_cv_german_with_photo.pdf"
+    }
+  ]
+}
