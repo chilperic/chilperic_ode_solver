@@ -1150,6 +1150,7 @@
     event.target.value = '';
   }
 
+  window.FokoNativePrepare = function(name) { loadPreset(name, true); };
   function bind() {
     if (!Core) throw new Error('FokoSteadyCore did not load.');
     storedLayout();

@@ -764,6 +764,7 @@
     try { action(); } catch (error) { $('fittingStatus').textContent = `Error: ${error.message}`; }
   }
 
+  window.FokoNativePrepare = function(name) { loadPreset(name, false); };
   function bindEvents() {
     $('runFitting').addEventListener('click', runFitting);
     $('resetFitting').addEventListener('click', function () { loadPreset(state.currentName, false); });
@@ -866,7 +867,7 @@
     }
     const requested = query.get('example');
     loadPreset(requested && PRESETS[requested] ? requested : state.currentName, false);
-    setTimeout(runFitting, 60);
+    if(new URLSearchParams(location.search).get('autorun')==='1')setTimeout(runFitting,60);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialise);

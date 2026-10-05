@@ -246,6 +246,7 @@
     setTimeout(function () { URL.revokeObjectURL(link.href); }, 0);
   }
 
+  window.FokoNativePrepare = function(name) { loadExample(name, true, false); };
   function init() {
     plotOptions.forEach(function (option) {
       ['leftPgPlotType', 'rightPgPlotType'].forEach(function (id) {
@@ -258,7 +259,7 @@
     $('rightPgPlotType').addEventListener('change', function () { if (result) renderSide('right'); });
     $('runPopulationGenetics').addEventListener('click', run);
     $('resetPopulationGenetics').addEventListener('click', function () { loadExample(Object.keys(PRESETS)[0], true, false); setStatus('Neutral-drift defaults restored. Run the simulation.', false); });
-    $('loadPgExample').addEventListener('click', function () { loadExample($('pgExampleSelect').value, true, true); });
+    $('loadPgExample').addEventListener('click', function () { loadExample($('pgExampleSelect').value, true, false); });
     $('pgExampleSelect').addEventListener('change', function () {
       currentExample = $('pgExampleSelect').value;
       const preset = PRESETS[currentExample];
@@ -270,7 +271,7 @@
     $('pgFamilyFilter').addEventListener('change', renderExampleLibrary);
     $('pgExampleDeck').addEventListener('click', function (event) {
       const button = event.target.closest('[data-pg-example]');
-      if (button) loadExample(button.dataset.pgExample, true, true);
+      if (button) loadExample(button.dataset.pgExample, true, false);
     });
     $('savePgSession').addEventListener('click', function () { localStorage.setItem('fokolab:population-genetics', JSON.stringify(readConfig())); setStatus('Configuration saved locally.', false); });
     $('restorePgSession').addEventListener('click', function () { const raw = localStorage.getItem('fokolab:population-genetics'); if (raw) applyConfig(JSON.parse(raw)); setStatus(raw ? 'Configuration restored; rerun to compute.' : 'No saved configuration found.', !raw); });
@@ -304,7 +305,7 @@
       });
     });
     const requested = new URLSearchParams(location.search).get('example');
-    loadExample(PRESETS[requested] ? requested : currentExample, false, true);
+    loadExample(PRESETS[requested] ? requested : currentExample, false, false);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });

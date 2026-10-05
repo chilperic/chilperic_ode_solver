@@ -305,7 +305,7 @@
     document.querySelectorAll('[data-sensitivity-method]').forEach(button => {
       const selected = button.dataset.sensitivityMethod === method;
       button.classList.toggle('active', selected);
-      button.setAttribute('aria-checked', String(selected));
+      button.setAttribute('aria-pressed', String(selected));
     });
     const local = method === 'local'; const global = method === 'sobol'; const enoughSurfaceParameters = Object.keys(state.model && state.model.params || {}).length >= 2; const canSurface = (local || global) && enoughSurfaceParameters;
     if (!canSurface) $('sensitivityResponseSurface').checked = false;
@@ -595,6 +595,7 @@
     else setText('sensitivityStatus', 'Clipboard API is unavailable. Export Model JSON instead.');
   }
 
+  window.FokoNativePrepare = function(name) { loadPreset(name); };
   function bind() {
     $('runSensitivity').addEventListener('click', () => { try { startRun(); } catch (error) { setText('sensitivityStatus', error.message); setText('sensitivityTopStatus', 'Invalid input'); setText('provenanceWarning', error.message); } });
     $('cancelSensitivity').addEventListener('click', () => cancelRun(true)); $('resetSensitivity').addEventListener('click', () => loadPreset(state.current));

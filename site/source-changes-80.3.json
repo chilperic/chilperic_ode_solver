@@ -1,0 +1,1249 @@
+{
+  "release": "80.3.0",
+  "changes": [
+    {
+      "path": "site/src/v72/optimization-workspace.js",
+      "before": "43f8840e456c5f81243003fd0c158e3910607b872c3e38bbe1753e7fad197cb4",
+      "after": "c27be3f3d809959ecccbd3066c2c1912bd4a339596ca53ac34560a0e345e86d4",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/stochastic-workspace.js",
+      "before": "8ccdead5e0692e24875385630b2fdba5ecb47f65f1bddad492fcdaea0a6d5234",
+      "after": "bcbd5976c37521509350b3764ea2ef4ed18818d6b44888fc7b6013c2c740ae50",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/steady-workspace.js",
+      "before": "8f68a785443a54fe8be949b7a89a0914d7d892a2f342602d9dce2728f9194f8e",
+      "after": "cf890ed5423e92a2025fc808c76cd1d6b7fba83beecf245287710b67f81b6da2",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/sensitivity-workspace.js",
+      "before": "936f92effeba5cb45ccf54be5e10293827a2cd882eefd2ca56e9f0c6d105da6d",
+      "after": "0e2d59f605fbc7f0a104ae4d92ef37069f0a8df0374a8a9096740f8bf84b1493",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/fitting-workspace.js",
+      "before": "2bba10ef39e02b0079d5622d2f4abc2092d84e81c76f705478fdf33b775ce21d",
+      "after": "3785183733f7e7e6684f6789e1060358c9c636b342907adc262f6ec048b90056",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/statistics-workspace.js",
+      "before": "197914542939cbb0b65d5cb4e4514cf6141c8f8739c69b70fdd7a961b55538d0",
+      "after": "3f0f5d57f943810b97ce54d8d22940eb41e99dfb1fafa8e5eb1e8c701d05e1ab",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/agent-workspace.js",
+      "before": "a709a8ed632ba53028ab9923b0a0107a4405e5100e029ae543442800543fbdba",
+      "after": "38985c53c7ef463a4d95f411a4fb66fce609c54de0f59e0752937dd965fca68f",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/networks-workspace.js",
+      "before": "358e3c98e492aff91591028d01adc9d79826b5cd26779fa5e3d8865d69200201",
+      "after": "57d74e7e803450eb33cd69254c9a68802eb8f3936c929c3acbe71d114448b108",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/linalg-workspace.js",
+      "before": "261789390fe8923f15bdf94d3d2060c4815cb5668a526f536f0b89df14ff544f",
+      "after": "7c522cfedc4bb4790c56906ac1eecbf4f6ce100dba16333876d87118caef3c6c",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/symbolic-workspace.js",
+      "before": "3019e3f40697f31553e0941b20d4822c97ab1fcc741bdd2207036d4f43554550",
+      "after": "2fa83a24b285ebce47390cde75153cfcea2a8f54e9789beeaadfcd5a3ba16ae5",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/population-genetics-workspace.js",
+      "before": "71d8bde37b7cf02c95f3d70ca27c152cc827ea17937d6d0e5e93f73d86bb3e4f",
+      "after": "9b7d090b9795f84a021d9102c3c271a90148b0d74e4205dba69b3a72a17c6636",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/bifurcation-workspace.js",
+      "before": "92da2c1a4babb9d1d5a691091b847e30143ae58c85e123a32de724c7e0cab008",
+      "after": "32ca9514cfb89f2edf7caa460f27ba238689625693beafc1b5174274932d0dcc",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/evolution-landscape-workspace.js",
+      "before": "d5fb61159037d402e839cf7a347104501b3fe3c3b046b6a598e5fa676b86d737",
+      "after": "5ee583201ae30d50102a72b7f66c1b347c31aff513fc237b52982694b544c598",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/advanced-methods-workspace.js",
+      "before": "ff8ec6d05ca638e72c3387930344a40de7afc58bb71640d447a89e0b482b649a",
+      "after": "c6f81b5414ea32695b11559a71fb27f06009f65061a7c27168de876b417bc8c7",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v72/ai-modeling-workspace.js",
+      "before": "5bd61cb8180baf9a802846df220b4e3cc676e58854737dffcc796ec31591af83",
+      "after": "0daa053d619a57ef2b1b2ceb7c0cf95bc16eb16c1df3dcce9e38c9ccab93e81a",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/v73/model-studio.js",
+      "before": "79f7e6ce78eed17cb6025a71e67ee6fa36b4cde5b78d2d2dd5684cdc692a9164",
+      "after": "1f42323800770772b545ed0060bd5b2856451bfb6620323b6361f89ff794ae8b",
+      "reason": "Expose native input preparation separately from computation."
+    },
+    {
+      "path": "site/src/app.js",
+      "before": "5aa3917007ad2bc8c4d893a1b4d4bcbc7809bd95e95affb3258aa069f1a028af",
+      "after": "a617a97137be1af6e80cf0c1e43600c4ccdefb13fea4a8c4e5a09b045aa2db8c",
+      "reason": "Expose native ODE preparation."
+    },
+    {
+      "path": "site/src/v72/statistics-workspace.js",
+      "before": "3f0f5d57f943810b97ce54d8d22940eb41e99dfb1fafa8e5eb1e8c701d05e1ab",
+      "after": "f76b9ee10df47c833bd52571abd7869e7593775519739de1f127e13b12dea7a0",
+      "reason": "Initial expensive computation requires explicit autorun opt-in."
+    },
+    {
+      "path": "site/src/v72/optimization-workspace.js",
+      "before": "c27be3f3d809959ecccbd3066c2c1912bd4a339596ca53ac34560a0e345e86d4",
+      "after": "d2bc11ba88588fcbd863c181d392404c160ca7307705461c2e87eebe35d67ca0",
+      "reason": "Initial expensive computation requires explicit autorun opt-in."
+    },
+    {
+      "path": "site/src/v72/agent-workspace.js",
+      "before": "38985c53c7ef463a4d95f411a4fb66fce609c54de0f59e0752937dd965fca68f",
+      "after": "31f792ffa9e3fb693c557615c7a6b1d132fb99002a861dccfabec600f7162602",
+      "reason": "Prepare Agent without executing."
+    },
+    {
+      "path": "site/src/v72/linalg-workspace.js",
+      "before": "7c522cfedc4bb4790c56906ac1eecbf4f6ce100dba16333876d87118caef3c6c",
+      "after": "fb15997d4cf7d9cd934ff8078dd3221e0891c0ef90382f465137e6c0963225ab",
+      "reason": "Prepare the first input without automatic computation."
+    },
+    {
+      "path": "site/src/v72/networks-workspace.js",
+      "before": "57d74e7e803450eb33cd69254c9a68802eb8f3936c929c3acbe71d114448b108",
+      "after": "63a797d7fecb53903536328fdb02f8e535260aa6e64564c07eb88db6450f4b7c",
+      "reason": "Prepare the first input without automatic computation."
+    },
+    {
+      "path": "site/src/v72/symbolic-workspace.js",
+      "before": "2fa83a24b285ebce47390cde75153cfcea2a8f54e9789beeaadfcd5a3ba16ae5",
+      "after": "ddb5581c9c34eef698480aca6fa110b785a01cad719dc59ef07a003555cc1c4c",
+      "reason": "Separate symbolic preparation from execution."
+    },
+    {
+      "path": "site/src/v72/fitting-workspace.js",
+      "before": "3785183733f7e7e6684f6789e1060358c9c636b342907adc262f6ec048b90056",
+      "after": "e0822a1d0cbe9b60a68a44c2c413d41925309ab87070d8ba7df75076763ce7ff",
+      "reason": "Prepare fitting input before execution."
+    },
+    {
+      "path": "site/src/v72/population-genetics-workspace.js",
+      "before": "9b7d090b9795f84a021d9102c3c271a90148b0d74e4205dba69b3a72a17c6636",
+      "after": "c66672e1be3de4bf3bef8fe96458bc62c5cb33849cff08284edaf38b0dd19ef5",
+      "reason": "Population-genetics cards and selectors prepare inputs."
+    },
+    {
+      "path": "site/src/v72/advanced-methods-workspace.js",
+      "before": "c6f81b5414ea32695b11559a71fb27f06009f65061a7c27168de876b417bc8c7",
+      "after": "957d5412b382fafa1c9cd8bedfb4e6ce61a319bfab4f6add35b71db2b1443a65",
+      "reason": "Advanced-method cards prepare inputs."
+    },
+    {
+      "path": "site/src/v72/ai-modeling-workspace.js",
+      "before": "0daa053d619a57ef2b1b2ceb7c0cf95bc16eb16c1df3dcce9e38c9ccab93e81a",
+      "after": "6f6854faa58ed6dd47dc85f82b9fd0b6506f0db7c660af8d3b2fa067f21a9f45",
+      "reason": "Prepare surrogate input before fitting."
+    },
+    {
+      "path": "site/src/v72/evolution-landscape-workspace.js",
+      "before": "5ee583201ae30d50102a72b7f66c1b347c31aff513fc237b52982694b544c598",
+      "after": "6335058c66c3b1ef320d033dae5b47aced21eef4ec792f7696829c53dfb88e32",
+      "reason": "Landscape example cards prepare inputs."
+    },
+    {
+      "path": "site/src/v72/sensitivity-workspace.js",
+      "before": "0e2d59f605fbc7f0a104ae4d92ef37069f0a8df0374a8a9096740f8bf84b1493",
+      "after": "caad858866eea24a4fe8a4545c06d749f78962de49ee45eb8e6923fab95fd4fe",
+      "reason": "Correct toggle semantics on method buttons."
+    },
+    {
+      "path": "site/src/v72/optimization-workspace.js",
+      "before": "d2bc11ba88588fcbd863c181d392404c160ca7307705461c2e87eebe35d67ca0",
+      "after": "0dd744faeb60f1a292e380d5e7352346d10a53e60f0f032d3033a855c98475e2",
+      "reason": "Full-objective candidate handoff retains completed settings and rejects failed or edited runs."
+    },
+    {
+      "path": "site/design/workspace.js",
+      "before": "c63926e2130077838bd41dea481a7002c7ab912d63648583ad27caebbec06ce9",
+      "after": "96d264846ffbaeceb661a66662ad3a8170d227712e9962b82573d7c9a4ab22c9",
+      "reason": "Keep a single native Run and avoid nested complementary landmarks and unexpected selection scrolling."
+    },
+    {
+      "path": "site/src/integration/shell.js",
+      "before": "cdbe355a11b5cef3cb0d91902998e310cd0f22dd30d1310abc3808a94820e492",
+      "after": "d0c70f407113c6f152a006c3a0ec2bd4ace842df1e767777478a84fa00820573",
+      "reason": "Expose analysis families and attribution in shared navigation."
+    },
+    {
+      "path": "site/src/integration/registry.js",
+      "before": "fe261d29f54b6112d5683d36960c2f348a1f8676de9426a1e524c10d1e8405f9",
+      "after": "95730e91910a00394c2d90ead9c62d0bbfb69b7045267a35fb88957aef0d9a1c",
+      "reason": "One discoverable workspace registry."
+    },
+    {
+      "path": "site/contributors.json",
+      "before": "5e672864ffc671b7e8a14db6e22fe69c31d676a9c6afd30c4eaf096fa1a6cf72",
+      "after": "bfa2f127f802f87cd6229b109fde88ca091bc8490796dbf3d2cfb5e2d4df8218",
+      "reason": "Add explicit historical institutional and funding acknowledgements."
+    },
+    {
+      "path": "site/src/revision82/contributors.js",
+      "before": "d1d900c9fa9684774ef2f6ce4ff69a02066d1fceeebadc334e005dd8c937779e",
+      "after": "7717d1bce9889b2228294720de695a0c2b92133a71d3e3455d9e12d591d04705",
+      "reason": "Align lab-level credits with the institutional record."
+    },
+    {
+      "path": "site/contact.html",
+      "before": "dc29ab629aab886a185fa3e2e7b2384e9acf53e1b1c5ef26f21f7c0d885c49d8",
+      "after": "e7b19434133579724f0ce80fefc3aacec95687287fd6a3d8b55a4ff08984ff7c",
+      "reason": "Restore the existing unretouched portrait and coherent Contact layout."
+    },
+    {
+      "path": "site/contributors.html",
+      "before": "708c9c89bf06747d9d46193748b533828b9f88edba6be978085d73c07a83d4bf",
+      "after": "9373e02ff0e7a766849799187c4a0370078984143e81e1657fe302955f72119d",
+      "reason": "Make people and institutions directly discoverable in a readable common design."
+    },
+    {
+      "path": "site/analysis.html",
+      "before": "71019e06052b0c0dcde705211103d6cb5a05b6139e9fdabed821178dd973e7e1",
+      "after": "48227e84bb3821f6bc4be86af81abda3186af4fa0fc648b71723580f2fe9b7be",
+      "reason": "Unify scientific families while retaining all specialist laboratories."
+    },
+    {
+      "path": "site/examples.html",
+      "before": "170a3b9355f760c8a4f5967c64f2f1878ad420fdf4293fa5ce4aa3c4c45dd369",
+      "after": "d3a1f1047845c9d54ea1fbd7b532664c33847733fcc1f60871451b3def733d2b",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/plant-growth.html",
+      "before": "5793898b5f6c4e72cdfc416a3dfbe63144e71a2b0199e73a84289eb7f4eb378d",
+      "after": "68ac4ddef6268fbe9a2feefe9fc0365c0ba1302f6e50462f5d5be52df62831b1",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/model.html",
+      "before": "829cd272b7c76263fc4be5d223129634ba01608a9104ea6f12b87346985cb2a7",
+      "after": "0da6649d152750510a3bd4ae2a6f1ff6b7833d7485170984e41d2765b09d09bb",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/contact.html",
+      "before": "e7b19434133579724f0ce80fefc3aacec95687287fd6a3d8b55a4ff08984ff7c",
+      "after": "e1434a57c755ccbae9faa6a82d058916811e0bfb2858221b3259fbad563bd96c",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/advanced-methods.html",
+      "before": "34e3fc7d398fbcbbe687efb4b9ed1d7282478b00375c07fff8d41cf4b13b9f0a",
+      "after": "28280dfefa2da98fef0f11f2e0f04cc65ea7b11a237a499510e2c128b60f2b4a",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/identity.html",
+      "before": "bc2207a9d9c27655fefc276951f496d00a0f03eabed7e1de8c9568ed95e614bf",
+      "after": "63a5d2815f4eafd513b87ef3a123fc87082a080ce952c33066a78b0a1e753a11",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/workbench.html",
+      "before": "af632b72772308d56a4788be19e7322bfc5401bfc2f5dfd9016b3c5c54bd3b64",
+      "after": "4bd3566d71a1f561c550d33955324e8fc1043cdf20dc41c2577d850f10e7f3ee",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/beauty.html",
+      "before": "bbc962086958145d19de89794347a8880fff5a71d6b1a614a2dad642cd15b428",
+      "after": "e497f6964bf5b1424b546f86739ebda3298222da692326b9fc6eba538546ac89",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/networks.html",
+      "before": "033eb9684474674ff9d7b07d296744f36fa21fbc59f1ce8be53705ca4bf02573",
+      "after": "9b1df326d589b129b5c268a29536eb2000ba1127af9ff2d296700ee4c6aaeee6",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/diffusion.html",
+      "before": "e585fefdb6fe917bc9f814ebf7cd4788553b00c9e8f3f7281ed2ccc6be1d4406",
+      "after": "d02b38f077229b0573a97a8bacc14907eada6f0dab482443e2b1516324103111",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/ml.html",
+      "before": "c346a40ea88a73498a411f6c1485ae6f676290066469ce64317a7d873f556895",
+      "after": "bd5848313fb11dae5bcd5465d326a5c9e0bd2bf35917ddf2991480383a660a33",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/agent.html",
+      "before": "c02110b129b241fc9c7777ea8133d4cb36e9dea0f17dd5505c540d238ef15188",
+      "after": "c039f9411c8888874a3477da45f820ed2d79f46c9ca5255bbe9536a02f06fb0c",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/programme.html",
+      "before": "96b4e5779af19d029599a8a27630c1c1c3cc48bd51f581ad40cb84eca4550928",
+      "after": "0d1095b52c865ed315783bf4dc1f549d1d0830a106b885e90549910f79524d41",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/practice.html",
+      "before": "375a616fc7f25063d79cf8988c46656197fffdc58a613e7ec069010e74427685",
+      "after": "a7f8c3aea9cb68de8dc2e811c11ed3c8652c94064ad289aef073b98c83375d55",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/analysis-studio.html",
+      "before": "4bf7add24a0cf81daa7e1151dc8989051d4c17dbc23da2cec1bffaf80408629f",
+      "after": "67f06f23e7b55dd1065ae716d25264b14d859b249f180a1cadaf3cc936ea6599",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/sciml.html",
+      "before": "f4ab70a34368a798fa08a9da1d94ad6f4e37b363dbc86bc2bb2a7bc2fe1d451e",
+      "after": "a77310f40de2441c1f59b8469d02def69ea65dbe0bd97948776eec5081d26888",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/learn.html",
+      "before": "b214772c3ca7c9196dc679eee93b871a331c0f986fbb586e8608cba4acdc1686",
+      "after": "51efb292441bd06be3c3577379cb5950d6dd1a3a0eaa7bf96c5a2520e6f5d625",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/fitting.html",
+      "before": "cc7814ba4936c53650f8322101c934386de3e656753d55146fd5747c9efda4eb",
+      "after": "6310a998809d7f1e3a6087408296a6b702a82e146e7efa129ba3a36f7b009485",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/library.html",
+      "before": "b26b5ac77dc8e1c21de2d9a7097440badba29b355714101d58f923e573845dff",
+      "after": "ea555379931a70fa52dd79701f4806cd7dc10af4bc1122635e1c38f36888ec23",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/cv.html",
+      "before": "aef807a1a38c60998433e59ea3f30de188e69e89ebcc8eac1a293e6c9e13245e",
+      "after": "34f4778f6580a35ffb572d62677e720bba1a02b3c958cd383c591cab17d8656f",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/workspace.html",
+      "before": "d043f1eb5d6ac6a42164958db7d9f9e866d45f971e2e0a1ec85b41b36e32a9ab",
+      "after": "2258a8732784f8e3d4f4ccc9fc6de14317454219584eae3754888bfc2add6dc4",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/docs.html",
+      "before": "b6cc62df1ecf4f58180bfe8c9498dfb8289e978c58613737b2b3cdd673291649",
+      "after": "5b07bb35ed02cd2e7918f764e696306d84a76745a7395d9b3e2da3eca79c1727",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/living.html",
+      "before": "f0d6b64f0ea131b0fb42f8e97c9cba61730cc3e99184888031fe591d92cfcc0c",
+      "after": "11780151b2ebd19a3ec126db2ab809432e9c5c7b7e5b6c064b361b9c280ca622",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/tcell.html",
+      "before": "3859114b7ba1f64659d7d04951d1e1411c0928246a58b4f21aef17f9cab66ecf",
+      "after": "a4ce76ffaf85ce5307b39198492ebe152d74c61bc4ab246a5995280e8afcf1ae",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/evolution-hub.html",
+      "before": "313be4fdea2629067d1348aab28ac89bd256959014a672b94b69df3f35b8a588",
+      "after": "ba0ca96ff9c18b2ca2bcf2d601a14ab44c56c638097484b93b9ed69cc5e2a2ef",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/decision-studio.html",
+      "before": "2243d26f527c80b5c6fc6f24209696d1414dbe2ce3d5de02ff7b3ef293f1b0f2",
+      "after": "a53b7dc184927ccb03ebc58d67c59521cd0b0d3032415220b7b53eedb6619e12",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/leaf-physiology.html",
+      "before": "ec203ce4f150df94ef9b192c7209e265252123e09e476a25908bf713c22ceb64",
+      "after": "de894027d598bb509d6d48cf22199dbdc6b56940c2940adeef9b98da7f9d216c",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/evolution.html",
+      "before": "398debd28bbede906c39c992bc0b6a11b5a49efc0e7da237a567fd5ac643454c",
+      "after": "4a9f5fe370cb75f10debb12334e7afb849fb7bf6516ed44aff2b4137377f29f6",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/research.html",
+      "before": "5509e90f39133a77cd711289bcb7ae90412d0c04da505831068daf31b446e838",
+      "after": "cdcd34db7bfe91b9659794c11a0817de7bfe76f33995e85b99b963ed9a1badd3",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/experiments.html",
+      "before": "77956d3df09b17a3e5c9ddd9662b8d22d751206db8514d46b53078cfc435ec27",
+      "after": "7d8306e11c39a5c51789d76a63e092cd4c802f8c035764916b9a339ff8a5bb8b",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/stochastic.html",
+      "before": "480ef8ebac81530bf72a42b79db5c48439fd303440a556d430b756539412b81a",
+      "after": "5c9729ec72d49ffd70ec4786bf793ac22395871022f3818beac0a30a7dc11865",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/analysis.html",
+      "before": "48227e84bb3821f6bc4be86af81abda3186af4fa0fc648b71723580f2fe9b7be",
+      "after": "70dc2423ff5791907ba400c8c735299f3643824a552bc3fc9a50c09ce7d21df2",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/integration-notes.html",
+      "before": "7d5b9e03ba6d1f511040ce3f5a6d917a3801b6521428f95cf4457dc9b50d18cc",
+      "after": "edfa5b1e0794b6723e5b96f45824abe2538aebe640b2f174ac9528925aff7a04",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/publication.html",
+      "before": "07bbe608a2c37a711b57b1e6ad7b8e51152dd3f532a8571fec5fdfce89e72414",
+      "after": "13736a784d21dbc9a21b33976aaaa69c4bc891a888bb63c014f078706ff01847",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/acknowledgement.html",
+      "before": "0cebedb34fcd2170668b3559ea522a8c1f9cb2b79d72ae5da704c8d5fe11e215",
+      "after": "f57e7e37d8234afae903917f74f321497f72108eae0726196ba84ae87234f16b",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/index.html",
+      "before": "72d8935843b2be1809349d8319d392689c15c7dae6aed7bc4bd2820fd0293021",
+      "after": "156bafca96c46ca880b2d4096855a6dccc4a01def486de7a3939ddc5e4c32cea",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/bifurcation.html",
+      "before": "74ca43ee668910c47b294e8721eca640da93442c68e160745d21e41f60cb4a9c",
+      "after": "196ebea8297d4b3780ab17e7c581a64b85b74ac3093985ea0ccce13d1f67076d",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/symbolic.html",
+      "before": "0c0b0b5e30cde0f9287940b59bc4881d5cf93e912108624230fea009812f4f0d",
+      "after": "ca644548e65136e2a7fd718fe87e4142019032977bc7dd1f16ec58630ac6f7fb",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/trust.html",
+      "before": "1e842919a44d1ff043693be37e9be17cf18d15c4e35f4482241198b828bac219",
+      "after": "2266e303ff0ab8c738bd48e75310155bc721784a43e5faa2c659c86a40326521",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/optimization.html",
+      "before": "c5230e4584cb13a1420b6be63e45f647dbc2fb6deff0f6d32d8a9e1cf9740784",
+      "after": "4abe41de60994f7dd6597aa1527cc5109d66bcc8ef939f5de4fd1c175bf23f2a",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/branching.html",
+      "before": "39e5b13aa6d856ff1e394e5e317de69834f0ae427136ef494d4fd4d3b83cbe78",
+      "after": "35185fd1ac4842395badd9d60b2290ffe4e0eff071016a57c55631f3e63a6453",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/saved-experiments.html",
+      "before": "a119a36dfc2480c824078cdfb807caf0eb519d5147bd9af401c2b18f25459862",
+      "after": "08796664f9bddc0b2af46990d86f1117395a1575fe5ff33b603f3c892aae8ce8",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/contributors.html",
+      "before": "9373e02ff0e7a766849799187c4a0370078984143e81e1657fe302955f72119d",
+      "after": "e688d922db1965bde2dafda5a2e6d577b653a8278b80e93ea6c77cf0423213f1",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/steady.html",
+      "before": "d9670c5048f77cb144cde610eadebd17c8816ca9f0c4b4681025d7029f685559",
+      "after": "bb09fead3cfb64ee9738de25b9888cd599ba4dbc7e8351aad427e82728de15da",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/studio.html",
+      "before": "b903882da64e522af2fcb027581d9034989ddfa41d03fc1aebe56783a4fdf8e1",
+      "after": "a74f09b4773a5b3e3c11515b35c898a6d0cb7ea84cc0ed000df532455c251bbf",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/book-observations.html",
+      "before": "983a81e68bd780def2334964a09158de51e7dcedaeadcd18b89ee126269d8045",
+      "after": "c7d27f4b5d75b1539d37312b4f675c8ed9832080eaef3e02220f2a7e30535b4c",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/random.html",
+      "before": "de2a3f4912c161ec79e74f7c9693b576ff296dcd7a57eee3cfbe328889aea83a",
+      "after": "66ed1820c2150331c8682b79e4bc8f3eb295fb88beea2fc536dd1f99c7e912ca",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/labs.html",
+      "before": "4664ee7df661ec8288e6643b45bec8a9b06fa639c78d22903c44d299ad1a19a4",
+      "after": "05cb3fa0baa615f3bf3eccfca75c813a39679949a849ecac430c5e3e7bb8359c",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/platform.html",
+      "before": "0973ce9bb52d907b5ee68b937c8c7f13837d2fcbaf5c386732d855ea968c6fe0",
+      "after": "1a932786c05d9d1e499cf6feb246bd15c8812a01f53c8d2d74ac91b1e6807151",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/ode.html",
+      "before": "44f5ebb640854be3e358882fbb968e96ba70f86bc3943fce55b2fbb75bf62bd7",
+      "after": "11ad92ec0f20b3f437631e174601cbc5ab7146679d4af14046cd130e962dcb61",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/book.html",
+      "before": "59917d9915b606b897822ef85618c931f49404b5816dff90966f88c549ec9499",
+      "after": "1d87534ad37c5a58a479372b6ce75fa4edaa34017d73122842dc0ac4b828da97",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/lipids.html",
+      "before": "c60e861de2f5528812e1aa1abf7e2d8a39ae96591fad5c3462bb2520616fcb63",
+      "after": "a48144f58e486d4ac75efe24672221e26f36393dd3589ba6e03d0aa691fbf6da",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/statistics.html",
+      "before": "2d9a1a2bffdf3d5bf8b47c5d44591f4c24cac24a0f923ee36106a873302f4d7b",
+      "after": "3941c45d7780e86e330a2a02d7f0dd3a8e5b948a01ed066e513088d24ee601b2",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/verify.html",
+      "before": "c2e5196ebe2daca5f2e1af6dd189da320a428c042dd6e9ed4c0d7f55cd663446",
+      "after": "33c5c7544e685ba9cf05a50ca91ab99fc95e547755f1ed5266370597a53e3eba",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/ai-modeling.html",
+      "before": "6925b492c43c5e72be783c956c95ca28e203eed5f698593e4700703f5c25ec33",
+      "after": "463b188a38a4ef352a628727c59fc15ad68cb73321547927ac80cd221abb7ca3",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/fractals.html",
+      "before": "66fda88ad0d19e060775a99aa369671233f4f599b3c0210c3b8a0b82b92ab6ec",
+      "after": "1f268b176be3d7f38374ce0c3647f21994400820a28d571de269f2c0168d4638",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/sensitivity.html",
+      "before": "ce960807aec759b147f8adf140996d934c1f02e74c629ee75196aa2a3b658a21",
+      "after": "31b212330b922d0646b61dcf6db72218342ac3c34bded7f3389e948f3978c65f",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/population-genetics.html",
+      "before": "88433f42e052fa6904a1ef87acb14b4ba95d2c2199737a17665505af2e1a0770",
+      "after": "e777417d2d0670c9e12023f3b10036359f9f73e2fe9ba19940cb6a403057b334",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/tutorial.html",
+      "before": "0e5ed03f80d9d643d79e2e03117f5e4bde588cee083c75578f590c25d85f441c",
+      "after": "3927755597901de4160d13ea57d158047ba4d9e74f20537d673f4705af15777f",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/adaptation.html",
+      "before": "93791f7a519856073343d826b0e7ddfdbd0bab677f0557242b669e47939a87ad",
+      "after": "42c7e16231825981ed1618a8c434b26cbfc3d1dbb5ccbb36f1e40a0070221153",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/randomness.html",
+      "before": "8640791692a37484ed07e884da6d15ab8685b4b0e349c236e15a6a6a3947de00",
+      "after": "21f4e1fd78bf21858ad116066b84cd685037facc38724ffe3fda3c7139858202",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/linear-algebra.html",
+      "before": "d75c32804d96c63a787348ae0e4757628015e88be482ae04caa4a1d6689e8ccf",
+      "after": "e3928e8f00b05bdca4fa741efb409badc53fc2030b991fdd36900e168303fc18",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/plants/index.html",
+      "before": "3c7ca83b2128a6d82dec71254c664de0f8b61f3ec65fcfdad5e40999c89df30a",
+      "after": "b5d237a7e49c9dbc124b81dc4cdc3c978542f2720422c2e3fb865970ac08d8ca",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/tcells/index.html",
+      "before": "0ef92a7b479ffc2220b68768ceae7aa47d95c90c87c4bb5adddd85fb78d82ed5",
+      "after": "3be105e97170492c356fb31afafb1e7a1e2d7a339dc9cfd587ffa785cb4cb533",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/lipids/index.html",
+      "before": "47f73b2d8fcca71c3770c359d27fb4c6e6678f39c9dcc6c58b21ae875343dc93",
+      "after": "c39af78056a11298e27f06f9f8438a7df4ce15f9357787e18692956d900786f4",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/leaf/index.html",
+      "before": "c3d786fd4e8e69db8e3bd20f5b1aa565bda0e02b6ff3da8f6a3c9285b2695d7b",
+      "after": "139ee0270c5b737c434c1026ff25b241cbd7fefce4bc3a8294f3f0dfef147109",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/research/tcell-proliferation.html",
+      "before": "7d0a6618483e22c98e87829ae73e91f2c357268b7f27b71d21a7060285d24620",
+      "after": "1d01e0dacc7cd15be7b276b311669e7d6f4e8ac79a10c9e8b1b9349d821438ed",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/research/fatty-acid-metabolism.html",
+      "before": "b439b7f69bf720c7242fd40483a0f926ad7a6b90cbb35638bd99bd2e4f15ed41",
+      "after": "42e45ba7ad7febf9aca459396911915d6a3eb544a7640ed9180ee3e5e4cecb2a",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/research/software.html",
+      "before": "0f8fd09c012717f5152b5c59286d902b0a30697408bae202930248cd72e8c993",
+      "after": "6689e3c39a681cb40dd05fc57140903c4479b7589edfdf0f67a0af91be92dc7a",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/research/index.html",
+      "before": "b641df711ce8ac4c35a862693da4a0dc66836647a4a0d9135e65e79fbf1f7c66",
+      "after": "a9ee297e8e4f3d5858d1709e1df425eb1fc5170c600ef27ad6726fb7c596ed70",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/research/photosynthesis.html",
+      "before": "5a20073a209d404c0618c8b4cec8cefd618f51ce5939737e2d524e729c950e2a",
+      "after": "89295da27b4ee458102b0a6cad42a20a285a416a2ce3d9d88ad9033ff9b27792",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/continuum/approaches.html",
+      "before": "71bd2e7a078b3e74ce41d8c42bf06fc0bdba78b1366230bcb064711b18b43e96",
+      "after": "fd8c1041b861ae01fb10d65bfe64fd978fbf5dc65191378226575cc24d018dc7",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/continuum/index.html",
+      "before": "9f68ef8473df2e70af4ceebf923386a2084bbd2c7b048566c40de253144e4316",
+      "after": "7ee64deda26f1a80bbf3fd2ce8a860e183c78455a9241cab18f62d270cade87a",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/continuum/advanced.html",
+      "before": "ce81422356ecbe07a5d1898188caa4e9338773efba428f11f626663b7b8e2fef",
+      "after": "a47c96e265fbd5ae6ea101933e9b3af53c8f8bbb8da2865c64c8ff4ba195d6da",
+      "reason": "Shared presentation, useful attribution, semantic corrections and persistent actions; scientific content retained."
+    },
+    {
+      "path": "site/VERSION.json",
+      "before": "3ef15bf7c91c56e18cb467d10514b1bb5fae0e0d3c23a5fa29f201d13086feb1",
+      "after": "424640aa40d7bdcdb7830e200e0e2b3ce6c1657501c6a93dc5715891a6b64886",
+      "reason": "Version the actual integrated application."
+    },
+    {
+      "path": "site/src/revision82/interface.js",
+      "before": "37c01b468d4bb8ac94991948d3d19df81286fcadc034ca50a278996f4c1da5bd",
+      "after": "fbf390723f7f34aaca326eb5fb0c8900bb531c10171608efc5b746e19e824b21",
+      "reason": "Keep internal version metadata current without visible version noise."
+    },
+    {
+      "path": "package.json",
+      "before": "164a3831cee5f087e1fdacbcdf8ee75cca7a09325d72b209882c88dedc7f089b",
+      "after": "94bb8bc140382a053b463a6e9e0a083f527a52e17c861feb16c2b7c32dca8f63",
+      "reason": "Synchronize developer package metadata."
+    },
+    {
+      "path": "README.md",
+      "before": "555060735e34eb63a25d17df8d09ded5e1983792065aa6f199afb5de28830138",
+      "after": "addefb765b20bb7ab7b110f93f4aaf284d5976327fc418bfe81cd195370a1c93",
+      "reason": "Document workflows, scientific scope, credits, limitations and local startup."
+    }
+  ],
+  "protectedFiles": {
+    "cv/academic_cv.pdf": "fdcde6bbda9d647d7fedec33690bba8e83d02f738ade0799f323645c3b4727f6",
+    "cv/industry_cv_with_photo.pdf": "3134fd7f620563b3205bebbee872a6464fbe13e4a48b737cae1a9ce58204b658",
+    "cv/industry_cv_german.pdf": "0ddedc7caa350b845bc3be1eb7e017ad5950d584482c29fd2490e7d72f186a9c",
+    "cv/academic_cv_with_photo.pdf": "47f4d0602a6fdf7cedda8a0c96d64397d870813035a482ff559542157950459a",
+    "cv/industry_cv.pdf": "0967efef5cce5b409c51109d1f39ccc3ecc3c107851c85c41037fd8784bae8b2",
+    "cv/industry_cv_german_with_photo.pdf": "1aa94a5960a61c15b38feae05e92d9201f25baa63455bd274cc6ad31a1241c34",
+    "assets/profile-chilperic.webp": "82831d92a306952f303010b43faeeaee763f2ce283e443b40feeb1cbfded0fd3",
+    "assets/cv/academic_cv.pdf": "fdcde6bbda9d647d7fedec33690bba8e83d02f738ade0799f323645c3b4727f6",
+    "assets/cv/industry_cv_with_photo.pdf": "3134fd7f620563b3205bebbee872a6464fbe13e4a48b737cae1a9ce58204b658",
+    "assets/cv/industry_cv_german.pdf": "0ddedc7caa350b845bc3be1eb7e017ad5950d584482c29fd2490e7d72f186a9c",
+    "assets/cv/academic_cv_with_photo.pdf": "47f4d0602a6fdf7cedda8a0c96d64397d870813035a482ff559542157950459a",
+    "assets/cv/industry_cv.pdf": "0967efef5cce5b409c51109d1f39ccc3ecc3c107851c85c41037fd8784bae8b2",
+    "assets/cv/industry_cv_german_with_photo.pdf": "1aa94a5960a61c15b38feae05e92d9201f25baa63455bd274cc6ad31a1241c34"
+  },
+  "unchangedEngines": {
+    "plants/plant-engine.js": "afc7a86179dbb2584cd1e7978ef92995090432360302773e483fb4d896864e70",
+    "plants/c4-engine.js": "e55d0ab1f80fb7dd48eda1ba8d9742e994726c31bfed60f2f79016dfcc90bbb6",
+    "plants/electron-engine.js": "72437cbe5edb4b5bbbf44a0056ed8da1b48468ddafa6afe89cf863150ff34edc",
+    "plants/scenario-engine.js": "0c28e1c453948e0888045fc1e87e0f23d52936d11579be0c04033bde49a2b0ba",
+    "leaf/leaf-engine.js": "4d68a842035db8f587a2ec3700009f1eebd132377197b62c0f9239f24117ce31",
+    "tcells/tcell-engine.js": "c7ebd93aaa5f20bbd461039ae56d8c9dbeaef8d04e86d3bffd0118cf6eccd64b",
+    "tcells/age-engine.js": "3ae0270787fac8664ec60c5aad16cb2db73e36e3a96ccaa49d52a5706cf2a5e1",
+    "lipids/lipid-engine.js": "efb775761e0c4d878b314207be0b674aeb84fbd08803d25a7c8d850239566c73",
+    "continuum/engine.js": "23c980b25d43ecce1eb90787dc2f044c906cc331d02bb7106f6ca5c9098e69f5",
+    "continuum/advanced-engine.js": "525148af6c02bbcf3a81f38359dd7016638605865e396f81b1eb8720145de396",
+    "src/core/linalg.js": "1fb390fcd106bcfbec0f7551be62c760d78a3259fcea491ea9e836e2b11cd4bd",
+    "src/core/symbolic-reference.js": "5d3b9fd1b0e7f5586873d99554972118caf8b2258ef9dae8f33596055a965050",
+    "src/core/cmaes.js": "f9af923599e22f7d3f7ade81e1ed7498bfabadebdcd2abf6a6f5abe1e9f1d231",
+    "src/core/ode.js": "3369d853c14488bf208230bf403642148c50d744c9166064ce8ecceb727f8158",
+    "src/core/linalg-reference.js": "7f3cfc325920cfc4b75e5be5fddbf3716f02b68ae1346f08db67bb4cc4ddc8bb",
+    "src/core/live-3d.js": "8037a780e96701857ac43746b106a908cad77b4e15f5ad0d3befba83d5fbe11f",
+    "src/core/agent-reference.js": "260dd5a4b96233122df0389f706a81bbdf45ca6af64da4dcf12fb35b3b982891",
+    "src/core/model-report-card.js": "b2d6124e076921ee2e38cb1f27a52201e978fc797b4b5d7d7ca077246c69dad6",
+    "src/core/scipy-verification.js": "8b739b2d25aa5cd28dbc1e98136db370a3a3693bdbf81bfc6e693baf51be4fc0",
+    "src/core/model-import.js": "68afe893b352c96ae50ce0d0fac60a3486c4c038da3b1a8eb190e1aa8ee7c6b5",
+    "src/core/data.js": "bc085b9a00c87bc5c031e8db9c52ee4afc66b6531e59ea376634e6069176eb32",
+    "src/core/basin-analysis.js": "c6f94a94a474ec49f19833d059a1c3303ab7f86d5022e0a4651bc9cb9936edb6",
+    "src/core/evolution-landscape.js": "0ede3524fcbdce86363e17be74d3ad3b67da696c4f227f99f31d395e3b1b9966",
+    "src/core/stochastic.js": "026ffeff03ee0bebca6638b28735db6a89b01691de085c2d30f3e7496aa6662a",
+    "src/core/networks-reference.js": "dbb3a193cde30c73c855eb41cce06ad5b90772a0b12d9a70ec1d327ab8c27f6f",
+    "src/core/sensitivity.js": "9f3aab121f6d3b044b0e2965872627bde1c05a230b3144c83d8efe3ec0c441b8",
+    "src/core/surrogate.js": "44cdc8c52b5c5961aeb8b23c6e7ac75b21220b82c70e02347c522c5b412fe453",
+    "src/core/studio-compute.js": "0f21e8c5aecc0b6744cf5da34316b67297f1d731e60fd13c3f2c0c0133fa3c5e",
+    "src/core/project.js": "060779675caed1ddc2e8f6e1c6786b6974c7e7f051eaf865fddd09eb8f4f82e4",
+    "src/core/statistics.js": "3871c7e2917117cd474e0dcd712caff73c731b4fa61be505e06411a3ee15de9b",
+    "src/core/index.js": "4c39799667c73def6d2615f8f4c1e92bde7399ccf8d069529dc387c2edbc284c",
+    "src/core/pca.js": "5550f40778d3298aba09ff2186b0a02cff39139e1da0a3eecfefb3eb90e3dead",
+    "src/core/stochastic-advanced.js": "42d865af04edce91749fbd3fd20f9ebd58216c61a766f9aae7077d0afe6abbe8",
+    "src/core/continuation-analysis.js": "136f995ae9fc7d9ac78d42a94eba4bccb511125f2c4fd92f95db5eeda20a4587",
+    "src/core/sindy.js": "d03a20bc08c439bdd908b33e0f1a69c34797e6db892eae88a29732a06d2de10c",
+    "src/core/optimization.js": "5ae65105eea3a7c73116223a6309cafdb024d48ee4a6323bc5f8fc93f31db86c",
+    "src/core/numerical-inputs.js": "2f0130e7fb50d71c7781376d4dccee400f197975cdb0d13c4687ef87655dd0b0",
+    "src/core/inverse.js": "010155bc7f3aeec6f708049e603b74f97bfdc3c1a0d4884ee61290399e1f2237",
+    "src/core/ai-modeling.js": "bd4e8072e6d006623133d634a8c77435c8eb1aece45711c225dbfdcaa031fe55",
+    "src/core/model-ir.js": "bb102c467eee2573d3a69ce71fe38cdea11741884a6f5b2a364f3821ffe6ba6c",
+    "src/core/dynamical-fitting.js": "b53cbbe7c07808ce697b435ac346c8afb9e4369138fc654d09525479408ef968",
+    "src/core/steady.js": "df7ac49877b3c543b6646f733da5ced2fa80b86e25b5456b0092ee2202b140f3",
+    "src/core/ml-lite.js": "cd367ef2b10b11f6dee0e26ade4a97f1568821fec583264051aad2f6dd83f3da",
+    "src/core/bifurcation.js": "fa347daa51d4e863165644a6c06ca1df7009ec31035259f8db7e800b520b7b32",
+    "src/core/advanced-methods.js": "b02e7dd77b78ee60eb3eb94990b1d606b40087bb918b026524a306d5218cc6d8",
+    "src/core/fitting.js": "612e45ab1c8384ed9b46c40468daee04125ec7036828925f1e6a86db2819c1fe",
+    "src/core/population-genetics.js": "0bf2bef5b09d8f660675f8c0541898ea93356516a13bc3579e1ff24c6749b5e8",
+    "src/core/ml-reference.js": "23167dde6f2923939c8461a385bfd1ef958aa7d9907b9aa39d5fbaf54b5b7a2d",
+    "src/core/networks.js": "7ebcb03e5ab8094a2e8a3ba594521322198e9f07e77475a8772032cbbd8c6f5b"
+  },
+  "postIntegrationCorrections": [
+    {
+      "path": "site/src/revision83/workflow.js",
+      "before": "c6f92bf145d41ee9c8d4486a7bc7919d860f7010ef59e8abb8f32942c8f64fc9",
+      "after": "3a8dd30d3fd89d65c912bce325ca50b3db5e415a1aa155510b2960be6d0799d2",
+      "reason": "Prevent preparation status races, preserve unnamed input values and standardize curated-card preparation."
+    },
+    {
+      "path": "site/src/revision83/decision-core.mjs",
+      "before": "682d039c418cb1cc828fd7802f3cd37851b028fba77f574ad23af9d753575415",
+      "after": "344f47fe1b7c6372eb024281b858b5e5550b545978772a224dea49d030fe4971",
+      "reason": "Retain the actual secondary expression; do not imply objective units the source never declared."
+    },
+    {
+      "path": "site/src/revision83/decision-ui.mjs",
+      "before": "c195c65a612c32d36c1656889378c6814a187da90cfe4855cb2886098869ec89",
+      "after": "a6bfa62cfb6ca99afce6c268a6bdbba10857252fffdcb932a4f48eb918ee9ce4",
+      "reason": "Clarify optimizer sampling clocks, retain full objective directions, avoid clipped parallel labels and isolate worker completion."
+    },
+    {
+      "path": "tests/finish803_browser.py",
+      "before": "da9b80b400f0fcfc681c9e954a5e85b92278ed6adc5f10788728cc484853b69c",
+      "after": "da43d808cc61f88c98d588f80ac88001fd7f03175712a72df021755bce9ebe8e",
+      "reason": "Exercise visible disclosure navigation rather than timing out on intentionally collapsed controls."
+    },
+    {
+      "path": "site/examples.html",
+      "before": "d3a1f1047845c9d54ea1fbd7b532664c33847733fcc1f60871451b3def733d2b",
+      "after": "471a16eae11065b25cb77b7bea32faa1d7cd3d85fd95a7924890f3ca8e9e6a57",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/plant-growth.html",
+      "before": "68ac4ddef6268fbe9a2feefe9fc0365c0ba1302f6e50462f5d5be52df62831b1",
+      "after": "7a14fc0dc96b99c0fda592b7e70317745e896190cc141778b22dd8fb853b78e8",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/model.html",
+      "before": "0da6649d152750510a3bd4ae2a6f1ff6b7833d7485170984e41d2765b09d09bb",
+      "after": "8d4e32dc3acc7c9b938eda120084368816cc19e4440891a1c8554a628202ae7a",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/contact.html",
+      "before": "e1434a57c755ccbae9faa6a82d058916811e0bfb2858221b3259fbad563bd96c",
+      "after": "b666d56685ed2953acbe11cb22f51fa375d97f423e34ef208d8dbf112f9f6d1b",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/advanced-methods.html",
+      "before": "28280dfefa2da98fef0f11f2e0f04cc65ea7b11a237a499510e2c128b60f2b4a",
+      "after": "534aaeed2c2e42a2580fe3ab6a32479f23c7b676fabeb31d5f99876d6a8a5a56",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/identity.html",
+      "before": "63a5d2815f4eafd513b87ef3a123fc87082a080ce952c33066a78b0a1e753a11",
+      "after": "5a96b5684421440e26df203e11a34906e2571ab5432e785e56fb1e0a2da975e0",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/workbench.html",
+      "before": "4bd3566d71a1f561c550d33955324e8fc1043cdf20dc41c2577d850f10e7f3ee",
+      "after": "06a4a56e7f3ed986ce6a80183918e74f73befc087a0a1b2b35ba4147fb27b5d5",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/beauty.html",
+      "before": "e497f6964bf5b1424b546f86739ebda3298222da692326b9fc6eba538546ac89",
+      "after": "a9e5308e34b3cc3c75fb9c0914b62c301a23663e665c89ed2ee068a36319675d",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/networks.html",
+      "before": "9b1df326d589b129b5c268a29536eb2000ba1127af9ff2d296700ee4c6aaeee6",
+      "after": "b392e511ef4713ae1886bff8653137fd00b0c5c43f563c4be8aeb1e3510e64ad",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/diffusion.html",
+      "before": "d02b38f077229b0573a97a8bacc14907eada6f0dab482443e2b1516324103111",
+      "after": "0ea3e0f0cd2c2b1b4d420f62c962f7b4dd836ebee9512b507fe0c0a987de3848",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/ml.html",
+      "before": "bd5848313fb11dae5bcd5465d326a5c9e0bd2bf35917ddf2991480383a660a33",
+      "after": "57723987f36f0c944540c82ef513293aaacaf016f1cadb00f98deb142f8f021f",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/agent.html",
+      "before": "c039f9411c8888874a3477da45f820ed2d79f46c9ca5255bbe9536a02f06fb0c",
+      "after": "6cbed5042f8ba45533deb45364b295d6a1eedf9f33bc40d83a56d7f77aeb156a",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/programme.html",
+      "before": "0d1095b52c865ed315783bf4dc1f549d1d0830a106b885e90549910f79524d41",
+      "after": "498e4003e08f38a988d000bb5078491d88aa083e8c477ee70042b0e8031c6791",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/practice.html",
+      "before": "a7f8c3aea9cb68de8dc2e811c11ed3c8652c94064ad289aef073b98c83375d55",
+      "after": "e23c61c4bdc13d0d32fe4ec301c3c24469163982e151c1f5611d6ba839df2c75",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/analysis-studio.html",
+      "before": "67f06f23e7b55dd1065ae716d25264b14d859b249f180a1cadaf3cc936ea6599",
+      "after": "dd65ddf345eeac5f3b21de84590abc8a88717c13ff5a8fbf2e663401cf59cba7",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/sciml.html",
+      "before": "a77310f40de2441c1f59b8469d02def69ea65dbe0bd97948776eec5081d26888",
+      "after": "84bb79054c9055ce363f8588423a39b4e497b2cef5ba92336ac3fc2ae7ffad15",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/learn.html",
+      "before": "51efb292441bd06be3c3577379cb5950d6dd1a3a0eaa7bf96c5a2520e6f5d625",
+      "after": "770b7784e9c5e4a2a2c8423098a6add9133dd5bf1ddcc39c9e37c2d04a8eb041",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/fitting.html",
+      "before": "6310a998809d7f1e3a6087408296a6b702a82e146e7efa129ba3a36f7b009485",
+      "after": "235481ab86d4618388878ba57d53e144edfeb2e753be827e8618a347d4295790",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/library.html",
+      "before": "ea555379931a70fa52dd79701f4806cd7dc10af4bc1122635e1c38f36888ec23",
+      "after": "e89eaf31bc150db75cfc29d64c66a9aa84cb1b15f0112a728920697fb099c369",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/cv.html",
+      "before": "34f4778f6580a35ffb572d62677e720bba1a02b3c958cd383c591cab17d8656f",
+      "after": "9d8e372bdd43718cdb0221d3636d8b2d3940a81a1a29d3d1180206bb78a33d40",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/workspace.html",
+      "before": "2258a8732784f8e3d4f4ccc9fc6de14317454219584eae3754888bfc2add6dc4",
+      "after": "b2555c83c73ebae7071d70368b381ff450a8edaf15bd368ee5df64303e252e2c",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/docs.html",
+      "before": "5b07bb35ed02cd2e7918f764e696306d84a76745a7395d9b3e2da3eca79c1727",
+      "after": "8322390450d8473ff66bbf4317ae60f6a68624bbe8b2733af1e70cb8ac304ece",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/living.html",
+      "before": "11780151b2ebd19a3ec126db2ab809432e9c5c7b7e5b6c064b361b9c280ca622",
+      "after": "908aa04af3cc8f1308484c4af2b1ea5a87641489a5a53700a93fd34f002bf157",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/tcell.html",
+      "before": "a4ce76ffaf85ce5307b39198492ebe152d74c61bc4ab246a5995280e8afcf1ae",
+      "after": "10db572d0462f56ccffd3e0b579f07b7f855ceee40d83098ef04880293ad7605",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/evolution-hub.html",
+      "before": "ba0ca96ff9c18b2ca2bcf2d601a14ab44c56c638097484b93b9ed69cc5e2a2ef",
+      "after": "0a666f8d712844c3c98497af86f40fd6fc29a9a7c6b3ba837c6362c8163b4ad6",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/decision-studio.html",
+      "before": "a53b7dc184927ccb03ebc58d67c59521cd0b0d3032415220b7b53eedb6619e12",
+      "after": "b93c997c0a157395b7be76fe88a0353e2de2088214c5f4ba1d0118395f78c704",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/leaf-physiology.html",
+      "before": "de894027d598bb509d6d48cf22199dbdc6b56940c2940adeef9b98da7f9d216c",
+      "after": "015dfafaa54ddd6d15141cd2bfc0d09f13c3c53b64174c74dd8d2aa5dac75889",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/evolution.html",
+      "before": "4a9f5fe370cb75f10debb12334e7afb849fb7bf6516ed44aff2b4137377f29f6",
+      "after": "9a7ae63b86fc537d00c84f14d9748989c45ecb0ed63633c8878e8f47977a3f06",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/research.html",
+      "before": "cdcd34db7bfe91b9659794c11a0817de7bfe76f33995e85b99b963ed9a1badd3",
+      "after": "4b4eaf75f2eab3a0468d438586f22e9e39812ce5f65d0c5c41677b72cb90902d",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/experiments.html",
+      "before": "7d8306e11c39a5c51789d76a63e092cd4c802f8c035764916b9a339ff8a5bb8b",
+      "after": "303dad0b3596a87c07cf78bce7bff74bd0293197ca498a1ed480b6a1dcdcb774",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/stochastic.html",
+      "before": "5c9729ec72d49ffd70ec4786bf793ac22395871022f3818beac0a30a7dc11865",
+      "after": "a9b09f24a99a8a03175aca17d07acd268fcf52f512f5d50ad5c6863c30eafb8a",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/analysis.html",
+      "before": "70dc2423ff5791907ba400c8c735299f3643824a552bc3fc9a50c09ce7d21df2",
+      "after": "8b3e6ff542cee5eecf79686a1e4106449fb519d417bce1a1cf6d45868e2e0bad",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/integration-notes.html",
+      "before": "edfa5b1e0794b6723e5b96f45824abe2538aebe640b2f174ac9528925aff7a04",
+      "after": "b3aceff58b648024c3ee3a9709897150303696df17b6b78599b75c70e611641e",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/publication.html",
+      "before": "13736a784d21dbc9a21b33976aaaa69c4bc891a888bb63c014f078706ff01847",
+      "after": "3aed2d80ea4d1f3c43bb21b432c07b9c9715c6fad4ba0ecab0607c7d4457f946",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/acknowledgement.html",
+      "before": "f57e7e37d8234afae903917f74f321497f72108eae0726196ba84ae87234f16b",
+      "after": "1ee6cd90a14b1124d3ee6739755b4d4c5a3de751103d10a0c8d5c2592b92f201",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/index.html",
+      "before": "156bafca96c46ca880b2d4096855a6dccc4a01def486de7a3939ddc5e4c32cea",
+      "after": "c7ea7570843e5b1ee9ce64340dee4715baeedab0cbe504caf9f22fd32c83ea7b",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/bifurcation.html",
+      "before": "196ebea8297d4b3780ab17e7c581a64b85b74ac3093985ea0ccce13d1f67076d",
+      "after": "72bca50a0bfb7fbe9647bb9169d817a195f0de325da371030dc0384fa5f039dc",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/symbolic.html",
+      "before": "ca644548e65136e2a7fd718fe87e4142019032977bc7dd1f16ec58630ac6f7fb",
+      "after": "d2da5349a72b4e163bf93984282d7b33b2d5ef6a8a530191db4a229286e2fb83",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/trust.html",
+      "before": "2266e303ff0ab8c738bd48e75310155bc721784a43e5faa2c659c86a40326521",
+      "after": "9ce5443a0c0f1002496c67f5f72f6ba8fde0bcfc2d4969a4bd9c557907fab21d",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/optimization.html",
+      "before": "4abe41de60994f7dd6597aa1527cc5109d66bcc8ef939f5de4fd1c175bf23f2a",
+      "after": "4041611cf39bd58bd48aac8a525ce472c7cf54108e8fab587efd60899abf7523",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/branching.html",
+      "before": "35185fd1ac4842395badd9d60b2290ffe4e0eff071016a57c55631f3e63a6453",
+      "after": "682104c3ea346c33d85daeb0b145913fa0fc638d89756a234c1504164f126d1e",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/saved-experiments.html",
+      "before": "08796664f9bddc0b2af46990d86f1117395a1575fe5ff33b603f3c892aae8ce8",
+      "after": "43efa6fd78a011244b0559ca3f922e024d672a31dc8e201f3bf7174ced9430c7",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/contributors.html",
+      "before": "e688d922db1965bde2dafda5a2e6d577b653a8278b80e93ea6c77cf0423213f1",
+      "after": "103750e563754e1729186e41c089ead3ce909b00ce998bcc2f512654728a7fab",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/steady.html",
+      "before": "bb09fead3cfb64ee9738de25b9888cd599ba4dbc7e8351aad427e82728de15da",
+      "after": "6f6ebf55a19445fac8df4f5c0cffd0c570f0e02c75f8aec11f0f83806687a7ba",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/studio.html",
+      "before": "a74f09b4773a5b3e3c11515b35c898a6d0cb7ea84cc0ed000df532455c251bbf",
+      "after": "28bba1d923e24061c3485550593ca08764bc0b8681ae61568886376b2e34a80a",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/book-observations.html",
+      "before": "c7d27f4b5d75b1539d37312b4f675c8ed9832080eaef3e02220f2a7e30535b4c",
+      "after": "3fd47efd1289dcd672ac7c477d4dcbf06bf28c00431e5c7377adbe621ea5e4a5",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/random.html",
+      "before": "66ed1820c2150331c8682b79e4bc8f3eb295fb88beea2fc536dd1f99c7e912ca",
+      "after": "6e843bd180036bbdac23d9c744632e12d17c0245b168fc8b0dafc6c87f80e78e",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/labs.html",
+      "before": "05cb3fa0baa615f3bf3eccfca75c813a39679949a849ecac430c5e3e7bb8359c",
+      "after": "cdd681428eb05ed5a8116bb9f3cbaaf161ceef097ddc5bcc76d6a6c465e7e518",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/platform.html",
+      "before": "1a932786c05d9d1e499cf6feb246bd15c8812a01f53c8d2d74ac91b1e6807151",
+      "after": "b6748690f4fd52fbce4d62c4dcfe5409f24e50f0bcb3d0995b0afde4ce1023ef",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/ode.html",
+      "before": "11ad92ec0f20b3f437631e174601cbc5ab7146679d4af14046cd130e962dcb61",
+      "after": "19d69a252c65c58d2bcdded9fb91b9e3a80c227e2ad1cbca8dca3f9b8b942ec0",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/book.html",
+      "before": "1d87534ad37c5a58a479372b6ce75fa4edaa34017d73122842dc0ac4b828da97",
+      "after": "d3fccbdaad0400002f4d26cb43c3484e590c03a8e283b6b2ff5241d1ffdf5544",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/lipids.html",
+      "before": "a48144f58e486d4ac75efe24672221e26f36393dd3589ba6e03d0aa691fbf6da",
+      "after": "76a228be2a340fed869f54d4183b07f4baf806aaf72d54c3d01f3877fa9efcea",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/statistics.html",
+      "before": "3941c45d7780e86e330a2a02d7f0dd3a8e5b948a01ed066e513088d24ee601b2",
+      "after": "5a11dac7d7409391353a97a5aee51bbaef4a3aa8ae0d6c40ef0f0fe787426986",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/verify.html",
+      "before": "33c5c7544e685ba9cf05a50ca91ab99fc95e547755f1ed5266370597a53e3eba",
+      "after": "b6c04b743a78c121496d381a84a864bc722f7b2fce6585fc9547a78b2982abe9",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/ai-modeling.html",
+      "before": "463b188a38a4ef352a628727c59fc15ad68cb73321547927ac80cd221abb7ca3",
+      "after": "e88e8fbb0d0868d42cd0d07e762e1c162cc088f47adacd1d960eb3e721c6d847",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/fractals.html",
+      "before": "1f268b176be3d7f38374ce0c3647f21994400820a28d571de269f2c0168d4638",
+      "after": "a6f7875e7cefc826c84f66950e91b489f22730ce3b51a5d3f37b45f4e3e465df",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/sensitivity.html",
+      "before": "31b212330b922d0646b61dcf6db72218342ac3c34bded7f3389e948f3978c65f",
+      "after": "73252345b99621378b7d0a2a5d90855934cfcfe86c4dd5c3188807bd6eacaf3b",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/population-genetics.html",
+      "before": "e777417d2d0670c9e12023f3b10036359f9f73e2fe9ba19940cb6a403057b334",
+      "after": "36941af609f6fff7e431f6d4637cc6761120a0e8407745ba7048c602fbff0443",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/tutorial.html",
+      "before": "3927755597901de4160d13ea57d158047ba4d9e74f20537d673f4705af15777f",
+      "after": "aec6a40888a18eb3b912db996820847db7c1af82576e3bc20b7d7dec30c65e30",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/adaptation.html",
+      "before": "42c7e16231825981ed1618a8c434b26cbfc3d1dbb5ccbb36f1e40a0070221153",
+      "after": "5f01992f8de3e28340083845c50ae37c0087603d6a7e983125114dd869e7a68e",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/randomness.html",
+      "before": "21f4e1fd78bf21858ad116066b84cd685037facc38724ffe3fda3c7139858202",
+      "after": "0bf81f314ec2543e249cebaf72c5cd3c98d0927fc9097a97b223cbed9b4dfda9",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/linear-algebra.html",
+      "before": "e3928e8f00b05bdca4fa741efb409badc53fc2030b991fdd36900e168303fc18",
+      "after": "5cfa3d1e853dad49c1f4f8cfd642685236897caaea0cf649e65677c0ca13804d",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/plants/index.html",
+      "before": "b5d237a7e49c9dbc124b81dc4cdc3c978542f2720422c2e3fb865970ac08d8ca",
+      "after": "8d6f16ac8a9efaaea962db27b8b27f7974ceeac7282dc31d7a803790710e0888",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/tcells/index.html",
+      "before": "3be105e97170492c356fb31afafb1e7a1e2d7a339dc9cfd587ffa785cb4cb533",
+      "after": "1ae2dfdb82bbc6bc735a0fc5a73f93ed3c2469f35ba1ce65ffc8a6f8667d975d",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/lipids/index.html",
+      "before": "c39af78056a11298e27f06f9f8438a7df4ce15f9357787e18692956d900786f4",
+      "after": "d6fb8af3ad99fcab7fe203e3d97ad68b6f7c092dad133720f8e5fc37d95eeec5",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/leaf/index.html",
+      "before": "139ee0270c5b737c434c1026ff25b241cbd7fefce4bc3a8294f3f0dfef147109",
+      "after": "f9c71fe41508f3504358d1485ffed4c57f169c80b94296a68715a14d051da3b6",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/research/tcell-proliferation.html",
+      "before": "1d01e0dacc7cd15be7b276b311669e7d6f4e8ac79a10c9e8b1b9349d821438ed",
+      "after": "62a5e997512ad2ee609bc2bea2449e7737c96fb225bb8ba38aa790c6e2059161",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/research/fatty-acid-metabolism.html",
+      "before": "42e45ba7ad7febf9aca459396911915d6a3eb544a7640ed9180ee3e5e4cecb2a",
+      "after": "cf6e9c10725f1ace07524d7b4a08440fc4b5857742d791449b280ea72c97d64b",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/research/software.html",
+      "before": "6689e3c39a681cb40dd05fc57140903c4479b7589edfdf0f67a0af91be92dc7a",
+      "after": "cce590b95f655c32ee3581169db64576f4b07437b5587225c0f4086f0b51a0d2",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/research/index.html",
+      "before": "a9ee297e8e4f3d5858d1709e1df425eb1fc5170c600ef27ad6726fb7c596ed70",
+      "after": "b4a12fb0221a441fd3bea84ea373c9c45fcc403ac39a15cd925a0e4b0d0d7110",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/research/photosynthesis.html",
+      "before": "89295da27b4ee458102b0a6cad42a20a285a416a2ce3d9d88ad9033ff9b27792",
+      "after": "04643743127308a34062059ee90ad3757908cef03fd73c80f87483a19a153f83",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/continuum/approaches.html",
+      "before": "fd8c1041b861ae01fb10d65bfe64fd978fbf5dc65191378226575cc24d018dc7",
+      "after": "7c55d4392ec62fddef7ddb7cb056a2b40f542687d22254125b37b21813e1b640",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/continuum/index.html",
+      "before": "7ee64deda26f1a80bbf3fd2ce8a860e183c78455a9241cab18f62d270cade87a",
+      "after": "b96db0dd90a0a374db315952ee8015bc159395636793225fe3093e9ed1cdec70",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/continuum/advanced.html",
+      "before": "a47c96e265fbd5ae6ea101933e9b3af53c8f8bbb8da2865c64c8ff4ba195d6da",
+      "after": "c1993fc3e6adaf3ec74f41e6bd9213fcb24bdf58804e02d125a70859cad4b25a",
+      "reason": "Correct document headings, scrollable data access and named/unique landmarks without hiding scientific content."
+    },
+    {
+      "path": "site/src/revision83/presentation.js",
+      "before": "810535562e3cda9d330e3bdc299b429f92bd433982314de474cd505220158eea",
+      "after": "7f6266eeaed45ace6910b4b46fe3cede7f746d391233705794a9063ae64c2c72",
+      "reason": "Correct dynamically created landmark/heading states and remove remaining misleading card labels."
+    },
+    {
+      "path": "site/styles/revision83.css",
+      "before": "4376a87289e070537d04ceaabf9bd0245454687c1c3afc565869f3efac13e381",
+      "after": "36b89dd8ce21990f62fa2e80f246348bc57e05b146f3300d9b674c9fb91ebe10",
+      "reason": "Fix measured contrast issues in dark cards, labels, links, tables and biological readouts; reserve skip-link focus space."
+    }
+  ]
+}

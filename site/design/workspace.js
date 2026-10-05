@@ -7,19 +7,19 @@ const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className
 const button=(text,fn,cls='')=>{const b=el('button',cls,text);b.type='button';b.onclick=fn;return b;};
 const form=main.querySelector('aside form,#advancedForm,#approachForm')||(labName==='continuum'?main.querySelector('form'):null);if(!form)return;
 const defaults=Object.fromEntries([...form.querySelectorAll('input[id],select[id],textarea[id]')].map(n=>[n.id,n.type==='checkbox'?n.checked:n.value]));
-const desk=el('div','lab-desk instrument-desk'),dock=el('aside','experiment-dock lab-inspector'),work=el('div','workbench-main');dock.id='lab-inspector';dock.setAttribute('aria-label','Experiment setup');
+const desk=el('div','lab-desk instrument-desk'),dock=el('section','experiment-dock lab-inspector'),work=el('div','workbench-main');dock.id='lab-inspector';dock.setAttribute('aria-label','Experiment setup');
 const wrapper=form.closest('aside')||form;dock.append(wrapper);for(const child of [...main.children])if(child!==wrapper)work.append(child);desk.append(dock,work);main.append(desk);body.classList.add('has-inspector','has-experiment-dock');
 const mobileNav=el('nav','mobile-workbench-switch');mobileNav.setAttribute('aria-label','Mobile experiment view');function mobileView(view){desk.dataset.mobileView=view;for(const b of mobileNav.children)b.setAttribute('aria-pressed',String(b.dataset.view===view));window.dispatchEvent(new Event('resize'));}for(const [id,title]of [['setup','01 Setup'],['results','02 Simulation & plots']]){const b=button(title,()=>mobileView(id));b.dataset.view=id;mobileNav.append(b);}desk.before(mobileNav);mobileView('setup');form.addEventListener('submit',()=>{if(matchMedia('(max-width:760px)').matches&&form.checkValidity())mobileView('results');});
 const names={random:'Randomness & branching',plants:'Plant growth',tcells:'T-cell populations',lipids:'Fatty acids & lipids',leaf:'Leaf physiology',evolution:'Evolution & adaptation',continuum:'Evolution & search'};
-const toolbar=el('header','lab-toolbar'),copy=el('div','toolbar-copy'),actions=el('div','toolbar-actions');copy.append(el('span','toolbar-eyebrow','SIMULATION WORKSPACE'),el('h1','',names[labName]||'Experiment'));toolbar.append(copy,actions);work.prepend(toolbar);
+const toolbar=el('header','lab-toolbar'),copy=el('div','toolbar-copy'),actions=el('div','toolbar-actions');copy.append(el('span','toolbar-eyebrow','SIMULATION WORKSPACE'),el('div','fl-lab-title',names[labName]||'Experiment'));toolbar.append(copy,actions);work.prepend(toolbar);
 const nativeRun=document.getElementById('advRun')||form.querySelector('button[type=submit]')||document.getElementById('run');
 function reveal(target=form){mobileView('setup');let p=target;while(p){if(p.tagName==='DETAILS')p.open=true;p=p.parentElement;}desk.classList.remove('desk-focus');dock.scrollIntoView({block:'nearest',behavior:'smooth'});target.scrollIntoView({block:'nearest',behavior:'smooth'});if(target.matches('input,select,textarea,button'))target.focus({preventScroll:true});}
 const openInspector=()=>reveal();
 const runProxy=button('Run experiment',()=>{if(nativeRun?.matches(':disabled'))return;if(form.reportValidity())form.requestSubmit();},'primary experiment-run');
 const focus=button('Focus view',()=>{const on=desk.classList.toggle('desk-focus');focus.textContent=on?'Show setup':'Focus view';focus.setAttribute('aria-pressed',String(on));window.dispatchEvent(new Event('resize'));});focus.setAttribute('aria-pressed','false');
-actions.append(focus,runProxy);const cancel=document.getElementById('advCancel');if(cancel)actions.append(cancel);
+actions.append(focus);runProxy.hidden=true;actions.append(runProxy);const cancel=document.getElementById('advCancel');if(cancel)actions.append(cancel);
 if(nativeRun){const syncRun=()=>runProxy.disabled=nativeRun.matches(':disabled');new MutationObserver(syncRun).observe(form,{attributes:true,subtree:true,attributeFilter:['disabled']});syncRun();}
-if(nativeRun?.id==='advRun')nativeRun.hidden=true;const oldToggle=document.getElementById('toggleControls');if(oldToggle)oldToggle.hidden=true;
+if(nativeRun)nativeRun.hidden=false;const oldToggle=document.getElementById('toggleControls');if(oldToggle)oldToggle.hidden=true;
 form.addEventListener('invalid',e=>reveal(e.target),true);
 const dockHead=el('div','experiment-dock-head');dockHead.append(el('span','toolbar-eyebrow','01 / CONFIGURE'),el('h2','','Experiment setup'));dock.prepend(dockHead);
 const search=el('input','parameter-search');search.type='search';search.placeholder='Find a parameter…';search.setAttribute('aria-label','Find a parameter');const hits=el('div','parameter-hits');dockHead.append(search,hits);
@@ -54,7 +54,7 @@ const explain=el('section','example-selected');explain.hidden=true;live.after(ex
   if(lab==='evolution'&&v.advLocation)document.getElementById('advApplyLocation')?.click();
   form.dispatchEvent(new Event('input',{bubbles:true}));
   explain.hidden=false;explain.replaceChildren(el('strong','',example.title),el('p','',example.question),el('small','',example.tag+' · Settings loaded; press Run experiment to calculate.'));
-  window.dispatchEvent(new CustomEvent('lab-example-selected',{detail:example}));exampleDialog?.d.close();window.dispatchEvent(new Event('lab-inputs-loaded'));toolbar.scrollIntoView({block:'start',behavior:'smooth'});
+  window.dispatchEvent(new CustomEvent('lab-example-selected',{detail:example}));exampleDialog?.d.close();window.dispatchEvent(new Event('lab-inputs-loaded'));
  }
 
 window.LabWorkspace={openInspector,applyExample,defaults,reveal};

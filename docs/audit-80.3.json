@@ -1,0 +1,1546 @@
+{
+  "release": "80.3.0",
+  "source_commit": "5fcc62633da2b2ee7d0b9037db1faa45cb191c66",
+  "outcomes": {
+    "ORIGINAL": "success",
+    "SCIENCE": "success",
+    "STATISTICS": "success",
+    "BROWSER": "success",
+    "AUDIT": "success"
+  },
+  "accepted": true,
+  "browser": {
+    "release": "80.3.0",
+    "checks": [
+      {
+        "name": "Persistent native Run · analysis-studio.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · analysis-studio.html",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": {
+          "selected": "paired",
+          "restored": "harvest"
+        }
+      },
+      {
+        "name": "Persistent native Run · decision-studio.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · optimization.html",
+        "status": "passed",
+        "seconds": 0.47,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · optimization.html",
+        "status": "passed",
+        "seconds": 0.45,
+        "detail": {
+          "selected": "Constrained quadratic",
+          "restored": "Convex bowl"
+        }
+      },
+      {
+        "name": "Persistent native Run · studio.html",
+        "status": "passed",
+        "seconds": 0.4,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · studio.html",
+        "status": "passed",
+        "seconds": 0.49,
+        "detail": {
+          "selected": "seir",
+          "restored": "sir"
+        }
+      },
+      {
+        "name": "Persistent native Run · ode.html",
+        "status": "passed",
+        "seconds": 0.39,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · ode.html",
+        "status": "passed",
+        "seconds": 0.43,
+        "detail": {
+          "selected": "Lorenz",
+          "restored": "Lotka–Volterra"
+        }
+      },
+      {
+        "name": "Persistent native Run · stochastic.html",
+        "status": "passed",
+        "seconds": 0.54,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · stochastic.html",
+        "status": "passed",
+        "seconds": 0.45,
+        "detail": {
+          "selected": "Stochastic SIR epidemic",
+          "restored": "Birth–death process"
+        }
+      },
+      {
+        "name": "Persistent native Run · steady.html",
+        "status": "passed",
+        "seconds": 0.39,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · steady.html",
+        "status": "passed",
+        "seconds": 0.43,
+        "detail": {
+          "selected": "Supercritical pitchfork",
+          "restored": "Saddle-node normal form"
+        }
+      },
+      {
+        "name": "Persistent native Run · bifurcation.html",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · bifurcation.html",
+        "status": "passed",
+        "seconds": 0.35,
+        "detail": {
+          "selected": "saddle-node",
+          "restored": "pitchfork"
+        }
+      },
+      {
+        "name": "Persistent native Run · sensitivity.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · sensitivity.html",
+        "status": "passed",
+        "seconds": 0.39,
+        "detail": {
+          "selected": "seir",
+          "restored": "sir"
+        }
+      },
+      {
+        "name": "Persistent native Run · fitting.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · fitting.html",
+        "status": "passed",
+        "seconds": 0.35,
+        "detail": {
+          "selected": "enzyme",
+          "restored": "enzyme_low_substrate"
+        }
+      },
+      {
+        "name": "Persistent native Run · statistics.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · statistics.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": {
+          "selected": "welch",
+          "restored": "regression"
+        }
+      },
+      {
+        "name": "Persistent native Run · agent.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · agent.html",
+        "status": "passed",
+        "seconds": 0.43,
+        "detail": {
+          "selected": "tcell_activation_stress",
+          "restored": "tcell_baseline"
+        }
+      },
+      {
+        "name": "Persistent native Run · population-genetics.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · population-genetics.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": {
+          "selected": "small-population-fixation",
+          "restored": "neutral-drift"
+        }
+      },
+      {
+        "name": "Persistent native Run · symbolic.html",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · symbolic.html",
+        "status": "passed",
+        "seconds": 0.35,
+        "detail": {
+          "selected": "lorenz",
+          "restored": "logistic"
+        }
+      },
+      {
+        "name": "Persistent native Run · networks.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · networks.html",
+        "status": "passed",
+        "seconds": 0.35,
+        "detail": {
+          "selected": "directed-information",
+          "restored": "undirected-social"
+        }
+      },
+      {
+        "name": "Persistent native Run · linear-algebra.html",
+        "status": "passed",
+        "seconds": 0.36,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · linear-algebra.html",
+        "status": "passed",
+        "seconds": 0.36,
+        "detail": {
+          "selected": "ill-conditioned-hilbert",
+          "restored": "well-conditioned-solve"
+        }
+      },
+      {
+        "name": "Persistent native Run · evolution.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · evolution.html",
+        "status": "passed",
+        "seconds": 0.45,
+        "detail": {
+          "selected": "smooth-additive",
+          "restored": "nk-rugged"
+        }
+      },
+      {
+        "name": "Persistent native Run · advanced-methods.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · advanced-methods.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": {
+          "selected": "beta-binomial-sparse",
+          "restored": "beta-binomial-balanced"
+        }
+      },
+      {
+        "name": "Persistent native Run · ai-modeling.html",
+        "status": "passed",
+        "seconds": 0.36,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Prepare and undo example · ai-modeling.html",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": {
+          "selected": "dose-response",
+          "restored": "oscillator"
+        }
+      },
+      {
+        "name": "Persistent native Run · sciml.html",
+        "status": "passed",
+        "seconds": 0.39,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · ml.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": null
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · plants/index.html",
+        "status": "passed",
+        "seconds": 0.39,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · leaf/index.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · tcells/index.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · lipids/index.html",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experiment"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · random.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · continuum/advanced.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "advancedForm"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "advancedForm"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "advancedForm"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · continuum/approaches.html",
+        "status": "passed",
+        "seconds": 0.39,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "approachForm"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "approachForm"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "approachForm"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · continuum/index.html",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "controls"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · plant-growth.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · adaptation.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · diffusion.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          }
+        ]
+      },
+      {
+        "name": "Persistent native Run · fractals.html",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": [
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          },
+          {
+            "visible": true,
+            "text": "Run",
+            "form": "experimentToolbar"
+          }
+        ]
+      },
+      {
+        "name": "Decision worker analytic example",
+        "status": "passed",
+        "seconds": 0.31,
+        "detail": {
+          "n": 41,
+          "excluded": 1
+        }
+      },
+      {
+        "name": "Decision view · pareto",
+        "status": "passed",
+        "seconds": 0.37,
+        "detail": {
+          "view": "pareto",
+          "traces": 2
+        }
+      },
+      {
+        "name": "Decision view · parallel",
+        "status": "passed",
+        "seconds": 0.5,
+        "detail": {
+          "view": "parallel",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision view · dominance",
+        "status": "passed",
+        "seconds": 0.4,
+        "detail": {
+          "view": "dominance",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision view · crowding",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": {
+          "view": "crowding",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision view · correlation",
+        "status": "passed",
+        "seconds": 0.39,
+        "detail": {
+          "view": "correlation",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision view · progress",
+        "status": "passed",
+        "seconds": 0.38,
+        "detail": {
+          "view": "progress",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision view · hypervolume",
+        "status": "passed",
+        "seconds": 0.36,
+        "detail": {
+          "view": "hypervolume",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision view · traits",
+        "status": "passed",
+        "seconds": 0.36,
+        "detail": {
+          "view": "traits",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision view · feasibility",
+        "status": "passed",
+        "seconds": 0.36,
+        "detail": {
+          "view": "feasibility",
+          "traces": 1
+        }
+      },
+      {
+        "name": "Decision native CSV export",
+        "status": "passed",
+        "seconds": 0.09,
+        "detail": {
+          "bytes": 2721
+        }
+      },
+      {
+        "name": "Decision full JSON preserves original input",
+        "status": "passed",
+        "seconds": 0.08,
+        "detail": {
+          "schema": "foko.decision-analysis/1"
+        }
+      },
+      {
+        "name": "Independent exported Python reproduces finite front",
+        "status": "passed",
+        "seconds": 0.09,
+        "detail": {
+          "finite_nondominated_ids": [
+            "A0",
+            "A1",
+            "A2",
+            "A3",
+            "A4",
+            "A5",
+            "A6",
+            "A7",
+            "A8",
+            "A9",
+            "A10",
+            "A11",
+            "A12",
+            "A13",
+            "A14",
+            "A15",
+            "A16",
+            "A17",
+            "A18",
+            "A19",
+            "A20",
+            "A21",
+            "A22",
+            "A23",
+            "A24",
+            "A25",
+            "A26",
+            "A27",
+            "A28",
+            "A29",
+            "A30",
+            "A31",
+            "A32",
+            "A33",
+            "A34",
+            "A35",
+            "A36",
+            "A37",
+            "A38",
+            "A39",
+            "A40"
+          ],
+          "feasible": 52,
+          "supplied": 53
+        }
+      },
+      {
+        "name": "Recorded candidate reveal and pause",
+        "status": "passed",
+        "seconds": 0.83,
+        "detail": {
+          "position": "90"
+        }
+      },
+      {
+        "name": "Three-objective rendering preserves full objective set",
+        "status": "passed",
+        "seconds": 1.51,
+        "detail": {
+          "objectives": 3
+        }
+      },
+      {
+        "name": "Incomplete input does not reuse a stale export",
+        "status": "passed",
+        "seconds": 0.26,
+        "detail": null
+      },
+      {
+        "name": "Native multiobjective optimizer completes",
+        "status": "passed",
+        "seconds": 1.88,
+        "detail": {
+          "points": 1200,
+          "model": "(x - 2)^2 + (y - 1)^2",
+          "secondary": "(x + 1)^2 + (y - 4)^2"
+        }
+      },
+      {
+        "name": "Native optimizer → decision studio without Load or X–Y flattening",
+        "status": "passed",
+        "seconds": 6.87,
+        "detail": {
+          "candidates": 1200,
+          "directions": [
+            "min",
+            "min"
+          ]
+        }
+      },
+      {
+        "name": "Recorded evolutionary events transfer with correct clock",
+        "status": "passed",
+        "seconds": 2.44,
+        "detail": {
+          "events": 5,
+          "clock": "biological generations"
+        }
+      },
+      {
+        "name": "45 C source diagnosis remains a hydraulic constraint, not a substituted result",
+        "status": "passed",
+        "seconds": 0.02,
+        "detail": {
+          "code": "hydraulic_limit",
+          "title": "Hydraulic constraint violated",
+          "explanation": "The heat equations converged, but the prescribed stomatal conductance demands more transpiration than this soil–leaf hydraulic supply permits. This rejects this fixed-trait state; it does not prove that no equilibrium exists at this air temperature.",
+          "heatConverged": true,
+          "heatResidual": 6.282015393987983e-09,
+          "transpiration_mmol": 5.385893823747323,
+          "supply_mmol": 4.432922870031652,
+          "deficit_mmol": 0.9529709537156715,
+          "excessPercent": 21.497575790414494,
+          "sourceReason": "Transpiration exceeds hydraulic supply.",
+          "units": {
+            "water": "mmol H2O m^-2 s^-1",
+            "heatResidual": "W m^-2"
+          },
+          "noSubstitution": true
+        }
+      },
+      {
+        "name": "Contact, attribution and CV preservation · contact.html",
+        "status": "passed",
+        "seconds": 0.1,
+        "detail": {
+          "title": "Contact · FokoLab"
+        }
+      },
+      {
+        "name": "Contact, attribution and CV preservation · contributors.html",
+        "status": "passed",
+        "seconds": 0.1,
+        "detail": {
+          "title": "Acknowledgements · FokoLab"
+        }
+      },
+      {
+        "name": "Contact, attribution and CV preservation · analysis.html",
+        "status": "passed",
+        "seconds": 0.07,
+        "detail": {
+          "title": "Analysis · FokoLab"
+        }
+      },
+      {
+        "name": "Contact, attribution and CV preservation · cv.html",
+        "status": "passed",
+        "seconds": 0.1,
+        "detail": {
+          "title": "CVs and creator profile — Foko Lab"
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · analysis-studio.html",
+        "status": "passed",
+        "seconds": 0.19,
+        "detail": {
+          "width": 390
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · decision-studio.html",
+        "status": "passed",
+        "seconds": 0.23,
+        "detail": {
+          "width": 390
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · optimization.html",
+        "status": "passed",
+        "seconds": 0.2,
+        "detail": {
+          "width": 375
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · plants/index.html",
+        "status": "passed",
+        "seconds": 0.21,
+        "detail": {
+          "width": 390
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · leaf/index.html",
+        "status": "passed",
+        "seconds": 0.19,
+        "detail": {
+          "width": 390
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · tcells/index.html",
+        "status": "passed",
+        "seconds": 0.2,
+        "detail": {
+          "width": 390
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · studio.html",
+        "status": "passed",
+        "seconds": 0.21,
+        "detail": {
+          "width": 375
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · contact.html",
+        "status": "passed",
+        "seconds": 0.03,
+        "detail": {
+          "width": 390
+        }
+      },
+      {
+        "name": "Mobile reflow and persistent Run · contributors.html",
+        "status": "passed",
+        "seconds": 0.01,
+        "detail": {
+          "width": 390
+        }
+      }
+    ],
+    "errors": [],
+    "failedHTTP": [],
+    "summary": {
+      "passed": 84,
+      "failed": 0
+    },
+    "scope": "Real HTTP Chromium desktop/mobile emulation with native workers and source records. Not full WCAG conformance, physical-device or empirical biological validation."
+  },
+  "science": {
+    "release": "80.3.0",
+    "checks": [
+      {
+        "name": "Analytic finite front and invalid sample preserved",
+        "status": "passed",
+        "detail": {
+          "front": 41,
+          "supplied": 53,
+          "hypervolume": 3.824789062500001
+        }
+      },
+      {
+        "name": "Dominance uses all objectives, not a two-axis projection",
+        "status": "passed"
+      },
+      {
+        "name": "Mixed maximize/minimize directions",
+        "status": "passed"
+      },
+      {
+        "name": "Equal candidates do not dominate each other",
+        "status": "passed"
+      },
+      {
+        "name": "Null objective is excluded, never a zero optimum",
+        "status": "passed"
+      },
+      {
+        "name": "Infeasible candidates do not dominate feasible candidates",
+        "status": "passed"
+      },
+      {
+        "name": "Exact rectangle-union reference case",
+        "status": "passed"
+      },
+      {
+        "name": "Exact hypervolume with maximize direction",
+        "status": "passed"
+      },
+      {
+        "name": "Invalid reference is refused rather than moved silently",
+        "status": "passed"
+      },
+      {
+        "name": "3D hypervolume is not substituted by projected area",
+        "status": "passed"
+      },
+      {
+        "name": "Unknown feasibility is rejected",
+        "status": "passed"
+      },
+      {
+        "name": "Duplicate candidate IDs are rejected",
+        "status": "passed"
+      },
+      {
+        "name": "Boolean and nonfinite objective values are not numeric observations",
+        "status": "passed"
+      },
+      {
+        "name": "Prototype-like IDs retain their actual ranks",
+        "status": "passed"
+      },
+      {
+        "name": "Unknown event-candidate identity is refused",
+        "status": "passed"
+      },
+      {
+        "name": "Native evolutionary events preserve clocks, follow-up and source record",
+        "status": "passed",
+        "detail": {
+          "events": 2,
+          "termination": "event_cap"
+        }
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 0",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 1",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 2",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 3",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 4",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 5",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 6",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 7",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 8",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 9",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 10",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 11",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 12",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 13",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 14",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 15",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 16",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 17",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 18",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 19",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 20",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 21",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 22",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 23",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 24",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 25",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 26",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 27",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 28",
+        "status": "passed"
+      },
+      {
+        "name": "Hypervolume inclusion-exclusion reference 29",
+        "status": "passed"
+      }
+    ],
+    "scope": "Finite deterministic candidate and record contracts; no empirical biological validation.",
+    "passed": 46,
+    "failed": 0
+  },
+  "statisticalPython": {
+    "workflows": 17,
+    "referenceComparisons": 63,
+    "checks": [
+      "describe:mean",
+      "describe:median",
+      "describe:sd",
+      "describe:meanCI",
+      "one:estimate",
+      "one:p",
+      "one:se",
+      "one:df",
+      "one:ci",
+      "welch:estimate",
+      "welch:p",
+      "welch:se",
+      "welch:df",
+      "welch:ci",
+      "paired:estimate",
+      "paired:p",
+      "paired:se",
+      "paired:ci",
+      "welch-anova:p",
+      "welch-anova:F",
+      "welch-anova:df1",
+      "welch-anova:df2",
+      "welch-anova:contrast-0",
+      "welch-anova:contrast-1",
+      "welch-anova:contrast-2",
+      "kruskal:p",
+      "kruskal:H",
+      "kruskal:contrast-0",
+      "kruskal:contrast-1",
+      "kruskal:contrast-2",
+      "permutation:estimate",
+      "permutation:p",
+      "bootstrap:estimate",
+      "bootstrap:se",
+      "bootstrap:ci",
+      "correlation:p",
+      "correlation:r",
+      "correlation:ci",
+      "regression:r2",
+      "regression:coefficients",
+      "regression:se",
+      "regression:p",
+      "regression:ci",
+      "categorical:p",
+      "categorical:df",
+      "categorical:fisherP",
+      "categorical:riskDifference",
+      "categorical:riskDifferenceCI",
+      "categorical:logOddsRatioCI",
+      "survival:Control",
+      "survival:Treatment",
+      "logrank",
+      "series:mean",
+      "series:median",
+      "series:sd",
+      "series:area",
+      "block-bootstrap:estimate",
+      "block-bootstrap:se",
+      "block-bootstrap:ci",
+      "replicates:interval",
+      "endpoints:dry_mass_g",
+      "endpoints:leaf_area_cm2",
+      "planning:perGroup"
+    ]
+  },
+  "retainedNumerics": {
+    "passed": 36,
+    "failed": 0
+  },
+  "accessibility": {
+    "before": {
+      "pageStates": 0,
+      "incomplete": [],
+      "violationNodes": {},
+      "totalViolationNodes": 0
+    },
+    "after": {
+      "pageStates": 49,
+      "incomplete": [],
+      "violationNodes": {
+        "aria-allowed-attr": 3,
+        "landmark-unique": 7,
+        "heading-order": 2,
+        "region": 28,
+        "color-contrast": 66,
+        "page-has-heading-one": 5,
+        "scrollable-region-focusable": 24
+      },
+      "totalViolationNodes": 135
+    }
+  },
+  "scope": "Actual HTTP Chromium desktop/mobile emulation, finite-set analytic cases, retained numerical regressions and independent Python statistical comparisons. Automated accessibility is an audit, not a conformance certificate; no physical-device or biological-calibration claim."
+}

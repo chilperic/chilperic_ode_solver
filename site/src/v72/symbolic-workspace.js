@@ -697,6 +697,7 @@
     root.addEventListener('resize', function () { renderLayout(); });
   }
 
+  window.FokoNativePrepare = function(name) { loadPreset(name, false); };
   function init() {
     storedLayout();
     bind();
@@ -708,7 +709,7 @@
     }
     if (importOdeHandoff()) return;
     const requested = params.get('example');
-    loadPreset(requested && Presets[requested] ? requested : 'logistic', true);
+    loadPreset(requested && Presets[requested] ? requested : 'logistic', false);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

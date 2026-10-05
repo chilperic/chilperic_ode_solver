@@ -1,6 +1,6 @@
 {
   "name": "fokolab-integrated-update",
-  "version": "79.2.0",
+  "version": "80.3.0",
   "private": true,
   "description": "Static FokoLab application; Node is used only for optional developer verification.",
   "scripts": {
@@ -9,5 +9,7 @@
     "test:python": "python3 tests/python_comparison.py",
     "test:browser": "python3 tests/browser_regression.py"
   },
-  "engines": {"node": ">=22"}
+  "engines": {
+    "node": ">=22"
+  }
 }

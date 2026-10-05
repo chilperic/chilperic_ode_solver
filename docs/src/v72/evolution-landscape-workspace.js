@@ -260,6 +260,7 @@
     link.download = 'evolution-landscape-result.json'; link.click();
     root.setTimeout(function () { URL.revokeObjectURL(link.href); }, 0);
   }
+  window.FokoNativePrepare = function(name) { loadPreset(Core.presets.find(p=>p.id===name)||Core.presets[0],false);result=null; };
   function init() {
     Core.presets.forEach(function (preset) {
       const option = document.createElement('option'); option.value = preset.id; option.textContent = preset.title; $('evPreset').appendChild(option);
@@ -276,8 +277,8 @@
     $('evPlaybackSpeed').addEventListener('change', function () { if (animationTimer) scheduleAnimation(); });
     $('evSnapshot').addEventListener('input', renderTimeViews);
     $('evPreset').addEventListener('change', function () { showPresetInfo(Core.presets.find(function (preset) { return preset.id === value('evPreset'); })); });
-    $('loadEvPreset').addEventListener('click', function () { loadPreset(Core.presets.find(function (preset) { return preset.id === value('evPreset'); }), true); });
-    $('evPresetDeck').addEventListener('click', function (event) { const button = event.target.closest('[data-ev-preset]'); if (button) loadPreset(Core.presets.find(function (preset) { return preset.id === button.dataset.evPreset; }), true); });
+    $('loadEvPreset').addEventListener('click', function () { loadPreset(Core.presets.find(function (preset) { return preset.id === value('evPreset'); }), false); });
+    $('evPresetDeck').addEventListener('click', function (event) { const button = event.target.closest('[data-ev-preset]'); if (button) loadPreset(Core.presets.find(function (preset) { return preset.id === button.dataset.evPreset; }), false); });
     $('generateEvTemplate').addEventListener('click', function () { const n = Number(value('evLength')); $('evCustomFitness').value = Array.from({ length: 2 ** n }, function (_, i) { return Core.bits(i, n) + ',0'; }).join('\n'); $('evType').value = 'custom'; syncInputs(); });
     ['left', 'right'].forEach(function (side) { $(side + 'EvPlotType').addEventListener('change', function () { if (result) renderSide(side); }); });
     $('saveEv').addEventListener('click', function () { localStorage.setItem('fokolab:evolution', JSON.stringify(read())); $('evStatus').textContent = 'Model saved locally.'; });
@@ -289,7 +290,7 @@
     root.addEventListener('pagehide', stopAnimation);
     const requested = new URLSearchParams(location.search).get('example');
     const preset = Core.presets.find(function (item) { return item.id === requested; }) || Core.presets[0];
-    $('evPreset').value = preset.id; apply(preset); showPresetInfo(preset); run();
+    $('evPreset').value = preset.id; apply(preset); showPresetInfo(preset);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true }); else init();
 }(typeof window !== 'undefined' ? window : globalThis));

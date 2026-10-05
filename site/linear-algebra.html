@@ -18,18 +18,18 @@
 <link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
 <link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
 <link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link href="styles/upgrade.css" rel="stylesheet"/>
-<script src="src/upgrade/registry.js"></script><script src="src/models/scientific-example-catalog.js"></script><script src="src/integration/catalog.js"></script><script src="src/recovery/catalog-bridge.js"></script><link href="styles/source-observatory.css" rel="stylesheet"/><link href="styles/instrument.css" rel="stylesheet"/><link href="styles/recovery.css" rel="stylesheet"/><script defer="" src="src/integration/shell.js"></script><script defer="" src="src/integration/connect.js"></script><script defer="" src="src/integration/controls.js"></script><script defer="" src="src/integration/workbench.js"></script><script defer="" src="src/integration/figure-tools.js"></script><script defer="" src="src/integration/model-export.js"></script><script defer="" src="src/integration/run-feedback.js"></script><script defer="" src="src/recovery/runtime.js"></script><link href="styles/revision82.css" rel="stylesheet"/></head>
-<body data-color-family="foundation" data-foko-integrated="true" data-lab="linalg" data-page-key="linear-algebra" data-v72-shell="true"><a class="skip-link" href="#workbench">Skip to scientific workspace</a>
+<script src="src/upgrade/registry.js"></script><script src="src/models/scientific-example-catalog.js"></script><script src="src/integration/catalog.js"></script><script src="src/recovery/catalog-bridge.js"></script><link href="styles/source-observatory.css" rel="stylesheet"/><link href="styles/instrument.css" rel="stylesheet"/><link href="styles/recovery.css" rel="stylesheet"/><script defer="" src="src/integration/shell.js"></script><script defer="" src="src/integration/connect.js"></script><script defer="" src="src/integration/controls.js"></script><script defer="" src="src/integration/workbench.js"></script><script defer="" src="src/integration/figure-tools.js"></script><script defer="" src="src/integration/model-export.js"></script><script defer="" src="src/integration/run-feedback.js"></script><script defer="" src="src/recovery/runtime.js"></script><link href="styles/revision82.css" rel="stylesheet"/><link href="styles/revision83.css" rel="stylesheet"/><script defer="" src="src/revision83/workflow.js"></script><script defer="" src="src/revision83/decision-bridge.js"></script><script defer="" src="src/revision83/presentation.js"></script></head>
+<body data-color-family="foundation" data-foko-integrated="true" data-lab="linalg" data-page-key="linear-algebra" data-v72-shell="true"><nav aria-label="Skip navigation" class="fl-skip-nav"><a class="fl-skip" href="#workbench">Skip to content</a></nav>
 <div class="app-shell">
 <header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
 <main class="layout" id="workbench" tabindex="-1">
-<aside aria-label="Linear algebra workflow" class="side-nav">
+<section aria-label="Linear algebra workflow" class="side-nav">
 <button class="nav-item active" data-jump="#examplesBlock" type="button">Examples</button>
 <button class="nav-item" data-jump="#matrixBlock" type="button">Matrix</button>
 <button class="nav-item" data-jump="#methodBlock" type="button">Method</button>
 <button class="nav-item" data-jump="#exportsBlock" type="button">Export</button>
-</aside>
-<aside aria-label="Linear algebra controls" class="work-panel controls">
+</section>
+<section aria-label="Linear algebra controls" class="work-panel controls">
 <section class="card intro-card hero-with-mark">
 <div><p class="v72-eyebrow">Small dense matrices · explicit residuals · bounded claims</p><h2>Linear Algebra Lab</h2><p class="note">Inspect matrix structure, solve small systems and expose rank, conditioning and residual evidence before interpreting a numerical answer.</p></div>
 <div aria-hidden="true" class="lab-mark data-lab-mark">A</div>
@@ -74,7 +74,7 @@
 <p class="field-help" id="linalgMethodHelp">Diagnostics use singular values estimated from the symmetric eigendecomposition of AᵀA.</p>
 <p class="scientific-boundary">A small residual is necessary but not sufficient for a reliable answer. Conditioning quantifies sensitivity; it does not certify that the matrix encodes the correct scientific model.</p>
 </section>
-</aside>
+</section>
 <section aria-label="Linear algebra results" class="workspace v72-workspace">
 <section aria-label="Computed matrix results" class="results-card" role="region">
 <header class="v72-workspace-head">
@@ -90,18 +90,18 @@
 <button class="ghost" id="exportLinalgSvg" type="button">Current SVG</button>
 </div>
 <div class="chart-grid" data-focus-side="left" data-layout="two" id="plotGrid">
-<article class="chart-card" data-plot-card="left"><div class="chart-title"><h3 id="leftPlotTitle">Matrix</h3><select aria-label="Primary linear algebra plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div><div class="plot" id="leftPlot"><div class="diagnostics empty">Compute to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details></article>
-<article class="chart-card" data-plot-card="right"><div class="chart-title"><h3 id="rightPlotTitle">Spectrum</h3><select aria-label="Secondary linear algebra plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div><div class="plot" id="rightPlot"><div class="diagnostics empty">Compute to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details></article>
+<article class="chart-card" data-plot-card="left"><div class="chart-title"><h2 id="leftPlotTitle">Matrix</h2><select aria-label="Primary linear algebra plot type" id="leftPlotType"></select><button class="focus-card" data-focus-side="left" type="button">Focus</button><button class="kebab" data-export-side="left" title="Export this plot" type="button">⇩</button></div><div class="plot" id="leftPlot"><div class="diagnostics empty">Compute to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="leftPlotEvidence">Available after a run.</p></details></article>
+<article class="chart-card" data-plot-card="right"><div class="chart-title"><h2 id="rightPlotTitle">Spectrum</h2><select aria-label="Secondary linear algebra plot type" id="rightPlotType"></select><button class="focus-card" data-focus-side="right" type="button">Focus</button><button class="kebab" data-export-side="right" title="Export this plot" type="button">⇩</button></div><div class="plot" id="rightPlot"><div class="diagnostics empty">Compute to create a plot.</div></div><details class="plot-evidence"><summary>Interpretation &amp; limits</summary><p id="rightPlotEvidence">Available after a run.</p></details></article>
 </div>
 <p class="info-strip" id="plotHint">Singular values, eigenvalues and residuals answer different numerical questions. They are not interchangeable.</p>
 </section>
 </section>
-<aside aria-label="Linear algebra diagnostics and exports" class="v72-inspector">
+<section aria-label="Linear algebra diagnostics and exports" class="v72-inspector">
 <section class="v72-inspector-card"><p class="v72-eyebrow">Run status</p><div class="status-strip"><div class="status-ok"><span>●</span><b id="linalgTopStatus">Ready</b></div><div><span>Runtime</span><b id="linalgRuntime">—</b></div><div><span>Shape</span><b id="linalgShape">—</b></div><div><span>Operation</span><b id="linalgOperationMetric">—</b></div><div><span>Residual</span><b id="linalgResidualMetric">—</b></div></div><div class="metrics-grid"><article class="metric-card"><small>Estimated rank</small><b id="linalgRank">—</b><em>tolerance-dependent</em></article><article class="metric-card"><small>Condition estimate</small><b id="linalgCondition">—</b><em>2-norm diagnostic</em></article><article class="metric-card"><small>Determinant</small><b id="linalgDeterminant">—</b><em>square matrices only</em></article><article class="metric-card"><small>Frobenius norm</small><b id="linalgNorm">—</b><em>matrix scale</em></article></div></section>
 <section class="v72-inspector-card"><div class="v72-card-head"><div><p class="v72-eyebrow">Numerical evidence</p><h2>Result and warnings</h2></div></div><div class="diagnostics empty" id="linalgDiagnostics">Compute to see numerical output, residuals and limitations.</div></section>
 <section class="v72-inspector-card" id="provenanceCard"><div class="v72-card-head"><div><p class="v72-eyebrow">Evidence</p><h2>Method &amp; limits</h2></div></div><dl class="v72-provenance"><div><dt>Status</dt><dd id="provenanceStatus">Not computed</dd></div><div><dt>Engine</dt><dd id="provenanceEngine">FokoLinalgReference</dd></div><div><dt>Method</dt><dd id="provenanceMethod">Not run</dd></div><div><dt>Data</dt><dd id="provenanceData">Not parsed</dd></div><div><dt>Assumptions</dt><dd id="provenanceAssumptions">Not assessed</dd></div><div><dt>Reproducibility</dt><dd id="provenanceReproducibility">Configuration only</dd></div></dl><p class="v72-warning" id="provenanceWarning">Run an analysis to create results.</p></section>
 <section aria-label="Exports" class="exports-card v72-inspector-card" id="exportsBlock" role="region"><div class="v72-card-head"><div><p class="v72-eyebrow">Reproducibility</p><h2>Export</h2></div></div><div class="export-row"><button class="secondary" id="saveLinalgSession" type="button">Save session</button><button class="secondary" id="restoreLinalgSession" type="button">Restore session</button><button class="secondary" id="copyLinalgShareUrl" type="button">Copy share URL</button><button class="secondary" id="exportLinalgCsv" type="button">Result CSV</button><button class="secondary" id="exportLinalgJson" type="button">Result JSON</button><button class="secondary" id="exportLinalgPython" type="button">Python validation script</button></div><p class="note">Session and share controls preserve matrix text and settings only. Computed evidence must be regenerated after restore.</p></section>
-</aside>
+</section>
 </main>
 </div>
 <script defer="" src="src/models/linalg-presets.js?v=79.2.0"></script>
@@ -110,5 +110,5 @@
 <script defer="" src="src/v72/scientific-registry.js?v=79.2.0"></script>
 <script defer="" src="src/models/search-index.js?v=79.2.0"></script><script defer="" src="src/v76/app-shell.js?v=79.2.0&amp;core-access=1"></script>
 <script src="src/upgrade/publication.js"></script><script src="src/upgrade/common.js"></script>
-<script src="src/revision82/run-integrity.js"></script><script src="src/revision82/analysis-bridge.js"></script><script src="src/revision82/contributors.js"></script><script src="src/revision82/interface.js"></script></body>
+<script src="src/revision82/run-integrity.js"></script><script src="src/revision82/analysis-bridge.js"></script><script src="src/revision82/contributors.js"></script><script src="src/revision82/interface.js"></script><footer class="fl-site-footer"><a href="index.html">Home</a><a href="contact.html">Contact</a><a href="contributors.html">Acknowledgements</a><a href="trust.html">Methods &amp; limitations</a></footer></body>
 </html>

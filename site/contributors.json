@@ -1,6 +1,6 @@
 {
   "schema": "foko.contributors/1",
-  "updated": "2026-10-04",
+  "updated": "2026-10-06",
   "platform": {
     "name": "FokoLab",
     "author": "Dr. Chilperic Armel Foko Kuate",
@@ -140,6 +140,38 @@
       "name": "Seeing Theory / Brown University team",
       "url": "https://seeing-theory.brown.edu/",
       "role": "Inspiration for interactive statistical explanation; no artwork or code copied."
+    }
+  ],
+  "institutionalAcknowledgements": [
+    {
+      "name": "Heinrich Heine University Düsseldorf · CCB",
+      "role": "Research environment, supervision and collaboration in computational cell biology; the plant programme is associated with CCB and CEPLAS.",
+      "url": "https://www.cs.hhu.de/en/research-groups/computational-cell-biology"
+    },
+    {
+      "name": "CEPLAS · Cluster of Excellence on Plant Sciences",
+      "role": "Plant-science research environment. The 2023 enzyme-kinetic review acknowledges DFG support through CEPLAS, EXC 2048/1, project 390686111. This attributes the cited research, not funding of all FokoLab software under this award.",
+      "url": "https://www.ceplas.eu/"
+    },
+    {
+      "name": "European Union · Marie Skłodowska-Curie Actions · PoLiMeR",
+      "role": "Doctoral training and research through the Horizon 2020 PoLiMeR Innovative Training Network, grant agreement 812616. Funding is acknowledged for the underlying doctoral work, not represented as endorsement of this platform.",
+      "url": "https://cordis.europa.eu/project/id/812616"
+    },
+    {
+      "name": "African Institute for Mathematical Sciences · AIMS",
+      "role": "Mathematical training, research opportunities and scientific community, including AIMS Ghana and the AIMS network, and subsequent research associated with AIMS Cameroon and Rwanda.",
+      "url": "https://aims-network.org/"
+    },
+    {
+      "name": "University of Cape Coast · University of Yaoundé I · University of Douala",
+      "role": "Degree-awarding institutions and mathematical education. Their contribution is distinguished from authorship or funding of the browser application.",
+      "url": null
+    },
+    {
+      "name": "University of Groningen · University Medical Center Groningen",
+      "role": "Scientific collaboration in fatty-acid and metabolic modelling; UMC Groningen coordinated the PoLiMeR network.",
+      "url": "https://cordis.europa.eu/project/id/812616"
     }
   ]
 }

@@ -1,7 +1,7 @@
 # FokoLab
 
 **Scientific modelling, analysis and visualisation**  
-Developed by **Dr. Chilperic Armel Foko Kuate**. Release **80.2.0**. Last updated **5 October 2026**.
+Developed by **Dr. Chilperic Armel Foko Kuate**. Release **80.3.0**. Last updated **6 October 2026**.
 
 [Open FokoLab](https://chilperic.github.io/chilperic_ode_solver/) · [Analysis studio](site/analysis-studio.html) · [Laboratories](site/labs.html) · [CV editions](site/cv.html) · [Scientific contributions](site/contributors.html)
 
@@ -75,3 +75,14 @@ The release workflow records dependency versions and installs Chromium. `--nativ
 Use [CITATION.cff](site/CITATION.cff), the relevant model references and the actual software version when citing work. Software licence: [MIT](site/LICENSE). Preserve third-party notices; do not infer permission to reuse personal CV or portrait material from a software licence.
 
 For a reproducible issue, provide the laboratory URL, browser, model, configuration, expected and actual outcome, and diagnostic or console output. Remove private data before opening a public issue.
+
+
+## 80.3: shared workflow and evolutionary analysis
+
+Selecting an example prepares native inputs without a separate Load click. The primary Run stays visible in a bottom command bar, with Cancel when the native solver supports interruption and an Inputs shortcut. Plot choices and playback do not rerun the scientific model. Undo example restores the previous draft on the connected dropdowns.
+
+`site/decision-studio.html` analyses explicit 2–6-objective records, including all-objective nondomination, ranks and crowding, linked 2D/3D/parallel views, feasibility, descriptive correlation, exact two-objective hypervolume with a fixed reference, evaluation histories and recorded evolutionary events. Import a completed native multi-objective optimization or evolutionary result; the original record remains in provenance. Failed candidates are excluded from dominance calculations, not replaced by zeros. A finite nondominated set is not a certified global front. Biological generations are not optimizer iterations.
+
+Contact uses the existing unmodified portrait. Acknowledgements are linked in the shared navigation and footer, distinguishing collaborators, supervisors, institutions, historical research funding and cited model literature. Marie Skłodowska-Curie / PoLiMeR 812616 and AIMS support are credited without implying endorsement of all browser software. All six CV editions are preserved.
+
+For executed acceptance and remaining limitations see `site/audit-80.3.json` and `site/AUDIT-80.3.md`. Automated checks are not biological calibration, physical-device certification or full WCAG conformance. The approved `legacy/80.1.0-user-approved` branch is unchanged.

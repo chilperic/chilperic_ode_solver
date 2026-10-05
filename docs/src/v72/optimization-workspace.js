@@ -320,6 +320,7 @@
         const problem = compileProblem();
         const settings = readSettings();
         state.compiledProblem = problem;
+        state.computedConfiguration = {model:clone(state.model),settings:clone(settings)};
         state.result = CORE.optimise(problem, settings);
         state.landscape = problem.variables.length === 2 ? CORE.landscape(problem, Object.assign({}, settings, { resolution: 45 })) : null;
         state.pareto = problem.secondaryObjective ? CORE.paretoSample(problem, Object.assign({}, settings, { samples: settings.paretoSamples })) : null;
@@ -328,6 +329,7 @@
         renderEvidence();
         setTimeout(function () { $('optimizationProgress').style.width = '0'; }, 450);
       } catch (error) {
+        state.result=null;state.pareto=null;state.computedConfiguration=null;
         showError(error);
       } finally {
         $('runOptimization').disabled = false;
@@ -1051,6 +1053,13 @@
     window.addEventListener('resize', applyLayout);
   }
 
+  window.FokoDecisionSource=function(){
+    if(!state.result||!state.computedConfiguration)throw Error('Run the optimization first.');
+    const now=configuration();
+    if(JSON.stringify(now.model)!==JSON.stringify(state.computedConfiguration.model)||JSON.stringify(now.settings)!==JSON.stringify(state.computedConfiguration.settings))throw Error('Inputs changed after this optimization. Run the revised configuration before transferring.');
+    return clone({kind:'optimization',model:state.computedConfiguration.model,config:state.computedConfiguration.settings,result:state.result,pareto:state.pareto});
+  };
+  window.FokoNativePrepare = function(name) { loadPreset(name, true); };
   function init() {
     if (!CORE || !root.math || !root.Plotly) return showError(new Error('Required local scientific libraries failed to load.'));
     const storedLayout = safeParse(localStorage.getItem(LAYOUT_KEY));
@@ -1066,7 +1075,7 @@
       loadPreset(url.searchParams.get('example'), false);
     }
     applyLayout();
-    if (!shared && url.searchParams.get('autorun') !== '0') root.setTimeout(runOptimization, 0);
+    if (!shared && url.searchParams.get('autorun') === '1') root.setTimeout(runOptimization, 0);
   }
 
   window.addEventListener('DOMContentLoaded', init);

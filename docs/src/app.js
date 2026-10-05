@@ -1282,3 +1282,5 @@ function num(x){ const v=Number(x); return Number.isFinite(v)?v:0; }
 function toggle(id,show){ $(id)?.classList.toggle('hidden',!show); }
 
 window.addEventListener('load',init);
+
+window.FokoNativePrepare=function(name){loadExample(name);};

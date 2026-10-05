@@ -413,6 +413,7 @@
     return '# Foko Lab v' + RELEASE + ' validation scaffold\nimport numpy as np\n\nA = np.array(' + JSON.stringify(state.matrix) + ', dtype=float)\nb = np.array(' + JSON.stringify(state.vector) + ', dtype=float)\nprint("shape", A.shape)\nprint("rank", np.linalg.matrix_rank(A))\nprint("singular values", np.linalg.svd(A, compute_uv=False))\nif A.shape[0] == A.shape[1] and b.size == A.shape[0]:\n    try:\n        x = np.linalg.solve(A, b)\n        print("solve residual", np.linalg.norm(A @ x - b))\n    except np.linalg.LinAlgError as exc:\n        print("solve unavailable", exc)\n';
   }
 
+  window.FokoNativePrepare = function(name) { loadPreset(name); };
   function bindEvents() {
     $('runLinalg').addEventListener('click', run);
     $('resetLinalg').addEventListener('click', function () { loadPreset(state.currentName); });
@@ -446,7 +447,7 @@
 
   function boot() {
     renderPresetLibrary(); bindEvents();
-    if (!restoreFromUrl()) { const requested = new URL(window.location.href).searchParams.get('example'); loadPreset(requested && PRESETS[requested] ? requested : state.currentName); setTimeout(run, 40); }
+    if (!restoreFromUrl()) { const requested = new URL(window.location.href).searchParams.get('example'); loadPreset(requested && PRESETS[requested] ? requested : state.currentName); if(new URLSearchParams(location.search).get('autorun')==='1')setTimeout(run,40); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 }(typeof window !== 'undefined' ? window : globalThis));

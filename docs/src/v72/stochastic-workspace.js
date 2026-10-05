@@ -931,6 +931,7 @@
     loadPreset(query.get('example') || CORE_PRESETS[0], false);
   }
 
+  window.FokoNativePrepare = function(name) { loadPreset(name, true); };
   function initialise() {
     installEvents();
     const hasSharedState = /(?:^#|&)state=/.test(location.hash);

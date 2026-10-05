@@ -1,3 +1,7 @@
+# 80.3.0 — 6 October 2026
+
+Persistent native actions, automatic example preparation with Undo, full-record evolutionary and multi-objective analysis, Contact portrait, discoverable institutional acknowledgements and cross-page visual/accessibility corrections. See site/AUDIT-80.3.md for scope and evidence.
+
 # 79.2.0 — source-preserving integrated update
 
 ## Compared with the supplied 79.1 application

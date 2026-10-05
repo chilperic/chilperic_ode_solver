@@ -1052,6 +1052,7 @@
     activeRenderRoots: function (side) { const host=$(side+'AgentPlot'); return activeRenderRoots(host).length; },
     activeRenderKind: function (side) { const host=$(side+'AgentPlot'); return host ? host.dataset.agentRenderKind || '' : ''; }
   };
-  function init(){safeStoredLayout();renderLayout(false);$('agentCustomModelJson').value=JSON.stringify(CUSTOM_TEMPLATE,null,2);renderPresetLibrary();populatePlotSelectors();syncAgent3DControls(0);bind();const url=new URL(location.href),encoded=url.searchParams.get('state'),requested=url.searchParams.get('example');if(encoded){try{applyConfig(decodeState(encoded),'Shared configuration loaded. Recomputing from the stored master seed.');setTimeout(run,50);return;}catch(error){$('agentStatus').textContent='Invalid shared state: '+error.message;}}loadPreset(requested&&PRESETS[requested]?requested:state.preset,true);}
+  window.FokoNativePrepare = function(name) { loadPreset(name, false); };
+  function init(){safeStoredLayout();renderLayout(false);$('agentCustomModelJson').value=JSON.stringify(CUSTOM_TEMPLATE,null,2);renderPresetLibrary();populatePlotSelectors();syncAgent3DControls(0);bind();const url=new URL(location.href),encoded=url.searchParams.get('state'),requested=url.searchParams.get('example');if(encoded){try{applyConfig(decodeState(encoded),'Shared configuration loaded. Recomputing from the stored master seed.');setTimeout(run,50);return;}catch(error){$('agentStatus').textContent='Invalid shared state: '+error.message;}}loadPreset(requested&&PRESETS[requested]?requested:state.preset,false);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 }(typeof window !== 'undefined' ? window : globalThis));

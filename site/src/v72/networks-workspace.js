@@ -402,6 +402,7 @@ print("weak/connected components", ${componentCall})
 `;
   }
 
+  window.FokoNativePrepare = function(name) { loadPreset(name); };
   function bindEvents() {
     $('runNetworks').addEventListener('click', run);
     $('resetNetworks').addEventListener('click', function () { loadPreset(state.currentName); });
@@ -431,6 +432,6 @@ print("weak/connected components", ${componentCall})
     catch (_) { $('networksStatus').textContent = 'Share state could not be decoded.'; return false; }
   }
 
-  function boot() { renderPresetLibrary(); bindEvents(); if (!restoreFromUrl()) { const requested = new URL(window.location.href).searchParams.get('example'); loadPreset(requested && PRESETS[requested] ? requested : state.currentName); setTimeout(run, 40); } }
+  function boot() { renderPresetLibrary(); bindEvents(); if (!restoreFromUrl()) { const requested = new URL(window.location.href).searchParams.get('example'); loadPreset(requested && PRESETS[requested] ? requested : state.currentName); if(new URLSearchParams(location.search).get('autorun')==='1')setTimeout(run,40); } }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 }(typeof window !== 'undefined' ? window : globalThis));
