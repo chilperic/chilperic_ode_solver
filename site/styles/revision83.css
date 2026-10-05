@@ -45,3 +45,14 @@ html body .fl-lab-title{font-size:20px;font-weight:700;line-height:1.3}.as-plot-
 html[data-appearance=dark] body .lab-toolbar,html[data-appearance=dark] body .lab-toolbar :is(p,span),html[data-appearance=dark] body .lab-summary{background:var(--fl-bg)!important;color:var(--fl-ink)!important}
 html[data-appearance=dark] body .preset-status,html[data-appearance=dark] body .meta-chip{color:var(--fl-ink)!important;background:var(--fl-soft)!important}
 @media(max-width:650px){.as-stage-controls select{max-width:100%}}
+
+/* Final measured native-surface corrections, with the inspector preserved. */
+html[data-appearance=dark] body .upload-drop{background:var(--fl-soft)!important;color:var(--fl-ink)!important}
+html[data-appearance=dark] body .upload-drop span,html[data-appearance=dark] body #optimizationTopStatus{color:var(--fl-ink)!important}
+html body :is(#runInfo,.research-capture,.investigation-grid>article,.leafEquation,.equations,.lab-summary){background:var(--fl-card)!important;color:var(--fl-ink)!important;border-color:var(--fl-line)!important}
+html body .research-capture summary,html body .analysis-legend span,html body .leafEquation small,html body .equationGrid article p,html body .equationGrid article strong{color:var(--fl-ink)!important}
+html[data-appearance=dark] body :is(main,.lab-inspector) a{color:var(--fl-accent)!important}
+html body .lab-inspector>.fl-native-controls{background:var(--fl-card);border:0;margin:0;padding:0;min-width:0}
+html body .fl-contact-photo{height:auto!important;object-fit:contain!important}
+html body :is(.u-heading,#experimentToolbar)[role=region]{min-width:0}
+@media(max-width:760px){body[data-foko-integrated] .experiment-dock>.fl-native-controls{max-height:340px;overflow:auto;border-top:1px solid var(--fl-line);padding-top:12px}}

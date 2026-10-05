@@ -1245,5 +1245,73 @@
       "after": "36b89dd8ce21990f62fa2e80f246348bc57e05b146f3300d9b674c9fb91ebe10",
       "reason": "Fix measured contrast issues in dark cards, labels, links, tables and biological readouts; reserve skip-link focus space."
     }
+  ],
+  "visualHardening": [
+    {
+      "path": "site/design/workspace.js",
+      "before": "96d264846ffbaeceb661a66662ad3a8170d227712e9962b82573d7c9a4ab22c9",
+      "after": "fe8f3d934ed52045ecc3bfb7436928599265bfea6f42f282c9156ffe8244f7bd",
+      "reason": "Decouple native workbench initialization from the semantic wrapper tag; keep every original control mounted."
+    },
+    {
+      "path": "site/plants/index.html",
+      "before": "8d6f16ac8a9efaaea962db27b8b27f7974ceeac7282dc31d7a803790710e0888",
+      "after": "45298b625e699f5f550322afff90798323b3c5bb52c33714c0b54c81c209f111",
+      "reason": "Retain the original native form wrapper inside the shared inspector."
+    },
+    {
+      "path": "site/leaf/index.html",
+      "before": "f9c71fe41508f3504358d1485ffed4c57f169c80b94296a68715a14d051da3b6",
+      "after": "971d022dcf141cac24168b5ab15386ac6f402434af6bea92891504fd4bedfa09",
+      "reason": "Retain the original native form wrapper inside the shared inspector."
+    },
+    {
+      "path": "site/tcells/index.html",
+      "before": "1ae2dfdb82bbc6bc735a0fc5a73f93ed3c2469f35ba1ce65ffc8a6f8667d975d",
+      "after": "738d36c9c400de640e4333b287c88b71bc9ea62b9387c706737141cca4939d2f",
+      "reason": "Retain the original native form wrapper inside the shared inspector."
+    },
+    {
+      "path": "site/lipids/index.html",
+      "before": "d6fb8af3ad99fcab7fe203e3d97ad68b6f7c092dad133720f8e5fc37d95eeec5",
+      "after": "c36bd908aaae6e1d7b39baf810c73480c6348026843d5f0d94c10119558fef40",
+      "reason": "Retain the original native form wrapper inside the shared inspector."
+    },
+    {
+      "path": "site/random.html",
+      "before": "6e843bd180036bbdac23d9c744632e12d17c0245b168fc8b0dafc6c87f80e78e",
+      "after": "bf3b7c13f67bd911e9f1a3e7d9de61feb74d637a975296d427740bf76e4ee809",
+      "reason": "Retain the original native form wrapper inside the shared inspector."
+    },
+    {
+      "path": "site/src/v72/optimization-workspace.js",
+      "before": "0dd744faeb60f1a292e380d5e7352346d10a53e60f0f032d3033a855c98475e2",
+      "after": "417e29a1fc5764d4e7c73486c081a69ef954a85c7bc73d9e047e0ef32d63264f",
+      "reason": "Curated cards select an example; no ambiguous second Load operation."
+    },
+    {
+      "path": "site/styles/analysis-studio.css",
+      "before": "362c55de76bc90493c2f1d561553da4d97b752acc9db713e20326c0e5f226009",
+      "after": "5216893d8628feab1f4850e1bbe4fe1d56524e13cd5478f98eba8aff9a13773c",
+      "reason": "Respect selected dark/light link contrast."
+    },
+    {
+      "path": "site/src/revision83/presentation.js",
+      "before": "7f6266eeaed45ace6910b4b46fe3cede7f746d391233705794a9063ae64c2c72",
+      "after": "8177c00ff14da15b2c5ab28f3eefe93c8c1961f7cf277353c452eec35d951114",
+      "reason": "Ensure responsive titles and scrollable mathematical details remain keyboard/screen-reader accessible."
+    },
+    {
+      "path": "site/styles/revision83.css",
+      "before": "36b89dd8ce21990f62fa2e80f246348bc57e05b146f3300d9b674c9fb91ebe10",
+      "after": "0fe8d21b955d21741224ddba85c83f3750a2b4a91a1cf3fb42e88ac20c426c99",
+      "reason": "Eliminate measured dark-mode conflicts without changing scientific scenes."
+    },
+    {
+      "path": "site/src/revision83/decision-ui.mjs",
+      "before": "a6bfa62cfb6ca99afce6c268a6bdbba10857252fffdcb932a4f48eb918ee9ce4",
+      "after": "d27a69b38a53447c0ecf27837ced5e6a992c1865548f2f13e4d4e6623fa930c1",
+      "reason": "Fix axes to the complete recorded domain during playback; highlight the same selected candidate across projections."
+    }
   ]
 }

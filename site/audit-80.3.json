@@ -1,14 +1,14 @@
 {
   "release": "80.3.0",
-  "source_commit": "5fcc62633da2b2ee7d0b9037db1faa45cb191c66",
+  "checkedAt": "2026-10-05T23:55:07.867438+00:00",
+  "source_commit": "7b248680cd0b9e6c901d1a9532172ab833957ecc",
+  "accepted": true,
   "outcomes": {
-    "ORIGINAL": "success",
+    "OLD": "success",
     "SCIENCE": "success",
-    "STATISTICS": "success",
     "BROWSER": "success",
     "AUDIT": "success"
   },
-  "accepted": true,
   "browser": {
     "release": "80.3.0",
     "checks": [
@@ -46,7 +46,7 @@
       {
         "name": "Persistent native Run · decision-studio.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -68,7 +68,7 @@
       {
         "name": "Persistent native Run · optimization.html",
         "status": "passed",
-        "seconds": 0.47,
+        "seconds": 0.38,
         "detail": [
           {
             "visible": true,
@@ -90,7 +90,7 @@
       {
         "name": "Prepare and undo example · optimization.html",
         "status": "passed",
-        "seconds": 0.45,
+        "seconds": 0.41,
         "detail": {
           "selected": "Constrained quadratic",
           "restored": "Convex bowl"
@@ -99,7 +99,7 @@
       {
         "name": "Persistent native Run · studio.html",
         "status": "passed",
-        "seconds": 0.4,
+        "seconds": 0.38,
         "detail": [
           {
             "visible": true,
@@ -121,7 +121,7 @@
       {
         "name": "Prepare and undo example · studio.html",
         "status": "passed",
-        "seconds": 0.49,
+        "seconds": 0.5,
         "detail": {
           "selected": "seir",
           "restored": "sir"
@@ -152,7 +152,7 @@
       {
         "name": "Prepare and undo example · ode.html",
         "status": "passed",
-        "seconds": 0.43,
+        "seconds": 0.42,
         "detail": {
           "selected": "Lorenz",
           "restored": "Lotka–Volterra"
@@ -161,7 +161,7 @@
       {
         "name": "Persistent native Run · stochastic.html",
         "status": "passed",
-        "seconds": 0.54,
+        "seconds": 0.65,
         "detail": [
           {
             "visible": true,
@@ -183,7 +183,7 @@
       {
         "name": "Prepare and undo example · stochastic.html",
         "status": "passed",
-        "seconds": 0.45,
+        "seconds": 0.46,
         "detail": {
           "selected": "Stochastic SIR epidemic",
           "restored": "Birth–death process"
@@ -192,7 +192,7 @@
       {
         "name": "Persistent native Run · steady.html",
         "status": "passed",
-        "seconds": 0.39,
+        "seconds": 0.37,
         "detail": [
           {
             "visible": true,
@@ -214,7 +214,7 @@
       {
         "name": "Prepare and undo example · steady.html",
         "status": "passed",
-        "seconds": 0.43,
+        "seconds": 0.39,
         "detail": {
           "selected": "Supercritical pitchfork",
           "restored": "Saddle-node normal form"
@@ -223,7 +223,7 @@
       {
         "name": "Persistent native Run · bifurcation.html",
         "status": "passed",
-        "seconds": 0.38,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -245,7 +245,7 @@
       {
         "name": "Prepare and undo example · bifurcation.html",
         "status": "passed",
-        "seconds": 0.35,
+        "seconds": 0.36,
         "detail": {
           "selected": "saddle-node",
           "restored": "pitchfork"
@@ -276,7 +276,7 @@
       {
         "name": "Prepare and undo example · sensitivity.html",
         "status": "passed",
-        "seconds": 0.39,
+        "seconds": 0.38,
         "detail": {
           "selected": "seir",
           "restored": "sir"
@@ -285,7 +285,7 @@
       {
         "name": "Persistent native Run · fitting.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -316,7 +316,7 @@
       {
         "name": "Persistent native Run · statistics.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -369,7 +369,7 @@
       {
         "name": "Prepare and undo example · agent.html",
         "status": "passed",
-        "seconds": 0.43,
+        "seconds": 0.46,
         "detail": {
           "selected": "tcell_activation_stress",
           "restored": "tcell_baseline"
@@ -378,7 +378,7 @@
       {
         "name": "Persistent native Run · population-genetics.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -400,7 +400,7 @@
       {
         "name": "Prepare and undo example · population-genetics.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": {
           "selected": "small-population-fixation",
           "restored": "neutral-drift"
@@ -409,7 +409,7 @@
       {
         "name": "Persistent native Run · symbolic.html",
         "status": "passed",
-        "seconds": 0.38,
+        "seconds": 0.37,
         "detail": [
           {
             "visible": true,
@@ -431,7 +431,7 @@
       {
         "name": "Prepare and undo example · symbolic.html",
         "status": "passed",
-        "seconds": 0.35,
+        "seconds": 0.37,
         "detail": {
           "selected": "lorenz",
           "restored": "logistic"
@@ -440,7 +440,7 @@
       {
         "name": "Persistent native Run · networks.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -502,7 +502,7 @@
       {
         "name": "Persistent native Run · evolution.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -524,7 +524,7 @@
       {
         "name": "Prepare and undo example · evolution.html",
         "status": "passed",
-        "seconds": 0.45,
+        "seconds": 0.43,
         "detail": {
           "selected": "smooth-additive",
           "restored": "nk-rugged"
@@ -533,7 +533,7 @@
       {
         "name": "Persistent native Run · advanced-methods.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -555,7 +555,7 @@
       {
         "name": "Prepare and undo example · advanced-methods.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": {
           "selected": "beta-binomial-sparse",
           "restored": "beta-binomial-balanced"
@@ -595,7 +595,7 @@
       {
         "name": "Persistent native Run · sciml.html",
         "status": "passed",
-        "seconds": 0.39,
+        "seconds": 0.38,
         "detail": [
           {
             "visible": true,
@@ -617,7 +617,7 @@
       {
         "name": "Persistent native Run · ml.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -705,7 +705,7 @@
       {
         "name": "Persistent native Run · lipids/index.html",
         "status": "passed",
-        "seconds": 0.38,
+        "seconds": 0.37,
         "detail": [
           {
             "visible": true,
@@ -771,7 +771,7 @@
       {
         "name": "Persistent native Run · continuum/approaches.html",
         "status": "passed",
-        "seconds": 0.39,
+        "seconds": 0.4,
         "detail": [
           {
             "visible": true,
@@ -793,7 +793,7 @@
       {
         "name": "Persistent native Run · continuum/index.html",
         "status": "passed",
-        "seconds": 0.38,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -815,7 +815,7 @@
       {
         "name": "Persistent native Run · plant-growth.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.38,
         "detail": [
           {
             "visible": true,
@@ -837,7 +837,7 @@
       {
         "name": "Persistent native Run · adaptation.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -859,7 +859,7 @@
       {
         "name": "Persistent native Run · diffusion.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -881,7 +881,7 @@
       {
         "name": "Persistent native Run · fractals.html",
         "status": "passed",
-        "seconds": 0.37,
+        "seconds": 0.36,
         "detail": [
           {
             "visible": true,
@@ -903,7 +903,7 @@
       {
         "name": "Decision worker analytic example",
         "status": "passed",
-        "seconds": 0.31,
+        "seconds": 0.27,
         "detail": {
           "n": 41,
           "excluded": 1
@@ -921,7 +921,7 @@
       {
         "name": "Decision view · parallel",
         "status": "passed",
-        "seconds": 0.5,
+        "seconds": 0.47,
         "detail": {
           "view": "parallel",
           "traces": 1
@@ -930,7 +930,7 @@
       {
         "name": "Decision view · dominance",
         "status": "passed",
-        "seconds": 0.4,
+        "seconds": 0.39,
         "detail": {
           "view": "dominance",
           "traces": 1
@@ -939,7 +939,7 @@
       {
         "name": "Decision view · crowding",
         "status": "passed",
-        "seconds": 0.38,
+        "seconds": 0.37,
         "detail": {
           "view": "crowding",
           "traces": 1
@@ -948,7 +948,7 @@
       {
         "name": "Decision view · correlation",
         "status": "passed",
-        "seconds": 0.39,
+        "seconds": 0.38,
         "detail": {
           "view": "correlation",
           "traces": 1
@@ -984,7 +984,7 @@
       {
         "name": "Decision view · feasibility",
         "status": "passed",
-        "seconds": 0.36,
+        "seconds": 0.35,
         "detail": {
           "view": "feasibility",
           "traces": 1
@@ -993,7 +993,7 @@
       {
         "name": "Decision native CSV export",
         "status": "passed",
-        "seconds": 0.09,
+        "seconds": 0.08,
         "detail": {
           "bytes": 2721
         }
@@ -1061,15 +1061,32 @@
       {
         "name": "Recorded candidate reveal and pause",
         "status": "passed",
-        "seconds": 0.83,
+        "seconds": 0.81,
         "detail": {
           "position": "90"
         }
       },
       {
+        "name": "Recorded reveal uses fixed scientific coordinate bounds",
+        "status": "passed",
+        "seconds": 0.66,
+        "detail": {
+          "fixed_axes": [
+            [
+              -0.1,
+              1.35
+            ],
+            [
+              -0.1,
+              1.35
+            ]
+          ]
+        }
+      },
+      {
         "name": "Three-objective rendering preserves full objective set",
         "status": "passed",
-        "seconds": 1.51,
+        "seconds": 1.46,
         "detail": {
           "objectives": 3
         }
@@ -1077,13 +1094,13 @@
       {
         "name": "Incomplete input does not reuse a stale export",
         "status": "passed",
-        "seconds": 0.26,
+        "seconds": 0.24,
         "detail": null
       },
       {
         "name": "Native multiobjective optimizer completes",
         "status": "passed",
-        "seconds": 1.88,
+        "seconds": 1.96,
         "detail": {
           "points": 1200,
           "model": "(x - 2)^2 + (y - 1)^2",
@@ -1093,7 +1110,7 @@
       {
         "name": "Native optimizer → decision studio without Load or X–Y flattening",
         "status": "passed",
-        "seconds": 6.87,
+        "seconds": 7.14,
         "detail": {
           "candidates": 1200,
           "directions": [
@@ -1105,7 +1122,7 @@
       {
         "name": "Recorded evolutionary events transfer with correct clock",
         "status": "passed",
-        "seconds": 2.44,
+        "seconds": 2.47,
         "detail": {
           "events": 5,
           "clock": "biological generations"
@@ -1136,7 +1153,7 @@
       {
         "name": "Contact, attribution and CV preservation · contact.html",
         "status": "passed",
-        "seconds": 0.1,
+        "seconds": 0.11,
         "detail": {
           "title": "Contact · FokoLab"
         }
@@ -1152,7 +1169,7 @@
       {
         "name": "Contact, attribution and CV preservation · analysis.html",
         "status": "passed",
-        "seconds": 0.07,
+        "seconds": 0.08,
         "detail": {
           "title": "Analysis · FokoLab"
         }
@@ -1160,7 +1177,7 @@
       {
         "name": "Contact, attribution and CV preservation · cv.html",
         "status": "passed",
-        "seconds": 0.1,
+        "seconds": 0.09,
         "detail": {
           "title": "CVs and creator profile — Foko Lab"
         }
@@ -1184,7 +1201,7 @@
       {
         "name": "Mobile reflow and persistent Run · optimization.html",
         "status": "passed",
-        "seconds": 0.2,
+        "seconds": 0.19,
         "detail": {
           "width": 375
         }
@@ -1192,7 +1209,7 @@
       {
         "name": "Mobile reflow and persistent Run · plants/index.html",
         "status": "passed",
-        "seconds": 0.21,
+        "seconds": 0.2,
         "detail": {
           "width": 390
         }
@@ -1208,7 +1225,7 @@
       {
         "name": "Mobile reflow and persistent Run · tcells/index.html",
         "status": "passed",
-        "seconds": 0.2,
+        "seconds": 0.19,
         "detail": {
           "width": 390
         }
@@ -1216,7 +1233,7 @@
       {
         "name": "Mobile reflow and persistent Run · studio.html",
         "status": "passed",
-        "seconds": 0.21,
+        "seconds": 0.2,
         "detail": {
           "width": 375
         }
@@ -1224,7 +1241,7 @@
       {
         "name": "Mobile reflow and persistent Run · contact.html",
         "status": "passed",
-        "seconds": 0.03,
+        "seconds": 0.04,
         "detail": {
           "width": 390
         }
@@ -1232,7 +1249,7 @@
       {
         "name": "Mobile reflow and persistent Run · contributors.html",
         "status": "passed",
-        "seconds": 0.01,
+        "seconds": 0.0,
         "detail": {
           "width": 390
         }
@@ -1241,7 +1258,7 @@
     "errors": [],
     "failedHTTP": [],
     "summary": {
-      "passed": 84,
+      "passed": 85,
       "failed": 0
     },
     "scope": "Real HTTP Chromium desktop/mobile emulation with native workers and source records. Not full WCAG conformance, physical-device or empirical biological validation."
@@ -1447,6 +1464,10 @@
     "passed": 46,
     "failed": 0
   },
+  "retainedNumerics": {
+    "passed": 36,
+    "failed": 0
+  },
   "statisticalPython": {
     "workflows": 17,
     "referenceComparisons": 63,
@@ -1516,31 +1537,46 @@
       "planning:perGroup"
     ]
   },
-  "retainedNumerics": {
-    "passed": 36,
-    "failed": 0
-  },
   "accessibility": {
     "before": {
-      "pageStates": 0,
-      "incomplete": [],
-      "violationNodes": {},
-      "totalViolationNodes": 0
-    },
-    "after": {
+      "available": true,
+      "application_commit": "559cd84a859368081446270efac137decdb5852b",
+      "workflow_run": 37277038024,
+      "artifact_id": 11330593293,
+      "raw_report_sha256": "38e15a3fd99273768babe1dabce11ae8b85d2f0eac813d1bb9c6e06fb9472a7a",
       "pageStates": 49,
       "incomplete": [],
       "violationNodes": {
-        "aria-allowed-attr": 3,
-        "landmark-unique": 7,
-        "heading-order": 2,
-        "region": 28,
-        "color-contrast": 66,
-        "page-has-heading-one": 5,
-        "scrollable-region-focusable": 24
+        "aria-prohibited-attr": 7,
+        "aria-allowed-attr": 18,
+        "aria-allowed-role": 20,
+        "definition-list": 19,
+        "heading-order": 21,
+        "region": 72,
+        "aria-required-children": 1,
+        "scrollable-region-focusable": 3,
+        "target-size": 8,
+        "landmark-unique": 6,
+        "color-contrast": 403,
+        "landmark-complementary-is-top-level": 11,
+        "page-has-heading-one": 7
       },
-      "totalViolationNodes": 135
+      "totalViolationNodes": 596,
+      "interpretation": "Repeated violation nodes across 49 matched page states, not 596 unique defects."
+    },
+    "after": {
+      "available": true,
+      "pageStates": 49,
+      "incomplete": [],
+      "violationNodes": {
+        "landmark-unique": 2,
+        "aria-allowed-role": 4,
+        "region": 2,
+        "heading-order": 3,
+        "page-has-heading-one": 3
+      },
+      "totalViolationNodes": 14
     }
   },
-  "scope": "Actual HTTP Chromium desktop/mobile emulation, finite-set analytic cases, retained numerical regressions and independent Python statistical comparisons. Automated accessibility is an audit, not a conformance certificate; no physical-device or biological-calibration claim."
+  "scope": "Real local-HTTP Chromium desktop and mobile emulation, analytic finite-set reference cases, original regressions and independently executed Python statistics. Repeated accessibility nodes are not unique defects. This does not establish complete WCAG conformance, physical-device compatibility, biological calibration or a global optimality certificate."
 }

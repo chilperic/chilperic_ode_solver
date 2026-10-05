@@ -7,6 +7,6 @@ html[data-appearance=dark]{--as-bg:#102329;--as-panel:#172e35;--as-ink:#edf6f5;-
 @media(prefers-reduced-motion:reduce){.as-page *{scroll-behavior:auto!important;transition:none!important}}
 @media print{.foko-header,.foko-context,.as-toolbar,.as-inspector,.as-motion,.as-stage-controls,.as-figure-options,.as-plot-exports{display:none!important}.as-layout{display:block}.as-page{padding:0}.as-plot-card,.as-estimates{break-inside:avoid}.as-plots{display:block}.as-plot-card{margin-bottom:16px}}
 
-body[data-lab=analysis-studio] .as-page a{color:#145b71!important}body[data-lab=analysis-studio] .as-page button.primary{background:#145b71!important;border-color:#145b71!important;color:#fff!important}.as-offline-nav a{color:#d9f5f6!important}.as-key-results dt{font-size:12px;font-weight:600}.as-key-results dd{margin:4px 0;font-variant-numeric:tabular-nums}
+body[data-lab=analysis-studio] .as-page a{color:var(--fl-accent,#145b71)!important}body[data-lab=analysis-studio] .as-page button.primary{background:#145b71!important;border-color:#145b71!important;color:#fff!important}.as-offline-nav a{color:#d9f5f6!important}.as-key-results dt{font-size:12px;font-weight:600}.as-key-results dd{margin:4px 0;font-variant-numeric:tabular-nums}
 
 .as-story h3{color:#edf5f7}.as-story label{color:#dcecf1}

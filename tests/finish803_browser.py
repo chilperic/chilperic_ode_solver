@@ -25,6 +25,7 @@ with sync_playwright() as pw:
   p=page(route)
   def dock():
    p.wait_for_selector('.fl-command .fl-primary-run',state='visible',timeout=12000);out=[]
+   if route in ('plants/index.html','leaf/index.html','tcells/index.html','lipids/index.html','random.html','continuum/advanced.html','continuum/approaches.html'):require(p.locator('.instrument-desk .lab-inspector').count()==1,'Native inspector was lost during semantic changes')
    for f in (0,.5,1):
     p.evaluate('f=>window.scrollTo(0,document.documentElement.scrollHeight*f)',f);p.wait_for_timeout(100)
     result=p.locator('.fl-primary-run').evaluate('(e)=>{const r=e.getBoundingClientRect();return {visible:r.top>=0&&r.bottom<=innerHeight&&r.left>=0&&r.right<=innerWidth,text:e.textContent,form:e.form?.id}}');require(result['visible'],'Run outside viewport at scroll '+str(f));out.append(result)
@@ -45,7 +46,7 @@ with sync_playwright() as pw:
   def plot(v=view):
    p.select_option('#ds-left-view',v);p.wait_for_timeout(300);require(p.locator('#ds-left').evaluate('(e)=>!!e._fullLayout'),'Missing Plotly figure');require(not p.locator('#ds-error').is_visible(),'Plot error displayed');return {'view':v,'traces':p.locator('#ds-left').evaluate('(e)=>e.data.length')}
   check('Decision view · '+view,plot)
- p.select_option('#ds-left-view','pareto');p.wait_for_timeout(200);p.screenshot(path=str(OUT/'decision-desktop.png'))
+ p.select_option('#ds-left-view','pareto');p.wait_for_timeout(200);p.evaluate('window.scrollTo(0,0)');p.screenshot(path=str(OUT/'decision-desktop.png'))
  def download(id,name):
   target=p.locator('#'+id);target.scroll_into_view_if_needed()
   with p.expect_download(timeout=20000) as d:target.click()
@@ -58,6 +59,9 @@ with sync_playwright() as pw:
  def playback():
   p.locator('#ds-play').click();p.wait_for_timeout(450);a=float(p.input_value('#ds-frame'));require(0<a<1000,'No playback progress');p.locator('#ds-play').click();v=p.input_value('#ds-frame');p.wait_for_timeout(250);require(v==p.input_value('#ds-frame'),'Pause does not hold');return {'position':v}
  check('Recorded candidate reveal and pause',playback)
+ def stable_axes():
+  p.select_option('#ds-left-view','pareto');p.wait_for_timeout(200);before=p.locator('#ds-left').evaluate('e=>[e.layout.xaxis.range,e.layout.yaxis.range]');p.locator('#ds-frame').fill('100');p.locator('#ds-frame').dispatch_event('input');p.wait_for_timeout(200);after=p.locator('#ds-left').evaluate('e=>[e.layout.xaxis.range,e.layout.yaxis.range]');require(before==after,'Playback changed numerical axes');p.locator('#ds-frame').fill('1000');p.locator('#ds-frame').dispatch_event('input');return {'fixed_axes':before}
+ check('Recorded reveal uses fixed scientific coordinate bounds',stable_axes)
  def three():
   p.select_option('#ds-demo','three');p.locator('#ds-run').click();p.wait_for_function('FokoDecisionStudio.getResult()?.input.objectives.length===3');p.select_option('#ds-left-view','three');p.wait_for_timeout(700);require(p.locator('#ds-left').evaluate('(e)=>e.data[0].type')=='scatter3d','No three-objective view');return {'objectives':3}
  check('Three-objective rendering preserves full objective set',three)
@@ -77,6 +81,8 @@ with sync_playwright() as pw:
  def evolution():
   for id,value in {'advLive':'fast','advReps':'1','advCap':'4','advGrid':'4','advGsLevels':'2','advComparator':'none','advScale':'0'}.items():
    el=p.locator('#'+id)
+   closed=el.locator('xpath=ancestor::details[not(@open)]')
+   for i in range(closed.count()-1,-1,-1):closed.nth(i).locator(':scope > summary').click()
    if el.evaluate('(e)=>e.tagName')=='SELECT':el.select_option(value)
    else:el.fill(value)
   p.locator('#advRun').click();p.wait_for_function("ResearchExperiments?.getLatest()?.result?.schema==='dynamics.kimura/1'",timeout=150000);r=p.evaluate('ResearchExperiments.getLatest()');(OUT/'native-evolution.json').write_text(json.dumps(r));p.locator('#fl-decision-handoff').click();p.wait_for_url('**/decision-studio.html?record=*');p.wait_for_function('window.FokoDecisionStudio');p.locator('#ds-run').click();p.wait_for_function('FokoDecisionStudio.getResult()?.input.events?.length',timeout=30000)

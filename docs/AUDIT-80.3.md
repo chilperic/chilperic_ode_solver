@@ -1,46 +1,84 @@
-# FokoLab 80.3 audit and changes
+# FokoLab 80.3 — audit, corrections and release scope
 
 Updated 6 October 2026.
 
-## Implemented corrections
+## Delivered application changes
 
-- Persistent native Run controls and consistent example preparation; reversible draft restoration on connected dropdowns. No fake universal Cancel for synchronous solvers.
-- All-objective finite Pareto ranks, explicit units/directions, exact 2D hypervolume only with a fixed reference, and complete candidate/event provenance. No biological interpolation between substitutions.
-- Contact portrait restored without retouching; collaborators, AIMS, CCB, CEPLAS and MSCA PoLiMeR institutional support are directly discoverable.
-- Shared surfaces, contrast/focus tokens, valid toggle states, accessible names, source-version noise cleanup and footer navigation.
-- Original numerical engine and six CV files preserved by SHA256 checks.
+- A persistent bar keeps the actual native Run control accessible on 33 exercised routes; Cancel appears only where the native computation supports it. Eighteen example selectors prepare inputs directly and retain a reversible previous draft.
+- Full objective/candidate/event records transfer from the original optimization and origin-fixation laboratories to a linked Evolution & optimization analysis studio. All-objective finite nondomination, crowding, feasibility, exact 2D reference-point hypervolume, objective/trait projections and recorded event diagnostics are computed without substituting failed states or flattening histories into X–Y pairs.
+- Scientific playback uses fixed coordinate bounds, preserves candidate identity and separates biological generations, accepted events and function evaluations.
+- The existing Contact portrait is restored; acknowledgements for people, institutions and historical funding are visible from global navigation, footer and the relevant laboratories.
+- The native laboratory inspector is preserved while repairing landmark semantics, keyboard access, contrast, headings and version noise. All six CV editions and original numerical engines are unchanged.
 
-## Verification
+## Executed verification
 
-See audit-80.3.json for exact pass/fail outcomes, complete workflow checks and limitations.
-
-## Remaining audit boundaries
-
-Automated checks do not establish biological calibration or WCAG conformance. Existing specialized native solvers have different cancellation capabilities; the common bar does not invent interruption support. Hypervolume beyond two objectives, inferential comparison of censored evolutionary endpoints, and generic schema mapping for every third-party model are not claimed. Existing native optimizer diagnostics remain available. Baseline audit findings beyond this patch require further measured correction, not blanket assurance.
-
-Accessibility node-count summaries (repeated instances, not unique defects):
+See audit-80.3.json for individual assertions, observed outcomes and limitations.
 
 ```json
 {
-  "before": {
-    "pageStates": 0,
-    "incomplete": [],
-    "violationNodes": {},
-    "totalViolationNodes": 0
+  "accepted": true,
+  "outcomes": {
+    "OLD": "success",
+    "SCIENCE": "success",
+    "BROWSER": "success",
+    "AUDIT": "success"
   },
-  "after": {
-    "pageStates": 49,
-    "incomplete": [],
-    "violationNodes": {
-      "aria-allowed-attr": 3,
-      "landmark-unique": 7,
-      "heading-order": 2,
-      "region": 28,
-      "color-contrast": 66,
-      "page-has-heading-one": 5,
-      "scrollable-region-focusable": 24
+  "browser": {
+    "passed": 85,
+    "failed": 0
+  },
+  "scientific": {
+    "passed": 46,
+    "failed": 0
+  },
+  "retainedNumerics": {
+    "passed": 36,
+    "failed": 0
+  },
+  "accessibility": {
+    "before": {
+      "available": true,
+      "application_commit": "559cd84a859368081446270efac137decdb5852b",
+      "workflow_run": 37277038024,
+      "artifact_id": 11330593293,
+      "raw_report_sha256": "38e15a3fd99273768babe1dabce11ae8b85d2f0eac813d1bb9c6e06fb9472a7a",
+      "pageStates": 49,
+      "incomplete": [],
+      "violationNodes": {
+        "aria-prohibited-attr": 7,
+        "aria-allowed-attr": 18,
+        "aria-allowed-role": 20,
+        "definition-list": 19,
+        "heading-order": 21,
+        "region": 72,
+        "aria-required-children": 1,
+        "scrollable-region-focusable": 3,
+        "target-size": 8,
+        "landmark-unique": 6,
+        "color-contrast": 403,
+        "landmark-complementary-is-top-level": 11,
+        "page-has-heading-one": 7
+      },
+      "totalViolationNodes": 596,
+      "interpretation": "Repeated violation nodes across 49 matched page states, not 596 unique defects."
     },
-    "totalViolationNodes": 135
+    "after": {
+      "available": true,
+      "pageStates": 49,
+      "incomplete": [],
+      "violationNodes": {
+        "landmark-unique": 2,
+        "aria-allowed-role": 4,
+        "region": 2,
+        "heading-order": 3,
+        "page-has-heading-one": 3
+      },
+      "totalViolationNodes": 14
+    }
   }
 }
 ```
+
+## Explicit boundaries
+
+A finite Pareto archive is not the complete global front. Hypervolume is implemented here for two objectives only; the interface refuses an unsupported dimensionality instead of projecting it. Candidate populations are not independent biological replicates. Evolutionary endpoints with different censoring/event caps are descriptive, not an inferential comparison. The original optimizer retains its CMA-ES and convergence diagnostics. Future native solvers may need their own cancellable worker and result adapter. The surviving accessibility findings are retained in the report; there is no blanket conformance claim.

@@ -144,7 +144,7 @@
     $('optimizationDeck').innerHTML = filtered.length ? filtered.map(function (name) {
       const preset = PRESETS[name];
       const multi = preset.objective2 ? '<span class="preset-tag">multi-objective</span>' : '';
-      return `<button class="model-card ${name === state.currentName ? 'active' : ''}" data-preset="${escapeHtml(name)}" type="button"><b>${escapeHtml(name)}</b><small>${escapeHtml(preset.family)}</small>${multi}<span class="preset-action">Load</span></button>`;
+      return `<button class="model-card ${name === state.currentName ? 'active' : ''}" data-preset="${escapeHtml(name)}" type="button"><b>${escapeHtml(name)}</b><small>${escapeHtml(preset.family)}</small>${multi}<span class="preset-action">Select</span></button>`;
     }).join('') : '<p class="field-help">No optimization example matches this filter.</p>';
     setText('optimizationNarrative', state.model.narrative || '');
     setText('optimizationScientificNote', state.model.scientificNote || '');
