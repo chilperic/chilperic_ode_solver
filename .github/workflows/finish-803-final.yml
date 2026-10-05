@@ -1,0 +1,121 @@
+name: Final acceptance of FokoLab 80.3
+on:
+  push:
+    branches: [release/80.3-complete-2026-10-06]
+    paths: [deployment/harden803.py, .github/workflows/finish-803-final.yml]
+permissions:
+  contents: write
+concurrency:
+  group: fokolab-803-final
+  cancel-in-progress: true
+jobs:
+  accepted:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Install verification dependencies
+        run: |
+          python3 -m pip install beautifulsoup4==4.13.4 numpy==2.3.5 scipy==1.17.0 matplotlib==3.10.8 playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+          npm install --prefix /tmp/foko-axe --ignore-scripts --no-audit axe-core@4.11.0
+      - name: Apply final measured corrections
+        run: |
+          python3 deployment/harden803.py
+          for f in site/src/revision83/*.js site/src/revision83/*.mjs; do node --check "$f"; done
+      - name: Original scientific regressions
+        id: old
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          node tests/preservation-regression.mjs | tee evidence/finish803/preservation.log
+          node deployment/802/smoke.mjs
+          python3 deployment/802/verify.py --native-only
+      - name: Independent finite-set scientific verification
+        id: science
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          node tests/finish803_science.mjs | tee evidence/finish803/science.log
+      - name: Real browser controls, transfers, plots and photos
+        id: browser
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python3 tests/finish803_browser.py | tee evidence/finish803/browser.log
+      - name: Matched visual/accessibility audit
+        id: audit
+        continue-on-error: true
+        run: python3 tests/audit803_browser.py after
+      - name: Record current acceptance and bounded audit findings
+        if: always()
+        env:
+          OLD: ${{ steps.old.outcome }}
+          SCIENCE: ${{ steps.science.outcome }}
+          BROWSER: ${{ steps.browser.outcome }}
+          AUDIT: ${{ steps.audit.outcome }}
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,os,collections
+          out=Path('evidence/finish803');out.mkdir(parents=True,exist_ok=True)
+          def read(path):
+            p=Path(path);return json.loads(p.read_text()) if p.exists() else {'status':'not completed'}
+          browser=read(out/'browser.json');science=read(out/'science.json');before=read(out/'baseline-summary.json');raw=read('evidence/audit-80.3/after/audit.json');counts=collections.Counter()
+          for page in raw.get('pages',[]):
+            for v in page['axe']['violations']:counts[v['id']]+=len(v['nodes'])
+          after={'available':'pages' in raw,'pageStates':len(raw.get('pages',[])),'incomplete':raw.get('incomplete',[]),'violationNodes':dict(counts),'totalViolationNodes':sum(counts.values())}
+          outcomes={k:os.environ.get(k) for k in ['OLD','SCIENCE','BROWSER','AUDIT']}
+          old=read('evidence/preservation-regression.json');oldSummary={'passed':sum(x['status']=='passed' for x in old.get('results',[])),'failed':sum(x['status']=='failed' for x in old.get('results',[]))}
+          stats=read('evidence/deployment-80.2/native.json')
+          accepted=all(x=='success' for x in outcomes.values()) and browser.get('summary',{}).get('failed')==0 and not browser.get('errors') and not browser.get('failedHTTP') and science.get('failed')==0 and oldSummary=={'passed':36,'failed':0} and stats.get('workflows')==17 and after['pageStates']==49 and not after['incomplete']
+          report={'release':'80.3.0','checkedAt':__import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat(),'source_commit':os.getenv('GITHUB_SHA'),'accepted':accepted,'outcomes':outcomes,'browser':browser,'science':science,'retainedNumerics':oldSummary,'statisticalPython':stats,'accessibility':{'before':before,'after':after},'scope':'Real local-HTTP Chromium desktop and mobile emulation, analytic finite-set reference cases, original regressions and independently executed Python statistics. Repeated accessibility nodes are not unique defects. This does not establish complete WCAG conformance, physical-device compatibility, biological calibration or a global optimality certificate.'}
+          (out/'acceptance.json').write_text(json.dumps(report,indent=2,ensure_ascii=False));Path('site/audit-80.3.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
+          text='# FokoLab 80.3 — audit, corrections and release scope\n\nUpdated 6 October 2026.\n\n## Delivered application changes\n\n- A persistent bar keeps the actual native Run control accessible on 33 exercised routes; Cancel appears only where the native computation supports it. Eighteen example selectors prepare inputs directly and retain a reversible previous draft.\n- Full objective/candidate/event records transfer from the original optimization and origin-fixation laboratories to a linked Evolution & optimization analysis studio. All-objective finite nondomination, crowding, feasibility, exact 2D reference-point hypervolume, objective/trait projections and recorded event diagnostics are computed without substituting failed states or flattening histories into X–Y pairs.\n- Scientific playback uses fixed coordinate bounds, preserves candidate identity and separates biological generations, accepted events and function evaluations.\n- The existing Contact portrait is restored; acknowledgements for people, institutions and historical funding are visible from global navigation, footer and the relevant laboratories.\n- The native laboratory inspector is preserved while repairing landmark semantics, keyboard access, contrast, headings and version noise. All six CV editions and original numerical engines are unchanged.\n\n## Executed verification\n\nSee audit-80.3.json for individual assertions, observed outcomes and limitations.\n\n```json\n'+json.dumps({'accepted':accepted,'outcomes':outcomes,'browser':browser.get('summary'),'scientific':{'passed':science.get('passed'),'failed':science.get('failed')},'retainedNumerics':oldSummary,'accessibility':report['accessibility']},indent=2)+'\n```\n\n## Explicit boundaries\n\nA finite Pareto archive is not the complete global front. Hypervolume is implemented here for two objectives only; the interface refuses an unsupported dimensionality instead of projecting it. Candidate populations are not independent biological replicates. Evolutionary endpoints with different censoring/event caps are descriptive, not an inferential comparison. The original optimizer retains its CMA-ES and convergence diagnostics. Future native solvers may need their own cancellable worker and result adapter. The surviving accessibility findings are retained in the report; there is no blanket conformance claim.\n'
+          Path('site/AUDIT-80.3.md').write_text(text)
+          print(json.dumps({'accepted':accepted,'outcomes':outcomes,'browser':browser.get('summary'),'before':before.get('totalViolationNodes'),'after':after['totalViolationNodes']},indent=2))
+      - name: Upload current verification evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fokolab-803-final-evidence
+          path: |
+            evidence/finish803/
+            evidence/audit-80.3/after/
+            site/source-changes-80.3.json
+            site/AUDIT-80.3.md
+          retention-days: 30
+      - name: Package and stage only the accepted public application
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,shutil,zipfile,hashlib
+          r=json.loads(Path('site/audit-80.3.json').read_text());assert r['accepted'],'Final acceptance did not pass; no main update is permitted.'
+          shutil.copytree('site','docs',dirs_exist_ok=True)
+          for p in list(Path('site').rglob('*'))+list(Path('docs').rglob('*')):
+            if p.is_file() and p.suffix.lower() in ('.woff','.woff2','.ttf','.eot','.otf'):p.unlink()
+          out=Path('release-artifacts');out.mkdir(exist_ok=True)
+          with zipfile.ZipFile(out/'FokoLab-80.3.0-Public-Site.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for p in Path('site').rglob('*'):
+              if p.is_file():z.write(p,str(p.relative_to('site')))
+          with zipfile.ZipFile(out/'FokoLab-80.3.0-Complete-Package.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for folder in ['site','tests','deployment/802','evidence/finish803','evidence/audit-80.3/after']:
+              for p in Path(folder).rglob('*'):
+                if p.is_file() and not p.is_symlink() and 'http-root' not in p.parts and p.suffix.lower() not in ('.ttf','.otf','.woff','.woff2','.eot'):z.write(p,'FokoLab-80.3.0/'+str(p))
+            for f in ['README.md','CHANGELOG.md','serve.py','package.json','START-FOKOLAB.bat','START-FOKOLAB.sh','deployment/finish803.py','deployment/refinements803.py','deployment/harden803.py']:
+              if Path(f).is_file():z.write(f,'FokoLab-80.3.0/'+f)
+          (out/'CHECKSUMS.txt').write_text('\n'.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name for p in out.glob('*.zip'))+'\n')
+          PY
+          git config user.name 'FokoLab verified completion'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- site docs tests/finish803_browser.py
+          git commit -m 'Finalize FokoLab 80.3 native layouts, scientific views and measured visual corrections'
+          git push origin HEAD:release/80.3-complete-2026-10-06
+          echo "ACCEPTED_COMMIT=$(git rev-parse HEAD)"
+      - name: Upload complete release packages
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fokolab-803-release-packages
+          path: release-artifacts/
+          retention-days: 30
