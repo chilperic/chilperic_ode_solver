@@ -1,0 +1,45 @@
+name: Snapshot current application for completion
+on:
+  push:
+    branches: [release/80.3-complete-2026-10-06]
+    paths: [.github/workflows/finish-803-snapshot.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Record current source and decode unfinished transport without executing it
+        shell: python
+        run: |
+          from pathlib import Path
+          import zipfile,base64,zlib,lzma,json,hashlib,subprocess
+          report=[];decoded=Path('audit-inputs');decoded.mkdir()
+          for folder in Path('deployment').rglob('*'):
+            if not folder.is_dir():continue
+            parts=sorted(folder.glob('*.b64'),key=lambda p:(int(p.stem) if p.stem.isdigit() else 100000,p.name))
+            if not parts:continue
+            item={'directory':str(folder),'parts':[p.name for p in parts]}
+            try:
+              encoded=''.join(p.read_text().strip() for p in parts);raw=base64.b64decode(encoded,validate=True)
+              try: obj=zlib.decompressobj();data=obj.decompress(raw);item['complete']=obj.eof
+              except zlib.error: data=lzma.decompress(raw);item['complete']=True
+              name=folder.name+'.decoded';(decoded/name).write_bytes(data);item['bytes']=len(data);item['decoded']=name
+            except Exception as e:item['error']=str(e)
+            report.append(item)
+          (decoded/'transport-report.json').write_text(json.dumps(report,indent=2))
+          with zipfile.ZipFile('FokoLab-current-source.zip','w',zipfile.ZIP_DEFLATED) as z:
+            for root in ('site','tests','deployment','audit-inputs','README.md','package.json','serve.py','.github/workflows'):
+              p=Path(root)
+              for f in ([p] if p.is_file() else p.rglob('*')):
+                if f.is_file() and not f.is_symlink() and 'private-reference' not in f.parts and f.suffix.lower() not in ('.ttf','.otf','.woff','.woff2','.eot'):
+                  z.write(f,str(f))
+            z.writestr('SOURCE_COMMIT.txt',subprocess.check_output(['git','rev-parse','HEAD'],text=True))
+          print(json.dumps(report,indent=2))
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fokolab-completion-source
+          path: FokoLab-current-source.zip
+          retention-days: 14
