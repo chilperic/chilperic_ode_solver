@@ -1,0 +1,132 @@
+name: Complete and verify FokoLab 80.3
+on:
+  push:
+    branches: [release/80.3-complete-2026-10-06]
+    paths:
+      - .github/workflows/finish-803.yml
+      - deployment/finish803.py
+      - deployment/refinements803.py
+      - tests/finish803*
+      - site/src/revision83/**
+      - site/styles/revision83.css
+      - site/decision-studio.html
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: fokolab-803-completion
+  cancel-in-progress: true
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+      - name: Install pinned verification dependencies
+        run: |
+          python3 -m pip install beautifulsoup4==4.13.4 numpy==2.3.5 scipy==1.17.0 matplotlib==3.10.8 playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+          npm install --prefix /tmp/foko-axe --ignore-scripts --no-audit axe-core@4.11.0
+      - name: Integrate native controls, scientific workflows and public pages
+        run: |
+          mkdir -p evidence/finish803
+          python3 deployment/finish803.py | tee evidence/finish803/build.log
+          if test -f deployment/refinements803.py; then python3 deployment/refinements803.py; fi
+          for f in site/src/revision83/*.js site/src/revision83/*.mjs; do node --check "$f"; done
+      - name: Verify original numerical cores
+        id: original
+        continue-on-error: true
+        run: node tests/preservation-regression.mjs | tee evidence/finish803/preservation.log
+      - name: Verify finite multi-objective science
+        id: science
+        continue-on-error: true
+        run: node tests/finish803_science.mjs | tee evidence/finish803/science.log
+      - name: Recheck statistical workflows and independent Python reproductions
+        id: statistics
+        continue-on-error: true
+        run: |
+          node deployment/802/smoke.mjs
+          python3 deployment/802/verify.py --native-only
+      - name: Exercise the delivered UI and real source-record transfers
+        id: browser
+        continue-on-error: true
+        run: python3 tests/finish803_browser.py | tee evidence/finish803/browser.log
+      - name: Audit visual accessibility and scroll behaviour after correction
+        id: audit
+        continue-on-error: true
+        run: python3 tests/audit803_browser.py after
+      - name: Retrieve the baseline audit for a like-for-like comparison
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: python
+        run: |
+          import urllib.request,zipfile,io,json,pathlib
+          p=pathlib.Path('evidence/finish803');p.mkdir(parents=True,exist_ok=True)
+          try:
+            req=urllib.request.Request('https://api.github.com/repos/chilperic/chilperic_ode_solver/actions/artifacts/11330593293/zip',headers={'Authorization':'Bearer '+__import__('os').environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+            with urllib.request.urlopen(req,timeout=30) as r:data=r.read()
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+              name=next(n for n in z.namelist() if n.endswith('audit.json'));(p/'before-audit.json').write_bytes(z.read(name))
+          except Exception as e:(p/'baseline-retrieval.json').write_text(json.dumps({'error':str(e),'claim':'No before/after reduction inferred without source report.'}))
+      - name: Record exact outcomes and publish no unsupported claims
+        if: always()
+        env:
+          ORIGINAL: ${{ steps.original.outcome }}
+          SCIENCE: ${{ steps.science.outcome }}
+          STATISTICS: ${{ steps.statistics.outcome }}
+          BROWSER: ${{ steps.browser.outcome }}
+          AUDIT: ${{ steps.audit.outcome }}
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,os,collections,hashlib
+          out=Path('evidence/finish803');out.mkdir(parents=True,exist_ok=True)
+          def read(p):
+            f=Path(p);return json.loads(f.read_text()) if f.exists() else {'status':'not completed'}
+          browser=read(out/'browser.json');science=read(out/'science.json');stats=read('evidence/deployment-80.2/native.json');old=read('evidence/preservation-regression.json');after=read('evidence/audit-80.3/after/audit.json');before=read(out/'before-audit.json')
+          def summary(a):
+            c=collections.Counter()
+            for p in a.get('pages',[]):
+              for v in p['axe']['violations']:c[v['id']]+=len(v['nodes'])
+            return {'pageStates':len(a.get('pages',[])),'incomplete':a.get('incomplete',[]),'violationNodes':dict(c),'totalViolationNodes':sum(c.values())}
+          outcomes={k:os.environ.get(k) for k in ['ORIGINAL','SCIENCE','STATISTICS','BROWSER','AUDIT']}
+          gate=all(outcomes[k]=='success' for k in outcomes) and browser.get('summary',{}).get('failed')==0 and not browser.get('errors') and not browser.get('failedHTTP') and science.get('failed')==0
+          report={'release':'80.3.0','source_commit':os.getenv('GITHUB_SHA'),'outcomes':outcomes,'accepted':gate,'browser':browser,'science':science,'statisticalPython':stats,'retainedNumerics':{'passed':sum(x['status']=='passed' for x in old.get('results',[])),'failed':sum(x['status']=='failed' for x in old.get('results',[]))},'accessibility':{'before':summary(before),'after':summary(after)},'scope':'Actual HTTP Chromium desktop/mobile emulation, finite-set analytic cases, retained numerical regressions and independent Python statistical comparisons. Automated accessibility is an audit, not a conformance certificate; no physical-device or biological-calibration claim.'}
+          (out/'acceptance.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
+          Path('site/audit-80.3.json').write_text(json.dumps(report,indent=2,ensure_ascii=False))
+          text='# FokoLab 80.3 audit and changes\n\nUpdated 6 October 2026.\n\n## Implemented corrections\n\n- Persistent native Run controls and consistent example preparation; reversible draft restoration on connected dropdowns. No fake universal Cancel for synchronous solvers.\n- All-objective finite Pareto ranks, explicit units/directions, exact 2D hypervolume only with a fixed reference, and complete candidate/event provenance. No biological interpolation between substitutions.\n- Contact portrait restored without retouching; collaborators, AIMS, CCB, CEPLAS and MSCA PoLiMeR institutional support are directly discoverable.\n- Shared surfaces, contrast/focus tokens, valid toggle states, accessible names, source-version noise cleanup and footer navigation.\n- Original numerical engine and six CV files preserved by SHA256 checks.\n\n## Verification\n\nSee audit-80.3.json for exact pass/fail outcomes, complete workflow checks and limitations.\n\n## Remaining audit boundaries\n\nAutomated checks do not establish biological calibration or WCAG conformance. Existing specialized native solvers have different cancellation capabilities; the common bar does not invent interruption support. Hypervolume beyond two objectives, inferential comparison of censored evolutionary endpoints, and generic schema mapping for every third-party model are not claimed. Existing native optimizer diagnostics remain available. Baseline audit findings beyond this patch require further measured correction, not blanket assurance.\n'
+          text+='\nAccessibility node-count summaries (repeated instances, not unique defects):\n\n```json\n'+json.dumps(report['accessibility'],indent=2)+'\n```\n'
+          Path('site/AUDIT-80.3.md').write_text(text)
+          print(json.dumps({'accepted':gate,'outcomes':outcomes,'browser':browser.get('summary'),'science':science.get('failed'),'accessibility':report['accessibility']},indent=2))
+      - name: Retain inspectable test and visual evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fokolab-803-completion-evidence
+          path: |
+            evidence/finish803/
+            evidence/audit-80.3/after/
+            site/source-changes-80.3.json
+            site/AUDIT-80.3.md
+          retention-days: 30
+      - name: Publish accepted application on release branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json,shutil
+          from pathlib import Path
+          r=json.loads(Path('evidence/finish803/acceptance.json').read_text());assert r['accepted'],'Acceptance failed; main and deployed website are unchanged.'
+          shutil.copytree('site','docs',dirs_exist_ok=True)
+          p=Path('CHANGELOG.md');old=p.read_text() if p.exists() else '';p.write_text('# 80.3.0 — 6 October 2026\n\nPersistent native actions, automatic example preparation with Undo, full-record evolutionary and multi-objective analysis, Contact portrait, discoverable institutional acknowledgements and cross-page visual/accessibility corrections. See site/AUDIT-80.3.md for scope and evidence.\n\n'+old)
+          PY
+          test "$GITHUB_REF_NAME" = 'release/80.3-complete-2026-10-06'
+          git config user.name 'FokoLab verified completion'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- site docs README.md CHANGELOG.md package.json
+          git commit -m 'FokoLab 80.3: verified workflows, Pareto analysis, portrait and acknowledgements'
+          git push origin HEAD:release/80.3-complete-2026-10-06
+          echo "ACCEPTED_COMMIT=$(git rev-parse HEAD)"
