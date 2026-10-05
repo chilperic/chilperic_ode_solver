@@ -1,0 +1,24 @@
+name: Audit 80.2 before 80.3 corrections
+on:
+  push:
+    branches: [audit/80.3-unified-science-2026-10-05]
+    paths: [.github/workflows/audit-803-baseline.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - run: |
+          python3 -m pip install playwright==1.55.0
+          python3 -m playwright install --with-deps chromium
+          npm install --prefix /tmp/foko-axe --ignore-scripts --no-audit axe-core@4.11.0
+      - run: python3 tests/audit803_browser.py before
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: fokolab-803-before-audit
+          path: evidence/audit-80.3/before/
+          retention-days: 14
