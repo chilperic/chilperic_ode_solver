@@ -1,7 +1,7 @@
 # FokoLab
 
 **Scientific modelling, analysis and visualisation**  
-Developed by **Dr. Chilperic Armel Foko Kuate**. Release **80.3.0**. Last updated **6 October 2026**.
+Developed by **Dr. Chilperic Armel Foko Kuate**. Release **80.3.1**. Last updated **6 October 2026**.
 
 [Open FokoLab](https://chilperic.github.io/chilperic_ode_solver/) · [Analysis studio](site/analysis-studio.html) · [Laboratories](site/labs.html) · [CV editions](site/cv.html) · [Scientific contributions](site/contributors.html)
 
@@ -21,7 +21,7 @@ Python 3 is needed only for this local server. Running the browser application d
 
 ## Modelling and analysis
 
-The retained workspaces include dynamical systems, stochastic processes, steady states, optimisation, sensitivity, fitting, symbolic methods and scientific computing. Plant physiology and adaptation, fatty-acid metabolism and T-cell populations remain accessible through the laboratory selectors.
+The retained workspaces include dynamical systems, stochastic processes, steady states, optimisation, sensitivity, fitting, symbolic methods and scientific computing. Plant physiology and C3–C4 adaptation remain publicly accessible as protected research overviews; the unpublished plant/leaf executable research implementations are not distributed in the current public tree. Fatty-acid metabolism and T-cell population tools remain accessible through their public laboratory routes.
 
 The analysis studio contains **17 workflows and 30 plot views**, organised by the scientific question and compatible sampling design. It includes descriptive summaries, one- and two-group inference, matched pairs, unequal-variance multiple-group comparisons, rank comparisons, resampling, association, regression diagnostics, categorical outcomes, survival, time-series diagnostics, independent-run summaries and prospective design calculations.
 
@@ -70,7 +70,7 @@ The release workflow records dependency versions and installs Chromium. `--nativ
 
 ## Attribution and citation
 
-[Contributor records](site/contributors.json) distinguish research collaboration, supervision, institutions, publication authorship, cited model lineage and browser implementation. The plant work acknowledges Jérémie Muller-Prokob, Yvonne Danisch, Antonio Rigueiro, Jonas Brass, Martin J. Lercher, CCB and CEPLAS. Doctoral work acknowledges Oliver Ebenhöh, Adélaïde Raguin and Barbara M. Bakker. T-cell records preserve the thesis-based acknowledgments, including Wilfred Ndifon and Gisèle Mophou. No credit implies endorsement of every browser result.
+[Contributor records](site/contributors.json) distinguish research collaboration, supervision, institutions, publication authorship, cited model lineage and browser implementation. The plant work identifies Jérémie Muller-Prokob and Yvonne Danisch as main collaborators, with Antonio Rigueiro and Jonas Brass as research collaborators and Martin J. Lercher providing PI supervision and the research environment. Doctoral work acknowledges Oliver Ebenhöh, Adélaïde Raguin and Barbara M. Bakker. T-cell records preserve the thesis-based acknowledgments, including Wilfred Ndifon and Gisèle Mophou. No credit implies endorsement of every browser result.
 
 Use [CITATION.cff](site/CITATION.cff), the relevant model references and the actual software version when citing work. Software licence: [MIT](site/LICENSE). Preserve third-party notices; do not infer permission to reuse personal CV or portrait material from a software licence.
 
