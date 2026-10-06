@@ -1,3 +1,13 @@
+# 80.3.2 — 6 October 2026
+
+Restores the public plant simulation outputs and scientific plots while keeping the unpublished research core protected.
+
+- Restored an interactive public result explorer across Sudan, Niger, Germany, Canada and Brazil scenarios.
+- Restored public Pareto, local sensitivity, Sobol, isotope-diagnostic, landscape and ecological-context figures.
+- Kept the detailed equations, calibration files, raw parameterization and model-development record out of the public website.
+- Retained the corrected distinction between landscape-search traces and biological evolutionary trajectories.
+- Retained the curated collaborator acknowledgements with Jérémie Muller-Prokob and Yvonne Danisch as main collaborators.
+
 # 80.3.1 — 6 October 2026
 
 Scientific-hardening and publication-boundary release for the unpublished plant programme.
