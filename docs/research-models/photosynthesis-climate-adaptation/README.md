@@ -1,38 +1,30 @@
 # Mechanistic evolution across the C3–C4 continuum
 
-This directory describes the public FokoLab interface for the plant research project.
+This directory contains the public summary of the plant research programme.
 
-## Scientific question
+## Scientific focus
 
-Starting from plausible C3-like populations, which combinations and sequences of anatomical, photorespiratory, biochemical, hydraulic and resource-allocation changes are physiologically viable and evolutionarily accessible under different environments?
+The project asks how heritable biochemical, anatomical, hydraulic, thermal and resource-allocation changes can move populations from plausible C3-like starting states toward viable C3–C4 intermediate or C4-like phenotypes under different environmental histories.
 
-The project deliberately separates three layers:
+The model is organized around the **C3–C4 continuum**. C2 is treated only as one possible photorespiratory intermediate mechanism when required by the biological hypothesis.
 
-1. **Physiology** — carbon, heat, water, resource and anatomical constraints determine whether a phenotype is physically and biologically admissible.
-2. **Landscape analysis** — grids, CMA-ES, NSGA-II and sensitivity methods identify high-performing regions and trade-offs.
-3. **Evolution** — only a finite-population model with inheritance, heritable variation, selection and drift is interpreted as biological evolution.
+Three layers remain separate:
 
-C2 photosynthesis is not forced as a mandatory stage. It is included when the glycine/GDC photorespiratory pump is represented and its carbon/nitrogen consequences can be evaluated.
+1. **Physiology** — establish physical and biological feasibility.
+2. **Landscape analysis** — map performance, uncertainty and trade-offs.
+3. **Evolution** — simulate heritable variation, reproduction, selection and drift in replicated populations.
 
-## Hydraulics
+Optimizer iterations are not biological generations, and assimilation is not reproductive fitness by itself.
 
-Water temperature is part of the hydraulic model because ideal conduit conductance depends on water viscosity. That physical correction is kept separate from pit resistance, conduit connectivity, outside-xylem resistance, aquaporins and vulnerability/embolism. A viscosity correction alone is not a whole-plant hydraulic model.
+## Public scope
 
-## Parameter provenance
-
-Every public parameter should carry one status: measured, literature anchor, calibrated, derived, assumed, scenario, or missing. Missing values are not silently replaced by defaults for quantitative claims.
+The website contains research questions, broad model classes, limitations, selected summary outputs and attribution. Detailed equations, parameter sets, calibration material and executable research workflows are not included on these public pages.
 
 ## Collaboration
 
-- **Dr. Chilperic Armel Foko Kuate** — project leadership, research integration and core modelling architecture.
+- **Dr. Chilperic Armel Foko Kuate** — project leadership, modelling architecture and scientific integration.
 - **Jérémie Muller-Prokob** — main scientific and technical collaborator.
 - **Yvonne Danisch** — main collaborator; substantial bachelor-thesis implementation, model execution, validation and analysis.
 - **Antonio Rigueiro** — research collaborator and paper-level contributor.
-- **Jonas Brass** — research collaborator; hydraulic-model discussions including water-temperature effects.
+- **Jonas Brass** — research collaborator; hydraulic discussions including water-temperature effects on conductance.
 - **Martin J. Lercher** — PI supervision and research environment.
-
-Specific publication authorship and software ownership are stated with the corresponding output.
-
-## Public boundary
-
-The browser presentation is not the unpublished scientific source repository. Historical figures are retained only with their method/provenance labels. Optimizer paths must not be called evolutionary trajectories, and assimilation must not be called reproductive fitness without an explicit mapping.
