@@ -2,33 +2,15 @@
   "id": "photosynthesis-climate-adaptation",
   "title": "Mechanistic evolution across the C3–C4 continuum",
   "positioning": "Collaborative unpublished research led by Dr. Chilperic Armel Foko Kuate on the coupled physiology and evolutionary accessibility of C3-like, C3–C4 intermediate and C4-like phenotypes.",
-  "public_scope": "Research questions, broad model classes, limitations, selected non-reconstructive outputs and attribution only. Full equations, executable research code, detailed parameterization and calibration material are not public.",
   "scientific_question": "Starting from plausible C3-like populations, which heritable biochemical, anatomical, hydraulic, thermal and resource-allocation changes generate viable and evolutionarily accessible intermediate or C4-like phenotypes under different environments?",
-  "process_layers": [
-    "C3 biochemical baseline and photorespiratory constraints",
-    "mechanistically represented intermediate states along the C3–C4 continuum",
-    "progressive recruitment of carbon-concentrating traits and C4 biochemistry",
-    "temperature-dependent physiology and leaf energy balance",
-    "soil-to-leaf hydraulics including water-temperature effects on viscosity",
-    "anatomy-derived transport traits",
-    "resource allocation and physiological feasibility",
-    "performance landscapes, sensitivity and uncertainty",
-    "replicated finite-population evolution with inheritance, mutation/segregation, selection and drift"
-  ],
   "interpretation_rules": [
-    "Intermediate mechanisms are included when required by the biological hypothesis; C2 is one possible mechanism, not the organizing target or a forced stage.",
+    "Intermediate mechanisms are included when required by the biological hypothesis; C2 is one possible mechanism, not a forced stage.",
     "Assimilation is a physiological performance component, not reproductive fitness by itself.",
-    "CMA-ES, NSGA-II, grids and continuation are landscape/search tools and are not biological generations.",
+    "Optimization methods are landscape/search tools and are not biological generations.",
     "Failed or nonphysical simulations remain explicit failures.",
     "Measured, literature-anchored, calibrated, derived, assumed, scenario and missing quantities are distinguished."
   ],
-  "limitations": [
-    "No public figure establishes a natural evolutionary history by itself.",
-    "Species-level calibration and external validation remain incomplete.",
-    "Genetic/mutational covariance and physiology-to-reproductive-fitness mapping are major uncertainties.",
-    "Water-viscosity effects do not replace biological hydraulic resistance and vulnerability.",
-    "The public repository is intentionally insufficient to reconstruct the unpublished scientific model."
-  ],
+  "public_scope": "Research questions, broad model classes, limitations, selected summary outputs and attribution only.",
   "attribution": {
     "lead": "Dr. Chilperic Armel Foko Kuate — project leadership, modelling architecture and scientific integration.",
     "main_collaborators": [
