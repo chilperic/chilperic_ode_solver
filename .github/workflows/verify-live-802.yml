@@ -57,7 +57,15 @@ jobs:
               with concurrent.futures.ThreadPoolExecutor(max_workers=5) as ex:report['checks']=list(ex.map(check,paths))
               try:report['rootHTTP']=get(base)[0]
               except Exception as e:report['rootError']=str(e)
-          removed=['plants/plant-engine.js','plants/c4-engine.js','leaf/leaf-engine.js','leaf/presets.json']\n          report['removedChecks']=[]\n          if prefix:\n              for path in removed:\n                  try:\n                      get(prefix+path+'?release-check='+os.environ['GITHUB_SHA']);report['removedChecks'].append({'path':path,'passed':False,'detail':'unexpectedly served'})\n                  except Exception as e:\n                      report['removedChecks'].append({'path':path,'passed':'404' in str(e),'detail':str(e)})\n          report['passed']=bool(prefix) and report.get('rootHTTP')==200 and len(report.get('checks',[]))==len(paths) and all(c['passed'] for c in report.get('checks',[])) and all(c['passed'] for c in report.get('removedChecks',[]))
+          removed=['plants/plant-engine.js','plants/c4-engine.js','leaf/leaf-engine.js','leaf/presets.json']
+          report['removedChecks']=[]
+          if prefix:
+              for path in removed:
+                  try:
+                      get(prefix+path+'?release-check='+os.environ['GITHUB_SHA']);report['removedChecks'].append({'path':path,'passed':False,'detail':'unexpectedly served'})
+                  except Exception as e:
+                      report['removedChecks'].append({'path':path,'passed':'404' in str(e),'detail':str(e)})
+          report['passed']=bool(prefix) and report.get('rootHTTP')==200 and len(report.get('checks',[]))==len(paths) and all(c['passed'] for c in report.get('checks',[])) and all(c['passed'] for c in report.get('removedChecks',[]))
           (out/'published-hashes.json').write_text(json.dumps(report,indent=2))
           print(json.dumps({k:v for k,v in report.items() if k not in ('checks','attempts')},indent=2))
           print('FILE_CHECKS',len(report.get('checks',[])))
@@ -96,7 +104,9 @@ jobs:
                   page.goto(base+'contact.html',wait_until='domcontentloaded');page.wait_for_selector('.fl-contact-photo');page.wait_for_function('document.querySelector(".fl-contact-photo").complete')
                   verify('Contact portrait',page.locator('.fl-contact-photo').evaluate('e=>e.naturalWidth>100'))
                   page.screenshot(path=str(out/'live-contact-desktop.png'))
-                  page.goto(base+'plants/index.html',wait_until='domcontentloaded');plant_text=page.locator('main').inner_text();verify('Protected C3-C4 overview',('C3–C4 continuum' in plant_text) and page.locator('math').count()==0 and page.locator('script[src*="plants/"]').count()==0)\n                  page.goto(base+'leaf/index.html',wait_until='domcontentloaded');leaf_text=page.locator('main').inner_text();verify('Protected leaf overview',('full equations' in leaf_text) and page.locator('math').count()==0 and page.locator('script[src*="leaf/"]').count()==0)\n                  page.goto(base+'contributors.html',wait_until='domcontentloaded');text=page.locator('main').inner_text()
+                  page.goto(base+'plants/index.html',wait_until='domcontentloaded');plant_text=page.locator('main').inner_text();verify('Protected C3-C4 overview',('C3–C4 continuum' in plant_text) and page.locator('math').count()==0 and page.locator('script[src*="plants/"]').count()==0)
+                  page.goto(base+'leaf/index.html',wait_until='domcontentloaded');leaf_text=page.locator('main').inner_text();verify('Protected leaf overview',('full equations' in leaf_text) and page.locator('math').count()==0 and page.locator('script[src*="leaf/"]').count()==0)
+                  page.goto(base+'contributors.html',wait_until='domcontentloaded');text=page.locator('main').inner_text()
                   verify('Curated collaborator acknowledgements',all(x in text for x in ('Jérémie','Yvonne','Adélaïde','Barbara','Wilfred','AIMS','CEPLAS')))
                   verify('Visible acknowledgements navigation',page.locator('.fl-site-footer a[href$="contributors.html"]').count()==1)
                   page.goto(base+'cv.html',wait_until='domcontentloaded');verify('Six CV editions accessible',page.locator('.cv-downloads a[href$=".pdf"]').count()==6)
