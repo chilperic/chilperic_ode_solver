@@ -1,59 +1,25 @@
 {
   "id": "photosynthesis-climate-adaptation",
   "title": "Mechanistic evolution across the C3–C4 continuum",
-  "positioning": "Collaborative research project led by Dr. Chilperic Armel Foko Kuate on the coupled physiology and evolutionary accessibility of C3-like, C2/intermediate and C4-like phenotypes under environmental forcing.",
-  "browser_scope": "Public browser pages expose research questions, provenance and reduced explanatory models. Unpublished equations, calibration material and full parameter sets remain outside the public release.",
-  "scientific_question": "Starting from plausible C3-like populations, which combinations and sequences of anatomical, photorespiratory, biochemical, hydraulic and resource-allocation changes are physiologically viable and evolutionarily accessible under different environments?",
-  "process_layers": [
-    "C3/Farquhar-style biochemical baseline",
-    "optional mechanistic C2 glycine/GDC photorespiratory pump",
-    "PEPC/C4-cycle recruitment and bundle-sheath CO2 concentration",
-    "temperature-dependent biochemical kinetics",
-    "leaf energy balance",
-    "soil-to-leaf hydraulics with water-temperature/viscosity effects",
-    "anatomy-derived transport traits",
-    "resource allocation and feasibility",
-    "performance landscapes and Pareto analysis",
-    "replicated finite-population evolution with inheritance, mutation/segregation, selection and drift"
+  "positioning": "Collaborative unpublished research led by Dr. Chilperic Armel Foko Kuate on the coupled physiology and evolutionary accessibility of C3-like, C3–C4 intermediate and C4-like phenotypes.",
+  "scientific_question": "Starting from plausible C3-like populations, which heritable biochemical, anatomical, hydraulic, thermal and resource-allocation changes generate viable and evolutionarily accessible intermediate or C4-like phenotypes under different environments?",
+  "interpretation_rules": [
+    "Intermediate mechanisms are included when required by the biological hypothesis; C2 is one possible mechanism, not a forced stage.",
+    "Assimilation is a physiological performance component, not reproductive fitness by itself.",
+    "Optimization methods are landscape/search tools and are not biological generations.",
+    "Failed or nonphysical simulations remain explicit failures.",
+    "Measured, literature-anchored, calibrated, derived, assumed, scenario and missing quantities are distinguished."
   ],
-  "analysis_boundary": {
-    "optimization": "CMA-ES, NSGA-II, grids and continuation map high-performance regions; optimizer iterations are not biological generations.",
-    "evolution": "Only simulations with explicit inheritance, heritable variation, selection and drift are described as evolutionary trajectories.",
-    "c2": "C2 is a mechanistic subregion of the continuum, not a mandatory label. It is included when glycine/GDC localization and associated carbon/nitrogen consequences are represented.",
-    "fitness": "Assimilation is a physiological performance component, not reproductive fitness by itself."
-  },
-  "parameter_status": [
-    "measured",
-    "literature_anchor",
-    "calibrated",
-    "derived",
-    "assumed",
-    "scenario",
-    "missing"
-  ],
-  "public_outputs": [
-    "historical optimization traces retained with corrected labels",
-    "local and global sensitivity analyses with model-revision provenance",
-    "Pareto analyses",
-    "numerical diagnostics and failure status",
-    "parameter provenance and uncertainty status"
-  ],
-  "limitations": [
-    "No public figure establishes a natural evolutionary history by itself.",
-    "Species-level calibration and external validation are incomplete.",
-    "Genetic/mutational covariance and physiology-to-reproductive-fitness mapping remain major uncertainties.",
-    "Water-viscosity corrections do not replace pit, junction, outside-xylem, aquaporin or vulnerability effects.",
-    "Missing or nonphysical simulations must not be silently imputed as valid low-performance phenotypes."
-  ],
+  "public_scope": "Research questions, broad model classes, limitations, selected summary outputs and attribution only.",
   "attribution": {
-    "lead": "Dr. Chilperic Armel Foko Kuate — project leadership, research integration and core modelling architecture.",
+    "lead": "Dr. Chilperic Armel Foko Kuate — project leadership, modelling architecture and scientific integration.",
     "main_collaborators": [
       "Jérémie Muller-Prokob — main scientific and technical collaborator.",
-      "Yvonne Danisch — main collaborator; substantial bachelor-thesis implementation, execution, validation and analysis."
+      "Yvonne Danisch — main collaborator; substantial bachelor-thesis implementation, model execution, validation and analysis."
     ],
     "collaborators": [
       "Antonio Rigueiro — research collaborator and paper-level contributor.",
-      "Jonas Brass — research collaborator; hydraulic-model discussions including water-temperature effects.",
+      "Jonas Brass — research collaborator; hydraulic discussions including water-temperature effects on conductance.",
       "Martin J. Lercher — PI supervision and research environment."
     ]
   }
