@@ -1,47 +1,30 @@
-# Photosynthesis Climate Adaptation Model
+# Mechanistic evolution across the C3–C4 continuum
 
-This folder documents the Foko Lab browser-facing layer for the photosynthesis climate-adaptation project.
+This directory contains the public summary of the plant research programme.
 
-## Project positioning
+## Scientific focus
 
-This is the flagship research model in the portfolio. It should be presented as a project designed and led by Chilperic Armel Foko Kuate, with core code architecture, major implementation and research integration attributed to him.
+The project asks how heritable biochemical, anatomical, hydraulic, thermal and resource-allocation changes can move populations from plausible C3-like starting states toward viable C3–C4 intermediate or C4-like phenotypes under different environmental histories.
 
-Yvonne Danisch's bachelor thesis contribution should be acknowledged clearly and respectfully: implementation, model execution, validation and analysis contribution within the bachelor thesis work. Jérémie Muller-Prokob contributed scientific guidance and technical discussion. Martin Lercher provided PI supervision, research environment and funding. Antonio Rigueiro is retained as an additional paper-level contributor where relevant.
+The model is organized around the **C3–C4 continuum**. C2 is treated only as one possible photorespiratory intermediate mechanism when required by the biological hypothesis.
 
-## Browser boundary
+Three layers remain separate:
 
-The browser models are deliberately reduced surrogates. They are meant to communicate the model architecture and make the scientific logic inspectable in a portfolio/demo setting.
+1. **Physiology** — establish physical and biological feasibility.
+2. **Landscape analysis** — map performance, uncertainty and trade-offs.
+3. **Evolution** — simulate heritable variation, reproduction, selection and drift in replicated populations.
 
-Use the full Python project for scientific runs:
+Optimizer iterations are not biological generations, and assimilation is not reproductive fitness by itself.
 
-- coupled C3/C4 biochemical model
-- hydraulic model
-- heat-balance model
-- CasADi optimization
-- sensitivity analysis
-- CMA-ES evolutionary trait exploration
+## Public scope
 
-## Visual priority
+The website contains research questions, broad model classes, limitations, selected summary outputs and attribution. Detailed equations, parameter sets, calibration material and executable research workflows are not included on these public pages.
 
-The strongest portfolio figures are not generic objective landscapes. The primary figures are:
+## Collaboration
 
-- 3D evolutionary trajectories
-- local sensitivity ranking
-- Sobol first-order and total-order indices
-- second-order Sobol interactions
-- Pareto fronts of mesophyll and bundle-sheath assimilation
-
-Workbench entries:
-
-- `leaf-thermal-steady`
-- `leaf-thermal-opt`
-- `hydraulic-carbon-opt`
-- `c3c4-trait-opt`
-
-Legacy Optimization Lab presets:
-
-- `Leaf heat-balance optimal control`
-- `Hydraulic-carbon trade-off`
-- `C3-C4 trait allocation`
-
-Scientific boundary: the platform can demonstrate modeling skill and mechanism coupling, but it must not claim calibrated physiological prediction from browser surrogates.
+- **Dr. Chilperic Armel Foko Kuate** — project leadership, modelling architecture and scientific integration.
+- **Jérémie Muller-Prokob** — main scientific and technical collaborator.
+- **Yvonne Danisch** — main collaborator; substantial bachelor-thesis implementation, model execution, validation and analysis.
+- **Antonio Rigueiro** — research collaborator and paper-level contributor.
+- **Jonas Brass** — research collaborator; hydraulic discussions including water-temperature effects on conductance.
+- **Martin J. Lercher** — PI supervision and research environment.

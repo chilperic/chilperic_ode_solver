@@ -1,48 +1,26 @@
 {
   "id": "photosynthesis-climate-adaptation",
-  "title": "Photosynthesis Climate Adaptation Model",
-  "positioning": "Flagship research model led and designed by Chilperic Armel Foko Kuate: multiscale mechanistic modeling across biology, environment, heat transfer, hydraulics, optimization, sensitivity analysis and evolutionary adaptation.",
-  "browser_scope": "Reduced educational and portfolio surrogates only. Full scientific runs require the Python repository.",
-  "workbench_models": [
-    "leaf-thermal-steady",
-    "leaf-thermal-opt",
-    "hydraulic-carbon-opt",
-    "c3c4-trait-opt"
+  "title": "Mechanistic evolution across the C3–C4 continuum",
+  "positioning": "Collaborative unpublished research led by Dr. Chilperic Armel Foko Kuate on the coupled physiology and evolutionary accessibility of C3-like, C3–C4 intermediate and C4-like phenotypes.",
+  "scientific_question": "Starting from plausible C3-like populations, which heritable biochemical, anatomical, hydraulic, thermal and resource-allocation changes generate viable and evolutionarily accessible intermediate or C4-like phenotypes under different environments?",
+  "interpretation_rules": [
+    "Intermediate mechanisms are included when required by the biological hypothesis; C2 is one possible mechanism, not a forced stage.",
+    "Assimilation is a physiological performance component, not reproductive fitness by itself.",
+    "Optimization methods are landscape/search tools and are not biological generations.",
+    "Failed or nonphysical simulations remain explicit failures.",
+    "Measured, literature-anchored, calibrated, derived, assumed, scenario and missing quantities are distinguished."
   ],
-  "legacy_lab_presets": [
-    "Leaf heat-balance optimal control",
-    "Hydraulic-carbon trade-off",
-    "C3-C4 trait allocation"
-  ],
-  "process_layers": [
-    "C3/C4 biochemical assimilation",
-    "PEPC and Rubisco kinetics",
-    "mesophyll and bundle-sheath compartment structure",
-    "leaf heat balance",
-    "hydraulic limitation and transpiration cooling",
-    "local and Sobol-style sensitivity analysis",
-    "CMA-ES evolutionary trait exploration across climates"
-  ],
-  "outputs_to_show": [
-    "3D evolutionary trajectories across climates",
-    "local sensitivity ranking",
-    "Sobol first-order and total-order indices",
-    "second-order Sobol interaction heatmap",
-    "Pareto front: mesophyll vs bundle-sheath assimilation",
-    "trait trajectories and climate comparison panels",
-    "reduced Workbench objective landscapes and constraint diagnostics"
-  ],
-  "limitations": [
-    "Browser models are not calibrated physiological predictions.",
-    "The full model is high-dimensional and solver-dependent.",
-    "Use Python/CasADi/SALib/CMA workflows for claims about real climates or crops."
-  ],
+  "public_scope": "Research questions, broad model classes, limitations, selected summary outputs and attribution only.",
   "attribution": {
-    "project_design_core_code_and_leadership": "Chilperic Armel Foko Kuate",
-    "bachelor_thesis_implementation_execution_validation_analysis": "Yvonne Danisch",
-    "scientific_guidance_and_technical_discussion": "Jérémie Muller-Prokob",
-    "pi_supervision_research_environment_and_funding": "Martin Lercher",
-    "additional_paper_level_contribution": "Antonio Rigueiro",
-    "institutional_context": "Institute for Computational Cell Biology, HHU Düsseldorf / CEPLAS"
+    "lead": "Dr. Chilperic Armel Foko Kuate — project leadership, modelling architecture and scientific integration.",
+    "main_collaborators": [
+      "Jérémie Muller-Prokob — main scientific and technical collaborator.",
+      "Yvonne Danisch — main collaborator; substantial bachelor-thesis implementation, model execution, validation and analysis."
+    ],
+    "collaborators": [
+      "Antonio Rigueiro — research collaborator and paper-level contributor.",
+      "Jonas Brass — research collaborator; hydraulic discussions including water-temperature effects on conductance.",
+      "Martin J. Lercher — PI supervision and research environment."
+    ]
   }
 }

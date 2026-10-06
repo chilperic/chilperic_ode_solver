@@ -42,7 +42,7 @@
       active.set(spec.id, record);
       if(spec.timeoutMs){
         timer = setTimeout(()=>{
-          cancel(spec.id, 'Computation timed out.');
+          cancel(spec.id, 'This calculation exceeded the configured browser time limit. No partial result was accepted. Reduce the workload or rerun with a longer or disabled timeout.');
         }, spec.timeoutMs);
       }
       function cleanup(){

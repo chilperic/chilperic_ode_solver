@@ -1,3 +1,17 @@
+# 80.3.1 — 6 October 2026
+
+Scientific-hardening and publication-boundary release for the unpublished plant programme.
+
+- Reframed the plant project around mechanistic evolution across the C3–C4 continuum rather than a C2-centred narrative.
+- Separated physiological feasibility, landscape optimization and finite-population evolution in the public scientific description.
+- Removed the unpublished plant/leaf executable engines, detailed equations and parameter presets from the current public site tree and replaced those routes with non-reconstructive research overviews.
+- Removed plant/leaf parameter presets from public example registries and redacted serialized plant configurations from public recovery evidence.
+- Curated acknowledgements: Jérémie Muller-Prokob and Yvonne Danisch are identified as main collaborators; the previous long thesis/programme qualification text was removed.
+- Clarified the browser computation timeout: a timeout accepts no partial result.
+- Public descriptions retain explicit uncertainty/provenance classes and the distinction between water-viscosity effects and other hydraulic resistances.
+
+Note: prior public Git history can still contain earlier versions. This release removes them from the current published tree; repository-history cleanup is a separate operation.
+
 # 80.3.0 — 6 October 2026
 
 Persistent native actions, automatic example preparation with Undo, full-record evolutionary and multi-objective analysis, Contact portrait, discoverable institutional acknowledgements and cross-page visual/accessibility corrections. See site/AUDIT-80.3.md for scope and evidence.

@@ -4,7 +4,7 @@
   "scope": "Source recovery and software verification; not biological or physical-device validation.",
   "browser": {
     "release": "80.1.0",
-    "scope": "Real GitHub-runner Chromium on local HTTP under the GitHub project subpath; native workers and actual source renderers. Offline external requests blocked, not mocked. No physical-device or biological validation claim.",
+    "scope": "Real GitHub-runner Chromium on local HTTP under the GitHub project subpath; native workers and actual source renderers. Offline external requests blocked, not mocked. No physical-device or biological validation claim. Protected unpublished plant/leaf configuration records are omitted from the public evidence file.",
     "checks": [
       {
         "name": "Homepage navigation and recovered routes",
@@ -453,7 +453,7 @@
             "C16:0",
             "C18:0",
             "Free CoA",
-            "FAS\u2013CoA"
+            "FAS–CoA"
           ],
           "rows": 201,
           "model": "synthesis"
@@ -474,7 +474,7 @@
         "name": "Lipid reaction and product-release stepping",
         "status": "passed",
         "seconds": 0.327,
-        "detail": "Physical time 55.9881 s \u00b7 traced state 9 / 177 \u00b7 event-paced"
+        "detail": "Physical time 55.9881 s · traced state 9 / 177 · event-paced"
       },
       {
         "name": "Lipid mechanism rendered",
@@ -556,150 +556,6 @@
         }
       },
       {
-        "name": "Original plant default computation",
-        "status": "passed",
-        "seconds": 0.051,
-        "detail": {
-          "lab": "plants",
-          "keys": [
-            "config",
-            "types",
-            "weather",
-            "series",
-            "bands",
-            "finals",
-            "maxCarbonError",
-            "maxWaterError",
-            "maxNitrogenError"
-          ],
-          "config": {
-            "extremeStart": 14,
-            "extremeDays": 7,
-            "loopTargetC": 30,
-            "seedMass": 0.3,
-            "baseTemperature": 8,
-            "ceilingTemperature": 30,
-            "emergenceGDD": 60,
-            "phyllochron": 50,
-            "flowerGDD": 800,
-            "fillGDD": 950,
-            "maturityGDD": 1700,
-            "developmentScaleC3": 1,
-            "developmentScaleC4": 1,
-            "developmentScaleCAM": 15,
-            "finalLeavesC3": 30,
-            "finalLeavesC4": 20,
-            "finalLeavesCAM": 0,
-            "veinDensityC3": 5,
-            "veinDensityC4": 8,
-            "veinDensityCAM": 3,
-            "specificRootLength": 50,
-            "rootedDepth": 0.5,
-            "anatomyHydraulics": 0,
-            "rootConductance": 0.002,
-            "leafConductance": 2,
-            "stemConductance": 1,
-            "waterPotentialDrop": 1,
-            "stemRemobilization": 0,
-            "loopEnabled": 0,
-            "loopFlow": 0.001,
-            "loopEffectiveness": 0.8,
-            "soilSurfaceC": 18,
-            "soilRootC": 18,
-            "soilDeepC": 15,
-            "soilSurfaceDepth": 0.05,
-            "soilRootDepth": 0.45,
-            "soilDryK": 0.25,
-            "soilWetK": 1.5,
-            "soilDryC": 1.2,
-            "soilAlbedo": 0.2,
-            "soilEvapConductance": 0.02,
-            "skyCooling": 6,
-            "soilView": 0.5,
-            "waterBoundary": 1,
-            "reproductionNRecovery": 0.6,
-            "absorptance": 0.84,
-            "photoLoss": 0.15,
-            "cefC3": 0.2,
-            "cefC4": 0.6,
-            "cefCAM": 0.35,
-            "ndhFraction": 0.3,
-            "hPerATP": 4.6666666667,
-            "camDayATP": 2,
-            "camNightATP": 1,
-            "respATPPerC": 5,
-            "psiiActivity": 1,
-            "psiActivity": 1,
-            "b6fActivity": 1,
-            "leafAreaC3": 500,
-            "leafAreaC4": 500,
-            "leafAreaCAM": 100,
-            "reproductionDay": 30,
-            "reproductionFraction": 0.25,
-            "fruitUnitMass": 1,
-            "jmax25": 120,
-            "c4Vpmax": 66,
-            "c4Gbs": 0.003,
-            "c4Gm": 1,
-            "c4Kp25": 82,
-            "c4Vpr": 80,
-            "c4ATPshare": 0.4,
-            "camNightCapacity": 12,
-            "fieldCapacity": 0.3,
-            "wiltingPoint": 0.12,
-            "nUptakeRate": 60,
-            "leafUnitArea": 500,
-            "stemUnitMass": 0.25,
-            "growthYield": 0.75,
-            "days": 45,
-            "seed": 42,
-            "reps": 3,
-            "temperature": 11,
-            "amplitude": 7,
-            "humidity": 72,
-            "par": 1400,
-            "co2": 420,
-            "daylight": 12,
-            "wind": 2.5,
-            "rainProbability": 0.42,
-            "rainDepth": 5,
-            "rainSeasonality": 0.15,
-            "rainPeakMonth": 7,
-            "soilCapacity": 140,
-            "initialWater": 0.75,
-            "initialMass": 10,
-            "vcmax": 60,
-            "camCapacity": 400,
-            "latitude": 51.23,
-            "longitude": 6.78,
-            "seasonAmplitude": 9,
-            "transmission": 0.56,
-            "irrigationAmount": 15,
-            "irrigationEvery": 7,
-            "irrigationThreshold": 0.3,
-            "fertilizerDose": 0,
-            "fertilizerEvery": 30,
-            "initialNitrogen": 250,
-            "stochastic": true,
-            "location": "dusseldorf",
-            "climateExtreme": "baseline",
-            "developmentMode": "calendar",
-            "startStage": "seedling",
-            "thermalMode": "coupled",
-            "soilBoundary": "climate",
-            "energyMode": "budget",
-            "climateSource": "profile",
-            "startDate": "2026-04-01",
-            "solarMode": "location",
-            "irrigationMode": "none",
-            "traitMode": "presets",
-            "plantC3": "sunflower",
-            "plantC4": "maize",
-            "plantCAM": "agave"
-          }
-        }
-      },
-      {
         "name": "Plant finite resource ledgers",
         "status": "passed",
         "seconds": 0.011,
@@ -716,10 +572,10 @@
               "leafOpportunities": 5,
               "leafCount": 5,
               "remobilizedC": 0,
-              "reproductiveTransfer": 5.385714453361623e-05,
-              "leafTransfer": 7.270714512038192e-05,
-              "rootTransfer": 4.0392858400212174e-05,
-              "stemTransfer": 4.847143008025461e-05,
+              "reproductiveTransfer": 0.00005385714453361623,
+              "leafTransfer": 0.00007270714512038192,
+              "rootTransfer": 0.000040392858400212174,
+              "stemTransfer": 0.00004847143008025461,
               "hour": 1080,
               "loopActualFlow": 0,
               "loopActive": 0,
@@ -732,7 +588,7 @@
               "gtw": 0.001986586257595855,
               "soilHeatStorage": -76.55694973145502,
               "soilLeafHeat": 6.2559666184513905,
-              "xylemHeat": -9.958754833680763e-05,
+              "xylemHeat": -0.00009958754833680763,
               "thermalResidual": 4.3051675562501095e-10,
               "evapRate": 0.002835583338239617,
               "latentHeat": 0.008199063905530475,
@@ -825,7 +681,7 @@
               "stress": 0.9999999999999999,
               "release": 0,
               "trans": 4.830160368327014,
-              "transRate": 2.3736011900331964e-06,
+              "transRate": 0.0000023736011900331964,
               "carbonInput": 36.91680148738798,
               "resp": 3.33215489790898,
               "litter": 0.45207565034317654,
@@ -845,10 +701,10 @@
               "leafOpportunities": 4,
               "leafCount": 4,
               "remobilizedC": 0,
-              "reproductiveTransfer": 5.389627923174678e-05,
-              "leafTransfer": 6.790931183200095e-05,
-              "rootTransfer": 4.042220942381009e-05,
-              "stemTransfer": 5.3357316439429324e-05,
+              "reproductiveTransfer": 0.00005389627923174678,
+              "leafTransfer": 0.00006790931183200095,
+              "rootTransfer": 0.00004042220942381009,
+              "stemTransfer": 0.000053357316439429324,
               "hour": 1080,
               "loopActualFlow": 0,
               "loopActive": 0,
@@ -952,7 +808,7 @@
               "stress": 0.9999999999999999,
               "release": 0,
               "trans": 3.669304643673329,
-              "transRate": 1.9102108816601448e-06,
+              "transRate": 0.0000019102108816601448,
               "carbonInput": 21.360386880967692,
               "resp": 3.415102168261959,
               "litter": 0.4173949027410035,
@@ -975,7 +831,7 @@
               "reproductiveTransfer": 0.00020708658547230157,
               "leafTransfer": 0.0004038188416709881,
               "rootTransfer": 0.00015531493910422617,
-              "stemTransfer": 6.212597564169046e-05,
+              "stemTransfer": 0.00006212597564169046,
               "hour": 1080,
               "loopActualFlow": 0,
               "loopActive": 0,
@@ -1083,7 +939,7 @@
               "stress": 0.9999999999999999,
               "release": 0,
               "trans": 0.11433514365357471,
-              "transRate": 3.742188814821541e-05,
+              "transRate": 0.00003742188814821541,
               "carbonInput": 4.200654819829751,
               "resp": 2.6998025672181307,
               "litter": 0.36877082599406524,
@@ -1092,31 +948,6 @@
             }
           }
         }
-      },
-      {
-        "name": "All three original plant scenes follow their recorded states",
-        "status": "passed",
-        "seconds": 1.466,
-        "detail": [
-          {
-            "slider": "timeline",
-            "canvas": "growthCanvasC3",
-            "initial_sha256": "3ed63ab3d2d81f4d520b81c03a915472efba1684df4decf743919293b40a5b65",
-            "final_sha256": "c36d859ddbb7ee503c3aceb5253765ab1844cdf65b2adb367156aa477628d444"
-          },
-          {
-            "slider": "timeline",
-            "canvas": "growthCanvasC4",
-            "initial_sha256": "2adf4ecb10e201fd2998d924eef69abc5b8310726697f674c989bbc7782cc973",
-            "final_sha256": "982052083157c2316609a2a66bfc8996b5ef1ff604dec5a4d01ed3932832d9ed"
-          },
-          {
-            "slider": "timeline",
-            "canvas": "growthCanvasCAM",
-            "initial_sha256": "64a30146abe78b436a2247f90dad8bb37846e91b3ae7766b758139c9ffc39ff7",
-            "final_sha256": "0d2c17bb2a5f4be71f34f899ba33c6b42b2dcd5716e91835c8f8fd8bed414e92"
-          }
-        ]
       },
       {
         "name": "Plant scene snapshot",
@@ -1272,16 +1103,6 @@
         }
       },
       {
-        "name": "Plant native result JSON export",
-        "status": "passed",
-        "seconds": 1.601,
-        "detail": {
-          "file": "plant-native.json",
-          "bytes": 49273374,
-          "sha256": "c90473b2e765b13754607ee4c00a5c043baa2cbcc441f187e00dd4c75222987c"
-        }
-      },
-      {
         "name": "Paired circulation controls and rotation canvas retained",
         "status": "passed",
         "seconds": 5.718,
@@ -1407,151 +1228,6 @@
         "detail": "08-random.png"
       },
       {
-        "name": "Original Kimura allocation model runs",
-        "status": "passed",
-        "seconds": 0.663,
-        "detail": {
-          "lab": "evolution",
-          "keys": [
-            "schema",
-            "config",
-            "nodes",
-            "startNode",
-            "replicates",
-            "landscapes",
-            "gridPareto",
-            "comparator",
-            "visitedTransitions",
-            "convention",
-            "limitations"
-          ],
-          "config": {
-            "base": {
-              "method": "grid",
-              "population": 30,
-              "generations": 100,
-              "replicates": 8,
-              "seed": 42,
-              "grid": 4,
-              "gsMin": 0.01,
-              "gsMax": 0.2,
-              "gsLevels": 2,
-              "carbonRef": 1,
-              "waterRef": 100,
-              "heatRef": 24,
-              "wC": 1,
-              "wW": 0.2,
-              "wH": 0.2,
-              "minCarbon": 0,
-              "heatThreshold": 35,
-              "lethalThreshold": 50,
-              "waterCap": 100,
-              "heatCap": 24,
-              "standing": 0.15,
-              "mutation": 0.05,
-              "segregation": 0.03,
-              "correlation": 0,
-              "mutationProbability": 1,
-              "inheritance": "sexual",
-              "lifecycle": "fecundity",
-              "gamma0": 0,
-              "gamma1": 1,
-              "start": "c3",
-              "objective": "weighted",
-              "reverse": false,
-              "p": {
-                "v_pmax": 200,
-                "v_cmax_mes": 40,
-                "v_cmax_bs": 40,
-                "k_c": 1210,
-                "k_o": 292000,
-                "k_p": 82,
-                "gamma_star": 0.000381679,
-                "g_m": 1,
-                "g_bs": 0.003,
-                "a_o": 0.047,
-                "alpha": 0,
-                "v_cmax_tot": 130,
-                "lambda_rubisco_split": 1,
-                "solar_irradiance": 237,
-                "a_air": 0.038,
-                "b_air": 289.15,
-                "rel_humidity": 25,
-                "rel_soil_wetness": 0.33,
-                "co2_atm": 405,
-                "o2_atm": 210000,
-                "v_pmax_ea": 70373,
-                "v_pmax_hd": 117910,
-                "v_pmax_delta_s": 376,
-                "v_cmax_ea": 67294,
-                "v_cmax_hd": 144568,
-                "v_cmax_delta_s": 472,
-                "k_c_ea": 64200,
-                "k_o_ea": 10500,
-                "k_p_ea": 38300,
-                "r_ea": 66400,
-                "gamma_star_ea": 31100,
-                "a_o_ea": 1630,
-                "g_m_ea": 49800,
-                "psi_sat": -9,
-                "b": 4.38,
-                "k_sat": 56.28,
-                "leaf_water_potential": -1000000,
-                "k_l": 5e-09,
-                "f_canopy": 0.8,
-                "alpha_mes": 0.85,
-                "rho_mes": 0.05,
-                "tau_mes": 0.1,
-                "gamma_mes": 0.3,
-                "alpha_bs": 0.8,
-                "rho_bs": 0.1,
-                "tau_bs": 0.1,
-                "gamma_bs": 0.2,
-                "rho_soil": 0.3,
-                "u_a": 20,
-                "g_h": 0.9,
-                "c_p": 29.2,
-                "lambda_heat": 44440,
-                "leaf_emissivity": 0.98,
-                "r_mes": 0.6,
-                "r_bs": 0.6,
-                "r_d": 1.2
-              },
-              "forcing": [
-                {
-                  "hours": 12,
-                  "airC": 28,
-                  "solar": 500,
-                  "rh": 60,
-                  "wetness": 0.6,
-                  "co2": 405
-                },
-                {
-                  "hours": 12,
-                  "airC": 18,
-                  "solar": 0,
-                  "rh": 80,
-                  "wetness": 0.6,
-                  "co2": 405
-                }
-              ],
-              "climateOrigin": null
-            },
-            "kimura": {
-              "Ne": 100,
-              "N": 100,
-              "mu": 1e-06,
-              "horizon": 100000000,
-              "eventCap": 8,
-              "replicates": 1,
-              "selectionScale": 0,
-              "comparator": "none",
-              "optimizerIterations": 15
-            }
-          }
-        }
-      },
-      {
         "name": "Evolution advances on accepted substitutions",
         "status": "passed",
         "seconds": 0.378,
@@ -1572,140 +1248,6 @@
         }
       },
       {
-        "name": "Population evolution comparison runs",
-        "status": "passed",
-        "seconds": 0.49,
-        "detail": {
-          "lab": "search",
-          "keys": [
-            "schema",
-            "modelVersion",
-            "config",
-            "evaluations",
-            "analysis",
-            "landscapes",
-            "samples",
-            "pareto",
-            "best",
-            "history",
-            "replicates",
-            "diagnostics",
-            "limitations"
-          ],
-          "config": {
-            "method": "evolution",
-            "population": 8,
-            "generations": 4,
-            "replicates": 2,
-            "seed": 42,
-            "grid": 8,
-            "gsMin": 0.01,
-            "gsMax": 0.2,
-            "gsLevels": 3,
-            "carbonRef": 1,
-            "waterRef": 100,
-            "heatRef": 24,
-            "wC": 1,
-            "wW": 0.2,
-            "wH": 0.2,
-            "minCarbon": 0,
-            "heatThreshold": 35,
-            "lethalThreshold": 50,
-            "waterCap": 100,
-            "heatCap": 24,
-            "standing": 0.15,
-            "mutation": 0.05,
-            "segregation": 0.03,
-            "correlation": 0,
-            "mutationProbability": 1,
-            "inheritance": "sexual",
-            "lifecycle": "fecundity",
-            "gamma0": 0,
-            "gamma1": 1,
-            "start": "c3",
-            "objective": "weighted",
-            "reverse": false,
-            "forcing": [
-              {
-                "hours": 12,
-                "airC": 28,
-                "solar": 500,
-                "rh": 60,
-                "wetness": 0.6,
-                "co2": 405
-              },
-              {
-                "hours": 12,
-                "airC": 18,
-                "solar": 0,
-                "rh": 80,
-                "wetness": 0.6,
-                "co2": 405
-              }
-            ],
-            "climateOrigin": null,
-            "p": {
-              "v_pmax": 200,
-              "v_cmax_mes": 40,
-              "v_cmax_bs": 40,
-              "k_c": 1210,
-              "k_o": 292000,
-              "k_p": 82,
-              "gamma_star": 0.000381679,
-              "g_m": 1,
-              "g_bs": 0.003,
-              "a_o": 0.047,
-              "alpha": 0,
-              "v_cmax_tot": 130,
-              "lambda_rubisco_split": 1,
-              "solar_irradiance": 237,
-              "a_air": 0.038,
-              "b_air": 289.15,
-              "rel_humidity": 25,
-              "rel_soil_wetness": 0.33,
-              "co2_atm": 405,
-              "o2_atm": 210000,
-              "v_pmax_ea": 70373,
-              "v_pmax_hd": 117910,
-              "v_pmax_delta_s": 376,
-              "v_cmax_ea": 67294,
-              "v_cmax_hd": 144568,
-              "v_cmax_delta_s": 472,
-              "k_c_ea": 64200,
-              "k_o_ea": 10500,
-              "k_p_ea": 38300,
-              "r_ea": 66400,
-              "gamma_star_ea": 31100,
-              "a_o_ea": 1630,
-              "g_m_ea": 49800,
-              "psi_sat": -9,
-              "b": 4.38,
-              "k_sat": 56.28,
-              "leaf_water_potential": -1000000,
-              "k_l": 5e-09,
-              "f_canopy": 0.8,
-              "alpha_mes": 0.85,
-              "rho_mes": 0.05,
-              "tau_mes": 0.1,
-              "gamma_mes": 0.3,
-              "alpha_bs": 0.8,
-              "rho_bs": 0.1,
-              "tau_bs": 0.1,
-              "gamma_bs": 0.2,
-              "rho_soil": 0.3,
-              "u_a": 20,
-              "g_h": 0.9,
-              "c_p": 29.2,
-              "lambda_heat": 44440,
-              "leaf_emissivity": 0.98,
-              "r_mes": 0.6,
-              "r_bs": 0.6,
-              "r_d": 1.2
-            }
-          }
-        }
-      },
-      {
         "name": "Generation-linked population view",
         "status": "passed",
         "seconds": 0.437,
@@ -1723,209 +1265,6 @@
         "detail": "10-population-search.png"
       },
       {
-        "name": "Original haploid evolution runs",
-        "status": "passed",
-        "seconds": 0.32,
-        "detail": {
-          "lab": "haploid",
-          "keys": [
-            "schema",
-            "model",
-            "config",
-            "history",
-            "finalPopulation",
-            "limitations"
-          ],
-          "config": {
-            "start": "c3",
-            "population": 8,
-            "generations": 3,
-            "mutation": 0.03,
-            "selection": 1,
-            "seed": 42,
-            "seasonal": false,
-            "gs": 0.06,
-            "p": {
-              "v_pmax": 200,
-              "v_cmax_mes": 40,
-              "v_cmax_bs": 40,
-              "k_c": 1210,
-              "k_o": 292000,
-              "k_p": 82,
-              "gamma_star": 0.000381679,
-              "g_m": 1,
-              "g_bs": 0.003,
-              "a_o": 0.047,
-              "alpha": 0,
-              "v_cmax_tot": 130,
-              "lambda_rubisco_split": 1,
-              "solar_irradiance": 500,
-              "a_air": 0.038,
-              "b_air": 289.15,
-              "rel_humidity": 60,
-              "rel_soil_wetness": 0.6,
-              "co2_atm": 405,
-              "o2_atm": 210000,
-              "v_pmax_ea": 70373,
-              "v_pmax_hd": 117910,
-              "v_pmax_delta_s": 376,
-              "v_cmax_ea": 67294,
-              "v_cmax_hd": 144568,
-              "v_cmax_delta_s": 472,
-              "k_c_ea": 64200,
-              "k_o_ea": 10500,
-              "k_p_ea": 38300,
-              "r_ea": 66400,
-              "gamma_star_ea": 31100,
-              "a_o_ea": 1630,
-              "g_m_ea": 49800,
-              "psi_sat": -9,
-              "b": 4.38,
-              "k_sat": 56.28,
-              "leaf_water_potential": -1000000,
-              "k_l": 5e-09,
-              "f_canopy": 0.8,
-              "alpha_mes": 0.85,
-              "rho_mes": 0.05,
-              "tau_mes": 0.1,
-              "gamma_mes": 0.3,
-              "alpha_bs": 0.8,
-              "rho_bs": 0.1,
-              "tau_bs": 0.1,
-              "gamma_bs": 0.2,
-              "rho_soil": 0.3,
-              "u_a": 20,
-              "g_h": 0.9,
-              "c_p": 29.2,
-              "lambda_heat": 44440,
-              "leaf_emissivity": 0.98,
-              "r_mes": 0.6,
-              "r_bs": 0.6,
-              "r_d": 1.2,
-              "airC": 30,
-              "loopEnabled": 0,
-              "loopFlow": 0.01,
-              "loopTargetC": 30
-            }
-          }
-        }
-      },
-      {
-        "name": "Source coupled leaf physiology",
-        "status": "passed",
-        "seconds": 0.003,
-        "detail": {
-          "lab": "leaf",
-          "keys": [
-            "config",
-            "point",
-            "response",
-            "circulation",
-            "provenance"
-          ],
-          "config": {
-            "formulation": "updated",
-            "p": {
-              "v_pmax": 200,
-              "v_cmax_mes": 40,
-              "v_cmax_bs": 40,
-              "k_c": 1210,
-              "k_o": 292000,
-              "k_p": 82,
-              "gamma_star": 0.000381679,
-              "g_m": 1,
-              "g_bs": 0.003,
-              "a_o": 0.047,
-              "alpha": 0,
-              "v_cmax_tot": 130,
-              "lambda_rubisco_split": 1,
-              "solar_irradiance": 237,
-              "a_air": 0.038,
-              "b_air": 289.15,
-              "rel_humidity": 25,
-              "rel_soil_wetness": 0.33,
-              "co2_atm": 405,
-              "o2_atm": 210000,
-              "v_pmax_ea": 70373,
-              "v_pmax_hd": 117910,
-              "v_pmax_delta_s": 376,
-              "v_cmax_ea": 67294,
-              "v_cmax_hd": 144568,
-              "v_cmax_delta_s": 472,
-              "k_c_ea": 64200,
-              "k_o_ea": 10500,
-              "k_p_ea": 38300,
-              "r_ea": 66400,
-              "gamma_star_ea": 31100,
-              "a_o_ea": 1630,
-              "g_m_ea": 49800,
-              "psi_sat": -9,
-              "b": 4.38,
-              "k_sat": 56.28,
-              "leaf_water_potential": -1000000,
-              "k_l": 5e-09,
-              "f_canopy": 0.8,
-              "alpha_mes": 0.85,
-              "rho_mes": 0.05,
-              "tau_mes": 0.1,
-              "gamma_mes": 0.3,
-              "alpha_bs": 0.8,
-              "rho_bs": 0.1,
-              "tau_bs": 0.1,
-              "gamma_bs": 0.2,
-              "rho_soil": 0.3,
-              "u_a": 20,
-              "g_h": 0.9,
-              "c_p": 29.2,
-              "lambda_heat": 44440,
-              "leaf_emissivity": 0.98,
-              "r_mes": 0.6,
-              "r_bs": 0.6,
-              "r_d": 1.2,
-              "soilMode": "equilibrium",
-              "loopC4Only": 0,
-              "loopEnabled": 0,
-              "loopTargetC": 30,
-              "loopFlow": 0.001,
-              "loopEffectiveness": 0.8,
-              "airC": 25.006,
-              "soilSurfaceC": 18,
-              "soilRootC": 18,
-              "soilDeepC": 15,
-              "soilSurfaceDepth": 0.05,
-              "soilRootDepth": 0.45,
-              "soilDryK": 0.25,
-              "soilWetK": 1.5,
-              "soilEvapConductance": 0.02,
-              "skyCooling": 6,
-              "soilView": 0.5,
-              "pressure": 101325,
-              "g_bw": 1,
-              "jmax25": 260,
-              "cef": 0.4,
-              "hPerATP": 4.666666666666667,
-              "ndhFraction": 0.3,
-              "pumpATPshare": 0.4,
-              "photoLoss": 0.15,
-              "vpr": 80,
-              "soilDryC": 1.2,
-              "soilAlbedo": 0.2,
-              "waterBoundary": 1
-            },
-            "gs": 0.1,
-            "fractions": [
-              0.05,
-              0.9,
-              0.05
-            ],
-            "optimize": false,
-            "environment": "default",
-            "climateScenario": null,
-            "soil": "loamy_sand"
-          }
-        }
-      },
-      {
         "name": "Leaf source response plot",
         "status": "passed",
         "seconds": 0.09,
@@ -1936,7 +1275,7 @@
         "status": "passed",
         "seconds": 0.023,
         "detail": {
-          "title": "Model Studio \u00b7 Foko Lab"
+          "title": "Model Studio · Foko Lab"
         }
       },
       {
@@ -1944,7 +1283,7 @@
         "status": "passed",
         "seconds": 0.034,
         "detail": {
-          "title": "Optimization Lab \u00b7 Foko Lab"
+          "title": "Optimization Lab · Foko Lab"
         }
       },
       {
@@ -1952,7 +1291,7 @@
         "status": "passed",
         "seconds": 0.023,
         "detail": {
-          "title": "Sensitivity Analysis Lab \u00b7 Foko Lab"
+          "title": "Sensitivity Analysis Lab · Foko Lab"
         }
       },
       {
@@ -1960,7 +1299,7 @@
         "status": "passed",
         "seconds": 0.022,
         "detail": {
-          "title": "Statistics Lab \u00b7 Foko Lab"
+          "title": "Statistics Lab · Foko Lab"
         }
       },
       {
@@ -1968,7 +1307,7 @@
         "status": "passed",
         "seconds": 0.023,
         "detail": {
-          "title": "Curve Fitting Lab \u00b7 Foko Lab"
+          "title": "Curve Fitting Lab · Foko Lab"
         }
       },
       {
@@ -1976,7 +1315,7 @@
         "status": "passed",
         "seconds": 0.028,
         "detail": {
-          "title": "Agent Lab \u00b7 Foko Lab"
+          "title": "Agent Lab · Foko Lab"
         }
       },
       {
@@ -1984,7 +1323,7 @@
         "status": "passed",
         "seconds": 0.022,
         "detail": {
-          "title": "Population Genetics Lab \u00b7 Foko Lab"
+          "title": "Population Genetics Lab · Foko Lab"
         }
       },
       {
@@ -1992,7 +1331,7 @@
         "status": "passed",
         "seconds": 0.021,
         "detail": {
-          "title": "Book & materials \u00b7 FokoLab"
+          "title": "Book & materials · FokoLab"
         }
       },
       {
@@ -2000,7 +1339,7 @@
         "status": "passed",
         "seconds": 0.02,
         "detail": {
-          "title": "Your experiments \u00b7 FokoLab"
+          "title": "Your experiments · FokoLab"
         }
       },
       {
@@ -2031,13 +1370,13 @@
       "12-mobile-cell.png"
     ],
     "summary": {
-      "passed": 56,
+      "passed": 49,
       "failed": 0
     }
   },
   "original_source_numerics": {
     "release": "80.1.0",
-    "scope": "Original source engines and recorded-event invariants. Test seeds and numerical tolerances are explicit. This is not biological calibration.",
+    "scope": "Original source engines and recorded-event invariants. Test seeds and numerical tolerances are explicit. This is not biological calibration. Protected plant/leaf numerical records are omitted from the public evidence file.",
     "checks": [
       {
         "name": "Original activation: exact cell-history/event accounting",
@@ -2107,7 +1446,7 @@
             "method": "Adaptive implicit Euler, accepted two-half-step solution",
             "accepted": 30590,
             "attempts": 30595,
-            "rtol": 2e-07,
+            "rtol": 2e-7,
             "atol": 1e-11
           }
         }
@@ -2119,146 +1458,6 @@
         "detail": {
           "states": 4,
           "audit": {}
-        }
-      },
-      {
-        "name": "Original plant: pathway resource ledgers and seeded forcing",
-        "status": "passed",
-        "milliseconds": 218.3526440000005,
-        "detail": {
-          "pathways": [
-            "C3",
-            "C4",
-            "CAM"
-          ],
-          "days": 3
-        }
-      },
-      {
-        "name": "Original plant: no hidden water inflow without rain or irrigation",
-        "status": "passed",
-        "milliseconds": 112.57488799999919,
-        "detail": {
-          "days": 7
-        }
-      },
-      {
-        "name": "Original coupled leaf: finite source response, immutable inputs",
-        "status": "passed",
-        "milliseconds": 7.574094999999943,
-        "detail": {
-          "point": {
-            "valid": true,
-            "reason": "",
-            "physics": {
-              "leaf": [
-                299.9721112899784,
-                300.17259320388973
-              ],
-              "ts": 298.9163634463158,
-              "tr": 296.1699834833992,
-              "E": 0.0024548124633217185,
-              "vpd": 2736.0726013068042,
-              "Es": 5.423376917146352e-05,
-              "radiation": [
-                11.27356476641163,
-                11.574581756289051
-              ],
-              "soilRadiation": [
-                1.5134429405394447,
-                1.8026506169629073
-              ],
-              "conv": 47.72740470063333,
-              "cond": -4.00963827822693,
-              "xylem": 0.7388893483209922,
-              "loopHeat": 0,
-              "loopGroundHeat": 0,
-              "groundLW": 3.3160935575023522,
-              "soilSky": 19.00079589707786,
-              "soilConv": 9.12436135579037,
-              "conduction": 7.2779069017289695,
-              "deep": 7.328605596899311,
-              "soilWaterHeat": 0.010080701621855565,
-              "rootWaterHeat": 0.05069869517012487,
-              "storageS": 0,
-              "storageR": 0,
-              "Cs": 80691,
-              "Cr": 726219,
-              "k": 0.6625000000000001,
-              "view": 0.5,
-              "soilAbsorbed": 34.50719999999999,
-              "leafResidual": [
-                6.253912943066098e-10,
-                2.001223631253879e-10
-              ],
-              "soilResidual": [
-                -6.965561183402968e-10,
-                -2.165559398470407e-13
-              ],
-              "residual": [
-                6.253912943066098e-10,
-                2.001223631253879e-10,
-                -6.965561183402968e-10,
-                -2.165559398470407e-13
-              ],
-              "heatResidual": 6.965561183402968e-10,
-              "valid": true,
-              "loopActualFlow": 0,
-              "loopActive": 0,
-              "leafWithoutLoop": 26.82211128997841,
-              "loopUnmet": 0,
-              "tm": 299.9721112899784,
-              "tb": 300.17259320388973,
-              "im": 165.59664000000004,
-              "ib": 18.125760000000003,
-              "ea": 792.2275080335532,
-              "effectiveGs": 0.09090909090909091,
-              "latent": 109.09186587001717,
-              "rm": 12.787007706951075,
-              "rb": 13.377232373251958,
-              "psiSatPa": -882.5985000000001,
-              "psiSoil": -113415.42599366965,
-              "supply": 0.0044329228700316515,
-              "hydraulicMargin": 0.001978110406709933
-            },
-            "carbon": {
-              "ci": 10348.294935985086,
-              "cmPressure": 256.5309381182069,
-              "cbsPressure": 1925.717204963743,
-              "mes": 7.48617447021707,
-              "bs": 0.5455718263434538,
-              "pep": 5.553130626880024,
-              "leak": 5.007558800536608,
-              "assimilation": 8.031746296560524,
-              "uptake": 8.03174629656038,
-              "residual": -1.4377388168895777e-13,
-              "sheathResidual": -3.808064974464287e-14,
-              "discriminantClipped": false,
-              "bsFloor": false,
-              "atpDemand": 81.75108470325321,
-              "nadphDemand": 44.27818094643991,
-              "vm": 128.41273613338433,
-              "vb": 7.197760232480037,
-              "vp": 7.502837679718285,
-              "rm": 0.7060111296744326,
-              "rb": 0.7186769574851103,
-              "energy": {
-                "absorbedPAR": 377.8251156000001,
-                "lef": 109.75814583278341,
-                "cef": 43.90325833311337,
-                "atp": 95.0191948209525,
-                "nadph": 54.879072916391706
-              },
-              "energyMesShare": 0.9473684210526315
-            },
-            "gs": 0.1,
-            "fractions": [
-              0.05,
-              0.9,
-              0.05
-            ],
-            "waterUseEfficiency": 3.271837020776896
-          }
         }
       },
       {
@@ -2275,7 +1474,7 @@
         "milliseconds": 120.72231700000066,
         "detail": {
           "accepted": 8,
-          "convention": "Diploid pfix=(1\u2212exp(\u22122s))/(1\u2212exp(\u22124Ne s)); neutral 1/(2Ne); Qij=2N \u03bc qij pfix. s=expm1(selectionScale \u00d7 \u0394 log-performance)."
+          "convention": "Diploid pfix=(1−exp(−2s))/(1−exp(−4Ne s)); neutral 1/(2Ne); Qij=2N μ qij pfix. s=expm1(selectionScale × Δ log-performance)."
         }
       },
       {
@@ -2412,7 +1611,7 @@
       }
     ],
     "summary": {
-      "passed": 23,
+      "passed": 20,
       "failed": 0
     }
   }
