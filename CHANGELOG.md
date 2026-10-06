@@ -1,3 +1,17 @@
+# 80.4.0 — 7 October 2026
+
+Major public-interface redesign focused on research navigation, scientific visualisation and animation visibility.
+
+- Rebuilt the FokoLab home and Research Hub with a shared modern visual system.
+- Added sticky research navigation, responsive layout, scroll progress, restrained motion and consistent page hierarchy.
+- Made archived scientific simulations and animations prominent rather than burying them behind text-heavy legacy layouts.
+- Added auto-playing, pausable result reels using existing research outputs; no unpublished equations are shipped to the browser.
+- Rebuilt the public C3–C4 continuum, evolution-journey and evolution-versus-optimisation pages around scientific interpretation and animated result replay.
+- Aligned plant, leaf, fatty-acid, T-cell, acknowledgements, trust, laboratory directory, experiment catalogue and contact pages with the same design language.
+- Preserved the protected plant research boundary: complete equations, detailed parameterisation, calibration files and private scientific development remain outside the public tree.
+- Preserved the approved FokoLab brand assets.
+- Added static and Playwright browser smoke tests for the redesigned public experience.
+
 # 80.3.2 — 6 October 2026
 
 Restores the public plant simulation outputs and scientific plots while keeping the unpublished research core protected.
