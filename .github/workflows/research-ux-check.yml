@@ -7,6 +7,9 @@ on:
       - ".github/workflows/research-ux-check.yml"
 permissions:
   contents: read
+concurrency:
+  group: research-ux-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   smoke:
     runs-on: ubuntu-24.04
