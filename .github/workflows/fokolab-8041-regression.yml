@@ -1,4 +1,5 @@
 name: FokoLab 80.4.1 regression smoke
+# regression verification for restored public logic
 on:
   pull_request:
     paths:
