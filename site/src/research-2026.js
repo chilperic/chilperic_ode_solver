@@ -37,7 +37,8 @@
   addEventListener('scroll',progress,{passive:true});progress();
 
   const main=d.querySelector('main');
-  if(main)main.classList.add('rx-main');\n  d.querySelectorAll('.fl-about>header').forEach(h=>{if(!h.querySelector('figure,img,.rx-reel'))h.classList.add('rx-hero-text-only');});
+  if(main)main.classList.add('rx-main');
+  d.querySelectorAll('.fl-about>header').forEach(h=>{if(!h.querySelector('figure,img,.rx-reel'))h.classList.add('rx-hero-text-only');});
 
   const reveal=[...d.querySelectorAll('main > section, main > article, .research-project-panel, .atlas-card, .figure-card, .panel')];
   if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
