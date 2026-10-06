@@ -1,0 +1,86 @@
+name: Research UX smoke
+on:
+  pull_request:
+    paths:
+      - "site/**"
+      - "docs/**"
+      - ".github/workflows/research-ux-check.yml"
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Static publication checks
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          pages=[
+            'index.html','research.html','plants/index.html','leaf/index.html',
+            'research/photosynthesis.html','research/fatty-acid-metabolism.html','research/tcell-proliferation.html',
+            'continuum/advanced.html','continuum/approaches.html','continuum/index.html',
+            'contributors.html','trust.html','contact.html','labs.html','experiments.html'
+          ]
+          root=Path('site')
+          for page in pages:
+              text=(root/page).read_text()
+              assert 'research-2026.css' in text, page
+              assert 'research-2026.js' in text, page
+          protected=['plants/plant-engine.js','plants/c4-engine.js','leaf/leaf-engine.js','leaf/presets.json']
+          assert all(not (root/p).exists() for p in protected)
+          assert '<math' not in (root/'plants/index.html').read_text().lower()
+          assert '<math' not in (root/'research/photosynthesis.html').read_text().lower()
+          print('static checks passed',len(pages))
+      - name: Install Chromium
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Browser UX smoke
+        shell: bash
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory site >/tmp/fokolab-http.log 2>&1 &
+          echo $! >/tmp/fokolab-http.pid
+          sleep 2
+          python3 - <<'PY'
+          from playwright.sync_api import sync_playwright
+          base='http://127.0.0.1:8765/'
+          with sync_playwright() as pw:
+              b=pw.chromium.launch(headless=True,args=['--no-sandbox'])
+              p=b.new_page(viewport={'width':1440,'height':1000})
+              def open_page(path):
+                  r=p.goto(base+path,wait_until='domcontentloaded',timeout=45000)
+                  assert r and r.status==200,(path,r.status if r else None)
+                  p.wait_for_selector('.rx-nav',timeout=15000)
+                  assert p.evaluate('document.documentElement.scrollWidth<=innerWidth+3'),path+' overflows'
+              open_page('index.html')
+              p.wait_for_selector('.rx-reel figure.is-active')
+              assert p.locator('.rx-project').count()>=4
+              open_page('research.html')
+              assert p.locator('.rx-project').count()>=4
+              assert p.locator('.rx-motion-card').count()>=4
+              open_page('plants/index.html')
+              p.wait_for_function('document.getElementById("simImage").naturalWidth>100')
+              p.locator('#simClimate').select_option('germany')
+              p.wait_for_function('document.getElementById("simImage").src.includes("germany")')
+              assert p.locator('.figure-card img').count()>=6
+              open_page('continuum/advanced.html')
+              assert p.locator('[data-rx-slide]').count()>=5
+              p.wait_for_function('document.querySelector("[data-rx-slide].is-active img").naturalWidth>100')
+              open_page('continuum/approaches.html')
+              assert p.locator('[data-rx-slide]').count()>=3
+              open_page('labs.html')
+              p.wait_for_function('document.querySelectorAll("#labDirectory .directory-item").length>0',timeout=20000)
+              open_page('experiments.html')
+              p.wait_for_function('document.querySelectorAll("#experimentGrid .experiment-card").length>0',timeout=20000)
+              open_page('contributors.html')
+              text=p.locator('main').inner_text()
+              assert 'Jérémie Muller-Prokob' in text and 'Yvonne Danisch' in text
+              open_page('contact.html')
+              if p.locator('.fl-contact-photo').count():
+                  p.wait_for_function('document.querySelector(".fl-contact-photo").naturalWidth>100')
+              b.close()
+          print('browser UX smoke passed')
+          PY
