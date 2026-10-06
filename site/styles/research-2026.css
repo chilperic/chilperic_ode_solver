@@ -304,3 +304,35 @@ body.rx-enhanced .fl-credit-row p{margin:0!important}
   body.rx-enhanced .fl-credit-row{grid-template-columns:1fr;gap:5px!important}
   body.rx-enhanced .project-nav-bar,body.rx-enhanced .fl-credit-nav{top:70px;overflow-x:auto;flex-wrap:nowrap!important}
 }
+
+/* Project-page hero conversion */
+body.rx-enhanced .research-project-page>.hero-doc,
+body.rx-enhanced .project-launch-hero{
+  position:relative!important;display:grid!important;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr)!important;
+  align-items:center!important;gap:42px!important;min-height:520px!important;margin:34px 0 70px!important;padding:50px!important;
+  border-radius:34px!important;background:
+    linear-gradient(135deg,color-mix(in srgb,var(--rx-panel-solid) 94%,transparent),color-mix(in srgb,var(--rx-accent-soft) 46%,transparent))!important;
+  border:1px solid var(--rx-line)!important;box-shadow:var(--rx-shadow)!important;overflow:hidden!important
+}
+body.rx-enhanced .research-project-page>.hero-doc h1,
+body.rx-enhanced .project-launch-hero h1{
+  margin:.18em 0 .2em!important;font-size:clamp(2.5rem,5.5vw,5rem)!important;line-height:.96!important;letter-spacing:-.05em!important;color:var(--rx-ink)!important
+}
+body.rx-enhanced .project-launch-figure,
+body.rx-enhanced .research-project-page>.hero-doc figure{margin:0!important;border-radius:24px!important;overflow:hidden!important;min-height:320px!important;background:#e8ece8!important}
+body.rx-enhanced .project-launch-figure img,
+body.rx-enhanced .research-project-page>.hero-doc figure img{width:100%!important;height:100%!important;min-height:320px!important;object-fit:cover!important;display:block!important}
+body.rx-enhanced .project-launch-figure figcaption{padding:10px 14px!important;font-size:.78rem!important;color:var(--rx-muted)!important;background:var(--rx-panel-solid)!important}
+body.rx-enhanced .fl-about>header.rx-hero-text-only{grid-template-columns:minmax(0,1fr)!important;min-height:410px!important}
+body.rx-enhanced .fl-about>header.rx-hero-text-only>*{max-width:900px}
+body.rx-enhanced .atlas-grid,
+body.rx-enhanced .figures-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}
+body.rx-enhanced .atlas-card{overflow:hidden!important;padding:0!important}
+body.rx-enhanced .atlas-card .scheme,
+body.rx-enhanced .atlas-card .atlas-figure{margin:0!important;border-radius:0!important;overflow:hidden!important}
+body.rx-enhanced .atlas-card img{width:100%!important;height:280px!important;object-fit:cover!important;display:block!important}
+body.rx-enhanced .atlas-body{padding:20px 22px 24px!important}
+@media(max-width:900px){
+ body.rx-enhanced .research-project-page>.hero-doc,body.rx-enhanced .project-launch-hero{grid-template-columns:1fr!important;padding:28px!important;min-height:auto!important}
+ body.rx-enhanced .atlas-grid,body.rx-enhanced .figures-grid{grid-template-columns:1fr!important}
+}
