@@ -1,45 +1,8 @@
-<!DOCTYPE html>
-<html lang="en" data-appearance="light">
-<head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Evolution versus optimisation · FokoLab</title>
-<link rel="icon" href="../assets/brand/foko-lab-micro.svg"/>
-<link rel="stylesheet" href="../styles/research-2026.css"/>
-<script defer src="../src/research-2026.js"></script>
-</head>
-<body data-foko-integrated="true" data-lab="evolution">
-<main id="main-content">
-<section class="rx-hero">
- <div class="rx-hero-copy">
-  <p class="rx-kicker">Methods · interpretation</p>
-  <h1 class="rx-title">Optimisation finds peaks. Evolution must find paths.</h1>
-  <p class="rx-lead">FokoLab keeps numerical search and biological evolution visually close but conceptually separate. That distinction is essential for interpreting the C3–C4 research programme.</p>
-  <div class="rx-hero-actions"><a class="rx-btn primary" href="advanced.html">Watch trajectory replay</a><a class="rx-btn" href="../optimization.html">Optimization laboratory</a></div>
- </div>
- <div class="rx-reel" data-rx-reel>
-  <div class="rx-reel-track">
-   <figure data-rx-slide><img src="../assets/research/photosynthesis/objective_landscape_bio_full_3d.png" alt="Performance landscape"/><figcaption><strong>Landscape</strong> High-performance regions can be mapped without implying that a population can reach them.</figcaption></figure>
-   <figure data-rx-slide><img src="../assets/research/photosynthesis/c3c4_3d_evolution_germany.png" alt="Trait search trajectory"/><figcaption><strong>Search trace</strong> A numerical path through trait space is an algorithmic object.</figcaption></figure>
-   <figure data-rx-slide><img src="../assets/research/photosynthesis/c3c4_pareto_germany.png" alt="Pareto front"/><figcaption><strong>Pareto structure</strong> Multiple trade-off solutions can coexist before biological accessibility is considered.</figcaption></figure>
-  </div>
- </div>
-</section>
-<section class="rx-section">
- <div class="rx-section-head"><div><p class="rx-kicker">Two questions</p><h2>“What performs well?” is not “what can evolve?”</h2></div><p>The first is an optimisation/landscape problem. The second adds population genetics, constraints, history and stochasticity.</p></div>
- <div class="rx-split">
-  <article class="rx-surface"><h3>Landscape &amp; optimisation</h3><ul class="rx-list"><li>Locate high-performing regions</li><li>Map trade-offs and feasibility boundaries</li><li>Compare objectives and constraints</li><li>Use CMA-ES, grids or Pareto methods as search tools</li></ul></article>
-  <article class="rx-surface"><h3>Biological evolution</h3><ul class="rx-list"><li>Start from plausible ancestral populations</li><li>Represent heritable variation and accessible mutations</li><li>Apply reproduction, selection and drift</li><li>Compare replicated trajectories across environmental histories</li></ul></article>
- </div>
-</section>
-<section class="rx-section">
- <div class="rx-section-head"><div><p class="rx-kicker">Evidence views</p><h2>Use several views of the same question.</h2></div><p>No single figure is sufficient. Sensitivity, Pareto structure, trajectory replay and physiological diagnostics constrain different failure modes of the interpretation.</p></div>
- <div class="rx-motion-grid">
-  <a class="rx-motion-card" href="../assets/research/photosynthesis/c3c4_local_sensitivity.png"><img src="../assets/research/photosynthesis/c3c4_local_sensitivity.png" alt="Local sensitivity"/><div><b>Local sensitivity</b><span>Near-reference response.</span></div></a>
-  <a class="rx-motion-card" href="../assets/research/photosynthesis/c3c4_sobol_interactions.png"><img src="../assets/research/photosynthesis/c3c4_sobol_interactions.png" alt="Sobol interactions"/><div><b>Interactions</b><span>Dependence on combinations of uncertain quantities.</span></div></a>
-  <a class="rx-motion-card" href="../assets/research/photosynthesis/c3c4_pareto_niger.png"><img src="../assets/research/photosynthesis/c3c4_pareto_niger.png" alt="Pareto front"/><div><b>Trade-offs</b><span>Alternative non-dominated allocations.</span></div></a>
-  <a class="rx-motion-card" href="../assets/research/photosynthesis/c3c4_3d_evolution_niger.png"><img src="../assets/research/photosynthesis/c3c4_3d_evolution_niger.png" alt="Trajectory replay"/><div><b>Trajectory replay</b><span>Historical search output with corrected labelling.</span></div></a>
- </div>
-</section>
-</main>
-<footer class="fl-site-footer"><a href="../index.html">Home</a><a href="../research.html">Research</a><a href="advanced.html">Evolution journey</a><a href="../trust.html">Methods &amp; limitations</a></footer>
-</body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Evolution vs optimisation · FokoLab</title><link rel="icon" href="../assets/brand/foko-lab-micro.svg"/><link rel="stylesheet" href="replay.css"/></head><body>
+<div class="ev-shell">
+<header class="ev-top"><a href="../index.html"><img src="../assets/brand/foko-lab-logo.svg" alt="FokoLab"/></a><nav class="ev-nav"><a href="../index.html">Home</a><a href="advanced.html">Evolution replay</a><a href="../research.html">Research</a><a href="../trust.html">Methods &amp; limits</a></nav></header>
+<section class="ev-hero"><div class="ev-kicker">Interpretation</div><h1>Optimisation and biological evolution answer different questions.</h1><p>Numerical search can locate high-performing regions. Biological evolution additionally depends on inheritance, accessible variation, selection, drift and historical constraints.</p></section>
+<section class="ev-section"><h2>Public comparison</h2><div class="ev-grid"><article class="ev-card"><img src="../assets/research/photosynthesis/objective_landscape_bio_full_3d.png" alt="Performance landscape"/><div><h3>Landscape</h3><p>Where does the model perform well under a declared objective?</p></div></article><article class="ev-card"><img src="../assets/research/photosynthesis/c3c4_3d_evolution_germany.png" alt="Archived trajectory"/><div><h3>Trajectory replay</h3><p>How did a recorded numerical trajectory move through trait space?</p></div></article><article class="ev-card"><img src="../assets/research/photosynthesis/c3c4_pareto_germany.png" alt="Pareto trade-off"/><div><h3>Trade-offs</h3><p>Which solutions remain non-dominated when objectives conflict?</p></div></article></div></section>
+<section class="ev-section"><h2>Boundary</h2><div class="ev-note">The public page intentionally omits the unpublished equations, detailed parameterisation and private scientific implementation. <a href="advanced.html">Open the animated result replay</a> for the public trajectory layer.</div></section>
+<footer class="ev-footer"><a href="advanced.html">Evolution replay</a><a href="../plants/">Plant growth replay</a><a href="../research/photosynthesis.html">Plant research</a></footer>
+</div></body></html>
