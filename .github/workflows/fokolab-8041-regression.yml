@@ -1,0 +1,100 @@
+name: FokoLab 80.4.1 regression smoke
+# regression verification for restored public logic
+on:
+  pull_request:
+    paths:
+      - "site/**"
+      - "docs/**"
+      - "CHANGELOG.md"
+      - ".github/workflows/fokolab-8041-regression.yml"
+permissions:
+  contents: read
+concurrency:
+  group: fokolab-8041-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Static scope checks
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,re
+          root=Path('site')
+          # Previous global logic must be back.
+          home=(root/'index.html').read_text()
+          assert 'foko-home' in home
+          assert 'research-2026.css' not in home
+          labs=(root/'labs.html').read_text()
+          assert 'sidebar' in labs and 'research-2026.css' not in labs
+          experiments=(root/'experiments.html').read_text()
+          assert 'experiment-grid' in experiments and 'research-2026.css' not in experiments
+          # New logic is intentionally limited to Research Hub.
+          research=(root/'research.html').read_text()
+          assert 'research-2026.css' in research and 'rx-project' in research and 'rx-motion-card' in research
+          # Plant/evolution are output replays, not scientific engine publication.
+          plant=(root/'plants/index.html').read_text().lower()
+          evolution=(root/'continuum/advanced.html').read_text().lower()
+          for text in (plant,evolution):
+              assert '<math' not in text
+              assert 'leaf_water_potential' not in text
+              assert 'v_pmax' not in text
+              assert 'g_bs' not in text
+          protected=['plants/plant-engine.js','plants/c4-engine.js','leaf/leaf-engine.js','leaf/presets.json']
+          assert all(not (root/p).exists() for p in protected)
+          replay=json.loads((root/'plants/public-growth-replay.json').read_text())
+          assert len(replay['rows'])>=100
+          assert set(replay['rows'][0])=={'time_day','shoot_C','root_C','seed_C','litter_C','soil_water_mm','mineral_N','cumulative_ET_mm','temperature_C','net_gain_gC_m2_day'}
+          print('static scope checks passed')
+      - name: Install Chromium
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Browser replay checks
+        shell: bash
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory site >/tmp/fokolab-http.log 2>&1 &
+          sleep 2
+          python3 - <<'PY'
+          from playwright.sync_api import sync_playwright
+          base='http://127.0.0.1:8765/'
+          with sync_playwright() as pw:
+              b=pw.chromium.launch(headless=True,args=['--no-sandbox'])
+              p=b.new_page(viewport={'width':1440,'height':1000})
+              # Previous home logic remains.
+              r=p.goto(base+'index.html',wait_until='domcontentloaded'); assert r.status==200
+              assert p.locator('.foko-home').count()==1
+              assert p.locator('.rx-nav').count()==0
+              # Only Research Hub uses the new UX system.
+              p.goto(base+'research.html',wait_until='domcontentloaded')
+              p.wait_for_selector('.rx-nav')
+              assert p.locator('.rx-project').count()>=4
+              # Plant growth replay is animated from archived public output.
+              p.goto(base+'plants/index.html',wait_until='domcontentloaded')
+              p.wait_for_function('document.getElementById("growthScene").width>100')
+              p.wait_for_function('document.getElementById("mDay").textContent!="—"',timeout=15000)
+              day0=p.locator('#mDay').inner_text()
+              p.wait_for_timeout(800)
+              day1=p.locator('#mDay').inner_text()
+              assert day0!=day1,(day0,day1)
+              assert p.locator('math').count()==0
+              # Evolution trajectory reveal visibly advances without loading protected engines.
+              p.goto(base+'continuum/advanced.html',wait_until='domcontentloaded')
+              p.wait_for_selector('#evReveal')
+              left0=p.locator('.ev-progress span').get_attribute('style') or ''
+              p.wait_for_timeout(700)
+              left1=p.locator('.ev-progress span').get_attribute('style') or ''
+              assert left0!=left1,(left0,left1)
+              assert p.locator('math').count()==0
+              # Minimal related pages are engine-free.
+              for path in ['continuum/approaches.html','continuum/index.html']:
+                  p.goto(base+path,wait_until='domcontentloaded')
+                  assert p.locator('math').count()==0
+                  assert p.locator('script[src*="plant-engine"]').count()==0
+                  assert p.locator('script[src*="c4-engine"]').count()==0
+              b.close()
+          print('browser replay checks passed')
+          PY
