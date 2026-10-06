@@ -1,47 +1,38 @@
-# Photosynthesis Climate Adaptation Model
+# Mechanistic evolution across the C3–C4 continuum
 
-This folder documents the Foko Lab browser-facing layer for the photosynthesis climate-adaptation project.
+This directory describes the public FokoLab interface for the plant research project.
 
-## Project positioning
+## Scientific question
 
-This is the flagship research model in the portfolio. It should be presented as a project designed and led by Chilperic Armel Foko Kuate, with core code architecture, major implementation and research integration attributed to him.
+Starting from plausible C3-like populations, which combinations and sequences of anatomical, photorespiratory, biochemical, hydraulic and resource-allocation changes are physiologically viable and evolutionarily accessible under different environments?
 
-Yvonne Danisch's bachelor thesis contribution should be acknowledged clearly and respectfully: implementation, model execution, validation and analysis contribution within the bachelor thesis work. Jérémie Muller-Prokob contributed scientific guidance and technical discussion. Martin Lercher provided PI supervision, research environment and funding. Antonio Rigueiro is retained as an additional paper-level contributor where relevant.
+The project deliberately separates three layers:
 
-## Browser boundary
+1. **Physiology** — carbon, heat, water, resource and anatomical constraints determine whether a phenotype is physically and biologically admissible.
+2. **Landscape analysis** — grids, CMA-ES, NSGA-II and sensitivity methods identify high-performing regions and trade-offs.
+3. **Evolution** — only a finite-population model with inheritance, heritable variation, selection and drift is interpreted as biological evolution.
 
-The browser models are deliberately reduced surrogates. They are meant to communicate the model architecture and make the scientific logic inspectable in a portfolio/demo setting.
+C2 photosynthesis is not forced as a mandatory stage. It is included when the glycine/GDC photorespiratory pump is represented and its carbon/nitrogen consequences can be evaluated.
 
-Use the full Python project for scientific runs:
+## Hydraulics
 
-- coupled C3/C4 biochemical model
-- hydraulic model
-- heat-balance model
-- CasADi optimization
-- sensitivity analysis
-- CMA-ES evolutionary trait exploration
+Water temperature is part of the hydraulic model because ideal conduit conductance depends on water viscosity. That physical correction is kept separate from pit resistance, conduit connectivity, outside-xylem resistance, aquaporins and vulnerability/embolism. A viscosity correction alone is not a whole-plant hydraulic model.
 
-## Visual priority
+## Parameter provenance
 
-The strongest portfolio figures are not generic objective landscapes. The primary figures are:
+Every public parameter should carry one status: measured, literature anchor, calibrated, derived, assumed, scenario, or missing. Missing values are not silently replaced by defaults for quantitative claims.
 
-- 3D evolutionary trajectories
-- local sensitivity ranking
-- Sobol first-order and total-order indices
-- second-order Sobol interactions
-- Pareto fronts of mesophyll and bundle-sheath assimilation
+## Collaboration
 
-Workbench entries:
+- **Dr. Chilperic Armel Foko Kuate** — project leadership, research integration and core modelling architecture.
+- **Jérémie Muller-Prokob** — main scientific and technical collaborator.
+- **Yvonne Danisch** — main collaborator; substantial bachelor-thesis implementation, model execution, validation and analysis.
+- **Antonio Rigueiro** — research collaborator and paper-level contributor.
+- **Jonas Brass** — research collaborator; hydraulic-model discussions including water-temperature effects.
+- **Martin J. Lercher** — PI supervision and research environment.
 
-- `leaf-thermal-steady`
-- `leaf-thermal-opt`
-- `hydraulic-carbon-opt`
-- `c3c4-trait-opt`
+Specific publication authorship and software ownership are stated with the corresponding output.
 
-Legacy Optimization Lab presets:
+## Public boundary
 
-- `Leaf heat-balance optimal control`
-- `Hydraulic-carbon trade-off`
-- `C3-C4 trait allocation`
-
-Scientific boundary: the platform can demonstrate modeling skill and mechanism coupling, but it must not claim calibrated physiological prediction from browser surrogates.
+The browser presentation is not the unpublished scientific source repository. Historical figures are retained only with their method/provenance labels. Optimizer paths must not be called evolutionary trajectories, and assimilation must not be called reproductive fitness without an explicit mapping.
