@@ -1,0 +1,89 @@
+name: Verify constrained Python export
+on:
+  push:
+    branches: [fix/80.3-python-export-2026-10-06]
+    paths:
+      - deployment/fix_optimization_export.py
+      - tests/optimization_python_export.py
+      - .github/workflows/verify-optimization-export.yml
+permissions:
+  contents: write
+concurrency:
+  group: fokolab-803-python-export
+  cancel-in-progress: true
+jobs:
+  correction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Install exact test dependencies
+        run: |
+          python3 -m pip install numpy==2.3.5 scipy==1.17.0 playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Patch only the exporter in the two application copies
+        run: |
+          mkdir -p evidence/optimization-python
+          python3 deployment/fix_optimization_export.py > evidence/optimization-python/source-changes.json
+          node --check site/src/v72/optimization-workspace.js
+          cmp site/src/v72/optimization-workspace.js docs/src/v72/optimization-workspace.js
+      - name: Execute browser-generated Python against analytic solutions
+        run: python3 tests/optimization_python_export.py
+      - name: Retain original numerical and decision-analysis behaviour
+        run: |
+          node tests/preservation-regression.mjs
+          node tests/finish803_science.mjs
+          python3 tests/finish803_browser.py
+      - name: Record tested correction and package exact current source
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,hashlib,shutil,zipfile,os
+          p=Path('evidence/optimization-python');report=json.loads((p/'verification.json').read_text());assert report['passed']
+          broad=json.loads(Path('evidence/finish803/browser.json').read_text());assert broad['summary']['failed']==0 and not broad['errors'] and not broad['failedHTTP']
+          report.update(release='80.3.0',source_commit=os.environ['GITHUB_SHA'],browser_regression=broad['summary'],changes=json.loads((p/'source-changes.json').read_text()),fixes=['Inequality/equality functions no longer refer to variables scoped only inside the objective.','A decision variable named x no longer overwrites the input vector.','AST translation rejects unsupported Python semantics instead of exporting guessed code.'])
+          (p/'verification.json').write_text(json.dumps(report,indent=2))
+          for prefix in ['site','docs']:
+              Path(prefix+'/optimization-export-verification.json').write_text(json.dumps(report,indent=2))
+              manifest=Path(prefix+'/source-changes-80.3.json');data=json.loads(manifest.read_text());data['optimizationPythonCorrection']=report['changes'];manifest.write_text(json.dumps(data,indent=2))
+          note='\n\n### Constrained Python export correction — 6 October 2026\n\nPython exports use parsed expressions with vector-indexed variables in every objective and constraint function. This fixes unbound constraint variables and the collision between a variable named `x` and the parameter vector. Six actual browser-generated scripts were independently executed against analytic constrained optima, and the 85-browser-check regression suite was rerun. See `site/optimization-export-verification.json`. These scripts independently solve the exported configuration with SciPy SLSQP; they do not claim to replay the browser algorithm. Unsupported translation semantics are refused explicitly.\n'
+          for path in ['README.md','CHANGELOG.md']:
+              f=Path(path);f.write_text(f.read_text()+note)
+          out=Path('release-artifacts');out.mkdir(exist_ok=True)
+          with zipfile.ZipFile(out/'FokoLab-80.3.0-Public-Site.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for f in Path('site').rglob('*'):
+                  if f.is_file() and not f.is_symlink() and f.suffix.lower() not in ('.woff','.woff2','.ttf','.otf','.eot'):z.write(f,str(f.relative_to('site')))
+          with zipfile.ZipFile(out/'FokoLab-80.3.0-Complete-Package.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for folder in ['site','tests','evidence/optimization-python','evidence/finish803','deployment/802']:
+                  for f in Path(folder).rglob('*'):
+                      if f.is_file() and not f.is_symlink() and 'http-root' not in f.parts and f.suffix.lower() not in ('.woff','.woff2','.ttf','.otf','.eot'):z.write(f,'FokoLab-80.3.0/'+str(f))
+              for name in ['README.md','CHANGELOG.md','serve.py','package.json','START-FOKOLAB.bat','START-FOKOLAB.sh','deployment/finish803.py','deployment/refinements803.py','deployment/harden803.py','deployment/fix_optimization_export.py']:
+                  f=Path(name)
+                  if f.is_file():z.write(f,'FokoLab-80.3.0/'+name)
+          (out/'CHECKSUMS.txt').write_text('\n'.join(hashlib.sha256(f.read_bytes()).hexdigest()+'  '+f.name for f in out.glob('*.zip'))+'\n')
+      - name: Commit tested files on the correction branch
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF_NAME" = 'fix/80.3-python-export-2026-10-06'
+          git config user.name 'FokoLab verified export correction'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add site/src/v72/optimization-workspace.js docs/src/v72/optimization-workspace.js site/optimization-export-verification.json docs/optimization-export-verification.json site/source-changes-80.3.json docs/source-changes-80.3.json README.md CHANGELOG.md
+          git commit -m 'Fix and verify constrained Python exports; preserve native simulation engines'
+          git push origin HEAD:fix/80.3-python-export-2026-10-06
+          echo "VERIFIED_EXPORT_COMMIT=$(git rev-parse HEAD)"
+      - name: Save test evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fokolab-optimization-python-evidence
+          path: |
+            evidence/optimization-python/
+            evidence/finish803/browser.json
+            evidence/finish803/science.json
+          retention-days: 30
+      - name: Save corrected complete packages
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fokolab-803-corrected-packages
+          path: release-artifacts/
+          retention-days: 30
