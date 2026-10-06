@@ -1,0 +1,483 @@
+{
+  "scope": "Actual Chromium-exported Python scripts executed independently with SciPy SLSQP; analytic constrained optimum checks; not equivalence to the native browser search algorithm.",
+  "checks": [
+    {
+      "name": "vector_name_x_with_inequality",
+      "passed": true,
+      "expected": [
+        0.5,
+        1.5
+      ],
+      "expected_objective": 0.5,
+      "observed": {
+        "success": true,
+        "message": "Optimization terminated successfully",
+        "x": [
+          0.5000000009168675,
+          1.4999999990831334
+        ],
+        "reported_objective": 0.4999999999999991,
+        "max_constraint_violation": 8.881784197001252e-16,
+        "feasible": true,
+        "configuration": {
+          "model": {
+            "name": "vector_name_x_with_inequality",
+            "objective": "(x-1)^2+(y-2)^2",
+            "objective2": "",
+            "sense": "minimize",
+            "algorithm": "",
+            "variables": [
+              {
+                "name": "x",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              },
+              {
+                "name": "y",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              }
+            ],
+            "inequalities": [
+              "x+y-2"
+            ],
+            "equalities": [],
+            "settings": {
+              "algorithm": "",
+              "maxIterations": 500,
+              "populationSize": 36,
+              "cmaSigma": 0.3,
+              "starts": 16,
+              "seed": 1729,
+              "penalty": 1000,
+              "feasibilityTolerance": 1e-09,
+              "stepTolerance": 1e-07,
+              "paretoSamples": 1200,
+              "stallIterations": 30,
+              "recordLimit": 12000
+            }
+          },
+          "settings": {
+            "algorithm": "",
+            "maxIterations": 500,
+            "populationSize": 36,
+            "cmaSigma": 0.3,
+            "starts": 16,
+            "seed": 1729,
+            "penalty": 1000,
+            "feasibilityTolerance": 1e-09,
+            "stepTolerance": 1e-07,
+            "paretoSamples": 1200,
+            "stallIterations": 30,
+            "recordLimit": 12000
+          },
+          "example": "Custom model"
+        }
+      }
+    },
+    {
+      "name": "named_variables_in_inequality",
+      "passed": true,
+      "expected": [
+        0.5,
+        1.5
+      ],
+      "expected_objective": 0.5,
+      "observed": {
+        "success": true,
+        "message": "Optimization terminated successfully",
+        "x": [
+          0.5000000009168675,
+          1.4999999990831334
+        ],
+        "reported_objective": 0.4999999999999991,
+        "max_constraint_violation": 8.881784197001252e-16,
+        "feasible": true,
+        "configuration": {
+          "model": {
+            "name": "named_variables_in_inequality",
+            "objective": "(a-1)^2+(b-2)^2",
+            "objective2": "",
+            "sense": "minimize",
+            "algorithm": "",
+            "variables": [
+              {
+                "name": "a",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              },
+              {
+                "name": "b",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              }
+            ],
+            "inequalities": [
+              "a+b-2"
+            ],
+            "equalities": [],
+            "settings": {
+              "algorithm": "",
+              "maxIterations": 500,
+              "populationSize": 36,
+              "cmaSigma": 0.3,
+              "starts": 16,
+              "seed": 1729,
+              "penalty": 1000,
+              "feasibilityTolerance": 1e-09,
+              "stepTolerance": 1e-07,
+              "paretoSamples": 1200,
+              "stallIterations": 30,
+              "recordLimit": 12000
+            }
+          },
+          "settings": {
+            "algorithm": "",
+            "maxIterations": 500,
+            "populationSize": 36,
+            "cmaSigma": 0.3,
+            "starts": 16,
+            "seed": 1729,
+            "penalty": 1000,
+            "feasibilityTolerance": 1e-09,
+            "stepTolerance": 1e-07,
+            "paretoSamples": 1200,
+            "stallIterations": 30,
+            "recordLimit": 12000
+          },
+          "example": "Custom model"
+        }
+      }
+    },
+    {
+      "name": "named_variables_in_equality",
+      "passed": true,
+      "expected": [
+        0,
+        1
+      ],
+      "expected_objective": 2,
+      "observed": {
+        "success": true,
+        "message": "Optimization terminated successfully",
+        "x": [
+          1.129966606394639e-10,
+          0.9999999998870034
+        ],
+        "reported_objective": 2.0,
+        "max_constraint_violation": 0.0,
+        "feasible": true,
+        "configuration": {
+          "model": {
+            "name": "named_variables_in_equality",
+            "objective": "(x-1)^2+(y-2)^2",
+            "objective2": "",
+            "sense": "minimize",
+            "algorithm": "",
+            "variables": [
+              {
+                "name": "x",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              },
+              {
+                "name": "y",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              }
+            ],
+            "inequalities": [],
+            "equalities": [
+              "x+y-1"
+            ],
+            "settings": {
+              "algorithm": "",
+              "maxIterations": 500,
+              "populationSize": 36,
+              "cmaSigma": 0.3,
+              "starts": 16,
+              "seed": 1729,
+              "penalty": 1000,
+              "feasibilityTolerance": 1e-09,
+              "stepTolerance": 1e-07,
+              "paretoSamples": 1200,
+              "stallIterations": 30,
+              "recordLimit": 12000
+            }
+          },
+          "settings": {
+            "algorithm": "",
+            "maxIterations": 500,
+            "populationSize": 36,
+            "cmaSigma": 0.3,
+            "starts": 16,
+            "seed": 1729,
+            "penalty": 1000,
+            "feasibilityTolerance": 1e-09,
+            "stepTolerance": 1e-07,
+            "paretoSamples": 1200,
+            "stallIterations": 30,
+            "recordLimit": 12000
+          },
+          "example": "Custom model"
+        }
+      }
+    },
+    {
+      "name": "maximize_direction",
+      "passed": true,
+      "expected": null,
+      "expected_objective": 2,
+      "observed": {
+        "success": true,
+        "message": "Optimization terminated successfully",
+        "x": [
+          1.0000000000000002,
+          1.0000000000000002
+        ],
+        "reported_objective": 2.0000000000000004,
+        "max_constraint_violation": 4.440892098500626e-16,
+        "feasible": true,
+        "configuration": {
+          "model": {
+            "name": "maximize_direction",
+            "objective": "x+y",
+            "objective2": "",
+            "sense": "maximize",
+            "algorithm": "",
+            "variables": [
+              {
+                "name": "x",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              },
+              {
+                "name": "y",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              }
+            ],
+            "inequalities": [
+              "x+y-2"
+            ],
+            "equalities": [],
+            "settings": {
+              "algorithm": "",
+              "maxIterations": 500,
+              "populationSize": 36,
+              "cmaSigma": 0.3,
+              "starts": 16,
+              "seed": 1729,
+              "penalty": 1000,
+              "feasibilityTolerance": 1e-09,
+              "stepTolerance": 1e-07,
+              "paretoSamples": 1200,
+              "stallIterations": 30,
+              "recordLimit": 12000
+            }
+          },
+          "settings": {
+            "algorithm": "",
+            "maxIterations": 500,
+            "populationSize": 36,
+            "cmaSigma": 0.3,
+            "starts": 16,
+            "seed": 1729,
+            "penalty": 1000,
+            "feasibilityTolerance": 1e-09,
+            "stepTolerance": 1e-07,
+            "paretoSamples": 1200,
+            "stallIterations": 30,
+            "recordLimit": 12000
+          },
+          "example": "Custom model"
+        }
+      }
+    },
+    {
+      "name": "variable_named_like_module",
+      "passed": true,
+      "expected": [
+        0.5,
+        1.5
+      ],
+      "expected_objective": 0.5,
+      "observed": {
+        "success": true,
+        "message": "Optimization terminated successfully",
+        "x": [
+          0.5000000009168675,
+          1.4999999990831334
+        ],
+        "reported_objective": 0.4999999999999991,
+        "max_constraint_violation": 8.881784197001252e-16,
+        "feasible": true,
+        "configuration": {
+          "model": {
+            "name": "variable_named_like_module",
+            "objective": "(_np-1)^2+(x-2)^2",
+            "objective2": "",
+            "sense": "minimize",
+            "algorithm": "",
+            "variables": [
+              {
+                "name": "_np",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              },
+              {
+                "name": "x",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              }
+            ],
+            "inequalities": [
+              "_np+x-2"
+            ],
+            "equalities": [],
+            "settings": {
+              "algorithm": "",
+              "maxIterations": 500,
+              "populationSize": 36,
+              "cmaSigma": 0.3,
+              "starts": 16,
+              "seed": 1729,
+              "penalty": 1000,
+              "feasibilityTolerance": 1e-09,
+              "stepTolerance": 1e-07,
+              "paretoSamples": 1200,
+              "stallIterations": 30,
+              "recordLimit": 12000
+            }
+          },
+          "settings": {
+            "algorithm": "",
+            "maxIterations": 500,
+            "populationSize": 36,
+            "cmaSigma": 0.3,
+            "starts": 16,
+            "seed": 1729,
+            "penalty": 1000,
+            "feasibilityTolerance": 1e-09,
+            "stepTolerance": 1e-07,
+            "paretoSamples": 1200,
+            "stallIterations": 30,
+            "recordLimit": 12000
+          },
+          "example": "Custom model"
+        }
+      }
+    },
+    {
+      "name": "functions_and_numeric_constants",
+      "passed": true,
+      "expected": [
+        0,
+        1
+      ],
+      "expected_objective": 0,
+      "observed": {
+        "success": true,
+        "message": "Optimization terminated successfully",
+        "x": [
+          0.0,
+          0.9999999925494231
+        ],
+        "reported_objective": 5.551109663735082e-17,
+        "max_constraint_violation": 0.0,
+        "feasible": true,
+        "configuration": {
+          "model": {
+            "name": "functions_and_numeric_constants",
+            "objective": "sin(x)^2+(y-log(e))^2",
+            "objective2": "",
+            "sense": "minimize",
+            "algorithm": "",
+            "variables": [
+              {
+                "name": "x",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              },
+              {
+                "name": "y",
+                "start": 0.2,
+                "lower": -5,
+                "upper": 5
+              }
+            ],
+            "inequalities": [],
+            "equalities": [
+              "x"
+            ],
+            "settings": {
+              "algorithm": "",
+              "maxIterations": 500,
+              "populationSize": 36,
+              "cmaSigma": 0.3,
+              "starts": 16,
+              "seed": 1729,
+              "penalty": 1000,
+              "feasibilityTolerance": 1e-09,
+              "stepTolerance": 1e-07,
+              "paretoSamples": 1200,
+              "stallIterations": 30,
+              "recordLimit": 12000
+            }
+          },
+          "settings": {
+            "algorithm": "",
+            "maxIterations": 500,
+            "populationSize": 36,
+            "cmaSigma": 0.3,
+            "starts": 16,
+            "seed": 1729,
+            "penalty": 1000,
+            "feasibilityTolerance": 1e-09,
+            "stepTolerance": 1e-07,
+            "paretoSamples": 1200,
+            "stallIterations": 30,
+            "recordLimit": 12000
+          },
+          "example": "Custom model"
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "passed": true,
+  "release": "80.3.0",
+  "source_commit": "beb2bae9c90ae590c7c9999119a0e2eb94a1546b",
+  "browser_regression": {
+    "passed": 85,
+    "failed": 0
+  },
+  "changes": [
+    {
+      "path": "site/src/v72/optimization-workspace.js",
+      "before": "417e29a1fc5764d4e7c73486c081a69ef954a85c7bc73d9e047e0ef32d63264f",
+      "after": "279228d9adf5208f08f8c2401ee2311fc4e1a60f3412bb684d4ac6be2fc7edb5"
+    },
+    {
+      "path": "docs/src/v72/optimization-workspace.js",
+      "before": "417e29a1fc5764d4e7c73486c081a69ef954a85c7bc73d9e047e0ef32d63264f",
+      "after": "279228d9adf5208f08f8c2401ee2311fc4e1a60f3412bb684d4ac6be2fc7edb5"
+    }
+  ],
+  "fixes": [
+    "Inequality/equality functions no longer refer to variables scoped only inside the objective.",
+    "A decision variable named x no longer overwrites the input vector.",
+    "AST translation rejects unsupported Python semantics instead of exporting guessed code."
+  ]
+}

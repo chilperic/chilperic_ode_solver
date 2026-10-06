@@ -86,3 +86,8 @@ Selecting an example prepares native inputs without a separate Load click. The p
 Contact uses the existing unmodified portrait. Acknowledgements are linked in the shared navigation and footer, distinguishing collaborators, supervisors, institutions, historical research funding and cited model literature. Marie Skłodowska-Curie / PoLiMeR 812616 and AIMS support are credited without implying endorsement of all browser software. All six CV editions are preserved.
 
 For executed acceptance and remaining limitations see `site/audit-80.3.json` and `site/AUDIT-80.3.md`. Automated checks are not biological calibration, physical-device certification or full WCAG conformance. The approved `legacy/80.1.0-user-approved` branch is unchanged.
+
+
+### Constrained Python export correction — 6 October 2026
+
+Python exports use parsed expressions with vector-indexed variables in every objective and constraint function. This fixes unbound constraint variables and the collision between a variable named `x` and the parameter vector. Six actual browser-generated scripts were independently executed against analytic constrained optima, and the 85-browser-check regression suite was rerun. See `site/optimization-export-verification.json`. These scripts independently solve the exported configuration with SciPy SLSQP; they do not claim to replay the browser algorithm. Unsupported translation semantics are refused explicitly.

@@ -19,3 +19,8 @@ Updated the home page and additive laboratory layouts, mobile disclosures, plott
 ## Source limits
 
 This is not the inaccessible newer hosted website and does not claim recovery of its 374 advertised examples. Newly authored teaching reductions do not stand in for missing calibrated research code. The fatty-acid interpretation discrepancy remains explicitly unresolved. The original website has not been deployed over or modified.
+
+
+### Constrained Python export correction — 6 October 2026
+
+Python exports use parsed expressions with vector-indexed variables in every objective and constraint function. This fixes unbound constraint variables and the collision between a variable named `x` and the parameter vector. Six actual browser-generated scripts were independently executed against analytic constrained optima, and the 85-browser-check regression suite was rerun. See `site/optimization-export-verification.json`. These scripts independently solve the exported configuration with SciPy SLSQP; they do not claim to replay the browser algorithm. Unsupported translation semantics are refused explicitly.

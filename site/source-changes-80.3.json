@@ -1313,5 +1313,17 @@
       "after": "d27a69b38a53447c0ecf27837ced5e6a992c1865548f2f13e4d4e6623fa930c1",
       "reason": "Fix axes to the complete recorded domain during playback; highlight the same selected candidate across projections."
     }
+  ],
+  "optimizationPythonCorrection": [
+    {
+      "path": "site/src/v72/optimization-workspace.js",
+      "before": "417e29a1fc5764d4e7c73486c081a69ef954a85c7bc73d9e047e0ef32d63264f",
+      "after": "279228d9adf5208f08f8c2401ee2311fc4e1a60f3412bb684d4ac6be2fc7edb5"
+    },
+    {
+      "path": "docs/src/v72/optimization-workspace.js",
+      "before": "417e29a1fc5764d4e7c73486c081a69ef954a85c7bc73d9e047e0ef32d63264f",
+      "after": "279228d9adf5208f08f8c2401ee2311fc4e1a60f3412bb684d4ac6be2fc7edb5"
+    }
   ]
 }
