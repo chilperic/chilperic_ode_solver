@@ -1,3 +1,15 @@
+# 80.4.1 — 7 October 2026
+
+Regression correction after the broad 80.4.0 interface redesign.
+
+- Restores the 80.3.2 public/home/laboratory logic instead of applying the new visual system across the whole platform.
+- Retains the redesigned Research Hub as the targeted interface improvement.
+- Restores a visible plant-growth animation as a replay driven by archived simulation output data, not by the unpublished scientific engine.
+- Restores a visible C3–C4 evolution result animation using archived trajectory figures and a public replay layer.
+- Keeps plant/evolution public pages minimal and removes displayed equations and dependencies on the unpublished plant engines.
+- Keeps the public plant source boundary: no leaf/plant scientific engine files or parameter preset files are reintroduced.
+- Preserves the curated acknowledgements and scientific claim corrections from 80.3.2.
+
 # 80.3.2 — 6 October 2026
 
 Restores the public plant simulation outputs and scientific plots while keeping the unpublished research core protected.
