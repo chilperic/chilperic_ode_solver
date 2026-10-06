@@ -1,10 +1,10 @@
 {
-  "version": "80.3.2",
-  "release": "Public simulation explorer with protected C3–C4 scientific core",
+  "version": "80.4.0",
+  "release": "Research UX redesign and visible scientific animation replays",
   "built": "2026-10-06",
   "baseline_commit": "ea0d099c38c09e7ab44955c436b1565e10b5c68b",
   "legacy_branch": "legacy/80.1.0-user-approved",
   "distribution": "GitHub Pages",
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "verification": "audit-80.3.json"
 }
