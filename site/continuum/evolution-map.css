@@ -1,0 +1,12 @@
+.evo-dimension-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 10px;padding:14px 16px;background:#edf3f7;border:1px solid #d6e2eb;border-radius:12px}
+.evo-dimension-switch{display:flex;gap:3px;padding:3px;background:#dce6ee;border-radius:9px;flex-shrink:0}
+.studio-body .evo-dimension-switch button{min-height:38px;padding:7px 16px;border:0;border-radius:7px;background:transparent;color:#455a73;font-weight:600}
+.studio-body .evo-dimension-switch button[aria-pressed=true]{background:#203e58;color:#fff;box-shadow:0 2px 5px #203e5820}
+.studio-body .evo-dimension-switch button:disabled{opacity:.45}
+.evo-dimension-toolbar label{font-size:12px;margin:0;min-width:150px}.evo-dimension-toolbar label select{margin:3px 0 0!important;min-height:32px!important;padding:5px 8px!important}
+.evo-dimension-toolbar p{flex:1 1 180px;font-size:12px;line-height:1.5;margin:0;color:#50677f}.evo-dimension-toolbar [hidden]{display:none!important}
+.studio-body #advancedLandscape{border-radius:10px;height:570px;touch-action:pan-y}.studio-body #advancedLandscape[data-dimension="3d"]{cursor:grab;touch-action:none}.studio-body #advancedLandscape[data-dimension="3d"]:active{cursor:grabbing}.studio-body #advancedLandscape:focus-visible{outline:3px solid #376bc9;outline-offset:2px}
+.plot-key .key-mean{background:#343c83;width:8px;height:8px;transform:rotate(45deg)}.plot-key .key-hatch{height:12px;width:16px;background:repeating-linear-gradient(135deg,#cad5df 0 1px,#edf2f6 1px 5px);border:1px solid #b4c1ce}.plot-key .key-path{background:#b54431}.plot-key .key-replicate{background:#2c5467}
+@media(min-width:1550px){.studio-body #advancedLandscape{height:650px}}@media(max-width:600px){.studio-body #advancedLandscape{height:420px}.evo-dimension-toolbar{padding:10px}.evo-dimension-toolbar p{flex-basis:100%}.evo-dimension-toolbar label{flex:1}.studio-body .evo-dimension-switch button{padding:7px 12px}}
+
+#fl-main .evo-dimension-switch button[aria-pressed="true"]{background:#203e58!important;color:#fff!important;border-color:#203e58!important;box-shadow:none!important}#fl-main .evo-dimension-switch button[aria-pressed="false"]{background:transparent!important;color:#455a73!important;box-shadow:none!important}
