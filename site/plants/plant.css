@@ -27,3 +27,5 @@ header nav{flex-wrap:wrap;min-width:0}header{flex-wrap:wrap}.sectionNav{flex-wra
 .architectureEvidence summary{cursor:pointer;font-weight:600}
 #architectureNote{font-size:14px;line-height:1.6;max-width:90ch}
 .growthTools label{font-size:14px}.growthTools select{max-width:100%;font-size:14px}
+
+.growthData strong{display:block;font-size:1rem;color:var(--plant,#175a48)}.growthReason{padding:.55rem .65rem;border-left:3px solid var(--plant,#175a48);background:#edf3f7;color:#203b47}
