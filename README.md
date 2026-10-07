@@ -1,3 +1,5 @@
+FokoLab 80.5.0 adds explicit evolutionary objectives, exploratory C2 intermediate mechanisms, and time-aligned replicate averages while preserving the restored 80.3 interface. Scientific assumptions and run limitations appear beside the results.
+
 # FokoLab
 
 **Scientific modelling, analysis and visualisation**  

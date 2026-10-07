@@ -1,9 +1,9 @@
 from pathlib import Path
 import hashlib,json,re
-s=Path('site');m=json.loads((s/'restoration-80.4.2.json').read_text())
+s=Path('site');m=json.loads((s/'science-80.5.json').read_text())
 for e in m['renderers']:
     assert hashlib.sha256((s/e['file']).read_bytes()).hexdigest()==e['sha256'],e['file']
-    assert e['unchanged'],e['file']
+    if e['file'].startswith(('plants/','leaf/')):assert e['unchangedFrom803'],e['file']
 for f in ['plants/index.html','leaf/index.html','continuum/index.html','continuum/advanced.html','continuum/approaches.html']:
     text=(s/f).read_text()
     assert not re.search(r'<math|id=["\'](?:equations|advancedMethods)["\']',text),f
@@ -15,4 +15,7 @@ for f in s.rglob('*'):
 a=json.loads((s/'design/examples.json').read_text());assert len(a['plants'])==18 and len(a['leaf'])==18
 assert 'research-2026.js' in (s/'research.html').read_text()
 assert 'Muller-Prokob' in (s/'contributors.json').read_text()
-print('Original renderers, protected pages, examples, Research Hub, acknowledgements and public mirrors passed.')
+assert 'ensemble.js' in (s/'continuum/advanced.html').read_text()
+assert 'objectiveStatement' in (s/'continuum/advanced.html').read_text()
+assert m['replicates']['maximum']==1000
+print('Preserved plant/leaf renderers and updated evolution figures, protected pages, examples, Research Hub, acknowledgements and public mirrors passed.')

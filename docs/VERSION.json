@@ -1,10 +1,10 @@
 {
-  "version": "80.4.2",
-  "release": "80.3 interface and native animations restored; private scientific computation",
+  "version": "80.5.0",
+  "release": "Scientific evolution correction: explicit objectives, C2 scenarios and replicated mean trajectories",
   "built": "2026-10-07",
   "baseline_commit": "04dff98",
   "legacy_branch": "legacy/80.1.0-user-approved",
   "distribution": "GitHub Pages",
   "updated": "2026-10-07",
-  "verification": "restoration-80.4.2.json"
+  "verification": "science-80.5.json"
 }

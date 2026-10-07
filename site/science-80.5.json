@@ -1,0 +1,198 @@
+{
+  "version": "80.5.0",
+  "restored_interface": "80.3.0",
+  "objective": "Declared scalar objective used consistently by evolution and scalar search; no category bonus.",
+  "replicates": {
+    "default": 200,
+    "maximum": 1000,
+    "alignment": "biological time",
+    "band": "central 95% of replicate values",
+    "event_cap": "censored after last observation"
+  },
+  "validation": [
+    "objective consistency",
+    "neutral proposal symmetry",
+    "carbon and shared energy conservation",
+    "darkness",
+    "independent seeds",
+    "time-aligned mean",
+    "censoring",
+    "private export boundary"
+  ],
+  "scenarioChecks": [
+    {
+      "scenario": "warm",
+      "gridBest": {
+        "strategy": "c4",
+        "fractions": [
+          0.5,
+          0,
+          0.5
+        ],
+        "score": 0.5325767966793449,
+        "gdcBS": 0
+      },
+      "completed": 200,
+      "censored": 0,
+      "frequencies": [
+        {
+          "label": "Incipient C2",
+          "count": 4,
+          "n": 200
+        },
+        {
+          "label": "C2 + C4 / Type II-like",
+          "count": 11,
+          "n": 200
+        },
+        {
+          "label": "Mixed C3\u2013C4",
+          "count": 5,
+          "n": 200
+        },
+        {
+          "label": "C4-like",
+          "count": 180,
+          "n": 200
+        }
+      ]
+    },
+    {
+      "scenario": "cool",
+      "gridBest": {
+        "strategy": "c3",
+        "fractions": [
+          0,
+          1,
+          0
+        ],
+        "score": 0.5999824874438524,
+        "gdcBS": 0
+      },
+      "completed": 200,
+      "censored": 0,
+      "frequencies": [
+        {
+          "label": "C3-like",
+          "count": 67,
+          "n": 200
+        },
+        {
+          "label": "Incipient C2",
+          "count": 38,
+          "n": 200
+        },
+        {
+          "label": "C2 / Type I-like",
+          "count": 18,
+          "n": 200
+        },
+        {
+          "label": "C2 + C4 / Type II-like",
+          "count": 25,
+          "n": 200
+        },
+        {
+          "label": "Mixed C3\u2013C4",
+          "count": 22,
+          "n": 200
+        },
+        {
+          "label": "C4-like",
+          "count": 5,
+          "n": 200
+        },
+        {
+          "label": "Other allocation",
+          "count": 25,
+          "n": 200
+        }
+      ]
+    },
+    {
+      "scenario": "neutral",
+      "gridBest": {
+        "strategy": "c4",
+        "fractions": [
+          0.5,
+          0,
+          0.5
+        ],
+        "score": 0.5325767966793449,
+        "gdcBS": 0
+      },
+      "completed": 200,
+      "censored": 0,
+      "frequencies": [
+        {
+          "label": "C3-like",
+          "count": 4,
+          "n": 200
+        },
+        {
+          "label": "Incipient C2",
+          "count": 46,
+          "n": 200
+        },
+        {
+          "label": "C2 / Type I-like",
+          "count": 6,
+          "n": 200
+        },
+        {
+          "label": "C2 + C4 / Type II-like",
+          "count": 56,
+          "n": 200
+        },
+        {
+          "label": "Mixed C3\u2013C4",
+          "count": 40,
+          "n": 200
+        },
+        {
+          "label": "C4-like",
+          "count": 30,
+          "n": 200
+        },
+        {
+          "label": "Other allocation",
+          "count": 18,
+          "n": 200
+        }
+      ]
+    }
+  ],
+  "scope": "Exploratory C2 carbon-recycling extension. Nitrogen-shuttle costs, evolving anatomy and species calibration remain unavailable.",
+  "renderers": [
+    {
+      "file": "plants/plant-renderer.js",
+      "sha256": "e7633d6a529cbdc93cc9522aeb3babf97cf8a2f409343f22651b59abe151eb15",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "plants/water-circuit.js",
+      "sha256": "61c5c945bb38f448ec5ec1e3a35a72f1ba99be7ccbae05fc9d8dfc27f750ed91",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "plants/plant.css",
+      "sha256": "cf6f76a7d47b2fd59d4590a2862a84e7af9247be58eb4c6a75d94acbf7d8851d",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "leaf/leaf.css",
+      "sha256": "4200a194497305d41f5bd9844cfec959eb3952c31bef67ac82146d2eeaa32fdd",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "continuum/landscape.js",
+      "sha256": "1ccd85353a3b95637bc1882eef97a1ca09032891420e8cd055e9f8691b135648",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "continuum/journey.js",
+      "sha256": "a6245d4d9f8c0b75d8e0189323b6d4c9fc7a0915debaa009cd1a56df55782d60",
+      "unchangedFrom803": false
+    }
+  ]
+}

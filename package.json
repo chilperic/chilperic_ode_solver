@@ -1,6 +1,6 @@
 {
   "name": "fokolab-integrated-update",
-  "version": "80.3.0",
+  "version": "80.5.0",
   "private": true,
   "description": "Static FokoLab application; Node is used only for optional developer verification.",
   "scripts": {
