@@ -1,1 +1,0 @@
-These are historical, incremental implementation recipes retained for provenance. They are not an idempotent build pipeline and should not be run on the final tree. The canonical application source is the already-built site/ directory. Current verification commands are in README_START_HERE.md.

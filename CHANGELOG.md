@@ -1,3 +1,7 @@
+## 80.4.2 — Restore the complete 80.3 experience
+
+Restores the native organ-growth, transport and evolution animation renderers, controls, parameter panels, examples, plots and data exports from 80.3. The Research Hub and corrected acknowledgements remain. Model equation sections and source downloads are excluded; original scientific calculations run on a separate private server. The newer private C3–C4 research core remains separately preserved and is not silently substituted into these legacy simulations.
+
 # 80.4.1 — 7 October 2026
 
 Regression correction after the platform-wide 80.4.0 redesign.

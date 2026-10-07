@@ -1,10 +1,10 @@
 {
-  "version": "80.4.1",
-  "release": "Regression fix: previous interface restored; Research Hub retained; plant/evolution output replays",
-  "built": "2026-10-06",
-  "baseline_commit": "ea0d099c38c09e7ab44955c436b1565e10b5c68b",
+  "version": "80.4.2",
+  "release": "80.3 interface and native animations restored; private scientific computation",
+  "built": "2026-10-07",
+  "baseline_commit": "04dff98",
   "legacy_branch": "legacy/80.1.0-user-approved",
   "distribution": "GitHub Pages",
   "updated": "2026-10-07",
-  "verification": "audit-80.3.json"
+  "verification": "restoration-80.4.2.json"
 }

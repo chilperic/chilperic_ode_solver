@@ -1,0 +1,54 @@
+{
+  "version": "80.4.2",
+  "restored_from": "80.3.0",
+  "renderers": [
+    {
+      "file": "plants/plant-renderer.js",
+      "baseline": "80.3.0",
+      "sha256": "e7633d6a529cbdc93cc9522aeb3babf97cf8a2f409343f22651b59abe151eb15",
+      "unchanged": true
+    },
+    {
+      "file": "plants/water-circuit.js",
+      "baseline": "80.3.0",
+      "sha256": "61c5c945bb38f448ec5ec1e3a35a72f1ba99be7ccbae05fc9d8dfc27f750ed91",
+      "unchanged": true
+    },
+    {
+      "file": "plants/plant.css",
+      "baseline": "80.3.0",
+      "sha256": "cf6f76a7d47b2fd59d4590a2862a84e7af9247be58eb4c6a75d94acbf7d8851d",
+      "unchanged": true
+    },
+    {
+      "file": "leaf/leaf.css",
+      "baseline": "80.3.0",
+      "sha256": "4200a194497305d41f5bd9844cfec959eb3952c31bef67ac82146d2eeaa32fdd",
+      "unchanged": true
+    },
+    {
+      "file": "continuum/landscape.js",
+      "baseline": "80.3.0",
+      "sha256": "1ccd85353a3b95637bc1882eef97a1ca09032891420e8cd055e9f8691b135648",
+      "unchanged": true
+    },
+    {
+      "file": "continuum/journey.js",
+      "baseline": "80.3.0",
+      "sha256": "af028198591c7aa1818fa71a9c954b5c849c2a6ace9e102026ad1b2e7b451a40",
+      "unchanged": true
+    }
+  ],
+  "preserved": [
+    "Research Hub",
+    "curated acknowledgements",
+    "other laboratories and numerical tools"
+  ],
+  "model_delivery": "server-only scientific computation; public renderers receive outputs",
+  "private_research_core": "v0.4.1 retained separately; not substituted into the legacy simulations",
+  "limitations": [
+    "Exploratory, uncalibrated models",
+    "Simulation service requires an internet connection",
+    "Historical public GitHub copies require repository visibility changes"
+  ]
+}

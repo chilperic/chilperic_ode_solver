@@ -42,7 +42,7 @@ jobs:
               if prefix:break
               time.sleep(10)
           report['publishedBase']=prefix
-          paths=['index.html','analysis.html','analysis-studio.html','decision-studio.html','VERSION.json','contact.html','contributors.html','contributors.json','cv.html','cv/downloads.json','styles/revision83.css','styles/analysis-studio.css','src/integration/shell.js','src/integration/registry.js','src/revision82/run-integrity.js','plants/index.html','plants/public-gallery.js','plants/public-gallery.css','leaf/index.html','shared/leaf-diagnostics.js','design/workspace.js','design/leaf-diagnostic-ui.js','tcells/index.html','tcells/worker.js','tcells/tcell-engine.js','lipids/index.html','lipids/worker.js','lipids/lipid-engine.js','continuum/advanced.html','continuum/advanced-engine.js','continuum/approaches.html','random.html','engine.js','ode.html','statistics.html','optimization.html','src/v72/optimization-workspace.js','book.html','assets/profile-chilperic.webp','audit-80.3.json','AUDIT-80.3.md']
+          paths=['index.html','analysis.html','analysis-studio.html','decision-studio.html','VERSION.json','contact.html','contributors.html','contributors.json','cv.html','cv/downloads.json','styles/revision83.css','styles/analysis-studio.css','src/integration/shell.js','src/integration/registry.js','src/revision82/run-integrity.js','plants/index.html','plants/plant-renderer.js','plants/water-circuit.js','plants/plant-ui.js','plants/plant.css','leaf/index.html','shared/leaf-diagnostics.js','design/workspace.js','design/leaf-diagnostic-ui.js','tcells/index.html','tcells/worker.js','tcells/tcell-engine.js','lipids/index.html','lipids/worker.js','lipids/lipid-engine.js','continuum/advanced.html','continuum/advanced-ui.js','continuum/advanced-worker.js','research/remote-client.js','research/remote-worker.js','continuum/approaches.html','random.html','engine.js','ode.html','statistics.html','optimization.html','src/v72/optimization-workspace.js','book.html','assets/profile-chilperic.webp','audit-80.3.json','AUDIT-80.3.md']
           paths += ['src/analysis-studio/'+p for p in ('statistics.mjs','compute.mjs','methods.mjs','demos.mjs','plots.mjs','explain.mjs','ui.mjs','worker.mjs','reproduce.py')]
           paths += ['src/revision83/'+p for p in ('workflow.js','presentation.js','decision-core.mjs','decision-ui.mjs','decision-worker.mjs','decision-bridge.js')]
           paths += ['cv/'+e['id']+'.pdf' for e in json.loads(Path('site/cv/downloads.json').read_text())['editions']]
@@ -57,7 +57,7 @@ jobs:
               with concurrent.futures.ThreadPoolExecutor(max_workers=5) as ex:report['checks']=list(ex.map(check,paths))
               try:report['rootHTTP']=get(base)[0]
               except Exception as e:report['rootError']=str(e)
-          removed=['plants/plant-engine.js','plants/c4-engine.js','leaf/leaf-engine.js','leaf/presets.json']
+          removed=['plants/plant-engine.js','plants/c4-engine.js','plants/scenario-engine.js','leaf/leaf-engine.js','leaf/leaf-updated.js','leaf/presets.json','continuum/advanced-engine.js','continuum/approaches.js','continuum/engine.js','shared/soil-thermal.js']
           report['removedChecks']=[]
           if prefix:
               for path in removed:
@@ -104,8 +104,21 @@ jobs:
                   page.goto(base+'contact.html',wait_until='domcontentloaded');page.wait_for_selector('.fl-contact-photo');page.wait_for_function('document.querySelector(".fl-contact-photo").complete')
                   verify('Contact portrait',page.locator('.fl-contact-photo').evaluate('e=>e.naturalWidth>100'))
                   page.screenshot(path=str(out/'live-contact-desktop.png'))
-                  page.goto(base+'plants/index.html',wait_until='domcontentloaded');plant_text=page.locator('body').inner_text();verify('Protected plant replay',('archived simulation replay' in plant_text.lower()) and page.locator('math').count()==0 and page.locator('#growthScene').count()==1);page.wait_for_function('document.getElementById("growthScene") && document.getElementById("growthScene").width>0',timeout=20000);verify('Public plant growth animation',page.locator('#growthPlay').count()==1 and page.locator('#growthTime').count()==1 and page.locator('#growthChart').count()==1);page.goto(base+'continuum/advanced.html',wait_until='domcontentloaded');evo_text=page.locator('body').inner_text();verify('Public evolution replay',('archived result replay' in evo_text.lower()) and page.locator('#evPlay').count()==1 and page.locator('#evClimate').count()==1 and page.locator('math').count()==0)
-                  page.goto(base+'leaf/index.html',wait_until='domcontentloaded');leaf_text=page.locator('main').inner_text();verify('Protected leaf overview',('full equations' in leaf_text) and page.locator('math').count()==0 and page.locator('script[src*="leaf/"]').count()==0)
+                  page.goto(base+'plants/index.html',wait_until='domcontentloaded')
+                  page.wait_for_function('document.getElementById("timeline").max>0 && document.getElementById("work").textContent.includes("Ready")',timeout=120000)
+                  verify('Original plant controls and three growth canvases',page.locator('#growthCanvasC3').count()==1 and page.locator('#growthCanvasC4').count()==1 and page.locator('#growthCanvasCAM').count()==1 and page.locator('math').count()==0)
+                  page.get_by_role('button',name='Show final state',exact=True).click()
+                  verify('Original time scrubber',float(page.locator('#timeline').input_value())>0)
+                  verify('No model-equation navigation',page.locator('a[href="#equations"]').count()==0)
+                  page.goto(base+'continuum/advanced.html',wait_until='domcontentloaded')
+                  page.locator('#advLive').select_option('fast')
+                  page.locator('#advReps').fill('1');page.locator('#advCap').fill('12');page.locator('#advRun').click()
+                  page.wait_for_function('document.getElementById("advStatus").textContent.includes("Completed")',timeout=120000)
+                  page.locator('#advNext').click()
+                  verify('Native evolutionary journey',page.locator('#advEventLabel').inner_text().startswith('1 /') and page.locator('math').count()==0)
+                  page.goto(base+'leaf/index.html',wait_until='domcontentloaded')
+                  page.wait_for_function('document.getElementById("status").textContent==="Calculation complete."',timeout=60000)
+                  verify('Interactive leaf result',page.locator('#metrics strong').count()==4 and page.locator('math').count()==0)
                   page.goto(base+'contributors.html',wait_until='domcontentloaded');text=page.locator('main').inner_text()
                   verify('Curated collaborator acknowledgements',all(x in text for x in ('Jérémie','Yvonne','Adélaïde','Barbara','Wilfred','AIMS','CEPLAS')))
                   verify('Visible acknowledgements navigation',page.locator('.fl-site-footer a[href$="contributors.html"]').count()==1)
