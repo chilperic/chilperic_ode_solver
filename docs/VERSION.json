@@ -1,10 +1,10 @@
 {
-  "version": "80.5.0",
-  "release": "Scientific evolution correction: explicit objectives, C2 scenarios and replicated mean trajectories",
+  "version": "80.6.0",
+  "release": "Assimilation-rate objectives and simultaneous individual / mean evolution playback",
   "built": "2026-10-07",
   "baseline_commit": "04dff98",
   "legacy_branch": "legacy/80.1.0-user-approved",
   "distribution": "GitHub Pages",
   "updated": "2026-10-07",
-  "verification": "science-80.5.json"
+  "verification": "science-80.6.json"
 }

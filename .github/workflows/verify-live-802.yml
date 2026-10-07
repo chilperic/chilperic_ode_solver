@@ -42,7 +42,7 @@ jobs:
               if prefix:break
               time.sleep(10)
           report['publishedBase']=prefix
-          paths=['index.html','analysis.html','analysis-studio.html','decision-studio.html','VERSION.json','contact.html','contributors.html','contributors.json','cv.html','cv/downloads.json','styles/revision83.css','styles/analysis-studio.css','src/integration/shell.js','src/integration/registry.js','src/revision82/run-integrity.js','plants/index.html','plants/plant-renderer.js','plants/water-circuit.js','plants/plant-ui.js','plants/plant.css','leaf/index.html','shared/leaf-diagnostics.js','design/workspace.js','design/leaf-diagnostic-ui.js','tcells/index.html','tcells/worker.js','tcells/tcell-engine.js','lipids/index.html','lipids/worker.js','lipids/lipid-engine.js','continuum/advanced.html','continuum/advanced-ui.js','continuum/advanced-worker.js','continuum/ensemble.js','continuum/population-mean.js','continuum/strategy-regions.js','science-80.5.json','research/remote-client.js','research/remote-worker.js','continuum/approaches.html','random.html','engine.js','ode.html','statistics.html','optimization.html','src/v72/optimization-workspace.js','book.html','assets/profile-chilperic.webp','audit-80.3.json','AUDIT-80.3.md']
+          paths=['index.html','analysis.html','analysis-studio.html','decision-studio.html','VERSION.json','contact.html','contributors.html','contributors.json','cv.html','cv/downloads.json','styles/revision83.css','styles/analysis-studio.css','src/integration/shell.js','src/integration/registry.js','src/revision82/run-integrity.js','plants/index.html','plants/plant-renderer.js','plants/water-circuit.js','plants/plant-ui.js','plants/plant.css','leaf/index.html','shared/leaf-diagnostics.js','design/workspace.js','design/leaf-diagnostic-ui.js','tcells/index.html','tcells/worker.js','tcells/tcell-engine.js','lipids/index.html','lipids/worker.js','lipids/lipid-engine.js','continuum/advanced.html','continuum/advanced-ui.js','continuum/advanced-worker.js','continuum/ensemble.js','continuum/journey.js','continuum/studio-renderer.js','continuum/landscape.js','continuum/landscape-3d.js','continuum/population-mean.js','continuum/strategy-regions.js','science-80.6.json','research/remote-client.js','research/remote-worker.js','continuum/approaches.html','random.html','engine.js','ode.html','statistics.html','optimization.html','src/v72/optimization-workspace.js','book.html','assets/profile-chilperic.webp','audit-80.3.json','AUDIT-80.3.md']
           paths += ['src/analysis-studio/'+p for p in ('statistics.mjs','compute.mjs','methods.mjs','demos.mjs','plots.mjs','explain.mjs','ui.mjs','worker.mjs','reproduce.py')]
           paths += ['src/revision83/'+p for p in ('workflow.js','presentation.js','decision-core.mjs','decision-ui.mjs','decision-worker.mjs','decision-bridge.js')]
           paths += ['cv/'+e['id']+'.pdf' for e in json.loads(Path('site/cv/downloads.json').read_text())['editions']]
@@ -117,10 +117,16 @@ jobs:
                   page.locator('#advReps').fill('200');page.locator('#advCap').fill('500');page.locator('#advRun').click()
                   page.wait_for_function('document.getElementById("advStatus").textContent.includes("Completed")',timeout=120000)
                   verify('Completed replicated science run','200 independent seeded runs' in page.locator('#ensembleSummary').inner_text())
-                  verify('Mean trajectory selected',page.locator('#advRep').input_value()=='200')
+                  verify('Individuals and mean selected',page.locator('#advRep').input_value()=='200')
+                  verify('All observed replicate markers described','200 observed runs: each colored dot is one actual replicate' in page.locator('#advLandscapeHelp').inner_text())
+                  verify('Assimilation objective is the default',page.locator('#advObjective').input_value()=='assimilation')
+                  page.locator('#advPlay').click()
+                  page.wait_for_function('Number(document.getElementById("evoTimeSlider").value)>10',timeout=15000)
+                  page.locator('#advPlay').click()
+                  verify('Simultaneous ensemble clock advances',float(page.locator('#evoTimeSlider').input_value())>10)
                   page.locator('#evoTimeSlider').press('End')
                   page.wait_for_function('document.getElementById("advTime").textContent.includes("Ensemble at generation")',timeout=10000)
-                  verify('Objective stated without model equations','Reference scales' in page.locator('#objectiveStatement').inner_text() and page.locator('math').count()==0)
+                  verify('Objective stated without model equations','Assimilation reference' in page.locator('#objectiveStatement').inner_text() and page.locator('math').count()==0)
                   verify('Intermediate mechanisms explained',page.locator('#strategyRegionKey').inner_text().count('Type I')>=2)
                   page.locator('#advRep').select_option('0')
                   page.locator('#advNext').click()

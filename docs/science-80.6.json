@@ -1,0 +1,165 @@
+{
+  "version": "80.6.0",
+  "restored_interface": "80.3.0",
+  "objective": "Whole-cycle mean net assimilation by default, with illuminated-hours and weighted rate options; units \u00b5mol CO2 m-2 s-1. Historical carbon objectives remain available.",
+  "replicates": {
+    "default": 200,
+    "maximum": 1000,
+    "alignment": "biological time",
+    "band": "central 95% of replicate values",
+    "event_cap": "censored after last observation",
+    "animation": "Actual independently seeded residents and their arithmetic mean share biological time. Censored runs are excluded. The mean is not an organism."
+  },
+  "validation": [
+    "duration-weighted rate and unit conversion",
+    "carbon/rate objective equivalence at matched reference",
+    "daylight denominator and dark-only rejection",
+    "forcing-duration invariance",
+    "temperature response",
+    "400 independent replicates",
+    "exact event-boundary playback",
+    "censor exclusion",
+    "exact current ensemble mean",
+    "200 simultaneous markers at desktop and mobile widths"
+  ],
+  "scenarioChecks": [
+    {
+      "scenario": "warm",
+      "objective": "assimilation",
+      "complete": 200,
+      "censored": 0,
+      "frequencies": [
+        {
+          "label": "Incipient C2",
+          "count": 6,
+          "n": 200
+        },
+        {
+          "label": "C2 + C4 / Type II-like",
+          "count": 9,
+          "n": 200
+        },
+        {
+          "label": "Mixed C3\u2013C4",
+          "count": 15,
+          "n": 200
+        },
+        {
+          "label": "C4-like",
+          "count": 169,
+          "n": 200
+        },
+        {
+          "label": "Other allocation",
+          "count": 1,
+          "n": 200
+        }
+      ]
+    },
+    {
+      "scenario": "cool CO2-rich",
+      "objective": "assimilation",
+      "complete": 200,
+      "censored": 0,
+      "frequencies": [
+        {
+          "label": "C3-like",
+          "count": 61,
+          "n": 200
+        },
+        {
+          "label": "Incipient C2",
+          "count": 43,
+          "n": 200
+        },
+        {
+          "label": "C2 / Type I-like",
+          "count": 30,
+          "n": 200
+        },
+        {
+          "label": "C2 + C4 / Type II-like",
+          "count": 25,
+          "n": 200
+        },
+        {
+          "label": "Mixed C3\u2013C4",
+          "count": 15,
+          "n": 200
+        },
+        {
+          "label": "C4-like",
+          "count": 9,
+          "n": 200
+        },
+        {
+          "label": "Other allocation",
+          "count": 17,
+          "n": 200
+        }
+      ]
+    }
+  ],
+  "scope": "Exploratory C2 carbon-recycling extension. Nitrogen-shuttle costs, evolving anatomy and species calibration remain unavailable.",
+  "renderers": [
+    {
+      "file": "plants/plant-renderer.js",
+      "sha256": "e7633d6a529cbdc93cc9522aeb3babf97cf8a2f409343f22651b59abe151eb15",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "plants/water-circuit.js",
+      "sha256": "61c5c945bb38f448ec5ec1e3a35a72f1ba99be7ccbae05fc9d8dfc27f750ed91",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "plants/plant.css",
+      "sha256": "cf6f76a7d47b2fd59d4590a2862a84e7af9247be58eb4c6a75d94acbf7d8851d",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "leaf/leaf.css",
+      "sha256": "4200a194497305d41f5bd9844cfec959eb3952c31bef67ac82146d2eeaa32fdd",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "continuum/landscape.js",
+      "sha256": "1b90684eda5c4c8addf8b864c4d7a0cda1487e51ec7b0c745f46f9831f335bb8",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/journey.js",
+      "sha256": "b0ea6898d9586f38385b52d954ffc4a3be694a5e47e9f41c68499b013556b735",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/ensemble.js",
+      "sha256": "f65960dc70b448ccd41cda9e3838504885a147e5f2b9c54bfe59cab1d44d70e8",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/population-mean.js",
+      "sha256": "e4292c98a95fc764e57cefe49f124018740a22f848b53b75bd829146919efea5",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/landscape-3d.js",
+      "sha256": "429da1eeff7472f8ec66d6397b05a474cf87bf99f3672dc7359fa1e3280525f8",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/studio-renderer.js",
+      "sha256": "6b7e06c62dc13781198fc6f2c7bdf9f7a57524bdf832d4f56486474e0f315cf0",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/strategy-regions.js",
+      "sha256": "b4dbed0e5242048a24fc40ec62388244630286c0d05343fe2daaf74845ccb290",
+      "unchangedFrom803": false
+    }
+  ],
+  "queued": [
+    "Audit and correct shared nitrogen allocation with enzyme-specific nitrogen requirements and catalytic capacity.",
+    "Define nitrogen-based allocation thresholds with physiological diagnostics and sensitivity analysis."
+  ]
+}

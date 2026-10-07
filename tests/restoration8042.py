@@ -1,6 +1,6 @@
 from pathlib import Path
 import hashlib,json,re
-s=Path('site');m=json.loads((s/'science-80.5.json').read_text())
+s=Path('site');m=json.loads((s/'science-80.6.json').read_text())
 for e in m['renderers']:
     assert hashlib.sha256((s/e['file']).read_bytes()).hexdigest()==e['sha256'],e['file']
     if e['file'].startswith(('plants/','leaf/')):assert e['unchangedFrom803'],e['file']

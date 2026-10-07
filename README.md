@@ -93,3 +93,8 @@ For executed acceptance and remaining limitations see `site/audit-80.3.json` and
 ### Constrained Python export correction — 6 October 2026
 
 Python exports use parsed expressions with vector-indexed variables in every objective and constraint function. This fixes unbound constraint variables and the collision between a variable named `x` and the parameter vector. Six actual browser-generated scripts were independently executed against analytic constrained optima, and the 85-browser-check regression suite was rerun. See `site/optimization-export-verification.json`. These scripts independently solve the exported configuration with SciPy SLSQP; they do not claim to replay the browser algorithm. Unsupported translation semantics are refused explicitly.
+
+
+### 80.6.0 — assimilation and simultaneous evolution playback
+
+Whole-cycle mean net assimilation is the default evolution objective, with explicit units, averaging duration and reference scale. Illuminated-hours and weighted rate objectives are separate choices. Individual replicate residents now animate beside the descriptive mean, with conditional feasibility hatching and local objective-direction arrows. Finite-population playback retains real individuals and independent populations alongside the mean. Enzyme-specific nitrogen allocation and classification-threshold calibration are queued next. Scientific implementation remains private.
