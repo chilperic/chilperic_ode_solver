@@ -1,5 +1,6 @@
 /* Shared projected plant geometry with soil resource availability. */
 (function(root){'use strict';
+const Architecture=typeof module!=='undefined'&&module.exports?require('./architecture.js'):root.PlantArchitecture;
 const view={yaw:-.35,tilt:.23,zoom:1,cutaway:false,thermal:false};
 const mix=(a,b,t)=>a.map((v,i)=>v+(b[i]-v)*t),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 function status(r,c,type){const baseline=r.leafWithoutLoop??r.leafT,target=c.loopTargetC??30,eligible=type==='C4',active=eligible&&c.loopEnabled===1&&(r.loopActualFlow||0)>1e-12;return{active,baseline,target,flow:active?r.loopActualFlow:0,label:!eligible?'Unavailable · C4 only':!c.loopEnabled?'Controller disabled':active?(r.loopUnmet>.05?'Cooling active · target unmet':'Cooling active · regulating'):baseline<=target?'Standby · no overheating':r.soilRootT>=baseline?'Standby · soil cannot absorb heat':'Standby · no usable cooling path'};}
@@ -35,7 +36,7 @@ for(let j=0;j<rootAxes;j++){
 }
 
 // A mature maize architectural illustration: alternate blades, cylindrical internodes and a tassel.
-const count=growth?(r.leafUnits||[]).length:(flaveria?16:rosette?18:kind==='maize'?14:10),height=(rosette?.12:pad?1.8:flaveria?2.35:kind==='wheat'?1.85:2.75)*growthScale,stemRadius=(grass?.043:flaveria?.023:.046)*(growth?Math.cbrt(Math.max(0,r.stem||0)/10):1);const leafSteps=count>50?10:20,leafBands=count>50?2:4;const organs={leaves:0,tassels:0,ears:0,panicles:0,rosettes:rosette?1:0};
+const count=growth?(r.leafUnits||[]).length:(flaveria?16:rosette?18:kind==='maize'?14:10),height=(rosette?.12:pad?1.8:flaveria?2.35:kind==='wheat'?1.85:2.75)*growthScale,stemRadius=(grass?.043:flaveria?.023:.046)*(growth?Math.cbrt(Math.max(0,r.stem||0)/10):1);const leafSteps=count>50?10:20,leafBands=count>50?2:4;const reproduction=Architecture.reproduction(growth?r:{flower:1,fruit:2},kind,options.illustratedSites),organs={leaves:0,tassels:0,ears:0,panicles:0,spikes:0,heads:0,clusters:0,fruits:0,rosettes:rosette?1:0};
 function shade(rgb,n){const d=clamp(.55+.45*Math.abs(n[1])+.20*n[0]-.13*n[2],.34,1.2);return 'rgb('+rgb.map(v=>Math.round(clamp(v*d,0,255))).join(',')+')';}
 function surface(p,rgb){const u=p[1].map((v,i)=>v-p[0][i]),v=p[2].map((v,i)=>v-p[0][i]),n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]],L=Math.hypot(...n)||1;const color=shade(rgb,n.map(x=>x/L));path(p,color,.65,color);}
 function tube(a,b,r0,r1,rgb,alpha=false){const d=b.map((v,i)=>v-a[i]),L=Math.hypot(...d);if(L<1e-9)return;const n=d.map(v=>v/L),q=Math.abs(n[1])>.9?[1,0,0]:[0,1,0],u=[n[1]*q[2]-n[2]*q[1],n[2]*q[0]-n[0]*q[2],n[0]*q[1]-n[1]*q[0]],ul=Math.hypot(...u);for(let i=0;i<3;i++)u[i]/=ul;const v=[n[1]*u[2]-n[2]*u[1],n[2]*u[0]-n[0]*u[2],n[0]*u[1]-n[1]*u[0]];for(let k=0;k<8;k++){const at=(p,r,t)=>p.map((x,i)=>x+r*(Math.cos(t)*u[i]+Math.sin(t)*v[i])),t=k*Math.PI/4,t1=(k+1)*Math.PI/4,poly=[at(a,r0,t),at(a,r0,t1),at(b,r1,t1),at(b,r1,t)];if(alpha)path(poly,null,0,'#83b77835');else surface(poly,rgb);}}
@@ -67,16 +68,31 @@ if((!growth||(r.flower||0)+(r.fruit||0)>1e-7)&&kind==='maize'){organs.tassels++;
 tube([0,height-.1,0],[.02,height+.52,0],.022,.006,[176,167,103]);
 for(let j=0;j<9;j++){const a=j*2.4,y=height+.03+(j%4)*.035,end=[.29*Math.cos(a),height+.27+(j%3)*.06,.29*Math.sin(a)],base=[0,y,0];path([base,mix(base,end,.6),end],'#c6b47a',1.1);for(let k=1;k<=7;k++){const p=mix(base,end,k/8);path([[p[0]-.014,p[1]-.013,p[2]],[p[0]+.014,p[1]+.018,p[2]]],'#dbcc99',2);}}
 }
-if(kind==='sorghum'&&(!growth||(r.flower||0)+(r.fruit||0)>1e-7)){organs.panicles++;tube([0,height-.04,0],[0,height+.68,0],.018,.005,[149,154,83]);for(let j=0;j<65;j++){const a=j*2.4,t=j/65,rad=.16*Math.sin(Math.PI*t),base=[0,height+.07+t*.49,0],tip=[rad*Math.cos(a),height+.14+t*.49,rad*Math.sin(a)];path([base,tip],'#b3a974',.7);dot(tip,'#cab17b',1.5);}}
 if(kind==='maize'&&(!growth||height>.7&&r.root>0))for(let j=0;j<7;j++){const a=j*Math.PI*2/7;path([[0,.22*growthScale,0],[.14*Math.cos(a),.07,.14*Math.sin(a)],[.28*Math.cos(a),-.08,.28*Math.sin(a)]],'#98a56d',1.6);}
-if(kind==='wheat'&&(!growth||(r.flower||0)+(r.fruit||0)>1e-7))for(let j=0;j<14;j++){const yy=height+.06+j*.03,xx=(j%2?1:-1)*.045;tube([0,yy,0],[xx,yy+.06,0],.026,.01,[193,175,104]);path([[xx,yy+.06,0],[xx*2,yy+.16,0]],'#b9b588',.5);}
-if(kind==='maize'&&(!growth||(r.fruit||0)>1e-7)){organs.ears++;const scaleFruit=growth?Math.min(1,Math.cbrt(r.fruit)/2):1;tube([.05,height*.58,0],[.2,height*.58+.4*scaleFruit,0],.10*scaleFruit,.018,[130,163,65]);for(let j=0;j<5;j++)path([[.2,height*.58+.38*scaleFruit,0],[.23+.01*j,height*.58+.5*scaleFruit,.02*j]],'#c8a978',.7);}
-if(!grass&&!rosette&&!pad&&(!growth||(r.flower||0)+(r.fruit||0)>1e-7)){const top=height+.12;for(let j=0;j<(flaveria?15:1);j++){const a=j*2.4,rad=flaveria?.16:0,p=[rad*Math.cos(a),top+.05*Math.sin(j),rad*Math.sin(a)];path([[0,height,0],p],'#779a60',1);if(kind==='sunflower'){
- const bloom=growth?Math.min(1,Math.pow(Math.max(0,(r.flower||0)+(r.fruit||0))/.6,.35)):1,inner=.13*bloom,outer=.33*bloom,z=p[2]-.06;
- for(let k=0;k<24;k++){const angle=k*Math.PI/12,points=[];for(let j=0;j<=16;j++){const u=j*Math.PI/8,rr=inner+(outer-inner)*(.5+.5*Math.cos(u)),side=.053*bloom*Math.sin(u);points.push([p[0]+rr*Math.cos(angle)-side*Math.sin(angle),p[1]+rr*Math.sin(angle)+side*Math.cos(angle),z+.015*Math.sin(u)]);}surface(points,k%2?[255,202,48]:[245,174,35]);}
- const disk=Array.from({length:25},(_,j)=>[p[0]+inner*Math.cos(j*Math.PI/12),p[1]+inner*Math.sin(j*Math.PI/12),z-.02]);path(disk,'#75612d',.7,'#493e28');
- for(let j=0;j<45;j++){const angle=j*2.399963,rr=inner*.92*Math.sqrt((j+.5)/45),pt=[p[0]+rr*Math.cos(angle),p[1]+rr*Math.sin(angle),z-.024];path([pt,[pt[0]+.003,pt[1]+.003,pt[2]]],j%3?'#a9954c':'#d1b66a',Math.max(.65,scale*.009));}
- }else dot(p,flaveria?'#e7cc66':'#deb35b',flaveria?3.5:7);}}
+for(const organ of reproduction.sites){
+ const i=organ.id,n=reproduction.count,side=i%2?-1:1,mass=organ.flower+organ.fruit,q=growth?Math.min(1,Math.cbrt(mass/.6)):1;
+ let x=(i-(n-1)/2)*.30,y=height;
+ if(kind==='maize'){
+  organs.ears++;const f=growth?Math.min(1,Math.cbrt(organ.fruit)/2):1,yy=height*(.68-.42*i/Math.max(1,n-1));
+  tube([side*.05,yy,0],[side*.2,yy+.4*f,0],.10*f,.018*f,[130,163,65]);
+  for(let j=0;j<5;j++)path([[side*.2,yy+.38*f,0],[side*(.23+.01*j),yy+.5*f,.02*j*f]],'#c8a978',.7);continue;
+ }
+ if(grass){y=height*(.82+.18*(1-Math.abs(x)/Math.max(.3,n*.15)));if(n>1)tube([0,0,0],[x,y,0],stemRadius*.6,stemRadius*.25,[93,143,62]);}
+ else if(rosette){y=1.2*Math.max(.2,growthScale)+i*.07;x=side*(.12+.02*(i%3));path([[0,.1,0],[0,y-.1,0],[x,y,0]],'#82985a',2);}
+ else if(pad){const k=count?i%count:0,level=Math.floor(Math.log2(k+1)),slot=k-(2**level-1);x=(slot-(2**level-1)/2)*.52;y=.42+level*.64+.40*Math.sqrt(growth?(r.leafUnits[k]||0):1);if(!count)continue;}
+ else if(n>1){x=i?side*(.25+.18*Math.floor((i-1)/2)):0;y=height-(i?.2+.18*Math.floor((i-1)/2):0);path([[0,Math.max(0,y-.35),0],[x,y,0]],'#779a60',2);}
+ if(kind==='sorghum'){
+  organs.panicles++;tube([x,y-.04,0],[x,y+.68*q,0],.018*q,.005*q,[149,154,83]);
+  for(let j=0;j<65;j++){const a=j*2.4,t=j/65,rad=.16*Math.sin(Math.PI*t)*q,base=[x,y+(.07+t*.49)*q,0],tip=[x+rad*Math.cos(a),y+(.14+t*.49)*q,rad*Math.sin(a)];path([base,tip],'#b3a974',.7);dot(tip,'#cab17b',1.5*q);}
+ }else if(kind==='wheat'){
+  organs.spikes++;for(let j=0;j<14;j++){const yy=y+(.06+j*.03)*q,xx=(j%2?1:-1)*.045*q;tube([x,yy,0],[x+xx,yy+.06*q,0],.026*q,.01*q,[193,175,104]);path([[x+xx,yy+.06*q,0],[x+xx*2,yy+.16*q,0]],'#b9b588',.5);}
+ }else if(kind==='sunflower'){
+  organs.heads++;const inner=.13*q,outer=.33*q,z=-.06;
+  for(let k=0;k<24;k++){const angle=k*Math.PI/12,points=[];for(let j=0;j<=16;j++){const u=j*Math.PI/8,rr=inner+(outer-inner)*(.5+.5*Math.cos(u)),ww=.053*q*Math.sin(u);points.push([x+rr*Math.cos(angle)-ww*Math.sin(angle),y+rr*Math.sin(angle)+ww*Math.cos(angle),z+.015*Math.sin(u)]);}surface(points,k%2?[255,202,48]:[245,174,35]);}
+  path(Array.from({length:25},(_,j)=>[x+inner*Math.cos(j*Math.PI/12),y+inner*Math.sin(j*Math.PI/12),z-.02]),'#75612d',.7,'#493e28');
+ }else if(pad){organs.fruits++;tube([x,y,0],[x,y+.18*q,0],.07*q,.04*q,[177,105,74]);}
+ else{organs.clusters++;for(let j=0;j<5;j++){const xx=x+(j-2)*.04*q,yy=y+.07*q*Math.sin(j);path([[x,y-.07,0],[xx,yy,0]],'#849653',.8);dot([xx,yy,0],'#d6bd65',2.7*q);}}
+}
 shapes.sort((a,b)=>b.z-a.z);for(const o of shapes)o.paint();
 // Anchored labels are deliberately outside the organ geometry.
 function label(txt,p,x,y,color){const q=project(p);ctx.strokeStyle=color+'88';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(q[0],q[1]);ctx.lineTo(x,y-5);ctx.stroke();ctx.font='14px system-ui';const tw=ctx.measureText(txt).width;ctx.fillStyle='#0a1928e6';ctx.fillRect(x-5,y-20,tw+10,26);ctx.fillStyle=color;ctx.fillText(txt,x,y);}
@@ -89,9 +105,9 @@ if(Number.isFinite(r.water)&&Number.isFinite(r.soilN)){
  }
 }
 ctx.font='10px system-ui';ctx.fillStyle='#7c889c';ctx.fillText('DRAG TO ORBIT · SCHEMATIC GEOMETRY',16,23);
-ctx.fillStyle='#30483f';ctx.font='13px system-ui';ctx.fillText(organs.leaves+' leaves'+(Number.isFinite(r.biomass)?'  /  '+r.biomass.toFixed(1)+' g dry':''),16,49);
+ctx.fillStyle='#30483f';ctx.font='13px system-ui';ctx.fillText(organs.leaves+' '+Architecture.profile(kind).unit+(Number.isFinite(r.biomass)?'  /  '+r.biomass.toFixed(1)+' g dry':''),16,49);
 if(Number.isFinite(r.leafT)){ctx.textAlign='right';ctx.fillStyle='#476b5d';ctx.font='13px system-ui';ctx.fillText(r.leafT.toFixed(1)+' °C',w-16,49);ctx.textAlign='left';}
-return{...s,kind,organs,geometry:{height,stemRadius,stemScaleReferenceG:10,rootScale,rootAxes,lateralCount,calibrated:false},net,loop,up,heat:(r.loopHeat||0)*(r.area||0)};
+return{...s,kind,organs,reproduction,geometry:{height,stemRadius,stemScaleReferenceG:10,rootScale,rootAxes,lateralCount,calibrated:false},net,loop,up,heat:(r.loopHeat||0)*(r.area||0)};
 }
 function bind(canvas,redraw){if(!canvas||canvas.dataset?.orbitBound)return;if(canvas.dataset)canvas.dataset.orbitBound='1';let drag=null;canvas.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY];canvas.setPointerCapture?.(e.pointerId);});canvas.addEventListener('pointermove',e=>{if(!drag)return;view.yaw+=(e.clientX-drag[0])*.009;view.tilt=clamp(view.tilt+(e.clientY-drag[1])*.006,-.35,.7);drag=[e.clientX,e.clientY];redraw();});const stop=()=>{drag=null;};canvas.addEventListener('pointerup',stop);canvas.addEventListener('pointercancel',stop);canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(e.key))return;e.preventDefault();if(e.key==='Home')Object.assign(view,{yaw:-.35,tilt:.23,zoom:1});else if(e.key==='ArrowLeft'||e.key==='ArrowRight')view.yaw+=e.key==='ArrowLeft'?-.15:.15;else view.tilt=clamp(view.tilt+(e.key==='ArrowUp'?.08:-.08),-.35,.7);redraw();});}
 const api={draw,status,view,bind};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.WaterCircuit=api;
