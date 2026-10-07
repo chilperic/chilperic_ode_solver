@@ -1,0 +1,10 @@
+Created with the built-in image-generation tool. Conceptual cover art; not simulation output.
+
+Use case: stylized-concept
+Asset type: wide 16:9 hero and research-card cover for FokoLab scientific software.
+Primary request: create an original, refined visual identity image for a modern mechanistic modelling environment connecting biology, evolution and dynamical systems.
+Scene: a clean warm-ivory studio background. One integrated sculptural composition: a translucent botanical leaf with fine branching veins grows from a gently undulating, clearly three-dimensional computational landscape; delicate flowing trajectory ribbons and small luminous nodes arc through the landscape toward a peak, with a restrained branching network fading into the background. A subtle soil/root cross-section connects the living leaf to the computational terrain. Treat all curves as conceptual illustration, not data.
+Style: premium scientific editorial illustration, precise tactile 3D forms, elegant fine-line details, soft realistic shadows, spacious composition, sophisticated and credible rather than science-fiction.
+Palette: deep petrol teal and botanical greens, small cobalt-blue and warm amber accents, ivory negative space. Match a research website with a dark teal header.
+Composition: wide horizontal landscape, strong readable silhouette at card size, principal forms centered and comfortably inside the middle 80% so responsive cropping works. Enough air around every form. Make the leaf, rising terrain and individual trajectories immediately recognizable.
+Constraints: no text, no letters, no equations, no axes, no fake interface, no desktop screenshot, no computer hardware, no watermark, no logo imitation. This is conceptual cover art, not an empirical graph.

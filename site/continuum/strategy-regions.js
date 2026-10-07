@@ -1,12 +1,12 @@
 /* Display categories only. These allocation thresholds are not empirical species boundaries. */
 (function(root){'use strict';
 const types={
- c3:{key:'c3',label:'C3-like',short:'C3-like',color:'#19816e',fill:'#83cdb0'},
- intermediate:{key:'intermediate',label:'Mixed C3–C4',short:'C3–C4 intermediate',color:'#986000',fill:'#f4cd83'},
- c4:{key:'c4',label:'C4-like',short:'C4-like',color:'#3168c7',fill:'#9ebfec'},
+ c3:{key:'c3',label:'C3',short:'C3',color:'#19816e',fill:'#83cdb0'},
+ intermediate:{key:'intermediate',label:'C3–C4',short:'C3–C4',color:'#986000',fill:'#f4cd83'},
+ c4:{key:'c4',label:'C4',short:'C4',color:'#3168c7',fill:'#9ebfec'},
  incipient:{key:'incipient',label:'Incipient C2',short:'Incipient C2',color:'#8160b0',fill:'#cbbce5'},
- c2:{key:'c2',label:'C2 / Type I-like',short:'C2 / Type I-like',color:'#007b92',fill:'#9bdee5'},
- c2c4:{key:'c2c4',label:'C2 + C4 / Type II-like',short:'C2 + C4',color:'#bd5426',fill:'#efb38c'},
+ c2:{key:'c2',label:'C3–C4 · Type I (C2)',short:'C2 · Type I',color:'#007b92',fill:'#9bdee5'},
+ c2c4:{key:'c2c4',label:'C3–C4 · Type II',short:'C2 + C4 · Type II',color:'#bd5426',fill:'#efb38c'},
  mean:{key:'mean',label:'Replicate mean',short:'Replicate mean',color:'#303f97',fill:'#b8c4f2'},
  other:{key:'other',label:'Other allocation',short:'Other allocation',color:'#687385',fill:'#e4e8ee'}
 };

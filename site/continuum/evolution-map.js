@@ -6,14 +6,14 @@ const names={assimilation:'Mean net assimilation · µmol CO₂ m⁻² s⁻¹',d
 const palette=['#173f5f','#157f86','#63ba9a','#b7d58b','#ead49a','#faf0d4'];
 const cache=new WeakMap();
 const views={
- terrain:{label:'Sculpted terrain',dimension:'3d',description:'A lit surface of calculated assimilation. Height follows the chosen output; shading reveals slopes without changing values.'},
+ terrain:{label:'Sculpted terrain',dimension:'3d',description:'Plant types in colour; assimilation sets the height.'},
  journey:{label:'Mechanism heatmap',dimension:'2d',description:'A continuous map of evaluated performance, with every observed replicate and its mean.'},
  contours:{label:'Topographic contours',dimension:'2d',description:'Equal-value lines reveal ridges, valleys and gradients. Contours stop at infeasible cells.'},
- regions:{label:'Intermediate mechanisms',dimension:'2d',description:'Operational C3, C2 and C4-like classes are colored directly from evaluated states. Labels do not determine fitness.'},
+ regions:{label:'Intermediate mechanisms',dimension:'2d',description:'Compare C3, C3–C4 intermediates and C4 regions.'},
  feasibility:{label:'Feasible domain',dimension:'2d',description:'Inspect evaluated feasible samples and the excluded or unresolved domain before interpreting an optimum.'},
  routes:{label:'Evolutionary routes',dimension:'3d',description:'Recorded replicate paths take priority over a subdued landscape. Paths end at the current generation; the diamond is their mean.'},
  wireframe:{label:'Surface structure',dimension:'3d',description:'A transparent mesh exposes the shape, resolution and gaps of the calculated surface.'},
- fuji:{label:'Mount Fuji reference',dimension:'3d',description:'An idealized single-peak reference on two abstract traits. It is independent of the plant simulation and has no biological replicate overlay.'}
+ fuji:{label:'Mount Fuji reference',dimension:'3d',description:'Watch independent adaptive walks climb a single fitness peak.'}
 };
 function fujiValue(x,y){return Math.max(0,1-Math.hypot(x-.55,y-.55)/Math.hypot(.55,.55));}
 function contourSegments(cells,key,levels){
@@ -99,8 +99,8 @@ function draw(ctx,w,h,r,options){
  ctx.clearRect(0,0,w,h);const backdrop=ctx.createLinearGradient(0,0,0,h);backdrop.addColorStop(0,'#eff5f8');backdrop.addColorStop(.65,'#fbfcfb');backdrop.addColorStop(1,'#e6eef1');ctx.fillStyle=backdrop;ctx.fillRect(0,0,w,h);
  const title=preset?preset.label:opt.view==='ternary'?'Allocation triangle':opt.view==='landscape'?'Allocation plane':'Photosynthetic mechanism map';
  text(ctx,title,22,29,w<420?16:18,'#203650');
- text(ctx,benchmark?'IDEALIZED BENCHMARK · relative fitness 0–1':style==='feasibility'?'Green: feasible samples · crosses: excluded or unresolved':style==='routes'?'Recorded individuals and their mean · current generation only':three?'3D · height: '+names[s.heightKey]:'2D · '+(opt.metric==='regions'?'Mechanism regions':names[opt.metric]),22,51,w<500?10:12);
- if(three&&!benchmark)text(ctx,'Color: '+(opt.metric==='regions'?'mechanism regions':names[opt.metric]),22,h-67,w<500?9:11);
+ text(ctx,benchmark?'Adaptive walks · relative fitness 0–1':style==='feasibility'?'Green: feasible samples · crosses: excluded or unresolved':style==='routes'?'Recorded individuals and their mean · current generation only':three?'Height: '+names[s.heightKey]:'2D · '+(opt.metric==='regions'?'Mechanism regions':names[opt.metric]),22,51,w<500?10:12);
+
  const floor=[at(0,0),at(1,0),at(1,1),at(0,1)];
  polygon(ctx,floor,'#e8edf3','#c4cfdb');
  // Hatch unavailable regions before drawing the valid surface; never bridge holes.
@@ -122,31 +122,58 @@ function draw(ctx,w,h,r,options){
   for(const segment of segments){const points=segment.points.map(p=>at(p.x,p.y,p.value));line(ctx,points,three?'#ffffff77':'#173d5680',three?.65:1.1);if(!three&&w>500&&!labels.has(segment.level)&&segment.points[0].x>.18&&segment.points[0].x<.82){const p=points[0];ctx.fillStyle='#ffffffeb';ctx.fillRect(p.x-18,p.y-8,36,13);text(ctx,fmt(segment.level),p.x,p.y+2,9,'#164857','center');labels.add(segment.level);}}
  }
  if(style==='feasibility')for(const p of s.surface.points){if(p.feasible){const q=pos(p);dot(ctx,q,'#207d68',2.4);}else if(p.fractions){const [x,y]=xy(p,opt.view,opt.axes),q=at(x,y);line(ctx,[{x:q.x-2,y:q.y-2},{x:q.x+2,y:q.y+2}],'#a57258',1.2);line(ctx,[{x:q.x-2,y:q.y+2},{x:q.x+2,y:q.y-2}],'#a57258',1.2);}}
- if(opt.view==='journey'&&!three&&!benchmark){const p=at(0,1),q=at(1,1);line(ctx,[p,q],'#75869b',3,[5,5]);text(ctx,'100% PEPC: no Rubisco; localization undefined',p.x+5,p.y+14,w<500?9:11);}
+ if(opt.view==='journey'&&!three&&!benchmark){const p=at(0,1),q=at(1,1);line(ctx,[p,q],'#75869b',3,[5,5]);}
  // A sparse surface mesh makes height and curvature legible without concealing regions.
  if(three){for(let j=0;j<=8;j++){let points=[];for(let i=0;i<=48;i++){const x=i/48,y=j/8*(opt.view==='journey'?1-1e-7:1),p=s.sample(inverse(x,y,opt.view,opt.axes));if(p&&Number.isFinite(p[s.heightKey]))points.push(at(x,y,height(p)));else{line(ctx,points,'#253d5725',.6);points=[];}}line(ctx,points,'#253d5725',.6);}}
  if(opt.arrows!==false)for(const [a,b]of s.arrows)arrow(ctx,at(a.x,a.y,height(a.p)),at(b.x,b.y,height(b.p)),'#18395080',.8);
  const xname=benchmark?'Abstract trait 1 (%)':opt.view==='journey'?'Rubisco located in bundle sheath (%)':opt.view==='ternary'?'Mesophyll Rubisco ← allocation → Sheath Rubisco':opt.axes==='pepc-sheath'?'PEPC allocation (%)':'Mesophyll Rubisco allocation (%)';
  const yname=benchmark?'Abstract trait 2 (%)':opt.view==='landscape'&&opt.axes!=='mes-pepc'?'Sheath Rubisco (%)':'PEPC capacity (%)';
  if(!three){for(let i=0;i<=4;i++){const v=i/4,p=at(v,0),q=at(0,v);text(ctx,String(i*25),p.x,p.y+19,11,'#506079','center');text(ctx,String(i*25),q.x-9,q.y+4,11,'#506079','right');line(ctx,[at(v,0),at(v,1)],'#ffffff60',.7);line(ctx,[at(0,v),at(1,v)],'#ffffff60',.7);}text(ctx,xname,(64+w-26)/2,h-23,w<500?10:12,'#324b66','center');ctx.save();ctx.translate(16,(85+h-70)/2);ctx.rotate(-Math.PI/2);text(ctx,yname,0,0,12,'#324b66','center');ctx.restore();}
- else{for(const [a,b]of [[[0,0],[1,0]],[[0,0],[0,1]]])line(ctx,[at(...a),at(...b)],'#5c6d85',1.1);line(ctx,[at(0,0,s.heightRange[0]),at(0,0,s.heightRange[1])],'#5c6d85',1.1);for(let i=0;i<=4;i++){const f=i/4,p=at(f,0),q=at(0,f),z=at(0,0,s.heightRange[0]+f*(s.heightRange[1]-s.heightRange[0]));text(ctx,String(i*25),p.x+3,p.y+18,10,'#506079','center');if(i)text(ctx,String(i*25),q.x-9,q.y+7,10,'#506079','right');text(ctx,fmt(s.heightRange[0]+f*(s.heightRange[1]-s.heightRange[0])),z.x-8,z.y,10,'#506079','right');}const p=at(1,0),q=at(0,1);text(ctx,'X',p.x+12,p.y+6,12,'#203650');text(ctx,'Y',q.x+12,q.y+6,12,'#203650');text(ctx,'X: '+xname,w/2,h-46,w<500?9:11,'#324b66','center');text(ctx,'Y: '+yname,w/2,h-30,w<500?9:11,'#324b66','center');text(ctx,'Drag / arrow keys: rotate · Home: reset',w/2,h-12,10,'#506079','center');}
- // Region labels use actual feasible grid samples, not geometric threshold guesses.
- if(opt.metric==='regions'&&!['routes','feasibility'].includes(style)&&!three&&w>500){const groups=new Map();for(const p of s.surface.points){if(!p.feasible)continue;const key=root.EvolutionRegions.type(p).key;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(p);}const labels=[];for(const points of [...groups.values()].sort((a,b)=>(root.EvolutionRegions.type(a[0]).key==='c3'?-1:root.EvolutionRegions.type(b[0]).key==='c3'?1:b.length-a.length))){const coords=points.map(p=>xy(p,opt.view,opt.axes)),cx=coords.reduce((a,p)=>a+p[0],0)/coords.length,cy=coords.reduce((a,p)=>a+p[1],0)/coords.length,p=points.reduce((a,b)=>Math.hypot(...xy(a,opt.view,opt.axes).map((v,i)=>v-[cx,cy][i]))<Math.hypot(...xy(b,opt.view,opt.axes).map((v,i)=>v-[cx,cy][i]))?a:b),anchor=pos(p),t=root.EvolutionRegions.type(p);ctx.font='12px system-ui';const width=ctx.measureText(t.short).width+14,q={x:clamp(anchor.x,64+width/2+4,w-30-width/2),y:clamp(anchor.y,112,h-91)};if(labels.some(a=>Math.hypot(q.x-a.x,q.y-a.y)<65))continue;labels.push(q);if(Math.hypot(q.x-anchor.x,q.y-anchor.y)>8)line(ctx,[anchor,q],t.color+'99',.8);ctx.fillStyle='#fffffff0';ctx.fillRect(q.x-width/2,q.y-10,width,19);text(ctx,t.short,q.x,q.y+4,12,t.color,'center');}}
- if(['terrain','contours','fuji'].includes(style)){
+ else{for(const [a,b]of [[[0,0],[1,0]],[[0,0],[0,1]]])line(ctx,[at(...a),at(...b)],'#5c6d85',1.1);line(ctx,[at(0,0,s.heightRange[0]),at(0,0,s.heightRange[1])],'#5c6d85',1.1);for(let i=0;i<=4;i++){const f=i/4,p=at(f,0),q=at(0,f),z=at(0,0,s.heightRange[0]+f*(s.heightRange[1]-s.heightRange[0]));text(ctx,String(i*25),p.x+3,p.y+18,10,'#506079','center');if(i)text(ctx,String(i*25),q.x-9,q.y+7,10,'#506079','right');text(ctx,fmt(s.heightRange[0]+f*(s.heightRange[1]-s.heightRange[0])),z.x-8,z.y,10,'#506079','right');}const p=at(1,0),q=at(0,1);text(ctx,'X',p.x+12,p.y+6,12,'#203650');text(ctx,'Y',q.x+12,q.y+6,12,'#203650');text(ctx,'X: '+xname,w/2,h-46,w<500?9:11,'#324b66','center');text(ctx,'Y: '+yname,w/2,h-30,w<500?9:11,'#324b66','center');}
+ // Anchor labels to evaluated samples in both dimensions; separate boxes to avoid overlap.
+ const regionLabels=[];
+ if(!benchmark&&opt.labels!==false&&w>420){
+  const groups=new Map();for(const p of s.surface.points){if(!p.feasible)continue;const key=root.EvolutionRegions.type(p).key;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(p);}
+  for(const key of ['c3','incipient','c2','intermediate','c2c4','c4','other']){
+   const points=groups.get(key);if(!points?.length)continue;
+   const coords=points.map(p=>xy(p,opt.view,opt.axes)),cx=coords.reduce((n,p)=>n+p[0],0)/points.length,cy=coords.reduce((n,p)=>n+p[1],0)/points.length;
+   const point=points.reduce((a,b)=>{const dist=p=>{const [x,y]=xy(p,opt.view,opt.axes);return Math.hypot(x-cx,y-cy);};return dist(a)<dist(b)?a:b;}),anchor=pos(point),type=root.EvolutionRegions.type(point);
+   ctx.font='600 11px system-ui';const width=ctx.measureText(type.short).width+22,height=24,candidates=[];
+   for(const dy of [0,-30,30,-60,60,-90,90,-120,120])for(const dx of [0,-80,80])candidates.push({x:clamp(anchor.x+dx,74+width/2,w-22-width/2),y:clamp(anchor.y+dy,117,h-100)});
+   const box=candidates.find(q=>regionLabels.every(b=>Math.abs(b.x-q.x)>(b.width+width)/2+5||Math.abs(b.y-q.y)>height+5));
+   if(!box)continue;regionLabels.push({...box,width,height,key,anchor,type});
+  }
+ }
+ if(benchmark||(['terrain','contours'].includes(style)&&opt.metric!=='regions')){
   const peak=benchmark?{point:at(.55,.55,1),value:1}:s.surface.points.filter(p=>p.feasible&&Number.isFinite(p[s.heightKey])).reduce((best,p)=>!best||p[s.heightKey]>best.value?{point:pos(p),value:p[s.heightKey]}:best,null);
   if(peak){const p=peak.point,label=benchmark?'Single optimum':'Highest sample · '+fmt(peak.value),x=clamp(p.x,150,w-150),y=Math.max(112,p.y-29);line(ctx,[p,{x,y:y+9}],'#394e62',1);dot(ctx,p,'#bf8240',3.5);ctx.font='11px system-ui';const width=ctx.measureText(label).width+18;ctx.fillStyle='#fffffff2';ctx.fillRect(x-width/2,y-11,width,21);text(ctx,label,x,y+3,11,'#23434d','center');}
  }
  const residents=benchmark?[]:root.EvolutionEnsemble.residents(r,opt.time||0),rep=r.replicates[opt.rep],show=residents;
- for(const q of show){if(!opt.all&&q.ri!==opt.rep)continue;const path=trajectory(r,q.rep,opt.time||0).map(e=>pos(e.p)),selected=q.ri===opt.rep;line(ctx,path,selected?'#bb4936':style==='routes'?'#365a7499':'#2c546753',selected?3.3:style==='routes'?1.6:1);if(selected&&path.length>1)arrow(ctx,path.at(-2),path.at(-1),'#b54431',2.7);}
+ for(const q of show){if(!opt.all&&q.ri!==opt.rep)continue;ctx.save();ctx.globalAlpha=q.ri===opt.rep?1:Math.min(1,(style==='routes'?3:1.2)/Math.sqrt(show.length));const path=trajectory(r,q.rep,opt.time||0).map(e=>pos(e.p)),selected=q.ri===opt.rep;line(ctx,path,selected?'#bb4936':style==='routes'?'#365a7499':'#2c546753',selected?3.3:style==='routes'?1.6:1);if(selected&&path.length>1)arrow(ctx,path.at(-2),path.at(-1),'#b54431',2.7);ctx.restore();}
  // Mean output is the mean of evaluated replicate outputs, not performance at mean traits.
  const mean=benchmark?null:root.EvolutionEnsemble.meanAt(r,opt.time||0),meanPath=(benchmark?[]:r.ensemble?.points||[]).filter(q=>q.time<=(opt.time||0)).map(q=>pos({fractions:q.fractions.map(v=>v.mean),[s.heightKey]:q.metrics[s.heightKey]?.mean}));if(mean)meanPath.push(pos(mean));line(ctx,meanPath,'#ffffff',4.8);line(ctx,meanPath,'#343c83',2.4,[6,3]);
  // Separate coincident glyphs with short leader lines. True trait locations are retained.
  const occupied=new Map();for(const q of show){const truePos=pos(q.p),key=Math.round(truePos.x/6)+','+Math.round(truePos.y/6),n=occupied.get(key)||0;occupied.set(key,n+1);const radius=n?Math.min(18,4+3*Math.sqrt(n)):0,angle=n*2.39996,p={x:truePos.x+Math.cos(angle)*radius,y:truePos.y+Math.sin(angle)*radius};if(n)line(ctx,[truePos,p],'#42577366',.7);dot(ctx,p,root.EvolutionRegions.type(q.p).color,q.ri===opt.rep?6:3.8);hits.push({x:p.x,y:p.y,rep:q.ri,index:q.index,p:q.p});}
  if(mean)dot(ctx,pos(mean),'#343c83',6,true);
- const total=r.ensemble?.requested||r.replicates.filter(q=>!q.mean).length;text(ctx,benchmark?'Reference only · simulation unchanged':residents.length+' / '+total+' runs observed · generation '+fmt(opt.time||0),w-20,72,11,'#465875','right');
+ let benchmarkFrame=null;
+ if(benchmark&&options.fujiRun){
+  const run=options.fujiRun,frame=root.FujiEvolution.frame(run,options.fujiStep),position=p=>at(p.x,p.y,p.value);benchmarkFrame=frame;
+  for(let i=0;i<run.paths.length;i++){
+   const points=run.paths[i].slice(0,frame.index+1).map(position);
+   line(ctx,points,'#245e8f38',.85);
+   if(i<12&&points.length>1){let j=points.length-2;while(j>0&&points[j].x===points.at(-1).x&&points[j].y===points.at(-1).y)j--;arrow(ctx,points[j],points.at(-1),'#245e8faa',1.1);}
+   dot(ctx,position(frame.individuals[i]),'#246891',2.9);
+  }
+  const path=run.means.slice(0,frame.index+1).map(position);line(ctx,path,'#fff',5);line(ctx,path,'#5b277c',2.6,[6,3]);dot(ctx,position(frame.mean),'#5b277c',6,true);
+ }
+ // Paint callouts last so replicate trails cannot obscure their names.
+ for(const box of regionLabels){const {anchor,type,width,height}=box;line(ctx,[anchor,box],type.color+'bb',1);dot(ctx,anchor,type.color,2.2);ctx.fillStyle='#fffffff5';ctx.fillRect(box.x-width/2,box.y-height/2,width,height);ctx.fillStyle=type.color;ctx.fillRect(box.x-width/2,box.y-height/2,4,height);text(ctx,type.short,box.x+3,box.y+4,11,type.color,'center');}
  if(opt.metric!=='regions'&&!['routes','feasibility'].includes(style)){const barW=Math.min(150,w*.3),left=22;for(let i=0;i<barW;i++){ctx.fillStyle=color(i/barW);ctx.fillRect(left+i,64,1.5,7);}text(ctx,fmt(s.colorRange[0]),left,82,10);text(ctx,fmt(s.colorRange[1]),left+barW,82,10,'#4b6078','right');}
  ctx.textAlign='left';
- return{hits,slice:s.surface.gs,benchmark,message:benchmark?'Mount Fuji is an idealized single optimum on two abstract traits. Height and color are relative fitness (0–1), not measured or calculated plant assimilation. It has no replicate trajectories, feasibility or mechanism classes. Your plant experiment and playback time are retained when switching back.':(preset?preset.description+' ':'')+(three?'Surface height: '+names[s.heightKey]+'. ':'')+'Background holds stomatal opening (gs) and photorespiratory recycling (GDC) fixed at the displayed slice. Paths retain each run’s own values and may cross or sit outside that surface. Arrows point toward locally higher objective scores on this slice; they are not predicted mutations. Dots are observed individuals; the dashed line and diamond summarize their mean, not a viable organism. Surface values are interpolated within feasible grid cells; mechanism colors follow the nearest contributing sample. Hatching means infeasible, unresolved or outside the allocation domain. '+(opt.view==='journey'?'Horizontal position divides sheath Rubisco by total Rubisco; this stretches the simplex, so region area is not a probability. At 100% PEPC, Rubisco location is undefined. ':'')+'Allocation denotes catalytic capacity, not enzyme abundance or nitrogen share. Censored runs disappear after their last observation; no future events are revealed.'};
+ return{hits,regionLabels,benchmarkFrame,slice:s.surface.gs,benchmark,
+ message:benchmark?'Blue dots and trails show individual adaptive walks; the purple diamond and dashed trail show their mean.':opt.metric==='regions'?'Colours identify modelled plant types. Dots show individual runs; the dashed trail and diamond show their mean.':'Surface colour shows '+names[opt.metric]+'. Dot colours identify plant types; the dashed trail and diamond show their mean.',
+ methods:benchmark?'An idealized single-peak landscape, independent of plant physiology. Each mutation step proposes a random change in two abstract traits; only higher-fitness proposals are accepted. Steps are mutation opportunities, not biological generations. Mean height is the mean of individual fitness values. C3/C4 classifications do not apply to these abstract traits.':
+ 'Plant-type labels are operational model categories, not species diagnoses. Background holds stomatal opening and photorespiratory recycling fixed at the displayed slice; trajectories retain each run’s own values. Arrows show local improvement in the chosen objective, not predicted mutations. Surface values are interpolated within feasible cells. Hatching marks unavailable or infeasible regions. Region area is not a probability. Allocation denotes catalytic capacity, not nitrogen share. Runs that stop early are excluded after their last observation.'};
 }
 function attach(canvas,readOptions,redraw){const camera={az:-.72,tilt:.62,height:1.15};let drag=null,suppress=false;
  canvas.addEventListener('pointerdown',e=>{if(readOptions().dimension!=='3d'||e.button!==0)return;drag={x:e.clientX,y:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId);});
