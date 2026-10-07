@@ -16,5 +16,9 @@ function summary(rows,hour,c,type){const r=frame(rows,hour),first=rows[0],previo
  else if(c.developmentMode==='thermal'&&c['finalLeaves'+type]>0&&r.leafOpportunities>=c['finalLeaves'+type])appearance='Configured final leaf count reached; existing leaves can still expand.';
  else if(c.developmentMode==='thermal'&&c['developmentScale'+type]!==1)appearance+=' Timing multiplier '+c['developmentScale'+type]+' is an editable slow-development assumption.';
  return{r,...n,change,dayChange,limitation,appearance};}
-const api={visible,counts,frame,summary};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GrowthPlayback=api;
+function appearanceEvents(series,selected=Object.keys(series)){
+ const events=new Map();for(const type of selected){const rows=series[type]||[];let count=rows.length?counts(rows[0]).formed:0;for(let i=1;i<rows.length;i++){const next=counts(rows[i]).formed;if(next>count){const hour=rows[i].hour??i,entry=events.get(hour)||{hour,leaves:[]};entry.leaves.push({type,first:count+1,last:next});events.set(hour,entry);}count=next;}}
+ return [...events.values()].sort((a,b)=>a.hour-b.hour);
+}
+const api={visible,counts,frame,summary,appearanceEvents};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.GrowthPlayback=api;
 })(globalThis);

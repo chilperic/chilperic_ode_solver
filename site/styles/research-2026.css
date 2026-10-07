@@ -388,3 +388,20 @@ body.rx-enhanced .fl-contact-photo{width:100%!important;max-width:320px!importan
 
 body.rx-enhanced .fl-about>header>.rx-reel{grid-column:2!important;grid-row:1 / span 6!important;align-self:center!important;min-height:390px!important}
 @media(max-width:1050px){body.rx-enhanced .fl-about>header>.rx-reel{grid-column:1!important;grid-row:auto!important;width:100%!important}}
+
+/* Keep the scientific abstract complete and separate from its caption. */
+.rx-reel .rx-abstract-slide{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:16px;padding:56px 16px 20px;box-sizing:border-box;background:#fff}
+.rx-reel .rx-abstract-slide img{min-height:0;object-fit:contain;filter:none}
+.rx-reel .rx-abstract-slide::after{display:none}
+.rx-reel .rx-abstract-slide figcaption{position:static;color:#203c44}
+.rx-reel:has(.rx-abstract-slide.is-active) .rx-reel-dot{background:#c8d5d5}
+.rx-reel:has(.rx-abstract-slide.is-active) .rx-reel-dot::after{background:#0f7771}
+.rx-project.rx-abstract-project{display:flex;flex-direction:column;min-height:420px}
+.rx-abstract-project .rx-project-media{position:relative;inset:auto;aspect-ratio:1120/643;background:#fff;flex:0 0 auto}
+.rx-abstract-project .rx-project-media img{object-fit:contain;filter:none}
+.rx-abstract-project .rx-project-media::after{display:none}
+.rx-abstract-project:hover .rx-project-media img{transform:none}
+.rx-abstract-project .rx-project-body{position:static}
+.rx-supporting-material{margin:24px 0 0;padding:16px 0;border-top:1px solid var(--rx-line);color:var(--rx-muted)}
+.rx-supporting-material summary{cursor:pointer;font-size:1rem}
+.rx-supporting-material a{color:var(--rx-accent);text-underline-offset:3px}

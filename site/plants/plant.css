@@ -29,3 +29,13 @@ header nav{flex-wrap:wrap;min-width:0}header{flex-wrap:wrap}.sectionNav{flex-wra
 .growthTools label{font-size:14px}.growthTools select{max-width:100%;font-size:14px}
 
 .growthData strong{display:block;font-size:1rem;color:var(--plant,#175a48)}.growthReason{padding:.55rem .65rem;border-left:3px solid var(--plant,#175a48);background:#edf3f7;color:#203b47}
+
+/* Resource inputs remain explicit and accessible from the animation. */
+#waterInputs,#nitrogenInputs{padding:14px;border:1px solid #cbdcdb;border-radius:12px;margin:14px 0;background:#f6fbfa;color:#183e46}
+#waterInputs legend,#nitrogenInputs legend{font-weight:750;font-size:1.05rem;padding:0 6px}
+#waterInputs{border-top:3px solid #2787ad}#nitrogenInputs{border-top:3px solid #ae7a29}
+.resourceField{margin-bottom:9px}.parameterHint{font-size:.86rem;line-height:1.5;color:#536a70}
+.plantInputLinks{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.plantInputLinks button{padding:8px 11px;border:1px solid #8ebbb7;background:#edf8f5;color:#164d48;border-radius:8px;font-size:.86rem;font-weight:650;cursor:pointer}
+.plantInputLinks button:hover,.plantInputLinks button:focus-visible{background:#d8eee8;outline-offset:3px}
+#waterInputs input,#waterInputs select,#nitrogenInputs input,#nitrogenInputs select{color:#173d45;background:#fff;border-color:#c1d5d3}
+[data-appearance=dark] #waterInputs,[data-appearance=dark] #nitrogenInputs{background:#15313b;color:#e4f3f2}

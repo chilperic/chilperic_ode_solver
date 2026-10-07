@@ -57,14 +57,14 @@
   d.querySelectorAll('[data-rx-reel]').forEach(reel=>{
     const slides=[...reel.querySelectorAll('[data-rx-slide]')];
     if(slides.length<2)return;
-    let i=0,timer=null,paused=false;
+    let i=0,timer=null,paused=reel.dataset.rxAutoplay==='false';
     const dots=d.createElement('div');dots.className='rx-reel-dots';
     slides.forEach((_,idx)=>{const dot=d.createElement('span');dot.className='rx-reel-dot'+(idx===0?' is-active':'');dots.appendChild(dot);});
     reel.appendChild(dots);
     const controls=d.createElement('div');controls.className='rx-reel-controls';
     const prev=d.createElement('button'),toggle=d.createElement('button'),next=d.createElement('button');
-    prev.type=next.type=toggle.type='button';prev.setAttribute('aria-label','Previous result');next.setAttribute('aria-label','Next result');toggle.setAttribute('aria-label','Pause result reel');
-    prev.textContent='←';toggle.textContent='Ⅱ';next.textContent='→';controls.append(prev,toggle,next);reel.appendChild(controls);
+    prev.type=next.type=toggle.type='button';prev.setAttribute('aria-label','Previous result');next.setAttribute('aria-label','Next result');toggle.setAttribute('aria-label',paused?'Play result reel':'Pause result reel');
+    prev.textContent='←';toggle.textContent=paused?'▶':'Ⅱ';next.textContent='→';controls.append(prev,toggle,next);reel.appendChild(controls);
     function show(n){
       i=(n+slides.length)%slides.length;
       slides.forEach((s,k)=>s.classList.toggle('is-active',k===i));
