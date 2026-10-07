@@ -1,10 +1,10 @@
 {
-  "version": "80.6.0",
-  "release": "Assimilation-rate objectives and simultaneous individual / mean evolution playback",
+  "version": "80.7.0",
+  "release": "Activity-aware region diagnostics, conditional legends and project audit",
   "built": "2026-10-07",
   "baseline_commit": "04dff98",
   "legacy_branch": "legacy/80.1.0-user-approved",
   "distribution": "GitHub Pages",
   "updated": "2026-10-07",
-  "verification": "science-80.6.json"
+  "verification": "science-80.7.json"
 }

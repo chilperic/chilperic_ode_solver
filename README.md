@@ -1,3 +1,7 @@
+## 80.7 — region and audit repairs
+
+Conditional legends, activity-aware intermediate diagnostics, explicit threshold sensitivity, previous-run warnings, and current-layout regression gates. The 80.3 native plant and leaf renderers remain preserved. [Audit and scientific limits](site/AUDIT-80.7.md). Nitrogen-budget parameterization remains queued; current continuum fractions explicitly denote catalytic capacity.
+
 FokoLab 80.5.0 adds explicit evolutionary objectives, exploratory C2 intermediate mechanisms, and time-aligned replicate averages while preserving the restored 80.3 interface. Scientific assumptions and run limitations appear beside the results.
 
 # FokoLab

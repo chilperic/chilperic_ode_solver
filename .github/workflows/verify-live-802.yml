@@ -42,7 +42,7 @@ jobs:
               if prefix:break
               time.sleep(10)
           report['publishedBase']=prefix
-          paths=['index.html','analysis.html','analysis-studio.html','decision-studio.html','VERSION.json','contact.html','contributors.html','contributors.json','cv.html','cv/downloads.json','styles/revision83.css','styles/analysis-studio.css','src/integration/shell.js','src/integration/registry.js','src/revision82/run-integrity.js','plants/index.html','plants/plant-renderer.js','plants/water-circuit.js','plants/plant-ui.js','plants/plant.css','leaf/index.html','shared/leaf-diagnostics.js','design/workspace.js','design/leaf-diagnostic-ui.js','tcells/index.html','tcells/worker.js','tcells/tcell-engine.js','lipids/index.html','lipids/worker.js','lipids/lipid-engine.js','continuum/advanced.html','continuum/advanced-ui.js','continuum/advanced-worker.js','continuum/ensemble.js','continuum/journey.js','continuum/studio-renderer.js','continuum/landscape.js','continuum/landscape-3d.js','continuum/population-mean.js','continuum/strategy-regions.js','science-80.6.json','research/remote-client.js','research/remote-worker.js','continuum/approaches.html','random.html','engine.js','ode.html','statistics.html','optimization.html','src/v72/optimization-workspace.js','book.html','assets/profile-chilperic.webp','audit-80.3.json','AUDIT-80.3.md']
+          paths=['index.html','analysis.html','analysis-studio.html','decision-studio.html','VERSION.json','contact.html','contributors.html','contributors.json','cv.html','cv/downloads.json','styles/revision83.css','styles/analysis-studio.css','src/integration/shell.js','src/integration/registry.js','src/revision82/run-integrity.js','plants/index.html','plants/plant-renderer.js','plants/water-circuit.js','plants/plant-ui.js','plants/plant.css','leaf/index.html','shared/leaf-diagnostics.js','design/workspace.js','design/leaf-diagnostic-ui.js','tcells/index.html','tcells/worker.js','tcells/tcell-engine.js','lipids/index.html','lipids/worker.js','lipids/lipid-engine.js','continuum/advanced.html','continuum/advanced-ui.js','continuum/advanced-worker.js','continuum/ensemble.js','continuum/journey.js','continuum/studio-renderer.js','continuum/landscape.js','continuum/landscape-3d.js','continuum/population-mean.js','continuum/strategy-regions.js','science-80.7.json','continuum/strategy-classifier.js','continuum/audit-807.css','research/remote-client.js','research/remote-worker.js','continuum/approaches.html','random.html','engine.js','ode.html','statistics.html','optimization.html','src/v72/optimization-workspace.js','book.html','assets/profile-chilperic.webp','audit-80.3.json','AUDIT-80.3.md']
           paths += ['src/analysis-studio/'+p for p in ('statistics.mjs','compute.mjs','methods.mjs','demos.mjs','plots.mjs','explain.mjs','ui.mjs','worker.mjs','reproduce.py')]
           paths += ['src/revision83/'+p for p in ('workflow.js','presentation.js','decision-core.mjs','decision-ui.mjs','decision-worker.mjs','decision-bridge.js')]
           paths += ['cv/'+e['id']+'.pdf' for e in json.loads(Path('site/cv/downloads.json').read_text())['editions']]
@@ -127,11 +127,28 @@ jobs:
                   page.locator('#evoTimeSlider').press('End')
                   page.wait_for_function('document.getElementById("advTime").textContent.includes("Ensemble at generation")',timeout=10000)
                   verify('Objective stated without model equations','Assimilation reference' in page.locator('#objectiveStatement').inner_text() and page.locator('math').count()==0)
-                  verify('Intermediate mechanisms explained',page.locator('#strategyRegionKey').inner_text().count('Type I')>=2)
+                  verify('Only present classes in default legend',page.locator('#sliceLegend article').count()==5)
+                  verify('Absent classes explained','Absent from this slice' in page.locator('#absentRegions').inner_text())
+                  verify('Playback preserves current run',page.locator('#resultState').get_attribute('data-state')=='current')
+                  page.get_by_role('button',name='GDC 100% · 7 classes',exact=True).click()
+                  verify('All seven classes in high-GDC slice',page.locator('#sliceLegend article').count()==7)
+                  verify('Other allocation included','Other allocation' in page.locator('#sliceLegend').inner_text())
+                  page.get_by_text('Classification thresholds and sensitivity',exact=True).click()
+                  verify('Threshold sensitivity visible',page.locator('#thresholdRows tr').count()==3)
+                  page.screenshot(path=str(out/'live-evolution-regions.png'))
+                  page.set_viewport_size({'width':390,'height':844})
+                  verify('Evolution mobile reflow',page.evaluate('document.documentElement.scrollWidth<=innerWidth+2'))
+                  page.screenshot(path=str(out/'live-evolution-mobile.png'))
+                  page.set_viewport_size({'width':1440,'height':1000})
                   page.locator('#advRep').select_option('0')
                   page.locator('#advNext').click()
                   page.wait_for_function('document.getElementById("advEventLabel").textContent.startsWith("1 /")',timeout=10000)
                   verify('Native evolutionary journey',page.locator('#advEventLabel').inner_text().startswith('1 /') and page.locator('math').count()==0)
+                  page.get_by_text('Climate & location',exact=True).click()
+                  page.locator('#advLocation').select_option('niamey');page.locator('#advWetness').fill('0.1');page.locator('#advRun').click()
+                  page.wait_for_function('document.getElementById("resultState").textContent.includes("Run failed")',timeout=120000)
+                  verify('Failed run visibly retains previous result','Previous completed run remains displayed' in page.locator('#resultState').inner_text())
+                  verify('Displayed climate is the completed climate','Custom / synthetic forcing' in page.locator('#resultContext').inner_text())
                   page.goto(base+'leaf/index.html',wait_until='domcontentloaded')
                   page.wait_for_function('document.getElementById("status").textContent==="Calculation complete."',timeout=60000)
                   verify('Interactive leaf result',page.locator('#metrics strong').count()==4 and page.locator('math').count()==0)

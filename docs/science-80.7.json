@@ -1,0 +1,294 @@
+{
+  "version": "80.7.0",
+  "restored_interface": "80.3.0",
+  "objective": "Whole-cycle mean net assimilation by default, with illuminated-hours and weighted rate options; units \u00b5mol CO2 m-2 s-1. Historical carbon objectives remain available.",
+  "replicates": {
+    "default": 200,
+    "maximum": 1000,
+    "alignment": "biological time",
+    "band": "central 95% of replicate values",
+    "event_cap": "censored after last observation",
+    "animation": "Actual independently seeded residents and their arithmetic mean share biological time. Censored runs are excluded. The mean is not an organism."
+  },
+  "validation": [
+    "duration-weighted rate and unit conversion",
+    "carbon/rate objective equivalence at matched reference",
+    "daylight denominator and dark-only rejection",
+    "forcing-duration invariance",
+    "temperature response",
+    "400 independent replicates",
+    "exact event-boundary playback",
+    "censor exclusion",
+    "exact current ensemble mean",
+    "200 simultaneous markers at desktop and mobile widths",
+    "shared classifier and threshold-independent trajectories",
+    "conditional legend and GDC slice inventory",
+    "failed-start integrity",
+    "76-page link and structural audit",
+    "current-core numerical and Research Hub contracts"
+  ],
+  "scenarioChecks": [
+    {
+      "scenario": "warm",
+      "objective": "assimilation",
+      "complete": 200,
+      "censored": 0,
+      "frequencies": [
+        {
+          "label": "C3-like",
+          "count": 1,
+          "n": 200
+        },
+        {
+          "label": "Incipient C2",
+          "count": 1,
+          "n": 200
+        },
+        {
+          "label": "Mixed C3\u2013C4",
+          "count": 29,
+          "n": 200
+        },
+        {
+          "label": "C4-like",
+          "count": 169,
+          "n": 200
+        }
+      ]
+    },
+    {
+      "scenario": "cool CO2-rich",
+      "objective": "assimilation",
+      "complete": 200,
+      "censored": 0,
+      "frequencies": [
+        {
+          "label": "C3-like",
+          "count": 106,
+          "n": 200
+        },
+        {
+          "label": "Incipient C2",
+          "count": 29,
+          "n": 200
+        },
+        {
+          "label": "Mixed C3\u2013C4",
+          "count": 47,
+          "n": 200
+        },
+        {
+          "label": "C4-like",
+          "count": 9,
+          "n": 200
+        },
+        {
+          "label": "Other allocation",
+          "count": 9,
+          "n": 200
+        }
+      ]
+    }
+  ],
+  "scope": "Exploratory C2 carbon-recycling extension. Nitrogen-shuttle costs, evolving anatomy and species calibration remain unavailable.",
+  "renderers": [
+    {
+      "file": "plants/plant-renderer.js",
+      "sha256": "e7633d6a529cbdc93cc9522aeb3babf97cf8a2f409343f22651b59abe151eb15",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "plants/water-circuit.js",
+      "sha256": "61c5c945bb38f448ec5ec1e3a35a72f1ba99be7ccbae05fc9d8dfc27f750ed91",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "plants/plant.css",
+      "sha256": "cf6f76a7d47b2fd59d4590a2862a84e7af9247be58eb4c6a75d94acbf7d8851d",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "leaf/leaf.css",
+      "sha256": "4200a194497305d41f5bd9844cfec959eb3952c31bef67ac82146d2eeaa32fdd",
+      "unchangedFrom803": true
+    },
+    {
+      "file": "continuum/landscape.js",
+      "sha256": "1b90684eda5c4c8addf8b864c4d7a0cda1487e51ec7b0c745f46f9831f335bb8",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/journey.js",
+      "sha256": "eb2e702e23cdfa3a4db31c3f74b129ef170449f72db6e2c106fef16eb8b5beb9",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/ensemble.js",
+      "sha256": "352f8d50a4934765d4c3c7240c33beb8eb4aa00d94d341901a4ca5442605c519",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/population-mean.js",
+      "sha256": "e4292c98a95fc764e57cefe49f124018740a22f848b53b75bd829146919efea5",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/landscape-3d.js",
+      "sha256": "0c053d7488cfa4c02af4037deaa62f6a32e4fdfd5dc3d725e86d11520293f8eb",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/studio-renderer.js",
+      "sha256": "530ac9e7e6037e0668f23d16c384d34bbbd48d173d50450ea4d0cd07a0b5b12b",
+      "unchangedFrom803": false
+    },
+    {
+      "file": "continuum/strategy-regions.js",
+      "sha256": "e51c6ed1f8d2092a0eb4f37859319225af8a6ffdb95f91c189c72f90b877aa7f",
+      "unchangedFrom803": false
+    }
+  ],
+  "queued": [
+    "Enzyme-specific nitrogen-budget conversion with sourced molecular and kinetic parameters, then classification sensitivity on the nitrogen basis."
+  ],
+  "classification": {
+    "basis": "capacity allocation plus calculated daylight activity; not calibrated species boundaries",
+    "defaults": {
+      "c3Min": 0.8,
+      "c4Max": 0.1,
+      "pumpMax": 0.1,
+      "recyclingMin": 0.02,
+      "recyclingStrong": 0.1
+    },
+    "sensitivity": "70/80/90% C3 mesophyll floors; sample counts distinguished from continuous area",
+    "effectOnFitness": "none"
+  },
+  "sliceChecks": [
+    {
+      "gs": 0.01,
+      "gdcBS": 0,
+      "feasible": 66,
+      "classes": {
+        "c3": 0,
+        "incipient": 0,
+        "c2": 0,
+        "c2c4": 0,
+        "intermediate": 47,
+        "c4": 17,
+        "other": 2
+      }
+    },
+    {
+      "gs": 0.105,
+      "gdcBS": 0,
+      "feasible": 83,
+      "classes": {
+        "c3": 3,
+        "incipient": 0,
+        "c2": 0,
+        "c2c4": 0,
+        "intermediate": 47,
+        "c4": 17,
+        "other": 16
+      }
+    },
+    {
+      "gs": 0.2,
+      "gdcBS": 0,
+      "feasible": 85,
+      "classes": {
+        "c3": 3,
+        "incipient": 0,
+        "c2": 0,
+        "c2c4": 0,
+        "intermediate": 47,
+        "c4": 17,
+        "other": 18
+      }
+    },
+    {
+      "gs": 0.01,
+      "gdcBS": 0.5,
+      "feasible": 66,
+      "classes": {
+        "c3": 0,
+        "incipient": 36,
+        "c2": 0,
+        "c2c4": 0,
+        "intermediate": 11,
+        "c4": 17,
+        "other": 2
+      }
+    },
+    {
+      "gs": 0.105,
+      "gdcBS": 0.5,
+      "feasible": 84,
+      "classes": {
+        "c3": 3,
+        "incipient": 33,
+        "c2": 0,
+        "c2c4": 0,
+        "intermediate": 22,
+        "c4": 17,
+        "other": 9
+      }
+    },
+    {
+      "gs": 0.2,
+      "gdcBS": 0.5,
+      "feasible": 85,
+      "classes": {
+        "c3": 3,
+        "incipient": 33,
+        "c2": 0,
+        "c2c4": 0,
+        "intermediate": 22,
+        "c4": 17,
+        "other": 10
+      }
+    },
+    {
+      "gs": 0.01,
+      "gdcBS": 1,
+      "feasible": 69,
+      "classes": {
+        "c3": 0,
+        "incipient": 34,
+        "c2": 3,
+        "c2c4": 11,
+        "intermediate": 2,
+        "c4": 17,
+        "other": 2
+      }
+    },
+    {
+      "gs": 0.105,
+      "gdcBS": 1,
+      "feasible": 84,
+      "classes": {
+        "c3": 1,
+        "incipient": 36,
+        "c2": 5,
+        "c2c4": 7,
+        "intermediate": 9,
+        "c4": 17,
+        "other": 9
+      }
+    },
+    {
+      "gs": 0.2,
+      "gdcBS": 1,
+      "feasible": 85,
+      "classes": {
+        "c3": 1,
+        "incipient": 38,
+        "c2": 5,
+        "c2c4": 5,
+        "intermediate": 9,
+        "c4": 17,
+        "other": 10
+      }
+    }
+  ]
+}

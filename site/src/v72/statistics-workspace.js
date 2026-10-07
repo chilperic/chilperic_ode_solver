@@ -911,7 +911,7 @@
     window.addEventListener('resize', applyLayout);
   }
 
-  window.FokoNativePrepare = function(name) { loadPreset(name, false); };
+  if (typeof window !== 'undefined') window.FokoNativePrepare = function(name) { loadPreset(name, false); };
   function init() {
     if (!DATA || !STATS || !root.Plotly) return showError(new Error('Required local scientific libraries failed to load.'));
     renderPresetLibrary();
