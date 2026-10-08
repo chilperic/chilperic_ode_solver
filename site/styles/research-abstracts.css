@@ -1,7 +1,7 @@
-/* Concept artwork stays whole; captions carry the scientific interpretation. */
+/* Scientific schemes stays whole; captions carry the scientific interpretation. */
 html body .project-launch-hero:has(.project-abstract){display:block!important}
 html body figure.project-abstract{display:block!important;width:100%;max-width:none!important;min-height:0!important;margin:24px 0!important;background:#fff!important;border:1px solid var(--fl-line,#cdd8db);border-radius:14px;overflow:hidden}
-html body figure.project-abstract img{display:block;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;object-fit:contain!important;aspect-ratio:1672/941;background:#fff;filter:none}
+html body figure.project-abstract img{display:block;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;object-fit:contain!important;aspect-ratio:1600/900;background:#fff;filter:none}
 html body figure.project-abstract figcaption{padding:18px 22px;background:var(--fl-card,#fff);color:var(--fl-ink,#19373f);font-size:1rem;line-height:1.6}
 .abstract-topics{display:flex;flex-wrap:wrap;gap:8px 24px;padding:0;margin:0 0 8px;list-style:none;font-weight:650}
 .abstract-note{display:block;font-size:.875rem;color:var(--fl-muted,#465f68);margin-top:8px}
@@ -13,13 +13,13 @@ html body .rx-reel figcaption strong{color:#19373f}
 html body .rx-reel-dot{background:#cdd8db}
 html body .rx-reel-dot::after{background:#176678}
 html body .rx-project{display:flex;flex-direction:column;min-height:0}
-html body .rx-project .rx-project-media{position:relative;inset:auto;aspect-ratio:1672/941;background:#fff;flex:0 0 auto}
+html body .rx-project .rx-project-media{position:relative;inset:auto;aspect-ratio:1600/900;background:#fff;flex:0 0 auto}
 html body .rx-project .rx-project-media img{object-fit:contain;filter:none}
 html body .rx-project .rx-project-media::after{display:none}
 html body .rx-project .rx-project-body{position:static}
 html body .rx-project:hover img{transform:none}
 html body .rx-motion-card{display:flex;flex-direction:column;background:var(--rx-panel-solid,#fff);border:1px solid var(--rx-line,#cdd8db)}
-html body .rx-motion-card img{position:static;aspect-ratio:1672/941;height:auto;opacity:1;object-fit:contain;background:white}
+html body .rx-motion-card img{position:static;aspect-ratio:1600/900;height:auto;opacity:1;object-fit:contain;background:white}
 html body .rx-motion-card::after{display:none}
 html body .rx-motion-card>div{position:static;padding:16px}
 html body .rx-motion-card b{color:var(--rx-ink,#19373f)!important}
