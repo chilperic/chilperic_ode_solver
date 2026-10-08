@@ -46,13 +46,6 @@
     reveal.forEach(el=>{el.classList.add('rx-reveal');io.observe(el);});
   }else reveal.forEach(el=>el.classList.add('is-visible'));
 
-  d.querySelectorAll('canvas').forEach(canvas=>{
-    const host=canvas.closest('section,.panel,article,div');
-    if(!host||host.dataset.rxLive==='1')return;
-    host.dataset.rxLive='1';host.classList.add('rx-live-zone');
-    const tag=d.createElement('div');tag.className='rx-live-label';tag.textContent='Live animation / computed view';
-    host.insertBefore(tag,host.firstChild);
-  });
 
   d.querySelectorAll('[data-rx-reel]').forEach(reel=>{
     const slides=[...reel.querySelectorAll('[data-rx-slide]')];
@@ -67,7 +60,7 @@
     prev.textContent='←';toggle.textContent=paused?'▶':'Ⅱ';next.textContent='→';controls.append(prev,toggle,next);reel.appendChild(controls);
     function show(n){
       i=(n+slides.length)%slides.length;
-      slides.forEach((s,k)=>s.classList.toggle('is-active',k===i));
+      slides.forEach((s,k)=>{s.classList.toggle('is-active',k===i);s.setAttribute('aria-hidden',String(k!==i));});
       [...dots.children].forEach((s,k)=>s.classList.toggle('is-active',k===i));
     }
     function start(){

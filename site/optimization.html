@@ -21,7 +21,8 @@
 <link href="styles/v72-lab-shell.css?v=79.2.0" rel="stylesheet"/>
 <link href="styles/v72-accessibility-performance.css?v=79.2.0" rel="stylesheet"/><script defer="" src="src/v72/accessibility-performance.js?v=79.2.0"></script><link href="styles/v76-system.css?v=79.2.0&amp;core-access=1" rel="stylesheet"/>
 <link href="styles/identity.css?v=79.2.0&amp;identity=79.1" rel="stylesheet"/><meta content="assets/brand/social-card.png" property="og:image"/><link href="styles/upgrade.css" rel="stylesheet"/>
-<script src="src/upgrade/registry.js"></script><script src="src/models/scientific-example-catalog.js"></script><script src="src/integration/catalog.js"></script><script src="src/recovery/catalog-bridge.js"></script><link href="styles/source-observatory.css" rel="stylesheet"/><link href="styles/instrument.css" rel="stylesheet"/><link href="styles/recovery.css" rel="stylesheet"/><script defer="" src="src/integration/shell.js"></script><script defer="" src="src/integration/connect.js"></script><script defer="" src="src/integration/controls.js"></script><script defer="" src="src/integration/workbench.js"></script><script defer="" src="src/integration/figure-tools.js"></script><script defer="" src="src/integration/model-export.js?v=97241e1faf10"></script><script defer="" src="src/integration/run-feedback.js"></script><script defer="" src="src/recovery/runtime.js"></script><link href="styles/revision82.css" rel="stylesheet"/><link href="styles/revision83.css" rel="stylesheet"/><script defer="" src="src/revision83/workflow.js?v=af3eba580d96"></script><script defer="" src="src/revision83/decision-bridge.js"></script><script defer="" src="src/revision83/presentation.js"></script></head>
+<script src="src/upgrade/registry.js"></script><script src="src/models/scientific-example-catalog.js"></script><script src="src/integration/catalog.js"></script><script src="src/recovery/catalog-bridge.js"></script><link href="styles/source-observatory.css" rel="stylesheet"/><link href="styles/instrument.css" rel="stylesheet"/><link href="styles/recovery.css" rel="stylesheet"/><script defer="" src="src/integration/shell.js"></script><script defer="" src="src/integration/connect.js"></script><script defer="" src="src/integration/controls.js"></script><script defer="" src="src/integration/workbench.js"></script><script defer="" src="src/integration/figure-tools.js"></script><script defer="" src="src/integration/model-export.js?v=97241e1faf10"></script><script defer="" src="src/integration/run-feedback.js"></script><script defer="" src="src/recovery/runtime.js"></script><link href="styles/revision82.css" rel="stylesheet"/><link href="styles/revision83.css" rel="stylesheet"/><script defer="" src="src/revision83/workflow.js?v=af3eba580d96"></script><script defer="" src="src/revision83/decision-bridge.js"></script><script defer="" src="src/revision83/presentation.js"></script><link rel="stylesheet" href="styles/actions.css?v=80.14.1"/>
+</head>
 <body data-color-family="decisions" data-foko-integrated="true" data-lab="optimization" data-page-key="optimization" data-v72-shell="true"><nav aria-label="Skip navigation" class="fl-skip-nav"><a class="fl-skip" href="#workbench">Skip to content</a></nav>
 <div class="app-shell">
 <header class="topbar v76-appbar" data-v76-appbar="true"><a aria-label="Foko Lab home" class="v76-brand" href="index.html"><img alt="Foko Lab" src="assets/brand/foko-lab-logo.svg"/></a></header>
@@ -35,7 +36,7 @@
 </section>
 <section aria-label="Optimization controls" class="work-panel controls">
 <section class="card intro-card hero-with-mark">
-<div><p class="v72-eyebrow">Bounded nonlinear programs · explicit feasibility · seeded search</p><h2>Optimization Lab</h2><p class="note">Compute and inspect numerical candidates without confusing a low objective value, a stopped algorithm, or a heuristic search with a proof of optimality.</p></div>
+<div><p class="v72-eyebrow">Bounded nonlinear programs · explicit feasibility · seeded search</p><h2>Optimization Lab</h2><p class="note">Search within specified bounds and inspect objective values, constraint violations and convergence.</p></div>
 <img alt="Optimization Lab mark" class="lab-mark" decoding="async" loading="lazy" src="assets/lab-logos/optimization-lab.webp?v=79.2.0"/>
 </section>
 <section aria-label="Run optimization" class="actionbar card">
@@ -92,14 +93,14 @@
 <div class="card-head"><div><p class="v72-eyebrow">Capability taxonomy</p><h2>Computed, limited and external methods</h2></div></div>
 <p class="field-help" id="optimizationTaxonomySummary">Loading the analysis taxonomy…</p>
 <div class="capability-catalog" id="optimizationTaxonomyCatalog"></div>
-<p class="scientific-boundary">Only views backed by the current computed result appear in plot dropdowns. Reference-only, export-only and unavailable methods remain visible here so taxonomy coverage is never confused with implementation.</p>
+<p class="scientific-boundary">Plot menus show views available for the current result. The method catalogue distinguishes runnable methods, export templates and references.</p>
 <p class="field-help"><a href="ANALYSIS_TAXONOMY.json">Machine-readable JSON</a> · <a href="ANALYSIS_TAXONOMY.md">hierarchical reference</a></p>
 </section>
 </section>
 <section aria-label="Optimization results" class="workspace v72-workspace">
 <section aria-label="Numerical results" class="results-card" role="region">
 <header class="v72-workspace-head">
-<div><h1>Results and search diagnostics</h1><p>Compare views from the same run. Unsupported optimality claims are omitted.</p></div>
+<div><h1>Results and search diagnostics</h1><p>Compare the objective landscape, search history and constraint checks from one run.</p></div>
 <div aria-label="Plot layout" class="v72-layout-switch" role="group">
 <button class="active" data-layout-mode="two" type="button">2-up</button>
 <button data-layout-mode="focus" type="button">Focus</button>

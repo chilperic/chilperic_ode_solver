@@ -8,6 +8,7 @@
 <link rel="icon" href="assets/brand/foko-lab-micro.svg" type="image/svg+xml"/>
 <link rel="stylesheet" href="styles/research-2026.css?v=6b22f6e1e116"/>
 <script defer src="src/research-2026.js?v=7bed1a773fa2"></script>
+<link rel="stylesheet" href="styles/actions.css?v=80.14.1"/>
 </head>
 <body data-foko-integrated="true" data-lab="research" data-page-key="research">
 <nav aria-label="Skip navigation" class="fl-skip-nav"><a class="fl-skip" href="#main-content">Skip to content</a></nav>
@@ -15,7 +16,7 @@
 
 <section class="rx-hero">
   <div class="rx-hero-copy">
-    <p class="rx-kicker">Research · model provenance</p>
+    <p class="rx-kicker">Research</p>
     <h1 class="rx-title">Mechanistic models across biological scales.</h1>
     <p class="rx-lead">FokoLab links my research in plant adaptation, metabolic systems biology and quantitative immunology to the simulations, analyses and visual explanations built around those questions.</p>
     <div class="rx-meta-row">
@@ -53,16 +54,16 @@
   <div class="rx-section-head">
     <div>
       <p class="rx-kicker">Research atlas</p>
-      <h2>Three research programmes, one modelling logic.</h2>
+      <h2>Research projects</h2>
     </div>
-    <p>The projects differ in scale and biology, but each follows the same discipline: define mechanisms, expose assumptions, compute the consequences, confront uncertainty and keep interpretation separate from numerical convenience.</p>
+    <p>Explore each project’s scientific question, simulations, publications and collaborators.</p>
   </div>
 
   <div class="rx-project-grid">
     <a class="rx-project large rx-abstract-project" href="research/photosynthesis.html">
       <div class="rx-project-media"><img src="assets/research/photosynthesis/thermoplants-graphical-abstract.png" alt="Graphical abstract of the plant C3–C4 research project" loading="lazy"/></div>
       <div class="rx-project-body">
-        <small>Flagship · unpublished plant research</small>
+        <small>Plant adaptation · ongoing research</small>
         <h3>Mechanistic evolution across the C3–C4 continuum</h3>
         <p>Biochemistry, leaf energy balance, hydraulics, anatomy, climate forcing, uncertainty and population evolution.</p>
       </div>
@@ -101,59 +102,29 @@
       <p class="rx-kicker">Motion &amp; simulation</p>
       <h2>See the models move.</h2>
     </div>
-    <p>Animations are part of the scientific interface, not decorative extras. They expose trajectories, event timing, lineage structure and competing explanations that are difficult to read from a single terminal plot.</p>
+    <p>Explore plant growth, evolutionary trajectories, cell division and metabolic reactions through time.</p>
   </div>
   <div class="rx-motion-grid">
     <a class="rx-motion-card" href="plants/index.html?v=3fac8611f0c7">
       <img src="assets/research/photosynthesis/c3c4_3d_evolution_germany.png" alt="Plant adaptation simulation output"/>
-      <div><b><span class="rx-live-pulse"></span> C3–C4 result replay</b><span>Climate-specific trajectories, Pareto views and sensitivity plots.</span></div>
+      <div><b>Plant growth</b><span>Climate-specific trajectories, Pareto views and sensitivity plots.</span></div>
     </a>
     <a class="rx-motion-card" href="continuum/advanced.html?v=45f480eedf60">
       <img src="assets/research/photosynthesis/objective_landscape_bio_full_3d.png" alt="Evolution landscape"/>
-      <div><b><span class="rx-live-pulse"></span> Evolution journey</b><span>Animated public replay of evolutionary and search outputs.</span></div>
+      <div><b>Evolution journey</b><span>Compare individual evolutionary runs and their mean trajectory.</span></div>
     </a>
     <a class="rx-motion-card" href="tcells/index.html">
       <img src="assets/research/tcell/generation-cascade.png" alt="T-cell lineage animation"/>
-      <div><b><span class="rx-live-pulse"></span> Cell lineages</b><span>Generation, division, death and branching events through time.</span></div>
+      <div><b>Cell lineages</b><span>Generation, division, death and branching events through time.</span></div>
     </a>
     <a class="rx-motion-card" href="lipids/index.html">
       <img src="assets/research/fatty-acid/denovo_scheme.webp" alt="Fatty-acid synthesis animation"/>
-      <div><b><span class="rx-live-pulse"></span> Molecular reactions</b><span>Acyl-chain elongation, enzyme occupancy and product-release traces.</span></div>
+      <div><b>Molecular reactions</b><span>Acyl-chain elongation, enzyme occupancy and product-release traces.</span></div>
     </a>
   </div>
 </section>
 
-<section class="rx-section" id="boundary">
-  <div class="rx-section-head">
-    <div>
-      <p class="rx-kicker">Publication boundary</p>
-      <h2>Public evidence without publishing unfinished science.</h2>
-    </div>
-    <p>For unpublished work, the public interface should show the question, simulation outputs, plots, uncertainty status and collaboration. It should not expose the complete equations, calibration files or reconstructable parameterisation.</p>
-  </div>
-  <div class="rx-split">
-    <article class="rx-surface public">
-      <h3>Visible publicly</h3>
-      <ul class="rx-list">
-        <li>Simulation animations and archived result replays</li>
-        <li>Scientific figures, sensitivity and trade-off analyses</li>
-        <li>Research questions, model classes and limitations</li>
-        <li>Parameter evidence categories and uncertainty labels</li>
-        <li>Collaborators, publications and model provenance</li>
-      </ul>
-    </article>
-    <article class="rx-surface protected">
-      <h3>Protected while unpublished</h3>
-      <ul class="rx-list">
-        <li>Complete scientific equations and source implementation</li>
-        <li>Detailed calibration datasets and parameter registry</li>
-        <li>Unpublished mechanistic hypotheses and development notes</li>
-        <li>Private notebooks, raw results and research administration</li>
-        <li>Anything sufficient to reconstruct the unpublished solver</li>
-      </ul>
-    </article>
-  </div>
-</section>
+<details class="rx-supporting-material" id="boundary"><summary>Research availability</summary><p>The plant project is ongoing. Selected results and interactive simulations are available; the full research model and calibration data are not yet released.</p></details>
 
 <section class="rx-section" id="method">
   <div class="rx-section-head">
@@ -161,7 +132,7 @@
       <p class="rx-kicker">Research method</p>
       <h2>Model → diagnose → challenge → revise.</h2>
     </div>
-    <p>The platform is designed around scientific interrogation rather than one-click answers. Solver convergence, parameter uncertainty and model limitations remain visible instead of being collapsed into a single score.</p>
+    <p>Check solver diagnostics, compare parameter choices and examine uncertainty before interpreting a result.</p>
   </div>
   <div class="rx-stat-strip">
     <div class="rx-stat"><b>01</b><span>Mechanism &amp; assumptions</span></div>
