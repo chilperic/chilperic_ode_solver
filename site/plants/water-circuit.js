@@ -103,6 +103,7 @@ for(const organ of reproduction.sites){
  else{organs.clusters++;for(let j=0;j<5;j++){const xx=x+(j-2)*.04*q,yy=y+.07*q*Math.sin(j);path([[x,y-.07,0],[xx,yy,0]],'#849653',.8);dot([xx,yy,0],kind==='kalanchoe'?'#cd7b79':kind==='aloe'?'#e7a94c':'#d6bd65',2.7*q);}}
 }
 shapes.sort((a,b)=>b.z-a.z);for(const o of shapes)o.paint();
+if(growth&&c.startStage==='seed'&&r.stage===0){const seed=project([0,-.10,0]);ctx.fillStyle='#a27a3d';ctx.strokeStyle='#705528';ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(seed[0],seed[1],7,4,.3,0,Math.PI*2);ctx.fill();ctx.stroke();}
 if(options.labels){ctx.save();ctx.font='11px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';const placed=[];for(const entry of organLabels){const q=project(entry.p),x=clamp(q[0]+(q[0]<cx?-10:10),12,w-12);let y=clamp(q[1],70,h-95);for(let n=0;n<30&&placed.some(p=>Math.hypot(p[0]-x,p[1]-y)<17);n++)y-=17;placed.push([x,y]);ctx.strokeStyle='#4f6c5c';ctx.lineWidth=.8;ctx.beginPath();ctx.moveTo(q[0],q[1]);ctx.lineTo(x,y);ctx.stroke();ctx.fillStyle='#ffffffed';ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();ctx.fillStyle='#244b36';ctx.fillText(String(entry.id),x,y);}ctx.restore();}
 // Anchored labels are deliberately outside the organ geometry.
 function label(txt,p,x,y,color){const q=project(p);ctx.strokeStyle=color+'88';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(q[0],q[1]);ctx.lineTo(x,y-5);ctx.stroke();ctx.font='14px system-ui';const tw=ctx.measureText(txt).width;ctx.fillStyle='#0a1928e6';ctx.fillRect(x-5,y-20,tw+10,26);ctx.fillStyle=color;ctx.fillText(txt,x,y);}
