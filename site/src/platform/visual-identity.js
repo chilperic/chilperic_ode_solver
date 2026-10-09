@@ -7,9 +7,9 @@
  const page=doc.body.dataset.pageKey||'index';
  const family=I.pages[page]||'learning';
  const safeHref=h=>h&&!/^(?:https?:|mailto:|#|data:)/i.test(h);
- const routeKey=h=>String(h||'').split('?')[0].split('#')[0].split('/').pop().replace(/\.html$/,'');
+ const routeKey=h=>{const path=String(h||'').split(/[?#]/)[0],parts=path.split('/').filter(Boolean),file=parts.at(-1)||'index.html',folder=parts.at(-2);const native={plants:'plant-growth',leaf:'leaf-physiology',continuum:'evolution',tcells:'tcell',lipids:'lipids'};if(native[folder])return native[folder];if(folder==='research')return {'photosynthesis-evolution.html':'evolution','fatty-acid-metabolism.html':'lipids','t-cell-proliferation.html':'tcell','index.html':'research'}[file]||'research';return file.replace(/\.html$/,'');};
  const iconKey=k=>I.icons.includes(k)?k:(k==='index'?'home':k==='library'?'examples':'docs');
- function icon(key,size=40){const image=doc.createElement('img');image.className='identity-icon';image.src=base+'assets/lab-logos/'+(doc.documentElement.dataset.appearance==='dark'?'dark/':'')+iconKey(key)+'.svg';image.alt='';image.width=size;image.height=size;image.setAttribute('aria-hidden','true');return image;}
+ function icon(key,size=40){const image=doc.createElement('img');image.className='identity-icon';image.src=base+'assets/lab-logos/'+(doc.documentElement.dataset.appearance==='dark'?'dark/':'')+iconKey(key)+'.svg?v=80.17.0';image.alt='';image.width=size;image.height=size;image.setAttribute('aria-hidden','true');return image;}
  function decorate(scope=doc){
   scope.querySelectorAll('.directory-item:not([data-identity-ready])').forEach(card=>{
    const key=routeKey(card.querySelector('a')?.getAttribute('href'));card.dataset.colorFamily=I.pages[key]||'learning';card.dataset.identityReady='true';
@@ -57,5 +57,5 @@
  // Observe only collections / overlays, never the numerical chart subtree.
  ['labDirectory','atlasGridV72','libraryResults','commandResults','v76-shell-portal'].forEach(id=>{const el=doc.getElementById(id);if(el)observer.observe(el,{subtree:true,childList:true});});
  // Small, explicit page helpers; do not alter run callbacks or interpretation.
- root.FokoVisualIdentity={version:'79.1.0-design',family,decorate};
+ root.FokoVisualIdentity={version:'80.17.0',family,decorate};
 })(window);

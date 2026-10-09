@@ -23,7 +23,7 @@ function syncDimensions(){
  const view=$('studioView').value,active=mapViews.includes(view),reference=view==='fuji',three=active&&dimension==='3d',preset=EvolutionMap.views[view];
  $('studio2D').disabled=$('studio3D').disabled=!active;$('studio2D').setAttribute('aria-pressed',String(!three));$('studio3D').setAttribute('aria-pressed',String(three));
  $('studioHeightLabel').hidden=!three||reference;$('studioResetCamera').hidden=$('studioReliefLabel').hidden=!three;$('advancedLandscape').dataset.dimension=three?'3d':'2d';
- $('fl-main').dataset.landscapeMode=reference?'fuji':'plants';$('fujiTransport').hidden=!reference;$('scientificTransport').hidden=reference;$('plantRunDetails').hidden=reference;$('trajectoryDetails').hidden=reference;if(result)$('advPlay').disabled=streaming||selectedRep()?.observedUntil<=0;$('landscapeReferenceNotice').hidden=!reference;$('landscapeViewDescription').textContent=preset?.description||'Additional diagnostic view of the completed experiment.';
+ $('fl-main').dataset.landscapeMode=reference?'fuji':'plants';$('advPNG').disabled=!reference&&(!result||streaming);$('fujiTransport').hidden=!reference;$('scientificTransport').hidden=reference;$('plantRunDetails').hidden=reference;$('trajectoryDetails').hidden=reference;if(result)$('advPlay').disabled=streaming||selectedRep()?.observedUntil<=0;$('landscapeReferenceNotice').hidden=!reference;$('landscapeViewDescription').textContent=preset?.description||'Additional diagnostic view of the completed experiment.';
  for(const button of document.querySelectorAll('[data-landscape-view]'))button.setAttribute('aria-pressed',String(button.dataset.landscapeView===view));
  $('studioDimensionHelp').textContent=active?(three?'Drag to rotate · arrow keys also work':'Select a dot to inspect a replicate.'):'2D/3D applies to the eight landscapes and allocation views.';
 }
@@ -37,6 +37,19 @@ let diagnosticFrame={rows:[],note:''},optimizerTimer=null,diagnosticResult=null;
 function stopOptimizer(){if(optimizerTimer!==null)clearInterval(optimizerTimer);optimizerTimer=null;$('optimizerPlay').textContent='Play evaluations';}
 function drawDiagnostic(){
  const el=$('diagnosticCanvas'),w=Math.max(280,el.getBoundingClientRect().width),h=Math.max(320,el.getBoundingClientRect().height||440),d=Math.min(devicePixelRatio||1,2);el.width=w*d;el.height=h*d;const ctx=el.getContext('2d');ctx.setTransform(d,0,0,d,0,0);
+ const fuji=$('studioView').value==='fuji';
+ $('fujiDiagnosticControl').hidden=!fuji;
+ document.querySelector('.diagnostic-controls').hidden=fuji;
+ document.querySelector('.diagnostic-pairs').hidden=fuji;
+ $('diagnosticLegend').hidden=fuji;
+ $('diagnosticTitle').textContent=fuji?'Adaptive walks through time':'Evolution & trade-offs';
+ if(fuji){
+  stopOptimizer();if(!fujiRun)fujiRun=FujiEvolution.simulate();$('optimizerClock').hidden=true;
+  $('diagnosticClockLabel').textContent='Synchronized mutation step · '+fujiStep+' / '+fujiRun.steps;
+  diagnosticFrame=EvolutionDiagnostics.fuji(ctx,w,h,fujiRun,fujiStep,$('fujiDiagnosticView').value);
+  $('diagnosticNote').textContent=diagnosticFrame.note;el.setAttribute('aria-label','Mount Fuji '+$('fujiDiagnosticView').selectedOptions[0].textContent+' at mutation step '+fujiStep);
+  $('diagnosticPNG').disabled=false;$('diagnosticCSV').disabled=false;return;
+ }
  if(diagnosticResult!==result){stopOptimizer();diagnosticResult=result;$('optimizerStep').value=0;}
  const view=$('diagnosticView').value,optimizer=view.startsWith('optimizer'),count=result?.comparator?.samples?.length||0;
  $('optimizerClock').hidden=!optimizer;$('optimizerStep').max=count||1;$('optimizerPlay').disabled=!count;$('optimizerStep').disabled=!count;
@@ -46,12 +59,28 @@ function drawDiagnostic(){
  diagnosticFrame=EvolutionDiagnostics.draw(ctx,w,h,result,{view,time,evaluations});$('diagnosticNote').textContent=diagnosticFrame.note;el.setAttribute('aria-label',EvolutionDiagnostics.views[view]+' at '+(optimizer?evaluations+' evaluations':'generation '+EvolutionStudio.fmt(time)));
  $('diagnosticPNG').disabled=!result||streaming;$('diagnosticCSV').disabled=!diagnosticFrame.rows.length||streaming;
 }
+$('fujiDiagnosticView').onchange=drawDiagnostic;
+for(const button of document.querySelectorAll('[data-evo-layout]'))button.onclick=()=>{
+ document.querySelector('.evo-stage-grid').dataset.windowLayout=button.dataset.evoLayout;
+ for(const b of document.querySelectorAll('[data-evo-layout]'))b.setAttribute('aria-pressed',String(b===button));
+ alignWindowHeads();requestAnimationFrame(draw);
+};
 $('diagnosticView').onchange=()=>{stopOptimizer();drawDiagnostic();};$('optimizerStep').oninput=()=>{stopOptimizer();drawDiagnostic();};
 $('optimizerPlay').onclick=()=>{if(optimizerTimer!==null){stopOptimizer();return;}stop();const end=result?.comparator?.samples?.length||0;if(!end)return;let head=Number($('optimizerStep').value)||0;if(head>=end)head=0;let last=Date.now();$('optimizerPlay').textContent='Pause evaluations';optimizerTimer=setInterval(()=>{const now=Date.now();head=Math.min(end,head+Math.min(.3,(now-last)/1000)*end/20);last=now;$('optimizerStep').value=Math.floor(head);drawDiagnostic();if(head>=end)stopOptimizer();},100);};
 for(const button of document.querySelectorAll('[data-pair]'))button.onclick=()=>{stopOptimizer();$('diagnosticView').value=button.dataset.pair;$('studioView').value=button.dataset.pair==='strategies'?'routes':'terrain';syncDimensions();draw();};
 for(const t of Object.values(EvolutionRegions.types).filter(t=>t.key!=='mean')){const span=document.createElement('span');span.style.setProperty('--category',t.color);span.textContent=t.label;$('diagnosticLegend').append(span);}
-$('diagnosticPNG').onclick=()=>{const a=document.createElement('a');a.download='evolution-'+$('diagnosticView').value+'.png';a.href=$('diagnosticCanvas').toDataURL('image/png');a.click();};
-$('diagnosticCSV').onclick=()=>{const rows=diagnosticFrame.rows,keys=[...new Set(rows.flatMap(Object.keys))],quote=x=>'"'+String(x??'').replaceAll('"','""')+'"';save('evolution-'+$('diagnosticView').value+'.csv',[keys.map(quote).join(','),...rows.map(row=>keys.map(k=>quote(row[k])).join(','))].join('\n'),'text/csv');};
+$('diagnosticPNG').onclick=()=>{const a=document.createElement('a');a.download='evolution-'+($('studioView').value==='fuji'?'fuji-'+$('fujiDiagnosticView').value:$('diagnosticView').value)+'.png';a.href=$('diagnosticCanvas').toDataURL('image/png');a.click();};
+$('diagnosticCSV').onclick=()=>{const rows=diagnosticFrame.rows,keys=[...new Set(rows.flatMap(Object.keys))],quote=x=>'"'+String(x??'').replaceAll('"','""')+'"';save('evolution-'+($('studioView').value==='fuji'?'fuji-'+$('fujiDiagnosticView').value:$('diagnosticView').value)+'.csv',[keys.map(quote).join(','),...rows.map(row=>keys.map(k=>quote(row[k])).join(','))].join('\n'),'text/csv');};
+// Equalize natural control heights, including wrapped labels, before the two canvases.
+const windowHeads=[...document.querySelectorAll('.evo-window-head')];
+let headerFrame=0;
+function alignWindowHeads(){cancelAnimationFrame(headerFrame);headerFrame=requestAnimationFrame(()=>{
+ const paired=matchMedia('(min-width:761px)').matches&&document.querySelector('.evo-stage-grid').dataset.windowLayout==='two';
+ const height=paired?Math.ceil(Math.max(...windowHeads.map(h=>h.firstElementChild.getBoundingClientRect().height)))+16:0;
+ for(const head of windowHeads)head.style.minHeight=height?height+'px':'';
+});}
+const headObserver=new ResizeObserver(alignWindowHeads);windowHeads.forEach(head=>headObserver.observe(head.firstElementChild));
+window.addEventListener('resize',alignWindowHeads);alignWindowHeads();
 new ResizeObserver(()=>drawDiagnostic()).observe($('diagnosticCanvas'));
 
 function stopFuji(){if(fujiTimer!==null)clearInterval(fujiTimer);fujiTimer=null;$('fujiPlay').textContent='Play evolution';}
@@ -109,7 +138,7 @@ $('advForcing').addEventListener('input',()=>{origin=null;climateError=null;$('a
 for(const id of ['advLocation','advDate','advWetness','advExtreme','advIntervals','advPeriod','advSeasonDays','advStressStart','advStressDays','advSeasonSamples'])$(id).addEventListener('change',()=>{if(id==='advLocation'&&$('advLocation').value!=='custom')$('advWetness').value=EvolutionClimate.profiles[$('advLocation').value].leafWetness;applyClimate();if($('advLocation').value==='custom'){$('advClimateStatus').textContent='Custom forcing retained below. Extreme and date selectors affect named locations only.';origin=null;}for(const x of ['advDate','advWetness','advExtreme','advIntervals'])$(x).disabled=$('advLocation').value==='custom';syncSeasonControls();});
 $('advHorizonPreset').onchange=()=>{if($('advHorizonPreset').value!=='custom')$('advHorizon').value=$('advHorizonPreset').value;};$('advHorizon').addEventListener('input',()=>{$('advHorizonPreset').value='custom';});
 $('advancedForm').addEventListener('input',e=>{if(/^fuji|^studio|^historyMetric$|^evo(TimeSlider|ClockMode)$|^adv(Rep|Event|Speed|Zoom)$/.test(e.target.id))return;analysisRevision++;if(result)resultState('Inputs changed. Figures still show the previous completed run; run again to update.');if(analysis)$('globalStatus').textContent='Forcing or experiment settings changed; previous analysis retained.';if(result)$('advStatus').textContent='Inputs changed. Run again to use these conditions; displayed states retain the submitted settings.';});
-$('advExport').onclick=()=>result&&save('kimura-and-optimization.json',result);$('advCSV').onclick=()=>result&&save('kimura-events.csv',['replicate,seed,event,time_generations,waiting_generations,from,node,s,pfix,pepc,mesophyll,sheath,gs,mean_assimilation_umol_CO2_m2_s,day_assimilation_umol_CO2_m2_s',...result.replicates.flatMap((r,i)=>r.events.map(e=>[i+1,r.seed,e.index,e.time,e.waiting,e.from??'',e.node,e.s??'',e.pfix??'',...result.nodes[e.node].fractions,result.nodes[e.node].gs,result.nodes[e.node].assimilation,result.nodes[e.node].dayAssimilation??''].join(',')))].join('\n'),'text/csv');$('advPNG').onclick=()=>{const a=document.createElement('a');a.href=$('advancedLandscape').toDataURL('image/png');a.download='kimura-'+$('studioView').value+'-'+dimension+'.png';a.click();};
+$('advExport').onclick=()=>result&&save('kimura-and-optimization.json',result);$('advCSV').onclick=()=>result&&save('kimura-events.csv',['replicate,seed,event,time_generations,waiting_generations,from,node,s,pfix,pepc,mesophyll,sheath,gs,mean_assimilation_umol_CO2_m2_s,day_assimilation_umol_CO2_m2_s',...result.replicates.flatMap((r,i)=>r.events.map(e=>[i+1,r.seed,e.index,e.time,e.waiting,e.from??'',e.node,e.s??'',e.pfix??'',...result.nodes[e.node].fractions,result.nodes[e.node].gs,result.nodes[e.node].assimilation,result.nodes[e.node].dayAssimilation??''].join(',')))].join('\n'),'text/csv');$('advPNG').onclick=()=>{const a=document.createElement('a');a.href=$('advancedLandscape').toDataURL('image/png');a.download=($('studioView').value==='fuji'?'adaptive-walk-':'kimura-')+$('studioView').value+'-'+dimension+'.png';a.click();};
 $('globalMethod').onchange=()=>{const pca=$('globalMethod').value==='pca';$('globalSamples').disabled=$('globalTarget').disabled=pca;$('pcaSource').disabled=!pca;if(!pca){const sobol=$('globalMethod').value==='sobol';$('globalSamples').value=sobol?256:16;$('globalSamples').min=sobol?16:4;$('globalSamples').max=sobol?8192:256;}};$('globalMethod').onchange();
 $('factorScope').onchange=()=>{$('globalFactors').value=JSON.stringify($('factorScope').value==='climate'?[...factors,{key:'temperature',name:'Air temperature offset (°C)',lo:-3,hi:3},{key:'light',name:'Irradiance multiplier',lo:.7,hi:1.3},{key:'wetness',name:'Soil wetness',lo:.3,hi:.9}]:factors,null,2);analysisRevision++;renderFactors();if(analysis)$('globalStatus').textContent='Factor domain changed; previous analysis retained.';};
 function renderFactors(){let current;try{current=JSON.parse($('globalFactors').value);}catch{return;}$('factorRows').replaceChildren();for(const [i,f]of current.entries()){const tr=document.createElement('tr'),name=document.createElement('td');name.textContent=f.name+' ('+f.key+')';tr.append(name);for(const bound of ['lo','hi']){const td=document.createElement('td'),input=document.createElement('input');input.type='number';input.step='any';input.value=f[bound];input.setAttribute('aria-label',f.name+' '+(bound==='lo'?'lower':'upper')+' bound');input.onchange=()=>{const data=JSON.parse($('globalFactors').value);data[i][bound]=Number(input.value);$('globalFactors').value=JSON.stringify(data,null,2);analysisRevision++;if(analysis)$('globalStatus').textContent='Factor bounds changed; previous analysis retained.';};td.append(input);tr.append(td);}$('factorRows').append(tr);}}
