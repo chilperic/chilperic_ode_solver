@@ -40,15 +40,16 @@
   function imageFor(item){
     if(item.image) return item.image;
     const text=[item.title,item.family,item.lab].join(' ').toLowerCase();
-    if(includes(text,['fadns'])) return item.lab==='Agent'?'assets/agent-atlas/fadns_particle.svg':'assets/model-atlas/phd-fadns-coa-extracted.webp';
-    if(includes(text,['fatty-acid','fatty acid','malcoa'])) return 'assets/model-atlas/phd-fa-metabolism-extracted.webp';
-    if(includes(text,['t-cell','t cell','cell cycle','generation cascade'])) return 'assets/agent-atlas/tcell.svg';
+    if(includes(text,['fadns'])) return 'assets/research/fatty-acid/elongation-preview.svg';
+    if(includes(text,['fatty-acid','fatty acid','malcoa'])) return 'assets/research/fatty-acid/fatty-acid-research-cover.svg';
+    if(includes(text,['t-cell','t cell','cell cycle','generation cascade'])) return 'assets/research/tcell/lineage-preview.svg';
     if(includes(text,['forest'])) return 'assets/agent-atlas/forest.svg';
     if(includes(text,['predator','prey'])) return item.lab==='Agent'?'assets/agent-atlas/predprey.svg':'assets/model-atlas/lotka.webp';
     if(includes(text,['sir','seir','epidem'])) return item.lab==='SciML'?'assets/sciml-atlas/seir.svg':'assets/model-atlas/sir-seir.webp';
     if(includes(text,['lorenz','chaos'])) return 'assets/model-atlas/lorenz.webp';
     if(includes(text,['van der pol','oscillator'])) return 'assets/model-atlas/vanderpol.webp';
-    if(includes(text,['calvin','photosynthesis','leaf'])) return 'assets/model-atlas/calvin.webp';
+    if(includes(text,['calvin'])) return 'assets/model-atlas/calvin.webp';
+    if(includes(text,['photosynthesis','leaf'])) return 'assets/research/photosynthesis/photosynthesis-research-cover.svg';
     if(includes(text,['michaelis','enzyme','dose–response','dose-response'])) return 'assets/model-atlas/michaelis.webp';
     if(includes(text,['braess','network','graph','spanning tree','information flow'])) return 'assets/model-atlas/braess.webp';
     if(includes(text,['romeo','social','voter','segregation','collective'])) return item.lab==='Agent'?'assets/agent-atlas/life.svg':'assets/model-atlas/romeo-juliet.webp';
@@ -64,19 +65,19 @@
       return 'assets/sciml-atlas/allosteric.svg';
     }
     const defaults={
-      'ODE':'assets/lab-logos/ode-lab.webp',
-      'Steady State':'assets/lab-logos/steady-state-lab.webp',
-      'Stochastic':'assets/lab-logos/stochastic-lab.webp',
-      'Optimization':'assets/lab-logos/optimization-lab.webp',
-      'Fitting':'assets/model-atlas/michaelis.webp',
-      'Statistics':'assets/lab-logos/model-atlas.webp',
-      'Machine Learning':'assets/lab-logos/model-atlas.webp',
-      'Linear Algebra':'assets/model-atlas/romeo-juliet.webp',
-      'Networks':'assets/model-atlas/braess.webp',
-      'Population Genetics':'assets/lab-logos/model-atlas.webp',
-      'Symbolic':'assets/model-atlas/vanderpol.webp'
+      'ODE':'assets/lab-logos/ode.svg',
+      'Steady State':'assets/lab-logos/steady.svg',
+      'Stochastic':'assets/lab-logos/stochastic.svg',
+      'Optimization':'assets/lab-logos/optimization.svg',
+      'Fitting':'assets/lab-logos/fitting.svg',
+      'Statistics':'assets/lab-logos/statistics.svg',
+      'Machine Learning':'assets/lab-logos/ml.svg',
+      'Linear Algebra':'assets/lab-logos/linear-algebra.svg',
+      'Networks':'assets/lab-logos/networks.svg',
+      'Population Genetics':'assets/lab-logos/population-genetics.svg',
+      'Symbolic':'assets/lab-logos/symbolic.svg'
     };
-    return defaults[item.lab]||'assets/lab-logos/model-atlas.webp';
+    return defaults[item.lab]||'assets/lab-logos/examples.svg';
   }
   function render(){
     const q=$('atlasSearch').value.trim().toLowerCase(),lab=$('atlasLab').value,prov=$('atlasProvenance').value,family=$('atlasFamily').value,status=$('atlasStatus').value;

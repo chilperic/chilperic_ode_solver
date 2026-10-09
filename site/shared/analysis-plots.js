@@ -3,7 +3,7 @@
 const colors=['#3d4df0','#16816d','#c55f35','#7955b6','#ad8224','#327a99','#596779','#8a712e'];
 const finite=Number.isFinite,fmt=x=>!finite(x)?'—':Math.abs(x)>=1e5||Math.abs(x)>0&&Math.abs(x)<.001?x.toExponential(1):Number(x.toPrecision(4)).toString();
 const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const series=(name,rows,x,y)=>({name,color:({C3:'#16816d',C4:'#3d4df0',CAM:'#c55f35'})[name],points:rows.map((r,i)=>[x(r,i),finite(y(r,i))?y(r,i):null])});
+const series=(name,rows,x,y)=>({name,color:({C3:'#19816e',C4:'#3168c7',CAM:'#c55f35'})[name],points:rows.map((r,i)=>[x(r,i),finite(y(r,i))?y(r,i):null])});
 const chart=(id,title,xlabel,ylabel,series,note,extra={})=>({id,title,xlabel,ylabel,series,note,...extra});
 function histogram(xs,bins=20){const a=xs.filter(finite);if(!a.length)return[];const lo=a.reduce((v,x)=>Math.min(v,x),Infinity),hi=a.reduce((v,x)=>Math.max(v,x),-Infinity);if(lo===hi)return[[lo,a.length,lo-.5,hi+.5]];const n=Math.min(bins,Math.max(5,Math.ceil(Math.sqrt(a.length)))),dx=(hi-lo)/n,counts=Array(n).fill(0);for(const v of a)counts[Math.min(n-1,Math.floor((v-lo)/dx))]++;return counts.map((v,i)=>[lo+(i+.5)*dx,v,lo+i*dx,lo+(i+1)*dx]);}
 function analyze(lab,r,focus){const out=[],add=(...a)=>out.push(chart(...a));

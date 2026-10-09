@@ -2,7 +2,7 @@
 (function(root){'use strict';
 const Base=typeof module!=='undefined'&&module.exports?require('./landscape'):root.EvolutionLandscape;
 const view={yaw:-.5,tilt:.62};
-const regions=[{name:'C3-like',f:[0,1,0],color:'#83caff'},{name:'C3–C4 intermediate-like',f:[.2,.5,.3],color:'#e9c16f'},{name:'C4-like',f:[.4,0,.6],color:'#c0e493'}];
+const regions=[{name:'C3-like',f:[0,1,0],color:'#83cdb0'},{name:'C3–C4 intermediate-like',f:[.2,.5,.3],color:'#f4cd83'},{name:'C4-like',f:[.4,0,.6],color:'#9ebfec'}];
 const Classifier=typeof module!=='undefined'&&module.exports?require('./strategy-classifier'):root.StrategyClassifier;
 function classify(p){const key=Classifier.classify(Array.isArray(p)?{fractions:p}:p);return key==='c3'?0:key==='c4'?2:key==='other'?3:1;}
 function frame(rep,g){const k=Math.min(Math.floor(g),rep.history.length-1),a=rep.history[k],b=rep.history[Math.min(k+1,rep.history.length-1)],t=a.phase===b.phase?g-Math.floor(g):0;if(!a.meanFractions)return{row:a,f:null,value:()=>NaN};return{row:a,f:a.meanFractions.map((v,i)=>v+t*((b.meanFractions||a.meanFractions)[i]-v)),value:key=>{const avg=r=>{const p=r.population.filter(x=>x.feasible&&Number.isFinite(x[key]));return p.length?p.reduce((s,x)=>s+x[key],0)/p.length:NaN;};const x=avg(a),y=avg(b);return x+t*((Number.isFinite(y)?y:x)-x);}};}

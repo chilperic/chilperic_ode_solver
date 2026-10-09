@@ -34,8 +34,8 @@ html body .fl-command-status{color:var(--fl-ink)!important}
 html body :is(.legend,.panelRules,.panelTitle,#traceNote,#methodNote,.leaf-scan,.leaf-diagnosis,.stats,.metrics,.energyMetrics>div,.c4Readout,.c4Numbers,.primaryTemp,.responsePanel,.comparisonState,.growthPlant,.sequence){background:var(--fl-card)!important;color:var(--fl-ink)!important;border-color:var(--fl-line)!important}
 html body :is(.legend,.metrics,.stats,.energyMetrics,.leaf-diagnosis,.leaf-scan,.c4Readout,.panelTitle,.panelRules) :is(span,strong,b,p,h2,h3),html body :is(#status,#work,#runStatus,#methodNote,#traceNote,.fl-lab-title){color:var(--fl-ink)!important}
 html body :is(.legend,.metrics,.stats,.energyMetrics) :is(small,.hint){color:var(--fl-muted)!important}
-html body .legend .c3{color:#116b5c!important}html body .legend .c4{color:#8a4c09!important}html body .legend .cam{color:#315da0!important}
-html[data-appearance=dark] body .legend .c3{color:#91dccb!important}html[data-appearance=dark] body .legend .c4{color:#ffd194!important}html[data-appearance=dark] body .legend .cam{color:#bed7ff!important}
+html body .legend .c3{color:#19816e!important}html body .legend .c4{color:#3168c7!important}html body .legend .cam{color:#c55f35!important}
+html[data-appearance=dark] body .legend .c3{color:#91dccb!important}html[data-appearance=dark] body .legend .c4{color:#9ebfec!important}html[data-appearance=dark] body .legend .cam{color:#f2b099!important}
 html body :is(table,table td,table th){color:var(--fl-ink)!important;border-color:var(--fl-line)!important}html body table th{background:var(--fl-soft)!important}
 html body .model-card,html body .model-card.is-active,html body .model-card.active,html body button[data-preset][aria-pressed=true]{background:var(--fl-soft)!important;color:var(--fl-ink)!important;border-color:var(--fl-line)!important}
 html body .model-card :is(b,strong,span,small){color:var(--fl-ink)!important}html body .model-card small{color:var(--fl-muted)!important}
