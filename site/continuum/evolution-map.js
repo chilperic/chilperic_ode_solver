@@ -13,7 +13,7 @@ const views={
  feasibility:{label:'Feasible domain',dimension:'2d',description:'Inspect evaluated feasible samples and the excluded or unresolved domain before interpreting an optimum.'},
  routes:{label:'Evolutionary routes',dimension:'3d',description:'Recorded replicate paths take priority over a subdued landscape. Paths end at the current generation; the diamond is their mean.'},
  wireframe:{label:'Surface structure',dimension:'3d',description:'A transparent mesh exposes the shape, resolution and gaps of the calculated surface.'},
- fuji:{label:'Mount Fuji reference',dimension:'3d',description:'Watch independent adaptive walks climb a single fitness peak.'}
+ fitness:{label:'Simulated fitness landscape',dimension:'3d',description:'The selected experiment’s objective score sets the surface height. Recorded replicates and their mean follow biological time.'}
 };
 function fujiValue(x,y){return Math.max(0,1-Math.hypot(x-.55,y-.55)/Math.hypot(.55,.55));}
 function contourSegments(cells,key,levels){
@@ -94,7 +94,7 @@ function text(ctx,s,x,y,size=12,col='#4b6078',align='left'){ctx.font=size+'px sy
 function dot(ctx,p,col,size=4,diamond=false){ctx.fillStyle=col;ctx.strokeStyle='#fff';ctx.lineWidth=1.6;if(diamond)polygon(ctx,[{x:p.x,y:p.y-size-1},{x:p.x+size+1,y:p.y},{x:p.x,y:p.y+size+1},{x:p.x-size-1,y:p.y}],col,'#fff');else{ctx.beginPath();ctx.arc(p.x,p.y,size,0,Math.PI*2);ctx.fill();ctx.stroke();}}
 function trajectory(r,rep,time){return rep.events.filter(e=>e.time<=time).map(e=>({p:r.nodes[e.node],time:e.time,index:e.index}));}
 function draw(ctx,w,h,r,options){
- const style=options.view,benchmark=style==='fuji',preset=views[style],opt={...options,view:preset?'journey':style,metric:style==='regions'?'regions':benchmark?'assimilation':options.metric,heightMetric:benchmark?'assimilation':options.heightMetric};
+ const style=options.view,benchmark=style==='fuji',preset=views[style],opt={...options,view:preset?'journey':style,metric:style==='regions'?'regions':benchmark?'assimilation':options.metric,heightMetric:benchmark?'assimilation':style==='fitness'?'logFitness':options.heightMetric};
  const s=benchmark?fujiScene():scene(r,opt),three=opt.dimension==='3d',at=project(w,h,opt,s.heightRange),height=p=>Number.isFinite(p?.[s.heightKey])?p[s.heightKey]:s.heightRange[0],pos=p=>{const [x,y]=xy(p,opt.view,opt.axes);return at(x,y,height(p));},hits=[];
  ctx.clearRect(0,0,w,h);const backdrop=ctx.createLinearGradient(0,0,0,h);backdrop.addColorStop(0,'#eff5f8');backdrop.addColorStop(.65,'#fbfcfb');backdrop.addColorStop(1,'#e6eef1');ctx.fillStyle=backdrop;ctx.fillRect(0,0,w,h);
  const title=preset?preset.label:opt.view==='ternary'?'Allocation triangle':opt.view==='landscape'?'Allocation plane':'Photosynthetic mechanism map';
@@ -117,7 +117,7 @@ function draw(ctx,w,h,r,options){
   if(three&&style!=='regions'&&style!=='feasibility'){const lighting=shade(fill,c,s.heightKey,s.heightRange);ctx.save();ctx.globalAlpha=lighting.alpha;polygon(ctx,q,'#15333b');ctx.restore();}
  }
  // Equal-value isolines preserve gaps; no smoothing invents a feasible bridge.
- if(['terrain','contours','fuji'].includes(style)){
+ if(['terrain','contours','fitness','fuji'].includes(style)){
   const levels=Array.from({length:9},(_,i)=>s.heightRange[0]+(i+1)/10*(s.heightRange[1]-s.heightRange[0])),segments=contourSegments(s.cells,s.heightKey,levels),labels=new Set();
   for(const segment of segments){const points=segment.points.map(p=>at(p.x,p.y,p.value));line(ctx,points,three?'#ffffff77':'#173d5680',three?.65:1.1);if(!three&&w>500&&!labels.has(segment.level)&&segment.points[0].x>.18&&segment.points[0].x<.82){const p=points[0];ctx.fillStyle='#ffffffeb';ctx.fillRect(p.x-18,p.y-8,36,13);text(ctx,fmt(segment.level),p.x,p.y+2,9,'#164857','center');labels.add(segment.level);}}
  }
