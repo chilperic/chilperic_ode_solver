@@ -105,6 +105,6 @@ if(['flaveria','kalanchoe'].includes(s.kind))for(const o of s.organs)stroke(ctx,
  s.soilResources=Soil.draw2D(ctx,w,h,ground,r,config,view.time??r.hour);
  ctx.font='14px system-ui';ctx.fillStyle='#314a53';ctx.fillStyle='#314a53';ctx.fillText(r.stress<.5?'Water stress · leaves droop / roll':'Water supplied',12,21);if(r.nStress<.8)ctx.fillText('Nitrogen limits construction',12,39);
  ctx.fillText(s.organs.filter(o=>o.visible!==false).length+' '+s.profile.unit,12,57);ctx.fillText(s.sites.count+' '+s.sites.label+' illustrated',12,75);
- return s;}
+ s.hitRegions=s.organs.map(o=>({id:o.id,x:cx+(o.x+o.side*o.length*.5)*scale,y:ground+(o.y-o.length*.15)*scale,r:Math.max(10,o.length*scale*.3),progress:o.progress,survival:o.survival}));return s;}
 const api={form,structure,bounds,camera,draw};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.PlantRenderer=api;
 })(globalThis);

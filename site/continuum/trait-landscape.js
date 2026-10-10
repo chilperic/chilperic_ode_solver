@@ -7,7 +7,7 @@ function average(r,time,axes){const rows=E.residents(r,time).map(q=>({q,xy:norma
 function draw(ctx,w,h,r,opt={}){
  ctx.clearRect(0,0,w,h);ctx.fillStyle='#f6f9f8';ctx.fillRect(0,0,w,h);ctx.font='13px system-ui';ctx.fillStyle='#173b42';
  const s=r?.traitLandscape;if(!s){ctx.fillText('Analyze traits & run evolution to build this view.',20,45);return{hits:[],message:'Choose the linked sensitivity workflow above.'};}
- const values=[...s.points,...r.nodes].filter(p=>p.feasible&&Number.isFinite(p.logFitness)).map(p=>p.logFitness),lo=Math.min(...values),hi=Math.max(...values),pad=(hi-lo)*.04||.01,zrange=[lo-pad,hi+pad],at=V.project(w,h,opt,zrange),n=s.resolution,time=opt.time??0;
+ const values=[...s.points,...r.nodes].filter(p=>p.feasible&&Number.isFinite(p.logFitness)).map(p=>p.logFitness),lo=Math.min(...values),hi=Math.max(...values),pad=(hi-lo)*.04||.01,zrange=opt.zRange||[lo-pad,hi+pad],at=V.project(w,h,opt,zrange),n=s.resolution,time=opt.time??0;
  const path=(points,fill,stroke)=>{ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.stroke();}};
  const floor=[at(0,0),at(1,0),at(1,1),at(0,1)];ctx.lineWidth=1;path(floor,'#e7eeee','#b8c8c9');
  const grid=new Map(s.points.map(p=>[p.i+','+p.j,p])),cells=[];
@@ -40,9 +40,9 @@ function draw(ctx,w,h,r,opt={}){
  if(opt.dimension==='3d'){const bottom=at(0,0,zrange[0]),top=at(0,0,zrange[1]);ctx.strokeStyle='#506973';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(bottom.x,bottom.y);ctx.lineTo(top.x,top.y);ctx.stroke();ctx.fillStyle='#294b54';ctx.textAlign='right';ctx.font='11px system-ui';for(let i=0;i<=4;i++){const z=zrange[0]+(zrange[1]-zrange[0])*i/4,p=at(0,0,z);ctx.fillText(fmt(z),p.x-8,p.y+4);}}
  ctx.textAlign='left';ctx.font='600 14px system-ui';ctx.fillText('Selected traits · actual simulation',18,25);ctx.font='12px system-ui';ctx.fillStyle='#46616a';ctx.fillText(opt.dimension==='3d'?'Height: objective score (dimensionless)':'Colour: photosynthetic strategy',18,46);
  ctx.textAlign='right';ctx.fillText(observed.length+' runs · mean ◇',w-18,w<560?66:25);ctx.textAlign='center';ctx.font='12px system-ui';
- ctx.fillText('X · '+s.axes[0].name+' ('+T.units[s.axes[0].key]+')',w/2,h-34);
- ctx.fillText('Y · '+s.axes[1].name+' ('+T.units[s.axes[1].key]+')',w/2,h-15);ctx.textAlign='left';
- const fixed=Object.entries(s.reference).filter(([key])=>!s.axes.some(a=>a.key===key)).map(([key,v])=>T.names[key]+' '+fmt(v)).join(' · ');
+ ctx.fillText('X · '+s.axes[0].name+' ('+(s.axes[0].unit||T.units[s.axes[0].key])+')',w/2,h-34);
+ ctx.fillText('Y · '+s.axes[1].name+' ('+(s.axes[1].unit||T.units[s.axes[1].key])+')',w/2,h-15);ctx.textAlign='left';
+ const fixed=Object.entries(s.reference).filter(([key])=>!s.axes.some(a=>a.key===key)).map(([key,v])=>(T.factors(s.config).find(f=>f.key===key)?.name||T.names[key])+' '+fmt(v)).join(' · ');
  return{hits,mean,regionLabels,slice:null,message:'Individual runs and their mean share the playback clock. Background held at '+fixed+'.',methods:s.scope+' Colours are model categories; grey hatching marks infeasible or unresolved cells. Arrow directions describe local objective increase, not mutation probabilities. A missing Rubisco pool has no sheath fraction and is omitted from that projection.'};
 }
 function ranking(ctx,w,h,a,axes=[]){

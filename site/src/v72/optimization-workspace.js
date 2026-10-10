@@ -66,6 +66,7 @@
     compiledProblem: null,
     layout: 'two',
     focusSide: 'left',
+    replay: Infinity, selectedSample: 0,
     plotTypes: { left: 'landscape', right: 'convergence' },
   };
   let plotRenderRevision = 0;
@@ -326,7 +327,9 @@
         state.pareto = problem.secondaryObjective ? CORE.paretoSample(problem, Object.assign({}, settings, { samples: settings.paretoSamples })) : null;
         $('optimizationProgress').style.width = '100%';
         updatePlotSelectors();
+        state.replay = state.pareto?.points.length || state.result.samples.length;state.selectedSample=0;
         renderEvidence();
+        root.dispatchEvent(new CustomEvent('lab-result',{detail:{lab:'optimization',result:state.result}}));
         setTimeout(function () { $('optimizationProgress').style.width = '0'; }, 450);
       } catch (error) {
         state.result=null;state.pareto=null;state.computedConfiguration=null;
@@ -346,6 +349,7 @@
       options.push(['violation-map', PLOT_META['violation-map'].label]);
       options.push(['feasible-region', PLOT_META['feasible-region'].label]);
     }
+    options.push(['candidate-profile','Selected candidate traits']);
     options.push(['convergence', PLOT_META.convergence.label]);
     options.push(['constraint-history', PLOT_META['constraint-history'].label]);
     options.push(['variables', PLOT_META.variables.label]);
@@ -484,6 +488,8 @@
     return state.pareto && state.pareto.primarySense === 'maximize' ? -point.objective : point.objective;
   }
 
+  const replayFronts=new WeakMap();
+  function prefixFront(points,count){let entry=replayFronts.get(points);if(!entry||entry.count>count)entry={count:0,front:[]};for(let i=entry.count;i<count;i++){const p=points[i];if(!p.feasible||entry.front.some(q=>dominates(q,p)))continue;entry.front=entry.front.filter(q=>!dominates(p,q));entry.front.push(p);}entry.count=count;replayFronts.set(points,entry);return entry.front.slice().sort((a,b)=>a.objective-b.objective);}
   function dominates(a, b) {
     const a0 = orientedObjective(a), b0 = orientedObjective(b);
     return a0 <= b0 && a.secondaryObjective <= b.secondaryObjective && (a0 < b0 || a.secondaryObjective < b.secondaryObjective);
@@ -574,7 +580,7 @@
       return { traces: [{ x: state.landscape.xs, y: state.landscape.ys, z: state.landscape.feasible, type: 'heatmap', colorscale: [[0,'#fee2e2'],[.499,'#fee2e2'],[.5,'#dcfce7'],[1,'#dcfce7']], showscale: false }, candidateTrace()].filter(Boolean), layout: baseLayout('Finite-grid feasible region', result.problem.names[0], result.problem.names[1]), evidence: 'Green cells satisfy the declared numerical feasibility tolerance on a finite 45×45 grid. Boundaries between cells are unresolved.' };
     }
     if (type === 'convergence') {
-      const history = result.history;
+      const history = result.history.filter(h=>!state.pareto?h.evaluations<=state.replay:true);
       return {
         traces: [
           { x: history.map(function (h) { return h.evaluations; }), y: history.map(function (h) { return h.penalizedObjective; }), mode: 'lines+markers', name: 'best penalized score' },
@@ -725,16 +731,17 @@
         evidence: result.problem.names.length > 2 ? 'Only the first two decision variables are projected. Distinct high-dimensional candidates can overlap, so this view must not be interpreted as the full search geometry.' : 'Every point is an evaluated candidate projected into the two-dimensional decision space. Color encodes maximum constraint violation.',
       };
     }
+    if (type === 'candidate-profile') {
+      const points = state.pareto?.points || state.result.samples, point=points[state.selectedSample]||state.result.candidate;
+      return {traces:[{type:'bar',x:state.result.problem.names,y:point.x,name:'Selected candidate',marker:{color:'#215d56'}}],layout:baseLayout('Selected candidate '+(state.selectedSample+1),'Decision variable','Value (native units)'),evidence:'Primary objective '+format(point.objective)+'; '+(point.secondaryObjective==null?'':'secondary '+format(point.secondaryObjective)+'; ')+(point.feasible?'feasible':'infeasible')+'. Different trait units are not interchangeable; inspect values rather than relative bar heights.'};
+    }
     if (type === 'pareto' && state.pareto) {
-      const feasible = state.pareto.points.filter(function (p) { return p.feasible; });
-      return {
-        traces: [
-          { x: feasible.map(function (p) { return p.objective; }), y: feasible.map(function (p) { return p.secondaryObjective; }), mode: 'markers', name: 'feasible sample', marker: { size: 6, opacity: .45 } },
-          { x: state.pareto.front.map(function (p) { return p.objective; }), y: state.pareto.front.map(function (p) { return p.secondaryObjective; }), mode: 'lines+markers', name: 'sample nondominated set' },
-        ],
-        layout: baseLayout('Finite-sample objective trade-off', `primary objective (${state.pareto.primarySense})`, 'secondary objective (minimize)'),
-        evidence: state.pareto.claim + ' The secondary objective is treated as a minimization objective. Changing seed or sample budget can change the displayed nondominated set.',
-      };
+      const all=state.pareto.points, shown=all.slice(0,Math.max(1,Math.floor(state.replay))),feasible=shown.filter(p=>p.feasible),front=prefixFront(all,shown.length),selected=all[state.selectedSample];
+      const traces=[{x:feasible.map(p=>p.objective),y:feasible.map(p=>p.secondaryObjective),customdata:feasible.map(p=>all.indexOf(p)),mode:'markers',name:'evaluated feasible samples',marker:{size:6,opacity:.35,color:'#697e87'}},{x:front.map(p=>p.objective),y:front.map(p=>p.secondaryObjective),customdata:front.map(p=>all.indexOf(p)),mode:'lines+markers',name:'current nondominated sample',line:{color:'#215d56',width:2},marker:{symbol:'diamond',size:8}}];
+      if(selected&&state.selectedSample<shown.length)traces.push({x:[selected.objective],y:[selected.secondaryObjective],customdata:[state.selectedSample],mode:'markers',name:'selected candidate',marker:{symbol:'circle-open',size:15,color:'#b46b20',line:{width:3}}});
+      const layout=baseLayout('Finite-sample trade-off · '+shown.length+' evaluations',`primary objective (${state.pareto.primarySense})`,'secondary objective (minimize)'),finite=all.filter(p=>Number.isFinite(p.objective)&&Number.isFinite(p.secondaryObjective));
+      for(const [axis,key]of [['xaxis','objective'],['yaxis','secondaryObjective']]){const values=finite.map(p=>p[key]),lo=Math.min(...values),hi=Math.max(...values),pad=(hi-lo)*.05||1;layout[axis].range=[lo-pad,hi+pad];}
+      return{traces,layout,evidence:'Replay of recorded Pareto sample evaluations, not a multi-objective evolutionary algorithm. The front contains only nondominated candidates observed so far. Click a point to inspect its traits in the other window. '+state.pareto.claim};
     }
     if (type === 'dominance-heatmap' && state.pareto) {
       const points = finiteParetoPoints().slice(0, 80);
@@ -783,7 +790,7 @@
     setText(`${side}PlotEvidence`, spec.evidence);
     const node = $(`${side}Plot`);
     if (!node) return Promise.resolve();
-    return root.FokoPlotLifecycle.render(node, spec.traces, spec.layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['lasso2d', 'select2d'] });
+    spec.layout.uirevision=type;return root.FokoPlotLifecycle.render(node, spec.traces, spec.layout, { responsive: true, displaylogo: false, modeBarButtonsToRemove: ['lasso2d', 'select2d'] }).then(()=>{if(node.removeAllListeners)node.removeAllListeners('plotly_click');if(type==='pareto'&&node.on)node.on('plotly_click',e=>{const index=e.points?.[0]?.customdata;if(Number.isInteger(index)){state.selectedSample=index;renderAllPlots();}});});
   }
 
   function renderAllPlots() {
@@ -1144,8 +1151,11 @@
       loadPreset(url.searchParams.get('example'), false);
     }
     applyLayout();
+    root.FokoUI?.linked($('plotGrid'));root.FokoUI?.playback($('plotGrid').parentElement,'optimization');
     if (!shared && url.searchParams.get('autorun') === '1') root.setTimeout(runOptimization, 0);
   }
 
+  root.FokoLabAdapters=root.FokoLabAdapters||{};
+  root.FokoLabAdapters.optimization={result:()=>state.result,unit:'evaluations',clock:()=>Number.isFinite(state.replay)?state.replay:0,end:()=>state.pareto?.points.length||state.result?.samples.length||0,pause(){},seek(value){state.replay=Math.max(1,Math.floor(value));state.selectedSample=Math.min(state.selectedSample,state.replay-1);renderAllPlots();root.dispatchEvent(new CustomEvent('foko-frame',{detail:{lab:'optimization',time:state.replay}}));}};
   window.addEventListener('DOMContentLoaded', init);
 })(typeof window !== 'undefined' ? window : globalThis);
