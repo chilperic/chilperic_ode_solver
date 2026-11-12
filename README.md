@@ -61,18 +61,11 @@ The dated [pre-publication report](site/analysis-studio-verification.json) remai
 
 The approved baseline is preserved on [legacy/80.1.0-user-approved](https://github.com/chilperic/chilperic_ode_solver/tree/legacy/80.1.0-user-approved), commit `39810f18526ea7eed1b02c3a30fffaddad490b57`.
 
-For developer acceptance checks after assembly:
-
-```bash
-node deployment/802/smoke.mjs
-python3 deployment/802/verify.py
-```
-
-The release workflow records dependency versions and installs Chromium. `--native-only` runs the Python numerical comparisons without browser checks. The guarded assembly script is a one-time migration from its specified baseline; it deliberately refuses an already modified baseline rather than overwriting newer work.
+Developer checks are listed in `package.json` and `tests/`. The former `deployment/802/` commands are not available in this checkout. Existing checks and reports target specific historical releases; their presence does not establish that the current checkout passes them. See [CONTRIBUTING.md](CONTRIBUTING.md) for the current layout and publication-tree reconciliation requirements.
 
 ## Repository layout
 
-`site/` is the public application. `docs/` mirrors its publication files for the retained hosting layout. `deployment/802/` contains the guarded source assembly and acceptance scripts. `site/cv/` contains six PDFs, editable LaTeX and the download manifest. Do not publish private author/recovery archives as website content.
+`site/` is the authored public application used by the local server and root landing-page redirect. `docs/` is a separately reachable publication tree that currently differs from `site/`; do not overwrite or remove it as a duplicate. `tools/` contains release and recovery utilities, while `tests/` contains regression checks. `site/cv/` contains six PDFs, editable LaTeX and the download manifest. Do not publish private author/recovery archives as website content.
 
 ## Attribution and citation
 
@@ -102,3 +95,7 @@ Python exports use parsed expressions with vector-indexed variables in every obj
 ### 80.6.0 — assimilation and simultaneous evolution playback
 
 Whole-cycle mean net assimilation is the default evolution objective, with explicit units, averaging duration and reference scale. Illuminated-hours and weighted rate objectives are separate choices. Individual replicate residents now animate beside the descriptive mean, with conditional feasibility hatching and local objective-direction arrows. Finite-population playback retains real individuals and independent populations alongside the mean. Enzyme-specific nitrogen allocation and classification-threshold calibration are queued next. Scientific implementation remains private.
+
+## Maintaining this repository
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the directory map, output conventions, provenance and cleanup boundaries.
